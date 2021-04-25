@@ -30,7 +30,7 @@ npm run dev
 [后端接口文档](https://chao.fun/swagger-ui/index.html)
 
 # 其他
-每周日五点，奖励上周贡献最多的饭友炒饭 TShirt 一件
+每周日下午五点，奖励上周贡献最多的饭友炒饭 TShirt 一件
 ![image](https://user-images.githubusercontent.com/6985160/115997172-c6374600-a614-11eb-8fda-27a9b8725d5a.png)
 
 
