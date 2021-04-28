@@ -1,9 +1,3 @@
-/*
- * @Description: 版本更新
- * @writer chengshengxing
- * @LastEditTime: 2019-12-25
- */
-
 const fs = require("fs");
 const path = require("path");
 const basePath = path.resolve(__dirname, "../");
