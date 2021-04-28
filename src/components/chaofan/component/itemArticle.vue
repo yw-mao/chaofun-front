@@ -14,9 +14,9 @@
     
     <div v-if="isDetail" class="item_article">
           <div class="title">
-            {{item.title}}
+            {{item.title}}111
           </div>
-          <div @click.stop="" class="detail_line" :style="{width: ISPHONE?clientWidth-24+'px':''}">
+          <div @click.stop="" class="detail_line" :style="{width: ISPHONE?clientWidth-24+'px':'720px'}">
             <p  v-for="(_item,ins) in item.article.split('\n')" :key="ins">
               <span v-html="_item"></span>
             </p>
@@ -103,5 +103,8 @@ import * as api from '@/api/api'
   }
   .detail_line{
     line-height: 30px;
+  }
+  /deep/ .detail_line img{
+    max-width: 100%;
   }
 </style>
