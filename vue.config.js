@@ -11,6 +11,14 @@ const isProduction = process.env.NODE_ENV === 'production';
 // 线上打包路径，请根据项目实际线上情况
 const BASE_URL = process.env.NODE_ENV === "production" ? "/" : "/";
 
+const fs = require('fs');
+
+// directory to check if exists
+const dirweb = './src/views/chaofun-webview';
+
+// check if directory exists
+process.env.VUE_APP_BASE_WEB = fs.existsSync(dirweb);
+
 module.exports = {
   publicPath: BASE_URL,
   outputDir: "dist", // 打包生成的生产环境构建文件的目录
