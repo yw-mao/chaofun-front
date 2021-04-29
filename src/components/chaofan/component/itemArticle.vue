@@ -14,7 +14,7 @@
     
     <div v-if="isDetail" class="item_article">
           <div class="title">
-            {{item.title}}111
+            {{item.title}}
           </div>
           <div @click.stop="" class="detail_line" :style="{width: ISPHONE?clientWidth-24+'px':'720px'}">
             <p  v-for="(_item,ins) in item.article.split('\n')" :key="ins">
