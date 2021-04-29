@@ -115,7 +115,7 @@
               </el-form-item>
               <el-form-item label="链接：" prop="link">
                 <el-input @input="getUrlTitle" type="textarea" class="textarea" placeholder="请输入链接地址" :autosize="{ minRows: 4, maxRows: 6}"  v-model="baseForm.link"></el-input>
-<!--                <div class="el-upload__tip">* 先复制链接的话我们可能会帮你抓取到标题填上哦~<br/>* 只允许填写一个完整的链接地址~</div>-->
+                <!--                <div class="el-upload__tip">* 先复制链接的话我们可能会帮你抓取到标题填上哦~<br/>* 只允许填写一个完整的链接地址~</div>-->
                 <div class="el-upload__tip" style="line-height: 20px">* 先复制链接的话我们可能会帮你抓取到标题填上哦~<br/>* 只允许填写一个完整的链接地址~</div>
               </el-form-item>
             </el-tab-pane>
@@ -130,13 +130,13 @@
               </el-form-item>
               <el-form-item label="选项：" prop="link">
                 <div v-for="(item,index) in voteList"
-                    :key="index" class="flexs">
+                     :key="index" class="flexs">
                   <el-input
-                    
-                    style="margin-bottom:10px;"
-                    :placeholder="'请输入选项'+(index+1)"
-                    v-model="voteList[index].optionName"
-                    clearable>
+
+                      style="margin-bottom:10px;"
+                      :placeholder="'请输入选项'+(index+1)"
+                      v-model="voteList[index].optionName"
+                      clearable>
                   </el-input>
                   <div v-if="voteList.length>2" class="del"><i @click="toDel(index)" class="el-icon-minus"></i></div>
                 </div>
@@ -156,11 +156,26 @@
       </el-form>
 
 
+      <div style="display: flex; padding-left: 100px; padding-top: 0px; padding-bottom: 20px;">
+        <div>匿名: </div>
+        <el-table-column label="是否匿名" class="anonymity">
+          <template>
+            <el-switch
+                class="switch"
+                v-model="anonymity"
+                :active-value=true
+                :inactive-value=false
+            >
+            </el-switch>
+          </template>
+        </el-table-column>
+      </div>
       <div class="btns">
         <el-button @click="subs" type="primary" size="big" block :disabled="disableSubmit">
           {{submitTitle}}
         </el-button>
       </div>
+
       <div class="descr">
         <ul>
           <li>严禁发布色情、暴恐、赌博及其他违反网络安全法的内容，或涉嫌隐私或未经授权的私人图片及信息，如违规发布，请自行删除或管理员强制删除。</li>
@@ -285,6 +300,7 @@
           link: '',
           ossName: ''
         },
+        anonymity: false,
         loading: false,
         rules: {
           forumId: [
@@ -382,7 +398,7 @@
         if(this.voteList.length<6){
           this.voteList.push({optionName:''});
         }
-        
+
       },
       deleteImg(index){
         // this.baseForm.ossName = ''
@@ -514,7 +530,8 @@
               delete this.baseForm.link;
               let params = {
                 title: this.baseForm.title,
-                forumId: this.baseForm.forumId.split('/')[2]
+                forumId: this.baseForm.forumId.split('/')[2],
+                anonymity: this.anonymity
               }
               if(this.fileLists.length==1){
                 params.ossName = this.fileLists[0];
@@ -538,7 +555,8 @@
                 title: this.baseForm.title,
                 article: this.baseForm.article,
                 articleType: this.baseForm.articleType,
-                forumId: this.baseForm.forumId.split('/')[2]
+                forumId: this.baseForm.forumId.split('/')[2],
+                anonymity: this.anonymity
               }
               api.submitArticle(params).then(res=>{
                 if(res.success){
@@ -556,7 +574,8 @@
               let params = {
                 title: this.baseForm.title,
                 link: this.baseForm.link,
-                forumId: this.baseForm.forumId.split('/')[2]
+                forumId: this.baseForm.forumId.split('/')[2],
+                anonymity: this.anonymity
               }
               api.submitLink(params).then(res=>{
                 if(res.success){
@@ -581,7 +600,8 @@
                 let params = {
                   title: this.baseForm.title,
                   options: JSON.stringify(this.voteList),
-                  forumId: this.baseForm.forumId.split('/')[2]
+                  forumId: this.baseForm.forumId.split('/')[2],
+                  anonymity: this.anonymity
                 }
                 api.submitVote(params).then(res=>{
                   if(res.success){
@@ -598,7 +618,7 @@
               }else{
                 this.$message.error('选项未填写完整');
               }
-              
+
               console.log(params)
             }
           }
@@ -648,7 +668,7 @@
 </script>
 
 <style type='text/scss' lang='scss' scoped>
-::-webkit-scrollbar-thumb {
+  ::-webkit-scrollbar-thumb {
     border-radius: 10px;
     padding: 0;
     width: 2px;
