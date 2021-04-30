@@ -14,6 +14,9 @@
 
 # 项目
 
+## 如何贡献
+从master分支Fork以后，修改后直接提PR到master分支。
+
 ## 初始化
 ```
 npm install
@@ -29,6 +32,7 @@ npm run dev
 ## 接口
 [后端接口文档](https://chao.fun/swagger-ui/index.html)
 
+
 # 其他
 每周日下午五点，奖励上周贡献最多的饭友炒饭 TShirt 一件
 ![image](https://user-images.githubusercontent.com/6985160/115997172-c6374600-a614-11eb-8fda-27a9b8725d5a.png)
@@ -37,6 +41,3 @@ npm run dev
 如有其他疑问，也可添加微信 cijianzy 咨询
 
 # 感谢
-
-
-
