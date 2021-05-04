@@ -17,14 +17,22 @@
       </el-menu>
     </el-scrollbar> -->
     <div class="scrollbar_container">
+      
       <div v-if="$store.state.settings.leftNav=='normal'">
         <div v-for="route in permission_routes" :key="route.path" class="items">
           <div v-if="route.name">
+            <!-- 一级 -->
             <div @click="doCollapse(route)" class="items_title">
-              <svg-icon :icon-class='route.meta.icon'/>
+              <el-popover :disabled="!isCollapse" :visible-arrow='false' placement="right-start"   width="200" trigger="hover">
+                <div class="popover-title" v-for="item in route.children" :key="item.path" >
+                  <span @click="toUrl({path:item.path})" :class="[{'item_title_active':$route.path==item.path}]">{{item.meta.title}}</span>
+                </div>
+                <svg-icon slot="reference" :icon-class='route.meta.icon'/>
+              </el-popover>
               <!-- <img class="items_title_icon" :src="" alt="">  -->
               <span class="items_title_span">{{route.meta.title}}</span>
             </div>
+            <!-- 二级 -->
             <div v-if="!route.hide" class="item">
               <div v-for="item in route.children" :key="item.path" >
                 <div @click="toUrl({path:item.path})" class="item_title">
@@ -117,6 +125,12 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+.popover-title{
+  font-size: 16px;
+  padding-bottom: 8px;
+  cursor: pointer;
+  
+}
 /deep/ .nest-menu:hover{
   background: #fff;
 }
