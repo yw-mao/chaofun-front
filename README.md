@@ -35,12 +35,8 @@ npm run dev
 
 # 其他
 每周日下午五点，奖励上周贡献最多的饭友炒饭 TShirt 一件
+
 ![image](https://user-images.githubusercontent.com/6985160/115997172-c6374600-a614-11eb-8fda-27a9b8725d5a.png)
-
-
-# 主工程为 chaofun-front
-在 src/views 下面 clone
-
 
 如有其他疑问，也可添加微信 cijianzy 咨询
 
