@@ -56,7 +56,7 @@
           </div>
         </div>
       </div>
-      <div style="margin-left: 30px">
+      <div style="margin-left: 30px; max-width: 500px;">
         <div style="font-size: 20px">评论列表</div>
         <div v-for="item in comments">
           <pre>评论:<a :href="'/p/' + item.postId">{{item.text.replace('\n','')}}</a>     用户: <a :href="'/user/' + item.userInfo.userId">{{item.userInfo.userName}}</a></pre>
