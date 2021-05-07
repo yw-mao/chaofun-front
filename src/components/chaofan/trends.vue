@@ -32,7 +32,9 @@
                     <!-- 视频 -->
                     <!-- &&(!ISPHONE||item.postInfo.link.includes('www.acfun.cn')) -->
                     <itemGif v-if="item.postInfo.type == 'gif'" :isDetail="false" :item="item.postInfo"></itemGif>
-                    <!-- iframe视频 -->
+                    <!-- 内部视频 -->
+                    <itemVideo v-if="item.postInfo.type == 'inner_video'" :isDetail="false" :item="item.postInfo"></itemVideo>
+                  <!-- iframe视频 -->
                     <div v-if="item.postInfo.type == 'video'&&item.postInfo.videoType == 'ifram'&&(!ISPHONE||!item.postInfo.link.includes('www.acfun.cn'))"
                         class="item_video">
                         <div class="title">
@@ -44,7 +46,6 @@
                             <img v-if="!item.postInfo.play" class="btn_play" @click="playVideo(index,item.postInfo,0)" src="../../assets/images/bg/play.png" alt="">
                             <iframe v-if="!ISPHONE&&item.postInfo.play" style="width: 100%;min-height: 370px"   :src="item.postInfo.video+(item.postInfo.link.includes('www.acfun.cn')?'?':'')+'&autoplay=true'" allow="autoplay" id="ACPlayer-re"  scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>
                             <iframe v-if="ISPHONE&&item.postInfo.play" style="width: 100%;height: 230px"   :src="item.postInfo.video+(item.postInfo.link.includes('www.acfun.cn')?'?':'')+'&autoplay=true'" allow="autoplay" id="ACPlayer-re"  scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>
-                      
                         </div>
                     </div>
 
@@ -65,6 +66,8 @@
                         <itemImage v-if="item.postInfo.sourcePost.type == 'image'" :item="item.postInfo.sourcePost"></itemImage>
                         <!-- 视频 -->
                         <itemGif v-if="item.postInfo.sourcePost.type == 'gif'" :isDetail="false" :item="item.postInfo.sourcePost"></itemGif>
+                        <!-- 内部视频 -->
+                        <itemVideo v-if="item.postInfo.sourcePost.type == 'inner_video'" :isDetail="false" :item="item.postInfo.sourcePost"></itemVideo>
                         <!-- iframe视频 -->
                         <div v-if="item.postInfo.sourcePost.type == 'video'&&item.postInfo.sourcePost.videoType == 'ifram'&&(!ISPHONE||!item.postInfo.sourcePost.link.includes('www.acfun.cn'))"
                           class="item_video">
@@ -170,6 +173,7 @@ import itemTopTitle from './component/itemTopTitle'
 import itemLink from './component/itemLink'
 import itemImage from './component/itemImage'
 import itemGif from './component/itemGif'
+import itemVideo from './component/itemVideo'
 import itemIframeVideo from './component/itemIframeVideo'
 import itemArticle from './component/itemArticle'
 import itemVote from './component/itemVote'
@@ -233,7 +237,7 @@ import forwardH5 from '../h5/forward'
        }
    },
    components: {
-     forward,forwardH5,videoDialog,itemTopTitle,itemLink,itemImage,itemGif,itemIframeVideo,itemArticle,itemVote,itemForwardTitle
+     forward,forwardH5,videoDialog,itemTopTitle,itemLink,itemImage,itemGif,itemIframeVideo,itemArticle,itemVote,itemForwardTitle,itemVideo
    }, 
    created() {
     this.top = localStorage.getItem('storedata')?JSON.parse(localStorage.getItem('storedata')).top:0;

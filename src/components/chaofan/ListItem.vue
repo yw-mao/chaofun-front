@@ -23,6 +23,8 @@
         <itemImage v-if="item.type == 'image'" :item="item"></itemImage>
         <!-- 视频 -->
         <itemGif v-if="item.type == 'gif'" :isDetail="false" :item="item"></itemGif>
+        <!-- 内部视频 -->
+        <itemVideo v-if="item.type == 'inner_video'" :isDetail="false" :item="item"></itemVideo>
         <!-- iframe视频 -->
         <div v-if="item.type == 'video'&&item.videoType == 'ifram'&&(!ISPHONE||!item.link.includes('www.acfun.cn'))"
             class="item_video">
@@ -58,6 +60,8 @@
             <itemImage v-if="item.sourcePost.type == 'image'" :item="item.sourcePost"></itemImage>
             <!-- 视频 -->
             <itemGif v-if="item.sourcePost.type == 'gif'" :isDetail="false" :item="item.sourcePost"></itemGif>
+            <!-- 内部视频 -->
+            <itemVideo v-if="item.sourcePost.type == 'inner_video'" :isDetail="false" :item="item.sourcePost"></itemVideo>
             <!-- iframe视频 -->
             <div v-if="item.sourcePost.type == 'video'&&item.sourcePost.videoType == 'ifram'&&(!ISPHONE||!item.sourcePost.link.includes('www.acfun.cn'))"
               class="item_video">
@@ -85,7 +89,7 @@
           </div>
         </div>
 
-        <div v-if="item.type != 'video'&&item.type != 'link'&&item.type != 'image'&&item.type != 'gif'&&item.type != 'article'&&item.type!='forward'&&item.type!='vote'" @click="toDetail(item)" class="item_article">
+        <div v-if="item.type != 'video'&&item.type != 'link'&&item.type != 'image'&&item.type != 'gif'&&item.type != 'article'&&item.type!='forward'&&item.type!='vote'&&item.type!='inner_video'" @click="toDetail(item)" class="item_article">
           <div class="title">
             {{item.title}}
           </div>
@@ -150,6 +154,7 @@ import itemTopTitle from './component/itemTopTitle'
 import itemLink from './component/itemLink'
 import itemImage from './component/itemImage'
 import itemGif from './component/itemGif'
+import itemVideo from './component/itemVideo'
 import itemIframeVideo from './component/itemIframeVideo'
 import itemArticle from './component/itemArticle'
 import itemVote from './component/itemVote'
@@ -213,7 +218,7 @@ import forwardH5 from '../h5/forward'
        }
    },
    components: {
-     forward,forwardH5,videoDialog,itemTopTitle,itemLink,itemImage,itemGif,itemIframeVideo,itemArticle,itemVote,itemForwardTitle
+     forward,forwardH5,videoDialog,itemTopTitle,itemLink,itemImage,itemGif,itemIframeVideo,itemArticle,itemVote,itemForwardTitle,itemVideo
    }, 
    created() {
     this.top = localStorage.getItem('storedata')?JSON.parse(localStorage.getItem('storedata')).top:0;
