@@ -25,7 +25,7 @@
 
 
           <el-tabs v-model="activeName" @tab-click="handleClick">
-            <el-tab-pane label="发布图片" name="first">
+            <el-tab-pane label="发布图片/视频" name="first">
               <el-form-item label="标题：" prop="title">
                 <el-input
                     placeholder="请输入标题"
@@ -52,7 +52,7 @@
                     <img style="max-width:100%;max-height:100%;" :src="imgOrigin+baseForm.ossName" alt="">
                   </div> -->
                   <!-- <i @click.stop="deleteImg" v-if="baseForm.ossName" class="delete_icon el-icon-delete"></i> -->
-                  <div class="el-upload__tip" style="margin-top:0;line-height:24px;" slot="tip">复制网络图片可直接粘贴完成上传图片，超过20M的图片建议拖拽上传, Web 版支持多图</div>
+                  <div class="el-upload__tip" style="margin-top:0;line-height:24px;" slot="tip">复制网络图片可直接粘贴完成上传图片，超过20M的图片建议拖拽上传, Web 版支持多图。不支持多视频发布</div>
                 </el-upload>
                 <div class="imgList">
                   <div v-for="(item,index) in fileLists" :key="index" class="li">
