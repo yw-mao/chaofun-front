@@ -33,7 +33,7 @@
                     clearable>
                 </el-input>
               </el-form-item>
-              <el-form-item label="图片：" prop="ossName">
+              <el-form-item label="图片/视频：" prop="ossName">
                 <el-upload
                     class="upload-demo avatar-uploader"
                     :file-list="fileList"
@@ -52,7 +52,7 @@
                     <img style="max-width:100%;max-height:100%;" :src="imgOrigin+baseForm.ossName" alt="">
                   </div> -->
                   <!-- <i @click.stop="deleteImg" v-if="baseForm.ossName" class="delete_icon el-icon-delete"></i> -->
-                  <div class="el-upload__tip" style="margin-top:0;line-height:24px;" slot="tip">复制网络图片可直接粘贴完成上传图片，超过20M的图片建议拖拽上传, Web 版支持多图。不支持多视频发布</div>
+                  <div class="el-upload__tip" style="margin-top:0;line-height:24px;" slot="tip">复制网络图片可直接粘贴完成上传图片，超过20M的图片建议拖拽上传, Web 版支持多图。不支持单帖多视频发布</div>
                 </el-upload>
                 <div class="imgList">
                   <div v-for="(item,index) in fileLists" :key="index" class="li">
