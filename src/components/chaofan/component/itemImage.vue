@@ -13,7 +13,7 @@
         <div @click.stop="" v-if="item.imageNums!=1" class="imgLists">
             <viewer :images="item.images">
                 <div v-for="(item2,index2) in item.images" :key="index2" :class="doImgClass(item.images)" :style="doMoreImgStyle(item,item2)" :alt="item.title" :title="item.title">
-                <img  style="opacity:0;" :data-source="imgOrigin+item2" :src="imgOrigin+item2+ (item2.includes('.gif')? '': ('?x-oss-process=image/resize,h_' + getImageHeight(item.width, item.height)))"  :key="item2" :alt="item.title" :title="item.title">
+                <img  :data-source="imgOrigin+item2" :src="imgOrigin+item2+ (item2.includes('.gif')? '': ('?x-oss-process=image/resize,h_' + getImageHeight(item.width, item.height)))"  :key="item2" :alt="item.title" :title="item.title">
                 </div>
             </viewer>
         </div>
@@ -27,7 +27,7 @@ import * as api from '@/api/api'
    name: '',
    data(){
      return {
-         
+
      }
    },
    props: {
@@ -52,7 +52,7 @@ import * as api from '@/api/api'
    created() {
    },
    mounted() {
-    
+
    },
    methods: {
     toUrls(item,params){
@@ -70,7 +70,6 @@ import * as api from '@/api/api'
         return {
           // 'width':
           'height':(231*item.height/item.width)+'px',
-          'background-image':`url(${this.imgOrigin+item2})`
         }
     },
     getImageHeight(w,h){
