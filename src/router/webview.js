@@ -50,6 +50,13 @@ if(process.env.NODE_ENV === 'production'&&process.env.VUE_APP_BASE_WEB){
       meta: { title: '用户排名'},
       hidden: true
     },
+    {
+      path: '/webview/forumRank',
+      component: () => import('@/views/chaofun-webview/activity/forumRank'),
+      name: 'webViewForumRank',
+      meta: { title: '板块排名'},
+      hidden: true
+    },
   ]
 }
 
