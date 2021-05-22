@@ -454,10 +454,10 @@ queryChildren (parent, list) {
                               }
                               
                               this.comment = '';
-                              this.canSub = true;
                               this.treeData = this.transformTree(this.lists)
                           },1500)
                       }
+                    this.canSub = true;
                   })
                 }else{
                   this.$toast('请勿重复提交')
