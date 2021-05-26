@@ -6,7 +6,7 @@
       </div>
       <div @click.stop="" v-if="item.imageNums==1" class="imgs">
         <viewer :images="[imgOrigin+item.imageName]">
-          <img :src="imgOrigin+item.imageName" v-if="isDetail" :style="doImgStyle(item.width,item.height)" :alt="item.title" :title="item.title">
+          <img :src="imgOrigin+item.imageName" :data-source="imgOrigin+item.imageName" v-if="isDetail" :style="doImgStyle(item.width,item.height)" :alt="item.title" :title="item.title">
           <img :src="imgOrigin+item.imageName+ (item.imageName.includes('.gif')? '': '?x-oss-process=image/resize,h_512')" :data-source="imgOrigin+item.imageName" v-if="!isDetail" :style="doImgStyle(item.width,item.height)" :alt="item.title" :title="item.title">
         </viewer>
       </div>
