@@ -105,7 +105,9 @@
           if(this.$store.state.user.islogin){
             resolve(true)
           }else{
-            this.$store.dispatch('user/SET_logStatus','login')
+            this.$login({callBack:()=>{
+                this.$store.dispatch('user/getInfo')
+              }});
             resolve(false)
           }
         })

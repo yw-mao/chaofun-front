@@ -311,7 +311,9 @@
            }
            item.save = !item.save
          }else if(res.errorCode == 'need_login'){
-           this.$store.dispatch('user/SET_logStatus','login')
+           this.$login({callBack:()=>{
+               this.$store.dispatch('user/getInfo')
+             }});
          }
        })
      },
