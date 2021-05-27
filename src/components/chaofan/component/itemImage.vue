@@ -11,9 +11,10 @@
             </viewer>
         </div>
         <div @click.stop="" v-if="item.imageNums!=1" class="imgLists">
-            <viewer :images="item.images">
-                <div v-for="(item2,index2) in item.images" :key="index2" :class="doImgClass(item.images)" :style="doMoreImgStyle(item,item2)" :alt="item.title" :title="item.title">
-                <img  style="opacity:0;" :data-source="imgOrigin+item2" :src="imgOrigin+item2+ (item2.includes('.gif')? '': ('?x-oss-process=image/resize,h_' + getImageHeight(item.width, item.height)))"  :key="item2" :alt="item.title" :title="item.title">
+            <viewer :images="item.o_imgs">
+                <div v-for="(item2,index2) in item.images" :key="index2" :class="doImgClass(item.images)" :style="doMoreImgStyle(item,item2)" :alt="item.title" :title="item.title" :data-source="imgOrigin+item2">
+                  <!-- <img  style="opacity:0;" :data-source="imgOrigin+item2" :src="imgOrigin+item2+ (item2.includes('.gif')? '': ('?x-oss-process=image/resize,h_' + getImageHeight(item.width, item.height)))"  :key="item2" :alt="item.title" :title="item.title"> -->
+                  
                 </div>
             </viewer>
         </div>
@@ -50,6 +51,17 @@ import * as api from '@/api/api'
 
    },
    created() {
+     var o_imgs = [];
+     if(this.item.imageNums>1){
+         this.item.images.forEach(item=>{
+           
+           if(!item.includes('.gif')){
+             o_imgs.push(this.imgOrigin+item+ '?x-oss-process=image/resize,h_512')
+           }
+         })
+       }
+       console.log('o_imgs',o_imgs)
+       this.item.o_imgs = o_imgs;
    },
    mounted() {
     
@@ -70,7 +82,8 @@ import * as api from '@/api/api'
         return {
           // 'width':
           'height':(231*item.height/item.width)+'px',
-          'background-image':`url(${this.imgOrigin+item2})`
+          'background-image':`url(${this.imgOrigin+item2+(item2.includes('.gif')? '': ('?x-oss-process=image/resize,h_' + this.getImageHeight(item.width, item.height)))})`,
+          //imgOrigin+item2+ (item2.includes('.gif')? '': ('?x-oss-process=image/resize,h_' + getImageHeight(item.width, item.height)))
         }
     },
     getImageHeight(w,h){
@@ -232,4 +245,5 @@ import * as api from '@/api/api'
   display: flex;
   flex-flow: wrap;
 }
+
 </style>
