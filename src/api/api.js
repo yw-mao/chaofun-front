@@ -631,3 +631,21 @@ export function getButtonRank(params) {
     params
   })
 }
+
+/** 获取Top的Ups */
+export function getUserTopUps(params) {
+  return request({
+    url: '/api/v0/user/getTopUps',
+    method: 'get',
+    params
+  })
+}
+
+/** 获取Top的Ups */
+export function getForumTopUps(params) {
+  return request({
+    url: '/api/v0/forum/getTopUps',
+    method: 'get',
+    params
+  })
+}

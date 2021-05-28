@@ -335,7 +335,9 @@ import forwardH5 from '../h5/forward'
            item.save = !item.save
           //  this.$message.success("收藏成功")
          }else if(res.errorCode == 'need_login'){
-           this.$store.dispatch('user/SET_logStatus','login')
+           this.$login({callBack:()=>{
+               this.$store.dispatch('user/getInfo')
+             }});
          }
        })
      },
