@@ -21,10 +21,14 @@
         <itemLink :isindex="isindex" v-if="item.type == 'link'|| (ISPHONE&&item.type == 'video'&&item.videoType == 'ifram')&&item.link.includes('www.acfun.cn')" @click.stop="toUrls(item,{url:item.link,routeType: 1})" :item="item"></itemLink>
         <!-- 图片 -->
         <itemImage v-if="item.type == 'image'" :item="item"></itemImage>
-        <!-- 视频 -->
-        <itemGif v-if="item.type == 'gif'" :isDetail="false" :item="item"></itemGif>
-        <!-- 内部视频 -->
-        <itemVideo v-if="item.type == 'inner_video'" :isDetail="false" :item="item"></itemVideo>
+        
+        <div @click.stop="">
+          <!-- 视频 -->
+          <itemGif  v-if="item.type == 'gif'" :isDetail="false" :item="item"></itemGif>
+          <!-- 内部视频 -->
+          <itemVideo v-if="item.type == 'inner_video'" :isDetail="false" :item="item"></itemVideo>
+        </div>
+        
         <!-- iframe视频 -->
         <div v-if="item.type == 'video'&&item.videoType == 'ifram'&&(!ISPHONE||!item.link.includes('www.acfun.cn'))"
             class="item_video">
