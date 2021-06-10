@@ -18,7 +18,7 @@
         <div style="position:relative;">
           <img class="erweimasmall img1" src="../../assets/images/icon/phone1.png" alt="">
           <img class="erweimasmall img2" src="../../assets/images/icon/phonehover.png" alt="">
-          <span style="background:red;color:#fff;font-size:10px;vertical-align:middle;position:absolute;top:4px;left:-24px;height:18px;line-height:18px;padding:0 4px;border-radius:4px;">new</span>
+          <span style="background:red;color:#fff;font-size:10px;vertical-align:middle;position:absolute;top:4px;left:-12px;height:18px;line-height:18px;padding:0 4px;border-radius:4px;">new</span>
         </div>
 
         <div class="erweimabig">
@@ -36,7 +36,12 @@
           </div> -->
           <div class="er_item">
             <img src="../../assets/images/erweima2.jpg" alt="">
-            <p>扫码加微信邀请入炒饭用户群</p>
+            <p>扫码加微信 wwwchaofun 邀请入炒饭用户群</p>
+          </div>
+
+          <div class="er_item">
+            <img src="../../assets/images/erweima3.png" alt="">
+            <p>扫码加入QQ用户群(784495660)</p>
           </div>
           
         </div>
@@ -370,7 +375,7 @@ export default {
     border: 1px solid #ddd;
     border-radius: 4px;
     img{
-      width: 180px;
+      width: 120px;
     }
     .er_item{
       margin: 30px 0 30px;
