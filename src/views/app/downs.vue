@@ -15,8 +15,8 @@
                 <span>炒饭超Fun</span>
             </div>
             <div class="build_info">
-                <div class="info_item"> iOS: 2.19.0（审核中）| Android: 2.19.0 </div>
-                <div class="info_item"> 更新时间 2021.05.09 </div>
+                <div class="info_item"> iOS: 2.23.1 | Android: 2.23.1 </div>
+                <div class="info_item"> 更新时间 2021.06.11 </div>
             </div>
         </div>
         <div v-if="ISPHONE" class="down_btn">
