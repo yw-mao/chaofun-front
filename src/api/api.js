@@ -212,7 +212,7 @@ export function getListPosts(params) {
 
 
 
-/** 搜索 */
+/** 搜索帖子 */
 export function getSearch(params) {
   return request({
     url: '/api/search',
@@ -220,6 +220,16 @@ export function getSearch(params) {
     params
   })
 }
+
+/** 搜索用户 */
+export function getSearchUser(params) {
+  return request({
+    url: '/api/v0/searchUser',
+    method: 'get',
+    params
+  })
+}
+
 
 /** 点赞 */
 export function upvote_post(params) {

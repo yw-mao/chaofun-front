@@ -56,7 +56,6 @@
           }
         })
       }
-      console.log('o_imgs',o_imgs)
       this.item.o_imgs = o_imgs;
     },
     mounted() {

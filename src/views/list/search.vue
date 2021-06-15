@@ -14,9 +14,19 @@
                 v-model="keyword">
               </el-input>
             </div>
+          <div class="navs">
+            <div @click="chooseType('post')" :class="{active:searchType=='post'}">帖 子</div>
+            <div @click="chooseType('user')" :class="{active:searchType=='user'}">用 户</div>
+          </div>
           <div class="grid-content"  style="overflow:auto; width: 640px; max-width: 100%">
-            <ListItem :pagenum="params.pageNum" :isindex="true" :lists="lists"></ListItem>
-            <load-text :ifcanget="ifcanget" :loadAll="loadAll"></load-text>
+            <div v-if="searchType=='post'">
+              <ListItem :pagenum="params.pageNum" :isindex="true" :lists="lists"></ListItem>
+            </div>
+            <div v-if="searchType=='user'">
+              <attentionItem v-for="(item,index) in lists" :item="item"  :key="index"></attentionItem>
+            </div>
+            
+            <load-text :ifcanget="ifcanget" :hasContent="hasContent" :loadAll="loadAll"></load-text>
           </div>
         </el-col>
       </el-row>
@@ -34,6 +44,7 @@ import * as api from '../../api/api'
 import ListItem from '../../components/chaofan/ListItem.vue'
 import RightCom from '@/components/chaofan/RightCom'
 import loadText from '@/components/chaofan/loadText'
+import attentionItem from '@/components/chaofan/attentionItem.vue'
 
 
 export default {
@@ -41,6 +52,7 @@ export default {
   // components: { adminDashboard, editorDashboard },
   data() {
     return {
+      hasContent: true,
       currentRole: 'adminDashboard',
       count: 5,
       lists: [],
@@ -67,11 +79,12 @@ export default {
       ifcanget: true,
       loadText: false,
       loadAll: false,
-      keyword: ''
+      keyword: '',
+      searchType: 'post',
     }
   },
   components: {
-    ListItem,loadText
+    ListItem,loadText,attentionItem
   },
   watch: {
     '$route.query.q'(v){
@@ -122,6 +135,12 @@ export default {
     this.load()
   },
   methods:{
+    chooseType(val){
+      this.searchType = val;
+      this.params.pageNum = 1;
+      this.lists = [];
+      this.getLists();
+    },
     inout(v){
       if(this.$store.state.user.islogin){
         if(v==1){
@@ -165,30 +184,37 @@ export default {
     },
     getLists(){
       let params = this.params;
-      this.ifcanget = false
-      api.getSearch(params).then(res=>{
-        console.log(res)
-        this.ifcanget = true
-        this.params.pageNum += 1;
-        // if(res.data.marker&&(res.data.posts.length == this.params.pageSize)){
-        //   this.ifcanget = true
-        // }
-        // if(res.data.marker){
-        //   params.marker = res.data.marker;
-        // }else{
-        //   if(res.data.posts.length<this.params.pageSize){
-        //     this.loadAll = true
-        //   }
-        // }
-        // if(res.data.posts.length<this.params.pageSize){
-        //   this.loadAll = true
-        // }
-        if(!res.data.length){
-          this.loadAll = true
-          this.ifcanget = false
-        }
-        this.lists.push(...res.data)
-      })
+      this.ifcanget = false;
+      if(this.searchType=='post'){
+        api.getSearch(params).then(res=>{
+          console.log(res)
+          this.ifcanget = true
+          this.params.pageNum += 1;
+          if(!res.data.length){
+            this.loadAll = true
+            this.ifcanget = false
+          }
+          this.lists.push(...res.data)
+          if(!this.lists.length){
+            this.hasContent = false;
+          }
+        })
+      }else{
+        api.getSearchUser(params).then(res=>{
+          console.log(res)
+          this.ifcanget = true
+          if(!res.data.length){
+            this.loadAll = true
+            this.ifcanget = false
+          }
+          this.lists = res.data.data;
+          if(!this.lists.length){
+            this.hasContent = false;
+          }
+        })
+        
+      }
+      
     },
     load () {
         if(localStorage.getItem('storedata')){
@@ -301,7 +327,22 @@ export default {
   padding-top: 8px;
   padding-bottom: 8px;
 }
-
+.navs{
+  display: flex;
+  margin-top: 10px;
+  div{
+    line-height: 40px;
+    font-size: 14px;
+    flex: 0 0 100px;
+    text-align: center;
+    cursor: pointer;
+  }
+  .active{
+    background: #fff;
+    border-radius: 6px;
+    
+  }
+}
 
 
 

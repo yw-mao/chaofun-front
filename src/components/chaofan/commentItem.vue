@@ -18,13 +18,41 @@
             </div> 
             <div class="content">
                 {{item.text}}
+                <span class="comImgs">
+                    <a v-for="(i,k) in item.imageNames.split(',')" :key="k" :href="imgOrigin+i" target="_blank">【附图】</a>
+                </span>
                 
             </div>
+            <!-- <div v-if="item.type=='media'" class="comImgs">
+                <img v-for="(i,k) in item.imageNames.split(',')" :key="k" :src="imgOrigin+i+''" alt="">
+            </div> -->
+            <!-- <div  v-if="item.type=='media'"  class="comImgs" >
+                <a v-for="(i,k) in item.imageNames.split(',')" :key="k" :href="imgOrigin+i" target="_blank">[附图]</a>
+            </div> -->
             <!-- {{replayItem}}{{item.id}} -->
             <div v-if="replayItem&&(replayItem.id==item.id)" class="replayInput">
                 <textarea v-model="comment" :placeholder="replayItem?'我对'+replayItem.userInfo.userName+'说：':'发表你的想法'" class="t_rep" name="" id="" cols="30" rows="10"></textarea>
-                <div style="overflow:hidden;padding-bottom:10px;">
-                    <span v-if="replayItem&&(replayItem.id==item.id)" @click="toSub" class="fabu">发布</span>
+                <div style="overflow:hidden;padding:10px 0;">
+                    <div style="float:left;">
+                        <a v-if="images.length" :href="imgOrigin+images[0]" target="_blank">[附图]</a>
+                    </div>
+                    <div style="float:right;">
+                        <el-upload
+                        class="avatar-uploader"
+                        action="/api/upload_image"
+                        name="file"
+                        :data="filedata"
+                        :show-file-list="false"
+                        :on-success="handleAvatarSuccess"
+                        :before-upload="beforeAvatarUpload"
+                        style="display:inline-block;"
+                        >
+                         <img style="vertical-align:middle;margin-right:10px;cursor:pointer;" src="../../assets/images/icon/choose.png" alt="">
+                        
+                        </el-upload>
+                       
+                        <span v-if="replayItem&&(replayItem.id==item.id)" @click="toSub" class="fabu">发布</span>
+                    </div>
                     <!-- <div class="icons" style="padding: 4px 20px 0;float:right;">
                         <img @click="showIcons" style="width:24px;height:24px;" src="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=105646479,4120396531&fm=26&gp=0.jpg" alt="">
                         <div  class="emoji">
@@ -69,6 +97,7 @@ import moment from 'moment'
    name: 'commentitem',
    data(){
      return {
+         
          showIcon: false,
          moment: moment,
          replayItem: null,
@@ -79,6 +108,8 @@ import moment from 'moment'
          icons: [
             '😀','😃','😁','😆','😅','🤣','😂','🙂','🙃','😉','😊','😇','😍','😘','🤪','😝','👍','🤝','🙏','💪','👏','✍️','💔','👮‍♂️','☠️','👽'
         ],
+         images: [],
+         filedata: {},
      }
    },
    props: {
@@ -102,6 +133,28 @@ import moment from 'moment'
      
    },
    methods: {
+    handleAvatarSuccess(res, file) {
+    
+        console.log(this.filedata)
+        console.log(res);
+        if(res.success){
+            this.imageUrl = URL.createObjectURL(file.raw);
+            this.images.push(res.data);
+        }else if(res.errorCode=='invalid_content'){
+            // this.imageUrl = ''
+            this.$toast(res.errorMessage)
+        }
+    
+    },
+    beforeAvatarUpload(file) {
+        const isLt2M = file.size / 1024 / 1024 < 5;
+        if (!isLt2M) {
+          this.$message.error('上传头像图片大小不能超过 1MB!');
+          return false
+        }
+        this.filedata.fileName = file.name
+        return true
+      },
     showIcons(){
       this.showIcon = true
     },
@@ -142,12 +195,14 @@ import moment from 'moment'
            let params = {
              parentId: this.replayItem&&this.replayItem.id?this.replayItem.id:'',
              postId: this.replayItem.postId,
-             comment: this.comment
+             comment: this.comment,
+             imageNames: this.images.join(',')
            }
            console.log(this.comment);
            api.addComments(params).then(res=>{
              if(res.success){
                this.$toast('评论成功');
+               this.images = [];
                setTimeout(()=>{
                  let obj = {
                    parentId: this.replayItem?this.replayItem.id:0,
@@ -300,5 +355,14 @@ import moment from 'moment'
     padding: 2px;
     cursor: pointer;
   }
+}
+.comImgs{
+    padding-bottom: 10px !important;
+    img{
+        width: 100px;
+        height: 100px;
+        border-radius: 4px;
+        margin-right: 6px;
+    }
 }
 </style>

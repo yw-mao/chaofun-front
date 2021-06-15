@@ -49,14 +49,31 @@
                           <div v-if="replayItem" @click="cancelReplay" style="padding: 6px 0px;cursor:pointer;float:left;">取消回复</div>
                           <el-input type="textarea" @focus="doLogin" class="textarea" :placeholder="replayItem?'我对'+replayItem.userInfo.userName+'说：':'发表你的想法'" :autosize="{ minRows: 2, maxRows: 4}"  v-model="comment"></el-input>
                           <div class="sub_botton">
+                            <div class="subims">
+                                <a v-if="images.length" :href="imgOrigin+images[0]" target="_blank">[附图]</a>
+                            </div>
+                            <div ></div>
                             <el-button style="height:36px;" @click="toSub" type="primary">发表</el-button>
+                            <el-upload
+                            class="avatar-uploader"
+                            action="/api/upload_image"
+                            name="file"
+                            :data="filedata"
+                            :show-file-list="false"
+                            :on-success="handleAvatarSuccess"
+                            :before-upload="beforeAvatarUpload"
+                            style="display:inline-block;"
+                            >
+                            <img style="vertical-align:middle;margin-right:10px;cursor:pointer;" src="../../assets/images/icon/choose.png" alt="">
                             
+                            </el-upload>
                             <div class="icons" style="padding: 4px 20px 0;">
                               <img @click="showIcons" style="width:24px;height:24px;" src="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=105646479,4120396531&fm=26&gp=0.jpg" alt="">
                               <div  class="emoji">
                                 <span v-for="(item,index) in icons" @click="chooseEmoji(item)" :key="index">{{item}}</span>
                               </div>
                             </div>
+                            
                           </div>
                       </div>
                       <div class="comment_list">
@@ -172,6 +189,8 @@ export default {
       treeData: [],
       userinfo: this.$store.state.user.userInfo,
       canSub: true,
+      images: [],
+      filedata: {},
     }
   },
   components: {
@@ -202,6 +221,28 @@ export default {
     
   },
   methods:{
+    handleAvatarSuccess(res, file) {
+    
+        console.log(this.filedata)
+        console.log(res);
+        if(res.success){
+            this.imageUrl = URL.createObjectURL(file.raw);
+            this.images.push(res.data);
+        }else if(res.errorCode=='invalid_content'){
+            // this.imageUrl = ''
+            this.$toast(res.errorMessage)
+        }
+    
+    },
+    beforeAvatarUpload(file) {
+        const isLt2M = file.size / 1024 / 1024 < 5;
+        if (!isLt2M) {
+          this.$message.error('上传头像图片大小不能超过 1MB!');
+          return false
+        }
+        this.filedata.fileName = file.name
+        return true
+      },
     refreshDelete(item){
       console.log('item',item);
       let idx=-1;
@@ -432,12 +473,14 @@ queryChildren (parent, list) {
                 let params = {
                   parentId: this.replayItem&&this.replayItem.id?this.replayItem.id:'',
                   postId: this.params.postId,
-                  comment: this.comment
+                  comment: this.comment,
+                  imageNames: this.images.join(',')
                 }
                 if(this.canSub){
                   this.canSub = false;
                   api.addComments(params).then(res=>{
                       if(res.success){
+                          this.images = [];
                           this.$message.success('评论成功')
                           setTimeout(()=>{
                               if(this.replayItem){
@@ -601,6 +644,11 @@ queryChildren (parent, list) {
         display: flex;
         flex-direction: row-reverse;
         padding: 20px 20px 0;
+        .subims{
+          position: absolute;
+          left: 0;
+          top: 20px;
+        }
     }
 }
 .sub_comment_phone{
@@ -707,6 +755,6 @@ queryChildren (parent, list) {
   // max-height: calc(100vh - 150px);
 }
 .comment_list{
-  padding-bottom: 120px;
+  padding-bottom: 200px !important;
 }
 </style>

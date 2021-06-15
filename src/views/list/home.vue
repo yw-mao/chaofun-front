@@ -183,6 +183,8 @@
           }
         }
       });
+      // document.querySelector('meta[name="keywords"]').setAttribute("content", '111')
+      document.querySelector('meta[name="description"]').setAttribute("content", '222')
     },
     created() {
       let id = this.$route.path.split('/')[2];
