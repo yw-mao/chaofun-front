@@ -19,7 +19,17 @@
             <div class="content">
                 {{item.text}}
                 <span v-if="item.imageNames" class="comImgs">
-                    <a v-for="(i,k) in item.imageNames.split(',')" :key="k" :href="imgOrigin+i" target="_blank">【附图】</a>
+                    <viewer :images="doImgs(item.imageNames)">
+                        <div v-for="(i,k) in item.imageNames.split(',')" :key="k">
+                            
+                            <span class="aaa" :data-source="imgOrigin+i">
+                                【附图】
+                                <img  style="opacity:0;" :src="imgOrigin+i+'?x-oss-process=image/resize,h_60'" :data-source="imgOrigin+i" >
+                                <img  class="futu" :src="imgOrigin+i+'?x-oss-process=image/resize,h_150'" :data-source="imgOrigin+i" >
+                            </span>
+                        </div>
+                    </viewer>
+                    <!-- <a v-for="(i,k) in item.imageNames.split(',')" :key="k" :href="imgOrigin+i" target="_blank">【附图】</a> -->
                 </span>
                 
             </div>
@@ -133,6 +143,14 @@ import moment from 'moment'
      
    },
    methods: {
+    doImgs(item){
+        console.log('item.imageNames',item)
+        var a = item.split(',');
+        a.forEach(it=>{
+            it = this.imgOrigin + it;
+        })
+        this.is = a;
+    },
     handleAvatarSuccess(res, file) {
     
         console.log(this.filedata)
@@ -363,6 +381,34 @@ import moment from 'moment'
         height: 100px;
         border-radius: 4px;
         margin-right: 6px;
+    }
+    div{
+        display: inline-block;
+    }
+}
+.aaa{
+    position: relative;
+    width: 50px;
+    height: 30px;
+    // background: #ddd;
+    color: #1890ff;
+    &:hover{
+        color: red;
+        .futu{
+            opacity: 1;
+            width: 150px;
+            height: auto;
+            left: 60px;
+            top: 0;
+        }
+    }
+    img{
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        left: 0;
+        top: 0;
+        opacity: 0;
     }
 }
 </style>

@@ -6,7 +6,7 @@
         <el-col :span="ISPHONE?24:doWidth()" :offset="doOffSet()">
           <div class="navs" style="display:flex;justify-content:space-between;">
             <div v-if="!isRecommend && !ISPHONE">
-              <el-select v-model="params.order" placeholder="请选择" @change="changes"
+              <!-- <el-select v-model="params.order" placeholder="请选择" @change="changes"
                          style="padding: 10px 0;">
                 <el-option
                     v-for="item in options"
@@ -23,7 +23,8 @@
                     :label="item.label"
                     :value="item.value">
                 </el-option>
-              </el-select>
+              </el-select> -->
+              <selectList @updateList="updateList" :params="params"></selectList>
             </div>
             <div v-if="!isRecommend && ISPHONE">
               <div style="position:relative; float: left;">
@@ -101,6 +102,8 @@
   import VirtualList from 'vue-virtual-listview'
   import fixedBottom from '@/components/chaofan/fixedBottom'
 
+  import selectList from '@/components/chaofan/common/selectList'
+
   export default {
     name: 'Dashboard',
     // components: { adminDashboard, editorDashboard },
@@ -173,7 +176,8 @@
       RightDescribe,
       loadText,
       VirtualList,
-      fixedBottom
+      fixedBottom,
+      selectList
     },
     computed: {
       ...mapGetters([
@@ -280,7 +284,11 @@
       this.load()
     },
     methods: {
-
+      updateList(params){
+        this.params = params;
+        this.lists = [];
+        this.getLists();
+      },
       getForumInfo() {
         console.log("getForumInfo")
       },

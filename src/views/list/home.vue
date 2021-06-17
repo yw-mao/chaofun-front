@@ -5,8 +5,8 @@
       <el-row :gutter="20">
         <el-col :span="isPhone?24:doWidth()" :offset="doOffSet()">
           <div class="navs" style="display:flex;justify-content:space-between; width: 100%;">
-            <div v-if="!ISPHONE">
-              <el-select v-model="params.order" placeholder="请选择" @change="changes"
+            <div v-if="!ISPHONE" style="width:100%;">
+              <!-- <el-select v-model="params.order" placeholder="请选择" @change="changes"
                          style="padding: 10px 0;">
                 <el-option
                     v-for="item in options"
@@ -14,16 +14,8 @@
                     :label="item.label"
                     :value="item.value">
                 </el-option>
-              </el-select>
-              <el-select v-if="params.order ==='ups'" v-model="params.range" placeholder="请选择"
-                         @change="changes" style="padding: 10px 0; ">
-                <el-option
-                    v-for="item in ranges"
-                    :key="item.value"
-                    :label="item.label"
-                    :value="item.value">
-                </el-option>
-              </el-select>
+              </el-select> -->
+              <selectList @updateList="updateList" :params="params"></selectList>
             </div>
             <div v-if="isiOS || isAndroid">
               <div style="position:relative; float: left;">
@@ -77,6 +69,8 @@
   import loadText from '@/components/chaofan/loadText'
   import fixedBottom from '@/components/chaofan/fixedBottom'
 
+  import selectList from '@/components/chaofan/common/selectList'
+
   export default {
     name: 'Dashboard',
     // components: { adminDashboard, editorDashboard },
@@ -92,50 +86,7 @@
           order: localStorage.getItem('chao.fun.timeline.order') == null ? 'hot' : localStorage.getItem('chao.fun.timeline.order'),
           range: localStorage.getItem('chao.fun.timeline.range') == null ? '1day' : localStorage.getItem('chao.fun.timeline.range')
         },
-        options: [
-          {
-            label: '最新',
-            value: 'new'
-          },
-          {
-            label: '最热',
-            value: 'hot'
-          },
-          {
-            label: '热评',
-            value: 'comment'
-          },
-          {
-            label: '最赞',
-            value: 'ups'
-          },
-        ],
-        ranges: [
-          {
-            label: '现在',
-            value: '1hour'
-          },
-          {
-            label: '一天',
-            value: '1day'
-          },
-          {
-            label: '一周',
-            value: '1week'
-          },
-          {
-            label: '一个月',
-            value: '1month'
-          },
-          {
-            label: '一年',
-            value: '1year'
-          },
-          {
-            label: '全部',
-            value: 'all'
-          },
-        ],
+        
         isPhone: false,
         forumInfo: null,
         ifcanget: true,
@@ -143,7 +94,7 @@
       }
     },
     components: {
-      ListItem, RightCom, loadText, fixedBottom
+      ListItem, RightCom, loadText, fixedBottom,selectList
     },
     watch: {
       // 'params.forumId'(v){
@@ -203,49 +154,25 @@
       this.load()
     },
     methods: {
-      // inout(v){
-      //   if(this.$store.state.user.islogin){
-      //     if(v==1){
-      //       // 加入
-      //       api.joinForum({forumId: this.params.forumId}).then(res=>{
-      //         if(res.success){
-      //           this.$message({
-      //             message: '加入成功',
-      //             type: 'success',
-      //             offset: 20
-      //           });
-      //           this.getForumInfo()
-      //         }
-      //       })
-      //     }else if(v==2){
-      //       api.leaveForum({forumId: this.params.forumId}).then(res=>{
-      //         if(res.success){
-      //           this.$message({
-      //             message: '退出成功',
-      //             type: 'success',
-      //             offset: 20
-      //           });
-      //           this.getForumInfo()
-      //         }
-      //       })
-      //     }
-      //   }else{
-      //     this.showLogin('login')
-      //   }
-      // },
-      // gotologin(){
-      //   this.showLogin('login')
-      // },
-      // showLogin(v){
-      //   this.$store.dispatch('user/SET_logStatus',v)
-      // },
-      // gotoSubmit(){// 发帖
-      //   if(this.$store.state.user.islogin){
-      //     this.$router.push({path: '/submit',query:{id: this.forumInfo.id,name: this.forumInfo.name}})
-      //   }else{
-      //     this.showLogin('login')
-      //   }
-      // },
+      chooseNav(index,item){
+        this.options.forEach(i=>{
+          i.choose = false;
+        })
+        item.choose = true;
+        this.options.splice(index,1,item);
+        localStorage.setItem('chao.fun.timeline.order', item.value);
+        localStorage.setItem('chao.fun.timeline.range', this.params.range);
+        delete this.params.marker;
+        delete this.params.key;
+        this.params.order = item.value;
+        this.lists = []
+        this.getLists();
+      },
+      updateList(params){
+        this.params = params;
+        this.lists = [];
+        this.getLists();
+      },
       changes() {
         localStorage.setItem('chao.fun.timeline.order', this.params.order);
         localStorage.setItem('chao.fun.timeline.range', this.params.range);
