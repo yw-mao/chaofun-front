@@ -18,7 +18,7 @@
             </div> 
             <div class="content">
                 {{item.text}}
-                <span class="comImgs">
+                <span v-if="item.imageNames" class="comImgs">
                     <a v-for="(i,k) in item.imageNames.split(',')" :key="k" :href="imgOrigin+i" target="_blank">【附图】</a>
                 </span>
                 

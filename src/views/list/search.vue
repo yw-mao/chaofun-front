@@ -336,11 +336,13 @@ export default {
     flex: 0 0 100px;
     text-align: center;
     cursor: pointer;
+    font-weight: bold;
   }
   .active{
     background: #fff;
     border-radius: 6px;
-    
+    color: #FF9300;
+    font-size: 15px;
   }
 }
 
