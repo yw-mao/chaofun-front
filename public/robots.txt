@@ -2,4 +2,3 @@ User-agent: *
 Disallow:
 Sitemap: https://chao.fun/sitemap_index.xml
 Sitemap: https://chao.fun/chao_fun_sitemap.xml
-Sitemap: https://chao.fun/chao_fun_sitemap1.xml
