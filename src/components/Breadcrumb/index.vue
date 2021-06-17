@@ -18,7 +18,7 @@
             filterable
             remote
             reserve-keyword
-            placeholder="请输入关键词"
+            placeholder="板块搜索"
             :remote-method="changes"
             @change="toOpen"
             @focus="getForum('')"
