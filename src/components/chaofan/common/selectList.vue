@@ -15,16 +15,17 @@
             <img v-if="index==3" class="img2" src="../../../assets/newicon/up_a.png" alt="">
             {{item.label}}
         </div>
-        </div>
         <el-select v-if="params.order ==='ups'" v-model="params.range" placeholder="请选择"
-                    @change="changes" style="padding: 10px 0; ">
-        <el-option
-            v-for="item in ranges"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value">
-        </el-option>
+                    @change="changes" style="padding: 0px 20px;float:right; ">
+            <el-option
+                v-for="item in ranges"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value">
+            </el-option>
         </el-select>
+    </div>
+        
         
  </div>
 </template>
