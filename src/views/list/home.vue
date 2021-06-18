@@ -4,7 +4,7 @@
     <div class="container infinite-list" ref="container" :style="{height: scrollHeight+'px'}">
       <el-row :gutter="20">
         <el-col :span="isPhone?24:doWidth()" :offset="doOffSet()">
-          <div class="navs" style="display:flex;justify-content:space-between; width: 100%;">
+          <div class="navs" style="justify-content:space-between; width: 640px;max-width:100%;">
             <div v-if="!ISPHONE" style="width:100%;">
               <!-- <el-select v-model="params.order" placeholder="请选择" @change="changes"
                          style="padding: 10px 0;">
@@ -17,8 +17,9 @@
               </el-select> -->
               <selectList @updateList="updateList" :params="params"></selectList>
             </div>
-            <div v-if="isiOS || isAndroid">
-              <div style="position:relative; float: left;">
+            <div v-if="ISPHONE&&(isiOS || isAndroid)">
+              <selectList @updateList="updateList" :params="params"></selectList>
+              <!-- <div style="position:relative; float: left;">
                 <select v-model="params.order"
                         style="-webkit-appearance: none;height:20px;padding:6px 20px;padding-right:30px;box-sizing:content-box;margin:10px 0;border-color:#999;background:#fff;"
                         placeholder="请选择12" @change="changes" name="" id="">
@@ -41,7 +42,7 @@
                   </option>
                 </select>
                 <i class="el-icon-arrow-right" style="position:absolute;right:8px;top:20px;"></i>
-              </div>
+              </div> -->
             </div>
           </div>
           <div class="grid-content" style="overflow:auto; width: 640px; max-width: 100%">
@@ -90,7 +91,55 @@
         isPhone: false,
         forumInfo: null,
         ifcanget: true,
-        loadAll: false
+        loadAll: false,
+        options: [
+          {
+            label: '最新',
+            value: 'new',
+            choose: true,
+          },
+          {
+            label: '最热',
+            value: 'hot',
+            choose: false,
+          },
+          {
+            label: '热评',
+            value: 'comment',
+            choose: false,
+          },
+          {
+            label: '最赞',
+            value: 'ups',
+            choose: false,
+          },
+        ],
+        ranges: [
+          {
+            label: '现在',
+            value: '1hour'
+          },
+          {
+            label: '一天',
+            value: '1day'
+          },
+          {
+            label: '一周',
+            value: '1week'
+          },
+          {
+            label: '一个月',
+            value: '1month'
+          },
+          {
+            label: '一年',
+            value: '1year'
+          },
+          {
+            label: '全部',
+            value: 'all'
+          },
+        ],
       }
     },
     components: {

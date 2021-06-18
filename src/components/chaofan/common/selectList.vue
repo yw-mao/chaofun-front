@@ -1,5 +1,5 @@
 <template>
- <div>  
+ <div class="nkl">  
     <div class="c_top_nav">
         <div v-for="(item,index) in options" @click="chooseNav(index,item)" :key="index" :class="['c_nav_item',{'c_nav_item_active': params.order ==item.value}]">
             <img v-if="index==0" class="img1" src="../../../assets/newicon/new.png" alt="">
@@ -15,8 +15,8 @@
             <img v-if="index==3" class="img2" src="../../../assets/newicon/up_a.png" alt="">
             {{item.label}}
         </div>
-        <el-select v-if="params.order ==='ups'" v-model="params.range" placeholder="请选择"
-                    @change="changes" style="padding: 0px 20px;float:right; ">
+        <el-select v-if="!ISPHONE&&params.order ==='ups'" v-model="params.range" placeholder="请选择"
+                    @change="changes" style="padding: 0px 20px; ">
             <el-option
                 v-for="item in ranges"
                 :key="item.value"
@@ -24,6 +24,17 @@
                 :value="item.value">
             </el-option>
         </el-select>
+    </div>
+    <div v-if="ISPHONE&&params.order ==='ups'" class="phones">
+      <el-select v-model="params.range" placeholder="请选择"
+                  @change="changes" style="padding: 0px">
+          <el-option
+              v-for="item in ranges"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value">
+          </el-option>
+      </el-select>
     </div>
         
         
@@ -130,48 +141,10 @@
 </script>
 
 <style type='text/scss' lang='scss' scoped>
-.fixed_bottom{
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background: rgba(0,0,0,0.7);
-    padding: 5px 5px;
-    z-index: 1000;
-    display: flex;
-    .logo{
-        flex: 0 0 44px;
-        margin-right: 10px;
-        img{
-            width: 100%;
-            vertical-align: middle;
-        }
-    }
-    .center{
-        flex: 1;
-        color: #fff;
-        .desc{
-            font-size: 12px;
-        }
-    }
-    .right{
-        position: relative;
-        padding-right: 30px;
-        display: flex;
-        justify-content: space-around;
-        align-items: center;
-        .btn{
-            color: #fff;
-            background: #E60045;
-            padding: 6px 12px;
-            border-radius: 20px;
-        }
-        img{
-            position: absolute;
-            width: 20px;
-            right: 0px;
-            top: 0px;
-        }
-    }
+
+.phones{
+  height: 34px;
+  text-align: left;
+  // margin-bottom: ;
 }
 </style>

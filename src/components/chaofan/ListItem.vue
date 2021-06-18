@@ -26,7 +26,20 @@
           <!-- 视频 -->
           <itemGif  v-if="item.type == 'gif'" :isDetail="false" :item="item"></itemGif>
           <!-- 内部视频 -->
-          <itemVideo v-if="item.type == 'inner_video'" :isDetail="false" :item="item"></itemVideo>
+          <div v-if="item.type == 'inner_video'">
+            <div v-if="!item.play" class="item_video">
+              <div class="title">
+                  {{item.title}}
+                  <div class="inner_prev">
+                    <img style="height:230px;" class="coverss" @click="playVideo(index,item,0)" :src="imgOrigin+item.video + '?x-oss-process=video/snapshot,t_0'" alt="">
+                    <img class="inner_play" @click="playVideo(index,item,0)" src="../../assets/images/bg/play.png" alt="">
+                  </div>
+                  
+              </div>
+            </div>
+            <itemVideo v-if="item.play" :isDetail="false" :item="item"></itemVideo>
+          </div>
+          
         </div>
         
         <!-- iframe视频 -->
@@ -459,6 +472,7 @@ import forwardH5 from '../h5/forward'
     padding: 0 0 10px 0;
     font-size: 16px;
     font-weight: 600;
+    position: relative;
 }
 .coverss{
   width: 100%;
@@ -469,8 +483,8 @@ import forwardH5 from '../h5/forward'
 }
 .btn_play{
   position: absolute;
-  width: 60px;
-  height: 60px;
+  width: 40px;
+  height: 40px;
   left: 20px;
   bottom: 20px;
 }
@@ -490,6 +504,27 @@ import forwardH5 from '../h5/forward'
   }
  .module_name b:hover{
    border-bottom: 1px solid #666;
+ }
+ .inner_prev{
+   height: 230px;
+   position: relative;
+   text-align: center;
+   background: #000;
+   img{
+     max-width: 100%;
+     max-height: 100%;
+     width: auto;
+     height: auto;
+     
+   }
+   .inner_play{
+      position: absolute;
+      left: 20px;
+      bottom: 20px;
+      z-index: 10;
+      width: 60px;
+      height: 60px;
+    }
  }
 
 

@@ -5,7 +5,7 @@
             {{item.title}}
         </div>
         <div class="video">
-            <video :class="[isDetail?'video2':'']" webkit-playsinline='true' x5-video-player-type="h5"  playsinline='true' controls  :src="imgOrigin+item.video" alt=""></video>
+            <video :class="[isDetail?'video2':'']" :autoplay="true" webkit-playsinline='true' x5-video-player-type="h5"  playsinline='true' controls  :src="imgOrigin+item.video" alt=""></video>
         </div>
     </div>
  </div>
@@ -97,7 +97,7 @@ import * as api from '@/api/api'
         overflow-y: hidden;
         video{
           width: 100%;
-          height: 300px;
+          height: 230px;
           background: #000;
           margin: 0 auto;
         }
