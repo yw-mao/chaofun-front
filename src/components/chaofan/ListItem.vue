@@ -30,8 +30,8 @@
             <div v-if="!item.play" class="item_video">
               <div class="title">
                   {{item.title}}
-                  <div class="inner_prev">
-                    <img style="height:230px;" class="coverss" @click="playVideo(index,item,0)" :src="imgOrigin+item.video + '?x-oss-process=video/snapshot,t_0'" alt="">
+                  <div :class="['inner_prev',{'inner_prev_phone': ISPHONE}]">
+                    <img class="coverss" @click="playVideo(index,item,0)" :src="imgOrigin+item.video + '?x-oss-process=video/snapshot,t_0'" alt="">
                     <img class="inner_play" @click="playVideo(index,item,0)" src="../../assets/images/bg/play.png" alt="">
                   </div>
                   
@@ -506,7 +506,8 @@ import forwardH5 from '../h5/forward'
    border-bottom: 1px solid #666;
  }
  .inner_prev{
-   height: 230px;
+   height: 320px;
+   line-height: 320px;
    position: relative;
    text-align: center;
    background: #000;
@@ -515,7 +516,7 @@ import forwardH5 from '../h5/forward'
      max-height: 100%;
      width: auto;
      height: auto;
-     
+     vertical-align: middle;
    }
    .inner_play{
       position: absolute;
@@ -526,6 +527,9 @@ import forwardH5 from '../h5/forward'
       height: 60px;
     }
  }
-
+.inner_prev_phone{
+  height: 230px;
+  line-height: 230px;
+}
 
 </style>

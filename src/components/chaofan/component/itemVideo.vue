@@ -1,6 +1,6 @@
 <template>
  <div>  
-    <div class="item_video">
+    <div :class="['item_video',{'phone_v': ISPHONE}]">
         <div class="title">
             {{item.title}}
         </div>
@@ -97,7 +97,7 @@ import * as api from '@/api/api'
         overflow-y: hidden;
         video{
           width: 100%;
-          height: 230px;
+          height: 320px;
           background: #000;
           margin: 0 auto;
         }
@@ -106,4 +106,11 @@ import * as api from '@/api/api'
         }
       }
     }
+  .phone_v{
+    .video{
+      video{
+        height: 230px;
+      }
+    }
+  }
 </style>
