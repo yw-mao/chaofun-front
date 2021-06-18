@@ -27,7 +27,7 @@
               <selectList @updateList="updateList" :params="params"></selectList>
             </div>
             <div v-if="!isRecommend && ISPHONE">
-              <div style="position:relative; float: left;">
+              <!-- <div style="position:relative; float: left;">
                 <select v-model="params.order"
                         style="-webkit-appearance: none;height:20px;padding:6px 20px;padding-right:30px;box-sizing:content-box;margin:10px 0;border-color:#999;background:#fff;"
                         placeholder="请选择12" @change="changes" name="" id="">
@@ -50,7 +50,8 @@
                   </option>
                 </select>
                 <i class="el-icon-arrow-right" style="position:absolute;right:8px;top:20px;"></i>
-              </div>
+              </div> -->
+              <selectList @updateList="updateList" :params="params"></selectList>
             </div>
             <div @click="reFresh" v-if="isRecommend&&ISPHONE" style="font-size:32px;padding: 6px 0px 0 0px;color:#999;">
               <i class="el-icon-refresh"></i>
