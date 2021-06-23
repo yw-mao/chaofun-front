@@ -4,8 +4,8 @@
     <div class="container infinite-list" ref="container" :style="{height: scrollHeight+'px'}">
       <el-row :gutter="20">
         <el-col :span="ISPHONE?24:doWidth()" :offset="doOffSet()">
-          <div class="navs" style="display:flex;justify-content:space-between;">
-            <div v-if="!isRecommend && !ISPHONE">
+          <div class="navs" style="justify-content:space-between;width: 640px;max-width:100%;">
+            <div v-if="!isRecommend && !ISPHONE" style="width:100%;">
               <!-- <el-select v-model="params.order" placeholder="请选择" @change="changes"
                          style="padding: 10px 0;">
                 <el-option
