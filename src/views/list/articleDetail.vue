@@ -235,9 +235,9 @@ export default {
     
     },
     beforeAvatarUpload(file) {
-        const isLt2M = file.size / 1024 / 1024 < 5;
+        const isLt2M = file.size / 1024 / 1024 < 20;
         if (!isLt2M) {
-          this.$message.error('上传头像图片大小不能超过 1MB!');
+          this.$message.error('上传图片大小不能超过 20MB!');
           return false
         }
         this.filedata.fileName = file.name
