@@ -197,8 +197,9 @@
   import request from '@/utils/request'
   import md5 from 'js-md5';
   // import EditorBar from '../../components/wangEditor/editor'
-  import { quillEditor } from 'vue-quill-editor'
+  import { quillEditor,Quill } from 'vue-quill-editor'
   import {quillRedefine} from 'vue-quill-editor-upload'
+  import {container, ImageExtend} from 'quill-image-extend-module'
   // import { addQuillTitle } from './modules/quill-title.js'
   import '../../assets/quill/quill.core.css'
   import '../../assets/quill/quill.snow.css'
@@ -207,6 +208,7 @@
     Toast
   } from 'vant';
   import errorLog from "../../store/modules/errorLog";
+   Quill.register('modules/ImageExtend', ImageExtend)
   const uploadConfig = {
     action: '/api/upload_image',  // 必填参数 图片上传地址
     res: (respnse) => {
@@ -323,7 +325,9 @@
         configs: {},
         isClear: false,
         detail:"",
-        editorOption: {}
+        editorOption: {
+         
+        }
         // editorOption: {
         //     // 图片上传的设置
         //     // uploadConfig: {
@@ -366,6 +370,14 @@
     beforeMount(){
       this.editorOption = {
         modules: {
+           ImageExtend: {
+              loading: true,
+              name: 'img',
+              action: '/api/upload_image',
+              response: (res) => {
+                return 'https://i.chao.fun/'+res.data
+              }
+            },
           toolbar: {
             // container: toolbarOptions,  // 工具栏选项
             container: [
@@ -387,7 +399,7 @@
         this.baseForm.forumId = '/f/'+this.$route.query.id;
         this.baseFormName = this.$route.query.name
       }
-      document.addEventListener('paste',this.toPaste);
+      // document.addEventListener('paste',this.toPaste);
 
       //  addQuillTitle();
     },
