@@ -251,17 +251,17 @@
         let params = this.params;
         this.ifcanget = false
         api.getPosts(params).then(res => {
-          if (res.data.marker && (res.data.posts.length == this.params.pageSize)) {
+          if (res.data.marker && (res.data.posts.length != 0)) {
             this.ifcanget = true
           }
           if (res.data.marker) {
             params.marker = res.data.marker;
           } else {
-            if (res.data.posts.length < this.params.pageSize) {
+            if (res.data.posts.length === 0) {
               this.loadAll = true
             }
           }
-          if (res.data.posts.length < this.params.pageSize) {
+          if (res.data.posts.length === 0) {
             this.loadAll = true
           }
           if (params.order == 'hot') {
