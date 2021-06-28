@@ -53,6 +53,10 @@
       color: #666;
       line-height: 22px;
       position: relative;
+       div{
+         display: flex;
+         align-items: center;
+       } 
       .b_icon{
         &:hover{
           color: orangered;
@@ -78,7 +82,7 @@
         i{
           font-size: 16px;
           color: #999;
-          vertical-align: middle;
+          vertical-align: text-bottom;
         }
         
       }

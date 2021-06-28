@@ -274,8 +274,8 @@ export default {
         .el-icon-caret-bottom {
           cursor: pointer;
           position: absolute;
-          right: -20px;
-          top: 25px;
+          right: -15px;
+          top: 18px;
           font-size: 12px;
         }
       }
