@@ -43,6 +43,7 @@
                     drag
                     action="/api/upload_image"
                     :before-upload="beforeUpload"
+                    :on-progress="getProgress"
                     :on-success="uploadSuccess"
                     :limit="9"
                     multiple>
@@ -54,6 +55,7 @@
                   <!-- <i @click.stop="deleteImg" v-if="baseForm.ossName" class="delete_icon el-icon-delete"></i> -->
                   <div class="el-upload__tip" style="margin-top:0;line-height:24px;" slot="tip">复制网络图片可直接粘贴完成上传图片，超过20M的图片建议拖拽上传, Web 版支持多图。不支持单帖多视频发布</div>
                 </el-upload>
+                <el-progress v-if="progressFlag" :percentage="loadProgress"></el-progress>
                 <div class="imgList">
                   <div v-for="(item,index) in fileLists" :key="index" class="li">
                     <img v-if="!item.endsWith('.mp4')" :src="imgOrigin+item + '?x-oss-process=image/resize,h_150'" alt="">
@@ -186,6 +188,17 @@
         </ul>
       </div>
     </div>
+    <el-dialog
+      :visible.sync="dialogVisible"
+      :modal="true"
+      >
+       <el-image
+        :src="bigImaUrl"
+        fit="contain"
+        :preview-src-list="srcList"
+        ref="preview"
+        ></el-image>
+    </el-dialog>
   </div>
 </template>
 
@@ -197,8 +210,9 @@
   import request from '@/utils/request'
   import md5 from 'js-md5';
   // import EditorBar from '../../components/wangEditor/editor'
-  import { quillEditor } from 'vue-quill-editor'
+  import { quillEditor,Quill } from 'vue-quill-editor'
   import {quillRedefine} from 'vue-quill-editor-upload'
+  import {container, ImageExtend} from '@/utils/quill-image-extend-module'
   // import { addQuillTitle } from './modules/quill-title.js'
   import '../../assets/quill/quill.core.css'
   import '../../assets/quill/quill.snow.css'
@@ -207,6 +221,7 @@
     Toast
   } from 'vant';
   import errorLog from "../../store/modules/errorLog";
+   Quill.register('modules/ImageExtend', ImageExtend)
   const uploadConfig = {
     action: '/api/upload_image',  // 必填参数 图片上传地址
     res: (respnse) => {
@@ -215,13 +230,16 @@
     },
     name: 'file'  // 图片上传参数名
   }
+  const vm=new Vue()
   const handlers = {
     image: function image() {
       var self = this;
       var fileInput = this.container.querySelector('input.ql-image[type=file]');
+      let loading=null;
       if (fileInput === null) {
         fileInput = document.createElement('input');
         fileInput.setAttribute('type', 'file');
+        fileInput.setAttribute('multiple', 'multiple') 
         // 设置图片参数名
         if (uploadConfig.name) {
           fileInput.setAttribute('name', uploadConfig.name);
@@ -239,35 +257,45 @@
             resolve(res);
           });
           pro.then(success => {
+            let arr=Array.from(fileInput.files)
             var data = success;
-            var ossData = new FormData();
-            let file = fileInput.files[0];
-            ossData.append("fileName", file.name);
-            //key就代表文件层级和阿里云上的文件名
-            let imgType = file.type.split("/")[1];
-            let filename = file.name + file.size;
-            // let keyValue = data.dir + "/" + md5(filename) + "." + imgType;
-            // ossData.append("key", keyValue);
-            // ossData.append("policy", data.policy);
-            // ossData.append("OSSAccessKeyId", data.accessid);
-            // ossData.append("success_action_status", 201);
-            // ossData.append("signature", data.signature);
-            ossData.append("file", file);
-            api.uploadImage(ossData).then(res=>{
-              console.log(res)
-              if(res.success){
-                let length = self.quill.getSelection(true).index;
-                //图片上传成功后，img的src需要在这里添加
-                let url = 'https://i.chao.fun/'+res.data
-                self.quill.insertEmbed(length, 'image', url);
-                self.quill.setSelection(length + 1)
+            // let file = fileInput.files[0];
+            for(let file of arr){
+              var ossData = new FormData();
+              ossData.append("fileName", file.name);
+              //key就代表文件层级和阿里云上的文件名
+              let imgType = file.type.split("/")[1];
+              let filename = file.name + file.size;
+              // let keyValue = data.dir + "/" + md5(filename) + "." + imgType;
+              // ossData.append("key", keyValue);
+              // ossData.append("policy", data.policy);
+              // ossData.append("OSSAccessKeyId", data.accessid);
+              // ossData.append("success_action_status", 201);
+              // ossData.append("signature", data.signature);
+              ossData.append("file", file);
+              loading=vm.$loading({
+                target:'.quill-editor',
+                fullscreen:false,
+                text:'uploading...'
+              })
+              api.uploadImage(ossData).then(res=>{
+                console.log(res)
+                if(res.success){
+                  let length = self.quill.getSelection(true).index;
+                  //图片上传成功后，img的src需要在这里添加
+                  let url = 'https://i.chao.fun/'+res.data
+                  self.quill.insertEmbed(length, 'image', url);
+                  self.quill.setSelection(length + 1)
 
-                fileInput.value = ''
-              }else if(res.errorCode=='invalid_content'){
-                Toast(res.errorMessage)
-              }
+                  fileInput.value = ''
+                }else if(res.errorCode=='invalid_content'){
+                   loading.close()
+                  Toast(res.errorMessage)
+                }
 
-            })
+              })
+            }
+            loading.close()
           })
         });
         this.container.appendChild(fileInput);
@@ -323,7 +351,14 @@
         configs: {},
         isClear: false,
         detail:"",
-        editorOption: {}
+        editorOption: {
+         
+        },
+      　loadProgress: 0, // 动态显示进度条
+        progressFlag: false, // 关闭进度条
+        dialogVisible:false,
+        bigImaUrl:'',
+        srcList:[]
         // editorOption: {
         //     // 图片上传的设置
         //     // uploadConfig: {
@@ -366,6 +401,14 @@
     beforeMount(){
       this.editorOption = {
         modules: {
+           ImageExtend: {
+              loading: true,
+              name: 'img',
+              action: '/api/upload_image',
+              response: (res) => {
+                return 'https://i.chao.fun/'+res.data
+              }
+            },
           toolbar: {
             // container: toolbarOptions,  // 工具栏选项
             container: [
@@ -385,13 +428,34 @@
     mounted() {
       if(this.$route.query.id){
         this.baseForm.forumId = '/f/'+this.$route.query.id;
-        this.baseFormName = this.$route.query.name
+        this.baseFormName = this.options.filter(i=>i.forumId==this.$route.query.id)
       }
-      document.addEventListener('paste',this.toPaste);
+      // document.addEventListener('paste',this.toPaste);
 
       //  addQuillTitle();
     },
     methods: {
+      imgClick(e){
+        if(e.target.localName!='img') return
+        let src=e.target.src
+        this.bigImaUrl=src
+        // this.srcList.push(src)
+        this.dialogVisible=true
+        // this.$nextTick(()=>{
+        //   this.$refs.preview.showViewer = true
+        // })
+        
+        // console.log(src);
+      },
+      getProgress(event, file, fileList){
+        console.log(event, file, fileList);
+        this.progressFlag = true; // 显示进度条
+          this.loadProgress = parseInt(event.percent); // 动态获取文件上传进度
+          if (this.loadProgress >= 100) {
+              this.loadProgress = 100
+              setTimeout( () => {this.progressFlag = false}, 1000) // 一秒后关闭进度条
+          }
+      },
       toDel(index){
         this.voteList.splice(index,1)
       },
@@ -636,8 +700,14 @@
         this.filedata.fileName = file.name
         return true
       },
-      handleClick(){
-
+      handleClick(tab,event){
+        if(tab.paneName=='third'){
+           this.$nextTick(()=>{
+              document.getElementsByClassName('quill-editor')[0].addEventListener('click',(e)=>{this.imgClick(e)})
+          })
+        }else{
+          document.getElementsByClassName('quill-editor')[0].removeEventListener('click',(e)=>{this.imgClick(e)})
+        }
       },
       toOpen(v){
         console.log(v)
@@ -654,6 +724,10 @@
       getForum(keyword){
         api.searchForum({keyword}).then(res=>{
           this.options = res.data
+           if(this.$route.query.id){
+            this.baseForm.forumId = '/f/'+this.$route.query.id;
+            this.baseFormName = this.options.filter(i=>i.forumId==this.$route.query.id)[0]['title']
+          }
           // if(!keyword){
           //     console.log(1,'/f/'+this.$route.query.id)
           //     res.data.forEach(item=>{
@@ -805,5 +879,9 @@
       text-align: center;
       color: red;
     }
+  }
+  /deep/ .el-dialog__body{
+    display: flex;
+    justify-content: center;
   }
 </style>
