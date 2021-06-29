@@ -273,6 +273,7 @@
               // ossData.append("success_action_status", 201);
               // ossData.append("signature", data.signature);
               ossData.append("file", file);
+              loading&&loading.close()
               loading=vm.$loading({
                 target:'.quill-editor',
                 fullscreen:false,

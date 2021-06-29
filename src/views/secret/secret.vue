@@ -47,7 +47,7 @@
               />
             </el-select>           -->
             <div class="subs">
-              <el-button type="primary" v-on:click="submit" :style="{marginLeft: '20px'}">发布</el-button>
+              <el-button type="primary" v-on:click="submit" :disabled="isSend" :style="{marginLeft: '20px'}">发布</el-button>
               <el-button type="success" v-on:click="skip" :style="{marginLeft: '20px'}">跳过</el-button>
             </div> 
           </div>
