@@ -431,7 +431,7 @@
         this.baseForm.forumId = '/f/'+this.$route.query.id;
         this.baseFormName = this.options.filter(i=>i.forumId==this.$route.query.id)
       }
-      // document.addEventListener('paste',this.toPaste);
+      document.addEventListener('paste',this.toPaste);
 
       //  addQuillTitle();
     },
