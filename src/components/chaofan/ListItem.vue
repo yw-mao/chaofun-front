@@ -26,7 +26,23 @@
           <!-- 视频 -->
           <itemGif  v-if="item.type == 'gif'" :isDetail="false" :item="item"></itemGif>
           <!-- 内部视频 -->
-          <itemVideo v-if="item.type == 'inner_video'" :isDetail="false" :item="item"></itemVideo>
+          <div v-if="item.type == 'inner_video'" style="height:350px;">
+            <div v-if="!item.play" class="item_video">
+              <div class="title">
+                  <div @click.stop="toDetail(item)" style="padding-bottom:10px;">
+                    {{item.title}}
+                  </div>
+                  
+                  <div :class="['inner_prev',{'inner_prev_phone': ISPHONE}]">
+                    <img class="coverss" @click="playVideo(index,item,0)" :src="imgOrigin+item.video + '?x-oss-process=video/snapshot,t_0'" alt="">
+                    <img class="inner_play" @click="playVideo(index,item,0)" src="../../assets/images/bg/play.png" alt="">
+                  </div>
+                  
+              </div>
+            </div>
+            <itemVideo v-if="item.play" :isDetail="false" :item="item"></itemVideo>
+          </div>
+          
         </div>
         
         <!-- iframe视频 -->
@@ -352,6 +368,9 @@ import forwardH5 from '../h5/forward'
       this.message = location.origin+'/p/'+item.postId
      },
      toDetail(item){
+       this.lists.forEach(i=>{
+         i.play = false;
+       })
        if(this.canTo){
          if(this.whichOne){
            localStorage.setItem('whichOne',this.whichOne)
@@ -494,7 +513,7 @@ import forwardH5 from '../h5/forward'
  }
  .inner_prev{
    height: 320px;
-   line-height: 320px;
+   line-height: 310px;
    position: relative;
    text-align: center;
    background: #000;
