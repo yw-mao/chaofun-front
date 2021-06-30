@@ -47,7 +47,7 @@
               />
             </el-select>           -->
             <div class="subs">
-              <el-button type="primary" v-on:click="submit" :style="{marginLeft: '20px'}">发布</el-button>
+              <el-button type="primary" v-on:click="submit" :disabled="isSend" :style="{marginLeft: '20px'}">发布</el-button>
               <el-button type="success" v-on:click="skip" :style="{marginLeft: '20px'}">跳过</el-button>
             </div> 
           </div>
@@ -91,7 +91,8 @@
         keyNext: true,
         defaultId: '',
         defaultName: '',
-        activeId: ''
+        activeId: '',
+        isSend:false
       }
     },
     watch: {
@@ -235,14 +236,20 @@
           // });
           this.secret.cnTitle = '图片分享 -- 来自秘密花园'
         };
-
-        api.submit_secret_image({'imageUrl': this.secret.imageUrl, 'title': this.secret.cnTitle, 'forumId': parseInt(this.activeId)}).then(res=>{
-          this.secret = res.data;
-          this.keyword = ''
-          this.defaultId = res.data.submitForum;
-          this.activeId = res.data.submitForum;
-          this.$toast('发布成功');
-        })
+        if(!this.isSend){
+          this.isSend=true
+          api.submit_secret_image({'imageUrl': this.secret.imageUrl, 'title': this.secret.cnTitle, 'forumId': parseInt(this.activeId)}).then(res=>{
+            this.isSend=false
+            this.secret = res.data;
+            this.keyword = ''
+            this.defaultId = res.data.submitForum;
+            this.activeId = res.data.submitForum;
+            this.$toast('发布成功');
+          }).catch(e=>{
+            this.isSend=false
+          })
+        }
+        
       },
 
       skip() {

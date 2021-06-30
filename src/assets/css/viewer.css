@@ -267,6 +267,7 @@
   -webkit-transition: background-color 0.15s;
   transition: background-color 0.15s;
   width: 30px;
+  transform: scale(1.5);
 }
 
 .viewer-toolbar > ul > li:focus,

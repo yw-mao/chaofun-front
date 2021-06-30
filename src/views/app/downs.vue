@@ -132,11 +132,16 @@ import Vue from 'vue';
             //     this.$toast('口令错误');
             // }
             
-            if(isAndroid){
-                location.href = 'https://chao.fun/chaofan.apk'
-                // location.href = `opentest://host`;
-            }else{
+            // if(isAndroid){
+            //     location.href = 'https://chao.fun/chaofan.apk'
+            //     // location.href = `opentest://host`;
+            // }else{
+            //     location.href = 'https://apps.apple.com/cn/app/%E7%82%92%E9%A5%AD%E8%B6%85fun/id1526950194'
+            // }
+            if (/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)) {
                 location.href = 'https://apps.apple.com/cn/app/%E7%82%92%E9%A5%AD%E8%B6%85fun/id1526950194'
+            } else if (/(Android)/i.test(navigator.userAgent)) {
+                location.href = 'https://chao.fun/chaofan.apk'
             }
         }else{
             if(isiOS){

@@ -340,7 +340,7 @@ export default {
     },
     gotoSubmit(){// 发帖
       if(this.$store.state.user.islogin){
-        this.$router.push({path: '/submit',query:{id: this.forumInfo.id}})
+        this.$router.push({path: '/submit',query:{id: this.forumInfo.id,name:this.forumInfo.name}})
       }else{
         this.showLogin('login')
       }

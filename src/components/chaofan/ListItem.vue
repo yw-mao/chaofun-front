@@ -26,20 +26,7 @@
           <!-- 视频 -->
           <itemGif  v-if="item.type == 'gif'" :isDetail="false" :item="item"></itemGif>
           <!-- 内部视频 -->
-          <div v-if="item.type == 'inner_video'">
-            <div v-if="!item.play" class="item_video">
-              <div class="title">
-                  {{item.title}}
-                  <div :class="['inner_prev',{'inner_prev_phone': ISPHONE}]">
-                    <img class="coverss" @click="playVideo(index,item,0)" :src="imgOrigin+item.video + '?x-oss-process=video/snapshot,t_0'" alt="">
-                    <img class="inner_play" @click="playVideo(index,item,0)" src="../../assets/images/bg/play.png" alt="">
-                  </div>
-                  
-              </div>
-            </div>
-            <itemVideo v-if="item.play" :isDetail="false" :item="item"></itemVideo>
-          </div>
-          
+          <itemVideo v-if="item.type == 'inner_video'" :isDetail="false" :item="item"></itemVideo>
         </div>
         
         <!-- iframe视频 -->

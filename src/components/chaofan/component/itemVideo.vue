@@ -5,7 +5,7 @@
             {{item.title}}
         </div>
         <div class="video">
-            <video :class="[isDetail?'video2':'']" :autoplay="true" webkit-playsinline='true' x5-video-player-type="h5"  playsinline='true' controls  :src="imgOrigin+item.video" alt=""></video>
+            <video :class="[isDetail?'video2':'']" :autoplay="false" webkit-playsinline='true' x5-video-player-type="h5"  playsinline='true' controls  :src="imgOrigin+item.video" alt=""></video>
         </div>
     </div>
  </div>
