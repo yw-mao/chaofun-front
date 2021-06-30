@@ -544,6 +544,7 @@ queryChildren (parent, list) {
     div{
         margin: 0;
         padding: 0;
+        text-align: left;
     }
 }
 /deep/ .pc_dialog{
