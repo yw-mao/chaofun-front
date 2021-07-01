@@ -319,6 +319,7 @@ import moment from 'moment'
             font-size: 16px;
             padding: 8px 0;
             line-height: 24px;
+            text-align: left;
         }
     }
 }
