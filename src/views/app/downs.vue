@@ -141,7 +141,8 @@ import Vue from 'vue';
             if (/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)) {
                 location.href = 'https://apps.apple.com/cn/app/%E7%82%92%E9%A5%AD%E8%B6%85fun/id1526950194'
             } else if (/(Android)/i.test(navigator.userAgent)) {
-                location.href = 'https://chao.fun/chaofan.apk'
+
+              window.open('https://chao.fun/chaofan.apk',"_blank");
             }
         }else{
             if(isiOS){
