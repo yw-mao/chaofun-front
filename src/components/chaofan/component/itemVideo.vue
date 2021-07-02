@@ -37,11 +37,13 @@ import * as api from '@/api/api'
    },
    created() {
      console.log('879');
-     let self = this;
-     document.getElementById('container').addEventListener("scroll", self.handlerScroll);
+     
    },
    mounted() {
-    
+     if(document.getElementById('container')){
+       let self = this;
+        document.getElementById('container').addEventListener("scroll", self.handlerScroll);
+     }
    },
    destroyed() {
       let self = this;

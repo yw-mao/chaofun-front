@@ -1,7 +1,7 @@
 <template>
   <div class="dashboard-container">
     <!-- <component :is="currentRole" /> -->
-    <div class="container infinite-list" ref="container" :style="{height: scrollHeight+'px'}">
+    <div id="container" class="container infinite-list" ref="container" :style="{height: scrollHeight+'px'}">
       <el-row :gutter="20">
         <el-col :span="isPhone?24:doWidth()" :offset="doOffSet()" >
           
