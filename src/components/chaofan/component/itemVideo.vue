@@ -4,8 +4,8 @@
         <div class="title">
             {{item.title}}
         </div>
-        <div class="video">
-            <video :class="[isDetail?'video2':'']" :autoplay="true" webkit-playsinline='true' x5-video-player-type="h5"  playsinline='true' controls  :src="imgOrigin+item.video" alt=""></video>
+        <div :id="'video'+item.postId" class="video">
+            <video :class="[doHeight()]" :autoplay="true" webkit-playsinline='true' x5-video-player-type="h5"  playsinline='true' controls  :src="imgOrigin+item.video" alt=""></video>
         </div>
     </div>
  </div>
@@ -17,7 +17,7 @@ import * as api from '@/api/api'
    name: '',
    data(){
      return {
-         
+         handle: ''
      }
    },
    props: {
@@ -36,49 +36,57 @@ import * as api from '@/api/api'
 
    },
    created() {
+     console.log('879');
+     let self = this;
+     document.getElementById('container').addEventListener("scroll", self.handlerScroll);
    },
    mounted() {
     
    },
+   destroyed() {
+      window.removeEventListener('scroll', e => this.unloadHandler(e));
+    },
    methods: {
+    handlerScroll(e){
+      console.log('879')
+      console.log(e.target);
+      console.log(e.target.offsetTop);
+      var el = document.getElementById('video'+this.item.postId);
+      console.log(this.item)
+      if(el){
+        var top = el.getBoundingClientRect().top;
+        if(top<-50){
+          if(!this.isDetail){
+            
+            this.$emit('toPause','',this.item,0)
+          }
+        }
+      }else{
+        console.log('取消滚动监听------------------')
+        let self = this;
+        document.getElementById('container').removeEventListener('scroll', self.handlerScroll,false);
+      }
+      
+      console.log('距离顶部',top)
+    },
+    unloadHandler(e){
+
+    },
+    doHeight(){
+      if(this.isDetail){
+        if(this.ISPHONE){
+          return 'video3';
+        }else{
+          return 'video2';
+        }
+      }else{
+        return ''
+      }
+    },
     toUrls(item,params){
        this.postBehavior(item.postId,'jump');
        this.toUrl(params)
     },
-    doImgStyle(w,h,type){
-       if(document.body.clientWidth<700){
-         // 适配移动端, 这里后续尽量封装成组件
-         const temp = Math.ceil(document.body.clientWidth * 0.85);
-         if(type == 'inner_video'){
-             if(this.isDetail){
-                 return {
-                  height: '512px'
-                }
-             }else{
-                 return {
-                  height: '235px'
-                }
-             }
-                
-          }else{
-            if(w<h&&h>temp){
-                  return {
-                    height: this.imgMaxWidth + 'px'
-                  }
-            }else{
-              return {}
-            }
-          }
-       } else {
-         if(w<h&&h>512){
-           return {
-             height: '512px'
-           }
-         }else{
-           return {}
-         }
-       }
-     },
    }
  }
 </script>
@@ -102,7 +110,10 @@ import * as api from '@/api/api'
           margin: 0 auto;
         }
         .video2{
-            height: 512px;
+            height: 440px;
+        }
+        .video3{
+          height: 290px;
         }
       }
     }

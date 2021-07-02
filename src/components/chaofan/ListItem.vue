@@ -24,23 +24,19 @@
         
         <div @click.stop="">
           <!-- 视频 -->
-          <itemGif  v-if="item.type == 'gif'" :isDetail="false" :item="item"></itemGif>
+          <itemGif @toDetail="toDetail"  v-if="item.type == 'gif'" :isDetail="false" :item="item"></itemGif>
           <!-- 内部视频 -->
-          <div v-if="item.type == 'inner_video'" style="height:350px;">
+          <div v-if="item.type == 'inner_video'" class="inner_videoc">
             <div v-if="!item.play" class="item_video">
-              <div class="title">
-                  <div @click.stop="toDetail(item)" style="padding-bottom:10px;">
-                    {{item.title}}
-                  </div>
-                  
-                  <div :class="['inner_prev',{'inner_prev_phone': ISPHONE}]">
-                    <img class="coverss" @click="playVideo(index,item,0)" :src="imgOrigin+item.video + '?x-oss-process=video/snapshot,t_0'" alt="">
-                    <img class="inner_play" @click="playVideo(index,item,0)" src="../../assets/images/bg/play.png" alt="">
-                  </div>
-                  
+              <div @click.stop="toDetail(item)" class="title">
+                  {{item.title}}
+              </div>
+              <div :class="['inner_prev',{'inner_prev_phone': ISPHONE}]">
+                <img class="coverss" @click="playVideo(index,item,0)" :src="imgOrigin+item.video + '?x-oss-process=video/snapshot,t_0'" alt="">
+                <img class="inner_play" @click="playVideo(index,item,0)" src="../../assets/images/bg/play.png" alt="">
               </div>
             </div>
-            <itemVideo v-if="item.play" :isDetail="false" :item="item"></itemVideo>
+            <itemVideo v-if="item.play" @toPause="playVideo" :isDetail="false" :item="item"></itemVideo>
           </div>
           
         </div>
@@ -301,22 +297,27 @@ import forwardH5 from '../h5/forward'
       //  console.log(e)
      },
      playVideo(index,item,t){
-       this.lists.forEach(i=>{
-         i.play = false;
-       })
-       item.play = true;
-       var i = this.lists[index];
-       if(t){
-         i.sourcePost = item;
+       if(index){
+         this.lists.forEach(i=>{
+            i.play = false;
+          })
+          item.play = true;
+          var i = this.lists[index];
+          if(t){
+            i.sourcePost = item;
+          }else{
+            i = item;
+          }
+          this.lists.splice(index,1,i)
        }else{
-         i = item;
+         console.log('开始暂停------------------------')
+         this.lists.forEach(i=>{
+            i.play = false;
+          })
+          var a = this.lists[this.lists.length-1];
+          this.lists.splice(this.lists.length-1,1,a)
        }
-       this.lists.splice(index,1,i)
-       if(item.type=='video'){
-        //  document.getElementById('ACPlayer-re').click();
-       }
-      //  this.shows = true;
-      //  this.videoData = this.imgOrigin+item.imageName
+       
      },
      handleCommand(data){
        if(data.type == 'copy'){
@@ -537,5 +538,12 @@ import forwardH5 from '../h5/forward'
   height: 230px;
   line-height: 230px;
 }
-
+.inner_videoc{
+      min-height: 350px;
+}
+@media screen and (max-width: 700px) {
+    .inner_videoc{
+      min-height: 290px;
+    }
+}
 </style>

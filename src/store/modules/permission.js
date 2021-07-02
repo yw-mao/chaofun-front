@@ -73,10 +73,6 @@ const actions = {
         let a = ['first','second','third','forth']
         let icon = ['documentation','user','guide','money','pepoles']
         let d = res.data
-  //       path: '/goods-manage',
-  // component: Layout,
-  // redirect: '/goods-manage/goods-list',
-  // name: 'GoodsManage',
         
         d.forEach((item,index)=>{
           if(item.menues.length){

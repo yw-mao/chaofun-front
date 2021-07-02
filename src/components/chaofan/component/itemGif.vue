@@ -1,7 +1,7 @@
 <template>
  <div>  
     <div class="item_video">
-        <div class="title">
+        <div @click="toDetail" class="title">
             {{item.title}}
         </div>
         <div class="video">
@@ -45,46 +45,41 @@ import * as api from '@/api/api'
        this.postBehavior(item.postId,'jump');
        this.toUrl(params)
     },
-    doImgStyle(w,h,type){
-       if(document.body.clientWidth<700){
-         // 适配移动端, 这里后续尽量封装成组件
-         const temp = Math.ceil(document.body.clientWidth * 0.85);
-         if(type == 'video'){
-             if(this.isDetail){
-                 return {
-                  height: '512px'
-                }
-             }else{
-                 return {
-                  height: '235px'
-                }
-             }
-                
-          }else{
-            if(w<h&&h>temp){
-                  return {
-                    height: this.imgMaxWidth + 'px'
-                  }
-            }else{
-              return {}
-            }
-          }
-       } else {
-         if(w<h&&h>512){
-           return {
-             height: '512px'
-           }
-         }else{
-           return {}
-         }
-       }
-     },
+    toDetail(){
+      if(!this.isDetail){
+        this.$emit('toDetail',this.item)
+      }
+    },
    }
  }
 </script>
 
 <style type='text/scss' lang='scss' scoped>
 .item_video{
+  .title{
+    padding: 0 0 10px 0;
+    font-size: 16px;
+    font-weight: 600;
+  }
+  .video{
+    text-align: center;
+    // width: 640px;
+    max-height: 512px;
+    overflow-y: hidden;
+    video{
+      width: 100%;
+      height: 300px;
+      background: #000;
+      margin: 0 auto;
+    }
+    .video2{
+        height: 512px;
+    }
+  }
+}
+
+@media screen and (max-width: 700px) {
+    .item_video{
       .title{
         padding: 0 0 10px 0;
         font-size: 16px;
@@ -102,8 +97,9 @@ import * as api from '@/api/api'
           margin: 0 auto;
         }
         .video2{
-            height: 512px;
+            height: 290px;
         }
       }
     }
+}
 </style>

@@ -50,6 +50,9 @@ import * as api from '@/api/api'
 </script>
 
 <style type='text/scss' lang='scss' scoped>
+.el-icon-link{
+  padding: 10px;
+}
 .item_link{
       padding-right: 10px;
       &:hover{
