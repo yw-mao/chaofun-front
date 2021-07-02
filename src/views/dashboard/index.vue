@@ -1,56 +1,11 @@
 <template>
   <div class="dashboard-container">
-    <!-- <component :is="currentRole" /> -->
     <div class="container infinite-list" ref="container" :style="{height: scrollHeight+'px'}">
       <el-row :gutter="20">
         <el-col :span="ISPHONE?24:doWidth()" :offset="doOffSet()">
           <div class="navs" style="justify-content:space-between;width: 640px;max-width:100%;">
-            <div v-if="!isRecommend && !ISPHONE" style="width:100%;">
-              <!-- <el-select v-model="params.order" placeholder="请选择" @change="changes"
-                         style="padding: 10px 0;">
-                <el-option
-                    v-for="item in options"
-                    :key="item.value"
-                    :label="item.label"
-                    :value="item.value">
-                </el-option>
-              </el-select>
-              <el-select v-if="params.order ==='ups'" v-model="params.range" placeholder="请选择"
-                         @change="changes" style="padding: 10px 0; ">
-                <el-option
-                    v-for="item in ranges"
-                    :key="item.value"
-                    :label="item.label"
-                    :value="item.value">
-                </el-option>
-              </el-select> -->
-              <selectList @updateList="updateList" :params="params"></selectList>
-            </div>
-            <div v-if="!isRecommend && ISPHONE">
-              <!-- <div style="position:relative; float: left;">
-                <select v-model="params.order"
-                        style="-webkit-appearance: none;height:20px;padding:6px 20px;padding-right:30px;box-sizing:content-box;margin:10px 0;border-color:#999;background:#fff;"
-                        placeholder="请选择12" @change="changes" name="" id="">
-                  <option v-for="item in options"
-                          :key="item.value"
-                          :label="item.label"
-                          :value="item.value">{{item.label}}
-                  </option>
-                </select>
-                <i class="el-icon-arrow-right" style="position:absolute;right:8px;top:20px;"></i>
-              </div>
-              <div v-if="params.order ==='ups'" style="position:relative; float: left;">
-                <select v-model="params.range"
-                        style="-webkit-appearance: none;height:20px;padding:6px 20px;padding-right:30px;box-sizing:content-box;margin-top:10px;border-color:#ccc;background:#fff;"
-                        placeholder="请选择" @change="changes" name="" id="">
-                  <option v-for="item in ranges"
-                          :key="item.value"
-                          :label="item.label"
-                          :value="item.value">{{item.label}}
-                  </option>
-                </select>
-                <i class="el-icon-arrow-right" style="position:absolute;right:8px;top:20px;"></i>
-              </div> -->
+            
+            <div>
               <selectList @updateList="updateList" :params="params"></selectList>
             </div>
             <div @click="reFresh" v-if="isRecommend&&ISPHONE" style="font-size:32px;padding: 6px 0px 0 0px;color:#999;">
@@ -67,8 +22,6 @@
               </el-input>
             </div>
           </div>
-
-          <!-- <div>123</div>  -->
           <div class="grid-content"
                style="overflow: auto;-webkit-overflow-scrolling: touch; width: 640px; max-width: 100%">
             <ListItem :marker="params.marker" :keys="params.key" :isindex="true" :lists="lists"></ListItem>

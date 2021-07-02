@@ -1,12 +1,13 @@
 <template>
  <div>  
     <div @click.stop="openLink(item)" class="item_link">
-        <div :class="['left_img',{'left_img_display': item.cover}]">
-        <i v-if="!item.cover" class="el-icon-link"></i>
-        <img v-if="item.cover" :src="imgOrigin+item.cover+(item.cover.includes('.ico')?'':'?x-oss-process=image/resize,h_100')" alt="">
-        </div>
+        
         <div class="right_content">
         {{item.title}}
+        </div>
+        <div :class="['left_img',{'left_img_display': item.cover}]">
+          <i v-if="!item.cover" class="el-icon-link"></i>
+          <img v-if="item.cover" :src="imgOrigin+item.cover+(item.cover.includes('.ico')?'':'?x-oss-process=image/resize,h_100')" alt="">
         </div>
     </div>
  </div>
@@ -51,10 +52,10 @@ import * as api from '@/api/api'
 
 <style type='text/scss' lang='scss' scoped>
 .el-icon-link{
-  padding: 10px;
+  padding: 14px;
 }
 .item_link{
-      padding-right: 10px;
+      // padding-right: 10px;
       &:hover{
         color: $linkcolor;
       }
@@ -65,11 +66,11 @@ import * as api from '@/api/api'
       align-items: center;
 
       .left_img{
-        flex: 0 0 60px;
+        flex: 0 0 80px;
         text-align: center;
         // padding: 10px 0;
-        border-right: $border;
-        margin-right: 10px;
+        // border-right: $border;
+        // margin-right: 10px;
         // padding-right: 10px;
         i{
           font-size: 40px;
@@ -77,8 +78,8 @@ import * as api from '@/api/api'
         }
         img{
           max-width: 100%;
-          min-height: 60px;
-          max-height: 100px;
+          min-height: 80px;
+          max-height: 120px;
           vertical-align: middle;
         }
       }
@@ -88,14 +89,16 @@ import * as api from '@/api/api'
         align-items: center;
       }
       .right_content{
-        font-size: 14px;
-        padding: 10px 0;
+        flex: 1;
+        font-size: 16px;
+        padding: 10px 10px;
         //display: flex;
         justify-content: space-around;
         font-weight: 600;
         display:block;
         word-break: break-all;
         word-wrap: break-word;
+        line-height: 26px;
       }
     }
 .phone-item{

@@ -8,7 +8,6 @@
             <div>{{forumInfo.name}}</div>
           </div>
           <div class="forum_desc">{{forumInfo.desc}}</div>
-<!--          <div v-if="forumInfo.name !== '推荐' && forumInfo.name !== '关注' " class="forum_add">-->
           <div class="forum_add">
             <el-button @click="gotoSubmit2" type="primary" block>
               发帖
@@ -16,6 +15,13 @@
           </div>
         </div>
       </div>
+      <div v-show="activity.title" @click="toActivity" class="activity">
+        <img src="../../assets/images/icon/act.png" alt="">
+        <span>【本期网络迷踪】</span>
+        {{activity.title}}
+        <span class="detail">「点击查看详情」</span>
+      </div>
+      <!-- /api/v0/activity -->
      <div v-if="!ISPHONE && forumInfo.name !== '关注'" class="tologin">
        <div @click="reload" class="body-right">
             刷新
@@ -65,17 +71,18 @@ import * as api from '@/api/api'
        forumId: '',
        gameRank: null,
        datas: {
-                    width: 260,
-                    height: 200,
-                    speeds: [200,150,100],
-                    data: {
-                            // 初始头位置
-                            x: 2,
-                            y: 2,
-                            size: 10, //大小
-                            timeout: 200, // 每隔多久刷新
-                        }
+            width: 260,
+            height: 200,
+            speeds: [200,150,100],
+            data: {
+                    // 初始头位置
+                    x: 2,
+                    y: 2,
+                    size: 10, //大小
+                    timeout: 200, // 每隔多久刷新
                 }
+        },
+       activity: {}
      }
    },
    props: {
@@ -97,11 +104,23 @@ import * as api from '@/api/api'
    },
    mounted() {
      this.getGameTop();
+     this.getActivity();
      if(new Date().getDate()==1){
        this.gamemodule = true
      }
    },
    methods: {
+     toActivity(){
+       window.open(this.activity.url)
+     },
+     getActivity(){
+      api.getActivity({}).then(res => {
+        if (res.success && res.data != null) {
+          this.activity = res.data;
+        }
+      });
+     },
+     
      gotoAddForum(){
        this.$toast('该功能还未开放，敬请期待')
      },
@@ -210,6 +229,8 @@ import * as api from '@/api/api'
   margin-top: 20px;
 }
 .rright{
+  width: 290px;
+  box-sizing: border-box;
   max-height: calc(100vh - 124px);
   padding: 10px;
   // background: rgb(241,241,241);
@@ -380,5 +401,35 @@ import * as api from '@/api/api'
   color: #fff;
   padding: 2px 4px;
   border-radius: 4px;
+}
+
+
+
+
+
+
+.activity{
+  padding: 10px;
+  background: #fff;
+  margin: 10px 0;
+  border-radius: 4px;
+  cursor: pointer;
+  &:hover{
+    text-decoration: underline;
+    color: #1890ff;
+    .detail{
+      color: #f32207;
+    }
+  }
+  img{
+    width: 20px;
+    height: 20px;
+    vertical-align: middle;
+  }
+  .detail{
+    float: right;
+    // font-size: 12px;
+    color: #1890ff;
+  }
 }
 </style>

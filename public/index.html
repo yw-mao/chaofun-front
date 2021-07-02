@@ -24,32 +24,32 @@
     <h1 class="description">兴趣聚合的优质内容社区，每个兴趣都值得被尊重，在这里，一起讨论问题、分享趣事、了解最新时事，世界-尽在眼下</h1>
     <div id="app"></div>
     <!-- built files will be auto injected -->
-    <script>
-      var _hmt = _hmt || [];
-      (function() {
-        var hm = document.createElement("script");
-        hm.src = "https://hm.baidu.com/hm.js?5c729b6c481ec66bfc756ecb6b099f8c";
-        var s = document.getElementsByTagName("script")[0];
-        s.parentNode.insertBefore(hm, s);
-
-
-
-        var bp = document.createElement('script');
-        var curProtocol = window.location.protocol.split(':')[0];
-        if (curProtocol === 'https'){
-          bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
-        }
-        else{
-          bp.src = 'http://push.zhanzhang.baidu.com/push.js';
-        }
-        var s = document.getElementsByTagName("script")[0];
-        s.parentNode.insertBefore(bp, s);
-
-
-
-        // var src = "https://s.ssl.qhres2.com/ssl/ab77b6ea7f3fbf79.js";
-        // document.write('<script src="' + src + '" id="sozz"><\/script>');
-      })();
-    </script>
+    
   </body>
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?5c729b6c481ec66bfc756ecb6b099f8c";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+
+
+
+      var bp = document.createElement('script');
+      if (window.location.protocol == 'https:'){
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+      }
+      else{
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+      }
+      s.parentNode.insertBefore(bp, s);
+      
+      var bps = document.createElement('script');
+      bps.src = 'https://s.ssl.qhres2.com/ssl/ab77b6ea7f3fbf79.js';
+      bps.id = 'sozz';
+      s.parentNode.insertBefore(bps, s);
+      // document.write('<script src="' + src + '" id="sozz"><\/script>');
+    })();
+  </script>
 </html>

@@ -275,7 +275,7 @@ export default {
           cursor: pointer;
           position: absolute;
           right: -15px;
-          top: 18px;
+          top: 12px;
           font-size: 12px;
         }
       }

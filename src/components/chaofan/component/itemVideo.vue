@@ -44,8 +44,9 @@ import * as api from '@/api/api'
     
    },
    destroyed() {
-      window.removeEventListener('scroll', e => this.unloadHandler(e));
-    },
+      let self = this;
+      document.getElementById('container').removeEventListener('scroll', self.handlerScroll,false);
+   },
    methods: {
     handlerScroll(e){
       console.log('879')
