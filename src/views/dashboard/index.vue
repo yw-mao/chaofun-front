@@ -5,7 +5,7 @@
         <el-col :span="ISPHONE?24:doWidth()" :offset="doOffSet()">
           <div class="navs" style="justify-content:space-between;width: 640px;max-width:100%;">
             
-            <div>
+            <div v-if="!isRecommend">
               <selectList @updateList="updateList" :params="params"></selectList>
             </div>
             <div @click="reFresh" v-if="isRecommend&&ISPHONE" style="font-size:32px;padding: 6px 0px 0 0px;color:#999;">
