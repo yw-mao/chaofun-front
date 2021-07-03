@@ -52,7 +52,7 @@ import * as api from '@/api/api'
 
 <style type='text/scss' lang='scss' scoped>
 .el-icon-link{
-  padding: 14px;
+  padding: 10px;
 }
 .item_link{
       // padding-right: 10px;
@@ -90,7 +90,7 @@ import * as api from '@/api/api'
       }
       .right_content{
         flex: 1;
-        font-size: 16px;
+        font-size: 14px;
         padding: 10px 10px;
         //display: flex;
         justify-content: space-around;
