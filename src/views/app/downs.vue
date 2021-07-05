@@ -15,7 +15,7 @@
                 <span>炒饭超Fun</span>
             </div>
             <div class="build_info">
-                <div class="info_item"> iOS: 2.23.3 | Android: 2.23.3 </div>
+                <div class="info_item"> iOS: 2.23.2 | Android: 2.23.2 </div>
                 <div class="info_item"> 更新时间 2021.07.03 </div>
             </div>
         </div>
