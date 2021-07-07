@@ -3,10 +3,10 @@
     <!-- <component :is="currentRole" /> -->
     <div id="container" class="container infinite-list" ref="container" :style="{height: scrollHeight+'px'}">
 
-      <el-row :gutter="20">
-        <el-col :span="isPhone?24:doWidth()" :offset="doOffSet()" >
+      <el-row :gutter="24">
+        <el-col :span="isPhone?24:doWidth()" :offset="0" >
           
-          <div class="grid-content"  style="overflow:auto; width: 740px; max-width: 100%">
+          <div class="grid-content"  style="overflow:auto; width: 740px; max-width: 100%;margin:0 auto;">
             <div class="ccc">
                 <div v-if="!ISPHONE" class="left_navs">
                     <div @click="chooseCate(item)" v-for="(item,index) in lists" :key="index" :class="['left_li',{'items_title_active':cateId==item.id}]" >

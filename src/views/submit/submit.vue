@@ -757,7 +757,7 @@
   }
   .containers{
     width: 1000px;
-    margin: 40px;
+    margin: 40px auto;
     padding: 30px 30px 100px;
     background: #fff;
     height: 100vh;
