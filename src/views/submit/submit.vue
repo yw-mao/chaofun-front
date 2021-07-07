@@ -156,23 +156,19 @@
                <button @click="submit">提交</button>
            </div>
        </div> -->
-      </el-form>
-
-
-      <div style="display: flex; padding-left: 100px; padding-top: 0px; padding-bottom: 20px;">
-        <div>匿名: </div>
-        <el-table-column label="是否匿名" class="anonymity">
-          <template>
+       <el-form-item label="匿名：" prop="title">
+         <template>
             <el-switch
                 class="switch"
                 v-model="anonymity"
-                :active-value=true
-                :inactive-value=false
+                :active-value="true"
+                :inactive-value="false"
             >
             </el-switch>
           </template>
-        </el-table-column>
-      </div>
+       </el-form-item>
+      </el-form>
+
       <div class="btns">
         <el-button @click="subs" type="primary" size="big" block :disabled="disableSubmit">
           {{submitTitle}}

@@ -21,14 +21,16 @@
         isiOS: !!navigator.userAgent.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/),
         isAndroid: navigator.userAgent.indexOf('Android') > -1 || navigator.userAgent.indexOf('Adr') > -1,
         scrollHeight: document.body.clientHeight - 50,
+        opened: true,
         // login: login
       };
     },
-    computed: {
-      opened(){
-        return this.$store.getters.sidebar.opened;
+    watch:{
+      '$store.getters.sidebar.opened'(v,n){
+        this.opened =  v;
       }
     },
+    
     mounted() {
       // console.log(this.$store.getters.sidebar.opened,666);
       // console.log(this.ISPHONE)

@@ -414,6 +414,7 @@ import * as api from '@/api/api'
   margin: 10px 0;
   border-radius: 4px;
   cursor: pointer;
+  overflow: hidden;
   &:hover{
     text-decoration: underline;
     color: #1890ff;

@@ -43,11 +43,15 @@ import * as api from '@/api/api'
      if(document.getElementById('container')){
        let self = this;
         document.getElementById('container').addEventListener("scroll", self.handlerScroll);
+        window.addEventListener('unload', self.handlerScroll)
      }
+     
    },
    destroyed() {
       let self = this;
-      document.getElementById('container').removeEventListener('scroll', self.handlerScroll,false);
+      if(document.getElementById('container')){
+        document.getElementById('container').removeEventListener('scroll', self.handlerScroll,false);
+      }
    },
    methods: {
     handlerScroll(e){
