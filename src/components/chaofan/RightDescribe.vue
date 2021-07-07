@@ -17,7 +17,7 @@
       </div>
       <div v-show="activity.title" @click="toActivity" class="activity">
         <img src="../../assets/images/icon/act.png" alt="">
-        <span>【本期网络迷踪】</span>
+        <span></span>
         {{activity.title}}
         <span class="detail">「点击查看详情」</span>
       </div>
