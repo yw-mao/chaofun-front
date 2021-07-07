@@ -587,7 +587,7 @@ export default {
       //  console.log(e)
     },
     playVideo(index, item, t) {
-      if (index || index == 0) {
+      if (index || index === 0) {
         this.lists.forEach((i) => {
           i.play = false;
         });
