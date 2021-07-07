@@ -16,7 +16,7 @@
             </div>
             <div class="build_info">
                 <div class="info_item"> iOS: 2.23.3 | Android: 2.23.3 </div>
-                <div class="info_item"> 更新时间 2021.07.03 </div>
+                <div class="info_item"> 更新时间 2021.07.07 </div>
             </div>
         </div>
         <div v-if="ISPHONE" class="down_btn">
