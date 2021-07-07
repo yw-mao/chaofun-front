@@ -90,7 +90,7 @@ import * as api from '@/api/api'
       }
       .right_content{
         flex: 1;
-        font-size: 14px;
+        font-size: 15px;
         padding: 10px 10px;
         //display: flex;
         justify-content: space-around;
