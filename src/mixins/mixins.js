@@ -24,7 +24,13 @@
         // login: login
       };
     },
+    computed: {
+      opened(){
+        return this.$store.getters.sidebar.opened;
+      }
+    },
     mounted() {
+      // console.log(this.$store.getters.sidebar.opened,666);
       // console.log(this.ISPHONE)
       // var u = navigator.userAgent;
       // var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1; //android终端
@@ -125,6 +131,15 @@
 
         }
       },
+      doSpanMain(){
+        // let opened = Cookies.get('sidebarStatus') ? !!+Cookies.get('sidebarStatus') : true
+        let opened = this.opened;
+        let winWidth = document.body.clientWidth
+        let sideBarWidth = opened ? 240 : 54
+        let contentWidth = winWidth - sideBarWidth;
+        return Math.ceil(contentWidth / winWidth  * 24)
+        // return Math.floor(((winWidth - this.doWidth() / 24.0 * contentWidth) / 2 - sideBarWidth) / (contentWidth) * 24)
+      },
       doOffSet(){
         let opened = Cookies.get('sidebarStatus') ? !!+Cookies.get('sidebarStatus') : true
         let winWidth = document.body.clientWidth
@@ -133,10 +148,23 @@
         return Math.floor(((winWidth - this.doWidth() / 24.0 * contentWidth) / 2 - sideBarWidth) / (contentWidth) * 24)
       },
       doWidth(){
-        let opened = Cookies.get('sidebarStatus') ? !!+Cookies.get('sidebarStatus') : true
+        // let opened = Cookies.get('sidebarStatus') ? !!+Cookies.get('sidebarStatus') : true
+        // let sideBarWidth = opened ? 240 : 54
+        // let winWidth = document.body.clientWidth - sideBarWidth
+        // return Math.ceil(640.0 / winWidth  * 24)
+        let opened = this.opened;
+        let winWidth = document.body.clientWidth
         let sideBarWidth = opened ? 240 : 54
-        let winWidth = document.body.clientWidth - sideBarWidth
-        return Math.ceil(640.0 / winWidth  * 24)
+        let contentWidth = winWidth - sideBarWidth;
+        return Math.ceil(contentWidth / winWidth  * 24)
+      },
+      doRightStyle(){
+        // let opened = Cookies.get('sidebarStatus') ? !!+Cookies.get('sidebarStatus') : true
+        let winWidth = document.body.clientWidth;
+        let right = (winWidth - 640)/2 -350;
+        return {
+          'right': right+'px'
+        }
       },
       doRightOffset() {
         return (this.doOffSet() + this.doWidth())

@@ -1,9 +1,9 @@
 <template>
   <div class="dashboard-container">
     <div id="container" class="container infinite-list" ref="container" :style="{height: scrollHeight+'px'}">
-      <el-row :gutter="20">
-        <el-col :span="ISPHONE?24:doWidth()" :offset="doOffSet()">
-          <div class="navs" style="justify-content:space-between;width: 640px;max-width:100%;">
+      <el-row :gutter="24">
+        <el-col :span="isPhone?24:doWidth()" :offset="0">
+          <div class="navs" style="justify-content:space-between;width: 640px;max-width:100%;margin:0 auto;">
             
             <div v-if="!isRecommend">
               <selectList @updateList="updateList" :params="params"></selectList>
@@ -23,16 +23,21 @@
             </div>
           </div>
           <div class="grid-content"
-               style="overflow: auto;-webkit-overflow-scrolling: touch; width: 640px; max-width: 100%">
+               style="overflow: auto;-webkit-overflow-scrolling: touch; width: 640px; max-width: 100%;margin:0 auto;">
             <ListItem :marker="params.marker" :keys="params.key" :isindex="true" :lists="lists"></ListItem>
             <load-text :ifcanget="ifcanget" :loadAll="loadAll"></load-text>
           </div>
         </el-col>
-        <el-col v-if="!ISPHONE&&clientWidth>865" :span="4" :offset="0">
+        <!-- <el-col v-if="!ISPHONE&&clientWidth>865" :span="8" :offset="0">
           <div v-if="!ISPHONE" style="min-width:300px;padding-top: 60px;" class="grid-content bg-purple content-right">
             <RightDescribe :forumInfo="forumInfo" @getForumInfo="getForumInfo" :islogin="islogin"></RightDescribe>
           </div>
-        </el-col>
+        </el-col> -->
+        <div class="fixed_r" :style="doRightStyle()">
+          <div v-if="!ISPHONE" style="min-width:300px;padding-top: 60px;" class="grid-content bg-purple content-right">
+            <RightDescribe :forumInfo="forumInfo" @getForumInfo="getForumInfo" :islogin="islogin"></RightDescribe>
+          </div>
+        </div>
       </el-row>
     </div>
 

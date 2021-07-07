@@ -2,18 +2,23 @@
   <div class="dashboard-container">
     <!-- <component :is="currentRole" /> -->
     <div class="container infinite-list" ref="container" :style="{height: scrollHeight+'px'}">
-      <el-row :gutter="20">
+      <el-row :gutter="24">
         <el-col :span="isPhone?24:doWidth()" :offset="doOffSet()" >
-          <div class="grid-content"  style="overflow:auto; width: 640px; max-width: 100%">
+          <div class="grid-content"  style="overflow:auto; width: 640px; max-width: 100%;margin:0 auto;">
              <ListItem :marker="params.marker" :whichOne="whichOne" :pagenum="params.pageNum" :isMy="true" :datas="{type: whichOne}" :isindex="true" :lists="lists"></ListItem>
              <load-text :hasContent="(lists.length||usersData.length)?true:false" :ifcanget="ifcanget" :loadAll="loadAll"></load-text>
           </div>
         </el-col>
-        <el-col v-if="!ISPHONE&&clientWidth>865" :span="4" :offset="0">
+        <!-- <el-col v-if="!ISPHONE&&clientWidth>865" :span="4" :offset="0">
           <div v-if="!ISPHONE" style="min-width:300px;padding-top: 60px;" class="grid-content bg-purple content-right">
             <RightDescribe :forumInfo="forumInfo" @getForumInfo="getForumInfo" :islogin="true"></RightDescribe>
           </div>
-        </el-col>
+        </el-col> -->
+        <div class="fixed_r" :style="doRightStyle()">
+          <div v-if="!ISPHONE" style="min-width:300px;padding-top: 60px;" class="grid-content bg-purple content-right">
+            <RightDescribe :forumInfo="forumInfo" @getForumInfo="getForumInfo" :islogin="true"></RightDescribe>
+          </div>
+        </div>
       </el-row>
     </div>
 
