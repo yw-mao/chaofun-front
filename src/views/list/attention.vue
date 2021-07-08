@@ -1,9 +1,9 @@
 <template>
   <div class="dashboard-container">
     <!-- <component :is="currentRole" /> -->
-    <div class="container infinite-list" ref="container" :style="{height: scrollHeight+'px'}">
+    <div id="container" class="container infinite-list" ref="container" :style="{height: scrollHeight+'px'}">
       <el-row :gutter="24">
-        <el-col :span="isPhone?24:doWidth()" :offset="doOffSet()" >
+        <el-col :span="isPhone?24:doWidth()" :offset="0" >
           <div class="grid-content"  style="overflow:auto; width: 640px; max-width: 100%;margin:0 auto;">
              <ListItem :marker="params.marker" :whichOne="whichOne" :pagenum="params.pageNum" :isMy="true" :datas="{type: whichOne}" :isindex="true" :lists="lists"></ListItem>
              <load-text :hasContent="(lists.length||usersData.length)?true:false" :ifcanget="ifcanget" :loadAll="loadAll"></load-text>

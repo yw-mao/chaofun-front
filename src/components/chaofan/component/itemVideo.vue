@@ -42,9 +42,6 @@ export default {
     },
   },
   components: {},
-  created() {
-    console.log("879");
-  },
   mounted() {
     if (document.getElementById("container")) {
       let self = this;
@@ -63,11 +60,7 @@ export default {
   },
   methods: {
     handlerScroll(e) {
-      console.log("879");
-      console.log(e.target);
-      console.log(e.target.offsetTop);
       var el = document.getElementById("video" + this.item.postId);
-      console.log(this.item);
       if (el) {
         var top = el.getBoundingClientRect().top;
         if (top < -50) {
@@ -82,8 +75,6 @@ export default {
           .getElementById("container")
           .removeEventListener("scroll", self.handlerScroll, false);
       }
-
-      console.log("距离顶部", top);
     },
     unloadHandler(e) {},
     doHeight() {

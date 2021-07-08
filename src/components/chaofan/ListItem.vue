@@ -76,10 +76,10 @@
               <div @click.stop="toDetail(item)" class="title">
                 {{ item.title }}
               </div>
-              <div :class="['inner_prev', { inner_prev_phone: ISPHONE }]">
+              <div @click="playVideo(index, item, 0)" :class="['inner_prev', { inner_prev_phone: ISPHONE }]">
                 <img
                   class="coverss"
-                  @click="playVideo(index, item, 0)"
+                  
                   :src="
                     imgOrigin + item.video + '?x-oss-process=video/snapshot,t_0'
                   "
@@ -87,7 +87,6 @@
                 />
                 <img
                   class="inner_play"
-                  @click="playVideo(index, item, 0)"
                   src="../../assets/images/bg/play.png"
                   alt=""
                 />
@@ -384,8 +383,8 @@
             </span>
           </div>
           <div>
-            <i class="el-icon-s-comment"></i> <span>{{ item.comments }}</span
-            >评论
+            <i class="el-icon-s-comment"></i> <span style="padding:0 2px;">{{ item.comments }} </span
+            > 评论
           </div>
           <el-dropdown @command="handleCommand" trigger="click">
             <span @click.stop="" class="el-dropdown-link">
@@ -415,7 +414,7 @@
             :class="['b_icon', { save_active: item.save }]"
             @click.stop="savePost(item)"
           >
-            <i class="el-icon-s-help"></i> {{ item.save ? "已收藏" : "收藏" }}
+            <i class="el-icon-s-help"></i> <span style="padding:0 2px;">{{ item.save ? "已收藏" : "收藏" }}</span> 
           </div>
         </div>
       </div>

@@ -1,5 +1,5 @@
 <template>
-  <div >
+  <div :class="[{'containersRight': opened}]">
     <div :class="['container', 'containers',{'phone_container':ISPHONE}]">
       <el-form :model="baseForm"  ref="baseForm" label-width="100px" class="demo-ruleForm">
         <el-form-item label="板块：" prop="forumId">
@@ -725,14 +725,6 @@
             this.baseForm.forumId = '/f/'+this.$route.query.id;
             this.baseFormName = this.options.filter(i=>i.forumId==this.$route.query.id)[0]['title']
           }
-          // if(!keyword){
-          //     console.log(1,'/f/'+this.$route.query.id)
-          //     res.data.forEach(item=>{
-          //         if(item.link == ('/f/'+this.$route.query.id)){
-          //             this.baseFormName = item.title
-          //         }
-          //     })
-          // }
         })
       },
     }
@@ -754,6 +746,9 @@
     padding: 1px;
     // height: 44px;
     background-color: #fff;
+  }
+  .containersRight{
+    margin-right: 240px;
   }
   .containers{
     width: 1000px;

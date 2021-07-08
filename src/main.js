@@ -10,6 +10,9 @@ import App from './App'
 import store from './store'
 import router from './router'
 
+
+Vue.prototype.$EventBus = new Vue();
+
 import VConsole from 'vconsole/dist/vconsole.min.js';
 const vConsole = process.env.NODE_ENV === 'development' ? new VConsole():'';
 

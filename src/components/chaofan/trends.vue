@@ -2,7 +2,7 @@
  <div class="cc">
      
             <div v-for="(item,index) in lists" :key="index" @click.stop="toDetail(item)" :class="['infinite-list-item']">
-              <div @click.stop="" class="d_type" style="font-size: 13px; border-bottom: 1px solid">
+              <div @click.stop="" class="d_type" style="font-size: 13px;">
                   <span @click.stop="toUser(item.focusUser)" class="username" style="font-size: 13px; color: #666">{{item.focusUser?item.focusUser.userName:'测试账号'}}</span>
 
                   {{moment.duration(moment(item.gmtCreate) - moment()).humanize(true)}} 
@@ -33,7 +33,34 @@
                     <!-- &&(!ISPHONE||item.postInfo.link.includes('www.acfun.cn')) -->
                     <itemGif v-if="item.postInfo.type == 'gif'" :isDetail="false" :item="item.postInfo"></itemGif>
                     <!-- 内部视频 -->
-                    <itemVideo v-if="item.postInfo.type == 'inner_video'" :isDetail="false" :item="item.postInfo"></itemVideo>
+                    <!-- <itemVideo v-if="item.postInfo.type == 'inner_video'" :isDetail="false" :item="item.postInfo"></itemVideo> -->
+                    <div @click.stop="" v-if="item.postInfo.type == 'inner_video'" class="inner_videoc">
+                      <div v-if="!item.postInfo.play" class="item_video">
+                        <div @click.stop="toDetail(item.postInfo)" class="title">
+                          {{ item.postInfo.title }}
+                        </div>
+                        <div @click.stop="playVideo(index, item, 0)" :class="['inner_prev', { inner_prev_phone: ISPHONE }]">
+                          <img
+                            class="coverss"
+                            :src="
+                              imgOrigin + item.postInfo.video + '?x-oss-process=video/snapshot,t_0'
+                            "
+                            alt=""
+                          />
+                          <img
+                            class="inner_play"
+                            src="../../assets/images/bg/play.png"
+                            alt=""
+                          />
+                        </div>
+                      </div>
+                      <itemVideo
+                        v-if="item.postInfo.play"
+                        @toPause="playVideo"
+                        :isDetail="false"
+                        :item="item.postInfo"
+                      ></itemVideo>
+                    </div>
                   <!-- iframe视频 -->
                     <div v-if="item.postInfo.type == 'video'&&item.postInfo.videoType == 'ifram'&&(!ISPHONE||!item.postInfo.link.includes('www.acfun.cn'))"
                         class="item_video">
@@ -51,6 +78,14 @@
 
                     <!-- 富文本 -->
                     <itemArticle v-if="item.postInfo.type == 'article'" :item="item.postInfo"></itemArticle>
+
+                    <!-- 投票 -->
+                    <itemVote
+                      v-if="item.postInfo.type == 'vote'"
+                      @callBack="callBack"
+                      :index="index"
+                      :item="item.postInfo"
+                    ></itemVote>
 
                     <!-- 转发 -->
                     <div v-if="item.postInfo.type == 'forward'" @click="toDetail(item.postInfo)" class="item_forward">
@@ -95,12 +130,21 @@
                       </div>
                     </div>
 
-                    <div v-if="item.postInfo.type != 'video'&&item.postInfo.type != 'link'&&item.postInfo.type != 'image'&&item.postInfo.type != 'gif'&&item.postInfo.type != 'article'&&item.postInfo.type!='forward'" @click="toDetail(item)" class="item_article">
+                    <div v-if="
+                      item.postInfo.type != 'video'&&
+                      item.postInfo.type != 'link'&&
+                      item.postInfo.type != 'image'&&
+                      item.postInfo.type != 'gif'&&
+                      item.postInfo.type != 'article'&&
+                      item.postInfo.type!='forward'&&
+                      item.postInfo.type != 'vote' &&
+                      item.postInfo.type != 'inner_video'
+                    " @click="toDetail(item)" class="item_article">
                       <div class="title">
                           {{item.postInfo.title}}
                       </div>
                     </div>
-                    
+            
                     <div class="tools">
                     <!-- <div><i class="el-icon-star-on"></i> <span>{{item.postInfo.ups-item.postInfo.downs}}</span> 点赞</div> -->
                     <div v-if="ISPHONE">
@@ -262,18 +306,46 @@ import forwardH5 from '../h5/forward'
      
    },
    methods: {
+     callBack(index, data) {
+        console.log(index, data);
+        var a = this.lists[index];
+        a.postInfo = data;
+        this.lists.splice(index, 1, a);
+      },
      doPlay(e){
       //  console.log(e)
      },
-     playVideo(index,item){
-       item.postInfo.play = true
-       this.lists.splice(index,1,item)
-       if(item.postInfo.type=='video'){
+    //  playVideo(index,item){
+    //    item.postInfo.play = true
+    //    this.lists.splice(index,1,item)
+    //    if(item.postInfo.type=='video'){
 
-       }
-      //  this.shows = true;
-      //  this.videoData = this.imgOrigin+item.postInfo.imageName
-     },
+    //    }
+    //   //  this.shows = true;
+    //   //  this.videoData = this.imgOrigin+item.postInfo.imageName
+    //  },
+     playVideo(index, item, t) {
+      if (index || index === 0) {
+        this.lists.forEach((i) => {
+          i.postInfo.play = false;
+        });
+        item.postInfo.play = true;
+        var i = this.lists[index];
+        if (t) {
+          i.sourcePost = item;
+        } else {
+          i = item;
+        }
+        this.lists.splice(index, 1, i);
+      } else {
+        console.log("开始暂停------------------------");
+        this.lists.forEach((i) => {
+          i.postInfo.play = false;
+        });
+        var a = this.lists[this.lists.length - 1];
+        this.lists.splice(this.lists.length - 1, 1, a);
+      }
+    },
      handleCommand(data){
        if(data.type == 'copy'){
          this.share(data.item)
@@ -526,7 +598,12 @@ import forwardH5 from '../h5/forward'
      width: 100%;
    }
  }
-
+.title {
+  padding: 0 0 10px 0;
+  font-size: 16px;
+  font-weight: 600;
+  position: relative;
+}
  .scroll_to_top{
      position: fixed;
      width: 40px;
@@ -547,7 +624,6 @@ import forwardH5 from '../h5/forward'
 .coverss{
   width: 100%;
   height: 300px;
-  filter: blur(30px);
   // -webkit-filter: blur(30);
 }
 .video{
@@ -562,6 +638,45 @@ import forwardH5 from '../h5/forward'
 }
 .d_type{
     padding: 10px;
-    background: #fff;
+    background: #f9f9f9;
+    cursor: pointer;
+}
+.inner_prev {
+  height: 320px;
+  line-height: 310px;
+  position: relative;
+  text-align: center;
+  background: #000;
+  img {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    vertical-align: middle;
+  }
+  .inner_play {
+    position: absolute;
+    left: 20px;
+    bottom: 20px;
+    z-index: 10;
+    width: 60px;
+    height: 60px;
+  }
+}
+.inner_prev_phone {
+  height: 230px;
+  line-height: 230px;
+}
+.inner_videoc {
+  min-height: 350px;
+}
+@media screen and (max-width: 700px) {
+  .inner_videoc {
+    min-height: 290px;
+  }
+}
+.item{
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
 }
 </style>

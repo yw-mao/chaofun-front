@@ -2,55 +2,55 @@
   <div id="cc" class="dashboard-container">
     <!-- <component :is="currentRole" /> -->
     <div class="container">
-      <el-row :gutter="20">
+      <el-row :gutter="24">
         <el-col :span="24" :offset="0">
-          <div style="display:flex;">
-          <div class="content" :style="{width: ISPHONE?imgMaxWidth+80+'px':'640px'}">
-            <div :style="{height: ISPHONE?'auto':'440px', maxWidth: ISPHONE?imgMaxWidth+80+'px':'640px',marginBottom:'20px',overflow:'hidden'}">
-              <div v-viewer="" v-if="!secret.imageUrl.includes('.mp4')" :style="{maxHeight: '100%', maxWidth: '100%', margin: 'auto', display: 'inline'}">
-                <img v-if="!secret.imageUrl.includes('.gif')" :src="secret.imageUrl + '?x-oss-process=image/resize,h_768'" :data-source="secret.imageUrl" :style="{maxHeight: '100%', maxWidth: '100%', margin: 'auto', display: 'table-cell'}"   >
-                <img v-if="secret.imageUrl.includes('.gif')" :src="secret.imageUrl" :data-source="secret.imageUrl" :style="{maxHeight: '100%', maxWidth: '100%', margin: 'auto', display: 'table-cell'}"   >
-              </div>
-              <video  v-if="secret.imageUrl.includes('.mp4')" controls autoplay loop :src="secret.imageUrl" alt="" :style="{maxHeight: '100%', maxWidth: '100%', margin: 'auto'}">
-              </video>
-            </div>
-<!--            <el-input v-model="secret.subReddit" @focus="doFocus(1)" @blur="doFocus(2)" :style="{width: '100%'}" :disabled="true">-->
-<!--            </el-input>-->
-<!--            <el-input v-model="secret.enTitle" @focus="doFocus(1)" @blur="doFocus(2)" :disabled="true">-->
-<!--            </el-input>-->
-            <el-input v-model="secret.cnTitle" placeholder="标题 (选填)" @focus="doFocus(1)" @blur="doFocus(2)" :style="{width: '100%'}">
-            </el-input>
-            <div class="searchBox">
-              <div class="searchs">
-                <!-- <input placeholder="搜索板块" type="text"> -->
-                <div style="font-size:18px">选择发布的板块：</div>
-                <el-input  v-model="keyword" :placeholder="forumsName" style="width:200px;margin-right: 30px;" clearable></el-input>
-                <el-button @click="reset" type="primary" size="mini">恢复默认</el-button>
-              </div>
-              <div class="boxs">
-                <!-- <div class="items" v-if="keyword">
-                  <span class="item" v-for="(item,index) in forums" :key="index"><img :src="imgOrigin+item.icon" alt="">{{item.title}}</span>
-                </div> -->
-                <div class="items">
-                  <span @click="chooseItem(item)" :class="['item',{'item_active':activeId==item.id}]" v-for="(item,index) in forums" :key="index"><img :src="imgOrigin+item.imageName" alt="">{{item.name}}</span>
+          <div style="display:flex;width:840px;margin:0 auto;">
+            <div class="content" :style="{width: ISPHONE?imgMaxWidth+80+'px':'640px'}">
+              <div :style="{height: ISPHONE?'auto':'440px', maxWidth: ISPHONE?imgMaxWidth+80+'px':'640px',marginBottom:'20px',overflow:'hidden'}">
+                <div v-viewer="" v-if="!secret.imageUrl.includes('.mp4')" :style="{maxHeight: '100%', maxWidth: '100%', margin: 'auto', display: 'inline'}">
+                  <img v-if="!secret.imageUrl.includes('.gif')" :src="secret.imageUrl + '?x-oss-process=image/resize,h_768'" :data-source="secret.imageUrl" :style="{maxHeight: '100%', maxWidth: '100%', margin: 'auto', display: 'table-cell'}"   >
+                  <img v-if="secret.imageUrl.includes('.gif')" :src="secret.imageUrl" :data-source="secret.imageUrl" :style="{maxHeight: '100%', maxWidth: '100%', margin: 'auto', display: 'table-cell'}"   >
                 </div>
-                
-                
+                <video  v-if="secret.imageUrl.includes('.mp4')" controls autoplay loop :src="secret.imageUrl" alt="" :style="{maxHeight: '100%', maxWidth: '100%', margin: 'auto'}">
+                </video>
               </div>
+  <!--            <el-input v-model="secret.subReddit" @focus="doFocus(1)" @blur="doFocus(2)" :style="{width: '100%'}" :disabled="true">-->
+  <!--            </el-input>-->
+  <!--            <el-input v-model="secret.enTitle" @focus="doFocus(1)" @blur="doFocus(2)" :disabled="true">-->
+  <!--            </el-input>-->
+              <el-input v-model="secret.cnTitle" placeholder="标题 (选填)" @focus="doFocus(1)" @blur="doFocus(2)" :style="{width: '100%'}">
+              </el-input>
+              <div class="searchBox">
+                <div class="searchs">
+                  <!-- <input placeholder="搜索板块" type="text"> -->
+                  <div style="font-size:16px;margin:10px 0;">选择发布的板块：</div>
+                  <el-input  v-model="keyword" :placeholder="forumsName" style="width:200px;margin-right: 30px;" clearable></el-input>
+                  <el-button @click="reset" type="primary" size="mini">恢复默认</el-button>
+                </div>
+                <div class="boxs">
+                  <!-- <div class="items" v-if="keyword">
+                    <span class="item" v-for="(item,index) in forums" :key="index"><img :src="imgOrigin+item.icon" alt="">{{item.title}}</span>
+                  </div> -->
+                  <div class="items">
+                    <span @click="chooseItem(item)" :class="['item',{'item_active':activeId==item.id}]" v-for="(item,index) in forums" :key="index"><img :src="imgOrigin+item.imageName" alt="">{{item.name}}</span>
+                  </div>
+                  
+                  
+                </div>
+              </div>
+              <!-- <el-select v-model="secret.submitForum" style="width:120px;">
+                <el-option
+                    v-for="item in forums"
+                    :key="item.id.toString()"
+                    :label="item.name"
+                    :value="item.id.toString()"
+                />
+              </el-select>           -->
+              <div class="subs">
+                <el-button type="primary" v-on:click="submit" :disabled="isSend" :style="{marginLeft: '20px'}">发布</el-button>
+                <el-button type="success" v-on:click="skip" :style="{marginLeft: '20px'}">跳过</el-button>
+              </div> 
             </div>
-            <!-- <el-select v-model="secret.submitForum" style="width:120px;">
-              <el-option
-                  v-for="item in forums"
-                  :key="item.id.toString()"
-                  :label="item.name"
-                  :value="item.id.toString()"
-              />
-            </el-select>           -->
-            <div class="subs">
-              <el-button type="primary" v-on:click="submit" :disabled="isSend" :style="{marginLeft: '20px'}">发布</el-button>
-              <el-button type="success" v-on:click="skip" :style="{marginLeft: '20px'}">跳过</el-button>
-            </div> 
-          </div>
             <div v-if="!ISPHONE" class="right_desc">
               <p>可以 -> 方向键快速跳过图片</p>
               <p>点击提交后，图片会从图库中删除，由你的账号发布到炒饭主站。</p>
@@ -267,7 +267,7 @@
 
   .container{
     display: block;
-    height: 90vh;
+    height: 100vh;
     overflow: scroll;
     width: 100%;
     overflow-x: hidden;
@@ -319,7 +319,7 @@
    position: fixed;
    bottom: 20px;
    z-index: 1;
-   background: #fff;
+  //  background: #fff;
  }
 
  .searchBox{

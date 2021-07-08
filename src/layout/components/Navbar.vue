@@ -3,7 +3,7 @@
     <hamburger id="hamburger-container" :is-active="sidebar.opened" class="hamburger-container" @toggleClick="toggleSideBar" />
 
     <breadcrumb id="breadcrumb-container" class="breadcrumb-container" />
-    <div class="nav_con">
+    <div class="nav_con" :style="doSty()">
       <el-input
           v-if="!ISPHONE"
           placeholder="全站搜索"
@@ -30,10 +30,6 @@
             <img src="../../assets/images/icon/app_mini.png" alt="">
             <p>小程序版</p>
           </div>
-          <!-- <div class="er_item">
-            <img src="../../assets/images/icon/erweima.png" alt="">
-            <p>h5移动版</p>
-          </div> -->
           <div class="er_item">
             <img src="../../assets/images/erweima2.jpg" alt="">
             <p>扫码加微信 wwwchaofun 邀请入炒饭用户群</p>
@@ -54,7 +50,6 @@
                 <i class="el-icon-message" style="font-size:24px;color:#999;"></i>
                 <span v-if="message.hasNewMessage" class="tip_notice_circle"></span>
               </span>
-              <!-- <span v-if="!message.hasNewMessage" class="tip_notice_circle tip_notice_circle2"></span> -->
             </div>
             <img class="userAvatar" :src="imgOrigin+userinfo.icon + '?x-oss-process=image/resize,h_80'"/>
               <div>
@@ -78,13 +73,11 @@
           <router-link v-if="islogin" to="/my">
             <el-dropdown-item>我的</el-dropdown-item>
           </router-link>
-          <!-- <router-link v-if="islogin" to="/message"> -->
             <el-dropdown-item @click.native="toUrls({name: 'message'})">消息
               <span v-if="message.hasNewMessage" class="tip_notice" style="float:right;">
                     {{message.unreadMessage}}
               </span>
             </el-dropdown-item>
-          <!-- </router-link> -->
           <router-link v-if="islogin" to="/setting">
             <el-dropdown-item>设置</el-dropdown-item>
           </router-link>
@@ -158,6 +151,17 @@ export default {
     // ttt(){
     //   this.$login.showLogin();
     // },
+    doSty(){
+      if(this.opened){
+        return {
+          paddingRight: '240px'
+        }
+      }else{
+        return {
+          paddingRight: '54px'
+        }
+      }
+    },
     toUrls(params){
       this.message.hasNewMessage = false
       this.message.unreadMessage = 0

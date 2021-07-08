@@ -92,6 +92,7 @@ import * as api from '@/api/api'
               api.getPostInfo({postId: item.postId}).then(res=>{
                   this.item = res.data;
                   this.$emit('callBack',index,res.data);
+                  this.$EventBus.$emit('eventRefresh');
                 // this.lists.splice(index,1,res.data)
                 })
             })

@@ -105,7 +105,7 @@ const actions = {
             location.href = '/'
           }
           
-        },1000)
+        },100)
       }
     })
     // return new Promise((resolve, reject) => {

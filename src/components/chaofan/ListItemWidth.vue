@@ -39,7 +39,7 @@
         <itemArticle v-if="item.type == 'article'" :isDetail="true" :item="item"></itemArticle>
 
         <!-- 投票 -->
-        <itemVote v-if="item.type == 'vote'" :item="item"></itemVote>
+        <itemVote v-if="item.type == 'vote'" @callBack="callBack" :index="0"  :item="item"></itemVote>
 
 
         <!-- 转发 -->
@@ -122,7 +122,7 @@
               <!-- <span>{{item.downs}}</span> -->
             </span>
           </div>
-          <div><i class="el-icon-s-comment"></i> <span>{{item.comments}}</span>评论</div>
+          <div><i class="el-icon-s-comment"></i> <span style="padding:0 2px;">{{item.comments}}</span>评论</div>
           <!-- <div class="b_icon" @click.stop="share(item)" v-clipboard:copy="message" v-clipboard:success="onCopy"><i class="el-icon-share"></i> 分享</div> -->
           <el-dropdown @command="handleCommand" trigger="click">
             <span @click.stop="" class="el-dropdown-link">
@@ -134,7 +134,9 @@
               <el-dropdown-item :command="{type:'shareWeibo',item: item}" icon="el-icon-s-promotion">分享到微博</el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
-          <div :class="['b_icon',{'save_active':item.save}]" @click.stop="savePost(item)"><i class="el-icon-s-help"></i> {{item.save?'已收藏':'收藏'}}</div>
+          <div :class="['b_icon',{'save_active':item.save}]" @click.stop="savePost(item)"><i class="el-icon-s-help"></i> 
+            <span style="padding:0 2px;">{{item.save?'已收藏':'收藏'}}</span>
+          </div>
           
         </div>
 
@@ -224,6 +226,9 @@
 
     },
     methods: {
+      callBack(index, data) {
+        this.lists.splice(0, 1, data);
+      },
       doBg(it,its){
        var num = it.optionVote;
        var total = 0;

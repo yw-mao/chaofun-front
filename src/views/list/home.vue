@@ -3,7 +3,7 @@
     <!-- <component :is="currentRole" /> -->
     <div id="container" class="container infinite-list" ref="container" :style="{height: scrollHeight+'px'}">
       <el-row :gutter="24">
-        <el-col :span="isPhone?24:doWidth()" :offset="doOffSet()">
+        <el-col :span="isPhone?24:doWidth()" :offset="0">
           <div class="navs" style="justify-content:space-between; width: 640px;max-width:100%;margin:0 auto;">
             <div v-if="!ISPHONE" style="width:100%;">
               <!-- <el-select v-model="params.order" placeholder="请选择" @change="changes"

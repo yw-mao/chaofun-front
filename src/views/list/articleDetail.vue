@@ -212,7 +212,11 @@ export default {
         history.pushState(null, null, '/');
              window.addEventListener("popstate", this.onCloseModal, false);
       }
-         }
+    }
+    this.$EventBus.$on('eventRefresh', ()=>{
+        //需要执行的代码
+      this.getDetail();
+    })
   },
   created() {
     let params = this.$route.params;
