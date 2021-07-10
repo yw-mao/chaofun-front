@@ -1,5 +1,5 @@
 let routes = [];
-if(process.env.NODE_ENV === 'production'&&process.env.VUE_APP_BASE_WEB){
+if(process.env.NODE_ENV != 'production'&&process.env.VUE_APP_BASE_WEB){
   routes = [
     {
       path: '/webview/contact',

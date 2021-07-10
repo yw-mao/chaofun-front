@@ -6,7 +6,7 @@
         </div>
         <div class="center">
             <div class="title">炒饭超Fun</div>
-            <div class="descs">分享奇趣、发现世界</div>
+            <div class="descs">世界那么大</div>
         </div>
         <div class="right">
             <div @click="toUrl({url:'/app?from=h5',routeType:1})" class="btn">App下载</div>

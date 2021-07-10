@@ -1,5 +1,5 @@
 module.exports = {
-  title: '炒饭 - 分享奇趣、发现世界',
+  title: '炒饭 - 世界那么大',
   styles: {
     // type 'open-close'
     navbarStyle: {

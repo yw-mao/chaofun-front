@@ -11,8 +11,7 @@
     <meta name="keywords" content="炒饭网,炒饭社区,炒饭超Fun,炒饭论坛,reddit,论坛,炒饭reddit,新鲜事,兴趣爱好,分享">
     <meta name="description" content="兴趣聚合的优质内容社区，每个兴趣都值得被尊重，在这里，一起讨论问题、分享趣事、了解最新时事，世界-尽在眼下">
     <link rel="shortcut icon" type="image/x-icon" href="https://i.chao.fun/9563cdd828d2b674c424b79761ccb4c0.png?x-oss-process=image/resize,h_80">
-    <title>炒饭 - 分享奇趣、发现世界</title>
-    <!-- <t2itle2>炒饭-新趣、分享、交流</t2itl2e> -->
+    <title>炒饭 - 世界那么大</title>
     <script>
       var _hmt = _hmt || [];
     </script>
@@ -21,7 +20,7 @@
     </style>
   </head>
   <body>
-    <h1 class="description">兴趣聚合的优质内容社区，每个兴趣都值得被尊重，在这里，一起讨论问题、分享趣事、了解最新时事，世界-尽在眼下</h1>
+    <h1 id="description" class="description">炒饭 - 兴趣聚合的优质内容社区, <span id="dsc">世界那么大 每个兴趣都值得被尊重</span></h1>
     <div id="app"></div>
     <!-- built files will be auto injected -->
     
@@ -45,6 +44,8 @@
       }
       s.parentNode.insertBefore(bp, s);
       
+      document.getElementById('description').innerHTML = document.title;
+
       // var bps = document.createElement('script');
       // bps.src = 'https://s.ssl.qhres2.com/ssl/ab77b6ea7f3fbf79.js';
       // bps.id = 'sozz';
