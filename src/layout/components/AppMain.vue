@@ -33,7 +33,13 @@ export default {
   box-sizing: border-box;
   background:#f7f7f7;
 }
-
+@media screen and (max-width: 700px) {
+  .app-main {
+  /* 50= navbar  50  */
+    
+    padding: 0px;
+  }
+}
 .fixed-header+.app-main {
   padding-top: 50px;
 }

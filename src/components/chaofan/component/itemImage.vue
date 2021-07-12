@@ -13,7 +13,7 @@
       <div @click.stop="" v-if="item.imageNums!=1" class="imgLists">
         <viewer :images="item.o_imgs">
           <div v-for="(item2,index2) in item.images" :key="index2" :class="doImgClass(item.images)" :style="doMoreImgStyle(item,item2)" :alt="item.title" :title="item.title">
-            <img  style="opacity:0;" :data-source="imgOrigin+item2" :src="imgOrigin+item2+ (item2.includes('.gif')? '': ('?x-oss-process=image/resize,h_' + getImageHeight(item.width, item.height)))"  :key="item2" :alt="item.title" :title="item.title">
+            <img  style="opacity:0;width:100%;height:100%;" :data-source="imgOrigin+item2"   :key="item2" :alt="item.title" :title="item.title">
           </div>
         </viewer>
       </div>
@@ -75,8 +75,8 @@
       doMoreImgStyle(item,item2){
         return {
           // 'width':
-          'height':(231*item.height/item.width)+'px',
-          'background-image':`url(${this.imgOrigin+item2+(item2.includes('.gif')? '': ('?x-oss-process=image/resize,h_' + this.getImageHeight(item.width, item.height)))})`,
+          'height':parseInt((this.ISPHONE?(231*item.height/(item.width*2)):(231*item.height/item.width)))+'px',
+          'background-image':`url(${this.imgOrigin+item2+(item2.includes('.gif')? '': ('?x-oss-process=image/resize,h_400'))})`,//parseInt((this.ISPHONE?(231*item.height/(item.width)):(231*item.height/item.width)))
           //imgOrigin+item2+ (item2.includes('.gif')? '': ('?x-oss-process=image/resize,h_' + getImageHeight(item.width, item.height)))
         }
       },
@@ -171,6 +171,7 @@
     .two_img{
       flex: 0 0 48%;
       margin: 1px;
+      min-height: 120px;
       max-height: 450px;
       height: 450px;
       display: flex;
@@ -180,11 +181,13 @@
       background-repeat: no-repeat;
       background-position: center;
       background-size: cover;
+      border-radius: 10px;
     }
     .three_img{
       flex: 0 0 32.5%;
       margin-top: 2px;
       margin-right: 0.5%;
+      min-height: 120px;
       max-height: 300px;
       height: 300px;
       display: flex;
