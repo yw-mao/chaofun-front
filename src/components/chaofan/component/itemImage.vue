@@ -181,10 +181,10 @@
       background-repeat: no-repeat;
       background-position: center;
       background-size: cover;
-      border-radius: 10px;
+      border-radius: 4px;
     }
     .three_img{
-      flex: 0 0 32.5%;
+      flex: 0 0 33%;
       margin-top: 2px;
       margin-right: 0.5%;
       min-height: 120px;
@@ -197,6 +197,7 @@
       background-repeat: no-repeat;
       background-position: center;
       background-size: cover;
+      border-radius: 4px;
     }
   }
   .imgLists{

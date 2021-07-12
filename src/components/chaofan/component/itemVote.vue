@@ -166,7 +166,7 @@ import * as api from '@/api/api'
   .has_choose{
     .a{
       width: 100%;
-      line-height: 40px;
+      // line-height: 40px;
       border: 1px solid #f1f1f1;
       margin-bottom: 8px;
       position: relative;
@@ -185,13 +185,15 @@ import * as api from '@/api/api'
         padding: 0 10px;
         display: flex;
         width: 100%;
-        height: 40px;
+        padding: 4px 10px;
+        // height: 40px;
         .c{
           flex: 1;
           span{
             display: inline-block;
             width: 30px;
             font-weight: bold;
+            text-align: center;
           }
         }
         .img{
