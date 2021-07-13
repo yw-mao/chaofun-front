@@ -20,7 +20,7 @@
         clientHeight: document.body.clientHeight,
         isiOS: !!navigator.userAgent.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/),
         isAndroid: navigator.userAgent.indexOf('Android') > -1 || navigator.userAgent.indexOf('Adr') > -1,
-        scrollHeight: document.body.clientHeight - 50,
+        scrollHeight: document.body.clientHeight - 0,
         opened: true,
         // login: login
       };

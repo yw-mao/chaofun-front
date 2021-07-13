@@ -1,6 +1,7 @@
 <template>
   <div :class="[{'containersRight': opened}]">
     <div :class="['container', 'containers',{'phone_container':ISPHONE}]">
+      <!-- <div style="height:50px;"></div> -->
       <el-form :model="baseForm"  ref="baseForm" label-width="100px" class="demo-ruleForm">
         <el-form-item label="板块：" prop="forumId">
           <el-select

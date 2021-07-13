@@ -7,6 +7,7 @@
       <div :class="{'fixed-header':fixedHeader}">
         <navbar :islogin="islogin" :userinfo="userinfo" />
       </div>
+      
       <app-main :style="doTheme('contentStyle')"/>
       <right-panel v-if="showSettings">
         <settings />
@@ -127,6 +128,7 @@ export default {
     z-index: 9;
     width: calc(100% - #{$sideBarWidth});
     transition: width 0.28s;
+    background: transparent;
   }
 
   .hideSidebar .fixed-header {

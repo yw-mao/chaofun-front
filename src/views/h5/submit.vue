@@ -1,6 +1,7 @@
 <template>
  <div>
      <div class="container">
+         <div style="height:50px;"></div>
         <div class="item">
             <div class="label">发布板块</div>
             <div>

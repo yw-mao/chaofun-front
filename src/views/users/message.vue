@@ -11,6 +11,7 @@
       ref="container"
       :style="{ height: scrollHeight + 'px' }"
     >
+      <div style="height:50px;"></div>
       <el-row :gutter="24">
         <el-col :span="ISPHONE ? 24 : doWidth()" :offset="0">
           <div

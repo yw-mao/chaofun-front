@@ -1,5 +1,5 @@
 <template>
-  <div class="navbar" :style="doTheme('navbarStyle')">
+  <div class="navbar">
     <hamburger id="hamburger-container" :is-active="sidebar.opened" class="hamburger-container" @toggleClick="toggleSideBar" />
 
     <breadcrumb id="breadcrumb-container" class="breadcrumb-container" />
@@ -202,8 +202,8 @@ export default {
   height: 50px;
   // overflow: hidden;
   position: relative;
-  background: #fff;
-  box-shadow: 0 1px 4px rgba(0,21,41,.08);
+  background: rgba(255,255,255,0.95);
+  // box-shadow: 0 1px 4px rgba(0,21,41,.08);
 
   .hamburger-container {
     line-height: 46px;
@@ -312,7 +312,12 @@ export default {
   // position: absolute;
   // right: 200px;
   width: 400px;
+  background: transparent;
+  
 }
+/deep/ .el-input--medium .el-input__inner{
+    background: transparent;
+  }
 /deep/ .el-input__prefix{
   left: 364px;
 }

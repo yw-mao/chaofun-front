@@ -1,6 +1,7 @@
 <template>
   <div class="dashboard-container">
     <div id="container" class="container infinite-list" ref="container" :style="{height: scrollHeight+'px'}">
+      <div style="height:50px;"></div>
       <el-row :gutter="24">
         <el-col :span="isPhone?24:doWidth()" :offset="0">
           <div class="navs" style="justify-content:space-between;width: 640px;max-width:100%;margin:0 auto;">

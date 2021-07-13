@@ -1,5 +1,6 @@
 <template>
   <section class="app-main">
+        <!-- <div style="height:50px;background:transparent;"></div> -->
 <!--    <transition name="fade-transform" mode="out-in">-->
 <!--      <keep-alive :include="cachedViews">-->
         <router-view :key="key" />
@@ -25,7 +26,7 @@ export default {
 <style lang="scss" scoped>
 .app-main {
   /* 50= navbar  50  */
-  min-height: calc(100vh - 50px);
+  min-height: calc(100vh);
   width: 100%;
   position: relative;
   overflow: hidden;
@@ -41,17 +42,17 @@ export default {
   }
 }
 .fixed-header+.app-main {
-  padding-top: 50px;
+  // padding-top: 50px;
 }
 
 .hasTagsView {
   .app-main {
     /* 84 = navbar + tags-view = 50 + 34 */
-    min-height: calc(100vh - 84px);
+    min-height: calc(100vh);
   }
 
   .fixed-header+.app-main {
-    padding-top: 54px;
+    // padding-top: 54px;
   }
 }
 </style>

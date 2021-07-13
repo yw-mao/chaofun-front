@@ -3,7 +3,7 @@
     <!-- <component :is="currentRole" /> -->
     <div class="container">
       <!-- <div class="title">设置新密码</div> -->
-
+      <div style="height:50px;"></div>
       <div class="title">设置头像</div>
         <div>
             <el-upload
