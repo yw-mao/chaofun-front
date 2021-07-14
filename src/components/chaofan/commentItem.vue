@@ -2,9 +2,33 @@
  <div>
      <div v-for="(item,index) in treeData" :key="index" class="comment_item">
         <div :class="['c_left',{'c_left2':ISPHONE}]">
-            <img @click.stop="doZanComment(1,item)" src="../../assets/images/icon/up.png" alt="">
+            <!-- <img @click.stop="doZanComment(1,item)" src="../../assets/images/icon/up.png" alt=""> -->
+            <img
+                v-if="item.vote != 1"
+                @click.stop="doZanComment(1, item)"
+                src="../../assets/images/icon/up.png"
+                alt=""
+            />
+            <img
+                v-if="item.vote == 1"
+                @click.stop="doZanComment(1, item)"
+                src="../../assets/images/icon/up_active.png"
+                alt=""
+            />
             <p></p>
-            <img @click.stop="doZanComment(2,item)" src="../../assets/images/icon/down.png" alt="">
+            <img
+                v-if="item.vote != -1"
+                @click.stop="doZanComment(2, item)"
+                src="../../assets/images/icon/down.png"
+                alt=""
+            />
+            <img
+                v-if="item.vote == -1"
+                @click.stop="doZanComment(2, item)"
+                src="../../assets/images/icon/down_active.png"
+                alt=""
+            />
+            <!-- <img @click.stop="doZanComment(2,item)" src="../../assets/images/icon/down.png" alt=""> -->
         </div>
         <div class="c_content">
             <div class="user_info">
@@ -248,12 +272,31 @@ import moment from 'moment'
      },
     doZanComment(v,item){
         if(v==1){
+            if(item.vote==0){
+                item.vote = 1;
+                item.ups += 1;
+            }else if(item.vote==-1){
+                item.vote = 1;
+                item.ups += 2;
+            }else{
+                item.vote = 0;
+                item.ups -= 1;
+            }
             api.upvoteComment({commentId:item.id}).then(res=>{
-                item.ups += 1
             })
         }else{
+            if(item.vote==0){
+                item.vote = -1;
+                item.ups -= 1;
+            }else if(item.vote==1){
+                item.vote = -1;
+                item.ups -= 2;
+            }else{
+                item.vote = 0;
+                item.ups += 1;
+            }
             api.downvoteComment({commentId:item.id}).then(res=>{
-            item.ups -= 1
+                
             })
        }
     },
