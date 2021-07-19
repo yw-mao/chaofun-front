@@ -24,6 +24,7 @@
                 :value="item.value">
             </el-option>
         </el-select>
+        <div style="flex:1;text-align:right;">模式选择</div>
     </div>
     <div v-if="ISPHONE&&params.order ==='ups'" class="phones">
       <el-select v-model="params.range" placeholder="请选择"

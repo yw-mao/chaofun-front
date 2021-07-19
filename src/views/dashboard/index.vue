@@ -25,8 +25,9 @@
           </div>
           <div class="grid-content"
                style="overflow: auto;-webkit-overflow-scrolling: touch; width: 640px; max-width: 100%;margin:0 auto;">
-            <ListItem :marker="params.marker" :keys="params.key" :isindex="true" :lists="lists"></ListItem>
-            <load-text :ifcanget="ifcanget" :loadAll="loadAll"></load-text>
+              <ListItem v-if="mode=='normal'" :marker="params.marker" :keys="params.key" :isindex="true" :lists="lists"></ListItem>
+              <SimListItem v-if="mode=='simple'" :marker="params.marker" :keys="params.key" :isindex="true" :lists="lists"></SimListItem>
+              <load-text :ifcanget="ifcanget" :loadAll="loadAll"></load-text>
           </div>
         </el-col>
         <!-- <el-col v-if="!ISPHONE&&clientWidth>865" :span="8" :offset="0">
@@ -57,6 +58,7 @@
   import * as api from '../../api/api'
 
   import ListItem from '../../components/chaofan/ListItem.vue'
+  import SimListItem from '../../components/chaofan/SimListItem.vue'
   import RightDescribe from '@/components/chaofan/RightDescribe'
   import loadText from '@/components/chaofan/loadText'
   import VirtualList from 'vue-virtual-listview'
@@ -69,6 +71,7 @@
     // components: { adminDashboard, editorDashboard },
     data() {
       return {
+        mode: 'simple',
         currentRole: 'adminDashboard',
         count: 5,
         lists: [],
@@ -133,6 +136,7 @@
     },
     components: {
       ListItem,
+      SimListItem,
       RightDescribe,
       loadText,
       VirtualList,
