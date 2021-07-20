@@ -25,8 +25,8 @@
           </div>
           <div class="grid-content"
                style="overflow: auto;-webkit-overflow-scrolling: touch; width: 640px; max-width: 100%;margin:0 auto;">
-              <ListItem v-if="mode=='normal'" :marker="params.marker" :keys="params.key" :isindex="true" :lists="lists"></ListItem>
-              <SimListItem v-if="mode=='simple'" :marker="params.marker" :keys="params.key" :isindex="true" :lists="lists"></SimListItem>
+              <ListItem v-if="isRecommend||$store.state.user.listMode=='normal'" :marker="params.marker" :keys="params.key" :isindex="true" :lists="lists"></ListItem>
+              <SimListItem v-else :marker="params.marker" :keys="params.key" :isindex="true" :lists="lists"></SimListItem>
               <load-text :ifcanget="ifcanget" :loadAll="loadAll"></load-text>
           </div>
         </el-col>

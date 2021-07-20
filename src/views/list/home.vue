@@ -6,48 +6,13 @@
       <el-row :gutter="24">
         <el-col :span="isPhone?24:doWidth()" :offset="0">
           <div class="navs" style="justify-content:space-between; width: 640px;max-width:100%;margin:0 auto;">
-            <div v-if="!ISPHONE" style="width:100%;">
-              <!-- <el-select v-model="params.order" placeholder="请选择" @change="changes"
-                         style="padding: 10px 0;">
-                <el-option
-                    v-for="item in options"
-                    :key="item.value"
-                    :label="item.label"
-                    :value="item.value">
-                </el-option>
-              </el-select> -->
+            <div style="width:100%;">
               <selectList @updateList="updateList" :params="params"></selectList>
-            </div>
-            <div v-if="ISPHONE&&(isiOS || isAndroid)">
-              <selectList @updateList="updateList" :params="params"></selectList>
-              <!-- <div style="position:relative; float: left;">
-                <select v-model="params.order"
-                        style="-webkit-appearance: none;height:20px;padding:6px 20px;padding-right:30px;box-sizing:content-box;margin:10px 0;border-color:#999;background:#fff;"
-                        placeholder="请选择12" @change="changes" name="" id="">
-                  <option v-for="item in options"
-                          :key="item.value"
-                          :label="item.label"
-                          :value="item.value">{{item.label}}
-                  </option>
-                </select>
-                <i class="el-icon-arrow-right" style="position:absolute;right:8px;top:20px;"></i>
-              </div>
-              <div v-if="params.order ==='ups'" style="position:relative; float: left;">
-                <select v-model="params.range"
-                        style="-webkit-appearance: none;height:20px;padding:6px 20px;padding-right:30px;box-sizing:content-box;margin-top:10px;border-color:#ccc;background:#fff;"
-                        placeholder="请选择" @change="changes" name="" id="">
-                  <option v-for="item in ranges"
-                          :key="item.value"
-                          :label="item.label"
-                          :value="item.value">{{item.label}}
-                  </option>
-                </select>
-                <i class="el-icon-arrow-right" style="position:absolute;right:8px;top:20px;"></i>
-              </div> -->
             </div>
           </div>
           <div class="grid-content" style="overflow:auto; width: 640px; max-width: 100%;margin: 0 auto;">
-            <ListItem :marker="params.marker" :keys="params.key" :isindex="false" :lists="lists"></ListItem>
+            <ListItem v-if="$store.state.user.listMode=='normal'" :marker="params.marker" :keys="params.key" :isindex="false" :lists="lists"></ListItem>
+            <SimListItem v-else :marker="params.marker" :keys="params.key" :isindex="true" :lists="lists"></SimListItem>
             <load-text :ifcanget="ifcanget" :loadAll="loadAll"></load-text>
           </div>
         </el-col>
@@ -72,6 +37,7 @@
   import * as api from '../../api/api'
 
   import ListItem from '../../components/chaofan/ListItem.vue'
+  import SimListItem from '../../components/chaofan/SimListItem.vue'
   import RightCom from '@/components/chaofan/RightCom'
   import loadText from '@/components/chaofan/loadText'
   import fixedBottom from '@/components/chaofan/fixedBottom'
@@ -149,7 +115,7 @@
       }
     },
     components: {
-      ListItem, RightCom, loadText, fixedBottom,selectList
+      ListItem, RightCom, loadText, fixedBottom,selectList,SimListItem
     },
     watch: {
       // 'params.forumId'(v){

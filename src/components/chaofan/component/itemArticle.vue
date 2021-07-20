@@ -102,7 +102,12 @@ import * as api from '@/api/api'
     // left: -50px;
   }
   .detail_line{
-    line-height: 30px;
+    
+    font-size: 15px;
+  }
+  /deep/ .detail_line p{
+    line-height: 1.6em;
+    margin: 1.4em 0;
   }
   /deep/ .detail_line img{
     max-width: 100%;

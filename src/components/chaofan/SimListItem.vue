@@ -3,7 +3,7 @@
     <div
       v-for="(item, index) in lists"
       :key="index"
-      @click.stop="toDetail(item)"
+      @click.stop="toDetail(item,false)"
       :class="['item', 'infinite-list-item', { 'phone-item': ISPHONE }]"
     >
       <div v-if="!ISPHONE" @click.stop="" class="zan">
@@ -37,23 +37,35 @@
           />
         </p>
       </div>
-      <div v-if="ISPHONE" style="width: 20px"></div>
+      <div v-if="ISPHONE" style="width: 10px"></div>
       <div class="rights" :style="{ width: ISPHONE ? imgMaxWidth + 'px' : '' }">
         <!-- 头部 -->
         
         <div class="sim_item">
             <div class="sim_img">
-                <img v-if="item.cover" :src="imgOrigin+item.cover" alt="">
+                <div class="sim_img_r" :style="{'background-image': `url(${doImageUrl(item)})`}">
+                
+                </div>
             </div>
             <div class="sim_content">
-                <div class="title">{{item.title}}</div>
+                <div class="title">
+                    <span class="sim_tab">
+                        [{{doType(item)}}]
+                    </span>
+                    {{item.title}}
+                </div>
                 <div class="sim_info">
                     <span class="sim_forum">
-                        <!-- <img :src="imgOrigin+item.forum.imageName+'?x-oss-process=image/resize,h_80'" alt=""> -->
                         {{item.forum.name}}
                     </span>
+                    <span class="from">
+                        来自·{{item.userInfo?item.userInfo.userName:'测试账号'}}
+                    </span>
+                    <span class="from">
+                        大约 {{moment.duration(moment(item.gmtCreate) - moment()).humanize(true)}}
+                    </span>
                 </div>
-                <div class="tools">
+                <div :class="['tools',{'tools_p': ISPHONE}]">
                     <!-- <div><i class="el-icon-star-on"></i> <span>{{item.ups-item.downs}}</span> 点赞</div> -->
                     <div v-if="ISPHONE">
                         <span v-if="item.vote != 1" @click.stop="doZan(1, item, index)">
@@ -73,7 +85,7 @@
                             alt=""
                         />
                         </span>
-                        <span style="padding: 0 10px">{{ item.ups - item.downs }}</span>
+                        <span style="padding: 0 4px">{{ item.ups - item.downs }}</span>
                         <span v-if="item.vote != -1" @click.stop="doZan(1, item, index)">
                         <img
                             style="width: 18px; vertical-align: middle; margin-top: -2px"
@@ -98,7 +110,7 @@
                         <!-- <span>{{item.downs}}</span> -->
                         </span>
                     </div>
-                    <div>
+                    <div @click.stop="toDetail(item,true)">
                         <i class="el-icon-s-comment"></i> <span style="padding:0 2px;">{{ item.comments }} </span
                         > 评论
                     </div>
@@ -171,15 +183,18 @@ import videoDialog from "./videoDialog";
 import "vant/lib/dialog/style";
 Vue.use(VueClipboard);
 
-import itemTopTitle from "./component/itemTopTitle";
-import itemLink from "./component/itemLink";
-import itemImage from "./component/itemImage";
-import itemGif from "./component/itemGif";
-import itemVideo from "./component/itemVideo";
-import itemIframeVideo from "./component/itemIframeVideo";
-import itemArticle from "./component/itemArticle";
-import itemVote from "./component/itemVote";
-import itemForwardTitle from "./component/itemForwardTitle";
+// import itemTopTitle from "./component/itemTopTitle";
+// import itemLink from "./component/itemLink";
+// import itemImage from "./component/itemImage";
+// import itemGif from "./component/itemGif";
+// import itemVideo from "./component/itemVideo";
+// import itemIframeVideo from "./component/itemIframeVideo";
+// import itemArticle from "./component/itemArticle";
+// import itemVote from "./component/itemVote";
+// import itemForwardTitle from "./component/itemForwardTitle";
+
+import 'moment/locale/zh-cn'
+import moment from 'moment'
 
 import forwardH5 from "../h5/forward";
 export default {
@@ -196,6 +211,7 @@ export default {
         dialogVisible: false,
         data: {},
       },
+      moment: moment,
     };
   },
   props: {
@@ -240,15 +256,15 @@ export default {
     forward,
     forwardH5,
     videoDialog,
-    itemTopTitle,
-    itemLink,
-    itemImage,
-    itemGif,
-    itemIframeVideo,
-    itemArticle,
-    itemVote,
-    itemForwardTitle,
-    itemVideo,
+    // itemTopTitle,
+    // itemLink,
+    // itemImage,
+    // itemGif,
+    // itemIframeVideo,
+    // itemArticle,
+    // itemVote,
+    // itemForwardTitle,
+    // itemVideo,
   },
   created() {
     this.top = localStorage.getItem("storedata")
@@ -273,6 +289,44 @@ export default {
   },
   destroyed() {},
   methods: {
+    doType(item){
+        var t = item.type;
+        switch (t){
+            case 'link': return '链接';break;
+            case 'gif': return 'GIF';break;
+            case 'image': return '图片';break;
+            case 'inner_video': return '视频';break;
+            case 'article': return '文章';break;
+            case 'vote': return '投票';break;
+            case 'forward': return '转发';break;
+            default: return '其他';
+        }
+    },
+    doImageUrl(item){
+        var t = item.type;
+        switch (t){
+            case 'link':
+            case 'gif':
+            return this.doLink(item);
+            break;
+            case 'inner_video': return this.imgOrigin+item['video']+'?x-oss-process=video/snapshot,t_0,h_500';break;
+            case 'article': return this.imgOrigin+'biz/b64193b7beca6ae243341273adddf494.png?x-oss-process=image/resize,h_150';break;
+            case 'image':return this.imgOrigin+item.imageName+'?x-oss-process=image/resize,h_150';break;
+            case 'forward': return this.doImageUrl(item.sourcePost);break;
+            
+        }
+    },
+    doLink(item){
+        if(item.cover){
+            if(item.cover.includes('.ico')){
+                return this.imgOrigin+item.cover;
+            }else{
+                return this.imgOrigin+item.cover+'?x-oss-process=image/resize,h_150';
+            }
+        }else{
+            return this.imgOrigin+'biz/b06148ccba2c8b527d979942131a9fd9.png?x-oss-process=image/resize,h_150'
+        }
+    },
     callBack(index, data) {
       console.log(index, data);
       this.lists.splice(index, 1, data);
@@ -391,40 +445,43 @@ export default {
     share(item) {
       this.message = location.origin + "/p/" + item.postId;
     },
-    toDetail(item) {
-      this.lists.forEach((i) => {
-        i.play = false;
-      });
+    toDetail(item,bool) {
       if (this.canTo) {
-        if (this.whichOne) {
-          localStorage.setItem("whichOne", this.whichOne);
+        if(bool||item.type!='link'){
+            if (this.whichOne) {
+            localStorage.setItem("whichOne", this.whichOne);
+            }
+            this.canTo = false;
+            let obj = {
+            list: this.lists,
+            };
+            let top = this.$(".infinite-list").scrollTop();
+            console.log("top", top);
+            this.$(".infinite-list").animate({ scrollTop: top || "+=0" }, 1000);
+            obj.top = top;
+            obj.forumId = item.forumId;
+            obj.from = {
+            params: this.$route.params,
+            query: this.$route.query,
+            path: this.$route.path,
+            };
+            obj.pagenum = this.pagenum;
+            obj.marker = this.marker;
+            obj.key = this.keys;
+            this.postBehavior(item.postId, "detail");
+            localStorage.setItem("storedata", JSON.stringify(obj));
+            
+            this.$router.push({
+                name: "articleDetail",
+                params: { postId: item.postId },
+            });
+            setTimeout(() => {
+            this.canTo = true;
+            }, 1000);
+        }else{
+            window.open(item.link,'_blank')
         }
-        this.canTo = false;
-        let obj = {
-          list: this.lists,
-        };
-        let top = this.$(".infinite-list").scrollTop();
-        console.log("top", top);
-        this.$(".infinite-list").animate({ scrollTop: top || "+=0" }, 1000);
-        obj.top = top;
-        obj.forumId = item.forumId;
-        obj.from = {
-          params: this.$route.params,
-          query: this.$route.query,
-          path: this.$route.path,
-        };
-        obj.pagenum = this.pagenum;
-        obj.marker = this.marker;
-        obj.key = this.keys;
-        this.postBehavior(item.postId, "detail");
-        localStorage.setItem("storedata", JSON.stringify(obj));
-        this.$router.push({
-          name: "articleDetail",
-          params: { postId: item.postId },
-        });
-        setTimeout(() => {
-          this.canTo = true;
-        }, 1000);
+        
       }
     },
     toUrls(item, params) {
@@ -491,6 +548,18 @@ export default {
     width: 100%;
   }
 }
+.item{
+    margin-bottom: 2px;
+    padding-top: 7px;
+    padding-bottom: 7px;
+    padding-right: 10px;
+}
+.item .tools_p{
+    justify-content: space-between;
+}
+.item .tools_p div{
+    margin-right: 0;
+}
 .title {
   padding: 0 0 10px 0;
   font-size: 16px;
@@ -518,31 +587,63 @@ export default {
     display: flex;
     justify-content: space-between;
     .sim_img{
-        flex: 0 0 100px;
-        height: 90px;
+        flex: 0 0 60px;
+        height: 60px;
         margin-right: 10px;
+        overflow: hidden;
+        border-radius: 4px;
+    }
+    .sim_img_r{
+        width: 60px;
+        height: 60px;
+        text-align: center;
+        background-size: cover;
+        // background-size: contain;
+        // background-size: 100px 90px;
+        background-position: center;
+        background-repeat: no-repeat;
+        
+        transition:all .5s;
         img{
-            border-radius: 4px;
-            width: 100%;
-            height: 100%;
+            
+            width: auto;
+            height: auto;
+
         }
+        
+    }
+    &:hover .sim_img_r{
+        transform: scale(1.1);
+        transition:all .5s;
     }
     .sim_content{
         flex: 1;
-        height: 90px;
+        // height: 90px;
         justify-content: space-between;
         display: flex;
         flex-direction: column;
         .title{
             padding-bottom: 4px;
         }
+        .sim_tab{
+            font-size: 16px;
+            color: #888;
+            font-weight: normal;
+        }
         .sim_info{
-            font-size: 14px;
+            font-size: 12px;
+            span{
+                padding-right: 10px;
+            }
             .sim_forum{
+                font-size: 13px;
                 img{
                     width: 30px;
                     height: 30px;
                 }
+            }
+            .from{
+                color: #999;
             }
         }
     }

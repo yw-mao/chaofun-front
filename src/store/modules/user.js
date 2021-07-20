@@ -12,6 +12,7 @@ const state = {
   roles: ['admin'],
   logStatus: '',
   showDownApp: true,
+  listMode: localStorage.getItem('listMode')||'normal'
 }
 
 const mutations = {
@@ -32,6 +33,9 @@ const mutations = {
   },
   SET_showDownApp: (state,showDownApp) => {
     state.showDownApp = showDownApp
+  },
+  SET_listMode: (state,listMode) => {
+    state.listMode = listMode
   }
 }
 
@@ -163,6 +167,11 @@ const actions = {
   },
   SET_logStatus({ commit, state }, data){
     commit('SET_logStatus',data);
+  },
+  SET_listMode({ commit, state }, data){
+    console.log(data);
+    localStorage.setItem('listMode',data);
+    commit('SET_listMode',data);
   }
 }
 

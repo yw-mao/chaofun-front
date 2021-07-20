@@ -2,17 +2,17 @@
  <div class="nkl">  
     <div class="c_top_nav">
         <div v-for="(item,index) in options" @click="chooseNav(index,item)" :key="index" :class="['c_nav_item',{'c_nav_item_active': params.order ==item.value}]">
-            <img v-if="index==0" class="img1" src="../../../assets/newicon/new.png" alt="">
-            <img v-if="index==0" class="img2" src="../../../assets/newicon/new_a.png" alt="">
+            <img v-show="index==0" class="img1" src="../../../assets/newicon/new.png" alt="">
+            <img v-show="index==0" class="img2" src="../../../assets/newicon/new_a.png" alt="">
 
-            <img v-if="index==1" class="img1" src="../../../assets/newicon/hot.png" alt="">
-            <img v-if="index==1" class="img2" src="../../../assets/newicon/hot_a.png" alt="">
+            <img v-show="index==1" class="img1" src="../../../assets/newicon/hot.png" alt="">
+            <img v-show="index==1" class="img2" src="../../../assets/newicon/hot_a.png" alt="">
 
-            <img v-if="index==2" class="img1" src="../../../assets/newicon/comment.png" alt="">
-            <img v-if="index==2" class="img2" src="../../../assets/newicon/comment_a.png" alt="">
+            <img v-show="index==2" class="img1" src="../../../assets/newicon/comment.png" alt="">
+            <img v-show="index==2" class="img2" src="../../../assets/newicon/comment_a.png" alt="">
 
-            <img v-if="index==3" class="img1" src="../../../assets/newicon/up.png" alt="">
-            <img v-if="index==3" class="img2" src="../../../assets/newicon/up_a.png" alt="">
+            <img v-show="index==3" class="img1" src="../../../assets/newicon/up.png" alt="">
+            <img v-show="index==3" class="img2" src="../../../assets/newicon/up_a.png" alt="">
             {{item.label}}
         </div>
         <el-select v-if="!ISPHONE&&params.order ==='ups'" v-model="params.range" placeholder="请选择"
@@ -24,7 +24,12 @@
                 :value="item.value">
             </el-option>
         </el-select>
-        <div style="flex:1;text-align:right;">模式选择</div>
+        <div style="flex:1;text-align:right;">
+          <img v-show="$store.state.user.listMode=='normal'" title="缩略视图" @click="checkoutMode('simple')" class="mode_icon" src="../../../assets/images/icon/mode_list.png" alt="">
+          <img v-show="$store.state.user.listMode=='simple'" title="缩略视图" @click="checkoutMode('simple')" class="mode_icon" src="../../../assets/images/icon/mode_list2.png" alt="">
+          <img v-show="$store.state.user.listMode=='simple'" title="扩展视图" @click="checkoutMode('normal')" class="mode_icon" src="../../../assets/images/icon/mode_normal.png" alt="">
+          <img v-show="$store.state.user.listMode=='normal'" title="扩展视图" @click="checkoutMode('normal')" class="mode_icon" src="../../../assets/images/icon/mode_normal2.png" alt="">
+        </div>
     </div>
     <div v-if="ISPHONE&&params.order ==='ups'" class="phones">
       <el-select v-model="params.range" placeholder="请选择"
@@ -115,6 +120,9 @@
     
    },
    methods: {
+    checkoutMode(v){
+      this.$store.dispatch('user/SET_listMode',v)
+    },
     changes() {
         localStorage.setItem('chao.fun.timeline.order', this.params.order);
         localStorage.setItem('chao.fun.timeline.range', this.params.range);
@@ -147,5 +155,19 @@
   height: 34px;
   text-align: left;
   // margin-bottom: ;
+}
+.mode_icon{
+  width: 26px;
+  margin-top: 4px;
+  margin-right: 10px;
+  cursor: pointer;
+}
+@media (max-width: 374px) {
+  .c_top_nav .c_nav_item{
+    // padding: 4px 8px;
+    padding: 4px 2px;
+    background: none;
+    // flex: 1;
+  }
 }
 </style>
