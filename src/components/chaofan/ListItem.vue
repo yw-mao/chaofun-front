@@ -44,6 +44,7 @@
           :item="item"
           :isindex="isindex"
           @deletePost="deletePost"
+          @doFocued="doFocued"
           :index="index"
         ></itemTopTitle>
         <!-- 链接 -->
@@ -59,6 +60,9 @@
           @click.stop="toUrls(item, { url: item.link, routeType: 1 })"
           :item="item"
         ></itemLink>
+        <div v-if="item.type!='link'" class="title">
+          {{item.title}}
+        </div>
         <!-- 图片 -->
         <itemImage v-if="item.type == 'image'" :item="item"></itemImage>
 
@@ -73,9 +77,9 @@
           <!-- 内部视频 -->
           <div v-if="item.type == 'inner_video'" class="inner_videoc">
             <div v-if="!item.play" class="item_video">
-              <div @click.stop="toDetail(item)" class="title">
+              <!-- <div @click.stop="toDetail(item)" class="title">
                 {{ item.title }}
-              </div>
+              </div> -->
               <div @click="playVideo(index, item, 0)" :class="['inner_prev', { inner_prev_phone: ISPHONE }]">
                 <img
                   class="coverss"
@@ -110,9 +114,9 @@
           "
           class="item_video"
         >
-          <div class="title">
+          <!-- <div class="title">
             {{ item.title }}
-          </div>
+          </div> -->
           <div @click.stop="" class="video">
             <img
               v-if="!item.play && item.cover"
@@ -212,6 +216,9 @@
               "
               :item="item.sourcePost"
             ></itemLink>
+            <div v-if="item.sourcePost.type!='link'" class="title">
+              {{item.sourcePost.title}}
+            </div>
             <!-- 图片 -->
             <itemImage
               v-if="item.sourcePost.type == 'image'"
@@ -550,6 +557,19 @@ export default {
   },
   destroyed() {},
   methods: {
+    doFocued(bool,id){
+      this.lists.forEach(it=>{
+        if(it.userInfo.userId == id){
+          console.log()
+          if(bool){
+            it.userInfo.focused = false;
+          }else{
+            it.userInfo.focused = true;
+          }
+          
+        }
+      })
+    },
     callBack(index, data) {
       console.log(index, data);
       this.lists.splice(index, 1, data);
@@ -832,7 +852,7 @@ export default {
   line-height: 230px;
 }
 .inner_videoc {
-  min-height: 350px;
+  min-height: 330px;
 }
 @media screen and (max-width: 700px) {
   .inner_videoc {

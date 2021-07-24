@@ -1,9 +1,9 @@
 <template>
  <div>  
     <div  class="item_video">
-        <div class="title">
+        <!-- <div class="title">
             {{item.title}}
-        </div>
+        </div> -->
         <div  @click.stop="" class="video">
             <img v-if="!item.play&&item.cover" class="coverss" @click="playVideo(index,item,0)" :src="imgOrigin+item.cover + '?x-oss-process=image/resize,h_256'" alt="">
             <img v-if="!item.play&&!item.cover" class="coverss" @click="playVideo(index,item,0)" src="../../../assets/images/bg/videocover.jpg" alt="">

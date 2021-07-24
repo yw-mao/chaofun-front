@@ -14,7 +14,12 @@
       </div>
       <div class="rights" :style="{'width':ISPHONE?imgMaxWidth+'px':''}">
         <!-- 头部 -->
-        <itemTopTitle :item="item" :isindex="true"></itemTopTitle>
+        <itemTopTitle @doFocued="doFocued" :item="item" :isindex="true"></itemTopTitle>
+        
+        <div v-if="item.type!='link'" class="title">
+          {{item.title}}
+        </div>
+        
         <!-- 链接 -->
         <itemLink v-if="item.type == 'link'|| (ISPHONE&&item.type == 'video'&&item.videoType == 'ifram')&&item.link.includes('www.acfun.cn')" @click.stop="toUrls(item,{url:item.link,routeType: 1})" :item="item"></itemLink>
         <!-- 图片 -->
@@ -26,9 +31,9 @@
 
         <!-- iframe视频 -->
         <div v-if="item.type == 'video'&&item.videoType == 'ifram'&&(!ISPHONE||!item.link.includes('www.acfun.cn'))" class="item_video">
-          <div class="title">
+          <!-- <div class="title">
             {{item.title}}
-          </div>
+          </div> -->
           <div class="video">
             <iframe v-if="!ISPHONE" style="width: 100%; height: 500px"   :src="item.video" id="ACPlayer-re"  scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>
             <iframe v-if="ISPHONE" style="width: 100%;height: 230px"   :src="item.video" id="ACPlayer-re"  scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>
@@ -44,9 +49,9 @@
 
         <!-- 转发 -->
         <div v-if="item.type == 'forward'" class="item_forward">
-          <div class="title">
+          <!-- <div class="title">
             {{item.title}}
-          </div>
+          </div> -->
           <div @click.stop="toDetail(item.sourcePost)" class="forward_border">
             <!-- 链接 -->
             
@@ -226,6 +231,19 @@
 
     },
     methods: {
+      doFocued(bool,id){
+        this.lists.forEach(it=>{
+          if(it.userInfo.userId == id){
+            console.log()
+            if(bool){
+              it.userInfo.focused = false;
+            }else{
+              it.userInfo.focused = true;
+            }
+            
+          }
+        })
+      },
       callBack(index, data) {
         this.lists.splice(0, 1, data);
       },

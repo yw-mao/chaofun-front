@@ -27,6 +27,9 @@
                     <itemTopTitle :item="item.postInfo" :isindex="isindex" @deletePost="deletePost" :index="index"></itemTopTitle>
                     <!-- 链接 -->
                     <itemLink :isindex="isindex" v-if="item.postInfo.type == 'link'|| (ISPHONE&&item.postInfo.type == 'video'&&item.postInfo.videoType == 'ifram')&&item.postInfo.link.includes('www.acfun.cn')"  :item="item.postInfo"></itemLink>
+                    <div v-if="item.postInfo.type!='link'" class="title">
+                      {{item.postInfo.title}}
+                    </div>
                     <!-- 图片 -->
                     <itemImage v-if="item.postInfo.type == 'image'" :item="item.postInfo"></itemImage>
                     <!-- 视频 -->

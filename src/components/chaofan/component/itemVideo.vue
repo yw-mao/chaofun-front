@@ -1,9 +1,9 @@
 <template>
   <div>
     <div :class="['item_video', { phone_v: ISPHONE }]">
-      <div class="title">
+      <!-- <div class="title">
         {{ item.title }}
-      </div>
+      </div> -->
       <div :id="'video' + item.postId" class="video">
         <video
           :class="[doHeight()]"

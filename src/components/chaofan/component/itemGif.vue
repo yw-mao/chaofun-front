@@ -1,9 +1,9 @@
 <template>
  <div>  
     <div class="item_video">
-        <div @click="toDetail" class="title">
+        <!-- <div @click="toDetail" class="title">
             {{item.title}}
-        </div>
+        </div> -->
         <div class="video">
             <video :class="[isDetail?'video2':'']" webkit-playsinline='true' playsinline='true' autoplay controls loop  :src="imgOrigin+item.imageName" alt=""></video>
         </div>
