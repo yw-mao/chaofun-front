@@ -660,5 +660,14 @@ export function getForumTopUps(params) {
   })
 }
 
+export function Olympics2020Rank(params) {
+  return request({
+    url: '/api/v0/Olympics2020Rank',
+    method: 'get',
+    params
+  })
+}
+
+
 /** 活动查询 */
 

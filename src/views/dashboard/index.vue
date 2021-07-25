@@ -36,7 +36,7 @@
           </div>
         </el-col> -->
         <div class="fixed_r" :style="doRightStyle()">
-          <div v-if="!ISPHONE" style="min-width:300px;padding-top: 60px;" class="grid-content bg-purple content-right">
+          <div v-if="!ISPHONE" style="min-width:300px;padding-top: 10px;" class="grid-content bg-purple content-right">
             <RightDescribe :forumInfo="forumInfo" @getForumInfo="getForumInfo" :islogin="islogin"></RightDescribe>
           </div>
         </div>

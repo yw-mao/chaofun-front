@@ -22,7 +22,7 @@
           </div>
         </el-col> -->
         <div v-if="!ISPHONE&&clientWidth>865" class="fixed_r" :style="doRightStyle()">
-          <div v-if="!ISPHONE" style="min-width:300px;padding-top: 60px;" class="grid-content bg-purple content-right">
+          <div v-if="!ISPHONE" style="min-width:300px;padding-top: 10px;" class="grid-content bg-purple content-right">
             <RightCom :forumInfo="forumInfo" @getForumInfo="getForumInfo" :islogin="islogin"></RightCom>
           </div>
         </div>
