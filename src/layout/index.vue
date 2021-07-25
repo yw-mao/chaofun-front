@@ -2,7 +2,44 @@
   <div :class="classObj" class="app-wrapper" :style="doTheme('bodyStyle')">
     <div v-if="device==='mobile'&&sidebar.opened" class="drawer-bg" @click="handleClickOutside" />
     <sidebar :style="ISPHONE?{backgroundColor: '#fff'}:doTheme('sidebarStyle')" class="sidebar-container"  />
-    
+    <div :class="['fixed_l',{'fixed_l_none':clientWidth<1760},{'fixed_l_block':(clientWidth<1760&&clientWidth>1340)&&!$store.getters.sidebar.opened}]" :style="doLeftStyle()">
+      <div v-if="!ISPHONE" class="aoyun">
+        <div class="poster">
+          <a target="_blank" href="https://olympics.com/tokyo-2020/olympic-games/zh/results/all-sports/medal-standings.htm">
+          <img class="" src="./image/aoyun/poster.jpg" alt=""></a>
+          
+        </div>
+        <div class="ao_title">
+          <div class="order">排名</div>
+          <div class="country">国家/地区</div>
+          <div class="score"><img src="./image/aoyun/1.png" alt=""></div>
+          <div class="score"><img src="./image/aoyun/2.png" alt=""></div>
+          <div class="score"><img src="./image/aoyun/3.png" alt=""></div>
+          <div class="score">总计</div>
+        </div>
+        <div class="ao_list">
+          <div v-for="(item,index) in aoData" :key="index" class="ao_title ao_item">
+            <div class="order">{{index+1}}</div>
+            <div class="country" title="中国加油">
+              <img class="country_img" :src="item.imageUrl" alt="">
+              {{item.country}}
+            </div>
+            <div class="score">
+              {{item.gold}}
+            </div>
+            <div class="score">
+              {{item.silver}}
+            </div>
+            <div class="score">
+              {{item.bronze}}
+            </div>
+            <div class="score">
+              {{item.total}}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
     <div :class="[{hasTagsView:true||needTagsView},'main-container']">
       <div :class="{'fixed-header':fixedHeader}">
         <navbar :islogin="islogin" :userinfo="userinfo" />
@@ -30,6 +67,8 @@ import Vue from 'vue'
 import login from '@/components/chaofan/common/login/login.js'
 // Vue.use(login);
 Vue.prototype.$login = login
+import * as api from '@/api/api'
+import RightDescribe from '@/components/chaofan/RightDescribe'
 
 
 console.log("探寻这里的秘密，\n找到自己的最爱，\n成为这里的主人，\n炒饭-新趣、分享、交流");
@@ -51,13 +90,14 @@ export default {
     Settings,
     Sidebar,
     BackgroundSet,
-    lottery
+    lottery,
+    RightDescribe
     // TagsView
   },
   data(){
     return {
       // logStatus: ''
-      
+      aoData: []
     }
   },
   mixins: [ResizeMixin],
@@ -82,13 +122,17 @@ export default {
     },
   },
   mounted(){
-    
+    this.Olympics2020Rank();
   },
   methods: {
     cancelRegisterSuccess(){
       this.getUserInfo()
     },
-    
+    Olympics2020Rank(){
+      api.Olympics2020Rank({}).then(res=>{
+        this.aoData = res.data
+      })
+    },
     handleClickOutside() {
       this.$store.dispatch('app/closeSideBar', { withoutAnimation: false })
     }
@@ -186,5 +230,71 @@ export default {
       color: #e23d0e;
     }
   }
+}
+.fixed_l{
+  position: fixed;
+  top: 60px;
+  z-index: 1000;
+  width: 260px;
+  height: 800px;
+  // background: red;
+}
+.ao_title{
+  background: #b11d33;
+  color: #fff;
+  display: flex;
+  line-height: 60px;
+  // text-align: center;
+}
+.order{
+  flex: 0 0 34px;
+  text-align: center;
+  margin-right: 4px;
+}
+.country{
+  flex: 1;
+  overflow: hidden;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+.score{
+  flex: 0 0 30px;
+  text-align: center;
+  
+  img{
+    width: 18px;
+    vertical-align: middle;
+  }
+}
+.ao_item{
+  background: #fff;
+  color: #666;
+  line-height: 48px;
+}
+.country{
+  font-weight: bold;
+  .country_img{
+    width: 38px;
+    vertical-align: middle;
+    margin-right: 2px;
+  }
+}
+.poster{
+  height: 104px;
+  overflow: hidden;
+  img{
+    width: 100%;
+  }
+}
+.aoyun{
+  padding-bottom: 20px;
+  background: #fff;
+}
+.fixed_l_none{
+  display: none;
+}
+.fixed_l_block{
+  display: block;
 }
 </style>
