@@ -1,9 +1,9 @@
 <template>
  <div>  
     <div  class="item_article">
-        <div class="title">
+        <!-- <div class="title">
         {{item.title}}
-        </div>
+        </div> -->
         <div  @click.stop="" :class="['vote']">
             <div class="vote_header">
                 <div>投票：{{item.optionVoteCount}}人</div>
@@ -17,13 +17,13 @@
             </div>
             <div v-if="checkoutVote(item.options)" class="has_choose">
                 <div v-for="(its,ind) in item.options" :key="ind" class="a">
-                <div class="bg" :style="{width: doBg(its,item.options)}"></div>
-                <div class="b">
-                    <div class="c"><span>{{its.optionVote}}</span> {{its.optionName}}</div>
-                    <div class="icons">
-                    <img v-if="item.chooseOption==(ind+1)" src="../../../assets/images/icon/success.png" alt="">
-                    </div>
-                </div>
+                  <div class="bg" :style="{width: doBg(its,item.options)}"></div>
+                  <div class="b">
+                      <div class="c"><span>{{its.optionVote}}</span> {{its.optionName}}</div>
+                      <div class="icons">
+                        <img v-if="item.chooseOption==(ind+1)" src="../../../assets/images/icon/success.png" alt="">
+                      </div>
+                  </div>
                 </div>
             </div>
             <div v-if="!checkoutVote(item.options)" class="vote_bottom">
@@ -186,9 +186,12 @@ import * as api from '@/api/api'
         display: flex;
         width: 100%;
         padding: 4px 10px;
-        // height: 40px;
+        min-height: 40px;
         .c{
+          align-items: center;
           flex: 1;
+          display: flex;
+          align-items: center;
           span{
             display: inline-block;
             width: 30px;

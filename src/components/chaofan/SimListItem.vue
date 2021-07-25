@@ -65,6 +65,125 @@
                         大约 {{moment.duration(moment(item.gmtCreate) - moment()).humanize(true)}}
                     </span>
                 </div>
+                <div v-if="item.showPreview&&item.type!='link'" class="preview">
+                              <!-- 图片 -->
+                    <itemImage v-if="item.type == 'image'" :item="item"></itemImage>
+
+                    <div @click.stop="">
+                      <!-- 视频 -->
+                      <itemGif
+                        @toDetail="toDetail"
+                        v-if="item.type == 'gif'"
+                        :isDetail="false"
+                        :item="item"
+                      ></itemGif>
+                      <!-- 内部视频 -->
+                      <div v-if="item.type == 'inner_video'" class="inner_videoc">
+                        <div v-if="!item.play" class="item_video">
+                          
+                          <div @click="playVideo(index, item, 0)" :class="['inner_prev', { inner_prev_phone: ISPHONE }]">
+                            <img
+                              class="coverss"
+                              
+                              :src="
+                                imgOrigin + item.video + '?x-oss-process=video/snapshot,t_0'
+                              "
+                              alt=""
+                            />
+                            <img
+                              class="inner_play"
+                              src="../../assets/images/bg/play.png"
+                              alt=""
+                            />
+                          </div>
+                        </div>
+                        <itemVideo
+                          v-if="item.play"
+                          @toPause="playVideo"
+                          :isDetail="false"
+                          :item="item"
+                        ></itemVideo>
+                      </div>
+                    </div>
+
+                    <!-- iframe视频 -->
+                    <div
+                      v-if="
+                        item.type == 'video' &&
+                        item.videoType == 'ifram' &&
+                        (!ISPHONE || !item.link.includes('www.acfun.cn'))
+                      "
+                      class="item_video"
+                    >
+                      <div @click.stop="" class="video">
+                        <img
+                          v-if="!item.play && item.cover"
+                          class="coverss"
+                          @click="playVideo(index, item, 0)"
+                          :src="
+                            imgOrigin + item.cover + '?x-oss-process=image/resize,h_256'
+                          "
+                          alt=""
+                        />
+                        <img
+                          v-if="!item.play && !item.cover"
+                          class="coverss"
+                          @click="playVideo(index, item, 0)"
+                          src="../../assets/images/bg/videocover.jpg"
+                          alt=""
+                        />
+                        <img
+                          v-if="!item.play"
+                          class="btn_play"
+                          @click="playVideo(index, item, 0)"
+                          src="../../assets/images/bg/play.png"
+                          alt=""
+                        />
+                        <iframe
+                          v-if="!ISPHONE && item.play"
+                          style="width: 100%; min-height: 370px"
+                          :src="
+                            item.video +
+                            (item.link.includes('www.acfun.cn') ? '?' : '') +
+                            '&autoplay=true'
+                          "
+                          allow="autoplay"
+                          id="ACPlayer-re"
+                          scrolling="no"
+                          border="0"
+                          frameborder="no"
+                          framespacing="0"
+                          allowfullscreen="true"
+                        ></iframe>
+                        <iframe
+                          v-if="ISPHONE && item.play"
+                          style="width: 100%; height: 230px"
+                          :src="
+                            item.video +
+                            (item.link.includes('www.acfun.cn') ? '?' : '') +
+                            '&autoplay=true'
+                          "
+                          allow="autoplay"
+                          id="ACPlayer-re"
+                          scrolling="no"
+                          border="0"
+                          frameborder="no"
+                          framespacing="0"
+                          allowfullscreen="true"
+                        ></iframe>
+                      </div>
+                    </div>
+                    <!-- 富文本 -->
+                    <itemArticle v-if="item.type == 'article'" :item="item"></itemArticle>
+
+                    <!-- 投票 -->
+                    <itemVote
+                      v-if="item.type == 'vote'"
+                      @callBack="callBack"
+                      :index="index"
+                      :item="item"
+                    ></itemVote>
+                </div>
                 <div :class="['tools',{'tools_p': ISPHONE}]">
                     <!-- <div><i class="el-icon-star-on"></i> <span>{{item.ups-item.downs}}</span> 点赞</div> -->
                     <div v-if="ISPHONE">
@@ -144,6 +263,9 @@
                     >
                         <i class="el-icon-s-help"></i> <span style="padding:0 2px;">{{ item.save ? "已收藏" : "收藏" }}</span> 
                     </div>
+                    <div v-if="!ISPHONE" @click.stop="topreview(item,index)" class="looks">
+                      {{item.showPreview?'收起':doLookType(item)}}
+                    </div>
                     </div>
             </div>
             
@@ -184,13 +306,13 @@ import "vant/lib/dialog/style";
 Vue.use(VueClipboard);
 
 // import itemTopTitle from "./component/itemTopTitle";
-// import itemLink from "./component/itemLink";
-// import itemImage from "./component/itemImage";
-// import itemGif from "./component/itemGif";
-// import itemVideo from "./component/itemVideo";
-// import itemIframeVideo from "./component/itemIframeVideo";
-// import itemArticle from "./component/itemArticle";
-// import itemVote from "./component/itemVote";
+import itemLink from "./component/itemLink";
+import itemImage from "./component/itemImage";
+import itemGif from "./component/itemGif";
+import itemVideo from "./component/itemVideo";
+import itemIframeVideo from "./component/itemIframeVideo";
+import itemArticle from "./component/itemArticle";
+import itemVote from "./component/itemVote";
 // import itemForwardTitle from "./component/itemForwardTitle";
 
 import 'moment/locale/zh-cn'
@@ -258,13 +380,13 @@ export default {
     videoDialog,
     // itemTopTitle,
     // itemLink,
-    // itemImage,
-    // itemGif,
-    // itemIframeVideo,
-    // itemArticle,
-    // itemVote,
+    itemImage,
+    itemGif,
+    itemIframeVideo,
+    itemArticle,
+    itemVote,
     // itemForwardTitle,
-    // itemVideo,
+    itemVideo,
   },
   created() {
     this.top = localStorage.getItem("storedata")
@@ -289,6 +411,28 @@ export default {
   },
   destroyed() {},
   methods: {
+    doLookType(item){
+      if(item.type=='image'){
+        return '查看图片'
+      }else if(item.type=='gif'){
+        return '查看GIF'
+      }else if(item.type == 'inner_video'){
+        return '查看视频'
+      }else if(item.type == 'link'){
+        return '跳转链接'
+      }else{
+        return '查看';
+      }
+    },
+    topreview(item,index){
+      if(item.type!='link'){
+        item.showPreview = !item.showPreview;
+        this.lists.splice(index,1,item);
+      }else{
+        window.open(item.link,'_blank')
+      }
+      
+    },
     doType(item){
         var t = item.type;
         switch (t){
@@ -553,6 +697,11 @@ export default {
     padding-top: 7px;
     padding-bottom: 7px;
     padding-right: 10px;
+    position: relative;
+    &:hover .tools .looks{
+      display: block;
+      color: #1890ff;
+    }
 }
 .item .tools_p{
     justify-content: space-between;
@@ -647,5 +796,60 @@ export default {
             }
         }
     }
+}
+.item .tools .looks{
+  position: absolute;
+  right: -10px;
+  bottom: 0px;
+  margin-right: 0;
+  font-size: 12px;
+  padding: 0 10px;
+  -webkit-touch-callout:none; /*系统默认菜单被禁用*/
+  -webkit-user-select:none; /*webkit浏览器*/
+  -khtml-user-select:none; /*早期浏览器*/
+  -moz-user-select:none;/*火狐*/
+  -ms-user-select:none; /*IE10*/
+  user-select:none; 
+  display: none;
+}
+.preview{
+  // height: 310px;
+  margin: 10px 0;
+  background: #f1f1f1;
+  
+}
+.inner_prev {
+  height: 320px;
+  line-height: 310px;
+  position: relative;
+  text-align: center;
+  background: #000;
+  img {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    vertical-align: middle;
+  }
+  .inner_play {
+    position: absolute;
+    left: 20px;
+    bottom: 20px;
+    z-index: 10;
+    width: 60px;
+    height: 60px;
+  }
+}
+.inner_prev_phone {
+  height: 230px;
+  line-height: 230px;
+}
+.inner_videoc {
+  min-height: 320px;
+}
+@media screen and (max-width: 700px) {
+  .inner_videoc {
+    min-height: 290px;
+  }
 }
 </style>

@@ -4,7 +4,7 @@
         <div>
             <img v-if="isindex" class="icon" :src="imgOrigin+item.forum.imageName+'?x-oss-process=image/resize,h_80'" alt="">
             <span @click.stop="" v-if="isindex" class="module_name">
-                <b @click.stop="toUrls(item,{url: '/f/'+item.forumId, routeType:1})"> {{item.forum.name}} </b>
+                <b @click.stop="toForum(item)"> {{item.forum.name}} </b>
                 <div class="hovercon">
                     <div>
                         <img style="" class="imgs" :src="imgOrigin+item.forum.imageName+'?x-oss-process=image/resize,h_80'" alt="">
@@ -99,6 +99,10 @@ import moment from 'moment'
     
    },
    methods: {
+    toForum(item){
+      localStorage.removeItem('storedata')
+      this.toUrls(item,{url: '/f/'+item.forumId, routeType:1});
+    },
     deletePost(item,index){
        if(this.ISPHONE){
          Dialog.confirm({
@@ -157,17 +161,8 @@ import moment from 'moment'
           }
         })
       }
-      this.lists.forEach(it=>{
-        if(it.userInfo.userId == id){
-          console.log()
-          if(bool){
-            it.userInfo.focused = false;
-          }else{
-            it.userInfo.focused = true;
-          }
-          
-        }
-      })
+      this.$emit('doFocued',bool,id)
+      
     },
    }
  }

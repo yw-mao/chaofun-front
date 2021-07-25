@@ -1,9 +1,9 @@
 <template>
  <div>  
     <div v-if="!isDetail" @click="toDetail(item)" class="item_article">
-                  <div class="title">
+                  <!-- <div class="title">
                     {{item.title}}
-                  </div>
+                  </div> -->
                   <div :class="['article',{'article_phone': ISPHONE}]">
                     <p  v-for="(_item,ins) in item.article.split('\n')" :key="ins">
                       <span v-html="_item"></span>
@@ -13,9 +13,9 @@
                 </div>
     
     <div v-if="isDetail" class="item_article">
-          <div class="title">
+          <!-- <div class="title">
             {{item.title}}
-          </div>
+          </div> -->
           <div @click.stop="" class="detail_line" :style="{width: ISPHONE?clientWidth-24+'px':'720px'}">
             <p  v-for="(_item,ins) in item.article.split('\n')" :key="ins">
               <span v-html="_item"></span>
@@ -102,7 +102,10 @@ import * as api from '@/api/api'
     // left: -50px;
   }
   .detail_line{
-    
+    width: 100%;
+    overflow: hidden;
+    word-break:break-all; /*支持IE，chrome，FF不支持*/
+　　word-wrap:break-word;/*支持IE，chrome，FF*/
     font-size: 15px;
   }
   /deep/ .detail_line p{

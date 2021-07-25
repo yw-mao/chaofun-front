@@ -1,9 +1,7 @@
 <template>
   <div>
     <div  v-if="item.type == 'image'" class="item_image">
-      <div class="title">
-        {{item.title}}
-      </div>
+      
       <div @click.stop="" v-if="item.imageNums==1" class="imgs">
         <viewer :images="[imgOrigin+item.imageName]">
           <img :src="imgOrigin+item.imageName" :data-source="imgOrigin+item.imageName" v-if="isDetail" :style="doImgStyle(item.width,item.height)" :alt="item.title" :title="item.title">
