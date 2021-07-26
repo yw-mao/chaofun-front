@@ -54,6 +54,13 @@
         <div @click="gotoAddForum" class="body-right">
           添加板块
         </div>
+        <div @click="goto24HForumRank" class="body-right">
+          24小时板块排名
+        </div>
+        <div @click="goto24HUserRank" class="body-right">
+          24小时用户排名
+        </div>
+
         <!-- <div class="advertise">
           <img src="https://i.chao.fun/654126b4d1f07fb84e3d43d8b3f696c9.jpg?x-oss-process=image/resize,h_512" alt="">
         </div> -->
@@ -232,6 +239,15 @@
           }
         })
       },
+
+      goto24HForumRank(){
+        this.$router.push({path: '/webview/forumRank'})
+      },
+
+      goto24HUserRank(){
+        this.$router.push({path: '/webview/userRank'})
+      },
+
       gotoSubmit(){
         this.doLoginStatus().then(res=>{
           if(res){

@@ -208,176 +208,6 @@ export const constantRoutes = [
         meta: { title: '管理'},
         hidden: true
       },
-      // ...store.state.permission.routes,
-      // {
-      //   path: '/f/2',
-      //   component: () => import('@/views/list/home'),
-      //   name: '/f/2',
-      //   meta: { title: '全网热门'},
-      //   hidden: true
-      // },
-      // {
-      //   path: '/f/3',
-      //   component: () => import('@/views/list/home'),
-      //   name: '/f/3',
-      //   meta: { title: 'Reddit'},
-      //   hidden: true
-      // },
-      // {
-      //   path: '/f/4',
-      //   component: () => import('@/views/list/home'),
-      //   name: '/f/4',
-      //   meta: { title: 'HackerNews中文'},
-      //   hidden: true
-      // },
-      // {
-      //   path: '/f/5',
-      //   component: () => import('@/views/list/home'),
-      //   name: '/f/5',
-      //   meta: { title: '游戏'},
-      //   hidden: true
-      // },
-      // {
-      //   path: '/f/6',
-      //   component: () => import('@/views/list/home'),
-      //   name: '/f/6',
-      //   meta: { title: '风景'},
-      //   hidden: true
-      // },
-      // {
-      //   path: '/f/7',
-      //   component: () => import('@/views/list/home'),
-      //   name: '/f/7',
-      //   meta: { title: '体育'},
-      //   hidden: true
-      // },
-      // {
-      //   path: '/f/8',
-      //   component: () => import('@/views/list/home'),
-      //   name: '/f/8',
-      //   meta: { title: '艺术'},
-      //   hidden: true
-      // },
-      // {
-      //   path: '/f/9',
-      //   component: () => import('@/views/list/home'),
-      //   name: '/f/9',
-      //   meta: { title: '萌宠'},
-      //   hidden: true
-      // },
-      // {
-      //   path: '/f/10',
-      //   component: () => import('@/views/list/home'),
-      //   name: '/f/10',
-      //   meta: { title: '二次元'},
-      //   hidden: true
-      // },
-      // {
-      //   path: '/f/11',
-      //   component: () => import('@/views/list/home'),
-      //   name: '/f/11',
-      //   meta: { title: '老照片'},
-      //   hidden: true
-      // },
-      // {
-      //   path: '/f/12',
-      //   component: () => import('@/views/list/home'),
-      //   name: '/f/12',
-      //   meta: { title: '星尘大海'},
-      //   hidden: true
-      // },
-      // {
-      //   path: '/f/13',
-      //   component: () => import('@/views/list/home'),
-      //   name: '/f/13',
-      //   meta: { title: '新闻'},
-      //   hidden: true
-      // },
-      // {
-      //   path: '/f/14',
-      //   component: () => import('@/views/list/home'),
-      //   name: '/f/14',
-      //   meta: { title: '极客'},
-      //   hidden: true
-      // },
-      // {
-      //   path: '/f/15',
-      //   component: () => import('@/views/list/home'),
-      //   name: '/f/15',
-      //   meta: { title: '电影'},
-      //   hidden: true
-      // },
-      // {
-      //   path: '/f/16',
-      //   component: () => import('@/views/list/home'),
-      //   name: '/f/16',
-      //   meta: { title: '炒饭发布'},
-      //   hidden: true
-      // },
-      // {
-      //   path: '/f/17',
-      //   component: () => import('@/views/list/home'),
-      //   name: '/f/17',
-      //   meta: { title: 'AB站'},
-      //   hidden: true
-      // },
-      // {
-      //   path: '/f/18',
-      //   component: () => import('@/views/list/home'),
-      //   name: '/f/18',
-      //   meta: { title: '科技'},
-      //   hidden: true
-      // },
-      // {
-      //   path: '/f/19',
-      //   component: () => import('@/views/list/home'),
-      //   name: '/f/19',
-      //   meta: { title: 'Linux'},
-      //   hidden: true
-      // },
-      // {
-      //   path: '/f/20',
-      //   component: () => import('@/views/list/home'),
-      //   name: '/f/20',
-      //   meta: { title: '财经'},
-      //   hidden: true
-      // },
-      // {
-      //   path: '/f/21',
-      //   component: () => import('@/views/list/home'),
-      //   name: '/f/21',
-      //   meta: { title: '滑稽'},
-      //   hidden: true
-      // },
-      // {
-      //   path: '/f/22',
-      //   component: () => import('@/views/list/home'),
-      //   name: '/f/22',
-      //   meta: { title: '炒饭日常'},
-      //   hidden: true
-      // },
-      // {
-      //   path: '/f/23',
-      //   component: () => import('@/views/list/home'),
-      //   name: '/f/23',
-      //   meta: { title: ''},
-      //   hidden: true
-      // },
-      // {
-      //   path: '/f/24',
-      //   component: () => import('@/views/list/home'),
-      //   name: '/f/24',
-      //   meta: { title: ''},
-      //   hidden: true
-      // },
-      // {
-      //   path: '/f/25',
-      //   component: () => import('@/views/list/home'),
-      //   name: '/f/25',
-      //   meta: { title: ''},
-      //   hidden: true
-      // },
-
       {
         path: '/all',
         component: () => import('@/views/dashboard/index'),
@@ -390,6 +220,20 @@ export const constantRoutes = [
         component: () => import('@/views/dashboard/index'),
         name: '/recommend',
         meta: { title: '推荐'},
+        hidden: true
+      },
+      {
+        path: '/webview/userRank',
+        component: () => import('@/views/chaofun-webview/activity/userRank'),
+        name: 'webViewUserRank',
+        meta: { title: '用户排名'},
+        hidden: true
+      },
+      {
+        path: '/webview/forumRank',
+        component: () => import('@/views/chaofun-webview/activity/forumRank'),
+        name: 'webViewForumRank',
+        meta: { title: '板块排名'},
         hidden: true
       },
       { path: '*', redirect: '/404', hidden: true }

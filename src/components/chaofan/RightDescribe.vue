@@ -40,6 +40,12 @@
         <div @click="gotoAddForum" class="body-right">
             添加板块
         </div>
+       <div @click="goto24HForumRank" class="body-right">
+         24小时板块排名
+       </div>
+       <div @click="goto24HUserRank" class="body-right">
+         24小时用户排名
+       </div>
 <!--        <div class="game">-->
 <!--          <div @click="toUrl({url: '/webview/buttonGame', routeType: 1})" class="title">The Button<span class="tab">第二届愚人节有奖活动</span></div>-->
 <!--          <div @click="toUrl({url: '/webview/buttonGame', routeType: 1})" class="advertise">-->
@@ -194,6 +200,14 @@ import * as api from '@/api/api'
         }
       })
     },
+
+     goto24HForumRank(){
+       this.$router.push({path: '/webview/forumRank'})
+     },
+
+     goto24HUserRank(){
+       this.$router.push({path: '/webview/userRank'})
+     },
     gotoSubmit(){
       this.doLoginStatus().then(res=>{
         if(res){

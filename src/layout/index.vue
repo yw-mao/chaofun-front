@@ -2,7 +2,7 @@
   <div :class="classObj" class="app-wrapper" :style="doTheme('bodyStyle')">
     <div v-if="device==='mobile'&&sidebar.opened" class="drawer-bg" @click="handleClickOutside" />
     <sidebar :style="ISPHONE?{backgroundColor: '#fff'}:doTheme('sidebarStyle')" class="sidebar-container"  />
-    <div :class="['fixed_l',{'fixed_l_none':clientWidth<1760},{'fixed_l_block':(clientWidth<1760&&clientWidth>1340)&&!$store.getters.sidebar.opened}]" :style="doLeftStyle()">
+    <div v-if="shouldShowOlympics()" :class="['fixed_l',{'fixed_l_none':clientWidth<1760},{'fixed_l_block':(clientWidth<1760&&clientWidth>1340)&&!$store.getters.sidebar.opened}]" :style="doLeftStyle()">
       <div v-if="!ISPHONE && shouldShowOlympics()" class="aoyun">
         <div class="poster">
           <a target="_blank" href="https://olympics.com/tokyo-2020/olympic-games/zh/results/all-sports/medal-standings.htm">
