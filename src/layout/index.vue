@@ -97,7 +97,8 @@ export default {
   data(){
     return {
       // logStatus: ''
-      aoData: []
+      aoData: [],
+      times: 1,
     }
   },
   mixins: [ResizeMixin],
@@ -122,9 +123,6 @@ export default {
     },
   },
   mounted(){
-    if ( shouldShowOlympics() ) {
-      this.Olympics2020Rank();
-    }
   },
   methods: {
     cancelRegisterSuccess(){
@@ -143,6 +141,10 @@ export default {
       let arrays = this.$route.path.split("/");
       console.log(arrays);
       if (arrays.length > 2 && arrays[arrays.length-2] === 'f' && arrays[arrays.length - 1] === '7') {
+        if (this.times === 1) {
+          this.Olympics2020Rank();
+          this.times += 1
+        }
         return true;
       }
       return false
