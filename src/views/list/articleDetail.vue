@@ -293,14 +293,70 @@ export default {
     },
     doZan(v,item){
        if(v==1){
-         api.upvote_post({postId:item.postId}).then(res=>{
-           item.ups += 1
-         })
+         if (item.vote != 1) {
+            if (item.vote == -1) {
+              item.ups += 2;
+            } else {
+              item.ups += 1;
+            }
+            item.vote = 1;
+          } else if (item.vote === 1) {
+            item.vote = 0;
+            item.ups -= 1;
+          }
+          // this.lists.splice(index, 1, item);
+          api.upvote_post({ postId: item.postId }).then((res) => {});
        }else{
-         api.downvote_post({postId:item.postId}).then(res=>{
-           item.ups -= 1
-         })
+         if (item.vote != -1) {
+          if (item.vote == 1) {
+            item.ups -= 2;
+          } else {
+            item.ups -= 1;
+          }
+          item.vote = -1;
+        } else if (item.vote === -1) {
+          item.vote = 0;
+          item.ups += 1;
+        }
+        api.downvote_post({ postId: item.postId }).then((res) => {});
        }
+    },
+    doZan2(v, item, index) {
+      if (v == 1) {
+        //赞
+        if (item.vote != 1) {
+          if (item.vote == -1) {
+            item.ups += 2;
+          } else {
+            item.ups += 1;
+          }
+          item.vote = 1;
+          this.lists.splice(index, 1, item);
+          api.upvote_post({ postId: item.postId }).then((res) => {});
+        } else if (item.vote === 1) {
+          item.vote = 0;
+          item.ups -= 1;
+          this.lists.splice(index, 1, item);
+          api.upvote_post({ postId: item.postId }).then((res) => {});
+        }
+      } else {
+        //踩
+        if (item.vote != -1) {
+          if (item.vote == 1) {
+            item.ups -= 2;
+          } else {
+            item.ups -= 1;
+          }
+          item.vote = -1;
+          this.lists.splice(index, 1, item);
+          api.downvote_post({ postId: item.postId }).then((res) => {});
+        } else if (item.vote === -1) {
+          item.vote = 0;
+          item.ups += 1;
+          this.lists.splice(index, 1, item);
+          api.downvote_post({ postId: item.postId }).then((res) => {});
+        }
+      }
     },
     inout(v){
         let self = this
