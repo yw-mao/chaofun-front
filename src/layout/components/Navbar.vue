@@ -311,7 +311,7 @@ export default {
 .search{
   // position: absolute;
   // right: 200px;
-  width: 400px;
+  width: 350px;
   background: transparent;
   
 }
@@ -319,7 +319,7 @@ export default {
     background: transparent;
   }
 /deep/ .el-input__prefix{
-  left: 364px;
+  left: 314px;
 }
 .nav_con{
   position: absolute;

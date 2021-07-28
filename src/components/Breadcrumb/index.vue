@@ -22,7 +22,7 @@
             :remote-method="changes"
             @change="toOpen"
             @focus="getForum('')"
-            :style="{width: ISPHONE?'120px':'',paddingRight: ISPHONE?'0px':''}"
+            :style="{width: ISPHONE?'120px':'140px',paddingRight: ISPHONE?'0px':''}"
             :loading="loading">
             <el-option
               v-for="item in options"
@@ -31,6 +31,7 @@
               :value="item.link"><img class="sicon" :src="imgOrigin+item.icon" alt=""> <span>{{item.title}}</span>
             </el-option>
           </el-select>
+          <span @click="toUrl({name: 'lists'})" class="af"> <img src="./all.png" alt=""> 全部板块</span>
       </div>
       <!-- <div v-else class="block block2">
           <input  type="text" placeholder="搜索板块">
@@ -130,5 +131,17 @@ export default {
 }
 .block2{
   background: #ddd;
+}
+.af{
+  font-size: 14px;
+  cursor: pointer;
+  img{
+    width: 16px;
+    margin-left: 8px;
+    vertical-align: middle;
+  }
+  &:hover{
+    color: #1890ff;
+  }
 }
 </style>

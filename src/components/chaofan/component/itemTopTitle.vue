@@ -101,6 +101,7 @@ import moment from 'moment'
    methods: {
     toForum(item){
       localStorage.removeItem('storedata')
+      localStorage.removeItem('spage')
       this.toUrls(item,{url: '/f/'+item.forumId, routeType:1});
     },
     deletePost(item,index){

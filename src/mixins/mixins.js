@@ -51,6 +51,7 @@
       },
       toUser(userInfo){
         localStorage.removeItem('storedata')
+        localStorage.removeItem('spage')
         if(userInfo){
           if(this.$route.path.includes('/user/')){
             localStorage.setItem('whichOne','pub');
@@ -75,9 +76,11 @@
           this.$('.infinite-list').animate({ scrollTop:  localStorage.getItem('storedata')?JSON.parse(localStorage.getItem('storedata')).top:0}, 10); 
           setTimeout(()=>{
             localStorage.removeItem('storedata')
+            localStorage.removeItem('spage')
           },1000)
         }else{
           localStorage.removeItem('storedata')
+          localStorage.removeItem('spage')
         }
       },
       doTheme(v){

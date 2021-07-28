@@ -310,11 +310,12 @@
         })
       },
       load() {
-        console.log(111);
-        if (localStorage.getItem('storedata')) {
-          this.lists = JSON.parse(localStorage.getItem('storedata')).list;
-          this.params.marker = JSON.parse(localStorage.getItem('storedata')).marker;
-          this.params.key = JSON.parse(localStorage.getItem('storedata')).key;
+        
+        if (localStorage.getItem('storedata')&&localStorage.getItem('spage')==this.$route.path) {
+          var data = JSON.parse(localStorage.getItem('storedata'));
+          this.lists = data.list;
+          this.params.marker = data.marker;
+          this.params.key = data.key;
         } else {
           if (this.ifcanget) {
             // this.params.pageNum += 1;

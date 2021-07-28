@@ -403,10 +403,12 @@ export default {
       console.log("this.top", this.top);
       this.$(".infinite-list").animate({ scrollTop: this.top }, 10);
       setTimeout(() => {
-        localStorage.removeItem("storedata");
+        localStorage.removeItem('storedata')
+        localStorage.removeItem('spage')
       }, 1000);
     } else {
-      localStorage.removeItem("storedata");
+      localStorage.removeItem('storedata')
+      localStorage.removeItem('spage')
     }
   },
   destroyed() {},
@@ -614,7 +616,7 @@ export default {
             obj.key = this.keys;
             this.postBehavior(item.postId, "detail");
             localStorage.setItem("storedata", JSON.stringify(obj));
-            
+            localStorage.setItem('spage',this.$route.path)
             this.$router.push({
                 name: "articleDetail",
                 params: { postId: item.postId },

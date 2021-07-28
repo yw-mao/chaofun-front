@@ -39,9 +39,9 @@
                     <!-- <itemVideo v-if="item.postInfo.type == 'inner_video'" :isDetail="false" :item="item.postInfo"></itemVideo> -->
                     <div @click.stop="" v-if="item.postInfo.type == 'inner_video'" class="inner_videoc">
                       <div v-if="!item.postInfo.play" class="item_video">
-                        <div @click.stop="toDetail(item.postInfo)" class="title">
+                        <!-- <div @click.stop="toDetail(item.postInfo)" class="title">
                           {{ item.postInfo.title }}
-                        </div>
+                        </div> -->
                         <div @click.stop="playVideo(index, item, 0)" :class="['inner_prev', { inner_prev_phone: ISPHONE }]">
                           <img
                             class="coverss"
@@ -299,10 +299,12 @@ import forwardH5 from '../h5/forward'
        console.log('this.top',this.top)
        this.$('.infinite-list').animate({ scrollTop:  this.top}, 10); 
        setTimeout(()=>{
-         localStorage.removeItem('storedata')
+        localStorage.removeItem('storedata')
+        localStorage.removeItem('spage')
        },1000)
      }else{
-       localStorage.removeItem('storedata')
+        localStorage.removeItem('storedata')
+        localStorage.removeItem('spage')
      }
    },
    destroyed(){
@@ -473,6 +475,7 @@ import forwardH5 from '../h5/forward'
           obj.key = this.keys;
           this.postBehavior(item.postInfo.postId,'detail');
           localStorage.setItem('storedata',JSON.stringify(obj))
+          localStorage.setItem('spage',this.$route.path);
           this.$router.push({name: 'articleDetail',params:{postId: item.postInfo.postId}})
           setTimeout(()=>{
             this.canTo = true

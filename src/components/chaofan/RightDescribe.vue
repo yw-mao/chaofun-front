@@ -35,7 +35,7 @@
         </div>
         <div @click="gotoSecret" class="body-right">
             秘密花园
-            <span data-v-265cb265="" style="background: red; color: rgb(255, 255, 255); font-size: 10px; vertical-align: middle; height: 18px; line-height: 18px; padding: 0px 4px; border-radius: 4px;">new</span>
+            <span data-v-265cb265="" style="background: red; color: rgb(255, 255, 255); font-size: 10px; vertical-align: middle; height: 18px; line-height: 18px; padding: 0px 4px; border-radius: 4px;">hot</span>
         </div>
         <div @click="gotoAddForum" class="body-right">
             添加板块

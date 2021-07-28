@@ -362,7 +362,7 @@ export default {
       }
     },
     load() {
-      if (localStorage.getItem("storedata")) {
+      if (localStorage.getItem("storedata")&&localStorage.getItem('spage')==this.$route.path) {
         this.lists = JSON.parse(localStorage.getItem("storedata")).list;
         this.params.marker = JSON.parse(
           localStorage.getItem("storedata")
