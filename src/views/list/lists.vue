@@ -15,12 +15,23 @@
                 </div>
                 <div class="right_main">
                     <!-- <div>全部板块</div>  -->
-                    <div v-for="(item,index) in listsData" :key="index" class="item" @click="toUrl({path:'/f/'+item.id})">
-                        <img :src="'https://i.chao.fun/'+item.imageName+'?x-oss-process=image/resize,h_80'" alt="">
-                        <span class="name">{{item.name}}</span>
-                        <span class="desc">{{item.desc}}</span>
-                        <!-- <span class="followers">帖子：{{item.posts}}</span> -->
-                        <span class="followers">关注：{{item.followers}}</span>
+                    <div v-for="(item,index) in listsData" :key="index"  @click="toUrl({path:'/f/'+item.id})">
+                        <div class="item">
+                          <img :src="'https://i.chao.fun/'+item.imageName+'?x-oss-process=image/resize,h_80'" alt="">
+                          <div class="center">
+                            <div class="name">{{item.name}}</div>
+
+                            <div class="desc">{{item.desc}}</div>
+                            <!-- <span class="followers">关注：{{item.followers}}</span> -->
+                          </div>
+                          <div class="right">
+                            <div class="followers">关注：{{item.followers}}</div>
+                            <div>
+                              <span @click.stop="toAttent(item,index)" :class="['btn', item.joined?'btn1':'']">{{item.joined?'退出板块':'加入板块'}}</span>
+                              <span @click.stop="toSubs(item,index)" class="btn btn2">发帖</span>
+                            </div>
+                          </div>
+                        </div>
                     </div>
                     <div v-if="!listsData.length" class="nothing">
                         <!-- <img src="../../assets/images/icon/nothing.png" alt=""> -->
@@ -135,6 +146,27 @@ export default {
     console.log(this.$store.state.settings.leftNav)
   },
   methods:{
+    toAttent(item,index){
+      item.joined = !item.joined;
+      if(this.$store.state.user.islogin){
+          if(item.joined){
+            // 加入
+            api.joinForum({forumId: item.id}).then(res=>{
+              
+            })
+          }else{
+            api.leaveForum({forumId: item.id}).then(res=>{
+              
+            })
+          }
+        }else{
+          this.showLogin('login')
+        }
+    },
+    toSubs(item){
+      console.log(item);
+      this.toPost(item.id,item.name,item.imageName)
+    },
     chooseCate(item){
         this.cateId = item.id;
         this.load()
@@ -196,15 +228,40 @@ export default {
 
 .item{
     display: flex;
-    padding: 14px 20px;
+    padding: 10px 20px;
     background: #fff;
     // margin-bottom: 10px;
     // border-radius: 10px;
     border-bottom: 1px solid #f1f1f1;
     cursor: pointer;
+    align-items: center;
+    .center{
+      flex: 1;
+    }
+    .right{
+      flex: 0 0 120px;
+      text-align: right;
+    }
+    .btn{
+      padding: 2px 6px;
+      background: #1890ff;
+      color: #fff;
+      border-radius: 4px;
+      margin-left: 10px;
+      font-size: 12px;
+      margin-top: 4px;
+      display: inline-block;
+      vertical-align: middle;
+    }
+    .btn1{
+      background: #ccc;
+    }
+    .btn2{
+      background: #FF9300;
+    }
     img{
-        width: 24px;
-        height: 24px;
+        width: 40px;
+        height: 40px;
         margin-right: 10px;
         vertical-align: middle;
     }

@@ -46,6 +46,20 @@
       // console.log(document.getElementsByClassName('nav_con').clientHeight)
     },
     methods: {
+      toPost(id,name,icon){// 发帖
+        if(this.$store.state.user.islogin){
+          this.$router.push({path: '/submit',query:{id: id,name: name,icon: icon}})
+        }else{
+          this.$login({callBack:()=>{
+            this.$store.dispatch('user/getInfo')
+          }});
+        }
+      },
+      showLogin(){
+        this.$login({callBack:()=>{
+          this.$store.dispatch('user/getInfo')
+        }});
+      },
       reFresh(){
         location.reload()
       },

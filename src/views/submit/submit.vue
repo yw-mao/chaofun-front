@@ -1,7 +1,8 @@
 <template>
   <div :class="[{'containersRight': opened}]">
+    <div style="height:50px;"></div>
     <div :class="['container', 'containers',{'phone_container':ISPHONE}]">
-      <!-- <div style="height:50px;"></div> -->
+      
       <el-form :model="baseForm"  ref="baseForm" label-width="100px" class="demo-ruleForm">
         <el-form-item label="板块：" prop="forumId">
           <el-select
@@ -724,7 +725,17 @@
           this.options = res.data
            if(this.$route.query.id){
             this.baseForm.forumId = '/f/'+this.$route.query.id;
-            this.baseFormName = this.options.filter(i=>i.forumId==this.$route.query.id)[0]['title']
+            let a = this.options.filter(i=>i.forumId==this.$route.query.id);
+            if(a.length){
+              this.baseFormName = this.options.filter(i=>i.forumId==this.$route.query.id)[0]['title'];
+            }else{
+              this.baseFormName = this.$route.query.name;
+            }
+            
+            // if(){
+
+            // }
+            console.log(222,this.baseFormName);
           }
         })
       },

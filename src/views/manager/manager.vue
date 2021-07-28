@@ -1,6 +1,7 @@
 <template>
   <div class="dashboard-container">
     <!-- <component :is="currentRole" /> -->
+    <div style="height:50px;"></div>
     <div style="font-weight: bold; font-size: 28px">做国内最好的内容社区</div>
     <div style="display: flex">
       <div style="width: 500px">

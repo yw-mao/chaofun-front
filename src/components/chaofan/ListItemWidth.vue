@@ -404,6 +404,7 @@
     padding: 0 0 10px 0;
     font-size: 16px;
     font-weight: 600;
+    margin-bottom: 10px !important;
 }
   .imgs2{
     width: 24px;
