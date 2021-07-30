@@ -65,35 +65,31 @@
             </div> -->
             <!-- {{replayItem}}{{item.id}} -->
             <div v-if="replayItem&&(replayItem.id==item.id)" class="replayInput">
-                <textarea v-model="comment" :placeholder="replayItem?'我对'+replayItem.userInfo.userName+'说：':'发表你的想法'" class="t_rep" name="" id="" cols="30" rows="10"></textarea>
-                <div style="overflow:hidden;padding:10px 0;">
-                    <div style="float:left;">
+                <div v-if="replayItem" @click="cancelReplay" style="padding: 6px 0px;cursor:pointer;float:right;">取消回复</div>
+                <el-input type="textarea" v-model="comment" class="textarea" :placeholder="replayItem?'我对'+replayItem.userInfo.userName+'说：':'发表你的想法'" :autosize="{ minRows: 2, maxRows: 4}"></el-input>
+                <div class="reply_button">
+                    <div class="subims">
                         <a v-if="images.length" :href="imgOrigin+images[0]" target="_blank">[附图]</a>
                     </div>
-                    <div style="float:right;">
-                        <el-upload
-                        class="avatar-uploader"
-                        action="/api/upload_image"
-                        name="file"
-                        :data="filedata"
-                        :show-file-list="false"
-                        :on-success="handleAvatarSuccess"
-                        :before-upload="beforeAvatarUpload"
-                        style="display:inline-block;"
-                        >
-                         <img style="vertical-align:middle;margin-right:10px;cursor:pointer;" src="../../assets/images/icon/choose.png" alt="">
-                        
-                        </el-upload>
-                       
-                        <span v-if="replayItem&&(replayItem.id==item.id)" @click="toSub" class="fabu">发布</span>
-                    </div>
-                    <!-- <div class="icons" style="padding: 4px 20px 0;float:right;">
+                    <el-button style="height:36px;" type="primary" v-if="replayItem&&(replayItem.id==item.id)" @click="toSub">发布</el-button>
+                    <el-upload
+                    class="avatar-uploader"
+                    action="/api/upload_image"
+                    name="file"
+                    :data="filedata"
+                    :show-file-list="false"
+                    :on-success="handleAvatarSuccess"
+                    :before-upload="beforeAvatarUpload"
+                    style="display:inline-block;"
+                    >
+                        <img style="vertical-align:middle;margin-right:10px;cursor:pointer;" src="../../assets/images/icon/choose.png" alt="">
+                    </el-upload>
+                    <div class="icons" style="padding: 4px 20px 0;float:right;">
                         <img @click="showIcons" style="width:24px;height:24px;" src="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=105646479,4120396531&fm=26&gp=0.jpg" alt="">
                         <div  class="emoji">
                         <span v-for="(item,index) in icons" @click="chooseEmoji(item)" :key="index">{{item}}</span>
                         </div>
-                    </div> -->
-                    
+                    </div>
                 </div>
             </div>
             <div v-if="item.children&&item.children.length">
@@ -127,181 +123,189 @@
 <script>
 import * as api from '../../api/api'
 import moment from 'moment'
- export default {
-   name: 'commentitem',
-   data(){
-     return {
-         
-         showIcon: false,
-         moment: moment,
-         replayItem: null,
-         showR: false,
-         comment: '',
-         userinfo: this.$store.state.user.userInfo,
-         canSub: true,
-         icons: [
-            '😀','😃','😁','😆','😅','🤣','😂','🙂','🙃','😉','😊','😇','😍','😘','🤪','😝','👍','🤝','🙏','💪','👏','✍️','💔','👮‍♂️','☠️','👽'
-        ],
-         images: [],
-         filedata: {},
-     }
-   },
-   props: {
-       treeData: {
-           type: Array,
-           default(){
-               return []
-           }
-       },
-       showRep: {
-           type: Boolean,
-           default: false
-       }
-   },
-   components: {
+export default {
+    name: 'commentitem',
+    data(){
+        return {
+            
+            showIcon: false,
+            moment: moment,
+            replayItem: null,
+            showR: false,
+            comment: '',
+            userinfo: this.$store.state.user.userInfo,
+            canSub: true,
+            icons: [
+                '😀','😃','😁','😆','😅','🤣','😂','🙂','🙃','😉','😊','😇','😍','😘','🤪','😝','👍','🤝','🙏','💪','👏','✍️','💔','👮‍♂️','☠️','👽'
+            ],
+            images: [],
+            filedata: {},
+        }
+    },
+    props: {
+        treeData: {
+            type: Array,
+            default(){
+                return []
+            }
+        },
+        showRep: {
+            type: Boolean,
+            default: false
+        }
+    },
+    components: {
 
-   },
-   created() {
-   },
-   mounted() {
-     
-   },
-   methods: {
-    doImgs(item){
-        console.log('item.imageNames',item)
-        var a = item.split(',');
-        a.forEach(it=>{
-            it = this.imgOrigin + it;
-        })
-        this.is = a;
     },
-    handleAvatarSuccess(res, file) {
-    
-        console.log(this.filedata)
-        console.log(res);
-        if(res.success){
-            this.imageUrl = URL.createObjectURL(file.raw);
-            this.images.push(res.data);
-        }else if(res.errorCode=='invalid_content'){
-            // this.imageUrl = ''
-            this.$toast(res.errorMessage)
-        }
-    
+    created() {
     },
-    beforeAvatarUpload(file) {
-        const isLt2M = file.size / 1024 / 1024 < 20;
-        if (!isLt2M) {
-          this.$message.error('上传图片大小不能超过 20MB!');
-          return false
-        }
-        this.filedata.fileName = file.name
-        return true
-      },
-    showIcons(){
-      this.showIcon = true
+    mounted() {
+        
     },
-    toReplay2(item){
-        this.$emit('toReplay2',item)
-    },
-       toReplay(item){
+    methods: {
+        doImgs(item){
+            console.log('item.imageNames',item)
+            var a = item.split(',');
+            a.forEach(it=>{
+                it = this.imgOrigin + it;
+            })
+            this.is = a;
+        },
+        handleAvatarSuccess(res, file) {
+        
+            console.log(this.filedata)
+            console.log(res);
+            if(res.success){
+                this.imageUrl = URL.createObjectURL(file.raw);
+                this.images.push(res.data);
+            }else if(res.errorCode=='invalid_content'){
+                // this.imageUrl = ''
+                this.$toast(res.errorMessage)
+            }
+        
+        },
+        beforeAvatarUpload(file) {
+            const isLt2M = file.size / 1024 / 1024 < 20;
+            if (!isLt2M) {
+            this.$message.error('上传图片大小不能超过 20MB!');
+            return false
+            }
+            this.filedata.fileName = file.name
+            return true
+        },
+        showIcons(){
+        this.showIcon = true
+        },
+        toReplay2(item){
+            this.$emit('toReplay2',item)
+        },
+        toReplay(item){
         //    this.replayItem = null;
             this.$set(this,'replayItem',item)
             // this.replayItem = item;
             this.$emit('rep',item)
             this.showR = true
         },
-    rep(item){
-        this.replayItem = item;
-    },
-    refreshComment(obj){
-        this.$emit('refreshComment',obj)
-    },
-    refreshDelete(item){
-        this.$emit('refreshDelete',item)
-    },
-    deleteComment(item){
-        api.deleteComment({commentId:item.id}).then(res=>{
-            if(res.success){
-                this.$toast('删除成功');
-                this.refreshDelete(item);
-                // this.treeData.splice(index,1);
-            }
-        })
-    },
-     toSub(){
-
-       this.doLoginStatus().then(res=>{
-         let comment = this.comment;
-         if(res){
-           if(!this.comment) return;
-           let params = {
-             parentId: this.replayItem&&this.replayItem.id?this.replayItem.id:'',
-             postId: this.replayItem.postId,
-             comment: this.comment,
-             imageNames: this.images.join(',')
-           }
-           console.log(this.comment);
-           api.addComments(params).then(res=>{
-             if(res.success){
-               this.$toast('评论成功');
-               this.images = [];
-               setTimeout(()=>{
-                 let obj = {
-                   parentId: this.replayItem?this.replayItem.id:0,
-                   text: this.comment,
-                   type: 'text',
-                   downs: 0,
-                   ups: 0,
-                   userInfo: this.userinfo
-                 };
-                 this.$emit('refreshComment',res.data)
-                 this.replayItem = null
-                 this.comment = ''
-                 this.canSub = true;
-
-                 // this.comment = '';
-                 // this.treeData = this.transformTree(this.lists)
-               },1500)
-             }
-           })
-
-         }else{
-           console.log('未登录',res)
-         }
-       })
-     },
-    doZanComment(v,item){
-        if(v==1){
-            if(item.vote==0){
-                item.vote = 1;
-                item.ups += 1;
-            }else if(item.vote==-1){
-                item.vote = 1;
-                item.ups += 2;
-            }else{
-                item.vote = 0;
-                item.ups -= 1;
-            }
-            api.upvoteComment({commentId:item.id}).then(res=>{
+        cancelReplay(){
+            this.replayItem = null
+            this.$emit('rep',null)
+            this.showR = false
+        },
+        rep(item){
+            this.replayItem = item;
+        },
+        refreshComment(obj){
+            this.$emit('refreshComment',obj)
+        },
+        refreshDelete(item){
+            this.$emit('refreshDelete',item)
+        },
+        deleteComment(item){
+            api.deleteComment({commentId:item.id}).then(res=>{
+                if(res.success){
+                    this.$toast('删除成功');
+                    this.refreshDelete(item);
+                    // this.treeData.splice(index,1);
+                }
             })
-        }else{
-            if(item.vote==0){
-                item.vote = -1;
-                item.ups -= 1;
-            }else if(item.vote==1){
-                item.vote = -1;
-                item.ups -= 2;
-            }else{
-                item.vote = 0;
-                item.ups += 1;
-            }
-            api.downvoteComment({commentId:item.id}).then(res=>{
-                
+        },
+        toSub(){
+            this.doLoginStatus().then(res=>{
+                let comment = this.comment;
+                if(res){
+                if(!this.comment) return;
+                let params = {
+                    parentId: this.replayItem&&this.replayItem.id?this.replayItem.id:'',
+                    postId: this.replayItem.postId,
+                    comment: this.comment,
+                    imageNames: this.images.join(',')
+                }
+                console.log(this.comment);
+                api.addComments(params).then(res=>{
+                    if(res.success){
+                    this.$toast('评论成功');
+                    this.images = [];
+                    setTimeout(()=>{
+                        let obj = {
+                        parentId: this.replayItem?this.replayItem.id:0,
+                        text: this.comment,
+                        type: 'text',
+                        downs: 0,
+                        ups: 0,
+                        userInfo: this.userinfo
+                        };
+                        this.$emit('refreshComment',res.data)
+                        this.replayItem = null
+                        this.comment = ''
+                        this.canSub = true;
+
+                        // this.comment = '';
+                        // this.treeData = this.transformTree(this.lists)
+                    },1500)
+                    }
+                })
+
+                }else{
+                    console.log('未登录',res)
+                }
             })
-       }
-    },
-   }
- }
+        },
+        doZanComment(v,item){
+            if(v==1){
+                if(item.vote==0){
+                    item.vote = 1;
+                    item.ups += 1;
+                }else if(item.vote==-1){
+                    item.vote = 1;
+                    item.ups += 2;
+                }else{
+                    item.vote = 0;
+                    item.ups -= 1;
+                }
+                api.upvoteComment({commentId:item.id}).then(res=>{
+                })
+            }else{
+                if(item.vote==0){
+                    item.vote = -1;
+                    item.ups -= 1;
+                }else if(item.vote==1){
+                    item.vote = -1;
+                    item.ups -= 2;
+                }else{
+                    item.vote = 0;
+                    item.ups += 1;
+                }
+                api.downvoteComment({commentId:item.id}).then(res=>{
+                    
+                })
+            }
+        },
+        chooseEmoji(item){
+            this.comment += item;
+            this.showIcon = false
+        },
+    }
+}
 </script>
 
 <style type='text/scss' lang='scss' scoped>
@@ -368,25 +372,27 @@ import moment from 'moment'
 }
 .replayInput{
     padding-bottom: 4px;
-    .t_rep{
-        border: 1px solid #ddd;
-        width: 100%;
-        box-sizing: border-box;
-        height: 60px;
+    &::before {
+        display: block;
+        content: '';
+        clear: both;
+    }
+    .textarea {
         resize: none;
-        border-radius: 4px;
-        padding: 4px 10px;
+        font-size: 16px;
+    }
+    .reply_button{
+        position: relative;
+        display: flex;
+        flex-direction: row-reverse;
+        padding: 20px 20px 0;
+        .subims{
+          position: absolute;
+          left: 0;
+          top: 20px;
+        }
     }
 }
- .fabu{
-     float: right;
-     color: #fff;
-     background: royalblue;
-     padding: 2px 10px;
-     border-radius: 4px;
-     font-size: 14px;
-     cursor: pointer;
- }
  .to_delete{
      float: right;
      font-size: 13px;
