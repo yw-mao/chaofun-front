@@ -49,6 +49,10 @@
             </div>
             <div class="sim_content">
                 <div class="title">
+                    <div v-if="item.isPin" style="display:inline-block;">
+                      <img  class="icon icon2" :src="imgOrigin+'biz/daa54c993451a77d3e723405afbcd15c.png?x-oss-process=image/resize,h_80'" alt="">
+                      <span class="zhiding">版主置顶</span>
+                    </div>
                     <span class="sim_tab">
                         [{{doType(item)}}]
                     </span>
@@ -704,6 +708,14 @@ export default {
       display: block;
       color: #1890ff;
     }
+    &:hover{
+      .icon2{
+        display: none;
+      }
+      .zhiding{
+        display: block;
+      }
+    }
 }
 .item .tools_p{
     justify-content: space-between;
@@ -853,5 +865,18 @@ export default {
   .inner_videoc {
     min-height: 290px;
   }
+}
+.icon2{
+    width: 20px;
+    height: 20px;
+    vertical-align: top;
+}
+.zhiding{
+  background: #FF9300;
+  color: #fff;
+  font-size: 12px;
+  padding: 0px 4px;
+  border-radius: 4px;
+  display: none;
 }
 </style>

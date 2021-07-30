@@ -214,7 +214,8 @@ export default {
     cursor: pointer;
     transition: background .3s;
     -webkit-tap-highlight-color:transparent;
-
+    padding-right: 0 !important;
+    padding-left: 5px !important;
     &:hover {
       background: rgba(0, 0, 0, .025)
     }
@@ -291,7 +292,7 @@ export default {
   .userAvatar{
     width: 40px;
     height: 40px;
-    margin-right: 10px;
+    margin-right: 4px;
     border-radius: 50%;
   }
   div{

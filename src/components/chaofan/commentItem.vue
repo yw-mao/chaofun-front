@@ -32,7 +32,7 @@
         </div>
         <div class="c_content">
             <div class="user_info">
-                <img :src="imgOrigin+item.userInfo.icon" alt="">
+                <img :src="imgOrigin+item.userInfo.icon+'?x-oss-process=image/resize,h_40'" alt="">
                 <span  @click.stop="toUser(item.userInfo)" class="username">{{item.userInfo.userName}}</span>
                 <span class="time">{{moment.duration(moment(item.gmtCreate) - moment()).humanize(true)}}</span>
                 <div class="zan_shu" style="display:inline-block;padding-left:20px;"> <span>{{item.ups - item.downs}}个赞</span></div>
@@ -327,7 +327,7 @@ import moment from 'moment'
     }
     .c_content{
         flex: 1;
-        
+        overflow: hidden;
         .user_info{
             img{
                 width: 24px;

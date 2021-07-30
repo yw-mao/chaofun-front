@@ -668,6 +668,32 @@ export function Olympics2020Rank(params) {
   })
 }
 
+export function listPins(params) {
+  return request({
+    url: '/api/v0/forum/listPins',
+    method: 'get',
+    params
+  })
+}
+
+export function forumpin(params) {
+  return request({
+    url: '/api/v0/forum/pin',
+    method: 'get',
+    params
+  })
+}
+
+export function forumunpin(params) {
+  return request({
+    url: '/api/v0/forum/unpin',
+    method: 'get',
+    params
+  })
+}
+
+
+
 
 /** 活动查询 */
 

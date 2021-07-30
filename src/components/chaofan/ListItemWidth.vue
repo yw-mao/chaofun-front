@@ -231,6 +231,20 @@
 
     },
     methods: {
+      updateList(index,item){
+        let data = JSON.parse(localStorage.getItem('storedata'));
+        data.list.forEach((it,i)=>{
+          console.log(it)
+          console.log(i)
+          if(item.postId==it.postId){
+            // it = item;
+            data.list.splice(i,1,item);
+          }
+        })
+        // data.list.splice(this.index,1,item);
+        localStorage.setItem('storedata',JSON.stringify(data));
+        console.log('data',data)
+      },
       doFocued(bool,id){
         this.lists.forEach(it=>{
           if(it.userInfo.userId == id){
@@ -358,8 +372,8 @@
               item.ups += 1
             }
             item.vote=1;
-            
             this.lists.splice(index,1,item)
+            
             api.upvote_post({postId:item.postId}).then(res=>{
               
             })
@@ -393,6 +407,8 @@
           }
          
        }
+       this.updateList(index,item);
+      //  this.$EventBus.$emit('updateVote',{index: this.index,item: item});
      }
     }
   }

@@ -2,6 +2,10 @@
  <div>  
      <h1>
         <div>
+            <div v-if="item.isPin" style="display:inline-block;">
+              <img  class="icon icon2" :src="imgOrigin+'biz/daa54c993451a77d3e723405afbcd15c.png?x-oss-process=image/resize,h_80'" alt="">
+              <span class="zhiding">版主置顶</span>
+            </div>
             <img v-if="isindex" class="icon" :src="imgOrigin+item.forum.imageName+'?x-oss-process=image/resize,h_80'" alt="">
             <span @click.stop="" v-if="isindex" class="module_name">
                 <b @click.stop="toForum(item)"> {{item.forum.name}} </b>
@@ -55,7 +59,21 @@
         
         </div>
         <!-- <div v-if="isMy&&datas.type=='pub'" @click.stop="deletePost(item,index)" class="delete">删除</div> -->
-        <div class="delete" v-if="item.canDeleted" @click.stop="deletePost(item,index)"><i class="el-icon-delete"></i> 删除</div>
+        <div @click.stop="" class="delete" v-if="item.canDeleted" >
+          <!-- @click.stop="deletePost(item,index)" -->
+          <!-- <i class="el-icon-delete"></i> 删除 -->
+          <el-dropdown trigger="click" @command="handleCommand">
+            <span class="el-dropdown-link">
+              <!-- 下拉菜单<i class="el-icon-arrow-down el-icon--right"></i> -->
+              <i class="el-icon-more" style="font-size:24px;"></i>
+            </span>
+            <el-dropdown-menu slot="dropdown">
+              <el-dropdown-item v-if="item.forum.admin&&!item.isPin" command="置顶">置顶</el-dropdown-item>
+              <el-dropdown-item v-if="item.forum.admin&&item.isPin" command="取消置顶">取消置顶</el-dropdown-item>
+              <el-dropdown-item command="删除">删除</el-dropdown-item>
+            </el-dropdown-menu>
+          </el-dropdown>
+        </div>
     </h1>
  </div>
 </template>
@@ -99,6 +117,29 @@ import moment from 'moment'
     
    },
    methods: {
+    handleCommand(command) {
+        // this.$message('click on item ' + command);
+        if(command=='置顶'){
+          api.forumpin({postId: this.item.postId}).then(res=>{
+            if(res.success){
+              this.$toast('帖子置顶成功，刷新可查看')
+            }
+          })
+        }else if(command=='取消置顶'){
+          api.forumunpin({postId: this.item.postId}).then(res=>{
+            if(res.success){
+              this.$toast('帖子已取消置顶')
+              this.$EventBus.$emit('unPin',this.index);
+              // this.$emit('deletePost',this.index)
+            }else{
+              this.$toast(res.message)
+            }
+            
+          })
+        }else if(command=='删除'){
+          this.deletePost(this.item,this.index);
+        }
+    },
     toForum(item){
       localStorage.removeItem('storedata')
       localStorage.removeItem('spage')
@@ -179,9 +220,14 @@ h1{
     display: flex;
     margin-bottom: 10px;
     justify-content: space-between;
+    position: relative;
     .delete{
-    font-size: 12px;
-    color: #999;
+        font-size: 12px;
+        float: right;
+        position: absolute;
+        right: 0;
+        top: 0;
+        color: #999;
         &:hover{
             color: $linkcolor;
         }
@@ -269,5 +315,13 @@ h1{
         height: 20px;
         vertical-align: top;
     }
+}
+.zhiding{
+  background: #FF9300;
+  color: #fff;
+  font-size: 12px;
+  padding: 0px 4px;
+  border-radius: 4px;
+  display: none;
 }
 </style>

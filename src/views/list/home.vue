@@ -49,6 +49,7 @@
     // components: { adminDashboard, editorDashboard },
     data() {
       return {
+        pinList: [],
         currentRole: 'adminDashboard',
         count: 5,
         lists: [],
@@ -156,7 +157,11 @@
         }
       });
       // document.querySelector('meta[name="keywords"]').setAttribute("content", '111')
-      document.querySelector('meta[name="description"]').setAttribute("content", '222')
+      // document.querySelector('meta[name="description"]').setAttribute("content", '222')
+      this.$EventBus.$on('unPin', (index)=>{
+          //需要执行的代码
+        this.lists.splice(index,1)
+      })
     },
     created() {
       let id = this.$route.path.split('/')[2];
@@ -172,9 +177,18 @@
       // }
       this.params.forumId = this.$route.params.forumId
       this.getForumInfo();
-      this.load()
+      this.load();
+      
     },
     methods: {
+      listPins(){
+        api.listPins({forumId: this.params.forumId}).then(res=>{
+          res.data.forEach(item=>{
+            item.isPin = true;
+          })
+          this.lists.unshift(...res.data);
+        })
+      },
       chooseNav(index,item){
         this.options.forEach(i=>{
           i.choose = false;
@@ -192,7 +206,7 @@
       updateList(params){
         this.params = params;
         this.lists = [];
-        this.getLists();
+        this.getLists('first');
       },
       changes() {
         localStorage.setItem('chao.fun.timeline.order', this.params.order);
@@ -219,9 +233,12 @@
           }
         })
       },
-      getLists() {
+      getLists(v) {
         let params = this.params;
-        this.ifcanget = false
+        this.ifcanget = false;
+        if(v=='first'&&params.order=='hot'){
+          this.listPins();
+        }
         api.getPosts(params).then(res => {
           if (res.data.marker && (res.data.posts.length != 0)) {
             this.ifcanget = true
@@ -253,7 +270,7 @@
           if (this.ifcanget) {
             // this.params.pageNum += 1;
             // this.params.marker = '';
-            this.getLists()
+            this.getLists('first')
           }
 
         }

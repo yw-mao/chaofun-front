@@ -47,300 +47,303 @@
           @doFocued="doFocued"
           :index="index"
         ></itemTopTitle>
-        <!-- 链接 -->
-        <itemLink
-          :isindex="isindex"
-          v-if="
-            item.type == 'link' ||
-            (ISPHONE &&
-              item.type == 'video' &&
-              item.videoType == 'ifram' &&
-              item.link.includes('www.acfun.cn'))
-          "
-          @click.stop="toUrls(item, { url: item.link, routeType: 1 })"
-          :item="item"
-        ></itemLink>
         <div v-if="item.type!='link'" class="title">
+          <!-- <span class="zhiding">置顶</span>  -->
           {{item.title}}
         </div>
-        <!-- 图片 -->
-        <itemImage v-if="item.type == 'image'" :item="item"></itemImage>
-
-        <div @click.stop="">
-          <!-- 视频 -->
-          <itemGif
-            @toDetail="toDetail"
-            v-if="item.type == 'gif'"
-            :isDetail="false"
+        
+        <div v-if="!item.isPin">
+            <!-- 链接 -->
+          <itemLink
+            :isindex="isindex"
+            v-if="
+              item.type == 'link' ||
+              (ISPHONE &&
+                item.type == 'video' &&
+                item.videoType == 'ifram' &&
+                item.link.includes('www.acfun.cn'))
+            "
+            @click.stop="toUrls(item, { url: item.link, routeType: 1 })"
             :item="item"
-          ></itemGif>
-          <!-- 内部视频 -->
-          <div v-if="item.type == 'inner_video'" class="inner_videoc">
-            <div v-if="!item.play" class="item_video">
-              <!-- <div @click.stop="toDetail(item)" class="title">
-                {{ item.title }}
-              </div> -->
-              <div @click="playVideo(index, item, 0)" :class="['inner_prev', { inner_prev_phone: ISPHONE }]">
-                <img
-                  class="coverss"
-                  
-                  :src="
-                    imgOrigin + item.video + '?x-oss-process=video/snapshot,t_0'
-                  "
-                  alt=""
-                />
-                <img
-                  class="inner_play"
-                  src="../../assets/images/bg/play.png"
-                  alt=""
-                />
-              </div>
-            </div>
-            <itemVideo
-              v-if="item.play"
-              @toPause="playVideo"
-              :isDetail="false"
-              :item="item"
-            ></itemVideo>
-          </div>
-        </div>
+          ></itemLink>
+          
+          <!-- 图片 -->
+          <itemImage v-if="item.type == 'image'" :item="item"></itemImage>
 
-        <!-- iframe视频 -->
-        <div
-          v-if="
-            item.type == 'video' &&
-            item.videoType == 'ifram' &&
-            (!ISPHONE || !item.link.includes('www.acfun.cn'))
-          "
-          class="item_video"
-        >
-          <!-- <div class="title">
-            {{ item.title }}
-          </div> -->
-          <div @click.stop="" class="video">
-            <img
-              v-if="!item.play && item.cover"
-              class="coverss"
-              @click="playVideo(index, item, 0)"
-              :src="
-                imgOrigin + item.cover + '?x-oss-process=image/resize,h_256'
-              "
-              alt=""
-            />
-            <img
-              v-if="!item.play && !item.cover"
-              class="coverss"
-              @click="playVideo(index, item, 0)"
-              src="../../assets/images/bg/videocover.jpg"
-              alt=""
-            />
-            <img
-              v-if="!item.play"
-              class="btn_play"
-              @click="playVideo(index, item, 0)"
-              src="../../assets/images/bg/play.png"
-              alt=""
-            />
-            <iframe
-              v-if="!ISPHONE && item.play"
-              style="width: 100%; min-height: 370px"
-              :src="
-                item.video +
-                (item.link.includes('www.acfun.cn') ? '?' : '') +
-                '&autoplay=true'
-              "
-              allow="autoplay"
-              id="ACPlayer-re"
-              scrolling="no"
-              border="0"
-              frameborder="no"
-              framespacing="0"
-              allowfullscreen="true"
-            ></iframe>
-            <iframe
-              v-if="ISPHONE && item.play"
-              style="width: 100%; height: 230px"
-              :src="
-                item.video +
-                (item.link.includes('www.acfun.cn') ? '?' : '') +
-                '&autoplay=true'
-              "
-              allow="autoplay"
-              id="ACPlayer-re"
-              scrolling="no"
-              border="0"
-              frameborder="no"
-              framespacing="0"
-              allowfullscreen="true"
-            ></iframe>
-          </div>
-        </div>
-        <!-- 富文本 -->
-        <itemArticle v-if="item.type == 'article'" :item="item"></itemArticle>
-
-        <!-- 投票 -->
-        <itemVote
-          v-if="item.type == 'vote'"
-          @callBack="callBack"
-          :index="index"
-          :item="item"
-        ></itemVote>
-
-        <!-- 转发 -->
-        <div
-          v-if="item.type == 'forward'"
-          @click="toDetail(item)"
-          class="item_forward"
-        >
-          <div class="title">
-            {{ item.title }}
-          </div>
-          <div @click.stop="toDetail(item.sourcePost)" class="forward_border">
-            <!-- 链接 -->
-            <itemForwardTitle :item="item"></itemForwardTitle>
-            <!-- 链接 -->
-            <itemLink
-              :isindex="isindex"
-              v-if="
-                item.sourcePost.type == 'link' ||
-                (ISPHONE &&
-                  item.sourcePost.type == 'video' &&
-                  item.sourcePost.videoType == 'ifram' &&
-                  item.sourcePost.link.includes('www.acfun.cn'))
-              "
-              @click.stop="
-                toUrls(item.sourcePost, {
-                  url: item.sourcePost.link,
-                  routeType: 1,
-                })
-              "
-              :item="item.sourcePost"
-            ></itemLink>
-            <div v-if="item.sourcePost.type!='link'" class="title">
-              {{item.sourcePost.title}}
-            </div>
-            <!-- 图片 -->
-            <itemImage
-              v-if="item.sourcePost.type == 'image'"
-              :item="item.sourcePost"
-            ></itemImage>
+          <div @click.stop="">
             <!-- 视频 -->
             <itemGif
-              v-if="item.sourcePost.type == 'gif'"
+              @toDetail="toDetail"
+              v-if="item.type == 'gif'"
               :isDetail="false"
-              :item="item.sourcePost"
+              :item="item"
             ></itemGif>
             <!-- 内部视频 -->
-            <itemVideo
-              v-if="item.sourcePost.type == 'inner_video'"
-              :isDetail="false"
-              :item="item.sourcePost"
-            ></itemVideo>
-            <!-- iframe视频 -->
-            <div
-              v-if="
-                item.sourcePost.type == 'video' &&
-                item.sourcePost.videoType == 'ifram' &&
-                (!ISPHONE || !item.sourcePost.link.includes('www.acfun.cn'))
-              "
-              class="item_video"
-            >
-              <div class="title">
-                {{ item.sourcePost.title }}
+            <div v-if="item.type == 'inner_video'" class="inner_videoc">
+              <div v-if="!item.play" class="item_video">
+                <!-- <div @click.stop="toDetail(item)" class="title">
+                  {{ item.title }}
+                </div> -->
+                <div @click="playVideo(index, item, 0)" :class="['inner_prev', { inner_prev_phone: ISPHONE }]">
+                  <img
+                    class="coverss"
+                    
+                    :src="
+                      imgOrigin + item.video + '?x-oss-process=video/snapshot,t_0'
+                    "
+                    alt=""
+                  />
+                  <img
+                    class="inner_play"
+                    src="../../assets/images/bg/play.png"
+                    alt=""
+                  />
+                </div>
               </div>
-              <div @click.stop="" class="video">
-                <img
-                  v-if="!item.sourcePost.play && item.sourcePost.cover"
-                  class="coverss"
-                  @click="playVideo(index, item.sourcePost, 0)"
-                  :src="
-                    imgOrigin +
-                    item.sourcePost.cover +
-                    '?x-oss-process=image/resize,h_256'
-                  "
-                  alt=""
-                />
-                <img
-                  v-if="!item.sourcePost.play && !item.sourcePost.cover"
-                  class="coverss"
-                  @click="playVideo(index, item.sourcePost, 0)"
-                  src="../../assets/images/bg/videocover.jpg"
-                  alt=""
-                />
-                <img
-                  v-if="!item.sourcePost.play"
-                  class="btn_play"
-                  @click="playVideo(index, item.sourcePost, 0)"
-                  src="../../assets/images/bg/play.png"
-                  alt=""
-                />
-                <iframe
-                  v-if="!ISPHONE && item.sourcePost.play"
-                  style="width: 100%; min-height: 370px"
-                  :src="
-                    item.sourcePost.video +
-                    (item.sourcePost.link.includes('www.acfun.cn') ? '?' : '') +
-                    '&autoplay=true'
-                  "
-                  allow="autoplay"
-                  id="ACPlayer-re"
-                  scrolling="no"
-                  border="0"
-                  frameborder="no"
-                  framespacing="0"
-                  allowfullscreen="true"
-                ></iframe>
-                <iframe
-                  v-if="ISPHONE && item.sourcePost.play"
-                  style="width: 100%; height: 230px"
-                  :src="
-                    item.sourcePost.video +
-                    (item.sourcePost.link.includes('www.acfun.cn') ? '?' : '') +
-                    '&autoplay=true'
-                  "
-                  allow="autoplay"
-                  id="ACPlayer-re"
-                  scrolling="no"
-                  border="0"
-                  frameborder="no"
-                  framespacing="0"
-                  allowfullscreen="true"
-                ></iframe>
-              </div>
+              <itemVideo
+                v-if="item.play"
+                @toPause="playVideo"
+                :isDetail="false"
+                :item="item"
+              ></itemVideo>
             </div>
-            <!-- 富文本 -->
-            <itemArticle
-              v-if="item.sourcePost.type == 'article'"
-              :item="item.sourcePost"
-            ></itemArticle>
+          </div>
 
-            <!-- 投票 -->
-            <!-- <itemVote v-if="item.sourcePost.type == 'vote'" @callBack="callBack" :index="index" :item="item.sourcePost"></itemVote> -->
-            <div class="tools">
-              <div>
-                {{ item.sourcePost.ups - item.sourcePost.downs }} 赞 ·
-                {{ item.sourcePost.comments }} 评论
+          <!-- iframe视频 -->
+          <div
+            v-if="
+              item.type == 'video' &&
+              item.videoType == 'ifram' &&
+              (!ISPHONE || !item.link.includes('www.acfun.cn'))
+            "
+            class="item_video"
+          >
+            <!-- <div class="title">
+              {{ item.title }}
+            </div> -->
+            <div @click.stop="" class="video">
+              <img
+                v-if="!item.play && item.cover"
+                class="coverss"
+                @click="playVideo(index, item, 0)"
+                :src="
+                  imgOrigin + item.cover + '?x-oss-process=image/resize,h_256'
+                "
+                alt=""
+              />
+              <img
+                v-if="!item.play && !item.cover"
+                class="coverss"
+                @click="playVideo(index, item, 0)"
+                src="../../assets/images/bg/videocover.jpg"
+                alt=""
+              />
+              <img
+                v-if="!item.play"
+                class="btn_play"
+                @click="playVideo(index, item, 0)"
+                src="../../assets/images/bg/play.png"
+                alt=""
+              />
+              <iframe
+                v-if="!ISPHONE && item.play"
+                style="width: 100%; min-height: 370px"
+                :src="
+                  item.video +
+                  (item.link.includes('www.acfun.cn') ? '?' : '') +
+                  '&autoplay=true'
+                "
+                allow="autoplay"
+                id="ACPlayer-re"
+                scrolling="no"
+                border="0"
+                frameborder="no"
+                framespacing="0"
+                allowfullscreen="true"
+              ></iframe>
+              <iframe
+                v-if="ISPHONE && item.play"
+                style="width: 100%; height: 230px"
+                :src="
+                  item.video +
+                  (item.link.includes('www.acfun.cn') ? '?' : '') +
+                  '&autoplay=true'
+                "
+                allow="autoplay"
+                id="ACPlayer-re"
+                scrolling="no"
+                border="0"
+                frameborder="no"
+                framespacing="0"
+                allowfullscreen="true"
+              ></iframe>
+            </div>
+          </div>
+          <!-- 富文本 -->
+          <itemArticle v-if="item.type == 'article'" :item="item"></itemArticle>
+
+          <!-- 投票 -->
+          <itemVote
+            v-if="item.type == 'vote'"
+            @callBack="callBack"
+            :index="index"
+            :item="item"
+          ></itemVote>
+
+          <!-- 转发 -->
+          <div
+            v-if="item.type == 'forward'"
+            @click="toDetail(item)"
+            class="item_forward"
+          >
+            <!-- <div   -->
+            <div @click.stop="toDetail(item.sourcePost)" class="forward_border">
+              <!-- 链接 -->
+              <itemForwardTitle :item="item"></itemForwardTitle>
+              <!-- 链接 -->
+              <itemLink
+                :isindex="isindex"
+                v-if="
+                  item.sourcePost.type == 'link' ||
+                  (ISPHONE &&
+                    item.sourcePost.type == 'video' &&
+                    item.sourcePost.videoType == 'ifram' &&
+                    item.sourcePost.link.includes('www.acfun.cn'))
+                "
+                @click.stop="
+                  toUrls(item.sourcePost, {
+                    url: item.sourcePost.link,
+                    routeType: 1,
+                  })
+                "
+                :item="item.sourcePost"
+              ></itemLink>
+              <div v-if="item.sourcePost.type!='link'" class="title">
+                {{item.sourcePost.title}}
+              </div>
+              <!-- 图片 -->
+              <itemImage
+                v-if="item.sourcePost.type == 'image'"
+                :item="item.sourcePost"
+              ></itemImage>
+              <!-- 视频 -->
+              <itemGif
+                v-if="item.sourcePost.type == 'gif'"
+                :isDetail="false"
+                :item="item.sourcePost"
+              ></itemGif>
+              <!-- 内部视频 -->
+              <itemVideo
+                v-if="item.sourcePost.type == 'inner_video'"
+                :isDetail="false"
+                :item="item.sourcePost"
+              ></itemVideo>
+              <!-- iframe视频 -->
+              <div
+                v-if="
+                  item.sourcePost.type == 'video' &&
+                  item.sourcePost.videoType == 'ifram' &&
+                  (!ISPHONE || !item.sourcePost.link.includes('www.acfun.cn'))
+                "
+                class="item_video"
+              >
+                <div class="title">
+                  {{ item.sourcePost.title }}
+                </div>
+                <div @click.stop="" class="video">
+                  <img
+                    v-if="!item.sourcePost.play && item.sourcePost.cover"
+                    class="coverss"
+                    @click="playVideo(index, item.sourcePost, 0)"
+                    :src="
+                      imgOrigin +
+                      item.sourcePost.cover +
+                      '?x-oss-process=image/resize,h_256'
+                    "
+                    alt=""
+                  />
+                  <img
+                    v-if="!item.sourcePost.play && !item.sourcePost.cover"
+                    class="coverss"
+                    @click="playVideo(index, item.sourcePost, 0)"
+                    src="../../assets/images/bg/videocover.jpg"
+                    alt=""
+                  />
+                  <img
+                    v-if="!item.sourcePost.play"
+                    class="btn_play"
+                    @click="playVideo(index, item.sourcePost, 0)"
+                    src="../../assets/images/bg/play.png"
+                    alt=""
+                  />
+                  <iframe
+                    v-if="!ISPHONE && item.sourcePost.play"
+                    style="width: 100%; min-height: 370px"
+                    :src="
+                      item.sourcePost.video +
+                      (item.sourcePost.link.includes('www.acfun.cn') ? '?' : '') +
+                      '&autoplay=true'
+                    "
+                    allow="autoplay"
+                    id="ACPlayer-re"
+                    scrolling="no"
+                    border="0"
+                    frameborder="no"
+                    framespacing="0"
+                    allowfullscreen="true"
+                  ></iframe>
+                  <iframe
+                    v-if="ISPHONE && item.sourcePost.play"
+                    style="width: 100%; height: 230px"
+                    :src="
+                      item.sourcePost.video +
+                      (item.sourcePost.link.includes('www.acfun.cn') ? '?' : '') +
+                      '&autoplay=true'
+                    "
+                    allow="autoplay"
+                    id="ACPlayer-re"
+                    scrolling="no"
+                    border="0"
+                    frameborder="no"
+                    framespacing="0"
+                    allowfullscreen="true"
+                  ></iframe>
+                </div>
+              </div>
+              <!-- 富文本 -->
+              <itemArticle
+                v-if="item.sourcePost.type == 'article'"
+                :item="item.sourcePost"
+              ></itemArticle>
+
+              <!-- 投票 -->
+              <!-- <itemVote v-if="item.sourcePost.type == 'vote'" @callBack="callBack" :index="index" :item="item.sourcePost"></itemVote> -->
+              <div class="tools">
+                <div>
+                  {{ item.sourcePost.ups - item.sourcePost.downs }} 赞 ·
+                  {{ item.sourcePost.comments }} 评论
+                </div>
               </div>
             </div>
           </div>
-        </div>
 
-        <div
-          v-if="
-            item.type != 'video' &&
-            item.type != 'link' &&
-            item.type != 'image' &&
-            item.type != 'gif' &&
-            item.type != 'article' &&
-            item.type != 'forward' &&
-            item.type != 'vote' &&
-            item.type != 'inner_video'
-          "
-          @click="toDetail(item)"
-          class="item_article"
-        >
-          <div class="title">
-            {{ item.title }}
+          <div
+            v-if="
+              item.type != 'video' &&
+              item.type != 'link' &&
+              item.type != 'image' &&
+              item.type != 'gif' &&
+              item.type != 'article' &&
+              item.type != 'forward' &&
+              item.type != 'vote' &&
+              item.type != 'inner_video'
+            "
+            @click="toDetail(item)"
+            class="item_article"
+          >
+            <div class="title">
+              {{ item.title }}
+            </div>
           </div>
         </div>
 
@@ -556,6 +559,7 @@ export default {
       localStorage.removeItem('storedata')
       localStorage.removeItem('spage')
     }
+    
   },
   destroyed() {},
   methods: {
@@ -663,6 +667,7 @@ export default {
       }
     },
     deletePost(index) {
+      
       this.lists.splice(index, 1);
     },
     savePost(item) {
@@ -860,6 +865,16 @@ export default {
 @media screen and (max-width: 700px) {
   .inner_videoc {
     min-height: 290px;
+  }
+}
+/deep/ .item{
+  &:hover{
+    .icon2{
+      display: none;
+    }
+    .zhiding{
+      display: block;
+    }
   }
 }
 </style>
