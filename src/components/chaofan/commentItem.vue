@@ -80,6 +80,10 @@
                     :show-file-list="false"
                     :on-success="handleAvatarSuccess"
                     :before-upload="beforeAvatarUpload"
+                    :on-exceed="handleAvatarExceed"
+                    :limit="imagesLimit"
+                    multiple
+                    accept="image/*"
                     style="display:inline-block;"
                     >
                         <img style="vertical-align:middle;margin-right:10px;cursor:pointer;" src="../../assets/images/icon/choose.png" alt="">
@@ -141,6 +145,8 @@ export default {
             images: [],
             filedata: {},
             imagesUploading: false,
+            imagesNum: 0,
+            imagesLimit: 9,
         }
     },
     props: {
@@ -180,17 +186,27 @@ export default {
                 // this.imageUrl = ''
                 this.$toast(res.errorMessage)
             }
-            this.imagesUploading = false
+            this.imagesNum--
+            if (!this.imagesNum) {
+                this.imagesUploading = false
+            }
         },
         beforeAvatarUpload(file) {
             const isLt2M = file.size / 1024 / 1024 < 20;
             if (!isLt2M) {
-            this.$message.error('上传图片大小不能超过 20MB!');
-            return false
+                this.$message.error('上传图片大小不能超过 20MB!');
+                return false
             }
+            this.imagesNum++
             this.imagesUploading = true
             this.filedata.fileName = file.name
             return true
+        },
+        handleAvatarExceed (files, fileList) {
+            this.$message.warning({
+                message: `当前限制选择 ${this.imagesLimit} 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`,
+                duration: 2500
+            });
         },
         showIcons(){
         this.showIcon = true
