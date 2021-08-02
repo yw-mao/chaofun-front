@@ -40,5 +40,6 @@ npm run dev
 
 如有其他疑问，也可添加微信 cijianzy 咨询
 
-# 感谢
-@qq919006380
+# 贡献鸣谢
+[@jlin-z](https://github.com/jlin-z)
+[@qq919006380](https://github.com/qq919006380)
