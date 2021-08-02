@@ -84,7 +84,7 @@
                     >
                         <img style="vertical-align:middle;margin-right:10px;cursor:pointer;" src="../../assets/images/icon/choose.png" alt="">
                     </el-upload>
-                    <div class="icons" style="padding: 4px 20px 0;float:right;">
+                    <div class="icons" style="padding: 4px 20px 0;float:right;text-align: right;">
                         <img @click="showIcons" style="width:24px;height:24px;" src="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=105646479,4120396531&fm=26&gp=0.jpg" alt="">
                         <div  class="emoji">
                         <span v-for="(item,index) in icons" @click="chooseEmoji(item)" :key="index">{{item}}</span>
@@ -409,7 +409,6 @@ export default {
 .emoji{
   // position: absolute;
   z-index: 1;
-  width: 80%;
   top: 66px;
   left: 0;
   line-height: 34px;
