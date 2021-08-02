@@ -334,7 +334,7 @@ export default {
     }
     .c_content{
         flex: 1;
-        overflow: hidden;
+        // overflow: hidden;
         .user_info{
             img{
                 width: 24px;
@@ -466,6 +466,7 @@ export default {
         left: 0;
         top: 0;
         opacity: 0;
+        z-index: 10;
     }
 }
 </style>
