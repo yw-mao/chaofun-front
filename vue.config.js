@@ -18,7 +18,7 @@ const dirweb = './src/views/chaofun-webview';
 
 // check if directory exists
 process.env.VUE_APP_BASE_WEB = fs.existsSync(dirweb);
-
+const Timestamp = new Date().getTime();
 module.exports = {
   publicPath: BASE_URL,
   outputDir: "dist", // 打包生成的生产环境构建文件的目录
@@ -30,6 +30,8 @@ module.exports = {
     config.performance = {
       hints: false
     }
+    config.output.filename = `[name].11${Timestamp}.js`;
+      config.output.chunkFilename = `[name].22${Timestamp}.js`;
   },
   chainWebpack: config => {
     // 配置路径别名

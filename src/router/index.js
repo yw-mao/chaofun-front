@@ -73,7 +73,20 @@ export const constantRoutes = [
     component: () => import('@/views/app/downs'),
     hidden: true
   },
-  
+  {
+    path: '/userRank',
+    component: () => import('@/views/activity/userRank'),
+    name: 'webViewUserRank',
+    meta: { title: '用户排名'},
+    hidden: true
+  },
+  {
+    path: '/forumRank',
+    component: () => import('@/views/activity/forumRank'),
+    name: 'webViewForumRank',
+    meta: { title: '板块排名'},
+    hidden: true
+  },
   {
     path: '/',
     component: Layout,
@@ -222,6 +235,7 @@ export const constantRoutes = [
         meta: { title: '推荐'},
         hidden: true
       },
+      
       // {
       //   path: '/webview/userRank',
       //   component: () => import('@/views/chaofun-webview/activity/userRank'),

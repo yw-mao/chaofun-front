@@ -242,11 +242,11 @@
       },
 
       goto24HForumRank(){
-        this.$router.push({path: '/webview/forumRank'})
+        this.$router.push({path: '/forumRank'})
       },
 
       goto24HUserRank(){
-        this.$router.push({path: '/webview/userRank'})
+        this.$router.push({path: '/userRank'})
       },
 
       gotoSubmit(){
