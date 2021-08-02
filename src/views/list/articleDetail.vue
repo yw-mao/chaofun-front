@@ -48,9 +48,9 @@
                       <div :class="['sub_comment', {'sub_comment_phone':ISPHONE}]">
                           <div v-if="replayItem" @click="cancelReplay" style="padding: 6px 0px;cursor:pointer;float:left;">取消回复</div>
                           <el-input type="textarea" @focus="doLogin" class="textarea" :placeholder="replayItem?'我对'+replayItem.userInfo.userName+'说：':'发表你的想法'" :autosize="{ minRows: 2, maxRows: 4}"  v-model="comment"></el-input>
-                          <div class="sub_botton">
-                            <div class="subims">
-                                <a v-if="images.length" :href="imgOrigin+images[0]" target="_blank">[附图]</a>
+                          <div class="sub_botton" v-loading="imagesUploading">
+                            <div class="subims" v-if="images.length">
+                                <a v-for="img in images" :key="img" :href="imgOrigin+img" target="_blank">[附图]</a>
                             </div>
                             <div ></div>
                             <el-button style="height:36px;" @click="toSub" type="primary">发表</el-button>
@@ -191,6 +191,7 @@ export default {
       canSub: true,
       images: [],
       filedata: {},
+      imagesUploading: false,
     }
   },
   components: {
@@ -226,9 +227,6 @@ export default {
   },
   methods:{
     handleAvatarSuccess(res, file) {
-    
-        console.log(this.filedata)
-        console.log(res);
         if(res.success){
             this.imageUrl = URL.createObjectURL(file.raw);
             this.images.push(res.data);
@@ -236,7 +234,7 @@ export default {
             // this.imageUrl = ''
             this.$toast(res.errorMessage)
         }
-    
+        this.imagesUploading = false
     },
     beforeAvatarUpload(file) {
         const isLt2M = file.size / 1024 / 1024 < 20;
@@ -244,6 +242,7 @@ export default {
           this.$message.error('上传图片大小不能超过 20MB!');
           return false
         }
+        this.imagesUploading = true
         this.filedata.fileName = file.name
         return true
       },
@@ -607,6 +606,9 @@ queryChildren (parent, list) {
         text-align: left;
     }
 }
+/deep/ .el-loading-spinner{
+    top: 10%;
+}
 /deep/ .pc_dialog{
   height: 100vh;
   overflow-y: hidden;
@@ -709,6 +711,11 @@ queryChildren (parent, list) {
           position: absolute;
           left: 0;
           top: 20px;
+          a {
+            + a {
+              margin-left: 6px;
+            }
+          }
         }
     }
 }
