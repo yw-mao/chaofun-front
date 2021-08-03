@@ -87,11 +87,28 @@ export const constantRoutes = [
     meta: { title: '板块排名'},
     hidden: true
   },
+  
   {
     path: '/',
     component: Layout,
     redirect: '',
     children: [
+      {
+        path: '/help',
+        component: () => import('@/views/activity/help'),
+        meta: { title: '板块排名'},
+        redirect: '/help/forumIntro',
+        children: [
+          {
+            path: 'forumIntro',
+            component: () => import('@/views/activity/help/forumIntro'),
+            // name: 'webViewForumRank',
+            meta: { title: '板块排名'},
+            hidden: true
+          },
+        ],
+        hidden: true
+      },
       {
         path: '',
         component: () => import('@/views/dashboard/index'),

@@ -43,7 +43,13 @@ if(process.env.NODE_ENV === 'production'&&process.env.VUE_APP_BASE_WEB){
       meta: { title: 'secret'},
       hidden: true
     },
-    
+    {
+      path: '/webview/forumIntro',
+      component: () => import('@/views/activity/help/forumIntro'),
+      name: 'webViewForumIntro',
+      meta: { title: '版主介绍'},
+      hidden: true
+    },
   ]
 }
 

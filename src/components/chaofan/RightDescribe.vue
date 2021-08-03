@@ -40,12 +40,12 @@
         <div @click="gotoAddForum" class="body-right">
             添加板块
         </div>
-       <div @click="goto24HForumRank" class="body-right">
+       <!-- <div @click="goto24HForumRank" class="body-right">
          24小时板块排名
        </div>
        <div @click="goto24HUserRank" class="body-right">
          24小时用户排名
-       </div>
+       </div> -->
 <!--        <div class="game">-->
 <!--          <div @click="toUrl({url: '/webview/buttonGame', routeType: 1})" class="title">The Button<span class="tab">第二届愚人节有奖活动</span></div>-->
 <!--          <div @click="toUrl({url: '/webview/buttonGame', routeType: 1})" class="advertise">-->
@@ -53,7 +53,16 @@
 <!--          </div>-->
 <!--        </div>-->
         
-    </div>
+      </div>
+      <div class="help_con">
+        <div class="help_item">
+          <div @click="toUrl({path: '/help/forumIntro'})">帮助文档</div>
+        </div>
+        <div class="help_item">
+          <div @click="goto24HForumRank">24小时板块排名</div>
+          <div @click="goto24HUserRank">24小时用户排名</div>
+        </div>
+      </div>
     </div>
 
 <!--   暂时先隐藏二维码   -->
@@ -273,6 +282,23 @@ import * as api from '@/api/api'
     }
   }
 }
+.help_con{
+    margin-top: 10px;
+    padding: 14px 0;
+    background: #fff;
+    .help_item{
+      padding: 8px 14px;
+      display: flex;
+      justify-content: space-between;
+      div{
+        cursor: pointer;
+        &:hover{
+          color: $linkcolor;
+          text-decoration: underline;
+        }
+      }
+    }
+  }
 .advertise{
   margin: 0px 0;
   img{
