@@ -76,14 +76,14 @@ export const constantRoutes = [
   {
     path: '/userRank',
     component: () => import('@/views/activity/userRank'),
-    name: 'webViewUserRank',
+    // name: 'webViewUserRank',
     meta: { title: '用户排名'},
     hidden: true
   },
   {
     path: '/forumRank',
     component: () => import('@/views/activity/forumRank'),
-    name: 'webViewForumRank',
+    // name: 'webViewForumRank',
     meta: { title: '板块排名'},
     hidden: true
   },
