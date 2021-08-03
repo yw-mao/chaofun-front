@@ -245,45 +245,48 @@ export default {
             })
         },
         toSub(){
-            this.doLoginStatus().then(res=>{
-                let comment = this.comment;
-                if(res){
-                if(!this.comment) return;
-                let params = {
-                    parentId: this.replayItem&&this.replayItem.id?this.replayItem.id:'',
-                    postId: this.replayItem.postId,
-                    comment: this.comment,
-                    imageNames: this.images.join(',')
-                }
-                console.log(this.comment);
-                api.addComments(params).then(res=>{
-                    if(res.success){
-                    this.$toast('评论成功');
-                    this.images = [];
-                    setTimeout(()=>{
-                        let obj = {
-                        parentId: this.replayItem?this.replayItem.id:0,
-                        text: this.comment,
-                        type: 'text',
-                        downs: 0,
-                        ups: 0,
-                        userInfo: this.userinfo
-                        };
-                        this.$emit('refreshComment',res.data)
-                        this.replayItem = null
-                        this.comment = ''
-                        this.canSub = true;
+            if(this.canSub){
+                this.doLoginStatus().then(res=>{
+                    let comment = this.comment;
+                    if(res){
+                    if(!this.comment) return;
+                    let params = {
+                        parentId: this.replayItem&&this.replayItem.id?this.replayItem.id:'',
+                        postId: this.replayItem.postId,
+                        comment: this.comment,
+                        imageNames: this.images.join(',')
+                    }
+                    console.log(this.comment);
+                    this.canSub = false;
+                    api.addComments(params).then(res=>{
+                        if(res.success){
+                        this.$toast('评论成功');
+                        this.images = [];
+                        setTimeout(()=>{
+                            let obj = {
+                            parentId: this.replayItem?this.replayItem.id:0,
+                            text: this.comment,
+                            type: 'text',
+                            downs: 0,
+                            ups: 0,
+                            userInfo: this.userinfo
+                            };
+                            this.$emit('refreshComment',res.data)
+                            this.replayItem = null
+                            this.comment = ''
+                            this.canSub = true;
+                        },1500)
+                        }
+                    })
 
-                        // this.comment = '';
-                        // this.treeData = this.transformTree(this.lists)
-                    },1500)
+                    }else{
+                        console.log('未登录',res)
                     }
                 })
-
-                }else{
-                    console.log('未登录',res)
-                }
-            })
+            }else{
+                this.$toast('正在提交评论...');
+                return;
+            }
         },
         doZanComment(v,item){
             if(v==1){

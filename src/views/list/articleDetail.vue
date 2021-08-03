@@ -540,6 +540,7 @@ queryChildren (parent, list) {
        }
     },
     toSub(){
+      if(this.canSub){
         this.doLoginStatus().then(res=>{
             let comment = this.comment;
             if(res){
@@ -550,40 +551,40 @@ queryChildren (parent, list) {
                   comment: this.comment,
                   imageNames: this.images.join(',')
                 }
-                if(this.canSub){
-                  this.canSub = false;
-                  api.addComments(params).then(res=>{
-                      if(res.success){
-                          this.images = [];
-                          this.$message.success('评论成功')
-                          setTimeout(()=>{
-                              if(this.replayItem){
-                                this.lists.push({
-                                  parentId: this.replayItem?this.replayItem.id:0,
-                                  text: comment,
-                                  type: 'text',
-                                  downs: 0,
-                                  ups: 0,
-                                  userInfo: this.userinfo
-                                })
-                              }else{
-                                this.lists.unshift(res.data)
-                              }
-                              
-                              this.comment = '';
-                              this.treeData = this.transformTree(this.lists)
-                          },1500)
-                      }
-                    this.canSub = true;
-                  })
-                }else{
-                  this.$toast('请勿重复提交')
-                }
-                
+                this.canSub = false;
+                api.addComments(params).then(res=>{
+                  if(res.success){
+                      this.images = [];
+                      this.$toast('评论成功')
+                      setTimeout(()=>{
+                          if(this.replayItem){
+                            this.lists.push({
+                              parentId: this.replayItem?this.replayItem.id:0,
+                              text: comment,
+                              type: 'text',
+                              downs: 0,
+                              ups: 0,
+                              userInfo: this.userinfo
+                            })
+                          }else{
+                            this.lists.unshift(res.data)
+                          }
+                          
+                          this.comment = '';
+                          this.treeData = this.transformTree(this.lists);
+                          this.canSub = true;
+                      },1500)
+                  }
+              })
             }else{
                 console.log('未登录',res)
             }
         })
+      }else{
+        this.$toast('正在提交评论...')
+        return;
+      }
+        
     }
   }
 }
