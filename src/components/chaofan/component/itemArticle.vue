@@ -1,6 +1,6 @@
 <template>
  <div>  
-    <div v-if="!isDetail" @click="toDetail(item)" class="item_article">
+    <div v-if="!isDetail" class="item_article">
                   <!-- <div class="title">
                     {{item.title}}
                   </div> -->
@@ -16,12 +16,21 @@
           <!-- <div class="title">
             {{item.title}}
           </div> -->
-          <div @click.stop="" class="detail_line" :style="{width: ISPHONE?clientWidth-24+'px':'720px'}">
+          <div @click.stop="" class="detail_line" id="detail_line" :style="{width: ISPHONE?clientWidth-24+'px':'720px'}">
             <p  v-for="(_item,ins) in item.article.split('\n')" :key="ins">
               <span v-html="_item"></span>
             </p>
           </div>
         </div>
+        <viewer style="height:0;display:none;" :images="imgsArr"> 
+          <img
+                v-for="(src,index) in imgsArr"
+                :src="src"
+                :id="'k'+index"
+                :key="index"
+                :data-source="src"
+              >
+        </viewer>
  </div>
 </template>
 
@@ -31,7 +40,7 @@ import * as api from '@/api/api'
    name: '',
    data(){
      return {
-         
+         imgsArr: []
      }
    },
    props: {
@@ -50,8 +59,26 @@ import * as api from '@/api/api'
 
    },
    created() {
+     
    },
    mounted() {
+    var el = document.getElementById('detail_line');
+    if(el){
+      var imgs = el.getElementsByTagName("img");
+      console.log(imgs);
+      let im = [];
+      imgs.forEach((item,index)=>{
+        item.addEventListener('click',function(e){
+          
+          let src = e.target.currentSrc;
+          document.getElementById('k'+index).click();
+          console.log(src)
+        })
+        im.push(item.currentSrc);
+      })
+      this.imgsArr = im;
+      console.log(this.imgsArr)
+    }
     
    },
    methods: {
