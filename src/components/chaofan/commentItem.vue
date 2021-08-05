@@ -66,7 +66,7 @@
             <!-- {{replayItem}}{{item.id}} -->
             <div v-if="replayItem&&(replayItem.id==item.id)" class="replayInput">
                 <div v-if="replayItem" @click="cancelReplay" style="padding: 6px 0px;cursor:pointer;float:right;">取消回复</div>
-                <el-input type="textarea" v-model="comment" class="textarea" :placeholder="replayItem?'我对'+replayItem.userInfo.userName+'说：':'发表你的想法'" :autosize="{ minRows: 2, maxRows: 4}"></el-input>
+                <el-input v-on:focus="inputFocus" v-on:blur="inputBlur" type="textarea" v-model="comment" class="textarea" :placeholder="replayItem?'我对'+replayItem.userInfo.userName+'说：':'发表你的想法'" :autosize="{ minRows: 2, maxRows: 4}"></el-input>
                 <div class="reply_button" v-loading="imagesUploading">
                     <div class="subims" v-if="images.length">
                         <a v-for="img in images" :key="img" :href="imgOrigin+img" target="_blank">[附图]</a>
@@ -85,11 +85,12 @@
                     multiple
                     accept="image/*"
                     style="display:inline-block;"
+                    ref="replyImageUpload"
                     >
                         <img style="vertical-align:middle;margin-right:10px;cursor:pointer;" src="../../assets/images/icon/choose.png" alt="">
                     </el-upload>
-                    <div class="icons" style="padding: 4px 20px 0;float:right;text-align: right;">
-                        <img @click="showIcons" style="width:24px;height:24px;" src="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=105646479,4120396531&fm=26&gp=0.jpg" alt="">
+                    <div class="icons">
+                        <img @click="showIcons" src="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=105646479,4120396531&fm=26&gp=0.jpg" alt="">
                         <div  class="emoji">
                         <span v-for="(item,index) in icons" @click="chooseEmoji(item)" :key="index">{{item}}</span>
                         </div>
@@ -158,8 +159,8 @@ export default {
         },
         showRep: {
             type: Boolean,
-            default: false
-        }
+            default: true
+        },
     },
     components: {
 
@@ -169,9 +170,15 @@ export default {
     mounted() {
         
     },
+    watch: {
+        showRep: function(val) {
+            if (val === false) {
+                this.replayItem = null
+            }
+        }
+    },
     methods: {
         doImgs(item){
-            console.log('item.imageNames',item)
             var a = item.split(',');
             a.forEach(it=>{
                 it = this.imgOrigin + it;
@@ -216,18 +223,20 @@ export default {
         },
         toReplay(item){
         //    this.replayItem = null;
+            if (this.replayItem === item) return
+            this.images = []
             this.$set(this,'replayItem',item)
             // this.replayItem = item;
-            this.$emit('rep',item)
-            this.showR = true
+            this.$emit('rep',item, true)
+            this.showR = false
         },
         cancelReplay(){
             this.replayItem = null
-            this.$emit('rep',null)
-            this.showR = false
+            this.$emit('rep',null, false)
         },
-        rep(item){
+        rep(item, bool){
             this.replayItem = item;
+            this.showR = bool
         },
         refreshComment(obj){
             this.$emit('refreshComment',obj)
@@ -322,6 +331,32 @@ export default {
             this.comment += item;
             this.showIcon = false
         },
+        toPaste(e){
+            var cbd = e.clipboardData;
+            var ua = window.navigator.userAgent;
+            if ( !(e.clipboardData && e.clipboardData.items) ) {
+                return ;
+            }
+            if(cbd.items && cbd.items.length === 2 && cbd.items[0].kind === "string" && cbd.items[1].kind === "file" && cbd.types && cbd.types.length === 2 && cbd.types[0] === "text/plain" && cbd.types[1] === "Files" && ua.match(/Macintosh/i) && Number(ua.match(/Chrome\/(\d{2})/i)[1]) < 49){
+                return;
+            }
+            // for(var i = 0; i < cbd.items.length; i++) {
+            var item = cbd.items[cbd.items.length-1];
+            if(item.kind == "file" && (/^image\/[a-z]*$/.test(item.type))){
+                var blob = item.getAsFile();
+                if (blob.size === 0) {
+                return;
+                }
+                this.$refs.replyImageUpload[0].$children[0].uploadFiles([blob])
+            }
+            // }
+        },
+        inputFocus () {
+            document.addEventListener('paste',this.toPaste);
+        },
+        inputBlur() {
+            document.removeEventListener('paste',this.toPaste);
+        }
     }
 }
 </script>
@@ -415,6 +450,34 @@ export default {
           a {
             + a {
               margin-left: 6px;
+            }
+          }
+        }
+        .icons{
+          padding: 4px 20px 0;
+          text-align: right;
+          height: 60px;
+          &:hover {
+            flex: 1;
+          }
+          &:hover .emoji{
+            display: block;
+          }
+          & > img {
+            width: 24px;
+            height: 24px;
+          }
+          .emoji{
+            line-height: 34px;
+            padding: 10px !important;
+            border: 1px solid #d1d1d1;
+            background: #fff;
+            display: none;
+            text-align: left;
+            span{
+              font-size: 24px;
+              padding: 2px;
+              cursor: pointer;
             }
           }
         }
