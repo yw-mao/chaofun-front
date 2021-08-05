@@ -207,4 +207,9 @@ import * as api from '@/api/api'
       }
     }
   }
+  .icons{
+    img{
+      vertical-align: middle;
+    }
+  }
 </style>

@@ -149,6 +149,15 @@
         'islogin'
       ])
     },
+    beforeRouteEnter (to, from, next) {
+      next(vm => {
+        // 通过 `vm` 访问组件实例
+        // vm.deleteScan();
+        if(!vm.$store.state.user.islogin){
+          vm.nextReplace()
+        }
+      })
+    },
     mounted() {
       if (document.body.clientWidth < 700) {
         this.isPhone = true
@@ -192,14 +201,16 @@
         this.$dialog.confirm({
           title: '',
           message: '是否前往你复制的链接？',
+          className: 'DialogsDialogs',
         })
           .then(() => {
             // on confirm
 
             window.open(url, '_blank');
-            history.replaceState({page: 3}, "title 3", '' + this.$route.path);
+            history.replaceState({page: 3}, "title 3", '/all');
           })
           .catch(() => {
+            history.replaceState({page: 3}, "title 3", '/all');
             // on cancel
           });
       }
@@ -210,7 +221,7 @@
       if (!this.roles.includes('admin')) {
         this.currentRole = 'editorDashboard'
       }
-      if (this.$route.path == '/all') {
+      if (this.$route.path == '/all'||this.$route.path == '/middles') {
         this.params.forumId = 'all'
         this.forumInfo = {
           imageName: 'c1aaa496ec1ba20373225d232006ffdc.png',
@@ -247,7 +258,18 @@
       // }
       this.load()
     },
+    watch:{
+      '$router'(v){
+        console.log(v)
+      }
+    },
     methods: {
+      nextReplace(){
+        if(this.$route.path == '/'){
+          this.$router.replace({path: '/all'})
+        }
+        
+      },
       updateList(params){
         this.params = params;
         this.lists = [];
@@ -443,5 +465,4 @@
       opacity: 1 !important;
     }
   }
-
 </style>
