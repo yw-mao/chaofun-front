@@ -50,6 +50,13 @@ if(process.env.NODE_ENV === 'production'&&process.env.VUE_APP_BASE_WEB){
       meta: { title: '版主介绍'},
       hidden: true
     },
+    {
+      path: '/webview/agreement',
+      component: () => import('@/views/chaofun-webview/agreement/agreement'),
+      name: 'webViewForumIntro',
+      meta: { title: '炒饭用户及隐私政策'},
+      hidden: true
+    },
   ]
 }
 
