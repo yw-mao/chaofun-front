@@ -692,7 +692,29 @@ export function forumunpin(params) {
   })
 }
 
+export function getlistTag(params) {
+  return request({
+    url: '/api/v0/forum/listTag',
+    method: 'get',
+    params
+  })
+}
 
+export function addTag(params) {
+  return request({
+    url: '/api/v0/post/addTag',
+    method: 'get',
+    params
+  })
+}
+
+export function removeTag(params) {
+  return request({
+    url: '/api/v0/post/removeTag',
+    method: 'get',
+    params
+  })
+}
 
 
 /** 活动查询 */

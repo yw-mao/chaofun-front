@@ -3,7 +3,7 @@
     <div
       v-for="(item, index) in lists"
       :key="index"
-      @click.stop="toDetail(item,false)"
+      @click.stop="toDetail(item, false)"
       :class="['item', 'infinite-list-item', { 'phone-item': ISPHONE }]"
     >
       <div v-if="!ISPHONE" @click.stop="" class="zan">
@@ -40,244 +40,289 @@
       <div v-if="ISPHONE" style="width: 10px"></div>
       <div class="rights" :style="{ width: ISPHONE ? imgMaxWidth + 'px' : '' }">
         <!-- 头部 -->
-        
+
         <div class="sim_item">
-            <div class="sim_img">
-                <div class="sim_img_r" :style="{'background-image': `url(${doImageUrl(item)})`}">
-                
-                </div>
+          <div class="sim_img">
+            <div
+              class="sim_img_r"
+              :style="{ 'background-image': `url(${doImageUrl(item)})` }"
+            ></div>
+          </div>
+          <div class="sim_content">
+            <div class="title">
+              <div v-if="item.isPin" style="display: inline-block">
+                <img
+                  class="icon icon2"
+                  :src="
+                    imgOrigin +
+                    'biz/daa54c993451a77d3e723405afbcd15c.png?x-oss-process=image/resize,h_80'
+                  "
+                  alt=""
+                />
+                <span class="zhiding">版主置顶</span>
+              </div>
+              <div v-if="item.tags.length" class="tags">
+                <span v-for="(item, index) in item.tags" :key="index"
+                  ># {{ item.name }}</span
+                >
+              </div>
+              <span class="sim_tab"> [{{ doType(item) }}] </span>
+              {{ item.title }}
             </div>
-            <div class="sim_content">
-                <div class="title">
-                    <div v-if="item.isPin" style="display:inline-block;">
-                      <img  class="icon icon2" :src="imgOrigin+'biz/daa54c993451a77d3e723405afbcd15c.png?x-oss-process=image/resize,h_80'" alt="">
-                      <span class="zhiding">版主置顶</span>
-                    </div>
-                    <span class="sim_tab">
-                        [{{doType(item)}}]
-                    </span>
-                    {{item.title}}
-                </div>
-                <div class="sim_info">
-                    <span class="sim_forum">
-                        {{item.forum.name}}
-                    </span>
-                    <span class="from">
-                        来自·{{item.userInfo?item.userInfo.userName:'测试账号'}}
-                    </span>
-                    <span class="from">
-                        大约 {{moment.duration(moment(item.gmtCreate) - moment()).humanize(true)}}
-                    </span>
-                </div>
-                <div v-if="item.showPreview&&item.type!='link'" class="preview">
-                              <!-- 图片 -->
-                    <itemImage v-if="item.type == 'image'" :item="item"></itemImage>
-
-                    <div @click.stop="">
-                      <!-- 视频 -->
-                      <itemGif
-                        @toDetail="toDetail"
-                        v-if="item.type == 'gif'"
-                        :isDetail="false"
-                        :item="item"
-                      ></itemGif>
-                      <!-- 内部视频 -->
-                      <div v-if="item.type == 'inner_video'" class="inner_videoc">
-                        <div v-if="!item.play" class="item_video">
-                          
-                          <div @click="playVideo(index, item, 0)" :class="['inner_prev', { inner_prev_phone: ISPHONE }]">
-                            <img
-                              class="coverss"
-                              
-                              :src="
-                                imgOrigin + item.video + '?x-oss-process=video/snapshot,t_0'
-                              "
-                              alt=""
-                            />
-                            <img
-                              class="inner_play"
-                              src="../../assets/images/bg/play.png"
-                              alt=""
-                            />
-                          </div>
-                        </div>
-                        <itemVideo
-                          v-if="item.play"
-                          @toPause="playVideo"
-                          :isDetail="false"
-                          :item="item"
-                        ></itemVideo>
-                      </div>
-                    </div>
-
-                    <!-- iframe视频 -->
-                    <div
-                      v-if="
-                        item.type == 'video' &&
-                        item.videoType == 'ifram' &&
-                        (!ISPHONE || !item.link.includes('www.acfun.cn'))
-                      "
-                      class="item_video"
-                    >
-                      <div @click.stop="" class="video">
-                        <img
-                          v-if="!item.play && item.cover"
-                          class="coverss"
-                          @click="playVideo(index, item, 0)"
-                          :src="
-                            imgOrigin + item.cover + '?x-oss-process=image/resize,h_256'
-                          "
-                          alt=""
-                        />
-                        <img
-                          v-if="!item.play && !item.cover"
-                          class="coverss"
-                          @click="playVideo(index, item, 0)"
-                          src="../../assets/images/bg/videocover.jpg"
-                          alt=""
-                        />
-                        <img
-                          v-if="!item.play"
-                          class="btn_play"
-                          @click="playVideo(index, item, 0)"
-                          src="../../assets/images/bg/play.png"
-                          alt=""
-                        />
-                        <iframe
-                          v-if="!ISPHONE && item.play"
-                          style="width: 100%; min-height: 370px"
-                          :src="
-                            item.video +
-                            (item.link.includes('www.acfun.cn') ? '?' : '') +
-                            '&autoplay=true'
-                          "
-                          allow="autoplay"
-                          id="ACPlayer-re"
-                          scrolling="no"
-                          border="0"
-                          frameborder="no"
-                          framespacing="0"
-                          allowfullscreen="true"
-                        ></iframe>
-                        <iframe
-                          v-if="ISPHONE && item.play"
-                          style="width: 100%; height: 230px"
-                          :src="
-                            item.video +
-                            (item.link.includes('www.acfun.cn') ? '?' : '') +
-                            '&autoplay=true'
-                          "
-                          allow="autoplay"
-                          id="ACPlayer-re"
-                          scrolling="no"
-                          border="0"
-                          frameborder="no"
-                          framespacing="0"
-                          allowfullscreen="true"
-                        ></iframe>
-                      </div>
-                    </div>
-                    <!-- 富文本 -->
-                    <itemArticle v-if="item.type == 'article'" :item="item"></itemArticle>
-
-                    <!-- 投票 -->
-                    <itemVote
-                      v-if="item.type == 'vote'"
-                      @callBack="callBack"
-                      :index="index"
-                      :item="item"
-                    ></itemVote>
-                </div>
-                <div :class="['tools',{'tools_p': ISPHONE}]">
-                    <!-- <div><i class="el-icon-star-on"></i> <span>{{item.ups-item.downs}}</span> 点赞</div> -->
-                    <div v-if="ISPHONE">
-                        <span v-if="item.vote != 1" @click.stop="doZan(1, item, index)">
-                        <img
-                            style="width: 18px; vertical-align: middle; margin-top: -2px"
-                            src="../../assets/images/icon/up.png"
-                            alt=""
-                        />
-                        </span>
-                        <span
-                        v-if="item.vote == 1 || !ISPHONE"
-                        @click.stop="doZan(1, item, index)"
-                        >
-                        <img
-                            style="width: 18px; vertical-align: middle; margin-top: -2px"
-                            src="../../assets/images/icon/up_active.png"
-                            alt=""
-                        />
-                        </span>
-                        <span style="padding: 0 4px">{{ item.ups - item.downs }}</span>
-                        <span v-if="item.vote != -1" @click.stop="doZan(1, item, index)">
-                        <img
-                            style="width: 18px; vertical-align: middle; margin-top: -2px"
-                            v-if="item.vote != -1"
-                            @click.stop="doZan(2, item, index)"
-                            src="../../assets/images/icon/down.png"
-                            alt=""
-                        />
-                        <!-- <span>{{item.downs}}</span> -->
-                        </span>
-                        <span
-                        v-if="item.vote == -1 || !ISPHONE"
-                        @click.stop="doZan(1, item, index)"
-                        >
-                        <img
-                            style="width: 18px; vertical-align: middle; margin-top: -2px"
-                            v-if="item.vote == -1 || !ISPHONE"
-                            @click.stop="doZan(2, item, index)"
-                            src="../../assets/images/icon/down_active.png"
-                            alt=""
-                        />
-                        <!-- <span>{{item.downs}}</span> -->
-                        </span>
-                    </div>
-                    <div @click.stop="toDetail(item,true)">
-                        <i class="el-icon-s-comment"></i> <span style="padding:0 2px;">{{ item.comments }} </span
-                        > 评论
-                    </div>
-                    <el-dropdown @command="handleCommand" trigger="click">
-                        <span @click.stop="" class="el-dropdown-link">
-                        <i class="el-icon-share"></i> 分享
-                        </span>
-                        <el-dropdown-menu slot="dropdown">
-                        <el-dropdown-item
-                            :command="{ type: 'copy', item: item }"
-                            v-clipboard:copy="message"
-                            v-clipboard:success="onCopy"
-                            icon="el-icon-document-copy"
-                            >复制链接</el-dropdown-item
-                        >
-                        <el-dropdown-item
-                            :command="{ type: 'share', item: item }"
-                            icon="el-icon-s-promotion"
-                            >转发到</el-dropdown-item
-                        >
-                        <el-dropdown-item
-                            :command="{ type: 'shareWeibo', item: item }"
-                            icon="el-icon-s-promotion"
-                            >分享到微博</el-dropdown-item
-                        >
-                        </el-dropdown-menu>
-                    </el-dropdown>
-                    <div
-                        :class="['b_icon', { save_active: item.save }]"
-                        @click.stop="savePost(item)"
-                    >
-                        <i class="el-icon-s-help"></i> <span style="padding:0 2px;">{{ item.save ? "已收藏" : "收藏" }}</span> 
-                    </div>
-                    <div v-if="!ISPHONE" @click.stop="topreview(item,index)" class="looks">
-                      {{item.showPreview?'收起':doLookType(item)}}
-                    </div>
-                    </div>
+            <div class="sim_info">
+              <span class="sim_forum">
+                {{ item.forum.name }}
+              </span>
+              <span class="from">
+                来自·{{ item.userInfo ? item.userInfo.userName : "测试账号" }}
+              </span>
+              <span class="from">
+                大约
+                {{
+                  moment
+                    .duration(moment(item.gmtCreate) - moment())
+                    .humanize(true)
+                }}
+              </span>
             </div>
-            
+            <div v-if="item.showPreview && item.type != 'link'" class="preview">
+              <!-- 图片 -->
+              <itemImage v-if="item.type == 'image'" :item="item"></itemImage>
+
+              <div @click.stop="">
+                <!-- 视频 -->
+                <itemGif
+                  @toDetail="toDetail"
+                  v-if="item.type == 'gif'"
+                  :isDetail="false"
+                  :item="item"
+                ></itemGif>
+                <!-- 内部视频 -->
+                <div v-if="item.type == 'inner_video'" class="inner_videoc">
+                  <div v-if="!item.play" class="item_video">
+                    <div
+                      @click="playVideo(index, item, 0)"
+                      :class="['inner_prev', { inner_prev_phone: ISPHONE }]"
+                    >
+                      <img
+                        class="coverss"
+                        :src="
+                          imgOrigin +
+                          item.video +
+                          '?x-oss-process=video/snapshot,t_0'
+                        "
+                        alt=""
+                      />
+                      <img
+                        class="inner_play"
+                        src="../../assets/images/bg/play.png"
+                        alt=""
+                      />
+                    </div>
+                  </div>
+                  <itemVideo
+                    v-if="item.play"
+                    @toPause="playVideo"
+                    :isDetail="false"
+                    :item="item"
+                  ></itemVideo>
+                </div>
+              </div>
+
+              <!-- iframe视频 -->
+              <div
+                v-if="
+                  item.type == 'video' &&
+                  item.videoType == 'ifram' &&
+                  (!ISPHONE || !item.link.includes('www.acfun.cn'))
+                "
+                class="item_video"
+              >
+                <div @click.stop="" class="video">
+                  <img
+                    v-if="!item.play && item.cover"
+                    class="coverss"
+                    @click="playVideo(index, item, 0)"
+                    :src="
+                      imgOrigin +
+                      item.cover +
+                      '?x-oss-process=image/resize,h_256'
+                    "
+                    alt=""
+                  />
+                  <img
+                    v-if="!item.play && !item.cover"
+                    class="coverss"
+                    @click="playVideo(index, item, 0)"
+                    src="../../assets/images/bg/videocover.jpg"
+                    alt=""
+                  />
+                  <img
+                    v-if="!item.play"
+                    class="btn_play"
+                    @click="playVideo(index, item, 0)"
+                    src="../../assets/images/bg/play.png"
+                    alt=""
+                  />
+                  <iframe
+                    v-if="!ISPHONE && item.play"
+                    style="width: 100%; min-height: 370px"
+                    :src="
+                      item.video +
+                      (item.link.includes('www.acfun.cn') ? '?' : '') +
+                      '&autoplay=true'
+                    "
+                    allow="autoplay"
+                    id="ACPlayer-re"
+                    scrolling="no"
+                    border="0"
+                    frameborder="no"
+                    framespacing="0"
+                    allowfullscreen="true"
+                  ></iframe>
+                  <iframe
+                    v-if="ISPHONE && item.play"
+                    style="width: 100%; height: 230px"
+                    :src="
+                      item.video +
+                      (item.link.includes('www.acfun.cn') ? '?' : '') +
+                      '&autoplay=true'
+                    "
+                    allow="autoplay"
+                    id="ACPlayer-re"
+                    scrolling="no"
+                    border="0"
+                    frameborder="no"
+                    framespacing="0"
+                    allowfullscreen="true"
+                  ></iframe>
+                </div>
+              </div>
+              <!-- 富文本 -->
+              <itemArticle
+                v-if="item.type == 'article'"
+                :item="item"
+              ></itemArticle>
+
+              <!-- 投票 -->
+              <itemVote
+                v-if="item.type == 'vote'"
+                @callBack="callBack"
+                :index="index"
+                :item="item"
+              ></itemVote>
+            </div>
+            <div :class="['tools', { tools_p: ISPHONE }]">
+              <!-- <div><i class="el-icon-star-on"></i> <span>{{item.ups-item.downs}}</span> 点赞</div> -->
+              <div v-if="ISPHONE">
+                <span v-if="item.vote != 1" @click.stop="doZan(1, item, index)">
+                  <img
+                    style="
+                      width: 18px;
+                      vertical-align: middle;
+                      margin-top: -2px;
+                    "
+                    src="../../assets/images/icon/up.png"
+                    alt=""
+                  />
+                </span>
+                <span
+                  v-if="item.vote == 1 || !ISPHONE"
+                  @click.stop="doZan(1, item, index)"
+                >
+                  <img
+                    style="
+                      width: 18px;
+                      vertical-align: middle;
+                      margin-top: -2px;
+                    "
+                    src="../../assets/images/icon/up_active.png"
+                    alt=""
+                  />
+                </span>
+                <span style="padding: 0 4px">{{ item.ups - item.downs }}</span>
+                <span
+                  v-if="item.vote != -1"
+                  @click.stop="doZan(1, item, index)"
+                >
+                  <img
+                    style="
+                      width: 18px;
+                      vertical-align: middle;
+                      margin-top: -2px;
+                    "
+                    v-if="item.vote != -1"
+                    @click.stop="doZan(2, item, index)"
+                    src="../../assets/images/icon/down.png"
+                    alt=""
+                  />
+                  <!-- <span>{{item.downs}}</span> -->
+                </span>
+                <span
+                  v-if="item.vote == -1 || !ISPHONE"
+                  @click.stop="doZan(1, item, index)"
+                >
+                  <img
+                    style="
+                      width: 18px;
+                      vertical-align: middle;
+                      margin-top: -2px;
+                    "
+                    v-if="item.vote == -1 || !ISPHONE"
+                    @click.stop="doZan(2, item, index)"
+                    src="../../assets/images/icon/down_active.png"
+                    alt=""
+                  />
+                  <!-- <span>{{item.downs}}</span> -->
+                </span>
+              </div>
+              <div @click.stop="toDetail(item, true)">
+                <i class="el-icon-s-comment"></i>
+                <span style="padding: 0 2px">{{ item.comments }} </span> 评论
+              </div>
+              <el-dropdown @command="handleCommand" trigger="click">
+                <span @click.stop="" class="el-dropdown-link">
+                  <i class="el-icon-share"></i> 分享
+                </span>
+                <el-dropdown-menu slot="dropdown">
+                  <el-dropdown-item
+                    :command="{ type: 'copy', item: item }"
+                    v-clipboard:copy="message"
+                    v-clipboard:success="onCopy"
+                    icon="el-icon-document-copy"
+                    >复制链接</el-dropdown-item
+                  >
+                  <el-dropdown-item
+                    :command="{ type: 'share', item: item }"
+                    icon="el-icon-s-promotion"
+                    >转发到</el-dropdown-item
+                  >
+                  <el-dropdown-item
+                    :command="{ type: 'shareWeibo', item: item }"
+                    icon="el-icon-s-promotion"
+                    >分享到微博</el-dropdown-item
+                  >
+                </el-dropdown-menu>
+              </el-dropdown>
+              <div
+                :class="['b_icon', { save_active: item.save }]"
+                @click.stop="savePost(item)"
+              >
+                <i class="el-icon-s-help"></i>
+                <span style="padding: 0 2px">{{
+                  item.save ? "已收藏" : "收藏"
+                }}</span>
+              </div>
+              <div
+                v-if="!ISPHONE"
+                @click.stop="topreview(item, index)"
+                class="looks"
+              >
+                {{ item.showPreview ? "收起" : doLookType(item) }}
+              </div>
+            </div>
+          </div>
         </div>
-        
-
-
-        
       </div>
     </div>
     <div
@@ -319,8 +364,8 @@ import itemArticle from "./component/itemArticle";
 import itemVote from "./component/itemVote";
 // import itemForwardTitle from "./component/itemForwardTitle";
 
-import 'moment/locale/zh-cn'
-import moment from 'moment'
+import "moment/locale/zh-cn";
+import moment from "moment";
 
 import forwardH5 from "../h5/forward";
 export default {
@@ -407,75 +452,112 @@ export default {
       console.log("this.top", this.top);
       this.$(".infinite-list").animate({ scrollTop: this.top }, 10);
       setTimeout(() => {
-        localStorage.removeItem('storedata')
-        localStorage.removeItem('spage')
+        localStorage.removeItem("storedata");
+        localStorage.removeItem("spage");
       }, 1000);
     } else {
-      localStorage.removeItem('storedata')
-      localStorage.removeItem('spage')
+      localStorage.removeItem("storedata");
+      localStorage.removeItem("spage");
     }
   },
   destroyed() {},
   methods: {
-    doLookType(item){
-      if(item.type=='image'){
-        return '查看图片'
-      }else if(item.type=='gif'){
-        return '查看GIF'
-      }else if(item.type == 'inner_video'){
-        return '查看视频'
-      }else if(item.type == 'link'){
-        return '跳转链接'
-      }else{
-        return '查看';
+    doLookType(item) {
+      if (item.type == "image") {
+        return "查看图片";
+      } else if (item.type == "gif") {
+        return "查看GIF";
+      } else if (item.type == "inner_video") {
+        return "查看视频";
+      } else if (item.type == "link") {
+        return "跳转链接";
+      } else {
+        return "查看";
       }
     },
-    topreview(item,index){
-      if(item.type!='link'){
+    topreview(item, index) {
+      if (item.type != "link") {
         item.showPreview = !item.showPreview;
-        this.lists.splice(index,1,item);
-      }else{
-        window.open(item.link,'_blank')
+        this.lists.splice(index, 1, item);
+      } else {
+        window.open(item.link, "_blank");
       }
-      
     },
-    doType(item){
-        var t = item.type;
-        switch (t){
-            case 'link': return '链接';break;
-            case 'gif': return 'GIF';break;
-            case 'image': return '图片';break;
-            case 'inner_video': return '视频';break;
-            case 'article': return '文章';break;
-            case 'vote': return '投票';break;
-            case 'forward': return '转发';break;
-            default: return '其他';
-        }
+    doType(item) {
+      var t = item.type;
+      switch (t) {
+        case "link":
+          return "链接";
+          break;
+        case "gif":
+          return "GIF";
+          break;
+        case "image":
+          return "图片";
+          break;
+        case "inner_video":
+          return "视频";
+          break;
+        case "article":
+          return "文章";
+          break;
+        case "vote":
+          return "投票";
+          break;
+        case "forward":
+          return "转发";
+          break;
+        default:
+          return "其他";
+      }
     },
-    doImageUrl(item){
-        var t = item.type;
-        switch (t){
-            case 'link':
-            case 'gif':
-            return this.doLink(item);
-            break;
-            case 'inner_video': return this.imgOrigin+item['video']+'?x-oss-process=video/snapshot,t_0,h_500';break;
-            case 'article': return this.imgOrigin+'biz/b64193b7beca6ae243341273adddf494.png?x-oss-process=image/resize,h_150';break;
-            case 'image':return this.imgOrigin+item.imageName+'?x-oss-process=image/resize,h_150';break;
-            case 'forward': return this.doImageUrl(item.sourcePost);break;
-            
-        }
+    doImageUrl(item) {
+      var t = item.type;
+      switch (t) {
+        case "link":
+        case "gif":
+          return this.doLink(item);
+          break;
+        case "inner_video":
+          return (
+            this.imgOrigin +
+            item["video"] +
+            "?x-oss-process=video/snapshot,t_0,h_500"
+          );
+          break;
+        case "article":
+          return (
+            this.imgOrigin +
+            "biz/b64193b7beca6ae243341273adddf494.png?x-oss-process=image/resize,h_150"
+          );
+          break;
+        case "image":
+          return (
+            this.imgOrigin +
+            item.imageName +
+            "?x-oss-process=image/resize,h_150"
+          );
+          break;
+        case "forward":
+          return this.doImageUrl(item.sourcePost);
+          break;
+      }
     },
-    doLink(item){
-        if(item.cover){
-            if(item.cover.includes('.ico')){
-                return this.imgOrigin+item.cover;
-            }else{
-                return this.imgOrigin+item.cover+'?x-oss-process=image/resize,h_150';
-            }
-        }else{
-            return this.imgOrigin+'biz/b06148ccba2c8b527d979942131a9fd9.png?x-oss-process=image/resize,h_150'
+    doLink(item) {
+      if (item.cover) {
+        if (item.cover.includes(".ico")) {
+          return this.imgOrigin + item.cover;
+        } else {
+          return (
+            this.imgOrigin + item.cover + "?x-oss-process=image/resize,h_150"
+          );
         }
+      } else {
+        return (
+          this.imgOrigin +
+          "biz/b06148ccba2c8b527d979942131a9fd9.png?x-oss-process=image/resize,h_150"
+        );
+      }
     },
     callBack(index, data) {
       console.log(index, data);
@@ -595,43 +677,42 @@ export default {
     share(item) {
       this.message = location.origin + "/p/" + item.postId;
     },
-    toDetail(item,bool) {
+    toDetail(item, bool) {
       if (this.canTo) {
-        if(bool||item.type!='link'){
-            if (this.whichOne) {
+        if (bool || item.type != "link") {
+          if (this.whichOne) {
             localStorage.setItem("whichOne", this.whichOne);
-            }
-            this.canTo = false;
-            let obj = {
+          }
+          this.canTo = false;
+          let obj = {
             list: this.lists,
-            };
-            let top = this.$(".infinite-list").scrollTop();
-            console.log("top", top);
-            this.$(".infinite-list").animate({ scrollTop: top || "+=0" }, 1000);
-            obj.top = top;
-            obj.forumId = item.forumId;
-            obj.from = {
+          };
+          let top = this.$(".infinite-list").scrollTop();
+          console.log("top", top);
+          this.$(".infinite-list").animate({ scrollTop: top || "+=0" }, 1000);
+          obj.top = top;
+          obj.forumId = item.forumId;
+          obj.from = {
             params: this.$route.params,
             query: this.$route.query,
             path: this.$route.path,
-            };
-            obj.pagenum = this.pagenum;
-            obj.marker = this.marker;
-            obj.key = this.keys;
-            this.postBehavior(item.postId, "detail");
-            localStorage.setItem("storedata", JSON.stringify(obj));
-            localStorage.setItem('spage',this.$route.path)
-            this.$router.push({
-                name: "articleDetail",
-                params: { postId: item.postId },
-            });
-            setTimeout(() => {
+          };
+          obj.pagenum = this.pagenum;
+          obj.marker = this.marker;
+          obj.key = this.keys;
+          this.postBehavior(item.postId, "detail");
+          localStorage.setItem("storedata", JSON.stringify(obj));
+          localStorage.setItem("spage", this.$route.path);
+          this.$router.push({
+            name: "articleDetail",
+            params: { postId: item.postId },
+          });
+          setTimeout(() => {
             this.canTo = true;
-            }, 1000);
-        }else{
-            window.open(item.link,'_blank')
+          }, 1000);
+        } else {
+          window.open(item.link, "_blank");
         }
-        
       }
     },
     toUrls(item, params) {
@@ -698,30 +779,30 @@ export default {
     width: 100%;
   }
 }
-.item{
-    margin-bottom: 2px;
-    padding-top: 7px;
-    padding-bottom: 7px;
-    padding-right: 10px;
-    position: relative;
-    &:hover .tools .looks{
+.item {
+  margin-bottom: 2px;
+  padding-top: 7px;
+  padding-bottom: 7px;
+  padding-right: 10px;
+  position: relative;
+  &:hover .tools .looks {
+    display: block;
+    color: #1890ff;
+  }
+  &:hover {
+    .icon2 {
+      display: none;
+    }
+    .zhiding {
       display: block;
-      color: #1890ff;
     }
-    &:hover{
-      .icon2{
-        display: none;
-      }
-      .zhiding{
-        display: block;
-      }
-    }
+  }
 }
-.item .tools_p{
-    justify-content: space-between;
+.item .tools_p {
+  justify-content: space-between;
 }
-.item .tools_p div{
-    margin-right: 0;
+.item .tools_p div {
+  margin-right: 0;
 }
 .title {
   padding: 0 0 10px 0;
@@ -746,91 +827,87 @@ export default {
 .module_name b:hover {
   border-bottom: 1px solid #666;
 }
-.sim_item{
-    display: flex;
-    justify-content: space-between;
-    .sim_img{
-        flex: 0 0 60px;
-        height: 60px;
-        margin-right: 10px;
-        overflow: hidden;
-        border-radius: 4px;
-    }
-    .sim_img_r{
-        width: 60px;
-        height: 60px;
-        text-align: center;
-        background-size: cover;
-        // background-size: contain;
-        // background-size: 100px 90px;
-        background-position: center;
-        background-repeat: no-repeat;
-        
-        transition:all .5s;
-        img{
-            
-            width: auto;
-            height: auto;
+.sim_item {
+  display: flex;
+  justify-content: space-between;
+  .sim_img {
+    flex: 0 0 60px;
+    height: 60px;
+    margin-right: 10px;
+    overflow: hidden;
+    border-radius: 4px;
+  }
+  .sim_img_r {
+    width: 60px;
+    height: 60px;
+    text-align: center;
+    background-size: cover;
+    // background-size: contain;
+    // background-size: 100px 90px;
+    background-position: center;
+    background-repeat: no-repeat;
 
-        }
-        
+    transition: all 0.5s;
+    img {
+      width: auto;
+      height: auto;
     }
-    &:hover .sim_img_r{
-        transform: scale(1.1);
-        transition:all .5s;
+  }
+  &:hover .sim_img_r {
+    transform: scale(1.1);
+    transition: all 0.5s;
+  }
+  .sim_content {
+    flex: 1;
+    // height: 90px;
+    justify-content: space-between;
+    display: flex;
+    flex-direction: column;
+    .title {
+      padding-bottom: 4px;
     }
-    .sim_content{
-        flex: 1;
-        // height: 90px;
-        justify-content: space-between;
-        display: flex;
-        flex-direction: column;
-        .title{
-            padding-bottom: 4px;
-        }
-        .sim_tab{
-            font-size: 16px;
-            color: #888;
-            font-weight: normal;
-        }
-        .sim_info{
-            font-size: 12px;
-            span{
-                padding-right: 10px;
-            }
-            .sim_forum{
-                font-size: 13px;
-                img{
-                    width: 30px;
-                    height: 30px;
-                }
-            }
-            .from{
-                color: #999;
-            }
-        }
+    .sim_tab {
+      font-size: 16px;
+      color: #888;
+      font-weight: normal;
     }
+    .sim_info {
+      font-size: 12px;
+      span {
+        padding-right: 10px;
+      }
+      .sim_forum {
+        font-size: 13px;
+        img {
+          width: 30px;
+          height: 30px;
+        }
+      }
+      .from {
+        color: #999;
+      }
+    }
+  }
 }
-.item .tools .looks{
+.item .tools .looks {
   position: absolute;
   right: -10px;
   bottom: 0px;
   margin-right: 0;
   font-size: 12px;
   padding: 0 10px;
-  -webkit-touch-callout:none; /*系统默认菜单被禁用*/
-  -webkit-user-select:none; /*webkit浏览器*/
-  -khtml-user-select:none; /*早期浏览器*/
-  -moz-user-select:none;/*火狐*/
-  -ms-user-select:none; /*IE10*/
-  user-select:none; 
+  -webkit-touch-callout: none; /*系统默认菜单被禁用*/
+  -webkit-user-select: none; /*webkit浏览器*/
+  -khtml-user-select: none; /*早期浏览器*/
+  -moz-user-select: none; /*火狐*/
+  -ms-user-select: none; /*IE10*/
+  user-select: none;
   display: none;
 }
-.preview{
+.preview {
   // height: 310px;
   margin: 10px 0;
   background: #f1f1f1;
-  
 }
 .inner_prev {
   height: 320px;
@@ -866,17 +943,29 @@ export default {
     min-height: 290px;
   }
 }
-.icon2{
-    width: 20px;
-    height: 20px;
-    vertical-align: top;
+.icon2 {
+  width: 20px;
+  height: 20px;
+  vertical-align: top;
 }
-.zhiding{
-  background: #FF9300;
+.zhiding {
+  background: #ff9300;
   color: #fff;
   font-size: 12px;
   padding: 0px 4px;
   border-radius: 4px;
   display: none;
+}
+.tags {
+  margin-bottom: 10px;
+  display: inline-block;
+  span {
+    display: inline-block;
+    padding: 2px 6px;
+    background: #ff9300;
+    border-radius: 4px;
+    font-size: 13px;
+    color: #fff;
+  }
 }
 </style>

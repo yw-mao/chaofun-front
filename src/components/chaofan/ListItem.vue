@@ -47,13 +47,18 @@
           @doFocued="doFocued"
           :index="index"
         ></itemTopTitle>
-        <div v-if="item.type!='link'" class="title">
+        <div v-if="item.type != 'link'" class="title">
           <!-- <span class="zhiding">置顶</span>  -->
-          {{item.title}}
+          <div v-if="item.tags.length" class="tags">
+            <span v-for="(item, index) in item.tags" :key="index"
+              ># {{ item.name }}</span
+            >
+          </div>
+          {{ item.title }}
         </div>
-        
+
         <div v-if="!item.isPin">
-            <!-- 链接 -->
+          <!-- 链接 -->
           <itemLink
             :isindex="isindex"
             v-if="
@@ -66,7 +71,7 @@
             @click.stop="toUrls(item, { url: item.link, routeType: 1 })"
             :item="item"
           ></itemLink>
-          
+
           <!-- 图片 -->
           <itemImage v-if="item.type == 'image'" :item="item"></itemImage>
 
@@ -84,12 +89,16 @@
                 <!-- <div @click.stop="toDetail(item)" class="title">
                   {{ item.title }}
                 </div> -->
-                <div @click="playVideo(index, item, 0)" :class="['inner_prev', { inner_prev_phone: ISPHONE }]">
+                <div
+                  @click="playVideo(index, item, 0)"
+                  :class="['inner_prev', { inner_prev_phone: ISPHONE }]"
+                >
                   <img
                     class="coverss"
-                    
                     :src="
-                      imgOrigin + item.video + '?x-oss-process=video/snapshot,t_0'
+                      imgOrigin +
+                      item.video +
+                      '?x-oss-process=video/snapshot,t_0'
                     "
                     alt=""
                   />
@@ -218,8 +227,8 @@
                 "
                 :item="item.sourcePost"
               ></itemLink>
-              <div v-if="item.sourcePost.type!='link'" class="title">
-                {{item.sourcePost.title}}
+              <div v-if="item.sourcePost.type != 'link'" class="title">
+                {{ item.sourcePost.title }}
               </div>
               <!-- 图片 -->
               <itemImage
@@ -281,7 +290,9 @@
                     style="width: 100%; min-height: 370px"
                     :src="
                       item.sourcePost.video +
-                      (item.sourcePost.link.includes('www.acfun.cn') ? '?' : '') +
+                      (item.sourcePost.link.includes('www.acfun.cn')
+                        ? '?'
+                        : '') +
                       '&autoplay=true'
                     "
                     allow="autoplay"
@@ -297,7 +308,9 @@
                     style="width: 100%; height: 230px"
                     :src="
                       item.sourcePost.video +
-                      (item.sourcePost.link.includes('www.acfun.cn') ? '?' : '') +
+                      (item.sourcePost.link.includes('www.acfun.cn')
+                        ? '?'
+                        : '') +
                       '&autoplay=true'
                     "
                     allow="autoplay"
@@ -393,8 +406,8 @@
             </span>
           </div>
           <div>
-            <i class="el-icon-s-comment"></i> <span style="padding:0 2px;">{{ item.comments }} </span
-            > 评论
+            <i class="el-icon-s-comment"></i>
+            <span style="padding: 0 2px">{{ item.comments }} </span> 评论
           </div>
           <el-dropdown @command="handleCommand" trigger="click">
             <span @click.stop="" class="el-dropdown-link">
@@ -424,7 +437,10 @@
             :class="['b_icon', { save_active: item.save }]"
             @click.stop="savePost(item)"
           >
-            <i class="el-icon-s-help"></i> <span style="padding:0 2px;">{{ item.save ? "已收藏" : "收藏" }}</span> 
+            <i class="el-icon-s-help"></i>
+            <span style="padding: 0 2px">{{
+              item.save ? "已收藏" : "收藏"
+            }}</span>
           </div>
         </div>
       </div>
@@ -552,29 +568,27 @@ export default {
       console.log("this.top", this.top);
       this.$(".infinite-list").animate({ scrollTop: this.top }, 10);
       setTimeout(() => {
-        localStorage.removeItem('storedata')
-          localStorage.removeItem('spage')
+        localStorage.removeItem("storedata");
+        localStorage.removeItem("spage");
       }, 1000);
     } else {
-      localStorage.removeItem('storedata')
-      localStorage.removeItem('spage')
+      localStorage.removeItem("storedata");
+      localStorage.removeItem("spage");
     }
-    
   },
   destroyed() {},
   methods: {
-    doFocued(bool,id){
-      this.lists.forEach(it=>{
-        if(it.userInfo.userId == id){
-          console.log()
-          if(bool){
+    doFocued(bool, id) {
+      this.lists.forEach((it) => {
+        if (it.userInfo.userId == id) {
+          console.log();
+          if (bool) {
             it.userInfo.focused = false;
-          }else{
+          } else {
             it.userInfo.focused = true;
           }
-          
         }
-      })
+      });
     },
     callBack(index, data) {
       console.log(index, data);
@@ -667,7 +681,6 @@ export default {
       }
     },
     deletePost(index) {
-      
       this.lists.splice(index, 1);
     },
     savePost(item) {
@@ -721,7 +734,7 @@ export default {
         obj.marker = this.marker;
         obj.key = this.keys;
         this.postBehavior(item.postId, "detail");
-        localStorage.setItem('spage',this.$route.path);
+        localStorage.setItem("spage", this.$route.path);
         localStorage.setItem("storedata", JSON.stringify(obj));
         this.$router.push({
           name: "articleDetail",
@@ -792,6 +805,7 @@ export default {
   right: 10px;
   bottom: 65px;
   cursor: pointer;
+  z-index: 1;
   img {
     width: 100%;
   }
@@ -823,6 +837,7 @@ export default {
   right: 80px;
   bottom: 65px;
   cursor: pointer;
+  z-index: 1;
   img {
     width: 100%;
   }
@@ -867,14 +882,26 @@ export default {
     min-height: 290px;
   }
 }
-/deep/ .item{
-  &:hover{
-    .icon2{
+/deep/ .item {
+  &:hover {
+    .icon2 {
       display: none;
     }
-    .zhiding{
+    .zhiding {
       display: block;
     }
+  }
+}
+.tags {
+  margin-bottom: 10px;
+  display: inline-block;
+  span {
+    display: inline-block;
+    padding: 2px 6px;
+    background: #ff9300;
+    border-radius: 4px;
+    font-size: 13px;
+    color: #fff;
   }
 }
 </style>
