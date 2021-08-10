@@ -245,18 +245,24 @@ export default {
     this.$EventBus.$on("refreshItemTag", (params) => {
       //需要执行的代码
       console.log(params);
-      if (params.type) {
-        // this.lists[params.index].tags.push(params.tag);
-        this.lists[params.index].tags.splice(0, 1, params.tag);
-      } else {
-        // this.lists[params.index].tags.splice(
-        //   this.lists[params.index].tags.findIndex((i) => i.id == params.tag.id),
-        //   1
-        // );
-        this.lists[params.index].tags.splice(0, 1);
+      if(params.way){//refreshItemTag
+        this[params.way]();
+      }else{
+        if (params.type) {
+          // this.lists[params.index].tags.push(params.tag);
+          this.lists[params.index].tags.splice(0, 1, params.tag);
+        } else {
+          // this.lists[params.index].tags.splice(
+          //   this.lists[params.index].tags.findIndex((i) => i.id == params.tag.id),
+          //   1
+          // );
+          this.lists[params.index].tags.splice(0, 1);
+        }
       }
+      
     });
   },
+  
   created() {
     let id = this.$route.path.split("/")[2];
     if (!isNaN(id)) {
@@ -273,6 +279,12 @@ export default {
     this.load();
   },
   methods: {
+    saveTagId(){
+      if(this.params.tagId){
+        
+        localStorage.setItem('tagInfo',JSON.stringify(this.params))
+      }
+    },
     listPins() {
       api.listPins({ forumId: this.params.forumId }).then((res) => {
         res.data.forEach((item) => {
@@ -291,14 +303,14 @@ export default {
       localStorage.setItem("chao.fun.timeline.range", this.params.range);
       delete this.params.marker;
       delete this.params.key;
-      delete this.params.tagId;
+      // delete this.params.tagId;
       this.params.order = item.value;
       this.lists = [];
       this.getLists("first");
     },
     updateList(params) {
       this.params = params;
-      delete this.params.tagId;
+      // delete this.params.tagId;
       this.lists = [];
       this.getLists("first");
     },
@@ -307,7 +319,7 @@ export default {
       localStorage.setItem("chao.fun.timeline.range", this.params.range);
       delete this.params.marker;
       delete this.params.key;
-      delete this.params.tagId;
+      // delete this.params.tagId;
       this.lists = [];
       this.getLists("first");
     },
@@ -338,12 +350,13 @@ export default {
     getForumTag() {
       api.getlistTag({ forumId: this.params.forumId }).then((res) => {
         this.tagList = res.data;
+        
       });
     },
     getLists(v) {
       let params = this.params;
       this.ifcanget = false;
-      if (v == "first" && params.order == "hot") {
+      if (v == "first") {
         if (!this.tagList.length) {
           //获取置顶帖子
 
@@ -351,8 +364,6 @@ export default {
           this.getForumTag();
           this.listPins();
         }
-      } else if (params.order != "hot") {
-        this.tagList = [];
       }
       api.getPosts(params).then((res) => {
         if (res.data.marker && res.data.posts.length != 0) {
@@ -381,17 +392,22 @@ export default {
         localStorage.getItem("storedata") &&
         localStorage.getItem("spage") == this.$route.path
       ) {
-        this.lists = JSON.parse(localStorage.getItem("storedata")).list;
-        this.params.marker = JSON.parse(
-          localStorage.getItem("storedata")
-        ).marker;
-        this.params.key = JSON.parse(localStorage.getItem("storedata")).key;
+        var sdata = JSON.parse(localStorage.getItem("storedata"));
+        this.lists = sdata.list;
+        this.params.marker = sdata.marker;
+        this.params.key = sdata.key;
+        let tagInfo = JSON.parse(localStorage.getItem('tagInfo'));
+        if(tagInfo&&tagInfo.forumId==sdata.forumId){
+          this.params.tagId = tagInfo.tagId;
+          localStorage.removeItem('tagInfo')
+        }
         this.getForumTag();
       } else {
         if (this.ifcanget) {
           // this.params.pageNum += 1;
           // this.params.marker = '';
           this.getLists("first");
+          
         }
       }
     },
@@ -445,7 +461,7 @@ export default {
   bottom: 0;
   z-index: 10;
   overflow-y: auto;
-  background: #fff;
+  // background: #fff;
   box-sizing: border-box;
   padding: 4px;
   // background: red;

@@ -712,6 +712,7 @@ export default {
       this.lists.forEach((i) => {
         i.play = false;
       });
+      
       if (this.canTo) {
         if (this.whichOne) {
           localStorage.setItem("whichOne", this.whichOne);
@@ -736,6 +737,10 @@ export default {
         this.postBehavior(item.postId, "detail");
         localStorage.setItem("spage", this.$route.path);
         localStorage.setItem("storedata", JSON.stringify(obj));
+
+        this.$EventBus.$emit("refreshItemTag", {
+          way: 'saveTagId'
+        });
         this.$router.push({
           name: "articleDetail",
           params: { postId: item.postId },
