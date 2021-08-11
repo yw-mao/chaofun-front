@@ -12,7 +12,9 @@ const state = {
   roles: ['admin'],
   logStatus: '',
   showDownApp: true,
-  listMode: localStorage.getItem('listMode')||'normal'
+  listMode: localStorage.getItem('listMode')||'normal',
+  showChatBox: false,
+  wss: null,
 }
 
 const mutations = {
@@ -36,7 +38,36 @@ const mutations = {
   },
   SET_listMode: (state,listMode) => {
     state.listMode = listMode
-  }
+  },
+  SET_showChatBox: (state,data) => {
+    // if(!state.wss){
+    //   var ws = new WebSocket("wss://chao.fun/ws/v0/forumChat/1"); 
+    //   ws.onopen = function() {
+    //     ws.send("{\"type\":\"1\",\"message\":\"你好\"}");
+    //   };
+    //   ws.onmessage = function(event) {
+    //     let data = event.data;
+    //     console.log(JSON.parse(data));
+    //   };
+    //   state.wss = ws;
+    // }
+    
+    state.showChatBox = data
+  },
+  SET_wss: (state,fun) => {
+    // if(!state.wss){
+    //   var ws = new WebSocket("wss://chao.fun/ws/v0/forumChat/1"); 
+    //   ws.onopen = function() {
+    //     ws.send("{\"type\":\"1\",\"message\":\"你好\"}");
+    //   };
+    //   ws.onmessage = function(event) {
+    //     let data = event.data;
+    //     console.log(JSON.parse(data));
+    //   };
+    //   state.wss = ws;
+    // }
+    state.wss = fun();
+  },
 }
 
 const actions = {
@@ -172,6 +203,12 @@ const actions = {
     console.log(data);
     localStorage.setItem('listMode',data);
     commit('SET_listMode',data);
+  },
+  SET_showChatBox({ commit, state }, data){
+    commit('SET_showChatBox',data);
+  },
+  SET_wss: ({ commit, state }, fun) => {
+    commit('SET_wss',fun);
   }
 }
 

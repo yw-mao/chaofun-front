@@ -1,0 +1,123 @@
+.chat_box{
+    position: fixed;
+    width: 300px;
+    height: 500px;
+    right: 0;
+    bottom: 0;
+    z-index: 100000000000000;
+    background: #f4f4f4;
+    box-sizing: border-box;
+    border: 1px solid #e1e1e1;
+    box-shadow: 1px 1px 10px 4px #f1f1f1;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    
+}
+.title{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 10px 14px;
+    // line-height: 40px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 16px;
+    border-bottom: 1px solid #f1f1f1;
+    background: #fff;
+}
+.forum_name{
+    img{
+        width: 30px;
+        height: 30px;
+        margin-right: 10px;
+        // background: #ddd;
+        vertical-align: middle;
+    }
+}
+.close{
+    i{
+        margin-right: 10px;
+        font-size: 20px;
+    }
+}
+.chat_con{
+    padding: 60px 10px 50px;
+    height: 100%;
+    box-sizing: border-box;
+    overflow-y: auto;
+}
+.others{
+    display: flex;
+    margin-bottom: 10px;
+}
+.ava{
+    flex: 0 0 30px;
+    height: 30px;
+    margin-right: 10px;
+    img{    
+        width: 100%;
+        border-radius: 50%;
+    }
+    
+}
+.contents{
+    .nickname{
+        font-size: 12px;
+        color: #666;
+    }
+    .msg{
+        background: #fff;
+        padding: 10px;
+        font-size: 15px;
+        border-radius: 4px;
+    }
+}
+.bottom_send{
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #eee;
+    z-index: 1;
+    height: 50px;
+    display: flex;
+    padding: 8px 5px;
+    box-sizing: border-box;
+    input{
+        padding-left: 10px;
+        border-radius: 20px;
+        flex: 1;
+    }
+    .send{
+        flex: 0 0 60px;
+        border-radius: 30px;
+        cursor: pointer;
+        line-height: 34px;
+        text-align: center;
+        background: #13ce66;
+        color: #fff;
+    }
+}
+.userSelf{
+    display: flex;
+    margin-bottom: 10px;
+    margin-left: 20px;
+    .ads{
+        flex: 1;
+        .contents{
+            float: right;
+        }
+    }
+    .nickname{
+        text-align: right;
+    }
+    .ava{
+        margin-right: 0;
+        margin-left: 10px;
+    }
+    .msg{
+        float: right;
+    }
+}

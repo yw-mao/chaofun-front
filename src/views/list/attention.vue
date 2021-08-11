@@ -5,7 +5,8 @@
       <div style="height:50px;"></div>
       <el-row :gutter="24">
         <el-col :span="isPhone?24:doWidth()" :offset="0" >
-          <div class="grid-content"  style="overflow:auto; width: 640px; max-width: 100%;margin:0 auto;">
+          <div class="grid-content"  style="overflow:auto; width: 640px; max-width: 100%;margin:0 auto;position:relative;
+              left:-100px;">
              <ListItem :marker="params.marker" :whichOne="whichOne" :pagenum="params.pageNum" :isMy="true" :datas="{type: whichOne}" :isindex="true" :lists="lists"></ListItem>
              <load-text :hasContent="(lists.length||usersData.length)?true:false" :ifcanget="ifcanget" :loadAll="loadAll"></load-text>
           </div>

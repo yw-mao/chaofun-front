@@ -54,16 +54,6 @@
         <div @click="gotoAddForum" class="body-right">
           添加板块
         </div>
-        <!-- <div @click="goto24HForumRank" class="body-right">
-          24小时板块排名
-        </div>
-        <div @click="goto24HUserRank" class="body-right">
-          24小时用户排名
-        </div> -->
-
-        <!-- <div class="advertise">
-          <img src="https://i.chao.fun/654126b4d1f07fb84e3d43d8b3f696c9.jpg?x-oss-process=image/resize,h_512" alt="">
-        </div> -->
         <div v-if="false" class="game">
           <div style="height:20px;background:#f1f1f1;"></div>
           <div class="title">贪吃蛇 <span class="tab">愚人节有奖活动</span>
@@ -95,7 +85,14 @@
         </div>
 
       </div>
-
+      <div class="chatbtn">
+        <div class=""></div>
+      </div>
+      <div v-if="$store.state.user.userInfo&&($store.state.user.userInfo.userId==1||$store.state.user.userInfo.userId==2||$store.state.user.userInfo.userId==146)" class="forum_add">
+        <el-button @click="gotoChat" style="width:100%;" type="success" block>
+          加入群聊
+        </el-button>
+      </div>
       <div class="help_con">
         <div class="help_item">
           <div @click="toUrl({path: '/help/forumIntro'})">帮助文档</div>
@@ -169,6 +166,15 @@
       this.modlist()
     },
     methods: {
+      gotoChat(){
+        this.doLoginStatus().then(res=>{
+          if(res){
+            localStorage.setItem('wsForum',JSON.stringify(this.forumInfo));
+            this.$store.dispatch('user/SET_showChatBox',true);
+          }
+        })
+        
+      },
       modlist(){
         api.modlist({forumId: this.forumId}).then(res=>{
           this.forumAdmin = res.data

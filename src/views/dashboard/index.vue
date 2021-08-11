@@ -4,7 +4,8 @@
       <div style="height:50px;"></div>
       <el-row :gutter="24">
         <el-col :span="isPhone?24:doWidth()" :offset="0">
-          <div class="navs" style="justify-content:space-between;width: 640px;max-width:100%;margin:0 auto;">
+          <div class="navs" style="justify-content:space-between;width: 640px;max-width:100%;margin:0 auto;position:relative;
+              left:-100px;">
             
             <div v-if="!isRecommend">
               <selectList @updateList="updateList" :params="params"></selectList>
@@ -24,7 +25,8 @@
             </div>
           </div>
           <div class="grid-content"
-               style="overflow: auto;-webkit-overflow-scrolling: touch; width: 640px; max-width: 100%;margin:0 auto;">
+               style="overflow: auto;-webkit-overflow-scrolling: touch; width: 640px; max-width: 100%;margin:0 auto;position:relative;
+              left:-100px;">
               <ListItem v-if="isRecommend||$store.state.user.listMode=='normal'" :marker="params.marker" :keys="params.key" :isindex="true" :lists="lists"></ListItem>
               <SimListItem v-else :marker="params.marker" :keys="params.key" :isindex="true" :lists="lists"></SimListItem>
               <load-text :ifcanget="ifcanget" :loadAll="loadAll"></load-text>
@@ -44,7 +46,8 @@
     </div>
 
     <div @click="reFresh" v-if="isRecommend&&ISPHONE"
-         style="position:absolute;right:20px;bottom: 30px;z-index:100;padding:20px;background:#fff;border-radius:40px;font-size:32px;padding: 6px 0px 0 0px;color:#999;">
+         style="position:absolute;right:20px;bottom: 30px;z-index:100;padding:20px;background:#fff;border-radius:40px;font-size:32px;padding: 6px 0px 0 0px;color:#999;position:relative;
+              left:-100px;">
       <i class="el-icon-refresh"></i>
     </div>
     <fixedBottom></fixedBottom>

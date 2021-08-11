@@ -30,7 +30,7 @@ module.exports = {
     },
     contentStyle: {
       type: 'open',
-      background: '#f1f1f1',
+      background: '#f7f7f7',
       opacity: 1,
       // backgroundImage: 'url("https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=3250306861,1149128633&fm=15&gp=0.jpg")',
       // backgroundRepeat: 'repeat',

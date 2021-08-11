@@ -29,7 +29,7 @@
     >
       <div style="height: 50px"></div>
       <el-row :gutter="24">
-        <el-col :span="isPhone ? 24 : doWidth()" :offset="0">
+        <el-col :span="isPhone ? 24 : doWidth()" :offset="-1">
           <div
             class="navs"
             style="
@@ -37,6 +37,8 @@
               width: 640px;
               max-width: 100%;
               margin: 0 auto;
+              position:relative;
+              left:-100px;
             "
           >
             <div style="width: 100%">
@@ -53,6 +55,8 @@
               width: 640px;
               max-width: 100%;
               margin: 0 auto;
+              position:relative;
+              left:-100px;
             "
           >
             <ListItem

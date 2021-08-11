@@ -180,14 +180,14 @@ export default {
       // return Math.ceil(640.0 / winWidth  * 24)
       let opened = this.$store.getters.sidebar.opened;
       let winWidth = (opened ? document.body.clientWidth : (document.body.clientWidth - 54))
-      let sideBarWidth = opened ? 240 : 54
+      let sideBarWidth = opened ? 240 : (54)
       let contentWidth = winWidth - sideBarWidth;
       return Math.ceil(contentWidth / winWidth * 24)
     },
     doRightStyle() {
       // let opened = Cookies.get('sidebarStatus') ? !!+Cookies.get('sidebarStatus') : true
       let winWidth = document.body.clientWidth;
-      let right = (winWidth - 640) / 2 - 350;
+      let right = (winWidth - 640) / 2 - 350 + 120;
       return {
         'right': right + 'px'
       }
@@ -196,7 +196,7 @@ export default {
       // let opened = Cookies.get('sidebarStatus') ? !!+Cookies.get('sidebarStatus') : true
       let opened = this.$store.getters.sidebar.opened;
       let winWidth = document.body.clientWidth;
-      let right = (winWidth - 640) / 2 - (opened ? 310 : 290);
+      let right = (winWidth - 640) / 2 - (opened ? 310 : 290) -70;
       return {
         'left': right + 'px'
       }

@@ -54,6 +54,7 @@
       <div>本站已在 Github 开源：<a href="https://github.com/www-chao-fun/chaofun-front" target="_blank">chaofun-front</a></div>
       Copyright © 2019 - 2021 炒饭 <img style="width:16px" src="../assets/images/bbcc.png" alt=""> <a target="_blank" href="http://www.beian.miit.gov.cn">粤ICP备19153164号-1</a>
     </div>
+    <chat v-if="$store.state.user.showChatBox"></chat>
   </div>
 </template>
 
@@ -69,6 +70,8 @@ import login from '@/components/chaofan/common/login/login.js'
 Vue.prototype.$login = login
 import * as api from '@/api/api'
 import RightDescribe from '@/components/chaofan/RightDescribe'
+
+import chat from './components/chat/chat'
 
 
 console.log("探寻这里的秘密，\n找到自己的最爱，\n成为这里的主人，\n炒饭-新趣、分享、交流");
@@ -91,7 +94,8 @@ export default {
     Sidebar,
     BackgroundSet,
     lottery,
-    RightDescribe
+    RightDescribe,
+    chat
     // TagsView
   },
   data(){
