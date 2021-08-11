@@ -88,11 +88,12 @@
       <div class="chatbtn">
         <div class=""></div>
       </div>
-      <div v-if="$store.state.user.userInfo&&($store.state.user.userInfo.userId==1||$store.state.user.userInfo.userId==2||$store.state.user.userInfo.userId==146)" class="forum_add">
+      <div  class="forum_add">
         <el-button @click="gotoChat" style="width:100%;" type="success" block>
           加入群聊
         </el-button>
       </div>
+      <!-- v-if="$store.state.user.userInfo&&($store.state.user.userInfo.userId==1||$store.state.user.userInfo.userId==2||$store.state.user.userInfo.userId==146)" -->
       <div class="help_con">
         <div class="help_item">
           <div @click="toUrl({path: '/help/forumIntro'})">帮助文档</div>
@@ -170,7 +171,15 @@
         this.doLoginStatus().then(res=>{
           if(res){
             localStorage.setItem('wsForum',JSON.stringify(this.forumInfo));
-            this.$store.dispatch('user/SET_showChatBox',true);
+            if(this.$store.state.user.showChatBox){
+              this.$store.dispatch('user/SET_showChatBox',false);
+              setTimeout(()=>{
+                this.$store.dispatch('user/SET_showChatBox',true);
+              },500)
+            }else{
+              this.$store.dispatch('user/SET_showChatBox',true);
+            }
+            
           }
         })
         

@@ -58,9 +58,7 @@ export default {
     return {
         content: '',
         msgList: [
-            {
-                content: '炒饭用户群聊功能开启，测试------666666炒饭用户群聊功能开启，测试'
-            }
+            
         ],
         forumInfo: {},
         websock: null, //建立的连接
@@ -74,14 +72,20 @@ export default {
   computed: {
     
   },
+  created(){
+      if(localStorage.getItem('wsForum')){
+        this.forumInfo = JSON.parse(localStorage.getItem('wsForum'))
+        
+    }
+  },
   mounted(){
     //   if(!this.$store.state.user.wss){
         //   this.$store.dispatch('user/SET_wss',this.getWss);
     //   }
     if(localStorage.getItem('wsForum')){
-        this.forumInfo = JSON.parse(localStorage.getItem('wsForum'))
+        this.initWebSocket();
     }
-    this.initWebSocket();
+    
   },
   methods: {
     // WebSocket
@@ -89,8 +93,10 @@ export default {
     initWebSocket() {
       //初始化weosocket
       //const wsuri = "ws://sms.填写您的地址.com/websocket/" + this.charId; //ws地址
-      
-      const wsuri ="wss://chao.fun/ws/v0/forumChat/"+(1||this.forumInfo.forumId)
+      if(this.websock){
+          this.websock.close();
+      }
+      const wsuri ="wss://chao.fun/ws/v0/forumChat/"+this.forumInfo.id
       //建立连接
       this.websock = new WebSocket(wsuri);
       //连接成功
@@ -183,7 +189,7 @@ export default {
       console.log(redata,"数据接收");
 
       let data = JSON.parse(event.data);
-      if(data.content){
+      if(data.data.content){
           that.msgList.push(data.data);
       }
       //收到服务器信息，心跳重置
