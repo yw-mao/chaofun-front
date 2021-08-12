@@ -11,7 +11,7 @@
       </div>
     </div>
 
-    <div class="chat_con">
+    <div id="chat_con" class="chat_con">
       <div v-for="(item, index) in msgList" :key="index">
         <div
           v-if="
@@ -55,8 +55,10 @@
         style="height: 0px; margin-bottom: 80px; overflow: hidden"
       ></div>
     </div>
+    <div @click="scrollToBottom" v-if="showTips" class="tips">你有新消息 <span v-if="unread">({{unread}})</span> </div>
     <div class="bottom_send">
       <input
+        autofocus
         @keydown="clientClickButton"
         v-model="content"
         type="text"
@@ -74,12 +76,14 @@ export default {
   components: { ThemePicker },
   data() {
     return {
+      showTips: false,
+      unread: 0,
       content: "",
       msgList: [],
       forumInfo: {},
       websock: null, //建立的连接
       lockReconnect: false, //是否真正建立连接
-      timeout: 28 * 1000, //30秒一次心跳
+      timeout: 30 * 1000, //30秒一次心跳
       timeoutObj: null, //心跳心跳倒计时
       serverTimeoutObj: null, //心跳倒计时
       timeoutnum: null, //断开 重连倒计时
@@ -91,6 +95,25 @@ export default {
       this.forumInfo = JSON.parse(localStorage.getItem("wsForum"));
     }
   },
+  destroyed(){
+    if (this.websock) {
+      console.log('关闭原连接')
+      clearTimeout(this.timeoutObj);
+      clearTimeout(this.serverTimeoutObj);
+      this.websock.close();
+      this.websock = null;
+    }
+  },
+  // watch:{
+  //   '$store.state.user.showChatBox'(){
+  //     if (this.websock) {
+  //       console.log('关闭原连接')
+  //       clearTimeout(this.timeoutObj);
+  //       clearTimeout(this.serverTimeoutObj);
+  //       this.websock.close();
+  //     }
+  //   }
+  // },
   mounted() {
     //   if(!this.$store.state.user.wss){
     //   this.$store.dispatch('user/SET_wss',this.getWss);
@@ -101,18 +124,21 @@ export default {
   },
   methods: {
     clientClickButton(event) {
+      console.log(event.code);
       if (event.keyCode == 13) {
         this.send();
       }
+    },
+    scrollToBottom(){
+      this.showTips = false;
+      document.getElementById("msg_end").scrollIntoView();
     },
     // WebSocket
     //建立连接
     initWebSocket() {
       //初始化weosocket
       //const wsuri = "ws://sms.填写您的地址.com/websocket/" + this.charId; //ws地址
-      if (this.websock) {
-        this.websock.close();
-      }
+      
       const wsuri = "wss://chao.fun/ws/v0/forumChat/" + this.forumInfo.id;
       //建立连接
       this.websock = new WebSocket(wsuri);
@@ -158,7 +184,11 @@ export default {
         //这里发送一个心跳，后端收到后，返回一个心跳消息，
         if (self.websock.readyState == 1) {
           //如果连接正常
-          self.websock.send('{"test":"1"}');
+          let params = {
+            type: 'heartbeat',
+            content: '',
+          }
+          self.websock.send(JSON.stringify(params));
           console.log("发送消息");
         } else {
           //否则重连
@@ -189,11 +219,21 @@ export default {
     //连接关闭事件
     websocketclose(e) {
       //关闭
-      console.log("connection closed (" + e + ")");
+      console.log(e)
+      console.log('closeType',e.type);
+      console.log('wasClean',e.wasClean);
+      console.log('code',e.code);
+      
       //提示关闭
       console.log("连接已关闭", 3);
+
       //重连
-      this.reconnect();
+      if(e.code!=1000&&e.type!='close'){
+        this.reconnect();
+      }else{
+        console.log('链接真正关闭')
+      }
+      
     },
     //接收服务器推送的信息
     websocketonmessage(event) {
@@ -204,10 +244,25 @@ export default {
       console.log(redata, "数据接收");
 
       let data = JSON.parse(event.data);
-      if (data.data.content) {
+      if (data.data.type!='heartbeat'&&data.data.content) {
         that.msgList.push(data.data);
+        
+        let chat_con = document.getElementById('chat_con');
+        console.log(chat_con.scrollHeight,chat_con.scrollTop);
+        if(chat_con.scrollHeight-chat_con.scrollTop>200&&chat_con.scrollHeight-chat_con.scrollTop<1500){//===this.clientHeight
+            console.log("到达底部");
+            document.getElementById("msg_end").scrollIntoView();
+        }else{
+          that.unread += 1;
+          that.showTips = true;
+          // setTimeout(()=>{
+
+          // },2000)
+          // that.TipintoView();
+        }
+        
       }
-      document.getElementById("msg_end").scrollIntoView();
+      
       //收到服务器信息，心跳重置
       this.reset();
     },
@@ -216,11 +271,13 @@ export default {
       //数据发送
       this.content = "";
       this.websock.send(msg);
+      document.getElementById("msg_end").scrollIntoView();
     },
     send() {
+      console.log(1)
       if (this.content) {
         let params = {
-          type: 1,
+          type: 'text',
           content: this.content,
         };
         this.websocketsend(JSON.stringify(params));
@@ -237,6 +294,7 @@ export default {
     closeWS() {
       this.$store.dispatch("user/SET_showChatBox", false);
     },
+    ccc(){},
     getWss(ps) {
       let self = this;
       var ws = new WebSocket("wss://chao.fun/ws/v0/forumChat/1");
@@ -253,7 +311,7 @@ export default {
           var self = this;
           this.timeoutObj = setTimeout(function () {
             // ws.send("HeartBeat");
-            ws.send(ps ? JSON.stringify(ps) : '{"type":"1","content":"你好"}');
+            ws.send(ps ? JSON.stringify(ps) : '{"type":"text","content":"你好"}');
             self.serverTimeoutObj = setTimeout(function () {
               ws.close(); //如果onclose会执行reconnect，我们执行ws.close()就行了.如果直接执行reconnect 会触发onclose导致重连两次
             }, self.timeout);
@@ -278,7 +336,7 @@ export default {
         heartCheck.reset();
       };
       ws.onopen = function () {
-        ws.send(ps ? JSON.stringify(ps) : '{"type":"1","content":"你好"}');
+        ws.send(ps ? JSON.stringify(ps) : '{"type":"text","content":"你好"}');
       };
       ws.onmessage = function (event) {
         let data = JSON.parse(event.data);

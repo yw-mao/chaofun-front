@@ -11,14 +11,7 @@
         <el-col :span="isPhone ? 24 : doWidth()" :offset="0">
           <div
             class="navs"
-            style="
-              justify-content: space-between;
-              width: 640px;
-              max-width: 100%;
-              margin: 0 auto;
-              position: relative;
-              left: -60px;
-            "
+            :style="{left: ISPHONE?'0':'-60px'}"
           >
             <div v-if="!isRecommend">
               <selectList
@@ -47,15 +40,8 @@
           </div>
           <div
             class="grid-content"
-            style="
-              overflow: auto;
-              -webkit-overflow-scrolling: touch;
-              width: 640px;
-              max-width: 100%;
-              margin: 0 auto;
-              position: relative;
-              left: -60px;
-            "
+            
+            :style="{left: ISPHONE?'0':'-60px'}"
           >
             <ListItem
               v-if="isRecommend || $store.state.user.listMode == 'normal'"
@@ -98,20 +84,8 @@
     <div
       @click="reFresh"
       v-if="isRecommend && ISPHONE"
-      style="
-        position: absolute;
-        right: 20px;
-        bottom: 30px;
-        z-index: 100;
-        padding: 20px;
-        background: #fff;
-        border-radius: 40px;
-        font-size: 32px;
-        padding: 6px 0px 0 0px;
-        color: #999;
-        position: relative;
-        left: -100px;
-      "
+      class="reFresh"
+      :style="{left: ISPHONE?'0':'-60px'}"
     >
       <i class="el-icon-refresh"></i>
     </div>
@@ -534,5 +508,33 @@ export default {
   > .el-scrollbar__bar {
     opacity: 1 !important;
   }
+}
+.navs{
+  justify-content: space-between;
+  width: 640px;
+  max-width: 100%;
+  margin: 0 auto;
+  position: relative;
+}
+.grid-content{
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  width: 640px;
+  max-width: 100%;
+  margin: 0 auto;
+  position: relative;
+}
+.reFresh{
+  position: absolute;
+  right: 20px;
+  bottom: 30px;
+  z-index: 100;
+  padding: 20px;
+  background: #fff;
+  border-radius: 40px;
+  font-size: 32px;
+  padding: 6px 0px 0 0px;
+  color: #999;
+  position: relative;
 }
 </style>

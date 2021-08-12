@@ -147,3 +147,17 @@
         float: right;
     }
 }
+.tips{
+    position: absolute;
+    width: 140px;
+    left: 80px;
+    line-height: 24px;
+    font-size: 12px;
+    color: #999;
+    bottom: 60px;
+    z-index: 1;
+    text-align: center;
+    background: #fff;
+    border-radius: 20px;
+    cursor: pointer;
+}
