@@ -55,7 +55,7 @@
         style="height: 0px; margin-bottom: 80px; overflow: hidden"
       ></div>
     </div>
-    <div @click="scrollToBottom" v-if="showTips" class="tips">你有新消息 <span v-if="unread">({{unread}})</span> </div>
+    <div @click="scrollToBottom" v-if="true||showTips" class="tips">你有新消息 <span v-if="unread">({{unread}})</span> </div>
     <div class="bottom_send">
       <input
         autofocus
@@ -130,6 +130,7 @@ export default {
       }
     },
     scrollToBottom(){
+      this.unread = 0;
       this.showTips = false;
       document.getElementById("msg_end").scrollIntoView();
     },
@@ -251,6 +252,8 @@ export default {
         console.log(chat_con.scrollHeight,chat_con.scrollTop);
         if(chat_con.scrollHeight-chat_con.scrollTop>200&&chat_con.scrollHeight-chat_con.scrollTop<1500){//===this.clientHeight
             console.log("到达底部");
+            that.unread = 0;
+            that.showTips = false;
             document.getElementById("msg_end").scrollIntoView();
         }else{
           that.unread += 1;
@@ -271,6 +274,8 @@ export default {
       //数据发送
       this.content = "";
       this.websock.send(msg);
+      this.unread = 0;
+      this.showTips = false;
       document.getElementById("msg_end").scrollIntoView();
     },
     send() {
