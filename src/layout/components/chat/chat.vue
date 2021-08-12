@@ -4,6 +4,7 @@
       <div class="forum_name">
         <img :src="imgOrigin + forumInfo.imageName" alt="" />
         <span>{{ forumInfo.name }}</span>
+        <span style="font-size:12px;color:#999;">（在线：{{onlineCount}}人）</span>
       </div>
       <div class="close">
         <!-- <i class="el-icon-minus"></i> -->
@@ -12,6 +13,7 @@
     </div>
 
     <div id="chat_con" class="chat_con">
+      
       <div v-for="(item, index) in msgList" :key="index">
         <div
           v-if="
@@ -28,8 +30,17 @@
               <div class="nickname">
                 {{ item.sender ? item.sender.userName : "炒饭用户—_1" }}
               </div>
-              <div class="msg" v-html="item.content">
-                <!-- {{ item.content }} -->
+              <div v-if="item.type=='text'" class="msg" v-html="item.content">
+                
+              </div>
+              <div v-if="item.type=='image'" class="msg_img">
+                <!-- <img class="item_image" :src="imgOrigin+item.content+'?x-oss-process=image/resize,h_300'" alt=""> -->
+                <viewer :images="[imgOrigin+item.content]">
+                  <img class="item_image" :data-source="imgOrigin+item.content" :src="imgOrigin+item.content+'?x-oss-process=image/resize,h_300'" alt="">
+                  <!-- <div v-for="(item2,index2) in item.images" :key="index2" :class="doImgClass(item.images)" :style="doMoreImgStyle(item,item2)" :alt="item.title" :title="item.title">
+                    <img  style="opacity:0;width:100%;height:100%;" :data-source="imgOrigin+item2"   :key="item2" :alt="item.title" :title="item.title">
+                  </div> -->
+                </viewer>
               </div>
             </div>
           </div>
@@ -40,8 +51,17 @@
               <div class="nickname">
                 {{ item.sender ? item.sender.userName : "炒饭用户—_1" }}
               </div>
-              <div class="msg" v-html="item.content">
-                <!-- {{ item.content }} -->
+              <div v-if="item.type=='text'" class="msg" v-html="item.content">
+                
+              </div>
+              <div v-if="item.type=='image'" class="msg_img">
+                <viewer :images="[imgOrigin+item.content]">
+                  <img class="item_image" :data-source="imgOrigin+item.content" :src="imgOrigin+item.content+'?x-oss-process=image/resize,h_300'" alt="">
+                  <!-- <div v-for="(item2,index2) in item.images" :key="index2" :class="doImgClass(item.images)" :style="doMoreImgStyle(item,item2)" :alt="item.title" :title="item.title">
+                    <img  style="opacity:0;width:100%;height:100%;" :data-source="imgOrigin+item2"   :key="item2" :alt="item.title" :title="item.title">
+                  </div> -->
+                </viewer>
+                
               </div>
             </div>
           </div>
@@ -55,15 +75,47 @@
         style="height: 0px; margin-bottom: 80px; overflow: hidden"
       ></div>
     </div>
-    <div @click="scrollToBottom" v-if="true||showTips" class="tips">你有新消息 <span v-if="unread">({{unread}})</span> </div>
+    <div v-if="prevImg" class="tietu">
+      <div class="tietu_con">
+        <div class="cls">
+          <i @click="closeImage" class="el-icon-close"></i>
+        </div>
+        <div class="tie_tu_img">
+          <img :src="prevImg" alt="">
+        </div>
+        <div class="flex">
+          <span>发送图片至群聊</span>
+          <div @click="sendImage" class="send">发送</div>
+        </div>
+      </div>
+    </div>
+    <div @click="scrollToBottom" v-if="showTips" class="tips">你有新消息 <span v-if="unread">({{unread}})</span> </div>
     <div class="bottom_send">
       <input
         autofocus
         @keydown="clientClickButton"
+        @focus="inputFocus"
         v-model="content"
         type="text"
         placeholder="发言~"
       />
+      <el-upload
+        class="avatar-uploader"
+        action="/api/upload_image"
+        name="file"
+        :data="filedata"
+        :show-file-list="false"
+        :on-success="handleAvatarSuccess"
+        :before-upload="beforeAvatarUpload"
+        
+        :limit="1"
+        multiple
+        accept="image/*"
+        style="display:inline-block;"
+        ref="replyImageUpload"
+        >
+          <img style="vertical-align:middle;margin-right:0px;cursor:pointer;" src="../../../assets/images/icon/choose.png" alt="">
+      </el-upload>
       <div @click="send" class="send">发送</div>
     </div>
   </div>
@@ -76,10 +128,23 @@ export default {
   components: { ThemePicker },
   data() {
     return {
+      onlineCount: 0,
+      filedata: {
+        
+      },
+      realImageUrl: '',
+      imgSendType: 'upload',
+      prevblob: '',
+      prevImg: '',
       showTips: false,
       unread: 0,
       content: "",
-      msgList: [],
+      msgList: [
+        // {
+        //   type: 'text',
+        //   content: ''
+        // }
+      ],
       forumInfo: {},
       websock: null, //建立的连接
       lockReconnect: false, //是否真正建立连接
@@ -201,12 +266,18 @@ export default {
         }, self.timeout);
       }, self.timeout);
     },
+    
     //连接成功事件
     websocketonopen() {
       //提示成功
       console.log("连接成功", 3);
       //开启心跳
       this.start();
+      let params = {
+        type: 'load',
+        content: '',
+      }
+      this.websocketsend(JSON.stringify(params));
     },
     //连接失败事件
     websocketonerror(e) {
@@ -245,6 +316,7 @@ export default {
       console.log(redata, "数据接收");
 
       let data = JSON.parse(event.data);
+      console.log('data',data)
       if (data.data.type!='heartbeat'&&data.data.content) {
         that.msgList.push(data.data);
         
@@ -265,6 +337,15 @@ export default {
         }
         
       }
+      if(data.type=="load_result"&&data.data&&data.data.length){
+        this.msgList = data.data;
+        setTimeout(()=>{
+          document.getElementById("msg_end").scrollIntoView();
+        },500)
+      }
+      if(redata.type=="user_count"){
+        this.onlineCount = redata.data;
+      }
       
       //收到服务器信息，心跳重置
       this.reset();
@@ -277,6 +358,96 @@ export default {
       this.unread = 0;
       this.showTips = false;
       document.getElementById("msg_end").scrollIntoView();
+    },
+    inputFocus () {
+        document.addEventListener('paste',this.toPaste);
+    },
+    inputBlur() {
+        document.removeEventListener('paste',this.toPaste);
+    },
+    toPaste(e){
+        var cbd = e.clipboardData;
+        var ua = window.navigator.userAgent;
+        if ( !(e.clipboardData && e.clipboardData.items) ) {
+            return ;
+        }
+        if(cbd.items && cbd.items.length === 2 && cbd.items[0].kind === "string" && cbd.items[1].kind === "file" && cbd.types && cbd.types.length === 2 && cbd.types[0] === "text/plain" && cbd.types[1] === "Files" && ua.match(/Macintosh/i) && Number(ua.match(/Chrome\/(\d{2})/i)[1]) < 49){
+            return;
+        }
+        var item = cbd.items[cbd.items.length-1];
+        if(item.kind == "file" && (/^image\/[a-z]*$/.test(item.type))){
+            var blob = item.getAsFile();
+            if (blob.size === 0) {
+              return;
+            }
+            console.log(blob);
+            this.imgSendType = 'paste';
+            this.prevImg = URL.createObjectURL(blob);
+            console.log(URL.createObjectURL(blob))
+            this.prevblob = blob;
+            
+        }
+    },
+    closeImage(){
+      this.prevImg = '';
+      this.prevblob = '';
+      this.realImageUrl = '';
+      this.$refs.replyImageUpload.clearFiles();
+    },
+    sendImage(){
+      if(this.imgSendType=='upload'){
+        let params = {
+          type: 'image',
+          content: this.realImageUrl
+        }
+        this.websocketsend(JSON.stringify(params));
+        this.prevImg = '';
+        this.prevblob = '';
+        this.realImageUrl = '';
+        this.$refs.replyImageUpload.clearFiles();
+      }else{
+        // this.imgSendType = 'upload';
+        this.$refs.replyImageUpload.$children[0].uploadFiles([this.prevblob]);
+      }
+      
+    },
+    handleAvatarSuccess(res, file) {
+      if(res.success){
+            // this.imageUrl = URL.createObjectURL(file.raw);
+            // this.images.push(res.data);
+          console.log(res.data);
+          
+          this.realImageUrl = res.data;
+          // this.imgSendType = 'upload';
+          this.prevImg = URL.createObjectURL(file.raw);
+          this.prevblob = file.raw;
+          if(this.imgSendType=='paste'){
+            this.imgSendType = 'upload';
+            this.sendImage();
+          }else{
+            // let params = {
+            //   type: 'image',
+            //   content: this.realImageUrl
+            // }
+            // this.websocketsend(JSON.stringify(params));
+          }
+      }else if(res.errorCode=='invalid_content'){
+          // this.imageUrl = ''
+          this.$toast(res.errorMessage)
+      }
+      
+        
+    },
+    beforeAvatarUpload(file) {
+      console.log(file)
+        const isLt2M = file.size / 1024 / 1024 < 20;
+        if (!isLt2M) {
+            this.$message.error('上传图片大小不能超过 20MB!');
+            return false
+        }
+        this.filedata.fileName = file.name;
+        
+        return true
     },
     send() {
       console.log(1)
