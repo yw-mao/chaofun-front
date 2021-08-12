@@ -2,44 +2,6 @@
   <div :class="classObj" class="app-wrapper" :style="doTheme('bodyStyle')">
     <div v-if="device==='mobile'&&sidebar.opened" class="drawer-bg" @click="handleClickOutside" />
     <sidebar :style="ISPHONE?{backgroundColor: '#fff'}:doTheme('sidebarStyle')" class="sidebar-container"  />
-    <div v-if="shouldShowOlympics()" :class="['fixed_l',{'fixed_l_none':clientWidth<1760},{'fixed_l_block':(clientWidth<1760&&clientWidth>1340)&&!$store.getters.sidebar.opened}]" :style="doLeftStyle()">
-      <div v-if="!ISPHONE && shouldShowOlympics()" class="aoyun">
-        <div class="poster">
-          <a target="_blank" href="https://olympics.com/tokyo-2020/olympic-games/zh/results/all-sports/medal-standings.htm">
-          <img class="" src="./image/aoyun/poster.jpg" alt=""></a>
-          
-        </div>
-        <div class="ao_title">
-          <div class="order">排名</div>
-          <div class="country">国家/地区</div>
-          <div class="score"><img src="./image/aoyun/1.png" alt=""></div>
-          <div class="score"><img src="./image/aoyun/2.png" alt=""></div>
-          <div class="score"><img src="./image/aoyun/3.png" alt=""></div>
-          <div class="score">总计</div>
-        </div>
-        <div class="ao_list">
-          <div v-for="(item,index) in aoData" :key="index" class="ao_title ao_item">
-            <div class="order">{{index+1}}</div>
-            <div class="country" title="中国加油">
-              <img class="country_img" :src="item.imageUrl" alt="">
-              {{item.country}}
-            </div>
-            <div class="score">
-              {{item.gold}}
-            </div>
-            <div class="score">
-              {{item.silver}}
-            </div>
-            <div class="score">
-              {{item.bronze}}
-            </div>
-            <div class="score">
-              {{item.total}}
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
     <div :class="[{hasTagsView:true||needTagsView},'main-container']">
       <div :class="{'fixed-header':fixedHeader}">
         <navbar :islogin="islogin" :userinfo="userinfo" />
@@ -132,26 +94,8 @@ export default {
     cancelRegisterSuccess(){
       this.getUserInfo()
     },
-    Olympics2020Rank(){
-      api.Olympics2020Rank({}).then(res=>{
-        this.aoData = res.data
-      })
-    },
     handleClickOutside() {
       this.$store.dispatch('app/closeSideBar', { withoutAnimation: false })
-    },
-
-    shouldShowOlympics() {
-      let arrays = this.$route.path.split("/");
-      console.log(arrays);
-      if (arrays.length > 2 && arrays[arrays.length-2] === 'f' && arrays[arrays.length - 1] === '7') {
-        if (this.times === 1) {
-          this.Olympics2020Rank();
-          this.times += 1
-        }
-        return true;
-      }
-      return false
     }
   }
 }
