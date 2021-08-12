@@ -187,7 +187,7 @@ export default {
     doRightStyle() {
       // let opened = Cookies.get('sidebarStatus') ? !!+Cookies.get('sidebarStatus') : true
       let winWidth = document.body.clientWidth;
-      let right = (winWidth - 640) / 2 - 350 + 120;
+      let right = (winWidth - 640) / 2 - 350 + 80;
       return {
         'right': right + 'px'
       }
@@ -196,7 +196,7 @@ export default {
       // let opened = Cookies.get('sidebarStatus') ? !!+Cookies.get('sidebarStatus') : true
       let opened = this.$store.getters.sidebar.opened;
       let winWidth = document.body.clientWidth;
-      let right = (winWidth - 640) / 2 - (opened ? 310 : 290) -70;
+      let right = (winWidth - 640) / 2 - (opened ? 310 : 290) - 70;
       return {
         'left': right + 'px'
       }
@@ -208,7 +208,7 @@ export default {
       let right = (winWidth - 640) / 2;
 
       return {
-        'left': right - 150 + 'px'
+        'left': right - 160 + 'px'
       }
     },
     doRightOffset() {

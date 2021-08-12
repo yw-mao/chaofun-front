@@ -30,17 +30,7 @@
       <div style="height: 50px"></div>
       <el-row :gutter="24">
         <el-col :span="isPhone ? 24 : doWidth()" :offset="-1">
-          <div
-            class="navs"
-            style="
-              justify-content: space-between;
-              width: 640px;
-              max-width: 100%;
-              margin: 0 auto;
-              position:relative;
-              left:-100px;
-            "
-          >
+          <div class="navs" :style="{ left: ISPHONE ? '0' : '-60px' }">
             <div style="width: 100%">
               <selectList
                 @updateList="updateList"
@@ -48,17 +38,7 @@
               ></selectList>
             </div>
           </div>
-          <div
-            class="grid-content"
-            style="
-              overflow: auto;
-              width: 640px;
-              max-width: 100%;
-              margin: 0 auto;
-              position:relative;
-              left:-100px;
-            "
-          >
+          <div class="grid-content" :style="{ left: ISPHONE ? '0' : '-60px' }">
             <ListItem
               v-if="$store.state.user.listMode == 'normal'"
               :marker="params.marker"
@@ -249,9 +229,10 @@ export default {
     this.$EventBus.$on("refreshItemTag", (params) => {
       //需要执行的代码
       console.log(params);
-      if(params.way){//refreshItemTag
+      if (params.way) {
+        //refreshItemTag
         this[params.way]();
-      }else{
+      } else {
         if (params.type) {
           // this.lists[params.index].tags.push(params.tag);
           this.lists[params.index].tags.splice(0, 1, params.tag);
@@ -263,10 +244,9 @@ export default {
           this.lists[params.index].tags.splice(0, 1);
         }
       }
-      
     });
   },
-  
+
   created() {
     let id = this.$route.path.split("/")[2];
     if (!isNaN(id)) {
@@ -283,10 +263,9 @@ export default {
     this.load();
   },
   methods: {
-    saveTagId(){
-      if(this.params.tagId){
-        
-        localStorage.setItem('tagInfo',JSON.stringify(this.params))
+    saveTagId() {
+      if (this.params.tagId) {
+        localStorage.setItem("tagInfo", JSON.stringify(this.params));
       }
     },
     listPins() {
@@ -354,7 +333,6 @@ export default {
     getForumTag() {
       api.getlistTag({ forumId: this.params.forumId }).then((res) => {
         this.tagList = res.data;
-        
       });
     },
     getLists(v) {
@@ -400,10 +378,10 @@ export default {
         this.lists = sdata.list;
         this.params.marker = sdata.marker;
         this.params.key = sdata.key;
-        let tagInfo = JSON.parse(localStorage.getItem('tagInfo'));
-        if(tagInfo&&tagInfo.forumId==sdata.forumId){
+        let tagInfo = JSON.parse(localStorage.getItem("tagInfo"));
+        if (tagInfo && tagInfo.forumId == sdata.forumId) {
           this.params.tagId = tagInfo.tagId;
-          localStorage.removeItem('tagInfo')
+          localStorage.removeItem("tagInfo");
         }
         this.getForumTag();
       } else {
@@ -411,7 +389,6 @@ export default {
           // this.params.pageNum += 1;
           // this.params.marker = '';
           this.getLists("first");
-          
         }
       }
     },
@@ -426,7 +403,13 @@ export default {
     margin-bottom: 0;
   }
 }
-
+.navs {
+  justify-content: space-between;
+  width: 640px;
+  max-width: 100%;
+  margin: 0 auto;
+  position: relative;
+}
 .el-col {
   border-radius: 4px;
 }
@@ -446,6 +429,11 @@ export default {
 .grid-content {
   border-radius: 4px;
   min-height: 36px;
+  overflow: auto;
+  width: 640px;
+  max-width: 100%;
+  margin: 0 auto;
+  position: relative;
 }
 
 .row-bg {
@@ -459,7 +447,7 @@ export default {
 }
 .fixed_tag {
   position: fixed;
-  width: 110px;
+  width: 90px;
   // height: 700px;
   top: 60px;
   bottom: 0;
