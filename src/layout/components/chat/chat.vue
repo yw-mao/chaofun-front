@@ -4,7 +4,9 @@
       <div class="forum_name">
         <img :src="imgOrigin + forumInfo.imageName" alt="" />
         <span>{{ forumInfo.name }}</span>
-        <span style="font-size:12px;color:#999;">（在线：{{onlineCount}}人）</span>
+        <span style="font-size: 12px; color: #999"
+          >（在线：{{ onlineCount }}人）</span
+        >
       </div>
       <div class="close">
         <!-- <i class="el-icon-minus"></i> -->
@@ -13,7 +15,6 @@
     </div>
 
     <div id="chat_con" class="chat_con">
-      
       <div v-for="(item, index) in msgList" :key="index">
         <div
           v-if="
@@ -30,13 +31,24 @@
               <div class="nickname">
                 {{ item.sender ? item.sender.userName : "炒饭用户—_1" }}
               </div>
-              <div v-if="item.type=='text'" class="msg" v-html="item.content">
-                
-              </div>
-              <div v-if="item.type=='image'" class="msg_img">
+              <div
+                v-if="item.type == 'text'"
+                class="msg"
+                v-html="item.content"
+              ></div>
+              <div v-if="item.type == 'image'" class="msg_img">
                 <!-- <img class="item_image" :src="imgOrigin+item.content+'?x-oss-process=image/resize,h_300'" alt=""> -->
-                <viewer :images="[imgOrigin+item.content]">
-                  <img class="item_image" :data-source="imgOrigin+item.content" :src="imgOrigin+item.content+'?x-oss-process=image/resize,h_300'" alt="">
+                <viewer :images="[imgOrigin + item.content]">
+                  <img
+                    class="item_image"
+                    :data-source="imgOrigin + item.content"
+                    :src="
+                      imgOrigin +
+                      item.content +
+                      '?x-oss-process=image/resize,h_300'
+                    "
+                    alt=""
+                  />
                   <!-- <div v-for="(item2,index2) in item.images" :key="index2" :class="doImgClass(item.images)" :style="doMoreImgStyle(item,item2)" :alt="item.title" :title="item.title">
                     <img  style="opacity:0;width:100%;height:100%;" :data-source="imgOrigin+item2"   :key="item2" :alt="item.title" :title="item.title">
                   </div> -->
@@ -51,17 +63,27 @@
               <div class="nickname">
                 {{ item.sender ? item.sender.userName : "炒饭用户—_1" }}
               </div>
-              <div v-if="item.type=='text'" class="msg" v-html="item.content">
-                
-              </div>
-              <div v-if="item.type=='image'" class="msg_img">
-                <viewer :images="[imgOrigin+item.content]">
-                  <img class="item_image" :data-source="imgOrigin+item.content" :src="imgOrigin+item.content+'?x-oss-process=image/resize,h_300'" alt="">
+              <div
+                v-if="item.type == 'text'"
+                class="msg"
+                v-html="item.content"
+              ></div>
+              <div v-if="item.type == 'image'" class="msg_img">
+                <viewer :images="[imgOrigin + item.content]">
+                  <img
+                    class="item_image"
+                    :data-source="imgOrigin + item.content"
+                    :src="
+                      imgOrigin +
+                      item.content +
+                      '?x-oss-process=image/resize,h_300'
+                    "
+                    alt=""
+                  />
                   <!-- <div v-for="(item2,index2) in item.images" :key="index2" :class="doImgClass(item.images)" :style="doMoreImgStyle(item,item2)" :alt="item.title" :title="item.title">
                     <img  style="opacity:0;width:100%;height:100%;" :data-source="imgOrigin+item2"   :key="item2" :alt="item.title" :title="item.title">
                   </div> -->
                 </viewer>
-                
               </div>
             </div>
           </div>
@@ -81,7 +103,7 @@
           <i @click="closeImage" class="el-icon-close"></i>
         </div>
         <div class="tie_tu_img">
-          <img :src="prevImg" alt="">
+          <img :src="prevImg" alt="" />
         </div>
         <div class="flex">
           <span>发送图片至群聊</span>
@@ -89,7 +111,9 @@
         </div>
       </div>
     </div>
-    <div @click="scrollToBottom" v-if="showTips" class="tips">你有新消息 <span v-if="unread">({{unread}})</span> </div>
+    <div @click="scrollToBottom" v-if="showTips" class="tips">
+      你有新消息 <span v-if="unread">({{ unread }})</span>
+    </div>
     <div class="bottom_send">
       <input
         autofocus
@@ -107,14 +131,17 @@
         :show-file-list="false"
         :on-success="handleAvatarSuccess"
         :before-upload="beforeAvatarUpload"
-        
         :limit="1"
         multiple
         accept="image/*"
-        style="display:inline-block;"
+        style="display: inline-block"
         ref="replyImageUpload"
-        >
-          <img style="vertical-align:middle;margin-right:0px;cursor:pointer;" src="../../../assets/images/icon/choose.png" alt="">
+      >
+        <img
+          style="vertical-align: middle; margin-right: 0px; cursor: pointer"
+          src="../../../assets/images/icon/choose.png"
+          alt=""
+        />
       </el-upload>
       <div @click="send" class="send">发送</div>
     </div>
@@ -129,13 +156,11 @@ export default {
   data() {
     return {
       onlineCount: 0,
-      filedata: {
-        
-      },
-      realImageUrl: '',
-      imgSendType: 'upload',
-      prevblob: '',
-      prevImg: '',
+      filedata: {},
+      realImageUrl: "",
+      imgSendType: "upload",
+      prevblob: "",
+      prevImg: "",
       showTips: false,
       unread: 0,
       content: "",
@@ -160,9 +185,9 @@ export default {
       this.forumInfo = JSON.parse(localStorage.getItem("wsForum"));
     }
   },
-  destroyed(){
+  destroyed() {
     if (this.websock) {
-      console.log('关闭原连接')
+      console.log("关闭原连接");
       clearTimeout(this.timeoutObj);
       clearTimeout(this.serverTimeoutObj);
       this.websock.close();
@@ -194,7 +219,7 @@ export default {
         this.send();
       }
     },
-    scrollToBottom(){
+    scrollToBottom() {
       this.unread = 0;
       this.showTips = false;
       document.getElementById("msg_end").scrollIntoView();
@@ -204,7 +229,7 @@ export default {
     initWebSocket() {
       //初始化weosocket
       //const wsuri = "ws://sms.填写您的地址.com/websocket/" + this.charId; //ws地址
-      
+
       const wsuri = "wss://chao.fun/ws/v0/forumChat/" + this.forumInfo.id;
       //建立连接
       this.websock = new WebSocket(wsuri);
@@ -248,12 +273,13 @@ export default {
       self.serverTimeoutObj && clearTimeout(self.serverTimeoutObj);
       self.timeoutObj = setTimeout(function () {
         //这里发送一个心跳，后端收到后，返回一个心跳消息，
+        console.log("查看readyState", self.websock.readyState, self.websock);
         if (self.websock.readyState == 1) {
           //如果连接正常
           let params = {
-            type: 'heartbeat',
-            content: '',
-          }
+            type: "heartbeat",
+            content: "",
+          };
           self.websock.send(JSON.stringify(params));
           console.log("发送消息");
         } else {
@@ -266,7 +292,7 @@ export default {
         }, self.timeout);
       }, self.timeout);
     },
-    
+
     //连接成功事件
     websocketonopen() {
       //提示成功
@@ -274,10 +300,15 @@ export default {
       //开启心跳
       this.start();
       let params = {
-        type: 'load',
-        content: '',
-      }
+        type: "load",
+        content: "",
+      };
       this.websocketsend(JSON.stringify(params));
+      var param = {
+        type: "heartbeat",
+        content: "",
+      };
+      this.websocketsend(JSON.stringify(param));
     },
     //连接失败事件
     websocketonerror(e) {
@@ -291,21 +322,21 @@ export default {
     //连接关闭事件
     websocketclose(e) {
       //关闭
-      console.log(e)
-      console.log('closeType',e.type);
-      console.log('wasClean',e.wasClean);
-      console.log('code',e.code);
-      
+      console.log(e);
+      console.log("closeType", e.type);
+      console.log("wasClean", e.wasClean);
+      console.log("code", e.code);
+
       //提示关闭
       console.log("连接已关闭", 3);
 
+      this.reconnect();
       //重连
-      if(e.code!=1000&&e.type!='close'){
-        this.reconnect();
-      }else{
-        console.log('链接真正关闭')
-      }
-      
+      // if (e.code != 1000 && e.type != "close") {
+      //   this.reconnect();
+      // } else {
+      //   console.log("链接真正关闭");
+      // }
     },
     //接收服务器推送的信息
     websocketonmessage(event) {
@@ -316,18 +347,22 @@ export default {
       console.log(redata, "数据接收");
 
       let data = JSON.parse(event.data);
-      console.log('data',data)
-      if (data.data.type!='heartbeat'&&data.data.content) {
+      console.log("data", data);
+      if (data.data.type != "heartbeat" && data.data.content) {
         that.msgList.push(data.data);
-        
-        let chat_con = document.getElementById('chat_con');
-        console.log(chat_con.scrollHeight,chat_con.scrollTop);
-        if(chat_con.scrollHeight-chat_con.scrollTop>200&&chat_con.scrollHeight-chat_con.scrollTop<1500){//===this.clientHeight
-            console.log("到达底部");
-            that.unread = 0;
-            that.showTips = false;
-            document.getElementById("msg_end").scrollIntoView();
-        }else{
+
+        let chat_con = document.getElementById("chat_con");
+        console.log(chat_con.scrollHeight, chat_con.scrollTop);
+        if (
+          chat_con.scrollHeight - chat_con.scrollTop > 200 &&
+          chat_con.scrollHeight - chat_con.scrollTop < 1500
+        ) {
+          //===this.clientHeight
+          console.log("到达底部");
+          that.unread = 0;
+          that.showTips = false;
+          document.getElementById("msg_end").scrollIntoView();
+        } else {
           that.unread += 1;
           that.showTips = true;
           // setTimeout(()=>{
@@ -335,20 +370,19 @@ export default {
           // },2000)
           // that.TipintoView();
         }
-        
       }
-      if(data.type=="load_result"&&data.data&&data.data.length){
+      if (data.type == "load_result" && data.data && data.data.length) {
         this.msgList = data.data;
-        setTimeout(()=>{
+        setTimeout(() => {
           document.getElementById("msg_end").scrollIntoView();
-        },500)
+        }, 500);
       }
-      if(redata.type=="user_count"){
+      if (redata.type == "user_count") {
         this.onlineCount = redata.data;
       }
-      
+
       //收到服务器信息，心跳重置
-      this.reset();
+      // this.reset();
     },
     //向服务器发送信息
     websocketsend(msg) {
@@ -359,101 +393,108 @@ export default {
       this.showTips = false;
       document.getElementById("msg_end").scrollIntoView();
     },
-    inputFocus () {
-        document.addEventListener('paste',this.toPaste);
+    inputFocus() {
+      document.addEventListener("paste", this.toPaste);
     },
     inputBlur() {
-        document.removeEventListener('paste',this.toPaste);
+      document.removeEventListener("paste", this.toPaste);
     },
-    toPaste(e){
-        var cbd = e.clipboardData;
-        var ua = window.navigator.userAgent;
-        if ( !(e.clipboardData && e.clipboardData.items) ) {
-            return ;
+    toPaste(e) {
+      var cbd = e.clipboardData;
+      var ua = window.navigator.userAgent;
+      if (!(e.clipboardData && e.clipboardData.items)) {
+        return;
+      }
+      if (
+        cbd.items &&
+        cbd.items.length === 2 &&
+        cbd.items[0].kind === "string" &&
+        cbd.items[1].kind === "file" &&
+        cbd.types &&
+        cbd.types.length === 2 &&
+        cbd.types[0] === "text/plain" &&
+        cbd.types[1] === "Files" &&
+        ua.match(/Macintosh/i) &&
+        Number(ua.match(/Chrome\/(\d{2})/i)[1]) < 49
+      ) {
+        return;
+      }
+      var item = cbd.items[cbd.items.length - 1];
+      if (item.kind == "file" && /^image\/[a-z]*$/.test(item.type)) {
+        var blob = item.getAsFile();
+        if (blob.size === 0) {
+          return;
         }
-        if(cbd.items && cbd.items.length === 2 && cbd.items[0].kind === "string" && cbd.items[1].kind === "file" && cbd.types && cbd.types.length === 2 && cbd.types[0] === "text/plain" && cbd.types[1] === "Files" && ua.match(/Macintosh/i) && Number(ua.match(/Chrome\/(\d{2})/i)[1]) < 49){
-            return;
-        }
-        var item = cbd.items[cbd.items.length-1];
-        if(item.kind == "file" && (/^image\/[a-z]*$/.test(item.type))){
-            var blob = item.getAsFile();
-            if (blob.size === 0) {
-              return;
-            }
-            console.log(blob);
-            this.imgSendType = 'paste';
-            this.prevImg = URL.createObjectURL(blob);
-            console.log(URL.createObjectURL(blob))
-            this.prevblob = blob;
-            
-        }
+        console.log(blob);
+        this.imgSendType = "paste";
+        this.prevImg = URL.createObjectURL(blob);
+        console.log(URL.createObjectURL(blob));
+        this.prevblob = blob;
+      }
     },
-    closeImage(){
-      this.prevImg = '';
-      this.prevblob = '';
-      this.realImageUrl = '';
+    closeImage() {
+      this.prevImg = "";
+      this.prevblob = "";
+      this.realImageUrl = "";
       this.$refs.replyImageUpload.clearFiles();
     },
-    sendImage(){
-      if(this.imgSendType=='upload'){
+    sendImage() {
+      if (this.imgSendType == "upload") {
         let params = {
-          type: 'image',
-          content: this.realImageUrl
-        }
+          type: "image",
+          content: this.realImageUrl,
+        };
         this.websocketsend(JSON.stringify(params));
-        this.prevImg = '';
-        this.prevblob = '';
-        this.realImageUrl = '';
+        this.prevImg = "";
+        this.prevblob = "";
+        this.realImageUrl = "";
         this.$refs.replyImageUpload.clearFiles();
-      }else{
+      } else {
         // this.imgSendType = 'upload';
         this.$refs.replyImageUpload.$children[0].uploadFiles([this.prevblob]);
       }
-      
     },
     handleAvatarSuccess(res, file) {
-      if(res.success){
-            // this.imageUrl = URL.createObjectURL(file.raw);
-            // this.images.push(res.data);
-          console.log(res.data);
-          
-          this.realImageUrl = res.data;
-          // this.imgSendType = 'upload';
-          this.prevImg = URL.createObjectURL(file.raw);
-          this.prevblob = file.raw;
-          if(this.imgSendType=='paste'){
-            this.imgSendType = 'upload';
-            this.sendImage();
-          }else{
-            // let params = {
-            //   type: 'image',
-            //   content: this.realImageUrl
-            // }
-            // this.websocketsend(JSON.stringify(params));
-          }
-      }else if(res.errorCode=='invalid_content'){
-          // this.imageUrl = ''
-          this.$toast(res.errorMessage)
+      if (res.success) {
+        // this.imageUrl = URL.createObjectURL(file.raw);
+        // this.images.push(res.data);
+        console.log(res.data);
+
+        this.realImageUrl = res.data;
+        // this.imgSendType = 'upload';
+        this.prevImg = URL.createObjectURL(file.raw);
+        this.prevblob = file.raw;
+        if (this.imgSendType == "paste") {
+          this.imgSendType = "upload";
+          this.sendImage();
+        } else {
+          // let params = {
+          //   type: 'image',
+          //   content: this.realImageUrl
+          // }
+          // this.websocketsend(JSON.stringify(params));
+        }
+      } else if (res.errorCode == "invalid_content") {
+        // this.imageUrl = ''
+        this.$toast(res.errorMessage);
       }
-      
-        
     },
     beforeAvatarUpload(file) {
-      console.log(file)
-        const isLt2M = file.size / 1024 / 1024 < 20;
-        if (!isLt2M) {
-            this.$message.error('上传图片大小不能超过 20MB!');
-            return false
-        }
-        this.filedata.fileName = file.name;
-        
-        return true
+      console.log(file);
+      const isLt2M = file.size / 1024 / 1024 < 20;
+      if (!isLt2M) {
+        this.$message.error("上传图片大小不能超过 20MB!");
+        return false;
+      }
+      this.filedata.fileName = file.name;
+
+      return true;
     },
     send() {
-      console.log(1)
+      console.log(1);
       if (this.content) {
         let params = {
-          type: 'text',
+          type: "text",
           content: this.content,
         };
         this.websocketsend(JSON.stringify(params));
@@ -470,7 +511,7 @@ export default {
     closeWS() {
       this.$store.dispatch("user/SET_showChatBox", false);
     },
-    ccc(){},
+    ccc() {},
     getWss(ps) {
       let self = this;
       var ws = new WebSocket("wss://chao.fun/ws/v0/forumChat/1");
@@ -487,7 +528,9 @@ export default {
           var self = this;
           this.timeoutObj = setTimeout(function () {
             // ws.send("HeartBeat");
-            ws.send(ps ? JSON.stringify(ps) : '{"type":"text","content":"你好"}');
+            ws.send(
+              ps ? JSON.stringify(ps) : '{"type":"text","content":"你好"}'
+            );
             self.serverTimeoutObj = setTimeout(function () {
               ws.close(); //如果onclose会执行reconnect，我们执行ws.close()就行了.如果直接执行reconnect 会触发onclose导致重连两次
             }, self.timeout);
