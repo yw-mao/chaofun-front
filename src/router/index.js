@@ -87,7 +87,13 @@ export const constantRoutes = [
     meta: { title: '板块排名'},
     hidden: true
   },
-  
+  {
+    path: '/chatpage/:id',
+    component: () => import('@/views/chat/chatpage'),
+    // name: 'webViewForumRank',
+    meta: { title: '板块排名'},
+    hidden: true
+  },
   {
     path: '/',
     component: Layout,

@@ -1,9 +1,16 @@
+.container{
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
 .chat_box{
-    position: fixed;
-    width: 300px;
-    height: 500px;
-    right: 0;
-    bottom: 0;
+    position: relative;
+    width: 800px;
+    height: 600px;
+    margin: 0 auto;
+    max-width: 100%;
     z-index: 100000000000000;
     background: #f4f4f4;
     box-sizing: border-box;
@@ -12,6 +19,9 @@
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
     overflow: hidden;
+}
+.chat_box_phone{
+    height: 100%;
 }
 .title{
     position: absolute;

@@ -1,155 +1,158 @@
 <template>
-  <div class="chat_box">
-    <div class="title">
-      <div class="forum_name">
-        <img :src="imgOrigin + forumInfo.imageName" alt="" />
-        <span>{{ forumInfo.name }}</span>
-        <span style="font-size: 12px; color: #999"
-          >（在线：{{ onlineCount }}人）</span
-        >
-      </div>
-      <div class="close">
-        <!-- <i class="el-icon-minus"></i> -->
-        <img @click="toNewPage" title="打开新窗口" :src="imgOrigin+'biz/b956a8bb34c931b0ba43386588e48c37.png'" alt="">
-        <i @click="closeWS" class="el-icon-close"></i>
-      </div>
-    </div>
+  <div class="container">
+      <div :class="['chat_box',{'chat_box_phone': ISPHONE}]">
+        <div class="title">
+        <div class="forum_name">
+            <img :src="imgOrigin + forumInfo.imageName" alt="" />
+            <span>{{ forumInfo.name }}</span>
+            <span style="font-size: 12px; color: #999"
+            >（在线：{{ onlineCount }}人）</span
+            >
+        </div>
+        <!-- <div class="close">
+            <img title="打开新窗口" :src="imgOrigin+'biz/b956a8bb34c931b0ba43386588e48c37.png'" alt="">
+            <i @click="closeWS" class="el-icon-close"></i>
+        </div> -->
+        </div>
 
-    <div id="chat_con" class="chat_con">
-      <div v-for="(item, index) in msgList" :key="index">
+        <div id="chat_con" class="chat_con">
+        <div v-for="(item, index) in msgList" :key="index">
+            <div
+            v-if="
+                item.sender &&
+                item.sender.userId != $store.state.user.userInfo.userId
+            "
+            class="others"
+            >
+            <div class="ava">
+                <img :src="imgOrigin + (item.sender.icon||'biz/f7cce56159ee5705a66f1cf8c03c4bea.png')" alt="" />
+            </div>
+            <div class="ads">
+                <div class="contents">
+                <div class="nickname">
+                    {{ item.sender ? item.sender.userName : "炒饭用户—_1" }}
+                </div>
+                <div
+                    v-if="item.type == 'text'"
+                    class="msg"
+                    v-html="item.content"
+                ></div>
+                <div v-if="item.type == 'image'" class="msg_img">
+                    <!-- <img class="item_image" :src="imgOrigin+item.content+'?x-oss-process=image/resize,h_300'" alt=""> -->
+                    <viewer :images="[imgOrigin + item.content]">
+                    <img
+                        class="item_image"
+                        :data-source="imgOrigin + item.content"
+                        :src="
+                        imgOrigin +
+                        item.content +
+                        '?x-oss-process=image/resize,h_300'
+                        "
+                        alt=""
+                    />
+                    <!-- <div v-for="(item2,index2) in item.images" :key="index2" :class="doImgClass(item.images)" :style="doMoreImgStyle(item,item2)" :alt="item.title" :title="item.title">
+                        <img  style="opacity:0;width:100%;height:100%;" :data-source="imgOrigin+item2"   :key="item2" :alt="item.title" :title="item.title">
+                    </div> -->
+                    </viewer>
+                </div>
+                </div>
+            </div>
+            </div>
+            <div v-if="item.sender &&
+                item.sender.userId == $store.state.user.userInfo.userId" class="userSelf">
+            <div class="ads">
+                <div class="contents">
+                <div class="nickname">
+                    {{ item.sender ? item.sender.userName : "炒饭用户—_1" }}
+                </div>
+                <div
+                    v-if="item.type == 'text'"
+                    class="msg"
+                    v-html="item.content"
+                ></div>
+                <div v-if="item.type == 'image'" class="msg_img">
+                    <viewer :images="[imgOrigin + item.content]">
+                    <img
+                        class="item_image"
+                        :data-source="imgOrigin + item.content"
+                        :src="
+                        imgOrigin +
+                        item.content +
+                        '?x-oss-process=image/resize,h_300'
+                        "
+                        alt=""
+                    />
+                    <!-- <div v-for="(item2,index2) in item.images" :key="index2" :class="doImgClass(item.images)" :style="doMoreImgStyle(item,item2)" :alt="item.title" :title="item.title">
+                        <img  style="opacity:0;width:100%;height:100%;" :data-source="imgOrigin+item2"   :key="item2" :alt="item.title" :title="item.title">
+                    </div> -->
+                    </viewer>
+                </div>
+                </div>
+            </div>
+            <div v-if="item.sender" class="ava">
+                <img :src="imgOrigin + item.sender.icon" alt="" />
+            </div>
+            </div>
+        </div>
         <div
-          v-if="
-            item.sender &&
-            item.sender.userId != $store.state.user.userInfo.userId
-          "
-          class="others"
-        >
-          <div class="ava">
-            <img :src="imgOrigin + (item.sender.icon||'biz/f7cce56159ee5705a66f1cf8c03c4bea.png')" alt="" />
-          </div>
-          <div class="ads">
-            <div class="contents">
-              <div class="nickname">
-                {{ item.sender ? item.sender.userName : "炒饭用户—_1" }}
-              </div>
-              <div
-                v-if="item.type == 'text'"
-                class="msg"
-                v-html="item.content"
-              ></div>
-              <div v-if="item.type == 'image'" class="msg_img">
-                <!-- <img class="item_image" :src="imgOrigin+item.content+'?x-oss-process=image/resize,h_300'" alt=""> -->
-                <viewer :images="[imgOrigin + item.content]">
-                  <img
-                    class="item_image"
-                    :data-source="imgOrigin + item.content"
-                    :src="
-                      imgOrigin +
-                      item.content +
-                      '?x-oss-process=image/resize,h_300'
-                    "
-                    alt=""
-                  />
-                  <!-- <div v-for="(item2,index2) in item.images" :key="index2" :class="doImgClass(item.images)" :style="doMoreImgStyle(item,item2)" :alt="item.title" :title="item.title">
-                    <img  style="opacity:0;width:100%;height:100%;" :data-source="imgOrigin+item2"   :key="item2" :alt="item.title" :title="item.title">
-                  </div> -->
-                </viewer>
-              </div>
+            id="msg_end"
+            style="height: 0px; margin-bottom: 80px; overflow: hidden"
+        ></div>
+        </div>
+        <div v-if="prevImg" class="tietu">
+        <div class="tietu_con">
+            <div class="cls">
+            <i @click="closeImage" class="el-icon-close"></i>
             </div>
-          </div>
-        </div>
-        <div v-else class="userSelf">
-          <div class="ads">
-            <div class="contents">
-              <div class="nickname">
-                {{ item.sender ? item.sender.userName : "炒饭用户—_1" }}
-              </div>
-              <div
-                v-if="item.type == 'text'"
-                class="msg"
-                v-html="item.content"
-              ></div>
-              <div v-if="item.type == 'image'" class="msg_img">
-                <viewer :images="[imgOrigin + item.content]">
-                  <img
-                    class="item_image"
-                    :data-source="imgOrigin + item.content"
-                    :src="
-                      imgOrigin +
-                      item.content +
-                      '?x-oss-process=image/resize,h_300'
-                    "
-                    alt=""
-                  />
-                  <!-- <div v-for="(item2,index2) in item.images" :key="index2" :class="doImgClass(item.images)" :style="doMoreImgStyle(item,item2)" :alt="item.title" :title="item.title">
-                    <img  style="opacity:0;width:100%;height:100%;" :data-source="imgOrigin+item2"   :key="item2" :alt="item.title" :title="item.title">
-                  </div> -->
-                </viewer>
-              </div>
+            <div class="tie_tu_img">
+            <img :src="prevImg" alt="" />
             </div>
-          </div>
-          <div v-if="item.sender" class="ava">
-            <img :src="imgOrigin + item.sender.icon" alt="" />
-          </div>
+            <div class="flex">
+            <span>发送图片至群聊</span>
+            <div @click="sendImage" class="send">发送</div>
+            </div>
         </div>
-      </div>
-      <div
-        id="msg_end"
-        style="height: 0px; margin-bottom: 80px; overflow: hidden"
-      ></div>
-    </div>
-    <div v-if="prevImg" class="tietu">
-      <div class="tietu_con">
-        <div class="cls">
-          <i @click="closeImage" class="el-icon-close"></i>
         </div>
-        <div class="tie_tu_img">
-          <img :src="prevImg" alt="" />
+        <div @click="scrollToBottom" v-if="showTips" class="tips">
+        你有新消息 <span v-if="unread">({{ unread }})</span>
         </div>
-        <div class="flex">
-          <span>发送图片至群聊</span>
-          <div @click="sendImage" class="send">发送</div>
-        </div>
-      </div>
-    </div>
-    <div @click="scrollToBottom" v-if="showTips" class="tips">
-      你有新消息 <span v-if="unread">({{ unread }})</span>
-    </div>
-    <div class="bottom_send">
-      <input
-        autofocus
-        @keydown="clientClickButton"
-        @focus="inputFocus"
-        v-model="content"
-        type="text"
-        placeholder="发言~"
-      />
-      <el-upload
-        class="avatar-uploader"
-        action="/api/upload_image"
-        name="file"
-        :data="filedata"
-        :show-file-list="false"
-        :on-success="handleAvatarSuccess"
-        :before-upload="beforeAvatarUpload"
-        :limit="1"
-        multiple
-        accept="image/*"
-        style="display: inline-block"
-        ref="replyImageUpload"
-      >
-        <img
-          style="vertical-align: middle; margin-right: 0px; cursor: pointer"
-          src="../../../assets/images/icon/choose.png"
-          alt=""
+        <div class="bottom_send">
+        <input
+            autofocus
+            @keydown="clientClickButton"
+            @focus="inputFocus"
+            v-model="content"
+            type="text"
+            placeholder="发言~"
         />
-      </el-upload>
-      <div @click="send" class="send">发送</div>
+        <el-upload
+            class="avatar-uploader"
+            action="/api/upload_image"
+            name="file"
+            :data="filedata"
+            :show-file-list="false"
+            :on-success="handleAvatarSuccess"
+            :before-upload="beforeAvatarUpload"
+            :limit="1"
+            multiple
+            accept="image/*"
+            style="display: inline-block"
+            ref="replyImageUpload"
+        >
+            <img
+            style="vertical-align: middle; margin-right: 0px; cursor: pointer"
+            src="../../assets/images/icon/choose.png"
+            alt=""
+            />
+        </el-upload>
+        <div @click="send" class="send">发送</div>
+        </div>
     </div>
   </div>
 </template>
 
 <script>
+import * as api from "@/api/api";
 import ThemePicker from "@/components/ThemePicker";
 export default {
   components: { ThemePicker },
@@ -182,9 +185,7 @@ export default {
   },
   computed: {},
   created() {
-    if (localStorage.getItem("wsForum")) {
-      this.forumInfo = JSON.parse(localStorage.getItem("wsForum"));
-    }
+    this.getForumInfo();
   },
   destroyed() {
     if (this.websock) {
@@ -195,28 +196,25 @@ export default {
       this.websock = null;
     }
   },
-  // watch:{
-  //   '$store.state.user.showChatBox'(){
-  //     if (this.websock) {
-  //       console.log('关闭原连接')
-  //       clearTimeout(this.timeoutObj);
-  //       clearTimeout(this.serverTimeoutObj);
-  //       this.websock.close();
-  //     }
-  //   }
-  // },
   mounted() {
-    //   if(!this.$store.state.user.wss){
-    //   this.$store.dispatch('user/SET_wss',this.getWss);
-    //   }
-    if (localStorage.getItem("wsForum")) {
+    console.log(this.$route.path);
+    if (this.$route.params.id) {
       this.initWebSocket();
     }
   },
   methods: {
-    toNewPage(){
-      let id = this.forumInfo.id;
-       window.open (location.origin+'/chatpage/'+id, 'newwindow', 'height=600, width=800, top=0, left=0, toolbar=no, menubar=no, scrollbars=no, resizable=no,location=n o, status=no')  
+    getForumInfo() {
+        if(this.$route.params.id){
+            api.getForumInfo({ forumId: this.$route.params.id }).then((res) => {
+                if (res.success) {
+                    this.forumInfo = res.data;
+                
+                } else {
+                    this.$router.push("/404");
+                }
+            });
+        }
+      
     },
     clientClickButton(event) {
       console.log(event.code);
@@ -234,7 +232,7 @@ export default {
     initWebSocket() {
       //初始化weosocket
       //const wsuri = "ws://sms.填写您的地址.com/websocket/" + this.charId; //ws地址
-      const wsuri = "wss://chao.fun/ws/v0/forumChat/" + this.forumInfo.id;
+      const wsuri = "wss://chao.fun/ws/v0/forumChat/" + this.$route.params.id;
       //建立连接
       this.websock = new WebSocket(wsuri);
       //连接成功
@@ -304,11 +302,6 @@ export default {
           // self.websock.close();
         }, self.timeout);
       }, self.timeout);
-      // var param = {
-      //   type: "heartbeat",
-      //   content: "",
-      // };
-      // this.websocketsend(JSON.stringify(param));
     },
     //连接成功事件
     websocketonopen() {
@@ -586,5 +579,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "./chat.scss";
+@import "./chatpage.scss";
 </style>

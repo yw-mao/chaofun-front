@@ -16,7 +16,7 @@
       <div>本站已在 Github 开源：<a href="https://github.com/www-chao-fun/chaofun-front" target="_blank">chaofun-front</a></div>
       Copyright © 2019 - 2021 炒饭 <img style="width:16px" src="../assets/images/bbcc.png" alt=""> <a target="_blank" href="http://www.beian.miit.gov.cn">粤ICP备19153164号-1</a>
     </div>
-    <chat v-if="$store.state.user.showChatBox"></chat>
+    <chat v-if="$store.state.user.showChatBox&&$route.path!='/chatpage'"></chat>
   </div>
 </template>
 
