@@ -148,7 +148,7 @@ export default {
       forumInfo: {},
       websock: null, //建立的连接
       lockReconnect: false, //是否真正建立连接
-      timeout: 30 * 1000, //30秒一次心跳
+      timeout: 10 * 1000, //30秒一次心跳
       timeoutObj: null, //心跳心跳倒计时
       serverTimeoutObj: null, //心跳倒计时
       timeoutnum: null, //断开 重连倒计时
@@ -292,19 +292,27 @@ export default {
     websocketclose(e) {
       //关闭
       console.log(e)
-      console.log('closeType',e.type);
-      console.log('wasClean',e.wasClean);
-      console.log('code',e.code);
       
       //提示关闭
       console.log("连接已关闭", 3);
 
       //重连
-      if(e.code!=1000&&e.type!='close'){
-        this.reconnect();
+      let curArr = e.target.url.split('/');
+      let id = curArr[curArr.length-1];
+      if(JSON.parse(localStorage.getItem("wsForum")).id==id){
+        console.log('开启重连:channel',id);
+        // this.reconnect();
+        this.reset()
       }else{
         console.log('链接真正关闭')
       }
+
+      // //重连
+      // if(e.code!=1000&&e.type!='close'){
+      //   this.reconnect();
+      // }else{
+      //   console.log('链接真正关闭')
+      // }
       
     },
     //接收服务器推送的信息

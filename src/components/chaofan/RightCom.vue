@@ -28,6 +28,11 @@
               发帖
             </el-button>
           </div>
+          <div v-if="forumInfo.id=='84'||forumInfo.id=='22'" class="forum_add">
+            <el-button @click="gotoChat" style="width:100%;" type="success" block>
+              加入群聊
+            </el-button>
+          </div>
         </div>
       </div>
       <div v-if="forumAdmin.length" class="admin">
@@ -88,11 +93,7 @@
       <div class="chatbtn">
         <div class=""></div>
       </div>
-      <div  class="forum_add">
-        <el-button @click="gotoChat" style="width:100%;" type="success" block>
-          加入群聊
-        </el-button>
-      </div>
+      
       <!-- v-if="$store.state.user.userInfo&&($store.state.user.userInfo.userId==1||$store.state.user.userInfo.userId==2||$store.state.user.userInfo.userId==146)" -->
       <div class="help_con">
         <div class="help_item">
