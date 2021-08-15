@@ -485,10 +485,8 @@ export default {
           }else{
             this.$store.dispatch('user/SET_showChatBox',true);
           }
-
         }
       })
-
     },
  
 queryChildren (parent, list) {
