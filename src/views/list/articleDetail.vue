@@ -118,6 +118,11 @@
                                   发帖
                               </el-button>
                               </div>
+                              <div v-if="forumInfo.id=='84'||forumInfo.id=='22' ||forumInfo.id=='97' || forumInfo.id=='65' || forumInfo.id=='93' || forumInfo.id=='3'" class="forum_add">
+                                <el-button @click="gotoChat" style="width:100%;" type="success" block>
+                                  加入群聊
+                                </el-button>
+                              </div>
                           </div> 
                           </div>
                           <!-- <RightCom :islogin="islogin"></RightCom> -->
@@ -467,6 +472,23 @@ export default {
       }
         
       return tree
+    },
+    gotoChat(){
+      this.doLoginStatus().then(res=>{
+        if(res){
+          localStorage.setItem('wsForum',JSON.stringify(this.forumInfo));
+          if(this.$store.state.user.showChatBox){
+            this.$store.dispatch('user/SET_showChatBox',false);
+            setTimeout(()=>{
+              this.$store.dispatch('user/SET_showChatBox',true);
+            },500)
+          }else{
+            this.$store.dispatch('user/SET_showChatBox',true);
+          }
+
+        }
+      })
+
     },
  
 queryChildren (parent, list) {
