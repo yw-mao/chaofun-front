@@ -216,7 +216,7 @@ export default {
   methods: {
     toNewPage(){
       let id = this.forumInfo.id;
-       window.open (location.origin+'/chatpage/'+id, 'newwindow', 'height=600, width=800, top=0, left=0, toolbar=no, menubar=no, scrollbars=no, resizable=no,location=n o, status=no')  
+       window.open(location.origin+'/chatpage/'+id, 'newwindow' + 'chatpage_' + id, 'height=600, width=800, top=0, left=0, toolbar=no, menubar=no, scrollbars=no, resizable=no,location=n o, status=no')
     },
     clientClickButton(event) {
       console.log(event.code);

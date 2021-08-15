@@ -578,14 +578,17 @@ queryChildren (parent, list) {
                           this.treeData = this.transformTree(this.lists);
                           this.canSub = true;
                       },1500)
+                  } else {
+                    this.canSub = true;
+                    this.$toast(res.errorMessage);
                   }
-              })
+                })
             }else{
                 console.log('未登录',res)
             }
         })
       }else{
-        this.$toast('正在提交评论...')
+        this.$toast('正在提交评论...');
         return;
       }
         

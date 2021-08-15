@@ -269,22 +269,25 @@ export default {
                     this.canSub = false;
                     api.addComments(params).then(res=>{
                         if(res.success){
-                        this.$toast('评论成功');
-                        this.images = [];
-                        setTimeout(()=>{
-                            let obj = {
-                            parentId: this.replayItem?this.replayItem.id:0,
-                            text: this.comment,
-                            type: 'text',
-                            downs: 0,
-                            ups: 0,
-                            userInfo: this.userinfo
-                            };
-                            this.$emit('refreshComment',res.data)
-                            this.replayItem = null
-                            this.comment = ''
+                            this.$toast('评论成功');
+                            this.images = [];
+                            setTimeout(()=>{
+                                let obj = {
+                                    parentId: this.replayItem?this.replayItem.id:0,
+                                    text: this.comment,
+                                    type: 'text',
+                                    downs: 0,
+                                    ups: 0,
+                                    userInfo: this.userinfo
+                                };
+                                this.$emit('refreshComment',res.data)
+                                this.replayItem = null
+                                this.comment = ''
+                                this.canSub = true;
+                            },1500)
+                        } else {
+                            this.$toast(res.errorMessage);
                             this.canSub = true;
-                        },1500)
                         }
                     })
 

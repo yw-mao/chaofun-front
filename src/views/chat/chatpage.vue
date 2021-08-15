@@ -358,7 +358,7 @@ export default {
       let that = this;
       const redata = JSON.parse(event.data);
       let data = JSON.parse(event.data);
-      if (data.data.type != "heartbeat" && data.data.content) {
+      if (data.data !== undefined && data.data !== null && data.data.type != "heartbeat" && data.data.content) {
         that.msgList.push(data.data);
         let chat_con = document.getElementById("chat_con");
         if (
@@ -387,7 +387,17 @@ export default {
       if (redata.type == "user_count") {
         this.onlineCount = redata.data;
       }
-      //收到服务器信息，心跳重置
+
+      if (redata.type == "need_login") {
+        this.$toast("请先登录");
+        this.$login({
+          callBack: () => {
+            // this.$store.dispatch("user/getInfo");
+          },
+        });
+      }
+
+        //收到服务器信息，心跳重置
       // this.reset();
     },
     //向服务器发送信息
