@@ -47,7 +47,7 @@
           @doFocued="doFocued"
           :index="index"
         ></itemTopTitle>
-        <div v-if="item.type != 'link'" class="title">
+        <div v-if="item.type != 'link'" :class="[{'title': !item.isPin},{'pin_title': item.isPin}]">
           <!-- <span class="zhiding">置顶</span>  -->
           <div v-if="item.tags.length" class="tags">
             <span v-for="(item, index) in item.tags" :key="index"
@@ -817,6 +817,12 @@ export default {
 }
 .title {
   padding: 0 0 10px 0;
+  font-size: 16px;
+  font-weight: 600;
+  position: relative;
+}
+.pin_title {
+  padding: 0 0 0px 0;
   font-size: 16px;
   font-weight: 600;
   position: relative;
