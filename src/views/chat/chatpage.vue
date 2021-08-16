@@ -108,7 +108,7 @@
             <img :src="prevImg" alt="" />
             </div>
             <div class="flex">
-            <span>发送图片至群聊</span>
+            <span>发送图片至版聊</span>
             <div @click="sendImage" class="send">发送</div>
             </div>
         </div>

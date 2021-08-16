@@ -30,7 +30,7 @@
           </div>
           <div v-if="forumInfo.id=='84'||forumInfo.id=='22' ||forumInfo.id=='97' || forumInfo.id=='65' || forumInfo.id=='93' || forumInfo.id=='3'" class="forum_add">
             <el-button @click="gotoChat" style="width:100%;" type="success" block>
-              加入群聊
+              加入版聊
             </el-button>
           </div>
         </div>
