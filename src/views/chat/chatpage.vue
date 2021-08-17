@@ -25,7 +25,7 @@
             class="others"
             >
             <div class="ava">
-                <img :src="imgOrigin + (item.sender.icon||'biz/f7cce56159ee5705a66f1cf8c03c4bea.png')" alt="" />
+                <img :src="imgOrigin + (item.sender.icon?item.sender.icon+'?x-oss-process=image/resize,h_80':'biz/f7cce56159ee5705a66f1cf8c03c4bea.png?x-oss-process=image/resize,h_80')" alt="" />
             </div>
             <div class="ads">
                 <div class="contents">
@@ -90,7 +90,7 @@
                 </div>
             </div>
             <div v-if="item.sender" class="ava">
-                <img :src="imgOrigin + item.sender.icon" alt="" />
+                <img :src="imgOrigin + (item.sender.icon?item.sender.icon+'?x-oss-process=image/resize,h_80':'biz/f7cce56159ee5705a66f1cf8c03c4bea.png?x-oss-process=image/resize,h_80')" alt="" />
             </div>
             </div>
         </div>
@@ -258,6 +258,7 @@ export default {
       that.timeoutnum = setTimeout(function () {
         //新连接
         console.log('新的连接');
+        this.websock.close();
         that.initWebSocket();
         that.lockReconnect = false;
       }, 5000);
@@ -336,10 +337,11 @@ export default {
       //重连
       let curArr = e.target.url.split('/');
       let id = curArr[curArr.length-1];
-      if(JSON.parse(localStorage.getItem("wsForum")).id==id){
-        console.log('开启重连:channel',id);
-        // this.reconnect();
-        this.reset()
+      this.reconnect();
+      if(e.code!=1000&&e.type!='close'){
+        //&&JSON.parse(localStorage.getItem("wsForum")).id==id
+        
+        // this.reset()
       }else{
         console.log('链接真正关闭')
       }
@@ -403,8 +405,14 @@ export default {
     //向服务器发送信息
     websocketsend(msg) {
       //数据发送
-      this.content = "";
+      console.log(this.websock)
+      if(this.websock.readyState==3){
+        this.initWebSocket();
+        return;
+      }
+      
       this.websock.send(msg);
+      this.content = "";
       this.unread = 0;
       this.showTips = false;
       document.getElementById("msg_end").scrollIntoView();

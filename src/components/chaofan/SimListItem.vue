@@ -785,6 +785,8 @@ export default {
   padding-bottom: 7px;
   padding-right: 10px;
   position: relative;
+  overflow: hidden;
+  word-break: break-all;
   &:hover .tools .looks {
     display: block;
     color: #1890ff;
