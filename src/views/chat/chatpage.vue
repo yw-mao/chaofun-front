@@ -17,6 +17,12 @@
 
         <div id="chat_con" class="chat_con">
         <div v-for="(item, index) in msgList" :key="index">
+            <div v-if="index==0" class="time">
+              <span>{{moment(item.time).format('MM-DD HH:mm:ss')}}</span>
+            </div>
+            <div v-if="index>0" class="time">
+              <span v-if="(item.time-msgList[index-1].time)>300000">{{moment(item.time).format('MM-DD HH:mm:ss')}}</span>
+            </div>
             <div
             v-if="
                 item.sender &&
@@ -63,7 +69,8 @@
             <div class="ads">
                 <div class="contents">
                 <div class="nickname">
-                    {{ item.sender ? item.sender.userName : "炒饭用户—_1" }}
+                
+                    {{ item.sender ? item.sender.userName : "炒饭用户—_1" }} 
                 </div>
                 <div
                     v-if="item.type == 'text'"
@@ -117,14 +124,16 @@
         你有新消息 <span v-if="unread">({{ unread }})</span>
         </div>
         <div class="bottom_send">
-        <input
-            autofocus
-            @keydown="clientClickButton"
-            @focus="inputFocus"
-            v-model="content"
-            type="text"
-            placeholder="发言~"
-        />
+        <!-- <form action="" onsubmit="return false;"> -->
+          <input
+              autofocus
+              @keydown="clientClickButton"
+              @focus="inputFocus"
+              v-model="content"
+              type="send"
+              placeholder="发言~"
+          />
+        <!-- </form> -->
         <el-upload
             class="avatar-uploader"
             action="/api/upload_image"
@@ -154,10 +163,13 @@
 <script>
 import * as api from "@/api/api";
 import ThemePicker from "@/components/ThemePicker";
+import 'moment/locale/zh-cn'
+import moment from "moment";
 export default {
   components: { ThemePicker },
   data() {
     return {
+      moment: moment,
       connectCount: 0,
       onlineCount: 0,
       filedata: {},

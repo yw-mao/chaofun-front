@@ -17,6 +17,12 @@
 
     <div id="chat_con" class="chat_con">
       <div v-for="(item, index) in msgList" :key="index">
+        <div v-if="index==0" class="time">
+          <span>{{moment(item.time).format('MM-DD HH:mm:ss')}}</span>
+        </div>
+        <div v-if="index>0" class="time">
+          <span v-if="(item.time-msgList[index-1].time)>300000">{{moment(item.time).format('MM-DD HH:mm:ss')}}</span>
+        </div>
         <div
           v-if="
             item.sender &&
@@ -30,7 +36,7 @@
           <div class="ads">
             <div class="contents">
               <div class="nickname">
-                {{ item.sender ? item.sender.userName : "炒饭用户—_1" }}
+                {{ item.sender ? item.sender.userName : "炒饭用户—_1" }} 
               </div>
               <div
                 v-if="item.type == 'text'"
@@ -62,6 +68,7 @@
           <div class="ads">
             <div class="contents">
               <div class="nickname">
+                <!-- {{moment(item.time).format('MM-DD HH:mm:ss')}} -->
                 {{ item.sender ? item.sender.userName : "炒饭用户—_1" }}
               </div>
               <div
@@ -151,10 +158,13 @@
 
 <script>
 import ThemePicker from "@/components/ThemePicker";
+import 'moment/locale/zh-cn'
+import moment from "moment";
 export default {
   components: { ThemePicker },
   data() {
     return {
+      moment: moment,
       connectCount: 0,
       onlineCount: 0,
       filedata: {},
