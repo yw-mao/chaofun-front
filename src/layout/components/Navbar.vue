@@ -3,15 +3,15 @@
     <hamburger id="hamburger-container" :is-active="sidebar.opened" class="hamburger-container" @toggleClick="toggleSideBar" />
 
     <breadcrumb id="breadcrumb-container" class="breadcrumb-container" />
-    <div class="nav_con" :style="doSty()">
+    <div class="nav_con">
       <el-input
-          v-if="!ISPHONE"
-          placeholder="全站搜索"
-          v-model="keyword"
-          @change="toSearch"
-          class="search">
-          <i slot="prefix" @click="toSearch" class="el-input__icon el-icon-search"></i>
-        </el-input>
+        v-if="!ISPHONE"
+        placeholder="全站搜索"
+        v-model="keyword"
+        @change="toSearch"
+        class="search">
+        <i slot="prefix" @click="toSearch" class="el-input__icon el-icon-search"></i>
+      </el-input>
     </div>
     <div class="right-menu">
       <div v-if="!ISPHONE" class="erweima">
@@ -65,7 +65,7 @@
         </div>
         <div v-else class="avatar-wrapper" @click="showLogin">
             <img class="userAvatar" :src="imgOrigin + defaultUserIcon + '?x-oss-process=image/resize,h_80'"/>
-              <div>
+              <div style="min-width: 50px;">
                 <p>未登录</p>
               </div>
         </div>
@@ -151,17 +151,17 @@ export default {
     // ttt(){
     //   this.$login.showLogin();
     // },
-    doSty(){
-      if(this.opened){
-        return {
-          paddingRight: '240px'
-        }
-      }else{
-        return {
-          paddingRight: '54px'
-        }
-      }
-    },
+    // doSty(){
+    //   if(this.opened){
+    //     return {
+    //       paddingRight: '240px'
+    //     }
+    //   }else{
+    //     return {
+    //       paddingRight: '54px'
+    //     }
+    //   }
+    // },
     toUrls(params){
       this.message.hasNewMessage = false
       this.message.unreadMessage = 0
@@ -199,17 +199,19 @@ export default {
 
 <style lang="scss" scoped>
 .navbar {
+  width: 100%;
   height: 50px;
   // overflow: hidden;
   position: relative;
   background: rgba(255,255,255,0.95);
   // box-shadow: 0 1px 4px rgba(0,21,41,.08);
-
+  display: inline-flex;
   .hamburger-container {
     line-height: 46px;
     height: 100%;
-    float: left;
-    position: relative;
+    // float: left;
+    display: inline-flex;
+    align-items: center;
     z-index: 10;
     cursor: pointer;
     transition: background .3s;
@@ -222,8 +224,8 @@ export default {
   }
 
   .breadcrumb-container {
-    float: left;
-    position: relative;
+    // float: left;
+    display: inline-flex;
     z-index: 10;
   }
 
@@ -233,12 +235,13 @@ export default {
   }
 
   .right-menu {
-    float: right;
+    // float: right;
     height: 100%;
     line-height: 50px;
-    position: relative;
+    display: inline-flex;
     z-index: 10;
-    display: flex;
+    // display: flex;
+    flex-grow: 0;
     &:focus {
       outline: none;
     }
@@ -323,11 +326,13 @@ export default {
   left: 314px;
 }
 .nav_con{
-  position: absolute;
+  // position: absolute;
+  display: inline-flex;
+  flex: auto;
   height: 50px;
-  width: 100%;
+  // width: 100%;
   z-index: 1;
-  display: flex;
+  // display: flex;
   align-items: center;
   justify-content: space-around;
 }
