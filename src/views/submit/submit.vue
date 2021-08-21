@@ -30,6 +30,7 @@
             <el-tab-pane label="发布图片/视频" name="first">
               <el-form-item label="标题：" prop="title">
                 <el-input
+                    id="first"
                     placeholder="请输入标题"
                     v-model="baseForm.title"
                     clearable>
@@ -71,6 +72,7 @@
             <el-tab-pane label="发布帖子" name="third">
               <el-form-item label="标题：" prop="title">
                 <el-input
+                    id="third"
                     placeholder="请输入标题"
                     v-model="baseForm.title"
                     clearable>
@@ -113,6 +115,7 @@
             <el-tab-pane label="发布链接" name="second">
               <el-form-item label="标题：" prop="title">
                 <el-input
+                    id="second"
                     placeholder="请输入标题(填入链接会自动抓取链接标题)"
                     v-model="baseForm.title"
                     clearable>
@@ -128,6 +131,7 @@
             <el-tab-pane label="发布投票" name="fourth">
               <el-form-item label="标题：" prop="title">
                 <el-input
+                    id="fourth"
                     placeholder="请输入标题"
                     v-model="baseForm.title"
                     clearable>
@@ -558,6 +562,7 @@
         console.log(this.voteList)
         this.submitTitle = '发布中'
         this.disableSubmit = true;
+        
         this.doLoginStatus().then(res=>{
           if(res){
             if(this.activeName == 'first'){
@@ -685,6 +690,7 @@
 
               console.log(params)
             }
+            document.getElementById(this.activeName).focus();
           }
         })
 
