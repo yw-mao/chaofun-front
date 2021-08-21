@@ -150,6 +150,13 @@ export const constantRoutes = [
         component: () => import('@/views/submit/submit'),
         hidden: true
       },
+      // 新版发布
+      {
+        path: '/:forumId/submit',
+        name: 'submitV2',
+        component: () => import('@/views/submit/v2'),
+        hidden: true
+      },
       {
         path: '/my',
         name: 'my',
