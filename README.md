@@ -41,6 +41,9 @@ npm run dev
 如有其他疑问，也可添加微信 cijianzy 咨询
 
 # 贡献鸣谢
+感谢 [@yw-mao](https://github.com/yw-mao) 在发帖上做的优化
+
+
 感谢 [@jlin-z](https://github.com/jlin-z) 在评论上做的优化
 
 感谢 [@qq919006380](https://github.com/qq919006380) 在样式上做的优化
