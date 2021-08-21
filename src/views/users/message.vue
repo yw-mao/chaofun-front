@@ -14,9 +14,11 @@
       <div style="height:50px;"></div>
       <el-row :gutter="24">
         <el-col :span="ISPHONE ? 24 : doWidth()" :offset="0">
-          <div class="new_msg">
-            <div class="left_nav">
-              <div @click="checkTab(item)" v-for="(item,index) in msgNavs" :key="index" :class="['tag_item',{'tag_item_active': params.type==item.value}]">{{item.label}}</div>
+          <div  class="new_msg">
+            <div v-if="!ISPHONE" class="left_nav">
+              <div class="ccc">
+                <div @click="checkTab(item)" v-for="(item,index) in msgNavs" :key="index" :class="['tag_item',{'tag_item_active': params.type==item.value}]">{{item.label}}</div>
+              </div>
             </div>
             <div
               class="grid-content"
@@ -73,10 +75,10 @@ export default {
           label: '点赞',
           value: 'upvote'
         },
-        {
-          label: '通知',
-          value: 'notice'
-        },
+        // {
+        //   label: '通知',
+        //   value: 'notice'
+        // },
       ],
       params: {
         pageSize: 20,
@@ -186,6 +188,7 @@ export default {
 }
 .new_msg{
   width: 750px;
+  max-width: 100%;
   display: flex;
   margin: 0 auto;
   .left_nav{
@@ -193,6 +196,14 @@ export default {
     height: 500px;
     // background: #fff;
     margin-right: 20px;
+    margin-top: 30px;
+    position: relative;
+    // .ccc{
+    //   position: absolute;
+    //   left: 0;
+    //   top: 0;
+
+    // }
     .nav_i{
       line-height: 40px;
       background: #fff;

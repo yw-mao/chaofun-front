@@ -11,6 +11,7 @@ import store from './store'
 import router from './router'
 
 
+
 Vue.prototype.$EventBus = new Vue();
 
 import VConsole from 'vconsole/dist/vconsole.min.js';
