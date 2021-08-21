@@ -14,31 +14,36 @@
       <div style="height:50px;"></div>
       <el-row :gutter="24">
         <el-col :span="ISPHONE ? 24 : doWidth()" :offset="0">
-          <div
-            class="grid-content"
-            style="
-              overflow: auto;
-              width: 640px;
-              max-width: 100%;
-              margin: 0 auto;
-            "
-          >
-            <div class="title">我的消息</div>
-            <div v-if="message.length">
-              <noticeItem
-                v-for="(item, index) in message"
-                :key="index"
-                :items="item"
-              ></noticeItem>
-              <load-text
-                :ifcanget="ifcanget"
-                :loadAll="loadAll"
-                :hasContent="Boolean(message.length)"
-              ></load-text>
+          <div class="new_msg">
+            <div class="left_nav">
+              <div @click="checkTab(item)" v-for="(item,index) in msgNavs" :key="index" :class="['tag_item',{'tag_item_active': params.type==item.value}]">{{item.label}}</div>
             </div>
-            <div v-else class="nothing">
-              <img src="../../assets/images/kk.png" alt="" />
-              <p>还没有消息哦~</p>
+            <div
+              class="grid-content"
+              style="
+                overflow: auto;
+                width: 640px;
+                max-width: 100%;
+                margin: 0 auto;
+              "
+            >
+              <div class="title">我的消息</div>
+              <div v-if="message.length">
+                <noticeItem
+                  v-for="(item, index) in message"
+                  :key="index"
+                  :items="item"
+                ></noticeItem>
+                <load-text
+                  :ifcanget="ifcanget"
+                  :loadAll="loadAll"
+                  :hasContent="Boolean(message.length)"
+                ></load-text>
+              </div>
+              <div v-else-if="!loading" class="nothing">
+                <img src="../../assets/images/kk.png" alt="" />
+                <p>还没有消息哦~</p>
+              </div>
             </div>
           </div>
         </el-col>
@@ -55,13 +60,33 @@ export default {
   name: "",
   data() {
     return {
+      msgNavs: [
+        {
+          label: '全部',
+          value: ''
+        },
+        {
+          label: '评论',
+          value: 'comment'
+        },
+        {
+          label: '点赞',
+          value: 'upvote'
+        },
+        {
+          label: '通知',
+          value: 'notice'
+        },
+      ],
       params: {
         pageSize: 20,
+        type: ''
         //  marker: ''
       },
       message: [],
       ifcanget: true,
       loadAll: false,
+      loading: false,
     };
   },
   components: {
@@ -95,6 +120,15 @@ export default {
     });
   },
   methods: {
+    checkTab(item){
+      this.params.type = item.value;
+      this.ifcanget = true;
+      this.params.marker = '';
+      this.loadAll = false;
+      this.loading = true;
+      this.message = []
+      this.messageList();
+    },
     load() {
       if (this.ifcanget) {
         this.messageList();
@@ -105,6 +139,7 @@ export default {
       this.ifcanget = false;
       api.messageList(params).then((res) => {
         // this.message = res.data.messages;
+        this.loading = false;
         if (res.data.marker && res.data.size == this.params.pageSize) {
           this.ifcanget = true;
         }
@@ -147,6 +182,47 @@ export default {
   color: #999;
   img {
     width: 50%;
+  }
+}
+.new_msg{
+  width: 750px;
+  display: flex;
+  margin: 0 auto;
+  .left_nav{
+    flex: 0 0 90px;
+    height: 500px;
+    // background: #fff;
+    margin-right: 20px;
+    .nav_i{
+      line-height: 40px;
+      background: #fff;
+      border-radius: 4px;
+      text-align: center;
+      margin-bottom: 10px;
+    }
+    .tag_item {
+      border: 1px solid transparent;
+      line-height: 30px;
+      text-align: center;
+      margin: 10px 0;
+      border-radius: 20px;
+      cursor: pointer;
+      font-weight: bold;
+      &:hover {
+        border: 1px solid #f1f1f1;
+        background: #f1f1f1;
+      }
+    }
+    .tag_item_active {
+      background: rgba(255, 147, 0, 0.3);
+      &:hover {
+        background: rgba(255, 147, 0, 0.3);
+        border: 1px solid rgba(255, 147, 0, 0.3);
+      }
+    }
+  }
+  .grid-content{
+    flex: 1;
   }
 }
 </style>
