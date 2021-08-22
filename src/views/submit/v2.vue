@@ -2,7 +2,7 @@
   <el-container class="section-submit">
     <el-main>
       <el-container class="section-submit-header">
-        <el-col>发布</el-col>
+        <el-col>发帖</el-col>
         <el-button type="text">草稿箱 <span>{{drafts}}</span></el-button>
       </el-container>
 
@@ -11,7 +11,7 @@
         <img class="sicon" :src="imgOrigin+forum.imageName" alt="" v-if="forum.imageName" />
         <i class="el-icon-search" v-else />
           <el-select
-            v-model="forum.name"
+            v-model="forum.id"
             filterable
             remote
             reserve-keyword
@@ -19,7 +19,9 @@
             popper-class="section-submit-form-select"
             :popper-append-to-body="false"
             :remote-method="getForumCategories"
-            :loading="loading">
+            :loading="loading"
+            @change="forumSelectOnChange"
+          >
             <el-option
               v-for="item in forums"
               :key="item.link"
@@ -142,9 +144,10 @@
         type: 'article',
         forum: {
           name: '',
+          id:  this.$route.params.forumId,
         },
         post: {
-          forumId: this.$route.params.forumId,
+          forumId:  this.$route.params.forumId,
           title: '',
           link: '',
           content: '',
@@ -156,21 +159,38 @@
       }
     },
     mounted() {
-      this.getForum();
-      this.getForumCategories();
+      this.getForum().then(() => this.getForumCategories());
     },
     beforeDestroy() {
     },
     methods: {
+      forumSelectOnChange(forumId) {
+        this.getForum();
+        this.$router.push({params: { forumId }});
+      },
       async getForum() {
-        if (this.post.forumId) {
-          const result = await getForumInfo({ forumId: this.post.forumId });
-          this.forum = result.data;
+        if (this.forum.id) {
+          const result = await getForumInfo({ forumId: this.forum.id });
+          this.forum.name = result.data.name;
+          this.forum.imageName = result.data.imageName;
+          this.forum.followers = result.data.followers;
+          this.forum.posts = result.data.posts;
+          this.forum.desc = result.data.desc;
+          this.post.forumId = this.forum.id;
         }
       },
       async getForumCategories(keyword = '') {
         const result = await searchForum({ keyword });
         this.forums = result.data;
+        // 如果没找对应板块，那么插入默认
+        if (!this.forums.find(forum => forum.forumId === this.forum.id)) {
+          console.log( this.forum.id);
+          this.forums.push({
+            forumId: this.forum.id,
+            icon: this.forum.imageName,
+            title: this.forum.name,
+          });
+        }
       },
     }
   }
@@ -181,7 +201,7 @@
   padding: 60px 20px;
   
   .section-submit-header {
-    border-bottom: 1px solid #fff;
+    border-bottom: 1px solid #DCDFE6;
     margin-bottom: 10px;
     .el-col {
       padding: 0;
