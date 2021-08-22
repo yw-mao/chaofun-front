@@ -29,6 +29,19 @@
         <el-row>
           <editor v-model="content" />
         </el-row>
+        <el-row>
+          <div class="checkbox-group">
+            <el-checkbox
+              v-model="post.anonymity"
+              :true-label="true"
+              :false-label="false"
+              border
+              size="medium"
+            >
+              <i class="el-icon-plus" /> 匿名
+            </el-checkbox>
+          </div>
+        </el-row>
       </div>
       
     </div>
@@ -54,6 +67,7 @@
           title: '',
           link: '',
           content: '',
+          anonymity: false,
         },
       }
     },
@@ -134,6 +148,32 @@
   }
   .postbox-fields {
     margin: 16px;
+    .checkbox-group {
+      display: flex;
+      flex-wrap: wrap;
+      flex-direction: row;
+      align-items: center;
+    }
+    /deep/ .el-checkbox {
+      position: relative;
+      padding: 4px 16px;
+      border: 1px solid;
+      border-radius: 9999px;
+      color: #606266;
+      font-size: 14px;
+      min-height: 32px;
+      min-width: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: auto;
+      .el-checkbox__inner {
+        display: none;
+      }
+      .el-checkbox__label {
+        padding-left: 0;
+      }
+    }
   }
 }
 </style>
