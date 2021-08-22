@@ -1,12 +1,13 @@
 <template>
   <div class="editor" v-if="editor">
     <menu-bar class="editor__header" :editor="editor" />
-    <editor-content :editor="editor" />
+    <editor-content class="editor__content" :editor="editor" />
   </div>
 </template>
 
 <script>
 import { Editor, EditorContent } from '@tiptap/vue-2'
+import Placeholder from '@tiptap/extension-placeholder'
 import StarterKit from '@tiptap/starter-kit'
 import MenuBar from './MenuBar.vue'
 
@@ -24,9 +25,12 @@ export default {
 
   mounted() {
     this.editor = new Editor({
-      content: '<p>I’m running tiptap with Vue.js. 🎉</p>',
+      content: '',
       extensions: [
         StarterKit,
+        Placeholder.configure({
+          placeholder: '写点什么吧~',
+        }),
       ],
     })
   },
@@ -62,65 +66,7 @@ export default {
     overflow-x: hidden;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
-  }
-
-  &__footer {
-    display: flex;
-    flex: 0 0 auto;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    white-space: nowrap;
-    border-top: 3px solid #0D0D0D;
-    font-size: 12px;
-    font-weight: 600;
-    color: #0D0D0D;
-    white-space: nowrap;
-    padding: 0.25rem 0.75rem;
-  }
-
-  /* Some information about the status */
-  &__status {
-    display: flex;
-    align-items: center;
-    border-radius: 5px;
-
-    &::before {
-      content: ' ';
-      flex: 0 0 auto;
-      display: inline-block;
-      width: 0.5rem;
-      height: 0.5rem;
-      background: rgba(#0D0D0D, 0.5);
-      border-radius: 50%;
-      margin-right: 0.5rem;
-    }
-
-    &--connecting::before {
-      background: #616161;
-    }
-
-    &--connected::before {
-      background: #B9F18D;
-    }
-  }
-
-  &__name {
-    button {
-      background: none;
-      border: none;
-      font: inherit;
-      font-size: 12px;
-      font-weight: 600;
-      color: #0D0D0D;
-      border-radius: 0.4rem;
-      padding: 0.25rem 0.5rem;
-
-      &:hover {
-        color: #FFF;
-        background-color: #0D0D0D;
-      }
-    }
+    min-height: 122px;
   }
 }
 </style>
@@ -157,6 +103,14 @@ export default {
 .ProseMirror {
   > * + * {
     margin-top: 0.75em;
+  }
+
+  p.is-editor-empty:first-child::before {
+    content: attr(data-placeholder);
+    float: left;
+    color: #ced4da;
+    pointer-events: none;
+    height: 0;
   }
 
   ul,

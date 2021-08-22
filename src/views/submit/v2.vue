@@ -1,58 +1,136 @@
 <template>
-  <div class="section-submit">
-    <div class="postbox">
-      <el-radio-group v-model="type">
-        <el-radio-button label="article">
-          <i class="el-icon-tickets"></i> 帖子
-        </el-radio-button>
-        <el-radio-button label="image">
-          <i class="el-icon-picture-outline"></i> 图片/视频
-        </el-radio-button>
-        <el-radio-button label="link">
-          <i class="el-icon-link"></i> 链接
-        </el-radio-button>
-        <el-radio-button label="vote">
-          <i class="el-icon-receiving"></i> 投票
-        </el-radio-button>
-      </el-radio-group>
+  <el-container class="section-submit">
+    <el-main>
+      <el-container class="section-submit-header">
+        <el-col>发布</el-col>
+        <el-button type="text">草稿箱 <span>{{drafts}}</span></el-button>
+      </el-container>
 
-      <div class="postbox-fields">
-        <el-row>
-          <el-input
-            type="text"
-            placeholder="请输入标题"
-            v-model="post.title"
-            maxlength="300"
-            show-word-limit
-          />
-        </el-row>
-        <el-row>
-          <editor v-model="content" />
-        </el-row>
-        <el-row>
-          <div class="checkbox-group">
-            <el-checkbox
-              v-model="post.anonymity"
-              :true-label="true"
-              :false-label="false"
-              border
-              size="medium"
+      <el-container>
+        <div class="section-submit-form">
+        <img class="sicon" :src="imgOrigin+forum.imageName" alt="" v-if="forum.imageName" />
+        <i class="el-icon-search" v-else />
+          <el-select
+            v-model="forum.name"
+            filterable
+            remote
+            reserve-keyword
+            placeholder="请选择板块"
+            popper-class="section-submit-form-select"
+            :popper-append-to-body="false"
+            :remote-method="getForumCategories"
+            :loading="loading">
+            <el-option
+              v-for="item in forums"
+              :key="item.link"
+              :label="item.title"
+              :value="item.forumId"
             >
-              <i class="el-icon-plus" /> 匿名
-            </el-checkbox>
-          </div>
-        </el-row>
+              <img class="sicon" :src="imgOrigin+item.icon" alt="" />
+              <span>{{item.title}}</span>
+            </el-option>
+          </el-select>
+        </div>
+      </el-container>
+      <div class="postbox">
+        <el-radio-group v-model="type">
+          <el-radio-button label="article">
+            <i class="el-icon-tickets"></i> 帖子
+          </el-radio-button>
+          <el-radio-button label="image">
+            <i class="el-icon-picture-outline"></i> 图片/视频
+          </el-radio-button>
+          <el-radio-button label="link">
+            <i class="el-icon-link"></i> 链接
+          </el-radio-button>
+          <el-radio-button label="vote">
+            <i class="el-icon-receiving"></i> 投票
+          </el-radio-button>
+        </el-radio-group>
+
+        <div class="postbox-fields">
+          <el-row>
+            <el-input
+              type="text"
+              placeholder="请输入标题"
+              v-model="post.title"
+              maxlength="300"
+              show-word-limit
+            />
+          </el-row>
+          <el-row>
+            <editor v-model="post.content" />
+          </el-row>
+          <el-row>
+            <div class="checkbox-group">
+              <el-checkbox
+                v-model="post.anonymity"
+                :true-label="1"
+                :false-label="0"
+                border
+                size="medium"
+              >
+                <i :class="[post.anonymity ? 'el-icon-check' : 'el-icon-plus']" />
+                <span>匿名</span>
+              </el-checkbox>
+            </div>
+          </el-row>
+          <el-divider></el-divider>
+        </div>
+        <div class="postbox-buttons">
+          <el-button type="primary" round>发 布</el-button>
+          <el-button round>保存草稿箱</el-button>
+        </div>
+        
       </div>
-      
-    </div>
-    
-  </div>
+    </el-main>
+    <el-aside width="320px">
+      <el-card class="aside-forum" shadow="never">
+        <div class="forum-header">
+          <img :src="imgOrigin+forum.imageName" :alt="forum.name" v-if="forum.imageName">
+          <router-link :to="`/f/${forum.id}`">{{forum.name}}</router-link>
+        </div>
+        <div class="forum-desc">
+          {{forum.desc}}
+        </div>
+        <div class="forum-statics">
+          <div class="statics-box">
+            <em>{{forum.followers}}</em>
+            <span>粉丝</span>
+          </div>
+          <div class="statics-box">
+            <em>{{forum.posts}}</em>
+            <span>帖子</span>
+          </div>
+        </div>
+      </el-card>
+      <el-card class="aside-rule" shadow="never">
+        <ol>
+          <li>严禁发布色情、暴恐、赌博及其他违反网络安全法的内容</li>
+          <li>严禁发布涉嫌隐私或未经授权的私人图片及信息</li>
+          <li>如违规发布，请自行删除或管理员强制删除</li>
+        </ol>
+      </el-card>
+      <el-card class="aside-help" shadow="never">
+        <el-row :gutter="12">
+          <el-col :span="12" class="help-item">
+            <router-link to="/help/forumIntro">帮助文档</router-link>
+          </el-col>
+          <el-col :span="12" class="help-item">
+            <router-link to="/forumRank">24小时板块排名</router-link>
+            <router-link to="/userRank">24小时用户排名</router-link>
+          </el-col>
+        </el-row>
+      </el-card>
+    </el-aside>
+  </el-container>
 
 </template>
 
 <script>
   import Vue from 'vue';
   import Editor from '@/components/Editor/Tiptap.vue'
+  import { getForumInfo, searchForum } from '@/api/api'
 
   export default {
     name: 'submitV2',
@@ -62,25 +140,120 @@
     data() {
       return {
         type: 'article',
+        forum: {
+          name: '',
+        },
         post: {
-          forumId: '',
+          forumId: this.$route.params.forumId,
           title: '',
           link: '',
           content: '',
           anonymity: false,
         },
+        forums: [],
+        loading: false,
+        drafts: 0, // 草稿箱数量
       }
     },
     mounted() {
+      this.getForum();
+      this.getForumCategories();
     },
     beforeDestroy() {
     },
+    methods: {
+      async getForum() {
+        if (this.post.forumId) {
+          const result = await getForumInfo({ forumId: this.post.forumId });
+          this.forum = result.data;
+        }
+      },
+      async getForumCategories(keyword = '') {
+        const result = await searchForum({ keyword });
+        this.forums = result.data;
+      },
+    }
   }
 </script>
 
 <style type='text/scss' lang='scss' scoped>
 .section-submit {
   padding: 60px 20px;
+  
+  .section-submit-header {
+    border-bottom: 1px solid #fff;
+    margin-bottom: 10px;
+    .el-col {
+      padding: 0;
+      font-size: 18px;
+      font-weight: 500;
+      line-height: 22px;
+    }
+    .el-button {
+      position: relative;
+      color: #606266;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: .5px;
+      line-height: 24px;
+      text-transform: uppercase;
+      margin-left: 10px;
+      padding: 4px;
+      span {
+        font-weight: 400;
+        line-height: 18px;
+        background: #606266;
+        border-radius: 2px;
+        color: #fff;
+        margin-left: 4px;
+        padding: 1px 3px;
+      }
+    }
+  }
+  .section-submit-form {
+    position: relative;
+    display: flex;
+    box-sizing: border-box;
+    min-width: 300px;
+    width: auto;
+    height: 40px;
+    border-radius: 4px;
+    transition: box-shadow .2s ease;
+    box-shadow: 0 0 0 0 #fff;
+    border: 1px solid #edeff1;
+    background-color: #fff;
+    align-items: center;
+    padding: 0 8px;
+    margin-bottom: 8px;
+    i, img {
+      margin: 0;
+      height: 22px;
+      width: 22px;
+      font-size: 22px;
+      line-height: 22px;
+      border-radius: 9999px;
+    }
+    .el-select {
+      width: 100%;
+      /deep/ .el-select__caret {
+        font-size: 22px;
+        color: #606266;
+        &:before {
+          content: "\e6e1";
+        }
+      }
+      /deep/ .el-input.is-focus {
+        .el-select__caret {
+          transform: rotate(
+            0deg
+          );
+        }
+      }
+    }
+    /deep/ .el-input__inner {
+      border: none;
+    }
+  }
   .postbox {
     width: 100%;
     background: #FFF;
@@ -111,12 +284,21 @@
           align-items: center;
           justify-content: center;
           box-shadow: none;
+          color: #606266;
+          line-height: 20px;
           i {
             font-size: 20px;
             font-weight: 400;
             height: 20px;
             line-height: 20px;
             margin-right: 8px;
+          }
+        }
+
+        &:hover {
+          background-color: rgba(0, 121, 211, 0.05);
+          /deep/ .el-radio-button__inner {
+            color: #606266;
           }
         }
 
@@ -162,6 +344,7 @@
       color: #606266;
       font-size: 14px;
       min-height: 32px;
+      height: auto;
       min-width: 32px;
       display: flex;
       align-items: center;
@@ -172,8 +355,179 @@
       }
       .el-checkbox__label {
         padding-left: 0;
+        display: flex;
+
+        i {
+          font-size: 20px;
+          font-weight: 400;
+          height: 20px;
+          line-height: 20px;
+          margin-right: 8px;
+        }
+      }
+
+      &.is-checked {
+        background: #4078c0;
+        border-color: #4078c0;
+        .el-checkbox__label {
+          color: #fff;
+        }
+      }
+    }
+    .el-divider {
+      margin: 0;
+    }
+  }
+  .postbox-buttons {
+    display: flex;
+    margin: 0 16px 16px;
+    flex-direction: row-reverse;
+    text-transform: uppercase;
+    .el-button {
+      margin-left: 8px;
+      &.el-button--primary {
+        background-color: #4078c0;
+        border-color: #4078c0;
       }
     }
   }
+
+  /deep/ .section-submit-form-select {
+    .el-select-dropdown__item {
+      display: flex;
+      align-items: center;
+      img {
+        display: flex;
+        border-radius: 9999px;
+        width: 24px;
+        height: 24px;
+        overflow: hidden;
+      }
+      
+      span {
+        display: flex;
+        padding-left: 8px;
+      }
+
+      &.selected {
+        background-color: #F5F7FA;
+      }
+      
+    }
+  }
+  .el-aside {
+    background: none;
+    padding: 0;
+    .el-card {
+      margin-top: 15px;
+    }
+    .aside-forum {
+      /deep/ .el-card__body {
+        padding: 12px 12px;
+      }
+      .forum-header {
+        display: flex;
+        align-items: center;
+        margin-bottom: 8px;
+        img {
+          display: block;
+          border-radius: 9999px;
+          box-sizing: border-box;
+          height: 52px;
+          width: 52px;
+          font-size: 52px;
+          line-height: 52px;
+          margin-right: 8px;
+        }
+        a {
+          color: #5a5e66;
+          font-size: 20px;
+        }
+      }
+      .forum-desc {
+        margin-bottom: 8px;
+        font-size: 14px;
+        line-height: 21px;
+        font-weight: 400;
+        color: #606266;
+      }
+      .forum-statics {
+        display: flex;
+        margin-bottom: 8px;
+        .statics-box {
+          flex: auto;
+          border-right: 1px solid  #DCDFE6;
+          padding: 8px 0 8px 12px;
+          em {
+            display: block;
+            font-size: 16px;
+            font-weight: 500;
+            font-style: normal;
+            line-height: 20px;
+            color: #5a5e66;
+          }
+          span {
+            display: block;
+            font-size: 12px;
+            font-weight: 500;
+            font-style: normal;
+            line-height: 16px;
+            color: #5a5e66;
+          }
+          &:last-child {
+            border: none;
+          }
+        }
+      }
+    }
+    .aside-rule {
+      /deep/ .el-card__body {
+        padding: 12px 12px;
+        ol {
+          font-size: 12px;
+          line-height: 18px;
+          list-style: decimal;
+          list-style-position: inside;
+
+          li {
+            border-bottom: 1px solid #DCDFE6;
+            padding: 10px 6px;
+            list-style: decimal;
+            list-style-position: inside;
+          }
+        }
+      }
+    }
+    .aside-help {
+      /deep/ .el-card__body {
+        padding: 12px 12px;
+        .help-item {
+          padding: 0 4px;
+          a {
+            display: block;
+            color: #606266;
+            font-size: 12px;
+            font-weight: 400;
+            line-height: 20px;
+          }
+        }
+      }
+    }
+  }
+
+  @media (max-width: 600px) {
+    .section-submit-form {
+      min-width: 0;
+      width: 100%;
+      margin-right: 0;
+    }
+  }
+
+  @media (max-width: 960px) {
+    .el-aside {
+      display: none;
+    }
+  }
+  
 }
 </style>

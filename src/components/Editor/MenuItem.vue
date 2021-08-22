@@ -5,9 +5,9 @@
     @click="action"
     :title="title"
   >
-    <!-- <svg class="remix">
+    <svg class="remix">
       <use :xlink:href="require('remixicon/fonts/remixicon.symbol.svg') + `#ri-${icon}`" />
-    </svg> -->
+    </svg>
   </button>
 </template>
 
@@ -41,12 +41,13 @@ export default {
 .menu-item {
   width: 1.75rem;
   height: 1.75rem;
-  color: #0D0D0D;
+  color: #878a8c;
   border: none;
   background-color: transparent;
-  border-radius: 0.4rem;
+  border-radius: 4px;
   padding: 0.25rem;
   margin-right: 0.25rem;
+  cursor: pointer;
 
   svg {
     width: 100%;
@@ -56,8 +57,7 @@ export default {
 
   &.is-active,
   &:hover {
-    color: #FFF;
-    background-color: #0D0D0D;
+    background-color: rgba(26, 26, 27, 0.1);
   }
 }
 </style>
