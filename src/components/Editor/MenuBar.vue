@@ -145,9 +145,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.editor__header {
-  background-color: #f6f7f8;
-}
 .divider {
   width: 2px;
   height: 1.25rem;

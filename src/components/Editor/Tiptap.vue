@@ -58,6 +58,7 @@ export default {
     flex-wrap: wrap;
     padding: 0.25rem;
     border-bottom: 1px solid #DCDFE6;
+    background-color: #edeff1;
   }
 
   &__content {

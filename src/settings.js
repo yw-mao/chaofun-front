@@ -1,5 +1,6 @@
 module.exports = {
   title: '炒饭 - 世界那么大',
+  logo: 'https://i.chao.fun/biz/9563cdd828d2b674c424b79761ccb4c0.png',
   styles: {
     // type 'open-close'
     navbarStyle: {

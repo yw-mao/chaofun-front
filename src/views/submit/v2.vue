@@ -83,7 +83,9 @@
           <el-button type="primary" round>发 布</el-button>
           <el-button round>保存草稿箱</el-button>
         </div>
-        
+        <div class="postbox-rules">
+          <p><i class="el-icon-warning-outline" /> 严禁发布色情、暴恐、赌博及其他违反网络安全法的内容，或涉嫌隐私或未经授权的私人图片及信息，如违规发布，请自行删除或管理员强制删除。 </p>
+        </div>
       </div>
     </el-main>
     <el-aside width="320px">
@@ -107,6 +109,10 @@
         </div>
       </el-card>
       <el-card class="aside-rule" shadow="never">
+        <p>
+          <img :src="logo" alt="" />
+          <span>炒饭发帖规则</span>
+        </p>
         <ol>
           <li>严禁发布色情、暴恐、赌博及其他违反网络安全法的内容</li>
           <li>严禁发布涉嫌隐私或未经授权的私人图片及信息</li>
@@ -133,6 +139,7 @@
   import Vue from 'vue';
   import Editor from '@/components/Editor/Tiptap.vue'
   import { getForumInfo, searchForum } from '@/api/api'
+  import { logo } from '@/settings'
 
   export default {
     name: 'submitV2',
@@ -141,6 +148,7 @@
     },
     data() {
       return {
+        logo,
         type: 'article',
         forum: {
           name: '',
@@ -277,8 +285,9 @@
   .postbox {
     width: 100%;
     background: #FFF;
+    overflow: hidden;
     border-radius: 10px;
-    padding-bottom: 20px;
+    // padding-bottom: 20px;
 
     .el-radio-group {
       width: 100%;
@@ -330,12 +339,12 @@
 
         &.is-active {
           /deep/ .el-radio-button__inner {
-            color: #4078c0;
+            color: #16679f;
 
             &::after {
               content: " ";
               box-sizing: border-box;
-              background-color: #4078c0;
+              background-color: #16679f;
               position: absolute;
               left: 0;
               right: 0;
@@ -387,8 +396,8 @@
       }
 
       &.is-checked {
-        background: #4078c0;
-        border-color: #4078c0;
+        background: #16679f;
+        border-color: #16679f;
         .el-checkbox__label {
           color: #fff;
         }
@@ -406,9 +415,19 @@
     .el-button {
       margin-left: 8px;
       &.el-button--primary {
-        background-color: #4078c0;
-        border-color: #4078c0;
+        background-color: #16679f;
+        border-color: #16679f;
       }
+    }
+  }
+
+  .postbox-rules {
+    display: none;
+    background-color: #edeff1;
+    padding: 8px 16px 21px;
+    i {
+      font-size: 18px;
+      color: #fc471e;
     }
   }
 
@@ -503,6 +522,21 @@
     .aside-rule {
       /deep/ .el-card__body {
         padding: 12px 12px;
+        p {
+          display: flex;
+          justify-items: center;
+          padding-bottom: 5px;
+          border-bottom: 1px solid #DCDFE6;
+          img {
+            width: 40px;
+            height: 40px;
+            margin-right: 8px;
+          }
+          span {
+            font-size: 16px;
+            line-height: 40px;
+          }
+        }
         ol {
           font-size: 12px;
           line-height: 18px;
@@ -546,6 +580,9 @@
   @media (max-width: 960px) {
     .el-aside {
       display: none;
+    }
+    .postbox-rules {
+      display: flex;
     }
   }
   
