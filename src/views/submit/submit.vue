@@ -30,7 +30,7 @@
             <el-tab-pane label="发布图片/视频" name="first">
               <el-form-item label="标题：" prop="title">
                 <el-input
-                    id="first"
+                    ref="firstTitle"
                     placeholder="请输入标题"
                     v-model="baseForm.title"
                     clearable>
@@ -435,6 +435,9 @@
       }
       document.addEventListener('paste',this.toPaste);
 
+      // 初始化聚焦默认标题
+      this.$refs.firstTitle.focus();
+
       //  addQuillTitle();
     },
     methods: {
@@ -690,7 +693,7 @@
 
               console.log(params)
             }
-            document.getElementById(this.activeName).focus();
+            // document.getElementById(this.activeName).focus();
           }
         })
 
@@ -705,7 +708,7 @@
         this.filedata.fileName = file.name
         return true
       },
-      handleClick(tab,event){
+      handleClick(tab, event){
         if(tab.paneName=='third'){
            this.$nextTick(()=>{
               document.getElementsByClassName('quill-editor')[0].addEventListener('click',(e)=>{this.imgClick(e)})
@@ -713,6 +716,11 @@
         }else{
           document.getElementsByClassName('quill-editor')[0].removeEventListener('click',(e)=>{this.imgClick(e)})
         }
+
+        // Title聚焦
+        this.$nextTick(() => {
+          tab.$children[0].$children.find(component => component.type === 'text').focus();
+        });
       },
       toOpen(v){
         console.log(v)
