@@ -716,7 +716,36 @@ export function removeTag(params) {
   })
 }
 
+export function userCollectionList(params) {
+  return request({
+    url: '/api/v0/collection/list',
+    method: 'get',
+  })
+}
 
+export function addCollection(params) {
+  return request({
+    url: '/api/v0/collection/add',
+    method: 'get',
+    params
+  })
+}
+
+export function addPostCollection(params) {
+  return request({
+    url: '/api/v0/post/addCollection',
+    method: 'get',
+    params
+  })
+}
+
+export function listPosts(params) {
+  return request({
+    url: '/api/v0/collection/listPosts',
+    method: 'get',
+    params
+  })
+}
 
 
 

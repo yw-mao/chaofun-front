@@ -94,36 +94,45 @@
                           <div v-if="forumInfo" class="asa">
                             <div class="forum_con">
                               <div v-if="forumInfo.admin" @click="manage" style="position: absolute; right: 20px; width: 40px; color: blue;">管理</div>
-                              <div class="fir">
-                              <img :src="imgOrigin+forumInfo.imageName+'?x-oss-process=image/resize,h_80'" />
-                              <div>{{forumInfo.name}}</div>
-                              </div>
-                              <div class="fensi">
-                                  <div>粉丝：{{forumInfo.followers}}</div>
-                                  <div>帖子：{{forumInfo.posts}}</div>
-                              </div> 
-                              <div class="forum_desc">{{forumInfo.desc}}</div> 
-                              <div class="forum_add">
+                                <div class="fir">
+                                <img :src="imgOrigin+forumInfo.imageName+'?x-oss-process=image/resize,h_80'" />
+                                <div>{{forumInfo.name}}</div>
+                                </div>
+                                <div class="fensi">
+                                    <div>粉丝：{{forumInfo.followers}}</div>
+                                    <div>帖子：{{forumInfo.posts}}</div>
+                                </div> 
+                                <div class="forum_desc">{{forumInfo.desc}}</div> 
+                                <div class="forum_add">
 
-                                  <el-button @click="inout(1)" v-if="!forumInfo.joined" type="primary" block>
-                                  进入板块
-                                  </el-button>
-                                  <el-button @click="inout(2)" v-else type="danger" onClick={outForum} block>
-                                  退出板块
-                                  </el-button>
-                              
-                              </div> 
-                              <div class="forum_add">
-                              <el-button @click="gotoSubmit" type="primary" block>
-                                  发帖
-                              </el-button>
-                              </div>
-                              <div v-if="forumInfo.id=='84'||forumInfo.id=='22' ||forumInfo.id=='97' || forumInfo.id=='65' || forumInfo.id=='93' || forumInfo.id=='3'" class="forum_add">
-                                <el-button @click="gotoChat" style="width:100%;" type="success" block>
-                                  加入版聊
+                                    <el-button @click="inout(1)" v-if="!forumInfo.joined" type="primary" block>
+                                    进入板块
+                                    </el-button>
+                                    <el-button @click="inout(2)" v-else type="danger" onClick={outForum} block>
+                                    退出板块
+                                    </el-button>
+                                
+                                </div> 
+                                <div class="forum_add">
+                                <el-button @click="gotoSubmit" type="primary" block>
+                                    发帖
                                 </el-button>
+                                </div>
+                                <div v-if="forumInfo.id=='84'||forumInfo.id=='22' ||forumInfo.id=='97' || forumInfo.id=='65' || forumInfo.id=='93' || forumInfo.id=='3'" class="forum_add">
+                                  <el-button @click="gotoChat" style="width:100%;" type="success" block>
+                                    加入版聊
+                                  </el-button>
+                                </div>
+                            </div> 
+                          </div>
+                          <div class="heji">
+                            <div class="col_title">{{pagedata.collection.name}}</div>
+                            <div @click="toDetail(it)" v-for="(it,inds) in collectList" :key="inds" class="col_item">
+                              <div :style="{'background-image': `url(${doColBg(it)})`}" class="col_img">
+                                <!-- <img src="https://i.chao.fun/biz/de1910aadfac6f7b7fbef647e7ff4b1b.jpeg" alt=""> -->
                               </div>
-                          </div> 
+                              <div class="cc_title">{{it.title}}</div>
+                            </div>
                           </div>
                           <!-- <RightCom :islogin="islogin"></RightCom> -->
                       </div>
@@ -204,6 +213,7 @@ export default {
       imagesUploading: false,
       imagesNum: 0,
       imagesLimit: 9,
+      collectList: []
     }
   },
   components: {
@@ -240,6 +250,73 @@ export default {
     this.inputBlur()
   },
   methods:{
+    toDetail(item){
+      this.$router.push({
+          name: "articleDetail",
+          params: { postId: item.postId },
+        });
+    },
+    doColBg(it){
+      // imgOrigin+it.imageName
+      return this.doImageUrl(it)
+    },
+    listPosts(){
+      let params = {
+        collectionId: this.pagedata.collection.id
+      }
+      api.listPosts(params).then(res=>{
+        this.collectList = res.data;
+      })  
+    },
+    doImageUrl(item) {
+      var t = item.type;
+      // debugger
+      switch (t) {
+        case "link":
+        case "gif":
+          return this.doLink(item);
+          break;
+        case "inner_video":
+          return (
+            this.imgOrigin +
+            item["video"] +
+            "?x-oss-process=video/snapshot,t_0,h_500"
+          );
+          break;
+        case "article":
+          return (
+            this.imgOrigin +
+            "biz/b64193b7beca6ae243341273adddf494.png?x-oss-process=image/resize,h_150"
+          );
+          break;
+        case "image":
+          return (
+            this.imgOrigin +
+            item.imageName +
+            "?x-oss-process=image/resize,h_150"
+          );
+          break;
+        case "forward":
+          return this.doImageUrl(item.sourcePost);
+          break;
+      }
+    },
+    doLink(item) {
+      if (item.cover) {
+        if (item.cover.includes(".ico")) {
+          return this.imgOrigin + item.cover;
+        } else {
+          return (
+            this.imgOrigin + item.cover + "?x-oss-process=image/resize,h_150"
+          );
+        }
+      } else {
+        return (
+          this.imgOrigin +
+          "biz/b06148ccba2c8b527d979942131a9fd9.png?x-oss-process=image/resize,h_150"
+        );
+      }
+    },
     handleAvatarSuccess(res, file) {
         if(res.success){
             this.imageUrl = URL.createObjectURL(file.raw);
@@ -509,11 +586,13 @@ queryChildren (parent, list) {
     getDetail(){
       api.getPostInfo({postId: this.params.postId}).then(res=>{
         if(res.success){
+          
           let data = res.data;
           this.pagedata = data;
           this.forumInfo = res.data.forum;
           console.log(res.data.forum,'res')
           document.title = res.data.title + " - 炒饭";
+          this.listPosts()
         } else {
           this.hasData = false;
           this.$store.commit('var/SET_PATH',this.$route.fullPath)
@@ -656,7 +735,7 @@ queryChildren (parent, list) {
   flex-direction: row-reverse;
     .forum_con{
         padding: 30px 20px;
-        border: 1px solid #ddd;
+        border: 1px solid #f1f1f1;
         width: 100%;
         min-width: 270px;
         max-width: 280px;
@@ -666,8 +745,8 @@ queryChildren (parent, list) {
 /deep/ .item .rights{
   padding-right: 0;
 }
-/deep/ .el-dialog{
-    margin-top:0 !important;
+.el-dialog{
+    
     height:100vh;
     overflow-x: hidden;
     div{
@@ -676,8 +755,17 @@ queryChildren (parent, list) {
         text-align: left;
     }
 }
+/deep/ .el-dialog--center .el-dialog__body{
+  padding: 0;
+}
 /deep/ .el-loading-spinner{
     top: 10%;
+}
+/deep/ .el-dialog__header{
+  padding: 0;
+}
+/deep/ .el-dialog{
+  margin-top:0 !important;
 }
 /deep/ .pc_dialog{
   height: 100vh;
@@ -752,7 +840,7 @@ queryChildren (parent, list) {
     .asa{
         .forum_con{
             padding: 30px 20px;
-            border: 1px solid #ddd;
+            border: 1px solid #f1f1f1;
             width: 100%;
             min-width: 244px;
             box-sizing: border-box;
@@ -922,5 +1010,42 @@ queryChildren (parent, list) {
 }
 .comment_list{
   padding-bottom: 200px !important;
+}
+.dialog_main2 .heji{
+  min-height: 400px;
+  color: #fff;
+  margin: 10px 0px 10px 14px;
+  padding: 10px 10px;
+  border: 1px solid #f1f1f1;
+  color: #333;
+  // margin-top: 10px;
+  .col_title{
+    color: #333;
+    font-size: 16px;
+    line-height: 40px;
+  }
+  .col_item{
+    padding: 4px;
+    border-bottom: 1px solid #f1f1f1;
+    margin-bottom: 10px;
+    cursor: pointer;
+    .col_img{
+      height: 140px;
+      background-position: center;
+      background-size: cover;
+      background-repeat: no-repeat;
+      border-radius: 4px;
+      img{
+        width: 100%;
+        height: 120px;
+      }
+    }
+    .cc_title{
+      padding: 4px 0;
+    }
+    &:hover{
+      color: $linkcolor;
+    }
+  }
 }
 </style>

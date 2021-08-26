@@ -162,6 +162,17 @@
               </div>
               <div v-else>暂无标签</div>
             </div>
+            <el-dropdown-item v-if="item.canChangeTitle" command="加入合集">
+              <div @click.stop="toCollect" class="addTag">加入合集 ></div>
+            </el-dropdown-item>
+            <div v-if="showCollect" class="showTags showCol">
+              <div v-if="collectList.length">
+                <div class="k" v-for="(it, ins) in collectList" @click="postCollect(it)" :key="ins">
+                    {{ it.name }}
+                </div>
+              </div>
+              <div @click="toAddCol" class="add_collect" v-else>新增合集</div>
+            </div>
             <el-dropdown-item
               v-if="item.forum.admin && !item.isPin"
               command="置顶"
@@ -179,6 +190,11 @@
         </el-dropdown>
       </div>
     </h1>
+    <dialogs :visible="dialogVisible">
+      <template slot="content">
+        <h1>this is slot2</h1>
+      </template>
+    </dialogs>
   </div>
 </template>
 
@@ -188,10 +204,16 @@ import { Dialog } from "vant";
 import "vant/lib/dialog/style";
 import "moment/locale/zh-cn";
 import moment from "moment";
+
+import dialogs from "../common/dialogs.vue";
 export default {
   name: "",
   data() {
     return {
+      dialogVisible: false,
+      hasGetCollect: false,
+      showCollect: false,
+      collectList: [],
       checkList: [],
       moment: moment,
       showTag: false,
@@ -216,7 +238,9 @@ export default {
       default: 0,
     },
   },
-  components: {},
+  components: {
+    dialogs
+  },
   created() {
     if (this.item.tags.length) {
       this.item.tags.forEach((item) => {
@@ -226,6 +250,26 @@ export default {
   },
   mounted() {},
   methods: {
+    postCollect(it){
+      let params  = {
+        postId: this.item.postId,
+        collectionId: it.id
+      }
+      api.addPostCollection(params).then(res=>{
+        if(res.success){
+          this.$toast('加入合集成功');
+        }
+      })
+    },
+    addCollection(){
+      api.addCollection({name: '测试合集_2'}).then(res=>{
+        this.userCollectionList()
+      })
+    },
+    toAddCol(){
+      // this.dialogVisible = true;
+      this.addCollection();
+    },
     aaa(e) {
       console.log(e);
     },
@@ -276,6 +320,20 @@ export default {
       } else {
         this.getForumTag();
       }
+    },
+    toCollect(){
+      if (this.hasGetCollect) {
+        this.showCollect = !this.showCollect;
+      } else {
+        this.userCollectionList();
+      }
+    },
+    userCollectionList(){
+      api.userCollectionList().then(res=>{
+        this.collectList = res.data;
+        this.hasGetCollect = true;
+        this.showCollect = !this.showCollect;
+      })
     },
     getForumTag() {
       api.getlistTag({ forumId: this.item.forum.id }).then((res) => {
@@ -520,5 +578,22 @@ h1 {
       cursor: pointer;
     }
   }
+}
+.showCol{
+  padding: 20px 10px;
+  font-size: 13px;
+  .k {
+    &:hover {
+      background: #fff;
+      cursor: pointer;
+      color: #ff9300;
+    }
+  }
+}
+.add_collect{
+  font-size: 12px;
+  border: 1px solid #666;
+  color: #666;
+  border-radius: 4px;
 }
 </style>
