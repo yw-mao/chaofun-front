@@ -131,7 +131,19 @@
                               <div :style="{'background-image': `url(${doColBg(it)})`}" class="col_img">
                                 <!-- <img src="https://i.chao.fun/biz/de1910aadfac6f7b7fbef647e7ff4b1b.jpeg" alt=""> -->
                               </div>
-                              <div class="cc_title">{{it.title}}</div>
+                              <div class="c_main">
+                                <div class="cc_title"><span class="sim_tab">[{{doType(it)}}]</span> {{it.title}}</div>
+                                <div>
+                                  <span class="from">
+                                    大约
+                                    {{
+                                      moment
+                                        .duration(moment(it.gmtCreate) - moment())
+                                        .humanize(true)
+                                    }}
+                                  </span>
+                                </div>
+                              </div>
                             </div>
                           </div>
                           <!-- <RightCom :islogin="islogin"></RightCom> -->
@@ -250,6 +262,34 @@ export default {
     this.inputBlur()
   },
   methods:{
+    doType(item) {
+      var t = item.type;
+      switch (t) {
+        case "link":
+          return "链接";
+          break;
+        case "gif":
+          return "GIF";
+          break;
+        case "image":
+          return "图片";
+          break;
+        case "inner_video":
+          return "视频";
+          break;
+        case "article":
+          return "文章";
+          break;
+        case "vote":
+          return "投票";
+          break;
+        case "forward":
+          return "转发";
+          break;
+        default:
+          return "其他";
+      }
+    },
     toDetail(item){
       this.$router.push({
           name: "articleDetail",
@@ -1012,7 +1052,7 @@ queryChildren (parent, list) {
   padding-bottom: 200px !important;
 }
 .dialog_main2 .heji{
-  min-height: 400px;
+  min-height: 180px;
   color: #fff;
   margin: 10px 0px 10px 14px;
   padding: 10px 10px;
@@ -1027,21 +1067,37 @@ queryChildren (parent, list) {
   .col_item{
     padding: 4px;
     border-bottom: 1px solid #f1f1f1;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
     cursor: pointer;
+    display: flex;
     .col_img{
-      height: 140px;
+      flex: 0 0 60px;
+      height: 60px;
       background-position: center;
       background-size: cover;
       background-repeat: no-repeat;
       border-radius: 4px;
+      margin-right: 6px;
       img{
         width: 100%;
         height: 120px;
       }
     }
+    .c_main{
+      flex: 1;
+      .sim_tab {
+        font-size: 14px;
+        color: #888;
+        font-weight: normal;
+      }
+      .from{
+        font-size: 12px;
+        margin-top: 0;
+        color: #999;
+      }
+    }
     .cc_title{
-      padding: 4px 0;
+      // padding: 4px 0;
     }
     &:hover{
       color: $linkcolor;

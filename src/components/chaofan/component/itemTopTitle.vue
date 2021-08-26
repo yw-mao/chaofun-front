@@ -171,7 +171,7 @@
                     {{ it.name }}
                 </div>
               </div>
-              <div @click="toAddCol" class="add_collect" v-else>新增合集</div>
+              <div class="add_collect" v-else>暂无合集</div>
             </div>
             <el-dropdown-item
               v-if="item.forum.admin && !item.isPin"
