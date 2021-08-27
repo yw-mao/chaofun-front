@@ -747,6 +747,13 @@ export function listPosts(params) {
   })
 }
 
+export function searchUserForAt(params) {
+  return request({
+    url: '/api/v0/search/searchUserForAt',
+    method: 'get',
+    params
+  })
+}
 
 
 /** 活动查询 */

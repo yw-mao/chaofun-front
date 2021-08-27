@@ -67,17 +67,19 @@ import * as api from '@/api/api'
       var imgs = el.getElementsByTagName("img");
       console.log(imgs);
       let im = [];
-      imgs.forEach((item,index)=>{
-        item.addEventListener('click',function(e){
-          
-          let src = e.target.currentSrc;
-          document.getElementById('k'+index).click();
-          console.log(src)
+      setTimeout(()=>{
+        el.getElementsByTagName("img").forEach((item,index)=>{
+          item.addEventListener('click',function(e){
+            
+            let src = e.target.currentSrc;
+            document.getElementById('k'+index).click();
+            console.log(src)
+          })
+          im.push(item.currentSrc);
         })
-        im.push(item.currentSrc);
-      })
-      this.imgsArr = im;
-      console.log(this.imgsArr)
+        this.imgsArr = im;
+        console.log(this.imgsArr)
+      },50)
     }
     
    },

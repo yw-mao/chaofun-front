@@ -46,8 +46,13 @@
                       <div style="height:30px;"></div>
                       <ListItem :isindex="false" :lists="[this.pagedata]"></ListItem>
                       <div :class="['sub_comment', {'sub_comment_phone':ISPHONE}]">
+                          <div v-show="showAt" class="atuser">
+                            <div v-for="(it,ins) in atUsers" :key="ins" @click="chooseAt($event,it)" class="at_item">
+                              {{it.userName}}
+                            </div>
+                          </div>
                           <div v-if="replayItem" @click="cancelReplay" style="padding: 6px 0px;cursor:pointer;float:left;">取消回复</div>
-                          <el-input v-on:focus="inputFocus" v-on:blur="inputBlur" type="textarea" @focus="doLogin" class="textarea" :placeholder="replayItem?'我对'+replayItem.userInfo.userName+'说：':'发表你的想法'" :autosize="{ minRows: 2, maxRows: 4}"  v-model="comment"></el-input>
+                          <el-input style="font-size:14px;" v-on:focus="inputFocus" @keyup.native="bindInput" v-on:blur="inputBlur" type="textarea" @focus="doLogin" class="textarea" :placeholder="replayItem?'我对'+replayItem.userInfo.userName+'说：':'发表你的想法'" :autosize="{ minRows: 2, maxRows: 4}"  v-model="comment"></el-input>
                           <div class="sub_botton" v-loading="imagesUploading">
                             <div class="subims" v-if="images.length">
                                 <a v-for="img in images" :key="img" :href="imgOrigin+img" target="_blank">[附图]</a>
@@ -125,7 +130,7 @@
                                 </div>
                             </div> 
                           </div>
-                          <div class="heji">
+                          <div v-if="pagedata.collection" class="heji">
                             <div class="col_title">{{pagedata.collection.name}}</div>
                             <div @click="toDetail(it)" v-for="(it,inds) in collectList" :key="inds" class="col_item">
                               <div :style="{'background-image': `url(${doColBg(it)})`}" class="col_img">
@@ -156,7 +161,9 @@
         </div>
         <div v-if="!hasData" class="is404">
           <div>
-            <div class="s404">404</div>
+            <div class="s404">
+              <img src="https://i.chao.fun/biz/d5eb6aa7ed1fb2a5a0a04abbcc170e03.png" alt="">
+            </div>
             <p>帖子已被删除或不存在 <span @click="back" class="lookother">看看其他 ></span></p>
           </div>
           
@@ -225,7 +232,15 @@ export default {
       imagesUploading: false,
       imagesNum: 0,
       imagesLimit: 9,
-      collectList: []
+      collectList: [],
+      atUsers: [],
+      showAt: false,
+      canSearch: true,
+      curInput: '',
+      ats: [],
+      pointIndex: '',
+      atIndex: '',
+      searchkey: '',
     }
   },
   components: {
@@ -262,6 +277,58 @@ export default {
     this.inputBlur()
   },
   methods:{
+    chooseAt(e,it){
+      // this.comment = this.comment+it.userName+' ';
+      if(this.searchkey){
+        this.comment = this.comment.replace('@'+this.searchkey,'@'+it.userName+' ')
+      }else{
+        this.comment = this.comment+it.userName+' ';
+      }
+      this.searchkey = '';
+      this.showAt = false;
+      this.ats.push(it.userId)
+      console.log(this.$(this.curInput));
+      this.$(this.curInput).focus();
+      // this.curInput
+    },
+    bindInput(e){
+      console.log(e);
+      // let last = e.slice(-1);
+      // console.log(last);
+      // document.getElementById('')
+      let index = e.target.selectionStart;//光标位置
+      this.pointIndex = index;
+      if(this.comment.includes('@')&&this.canSearch){
+        this.curInput = e.target;
+        let s = this.comment.slice(0,index);
+        
+        let i = s.lastIndexOf('@');
+        // if(index==i){return false}
+        let str = this.comment.slice(i+1,index);
+        let isHave = str.includes(' ');
+        if(!isHave){
+          this.atIndex = i;
+          let params = {
+            keyword: str
+          }
+          this.searchkey = str;
+          this.canSearch = false;
+          api.searchUserForAt(params).then(res=>{
+            if(res.success){
+              
+              this.canSearch = true;
+              this.showAt = true;
+              this.atUsers = res.data;
+            }
+            console.log(res)
+          })
+        }
+        console.log(str)
+        console.log();
+        // let index = e.lastIndexOf('@');
+      }
+      
+    },
     doType(item) {
       var t = item.type;
       switch (t) {
@@ -301,6 +368,7 @@ export default {
       return this.doImageUrl(it)
     },
     listPosts(){
+      if(!this.pagedata.collection){return;}
       let params = {
         collectionId: this.pagedata.collection.id
       }
@@ -686,13 +754,20 @@ queryChildren (parent, list) {
       if(this.canSub){
         this.doLoginStatus().then(res=>{
             let comment = this.comment;
+            // let reg = new RegExp(/@[^(\s)]+/g);
+            // let a = comment.match(reg);
+            // a = '#'+ a.join('#')+'#';
+            // comment = comment.replace(reg,'');
+            // console.log(a+comment);
+            // console.log(a)
             if(res){
                 if(!this.comment) return;
                 let params = {
                   parentId: this.replayItem&&this.replayItem.id?this.replayItem.id:'',
                   postId: this.params.postId,
                   comment: this.comment,
-                  imageNames: this.images.join(',')
+                  imageNames: this.images.join(','),
+                  ats: this.ats.join(',')
                 }
                 this.canSub = false;
                 api.addComments(params).then(res=>{
@@ -895,7 +970,31 @@ queryChildren (parent, list) {
 }
 .sub_comment{
     padding: 10px 0 0 50px !important;
-    // position: relative;
+    position: relative;
+    .atuser{
+      position: absolute;
+      top: 70px;
+      left: 50px;
+      background: #fff;
+      border: 1px solid #ddd;
+      z-index: 10;
+      padding: 10px 0;
+      width: 100px;
+      .at_item{
+        padding: 0 10px;
+        line-height: 28px;
+        font-size: 13px;
+        white-space:nowrap;
+        overflow:hidden;
+        text-overflow:ellipsis;
+        cursor: pointer;
+        &:hover{
+          color: #ff9300;
+          background: #eee;
+        }
+      } 
+      // display: flex;
+    }
     .textarea{
         resize: none;
         font-size: 16px;
@@ -1007,16 +1106,21 @@ queryChildren (parent, list) {
   justify-content: space-around;
   align-items: center;
   text-align: center;
-  height: 600px;
+  height: 100vh;
   .s404{
-    font-size: 128px;
+    font-size: 44px;
+    
     color: cornflowerblue;
+  }
+  p{
+    text-align: center;
   }
   .lookother{
     padding-left: 10px;
     color: cornflowerblue;
     text-decoration: underline;
     cursor: pointer;
+    font-size: 15px;
   }
 }
 .icons{
@@ -1098,6 +1202,10 @@ queryChildren (parent, list) {
     }
     .cc_title{
       // padding: 4px 0;
+      display: -webkit-box; 
+      -webkit-box-orient: vertical; 
+      -webkit-line-clamp: 2; 
+      overflow: hidden;
     }
     &:hover{
       color: $linkcolor;
