@@ -34,147 +34,195 @@
           </el-select>
         </div>
       </el-container>
-      <div class="postbox">
-        <el-radio-group v-model="type">
-          <el-radio-button label="article">
-            <i class="el-icon-tickets"></i> 帖子
-          </el-radio-button>
-          <el-radio-button label="image">
-            <i class="el-icon-picture-outline"></i> 图片/视频
-          </el-radio-button>
-          <el-radio-button label="link">
-            <i class="el-icon-link"></i> 链接
-          </el-radio-button>
-          <el-radio-button label="vote">
-            <i class="el-icon-receiving"></i> 投票
-          </el-radio-button>
-        </el-radio-group>
+      <el-form :model="post" ref="form">
+        <div class="postbox">
+          <el-radio-group v-model="type" @change="$refs.form.clearValidate()">
+            <el-radio-button label="article">
+              <i class="el-icon-tickets"></i> 帖子
+            </el-radio-button>
+            <el-radio-button label="image">
+              <i class="el-icon-picture-outline"></i> 图片/视频
+            </el-radio-button>
+            <el-radio-button label="link">
+              <i class="el-icon-link"></i> 链接
+            </el-radio-button>
+            <el-radio-button label="vote">
+              <i class="el-icon-receiving"></i> 投票
+            </el-radio-button>
+          </el-radio-group>
 
-        <div class="postbox-fields">
-          <el-row>
-            <el-input
-              type="text"
-              placeholder="请输入标题"
-              v-model="post.title"
-              maxlength="300"
-              show-word-limit
-            />
-          </el-row>
-          <el-row v-if="type === 'article'">
-            <editor v-model="post.content" />
-          </el-row>
-          <el-row v-if="type === 'image'">
-            <el-upload
-              action="/api/upload_image"
-              class="image-uploader"
-              :data="filedata"
-              :file-list="filelist"
-              :before-upload="imageBeforeUpload"
-              :on-progress="imageGettProgress"
-              :on-remove="imageUploadRemove"
-              :on-error="imageUploadError"
-              :on-success="imageUploadSuccess"
-              @click="imageUploadHandleClick"
-              :show-file-list="false"
-              v-bind:class="{
-                'drag-hover': isDrag && !drag,
-                'el-upload-free': filelist.length === 0,
-              }"
-              :drag="!drag"
-              multiple
-            >
-              <div class="image-uploader-list" v-if="filelist.length > 0">
-                <div class="image-uploader-sort">
-                  <draggable
-                    class="image-uploader-sort-list"
-                    ghost-class="ghost"
-                    v-model="filelist"
-                    @start="drag=true"
-                    @end="drag=false"
-                    :move="imageSorterMove"
-                    draggable=".image-uploader-file"
-                  >
-                    <div v-for="file in filelist" :key="file.uid" class="image-uploader-file">
-                      <span :style="{
-                        backgroundImage: `url(${file.url})`
-                      }">
-                      </span>
-                    </div>
-                    <span class="image-uploader-btn">
-                      <i slot="default" class="el-icon-plus"></i>
-                    </span>
-                  </draggable>
-                 
-                </div>
-                
-               
-              </div>
-              <div class="image-uploader-free" v-else>
-                将文件拖到此处，或 <el-button round>点击上传</el-button>
-              </div>
-
-            </el-upload>
-            <!-- <el-upload
-              :file-list="filelist"
-              list-type="picture-card"
-              class="image-uploader"
-              drag
-              action="/api/upload_image"
-              :on-success="uploadSuccess"
-              :auto-upload="false"
-              multiple
-            >
-
-                <i slot="default" class="el-icon-plus"></i>
-                <div slot="file" slot-scope="{file}">
-                  <img
-                    class="el-upload-list__item-thumbnail"
-                    :src="file.url" alt=""
-                  />
-                  <a>123123</a>
-                </div>
-
-                <i class="el-icon-upload"></i>
-                <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
-              
-              <div class="el-upload__tip" slot="tip">只能上传jpg/png文件，且不超过500kb</div>
-            </el-upload> -->
-          </el-row>
-          <el-row v-if="type === 'link'">
-            <el-input
-              type="textarea"
-              :rows="2"
-              placeholder="请输入链接地址"
-              v-model="post.link"
-              resize="none"
-              @input="getUrlTitle"
-            >
-            </el-input>
-          </el-row>
-          <el-row>
-            <div class="checkbox-group">
-              <el-checkbox
-                v-model="post.anonymity"
-                :true-label="1"
-                :false-label="0"
-                border
-                size="medium"
+          <div class="postbox-fields">
+            <el-row>
+              <el-form-item
+                prop="title"
+                :rules="[
+                  { required: true, message: '请输入标题', trigger: 'blur' },
+                ]"
               >
-                <i :class="[post.anonymity ? 'el-icon-check' : 'el-icon-plus']" />
-                <span>匿名</span>
-              </el-checkbox>
-            </div>
-          </el-row>
-          <el-divider></el-divider>
+                <el-input
+                  type="text"
+                  placeholder="请输入标题"
+                  v-model="post.title"
+                  maxlength="300"
+                  show-word-limit
+                />
+              </el-form-item>
+            </el-row>
+            <el-row v-if="['article', 'vote'].includes(type)">
+              <el-form-item
+                prop="content"
+                :rules="[
+                  { required: true, message: '请输入内容', trigger: 'blur' },
+                ]"
+              >
+                <editor v-model="post.content" />
+              </el-form-item>
+            </el-row>
+
+            <el-row v-if="type === 'image'">
+              <el-upload
+                action="/api/upload_image"
+                class="image-uploader"
+                :data="filedata"
+                :file-list="filelist"
+                :before-upload="imageBeforeUpload"
+                :on-progress="imageGettProgress"
+                :on-remove="imageUploadRemove"
+                :on-error="imageUploadError"
+                :on-success="imageUploadSuccess"
+                @click="imageUploadHandleClick"
+                :show-file-list="false"
+                v-bind:class="{
+                  'drag-hover': isDrag && !drag,
+                  'el-upload-free': filelist.length === 0,
+                }"
+                :drag="!drag"
+                multiple
+              >
+                <div class="image-uploader-list" v-if="filelist.length > 0">
+                  <div class="image-uploader-sort" @click="$event.stopPropagation()">
+                    <draggable
+                      class="image-uploader-sort-list"
+                      ghost-class="ghost"
+                      v-model="filelist"
+                      @start="drag=true"
+                      @end="drag=false"
+                      :move="imageSorterMove"
+                      draggable=".image-uploader-file"
+                    >
+                      <div v-for="file in filelist" :key="file.uid" class="image-uploader-file">
+                        <span :style="{
+                          backgroundImage: `url(${file.url})`
+                        }">
+                        </span>
+                      </div>
+                      <span class="image-uploader-btn" slot="default">
+                        <i class="el-icon-plus"></i>
+                      </span>
+                    </draggable>
+                  </div>
+                </div>
+                <div class="image-uploader-free" v-else>
+                  将文件拖到此处，或 <el-button round>点击上传</el-button>
+                </div>
+              </el-upload>
+            </el-row>
+            <el-row v-if="type === 'link'">
+              <el-form-item
+                prop="link"
+                :rules="[
+                  { required: true, message: '请输入链接地址', trigger: 'blur' },
+                  { type: 'url', message: '链接地址格式不正确', trigger: 'blur' },
+                ]"
+              >
+                <el-input
+                  type="textarea"
+                  :rows="2"
+                  placeholder="请输入链接地址"
+                  v-model="post.link"
+                  resize="none"
+                  @input="getUrlTitle"
+                >
+                </el-input>
+              </el-form-item>
+            </el-row>
+            
+            <el-row class="vote-box" v-if="type === 'vote'">
+              <div class="vote-control">
+                <draggable
+                  class="vote-sort-list"
+                  ghost-class="ghost"
+                  v-model="post.options"
+                  @start="drag=true"
+                  @end="drag=false"
+                  handle=".el-icon-rank"
+                >
+                  <el-form-item
+                    v-for="(option, index) in post.options"
+                    :key="index"
+                    :prop="`options.${index}.optionName`"
+                  >
+                    <el-input class="vote-option" :placeholder="`选项 ${index + 1}`" v-model="option.optionName">
+                      <i class="el-icon-rank" slot="prepend" />
+                      <el-button slot="suffix" type="text" icon="el-icon-delete-solid" v-if="index > 1" @click.prevent="removeOption(index)" />
+                    </el-input>
+                  </el-form-item>
+                </draggable>
+                <div class="option-control">
+                  <el-button
+                    round
+                    @click="addOption"
+                  >
+                    新增选项
+                  </el-button>
+                  <el-form-item label="投票时长：">
+                    <el-select v-model="post.voteDuration" placeholder="请选择">
+                      <el-option
+                        v-for="day in 7"
+                        :key="day"
+                        :label="`${day}天`"
+                        :value="day"
+                      />
+                    </el-select>
+                  </el-form-item>
+                </div>
+              </div>
+              <div class="vote-tips">
+                <p><i class="el-icon-warning-outline" /> <span>发起投票建议</span></p>
+                <ol>
+                  <li>投票选项简短明确</li>
+                  <li>投票选项越多越准确</li>
+                  <li>选择合适的投票时间（暂未开放）</li>
+                  <li>创建投票后无法编辑投票</li>
+                </ol>
+              </div>
+            </el-row>
+
+            <el-row>
+              <div class="checkbox-group">
+                <el-checkbox
+                  v-model="post.anonymity"
+                  :true-label="1"
+                  :false-label="0"
+                  border
+                  size="medium"
+                >
+                  <i :class="[post.anonymity ? 'el-icon-check' : 'el-icon-plus']" />
+                  <span>匿名</span>
+                </el-checkbox>
+              </div>
+            </el-row>
+            <el-divider></el-divider>
+          </div>
+          <div class="postbox-buttons">
+            <el-button type="primary" round>发 布</el-button>
+            <el-button round>保存草稿箱</el-button>
+          </div>
+          <div class="postbox-rules">
+            <p><i class="el-icon-warning-outline" /> 严禁发布色情、暴恐、赌博及其他违反网络安全法的内容，或涉嫌隐私或未经授权的私人图片及信息，如违规发布，请自行删除或管理员强制删除。 </p>
+          </div>
         </div>
-        <div class="postbox-buttons">
-          <el-button type="primary" round>发 布</el-button>
-          <el-button round>保存草稿箱</el-button>
-        </div>
-        <div class="postbox-rules">
-          <p><i class="el-icon-warning-outline" /> 严禁发布色情、暴恐、赌博及其他违反网络安全法的内容，或涉嫌隐私或未经授权的私人图片及信息，如违规发布，请自行删除或管理员强制删除。 </p>
-        </div>
-      </div>
+      </el-form>
     </el-main>
     <el-aside width="320px">
       <el-card class="aside-forum" shadow="never">
@@ -249,6 +297,15 @@
           title: '',
           link: '',
           content: '',
+          options: [
+            {
+              optionName: '',
+            },
+            {
+              optionName: '',
+            },
+          ],
+          voteDuration: 3,
           anonymity: false,
         },
         forums: [],
@@ -371,6 +428,19 @@
         const result = await getUrlTitle({'url': this.post.link});
         if (result && result.data) {
           this.post.title = result.data;
+        }
+      },
+      // === 投票相关 ===
+      // 新增选项
+      addOption() {
+        this.post.options.push({
+          optionName: '',
+        });
+      },
+      // 移除选项
+      removeOption(index) {
+        if (index !== -1) {
+          this.post.options.splice(index, 1);
         }
       },
     }
@@ -533,11 +603,15 @@
   }
   .postbox-fields {
     margin: 16px;
+    .el-row {
+      margin: 0;
+    }
     .checkbox-group {
       display: flex;
       flex-wrap: wrap;
       flex-direction: row;
       align-items: center;
+      margin-bottom: 20px;
     }
     /deep/ .el-checkbox {
       position: relative;
@@ -676,6 +750,151 @@
           color: #606266;
           &:hover {
             color: #5a5e66;
+          }
+        }
+      }
+    }
+    // 投票样式
+    .vote-box {
+      display: flex;
+      flex-direction: row;
+      border: 1px solid #DCDFE6;
+      margin: -23px 0 22px;
+      padding: 8px 0;
+      .vote-control {
+        flex-grow: 1;
+        width: 100%;
+        .vote-sort-list {
+          /deep/ .el-form-item {
+            margin-bottom: 0;
+          }
+        }
+        .vote-option {
+          display: flex;
+          align-items: center;
+          flex-direction: row;
+          padding: 4px 0 4px 4px;
+          position: relative;
+          transition: opacity .2s,left .2s;
+
+          /deep/ .el-form-item__error {
+            display: none;
+          }
+
+          /deep/ .el-input-group__prepend {
+            display: flex;
+            fill: #5a5e66;
+            height: 20px;
+            width: 20px;
+            font-size: 20px;
+            margin-right: 4px;
+            padding: 0;
+            background: transparent;
+            border: none;
+            i {
+              cursor: pointer;
+            }
+          }
+          /deep/ .el-input__suffix {
+            i {
+              font-size: 20px;
+              color: #606266;
+            }
+          }
+        }
+        .option-control {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          margin-top: 8px;
+          padding-right: 20px;
+          flex-direction: row;
+          .el-button {
+            margin-left: 26px;
+            align-items: center;
+            box-sizing: border-box;
+            display: flex;
+            justify-content: center;
+            position: relative;
+            text-align: center;
+            width: auto;
+            line-height: 20px;
+            padding: 4px 16px;
+            border: none;
+            color: #16679f;
+            font-weight: bold;
+          }
+          /deep/ .el-form-item {
+            display: flex;
+            align-items: center;
+            -ms-flex-direction: row;
+            flex-direction: row;
+            justify-content: center;
+            margin: 0;
+            label {
+              font-weight: normal;
+              line-height: 20px;
+            }
+            .el-form-item__content {
+              line-height: 20px;
+            }
+            .el-select {
+              position: relative;
+              width: 60px;
+              font-size: 12px;
+              line-height: 20px;
+              .el-input {
+                .el-input__icon {
+                  line-height: 20px;
+                }
+                input {
+                  align-items: center;
+                  display: flex;
+                  flex-direction: row;
+                  border: none;
+                  padding: 0 30px 0 0;
+                  color: #16679f;
+                  height: 20px;
+                  line-height: 20px;
+                }
+              }
+             
+            }
+          }
+        }
+      }
+      .vote-tips {
+        flex-grow: 0;
+        flex-shrink: 0;
+        padding: 4px 0 4px 8px;
+        width: 250px;
+        p {
+          margin-left: 5px;
+          padding-bottom: 6px;
+          font-size: 13px;
+          display: flex;
+          align-content: center;
+          flex-direction: row;
+          flex-grow: 0;
+          i {
+            font-size: 16px;
+            padding: 2px;
+            font-weight: 600;
+          }
+          span {
+            line-height: 22px;
+            padding-left: 4px;
+          }
+        }
+        ol {
+          padding: 0 24px;
+          li {
+            list-style: decimal outside;
+            font-size: 11px;
+            font-weight: 500;
+            line-height: 15px;
+            margin-bottom: 5px;
+            padding-left: 6px;
           }
         }
       }
