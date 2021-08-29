@@ -140,6 +140,17 @@
               <div class="el-upload__tip" slot="tip">只能上传jpg/png文件，且不超过500kb</div>
             </el-upload> -->
           </el-row>
+          <el-row v-if="type === 'link'">
+            <el-input
+              type="textarea"
+              :rows="2"
+              placeholder="请输入链接地址"
+              v-model="post.link"
+              resize="none"
+              @input="getUrlTitle"
+            >
+            </el-input>
+          </el-row>
           <el-row>
             <div class="checkbox-group">
               <el-checkbox
@@ -216,9 +227,8 @@
   import Vue from 'vue';
   import draggable from 'vuedraggable'
   import Editor from '@/components/Editor/Tiptap.vue'
-  import { getForumInfo, searchForum } from '@/api/api'
+  import { getForumInfo, searchForum, getUrlTitle } from '@/api/api'
   import { logo } from '@/settings'
-import { event } from 'jquery';
 
   export default {
     name: 'submitV2',
@@ -351,6 +361,17 @@ import { event } from 'jquery';
       },
       imageUploadHandleClick() {
         console.lo(3);
+      },
+      // === 链接相关 ===
+      // 通过URL获取链接标题
+      async getUrlTitle() {
+        if (this.post.title !== '') {
+          return;
+        }
+        const result = await getUrlTitle({'url': this.post.link});
+        if (result && result.data) {
+          this.post.title = result.data;
+        }
       },
     }
   }
