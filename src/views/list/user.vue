@@ -156,7 +156,7 @@ export default {
     ...mapGetters(["roles", "islogin"]),
   },
   beforeRouteEnter(to, from, next) {
-    console.log("from", from);
+    // console.log("from", from);
     if (from.path.includes("/p/")) {
     } else {
       localStorage.setItem("whichOne", "pub");

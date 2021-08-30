@@ -302,7 +302,7 @@ export default {
       // document.getElementById('')
       let index = e.target.selectionStart;//光标位置
       this.pointIndex = index;
-      if(this.comment.includes('@')&&this.canSearch){
+      if(this.comment.includes('@')){
         this.curInput = e.target;
         let s = this.comment.slice(0,index);
         
@@ -316,16 +316,19 @@ export default {
             keyword: str
           }
           this.searchkey = str;
-          this.canSearch = false;
-          api.searchUserForAt(params).then(res=>{
-            if(res.success){
-              
-              this.canSearch = true;
-              this.showAt = true;
-              this.atUsers = res.data;
-            }
-            // console.log(res)
-          })
+          if(this.canSearch){
+            this.canSearch = false;
+            api.searchUserForAt(params).then(res=>{
+              if(res.success&&res.data.length){
+                
+                this.canSearch = true;
+                this.showAt = true;
+                this.atUsers = res.data;
+              }
+              // console.log(res)
+            })
+          }
+          
         }
         if(e.code=='Backspace'&&this.atUserName.length){
           this.atUserName.forEach((item,ins)=>{
