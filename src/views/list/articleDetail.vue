@@ -131,7 +131,7 @@
                             </div> 
                           </div>
                           <div v-if="pagedata.collection" class="heji">
-                            <div class="col_title">{{pagedata.collection.name}}</div>
+                            <div class="col_title">合集: {{pagedata.collection.name}}</div>
                             <div @click="toDetail(it)" v-for="(it,inds) in collectList" :key="inds" class="col_item">
                               <div :style="{'background-image': `url(${doColBg(it)})`}" class="col_img">
                                 <!-- <img src="https://i.chao.fun/biz/de1910aadfac6f7b7fbef647e7ff4b1b.jpeg" alt=""> -->
