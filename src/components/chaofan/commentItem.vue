@@ -41,7 +41,8 @@
                 <div v-if="item.canDeleted" @refreshDelete="refreshDelete" @click="deleteComment(item)" class="to_delete">删除</div>
             </div> 
             <div class="content">
-                {{item.text}}
+                <p v-if="!item.atUsers" v-html="item.text"></p>
+                <p v-if="item.atUsers" @click="clickComment($event)" v-html="doText(item)"></p>
                 <span v-if="item.imageNames" class="comImgs">
                     <viewer :images="doImgs(item.imageNames)">
                         <div v-for="(i,k) in item.imageNames.split(',')" :key="k">
@@ -65,8 +66,13 @@
             </div> -->
             <!-- {{replayItem}}{{item.id}} -->
             <div v-if="replayItem&&(replayItem.id==item.id)" class="replayInput">
+                <div v-show="showAt" class="atuser">
+                    <div v-for="(it,ins) in atUsers" :key="ins" @click="chooseAt($event,it)" class="at_item">
+                        {{it.userName}}
+                    </div>
+                </div>
                 <div v-if="replayItem" @click="cancelReplay" style="padding: 6px 0px;cursor:pointer;float:right;">取消回复</div>
-                <el-input v-on:focus="inputFocus" v-on:blur="inputBlur" type="textarea" v-model="comment" class="textarea" :placeholder="replayItem?'我对'+replayItem.userInfo.userName+'说：':'发表你的想法'" :autosize="{ minRows: 2, maxRows: 4}"></el-input>
+                <el-input style="font-size:14px;" v-on:focus="inputFocus" @keyup.native="bindInput" v-on:blur="inputBlur" type="textarea" v-model="comment" class="textarea" :placeholder="replayItem?'我对'+replayItem.userInfo.userName+'说：':'发表你的想法'" :autosize="{ minRows: 2, maxRows: 4}"></el-input>
                 <div class="reply_button" v-loading="imagesUploading">
                     <div class="subims" v-if="images.length">
                         <a v-for="img in images" :key="img" :href="imgOrigin+img" target="_blank">[附图]</a>
@@ -148,6 +154,16 @@ export default {
             imagesUploading: false,
             imagesNum: 0,
             imagesLimit: 9,
+
+            atUsers: [],
+            showAt: false,
+            canSearch: true,
+            curInput: '',
+            ats: [],
+            pointIndex: '',
+            atIndex: '',
+            searchkey: '',
+            atUserName: []
         }
     },
     props: {
@@ -178,6 +194,88 @@ export default {
         }
     },
     methods: {
+        clickComment:function (event) {
+            
+            if(event.target.nodeName === 'SPAN'){
+            // 获取触发事件对象的属性
+                let key = event.target.getAttribute('key');
+                let name = event.target.getAttribute('name');
+                this.toUser({userId: key});
+            }
+        },
+        doText(item){
+            if(item.atUsers&&item.atUsers.length){
+                var c;
+                item.atUsers.forEach((it,ins)=>{
+                    let b = it.userName;
+                    c = item.text.replace('@'+b, '<span key="'+ it.userId +'" class="light" style="color:rgba(24, 144, 255,0.8);font-size:14px;">@'+b+'</span>')
+                })
+                return c;
+            }else{
+                return item.text
+            }
+        },
+        chooseAt(e,it){
+      // this.comment = this.comment+it.userName+' ';
+      if(this.searchkey){
+        this.comment = this.comment.replace('@'+this.searchkey,'@'+it.userName+' ')
+      }else{
+        this.comment = this.comment+it.userName+' ';
+      }
+      this.searchkey = '';
+      this.showAt = false;
+      this.ats.push(it.userId);
+      this.atUserName.push('@'+it.userName);
+      console.log('this.atUserName',this.atUserName)
+      console.log(this.$(this.curInput));
+      this.$(this.curInput).focus();
+      // this.curInput
+    },
+    bindInput(e){
+      console.log(e);
+      // let last = e.slice(-1);
+      // console.log(last);
+      // document.getElementById('')
+      let index = e.target.selectionStart;//光标位置
+      this.pointIndex = index;
+      if(this.comment.includes('@')&&this.canSearch){
+        this.curInput = e.target;
+        let s = this.comment.slice(0,index);
+        
+        let i = s.lastIndexOf('@');
+        // if(index==i){return false}
+        let str = this.comment.slice(i+1,index);
+        let isHave = str.includes(' ');
+        if(!isHave){
+          this.atIndex = i;
+          let params = {
+            keyword: str
+          }
+          this.searchkey = str;
+          this.canSearch = false;
+          api.searchUserForAt(params).then(res=>{
+            if(res.success){
+              
+              this.canSearch = true;
+              this.showAt = true;
+              this.atUsers = res.data;
+            }
+            // console.log(res)
+          })
+        }
+        if(e.code=='Backspace'&&this.atUserName.length){
+          this.atUserName.forEach((item,ins)=>{
+            if(item.includes('@'+str)&&item.slice(0,-1)=='@'+str){
+              this.ats.splice(ins,1);
+              this.atUserName.splice(ins,1);
+              console.log(this.ats,this.atUserName);
+            }
+          })
+        }
+        console.log(str)
+      }
+      
+    },
         doImgs(item){
             var a = item.split(',');
             a.forEach(it=>{
@@ -259,11 +357,27 @@ export default {
                     let comment = this.comment;
                     if(res){
                     if(!this.comment) return;
+                    let reg = new RegExp(/@[^(\s)]+/g);
+                    let a = comment.match(reg);
+                    console.log(a)
+                    var ats = [];
+                    if(a){
+                        a.forEach((item,index)=>{
+                            if(this.atUserName.includes(item)){
+                            let i = this.atUserName.findIndex(it=>it==item);
+                            ats.push(this.ats[i]);
+                            }
+                        });
+                        console.log('atc',ats)
+                        console.log(this.ats);
+                        console.log(this.atUserName)
+                    }
                     let params = {
                         parentId: this.replayItem&&this.replayItem.id?this.replayItem.id:'',
                         postId: this.replayItem.postId,
                         comment: this.comment,
-                        imageNames: this.images.join(',')
+                        imageNames: this.images.join(','),
+                        ats: ats.join(',')
                     }
                     console.log(this.comment);
                     this.canSub = false;
@@ -423,7 +537,7 @@ export default {
             }
         }
         .content{
-            font-size: 16px;
+            font-size: 15px;
             padding: 8px 0;
             line-height: 24px;
             text-align: left;
@@ -432,6 +546,7 @@ export default {
 }
 .replayInput{
     padding-bottom: 4px;
+    position: relative;
     &::before {
         display: block;
         content: '';
@@ -486,6 +601,29 @@ export default {
         }
     }
 }
+.atuser{
+      position: absolute;
+      top: 70px;
+      left: 50px;
+      background: #fff;
+      border: 1px solid #ddd;
+      z-index: 10;
+      padding: 10px 0;
+      width: 100px;
+      .at_item{
+        padding: 0 10px;
+        line-height: 28px;
+        font-size: 13px;
+        white-space:nowrap;
+        overflow:hidden;
+        text-overflow:ellipsis;
+        cursor: pointer;
+        &:hover{
+          color: #ff9300;
+          background: #eee;
+        }
+      } 
+    }
  .to_delete{
      float: right;
      font-size: 13px;

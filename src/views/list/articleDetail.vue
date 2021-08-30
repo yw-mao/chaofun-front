@@ -1,7 +1,7 @@
 <template>
   <div class="dashboard-container">
     <!-- <component :is="currentRole" /> -->
-    <div class="container infinite-list" v-infinite-scroll="load">
+    <div class="container">
       <el-row :gutter="20">
         <el-col :span="isPhone?24:doWidth()" :offset="isPhone?0:5" >
           <el-select v-model="params.order" placeholder="请选择" @change="changes" style="padding: 10px 0;">
@@ -200,7 +200,7 @@ export default {
       params:{
         postId: '',
         pageNum: 0,
-        pageSize: 40,
+        pageSize: 100,
         order: localStorage.getItem('chao.fun.timeline.order') == null ? 'hot': localStorage.getItem('chao.fun.timeline.order')
       },
       options: [
@@ -241,6 +241,7 @@ export default {
       pointIndex: '',
       atIndex: '',
       searchkey: '',
+      atUserName: []
     }
   },
   components: {
@@ -272,6 +273,7 @@ export default {
     let params = this.$route.params;
     this.params.postId = params.postId;
     this.getDetail();
+    this.getLists();
   },
   beforeMount () {
     this.inputBlur()
@@ -286,7 +288,9 @@ export default {
       }
       this.searchkey = '';
       this.showAt = false;
-      this.ats.push(it.userId)
+      this.ats.push(it.userId);
+      this.atUserName.push('@'+it.userName);
+      console.log('this.atUserName',this.atUserName)
       console.log(this.$(this.curInput));
       this.$(this.curInput).focus();
       // this.curInput
@@ -320,12 +324,19 @@ export default {
               this.showAt = true;
               this.atUsers = res.data;
             }
-            console.log(res)
+            // console.log(res)
+          })
+        }
+        if(e.code=='Backspace'&&this.atUserName.length){
+          this.atUserName.forEach((item,ins)=>{
+            if(item.includes('@'+str)&&item.slice(0,-1)=='@'+str){
+              this.ats.splice(ins,1);
+              this.atUserName.splice(ins,1);
+              console.log(this.ats,this.atUserName);
+            }
           })
         }
         console.log(str)
-        console.log();
-        // let index = e.lastIndexOf('@');
       }
       
     },
@@ -716,10 +727,7 @@ queryChildren (parent, list) {
         this.treeData = this.transformTree(data);
       })
     },
-    load () {
-        this.params.pageNum += 1;
-        this.getLists()
-    },
+    
     back(){
       if(this.forumInfo&&this.forumInfo.id){
         this.centerDialogVisible = false;
@@ -754,22 +762,34 @@ queryChildren (parent, list) {
       if(this.canSub){
         this.doLoginStatus().then(res=>{
             let comment = this.comment;
-            // let reg = new RegExp(/@[^(\s)]+/g);
-            // let a = comment.match(reg);
-            // a = '#'+ a.join('#')+'#';
-            // comment = comment.replace(reg,'');
-            // console.log(a+comment);
-            // console.log(a)
+            
             if(res){
                 if(!this.comment) return;
+                let reg = new RegExp(/@[^(\s)]+/g);
+                let a = comment.match(reg);
+                console.log(a)
+                var ats = [];
+                if(a){
+                  a.forEach((item,index)=>{
+                    if(this.atUserName.includes(item)){
+                      let i = this.atUserName.findIndex(it=>it==item);
+                      ats.push(this.ats[i]);
+                    }
+                  });
+                  console.log('atc',ats)
+                  console.log(this.ats);
+                  console.log(this.atUserName)
+                }
+                
                 let params = {
                   parentId: this.replayItem&&this.replayItem.id?this.replayItem.id:'',
                   postId: this.params.postId,
                   comment: this.comment,
                   imageNames: this.images.join(','),
-                  ats: this.ats.join(',')
+                  ats: ats.join(',')
                 }
                 this.canSub = false;
+                console.log(params)
                 api.addComments(params).then(res=>{
                   if(res.success){
                       this.images = [];
@@ -967,6 +987,12 @@ queryChildren (parent, list) {
 }
 .content-right{
     position: relative;
+}
+/deep/ .light{
+  cursor: pointer;
+  &:hover{
+    text-decoration: underline;
+  }
 }
 .sub_comment{
     padding: 10px 0 0 50px !important;

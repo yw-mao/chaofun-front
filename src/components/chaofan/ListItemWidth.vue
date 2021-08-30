@@ -465,7 +465,7 @@ export default {
       if (params.type) {
         // this.lists[params.index].tags.push(params.tag);
         this.lists[params.index].tags.splice(0, 1, params.tag);
-      } else {
+      } else if(params&&params.index){
         // this.lists[params.index].tags.splice(
         //   this.lists[params.index].tags.findIndex((i) => i.id == params.tag.id),
         //   1
