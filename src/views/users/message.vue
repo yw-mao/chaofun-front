@@ -75,6 +75,10 @@ export default {
           label: '点赞',
           value: 'upvote'
         },
+        {
+          label: '@ 我',
+          value: 'at'
+        },
         // {
         //   label: '通知',
         //   value: 'notice'

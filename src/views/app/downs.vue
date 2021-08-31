@@ -20,7 +20,8 @@
             </div>
         </div>
         <div v-if="ISPHONE" class="down_btn">
-            <div @click="sure" class="btn_green">安装</div>
+            <div @click="sure(1)" class="btn_green">安装</div>
+           
         </div>
         <div v-else class="down_btn" style="text-align:center;">
             <img style="height:100%;height:210px;" src="../../assets/images/app.png" alt="">
@@ -29,6 +30,7 @@
        <div class="home_btn">
          <div @click="back" class="btn_green">访问炒饭</div>
        </div>
+        <div @click="sure(2)" style="text-align:center;color:#999;margin-top:10px;" class="">直接下载 ></div>
      </div>
      
     <div class="detail">
@@ -97,6 +99,9 @@ import Vue from 'vue';
 
    },
    created() {
+       var u = navigator.userAgent, app = navigator.appVersion;
+       console.log(u);
+       console.log(app)
    },
    mounted() {
         // var u = navigator.userAgent, app = navigator.appVersion;
@@ -121,7 +126,7 @@ import Vue from 'vue';
             return false;
         }
     },
-    sure(){
+    sure(type){
         var u = navigator.userAgent, app = navigator.appVersion;
         var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Linux') > -1; //android终端或者uc浏览器
         var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
@@ -141,8 +146,43 @@ import Vue from 'vue';
             if (/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)) {
                 location.href = 'https://apps.apple.com/cn/app/%E7%82%92%E9%A5%AD%E8%B6%85fun/id1526950194'
             } else if (/(Android)/i.test(navigator.userAgent)) {
-
-              window.open('https://chao.fun/chaofan.apk',"_blank");
+                // location.href = 'vivoMarket://details?id=com.chao.app'
+                if(type==2) {window.open('https://chao.fun/chaofan.apk',"_blank"); return;}
+                //跳转到安卓商城地址
+                let ua = u.toLowerCase();
+                let isVivo = ua.indexOf("vivo") != -1;
+                let isHuawei = ua.indexOf("huawei") != -1;
+                let isMi = ua.indexOf("redmi") != -1 || ua.indexOf("xiaomi") != -1;
+                let isMeizu = ua.indexOf("meizu") != -1;
+                let isOppo = ua.indexOf("oppo") != -1;
+                
+                let hreff = "";
+                if (isVivo) {
+                    hreff = "vivoMarket://details?id=com.chao.app";
+                } else if (isHuawei) {
+                    hreff = "appmarket://details?id=com.chao.app";
+                    // hreff = 'http://www.baidu.com'
+                } else if (isMi) {
+                    hreff = "mimarket://details?id=com.chao.app";
+                } else if (isMeizu) {
+                    hreff = "mstore://details?id=com.chao.app";
+                } else if(isOppo){
+                    hreff = "market://details?id=com.chao.app";
+                }else {
+                    hreff = "market://details?id=com.chao.app"; // 官网下载地址  也可以跳到应用宝
+                }
+                try{
+                    if(isHuawei){
+                        window.open('https://chao.fun/chaofan.apk',"_blank");
+                    }else{
+                        window.location.href = hreff;
+                    }
+                    // window.open(hreff,"_blank");
+                }catch(e){
+                    window.open('https://chao.fun/chaofan.apk',"_blank");
+                }
+                
+            //   window.open('https://chao.fun/chaofan.apk',"_blank");
             }
         }else{
             if(isiOS){
@@ -197,7 +237,7 @@ import Vue from 'vue';
  .app_name{
      color: #0A0D26;
      font-size: 14px;
-     padding: 20px 0 10px;
+     padding: 20px 0 0px;
      font-size: 18px;
      line-height: 40px;
      height: 80px;
@@ -214,12 +254,14 @@ import Vue from 'vue';
  .build_info{
      display: flex;
      padding: 0 10px;
+     margin-bottom: 10px;
+     justify-content: space-around;
      .info_item{
-         flex: 1;
+        //  flex: 1;
          font-size: 14px;
          color: #788090;
          &:nth-child(1){
-             border-right: 1px solid #DEE2EC;
+            //  border-right: 1px solid #DEE2EC;
          }
      }
  }
