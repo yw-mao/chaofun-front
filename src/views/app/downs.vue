@@ -30,7 +30,7 @@
        <div class="home_btn">
          <div @click="back" class="btn_green">访问炒饭</div>
        </div>
-        <div @click="sure(2)" style="text-align:center;color:#999;margin-top:10px;" class="">直接下载 ></div>
+        <div v-if="ISPHONE&&!isiOS" @click="sure(2)" style="text-align:center;color:#999;margin-top:10px;" class="">直接下载 ></div>
      </div>
      
     <div class="detail">
@@ -92,7 +92,8 @@ import Vue from 'vue';
      return {
          show: false,
          value: '',
-         showCover: false
+         showCover: false,
+         isiOS: false
      }
    },
    components: {
@@ -100,8 +101,8 @@ import Vue from 'vue';
    },
    created() {
        var u = navigator.userAgent, app = navigator.appVersion;
-       console.log(u);
-       console.log(app)
+        var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Linux') > -1; //android终端或者uc浏览器
+        this.isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/);
    },
    mounted() {
         // var u = navigator.userAgent, app = navigator.appVersion;
