@@ -36,7 +36,6 @@ Viewer.setDefaults({
   // "fullscreen": false, //播放时是否全屏
   // "keyboard": true, //是否支持键盘
   "url": "data-source",
-
 })
 
 import VueScroller from 'vue-scroller'
