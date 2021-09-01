@@ -577,13 +577,13 @@ export default {
     send() {
       console.log(1);
       this.$refs.inputs.focus()
-      // if (this.content) {
-      //   let params = {
-      //     type: "text",
-      //     content: this.content,
-      //   };
-      //   this.websocketsend(JSON.stringify(params));
-      // }
+      if (this.content) {
+        let params = {
+          type: "text",
+          content: this.content,
+        };
+        this.websocketsend(JSON.stringify(params));
+      }
 
 
 
