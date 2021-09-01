@@ -126,6 +126,7 @@
         <div class="bottom_send">
         <!-- <form action="" onsubmit="return false;"> -->
           <input
+              ref="inputs"
               autofocus
               @keydown="clientClickButton"
               @focus="inputFocus"
@@ -135,6 +136,7 @@
           />
         <!-- </form> -->
         <el-upload
+            v-if="!isApp"
             class="avatar-uploader"
             action="/api/upload_image"
             name="file"
@@ -154,6 +156,13 @@
             alt=""
             />
         </el-upload>
+        <img
+          v-if="isApp"
+            @click="chooseImage"
+          style="vertical-align: middle; margin-right: 0px; cursor: pointer"
+          src="../../assets/images/icon/choose.png"
+          alt=""
+          />
         <div @click="send" class="send">发送</div>
         </div>
     </div>
@@ -169,6 +178,7 @@ export default {
   components: { ThemePicker },
   data() {
     return {
+      isApp: false,
       moment: moment,
       connectCount: 0,
       onlineCount: 0,
@@ -198,6 +208,9 @@ export default {
   computed: {},
   created() {
     this.getForumInfo();
+    if(this.$route.query.source=='app'){
+      this.isApp = true;
+    }
   },
   destroyed() {
     if (this.websock) {
@@ -209,12 +222,30 @@ export default {
     }
   },
   mounted() {
+    console.log(navigator.userAgent);
     console.log(this.$route.path);
     if (this.$route.params.id) {
       this.initWebSocket();
     }
+    try{
+      let self = this;
+      window.setUploadImage = function (message) {
+        self.imgSendType = "upload";
+        self.realImageUrl = message;
+        self.prevImg = self.imgOrigin + message;
+        // self.sendImage();
+      }
+    }catch{
+
+    }
   },
   methods: {
+    chooseImage(){
+      if(this.ISPHONE){
+        this.uploadImage();
+      }
+      // uploadImage
+    },
     getForumInfo() {
         if(this.$route.params.id){
             api.getForumInfo({ forumId: this.$route.params.id }).then((res) => {
@@ -468,6 +499,13 @@ export default {
         this.prevblob = blob;
       }
     },
+    uploadImage(){
+
+      window.flutter_inappwebview.callHandler('uploadImage').then(function(result) {
+
+      });
+
+    },
     closeImage() {
       this.prevImg = "";
       this.prevblob = "";
@@ -475,20 +513,32 @@ export default {
       this.$refs.replyImageUpload.clearFiles();
     },
     sendImage() {
-      if (this.imgSendType == "upload") {
+      if(!this.isApp){
+        if (this.imgSendType == "upload") {
+          let params = {
+            type: "image",
+            content: this.realImageUrl,
+          };
+          this.websocketsend(JSON.stringify(params));
+          this.prevImg = "";
+          this.prevblob = "";
+          this.realImageUrl = "";
+          this.$refs.replyImageUpload.clearFiles();
+        } else {
+          // this.imgSendType = 'upload';
+          this.$refs.replyImageUpload.$children[0].uploadFiles([this.prevblob]);
+        }
+      }else{
         let params = {
-          type: "image",
-          content: this.realImageUrl,
+            type: "image",
+            content: this.realImageUrl,
         };
         this.websocketsend(JSON.stringify(params));
         this.prevImg = "";
         this.prevblob = "";
         this.realImageUrl = "";
-        this.$refs.replyImageUpload.clearFiles();
-      } else {
-        // this.imgSendType = 'upload';
-        this.$refs.replyImageUpload.$children[0].uploadFiles([this.prevblob]);
       }
+      
     },
     handleAvatarSuccess(res, file) {
       if (res.success) {
@@ -526,6 +576,7 @@ export default {
     },
     send() {
       console.log(1);
+      this.$refs.inputs.focus()
       if (this.content) {
         let params = {
           type: "text",
@@ -533,6 +584,9 @@ export default {
         };
         this.websocketsend(JSON.stringify(params));
       }
+
+
+
       // try{
       //     this.$store.state.user.wss.send(JSON.stringify(params));
       //     this.content = ''
