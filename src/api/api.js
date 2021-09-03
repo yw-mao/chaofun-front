@@ -755,6 +755,14 @@ export function searchUserForAt(params) {
   })
 }
 
+export function listTagPostCount(params) {
+  return request({
+    url:  `/api/v0/forum/listTagPostCount`,
+    method: 'get',
+    params
+  })
+}
+
 
 /** 活动查询 */
 

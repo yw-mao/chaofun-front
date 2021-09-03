@@ -703,6 +703,10 @@ export default {
           this.postBehavior(item.postId, "detail");
           localStorage.setItem("storedata", JSON.stringify(obj));
           localStorage.setItem("spage", this.$route.path);
+
+          this.$EventBus.$emit("refreshItemTag", {
+            way: 'saveTagId'
+          });
           this.$router.push({
             name: "articleDetail",
             params: { postId: item.postId },

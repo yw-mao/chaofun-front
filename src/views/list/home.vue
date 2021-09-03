@@ -18,7 +18,7 @@
         :key="index"
         :class="['tag_item', { tag_item_active: item.id == params.tagId }]"
       >
-        # {{ item.name }}
+        # {{ item.name }} <span v-if="tagCountList.length">{{doTagCount(item)}}</span>
       </div>
     </div>
     <div
@@ -172,6 +172,7 @@ export default {
         },
       ],
       tagList: [],
+      tagCountList: [],
     };
   },
   components: {
@@ -260,9 +261,20 @@ export default {
     // }
     this.params.forumId = this.$route.params.forumId;
     this.getForumInfo();
+    
     this.load();
   },
   methods: {
+    doTagCount(item){
+      let count = this.tagCountList[this.tagCountList.findIndex(it=>it.tag_id==item.id)].count;
+      
+      return '('+count+')';
+    },
+    listTagPostCount(){
+      api.listTagPostCount({forumId: this.params.forumId}).then(res=>{
+        this.tagCountList = res.data;
+      })
+    },
     saveTagId() {
       if (this.params.tagId) {
         localStorage.setItem("tagInfo", JSON.stringify(this.params));
@@ -332,6 +344,7 @@ export default {
     },
     getForumTag() {
       api.getlistTag({ forumId: this.params.forumId }).then((res) => {
+        this.listTagPostCount();
         this.tagList = res.data;
       });
     },
@@ -447,7 +460,7 @@ export default {
 }
 .fixed_tag {
   position: fixed;
-  width: 90px;
+  width: 110px;
   // height: 700px;
   top: 60px;
   bottom: 0;
@@ -467,6 +480,9 @@ export default {
   border-radius: 20px;
   cursor: pointer;
   font-weight: bold;
+  span{
+    font-size: 13px;
+  }
   &:hover {
     border: 1px solid #f1f1f1;
     background: #f1f1f1;
