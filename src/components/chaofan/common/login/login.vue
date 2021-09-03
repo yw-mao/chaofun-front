@@ -5,7 +5,7 @@
         <img @click="cancelLogin" class="cancel" :src='cancelImg'/>
         <h1>用户登录</h1>
         <div style="">
-          <input type="text" v-model="params.userName"  placeholder="用户名"/>
+          <input type="text" v-model="params.userName"  placeholder="用户名 / 手机号"/>
           <input type="password" v-model="params.password"  placeholder="密码"/>
           <!-- <input type="text" v-model="params.userName"  placeholder="手机号"/>
           <div class="code_con">
@@ -28,9 +28,34 @@
         <h1>快速注册</h1>
         <div>
           <input type="text" v-model="params.userName" placeholder="用户名"/>
-          <input type="password" v-model="params.repassword"  placeholder="密码"/>
+          <!-- <input type="password" v-model="params.repassword"  placeholder="密码"/> -->
           <input type="password" v-model="params.password" placeholder="确认密码"/>
+          
         </div>
+        <div class="phonever">
+          <div class="title">手机号验证</div>
+          <input type="text" v-model="params.phone"  placeholder="手机号"/>
+          <div class="code_con">
+            <input class="code" v-model="params.code" type="text">
+            <span @click="sendCode">{{time?time+'s':'发送验证码'}}</span>
+          </div>
+        </div>
+        <!-- <div v-if="showSlider" class="sliders">
+          <div class="slid">
+            <div class="title">滑动验证</div>
+            <slide-verify :l="42"
+            :r="10"
+            :w="270"
+            :h="180"
+            @success="onSuccess"
+            @fail="onFail"
+            @refresh="onRefresh"
+            :slider-text="text"
+            ></slide-verify>
+            <div @click="showSlider = false" class="tclose">关闭</div>
+          </div>
+          
+        </div> -->
         <div @click="logOrReg(2)" class="ylogin">注册</div>
         <p>已有账号？ <span @click='toWhat("login")'>去登录</span></p>
       </div>
@@ -44,19 +69,28 @@ import * as api from '@/api/api'
 import { mapState } from 'vuex'
 import {deepClone,randomRange} from '@/utils'
 import { Checkbox } from 'element-ui'
+// import SlideVerify from 'vue-monoplasty-slide-verify';
+// Vue.use(SlideVerify);
  export default {
    name: '',
    data(){
      return {
+       showSlider: false,
          cancelImg: require('@/assets/images/icon/cancel1.png'),
          show: false,
          params: {
           userName: '',
-          password: ''
+          password: '',
+          phone: '',
+          code: ''
         },
         ifRemember: false,
         registerSuccess: true,
-        logStatus: 'login'
+        logStatus: 'login',
+        msg: '123123',
+        text: '向右滑',
+        timer: null,
+        time: null,
      }
    },
    computed:{
@@ -75,7 +109,7 @@ import { Checkbox } from 'element-ui'
     //  }
    },
    components: {
-     'el-checkbox': Checkbox
+     'el-checkbox': Checkbox,
    },
    watch:{
     logStatus(v){
@@ -116,6 +150,45 @@ import { Checkbox } from 'element-ui'
     
    },
    methods: {
+    sendCode(){
+      if(this.time) return;
+      if(this.params.phone&&(/^1[3456789]\d{9}$/.test(this.params.phone))){
+        // this.showSlider = true;
+        this.onSuccess()
+      }else{
+        this.$toast('请正确输入手机号')
+      }
+    },
+    onSuccess(){
+      this.msg = 'login success'
+      api.getCode({phone: this.params.phone}).then(res=>{
+        if(res.success){
+          this.$toast('发送验证码成功')
+          this.showSlider = false;
+          this.time = 60;
+          this.timer = setInterval(()=>{
+            if(this.time>1){
+              this.time -= 1;
+            }else{
+              clearInterval(this.timer);
+              this.time = null;
+              this.timer = null;
+            }
+            
+          },1000)
+        }else{
+          this.$toast(res.message)
+        }
+      })
+      
+      // getCode
+    },
+    onFail(){
+      this.msg = ''
+    },
+    onRefresh(){
+      this.msg = ''
+    },
     toUrls(item,params){
        this.postBehavior(item.postId,'jump');
        this.toUrl(params)
@@ -172,18 +245,19 @@ import { Checkbox } from 'element-ui'
       let params = deepClone(this.params);
       if(v == 1){
         if(params.userName&&params.password){
+          
           return true
         }else{
+          this.$toast('请输入用户名和密码')
           return false
         }
       }else{
-        if(params.userName&&params.password&&params.repassword){
-          if(params.password == params.repassword){
-            return true
-          }else{
-            this.$message.error('两次输入的密码不正确')
-            return false
-          }
+        if(!params.phone||!(/^1[3456789]\d{9}$/.test(params.phone))||!params.code){
+          this.$toast('请完成手机号码验证')
+          return false;
+        }
+        if(params.userName&&params.password){
+          return true
           
         }else{
           return false
@@ -290,6 +364,15 @@ import { Checkbox } from 'element-ui'
         flex: 0 0 100px;
         border: 1px solid #ddd;
         cursor: pointer;
+        color: #666;
+        border-radius: 24px;
+        moz-user-select: -moz-none;
+        -moz-user-select: none;
+        -o-user-select:none;
+        -khtml-user-select:none;
+        -webkit-user-select:none;
+        -ms-user-select:none;
+        user-select:none;
       }
     }
     .ylogin{
@@ -301,6 +384,13 @@ import { Checkbox } from 'element-ui'
       margin-top: 24px;
       margin-bottom: 24px;
       cursor: pointer;
+      moz-user-select: -moz-none;
+      -moz-user-select: none;
+      -o-user-select:none;
+      -khtml-user-select:none;
+      -webkit-user-select:none;
+      -ms-user-select:none;
+      user-select:none;
     }
     p{
       font-size: 12px;
@@ -309,6 +399,44 @@ import { Checkbox } from 'element-ui'
         color: #e23d0e;
         cursor: pointer;
       }
+    }
+  }
+}
+.phonever{
+  .title{
+    font-weight: bold;
+    margin-top: 16px;
+  }
+}
+.sliders{
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  right: 0;
+  bottom: 0;
+  background: rgba(255,255,255,1);
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  border-radius: 10px;
+  .title{
+    padding: 8px 4px 10px;
+    font-size: 16px;
+    font-weight: bold;
+  }
+  .slid{
+    // border: 1px solid #f1f1f1;
+    padding: 4px;
+    padding-bottom: 40px;
+    .tclose{
+      text-align: center;
+      margin-top: 20px;
+      position: absolute;
+      bottom: 30px;
+      left: 140px;
+      cursor: pointer;
+      font-size: 13px;
+      color: #999;
     }
   }
 }
