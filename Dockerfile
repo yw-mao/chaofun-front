@@ -13,8 +13,6 @@ RUN apt-get update && apt-get upgrade -y && \
     npm
 
 RUN apt-get install libseccomp-dev
-RUN apt-get install docker-ce
-
 
 RUN ls ./
 
