@@ -12,7 +12,7 @@ RUN apt-get update && apt-get upgrade -y && \
     apt-get install -y nodejs \
     npm
 
-RUN apt-get instlal git
+RUN apt-get install git
 RUN apt-get install libseccomp-dev
 
 RUN ls ./
