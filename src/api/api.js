@@ -763,6 +763,14 @@ export function listTagPostCount(params) {
   })
 }
 
+export function phoneLogin(params) {
+  return request({
+    url: '/api/v0/phone/login',
+    method: 'get',
+    params
+  })
+}
+
 
 /** 活动查询 */
 

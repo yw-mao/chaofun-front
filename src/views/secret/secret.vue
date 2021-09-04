@@ -159,7 +159,6 @@
         this.defaultId = res.data.submitForum;
         this.activeId = res.data.submitForum;
         this.ossName = res.data.imageName;
-        console.log(this);
       })
 
       this.getDefaultForum()
