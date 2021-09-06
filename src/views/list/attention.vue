@@ -65,7 +65,8 @@ export default {
         imageName: '3de7839782b923ea34f0a10af5766072.png',
         name: '关注',
         desc: '您关注人的动态',
-        admin : false
+        admin : false,
+        openChat: false
       },
       ifcanget: true,
       whichOne: 'love',
