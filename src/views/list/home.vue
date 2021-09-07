@@ -246,6 +246,10 @@ export default {
         }
       }
     });
+    this.$EventBus.$on("resetItem", (params) => {
+      //需要执行的代码
+      this.lists.splice(params.index,1,params.item)
+    });
   },
 
   created() {
@@ -357,7 +361,10 @@ export default {
 
           //获取标签列表
           this.getForumTag();
-          this.listPins();
+          if(params.order=='hot'&&!params.tagId){
+            this.listPins();
+          }
+          
         }
       }
       api.getPosts(params).then((res) => {

@@ -36,8 +36,8 @@
                 <span  @click.stop="toUser(item.userInfo)" class="username">{{item.userInfo.userName}}</span>
                 <span class="time">{{moment.duration(moment(item.gmtCreate) - moment()).humanize(true)}}</span>
                 <div class="zan_shu" style="display:inline-block;padding-left:20px;"> <span>{{item.ups - item.downs}}个赞</span></div>
-                <div v-if="ISPHONE" @click="toReplay2(item)" class="zan_shu" style="display:inline-block;padding-left:20px;">回复</div>
-                <div v-else @click="toReplay(item)" class="zan_shu" style="display:inline-block;padding-left:20px;">回复</div>
+                <div v-if="ISPHONE&&(!postInfo.disableComment||postInfo.forumAdmin)" @click="toReplay2(item)" class="zan_shu" style="display:inline-block;padding-left:20px;">回复</div>
+                <div v-if="!ISPHONE&&(!postInfo.disableComment||postInfo.forumAdmin)" @click="toReplay(item)" class="zan_shu" style="display:inline-block;padding-left:20px;">回复</div>
                 <div v-if="item.canDeleted" @refreshDelete="refreshDelete" @click="deleteComment(item)" class="to_delete">删除</div>
             </div> 
             <div class="content">
@@ -72,7 +72,13 @@
                     </div>
                 </div>
                 <div v-if="replayItem" @click="cancelReplay" style="padding: 6px 0px;cursor:pointer;float:right;">取消回复</div>
-                <el-input style="font-size:14px;" v-on:focus="inputFocus" @keyup.native="bindInput" v-on:blur="inputBlur" type="textarea" v-model="comment" class="textarea" :placeholder="replayItem?'我对'+replayItem.userInfo.userName+'说：':'发表你的想法'" :autosize="{ minRows: 2, maxRows: 4}"></el-input>
+                <el-input style="font-size:14px;" 
+                v-on:focus="inputFocus" @keyup.native="bindInput" 
+                v-on:blur="inputBlur" type="textarea" 
+                v-model="comment" class="textarea" 
+                :placeholder="replayItem?'我对'+replayItem.userInfo.userName+'说：':'发表你的想法'" 
+                :autosize="{ minRows: 2, maxRows: 4}">
+                </el-input>
                 <div class="reply_button" v-loading="imagesUploading">
                     <div class="subims" v-if="images.length">
                         <a v-for="img in images" :key="img" :href="imgOrigin+img" target="_blank">[附图]</a>
@@ -177,6 +183,10 @@ export default {
             type: Boolean,
             default: true
         },
+        postInfo: {
+            type: Object,
+            default: {}
+        }
     },
     components: {
 

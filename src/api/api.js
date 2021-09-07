@@ -771,6 +771,23 @@ export function phoneLogin(params) {
   })
 }
 
+export function disableComment(params) {
+  return request({
+    url: '/api/v0/post/disableComment',
+    method: 'get',
+    params
+  })
+}
+
+export function enableComment(params) {
+  return request({
+    url: '/api/v0/post/enableComment',
+    method: 'get',
+    params
+  })
+}
+
+
 
 /** 活动查询 */
 
