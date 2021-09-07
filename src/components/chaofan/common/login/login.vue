@@ -5,7 +5,7 @@
         <img @click="cancelLogin" class="cancel" :src='cancelImg'/>
         <div class="tnames">
           <div @click="checkoutLoginType('account')" :class="['tts',{'tts_act':loginType=='account'}]">账号登录</div>
-          <div @click="checkoutLoginType('phone')" :class="['tts',{'tts_act':loginType=='phone'}]">验证码登录</div>
+          <div @click="checkoutLoginType('phone')" :class="['tts',{'tts_act':loginType=='phone'}]">短信登录</div>
         </div>
         <div v-if="loginType=='account'" style="">
           <input type="text" v-model="params.userName"  placeholder="用户名 / 手机号"/>
