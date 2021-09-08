@@ -128,7 +128,7 @@
                                     发帖
                                 </el-button>
                                 </div>
-                                <div v-if="forumInfo.admin" class="forum_add">
+                                <div v-if="forumInfo.openChat" class="forum_add">
                                   <el-button @click="gotoChat" style="width:100%;" type="success" block>
                                     加入版聊
                                   </el-button>

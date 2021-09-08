@@ -72,12 +72,12 @@ export default {
           value: 'comment'
         },
         {
-          label: '点赞',
-          value: 'upvote'
-        },
-        {
           label: '@ 我',
           value: 'at'
+        },
+        {
+          label: '点赞',
+          value: 'upvote'
         },
         // {
         //   label: '通知',
