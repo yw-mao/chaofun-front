@@ -19,12 +19,12 @@
     <div class="scrollbar_container">
       
       <div v-if="$store.state.settings.leftNav=='normal'">
-        <div v-for="route in permission_routes" :key="route.path" class="items">
+        <div v-for="route in permission_routes" :key="route.name" class="items">
           <div v-if="route.name">
             <!-- 一级 -->
             <div @click="doCollapse(route)" class="items_title">
               <el-popover :disabled="!isCollapse" :visible-arrow='false' placement="right-start"   width="200" trigger="hover">
-                <div class="popover-title" v-for="item in route.children" :key="item.path" >
+                <div class="popover-title" v-for="item in route.children" :key="item.name" >
                   <span @click="toUrl({path:item.path})" :class="[{'item_title_active':$route.path==item.path}]">{{item.meta.title}}</span>
                 </div>
                 <svg-icon slot="reference" :icon-class='route.meta.icon'/>
@@ -34,7 +34,7 @@
             </div>
             <!-- 二级 -->
             <div v-if="!route.hide" class="item">
-              <div v-for="item in route.children" :key="item.path" >
+              <div v-for="item in route.children" :key="item.name" >
                 <div @click="toUrl({path:item.path})" class="item_title">
                   <svg-icon v-if="!item.meta.icon.includes('http')" :icon-class='item.meta.icon'/>
                   <img v-else class="items_title_icon" :src="item.meta.icon" alt=""> 
@@ -49,7 +49,7 @@
       </div>
       
       <div v-if="$store.state.settings.leftNav=='allForm'">
-        <div v-for="route in formRoute" :key="route.id" class="items">
+        <div v-for="route in formRoute" :key="route.name" class="items">
           <div @click="toUrl2(route)" :class="['items_title',{'items_title_active':$store.state.var.cateId==route.id}]">{{route.name}}</div>
           <!-- <div v-if="route.name">
             <div @click="doCollapse(route)" class="items_title">

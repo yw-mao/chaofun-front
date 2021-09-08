@@ -26,7 +26,7 @@
             :loading="loading">
             <el-option
               v-for="item in options"
-              :key="item.link"
+              :key="item.name"
               :label="item.title"
               :value="item.link"><img class="sicon" :src="imgOrigin+item.icon" alt=""> <span>{{item.title}}</span>
             </el-option>

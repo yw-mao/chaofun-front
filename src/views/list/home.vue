@@ -361,10 +361,9 @@ export default {
 
           //获取标签列表
           this.getForumTag();
-          if(params.order=='hot'&&!params.tagId){
-            this.listPins();
-          }
-          
+        }
+        if(params.order=='hot'&&!params.tagId){
+          this.listPins();
         }
       }
       api.getPosts(params).then((res) => {

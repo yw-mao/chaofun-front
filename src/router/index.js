@@ -126,14 +126,14 @@ export const constantRoutes = [
       {
         path: '/middles',
         component: () => import('@/views/dashboard/index'),
-        name: 'Dashboard',
+        name: 'middles',
         meta: { title: '首页', icon: 'dashboard', affix: true },
         hidden: true
       },
       {
         path: '/trends',
         component: () => import('@/views/list/attention'),
-        name: 'Dashboard',
+        name: 'trends',
         meta: { title: '关注', icon: 'dashboard', affix: true },
         hidden: true
       },
@@ -171,7 +171,7 @@ export const constantRoutes = [
       {
         path: '/f/:forumId',
         component: () => import('@/views/list/home'),
-        name: '/f/1',
+        name: '/f/:forumId',
         meta: { title: ''},
         hidden: true
       },

@@ -87,7 +87,7 @@ const actions = {
             var b = []
             item.menues.forEach(item2=>{
               var obj2 = {
-                name: item2.link,
+                name: item2.link+index+parseInt(Math.random()*1000),
                 path: `${item2.forumId=='all'?'/all':item2.link}`,
                 hide: false,
                 component: () => import(`@/views/${doRoute(item2)}`),

@@ -6,9 +6,11 @@ import getPageTitle from '@/utils/get-page-title'
 
 const whiteList = ['/login', '/auth-redirect'] // no redirect whitelist
 
+
 var doRoute = async()=>{
   const accessRoutes = await store.dispatch('permission/generateRoutes', ['admin'])
           // dynamically add accessible routes
+
   router.addRoutes(accessRoutes)
 }
 doRoute()
