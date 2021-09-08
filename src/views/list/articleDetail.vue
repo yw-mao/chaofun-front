@@ -44,7 +44,7 @@
               <el-row :gutter="20">
                   <el-col :span="ISPHONE?24:17" :offset="isPhone?0:0">
                       <div style="height:30px;"></div>
-                      <ListItem :isindex="false" :lists="[this.pagedata]"></ListItem>
+                      <ListItem :isindex="false" :lists="[pagedata]"></ListItem>
                       <div :class="['sub_comment', {'sub_comment_phone':ISPHONE}]">
                           <div v-show="showAt" class="atuser">
                             <div v-for="(it,ins) in atUsers" :key="ins" @click="chooseAt($event,it)" class="at_item">
@@ -52,14 +52,19 @@
                             </div>
                           </div>
                           <div v-if="replayItem" @click="cancelReplay" style="padding: 6px 0px;cursor:pointer;float:left;">取消回复</div>
-                          <el-input style="font-size:14px;" v-on:focus="inputFocus" @keyup.native="bindInput" v-on:blur="inputBlur" type="textarea" @focus="doLogin" class="textarea" :placeholder="replayItem?'我对'+replayItem.userInfo.userName+'说：':'发表你的想法'" :autosize="{ minRows: 2, maxRows: 4}"  v-model="comment"></el-input>
+                          <el-input :disabled="pagedata.disableComment&&!pagedata.forumAdmin" style="font-size:14px;" v-on:focus="inputFocus" @keyup.native="bindInput" 
+                          v-on:blur="inputBlur" type="textarea" @focus="doLogin" class="textarea" 
+                          :placeholder="pagedata.disableComment&&!pagedata.forumAdmin?'该帖已关闭评论功能，只有版主能够评论该帖':'发表你的想法'" 
+                          :autosize="{ minRows: 2, maxRows: 4}"  v-model="comment">
+                          </el-input>
                           <div class="sub_botton" v-loading="imagesUploading">
                             <div class="subims" v-if="images.length">
                                 <a v-for="img in images" :key="img" :href="imgOrigin+img" target="_blank">[附图]</a>
                             </div>
                             <div ></div>
-                            <el-button style="height:36px;" @click="toSub" type="primary">发表</el-button>
+                            <el-button :disabled="pagedata.disableComment&&!pagedata.forumAdmin" style="height:36px;" @click="toSub" type="primary">发表</el-button>
                             <el-upload
+                            :disabled="pagedata.disableComment&&!pagedata.forumAdmin"
                             class="avatar-uploader"
                             action="/api/upload_image"
                             name="file"
@@ -88,7 +93,7 @@
                       </div>
                       <div class="comment_list">
                           <div class="comment_title"><i style="font-size:24px;vertical-align:middle;" class="el-icon-s-comment"></i> 评论</div> 
-                          <commentitem @refreshDelete="refreshDelete" @toReplay2="toReplay2" @refreshComment="refreshComment" :treeData="treeData"></commentitem>
+                          <commentitem :postInfo="{disableComment:pagedata.disableComment,forumAdmin:pagedata.forumAdmin}" @refreshDelete="refreshDelete" @toReplay2="toReplay2" @refreshComment="refreshComment" :treeData="treeData"></commentitem>
                           <div v-if="!lists.length" class="no_comment">
                               还没有评论，你的机会来了 ~
                           </div> 
@@ -507,8 +512,11 @@ export default {
       this.showIcon = true
     },
     chooseEmoji(item){
-      this.comment += item;
-      this.showIcon = false
+      if(!this.pagedata.disableComment||this.pagedata.forumAdmin){
+        this.comment += item;
+        this.showIcon = false
+      }
+      
     },
     manage() {
       this.$router.push({path:'/f/' + this.forumInfo.id + '/setting'})

@@ -109,7 +109,7 @@ export default {
     }
   },
   mounted(){
-    console.log('permission_routes',this.permission_routes)
+    
     // this.$refs.asd.click(()=>{
     //   console.log(111)
     // })

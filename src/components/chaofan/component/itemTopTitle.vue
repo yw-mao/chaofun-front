@@ -184,6 +184,8 @@
               command="取消置顶"
               >取消置顶</el-dropdown-item
             >
+            <el-dropdown-item v-if="item.forumAdmin&&item.disableComment" command="开启评论">开启评论</el-dropdown-item>
+            <el-dropdown-item v-if="item.forumAdmin&&!item.disableComment" command="关闭评论">关闭评论</el-dropdown-item>
             <el-dropdown-item command="删除">删除帖子</el-dropdown-item>
             <el-dropdown-item command="关闭">关闭</el-dropdown-item>
           </el-dropdown-menu>
@@ -362,8 +364,33 @@ export default {
         });
       } else if (command == "删除") {
         this.deletePost(this.item, this.index);
-      } else {
+      } else if(command == "关闭评论") {
+        this.disableComment('close');
+        
+      }else if(command == "开启评论") {
+        this.disableComment('open');
+        
       }
+    },
+    disableComment(v){
+      if(v=='close'){
+        api.disableComment({postId: this.item.postId}).then(res=>{
+          this.item.disableComment = true;
+          this.$toast('该帖已关闭评论')
+          if(res.success){
+            this.$EventBus.$emit("resetItem", {index: this.index,item: this.item});
+          }
+        })
+      }else{
+        api.enableComment({postId: this.item.postId}).then(res=>{
+          this.$toast('该帖已开启评论')
+          this.item.disableComment = false;
+          if(res.success){
+            this.$EventBus.$emit("resetItem", {index: this.index,item: this.item});
+          }
+        })
+      }
+      
     },
     toForum(item) {
       localStorage.removeItem("storedata");
