@@ -185,7 +185,9 @@ export default {
         },
         postInfo: {
             type: Object,
-            default: {}
+            default(){
+                return {}
+            }
         }
     },
     components: {
