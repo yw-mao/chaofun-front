@@ -1,6 +1,6 @@
 <template>
- <div v-if="show" class="cover">  
-    <div v-if="logStatus == 'login'" class="ycovers ">
+ <div  v-if="show" class="cover">  
+    <div @keyup="enters" v-if="logStatus == 'login'" class="ycovers ">
       <div class="ycontainer">
         <img @click="cancelLogin" class="cancel" :src='cancelImg'/>
         <div class="tnames">
@@ -27,7 +27,7 @@
         <p>还未注册？ <span @click='toWhat("register")'>去注册</span></p>
       </div>
     </div>
-    <div v-if="logStatus == 'register'" class="ycovers ">
+    <div @keyup="enters" v-if="logStatus == 'register'" class="ycovers ">
       <div class="ycontainer">
         <img @click="cancelLogin" class="cancel" :src='cancelImg'/>
         <!-- <h1>快速注册</h1> -->
@@ -160,9 +160,31 @@ import { Checkbox } from 'element-ui'
      }
    },
    mounted() {
+     let self = this;
+     if(document.getElementById('loginBox')){
+       document.getElementById('loginBox').addEventListener('keyup',(e)=>{
+        if(e.code.toLowerCase()=='enter'){
+          if(self.logStatus=='login'){
+            self.logOrReg(1);
+          }else{
+            self.logOrReg(1);
+          }
+        }
+      })
+     }
     
    },
    methods: {
+     enters(e){
+      
+       if(e.code.toLowerCase()=='enter'){
+          if(this.logStatus=='login'){
+            this.logOrReg(1);
+          }else{
+            this.logOrReg(1);
+          }
+        }
+     },
     checkoutLoginType(v){
       this.loginType = v;
     },

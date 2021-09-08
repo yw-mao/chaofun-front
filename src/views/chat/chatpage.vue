@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div id="chatBox" class="container">
       <div :class="['chat_box',{'chat_box_phone': ISPHONE}]">
         <div class="title">
         <div class="forum_name">
@@ -103,7 +103,7 @@
         </div>
         <div
             id="msg_end"
-            style="height: 0px; margin-bottom: 80px; overflow: hidden"
+            style="height: 0px; margin-bottom: 50px; overflow: hidden"
         ></div>
         </div>
         <div v-if="prevImg" class="tietu">
@@ -226,6 +226,15 @@ export default {
     console.log(this.$route.path);
     if (this.$route.params.id) {
       this.initWebSocket();
+    }
+    let self = this;
+    if(document.getElementById('chatBox')){
+      document.getElementById('chatBox').addEventListener('keyup',(e)=>{
+        console.log(111222,e);
+        if(e.code.toLowerCase()=='enter'&&self.prevImg){
+          self.sendImage();
+        }
+      })
     }
     try{
       let self = this;
@@ -414,7 +423,9 @@ export default {
           console.log("到达底部");
           that.unread = 0;
           that.showTips = false;
-          document.getElementById("msg_end").scrollIntoView();
+          setTimeout(()=>{
+            document.getElementById("msg_end").scrollIntoView();
+          },10)
         } else {
           that.unread += 1;
           that.showTips = true;
@@ -458,7 +469,9 @@ export default {
       this.content = "";
       this.unread = 0;
       this.showTips = false;
-      document.getElementById("msg_end").scrollIntoView();
+      setTimeout(()=>{
+        document.getElementById("msg_end").scrollIntoView();
+      },10)
     },
     inputFocus() {
       document.addEventListener("paste", this.toPaste);

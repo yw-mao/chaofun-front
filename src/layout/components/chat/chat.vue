@@ -1,5 +1,5 @@
 <template>
-  <div class="chat_box">
+  <div id="chatBox" class="chat_box">
     <div class="title">
       <div class="forum_name">
         <img :src="imgOrigin + forumInfo.imageName" alt="" />
@@ -102,7 +102,7 @@
       </div>
       <div
         id="msg_end"
-        style="height: 0px; margin-bottom: 80px; overflow: hidden"
+        style="height: 0px; margin-bottom: 50px; overflow: hidden"
       ></div>
     </div>
     <div v-if="prevImg" class="tietu">
@@ -222,6 +222,16 @@ export default {
     if (localStorage.getItem("wsForum")) {
       this.initWebSocket();
     }
+    let self = this;
+    if(document.getElementById('chatBox')){
+      document.getElementById('chatBox').addEventListener('keyup',(e)=>{
+        console.log(111222,e);
+        if(e.code.toLowerCase()=='enter'&&self.prevImg){
+          self.sendImage();
+        }
+      })
+    }
+    
   },
   methods: {
     toNewPage(){
@@ -390,7 +400,9 @@ export default {
           console.log("到达底部");
           that.unread = 0;
           that.showTips = false;
-          document.getElementById("msg_end").scrollIntoView();
+          setTimeout(()=>{
+            document.getElementById("msg_end").scrollIntoView();
+          },10)
         } else {
           that.unread += 1;
           that.showTips = true;
@@ -423,7 +435,10 @@ export default {
       this.websock.send(msg);
       this.unread = 0;
       this.showTips = false;
-      document.getElementById("msg_end").scrollIntoView();
+      setTimeout(()=>{
+        document.getElementById("msg_end").scrollIntoView();
+      },10)
+      
       
     },
     inputFocus() {
