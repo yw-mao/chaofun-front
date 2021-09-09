@@ -433,6 +433,9 @@ export default {
           // },2000)
           // that.TipintoView();
         }
+        if(document.hidden){
+          this.showDeskTopNotice('chao.fun',this.forumInfo.name,data.data);
+        }
       }
       if (data.type == "load_result" && data.data && data.data.length) {
         this.msgList = data.data;
@@ -612,64 +615,45 @@ export default {
       this.$store.dispatch("user/SET_showChatBox", false);
     },
     ccc() {},
-    getWss(ps) {
-      let self = this;
-      var ws = new WebSocket("wss://chao.fun/ws/v0/forumChat/1");
-      var heartCheck = {
-        timeout: 1000, //60ms
-        timeoutObj: null,
-        serverTimeoutObj: null,
-        reset: function () {
-          clearTimeout(this.timeoutObj);
-          clearTimeout(this.serverTimeoutObj);
-          this.start();
-        },
-        start: function () {
-          var self = this;
-          this.timeoutObj = setTimeout(function () {
-            // ws.send("HeartBeat");
-            ws.send(
-              ps ? JSON.stringify(ps) : '{"type":"text","content":"你好"}'
-            );
-            self.serverTimeoutObj = setTimeout(function () {
-              ws.close(); //如果onclose会执行reconnect，我们执行ws.close()就行了.如果直接执行reconnect 会触发onclose导致重连两次
-            }, self.timeout);
-          }, this.timeout);
-        },
-      };
-      ws.onopen = function () {
-        heartCheck.start();
-      };
-      ws.onmessage = function (event) {
-        // heartCheck.reset();
-        let data = JSON.parse(event.data);
-        self.msgList.push(data.data);
-      };
-      ws.onclose = function () {
-        // reconnect();
-        heartCheck.reset();
-      };
-      ws.onerror = function () {
-        // reconnect();
-        heartCheck.reset();
-      };
-      ws.onopen = function () {
-        ws.send(ps ? JSON.stringify(ps) : '{"type":"text","content":"你好"}');
-      };
-      ws.onmessage = function (event) {
-        let data = JSON.parse(event.data);
-        self.msgList.push(data.data);
-      };
-      ws.onreconnect = function () {
-        console.log("reconnecting...");
-      };
-      // ws.onerror = function(event) {
-      //     // let data = JSON.parse(event.data);
-      //     // self.msgList.push(data.data);
-      //     console.log(event);
-      //     self.$store.dispatch('user/SET_wss',this.getWss);
-      // };
-      return ws;
+    showDeskTopNotice(id, title, data){
+        var Notification = window.Notification || window.mozNotification || window.webkitNotification;
+        if(Notification){
+            Notification.requestPermission(function(status){
+                //status默认值'default'等同于拒绝 'denied' 意味着用户不想要通知 'granted' 意味着用户同意启用通知
+                if("granted" != status){
+                    return;
+                }else{
+                    var tag = "sds"+Math.random();
+                    var notify = new Notification( title, {
+                        dir:'auto',
+                        data: {forumId: data.forumId},
+                                lang:'zh-CN',
+                                requireInteraction: false,
+                                tag: id,//实例化的notification的id
+                                icon:'https://i.chao.fun/biz/9563cdd828d2b674c424b79761ccb4c0.png?x-oss-process=image/resize,h_80',//通知的缩略图,//icon 支持ico、png、jpg、jpeg格式
+                                body: data.sender.userName+'说：'+data.content //通知的具体内容
+                        });
+                        notify.onclick=function(val){
+                            //如果通知消息被点击,通知窗口将被激活
+                            console.log(val);
+                            window.focus();
+                            notify.close();
+                            
+                        },
+                        notify.onshow = function () { 
+                            setTimeout(notify.close.bind(notify), 5000); 
+                        }
+                        notify.onerror = function () {
+                            console.log("HTML5桌面消息出错！！！");
+                        };
+                        notify.onclose = function () {
+                            console.log("HTML5桌面消息关闭！！！");
+                        };
+                    }
+            });
+        }else{
+            console.log("您的浏览器不支持桌面消息");
+        }
     },
   },
 };
