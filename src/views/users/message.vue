@@ -79,10 +79,10 @@ export default {
           label: '点赞',
           value: 'upvote'
         },
-        // {
-        //   label: '通知',
-        //   value: 'notice'
-        // },
+        {
+          label: '通知',
+          value: 'notice'
+        },
       ],
       params: {
         pageSize: 20,
