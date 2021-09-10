@@ -819,6 +819,7 @@ export default {
   padding: 0 0 10px 0;
   font-size: 16px;
   font-weight: 600;
+  line-height: 24px;
   position: relative;
 }
 .pin_title {
@@ -908,7 +909,8 @@ export default {
   display: inline-block;
   span {
     display: inline-block;
-    padding: 2px 6px;
+    vertical-align: middle;
+    padding: 0px 6px;
     background: #ff9300;
     border-radius: 4px;
     font-size: 13px;

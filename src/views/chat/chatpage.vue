@@ -616,6 +616,7 @@ export default {
     },
     ccc() {},
     showDeskTopNotice(id, title, data){
+        let self = this;
         var Notification = window.Notification || window.mozNotification || window.webkitNotification;
         if(Notification){
             Notification.requestPermission(function(status){
@@ -630,8 +631,8 @@ export default {
                                 lang:'zh-CN',
                                 requireInteraction: false,
                                 tag: id,//实例化的notification的id
-                                icon:'https://i.chao.fun/biz/9563cdd828d2b674c424b79761ccb4c0.png?x-oss-process=image/resize,h_80',//通知的缩略图,//icon 支持ico、png、jpg、jpeg格式
-                                body: data.sender.userName+'说：'+data.content //通知的具体内容
+                                icon:data.type=='image'?(self.imgOrigin+data.content):('https://i.chao.fun/biz/9563cdd828d2b674c424b79761ccb4c0.png?x-oss-process=image/resize,h_80'),//通知的缩略图,//icon 支持ico、png、jpg、jpeg格式
+                                body: data.type=='text'? (data.sender.userName+'说：'+data.content):(data.type=='image'?data.sender.userName+'【发来一张图片】':data.sender.userName+'-发来未知类型消息') //通知的具体内容
                         });
                         notify.onclick=function(val){
                             //如果通知消息被点击,通知窗口将被激活

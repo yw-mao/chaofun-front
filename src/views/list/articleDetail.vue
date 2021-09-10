@@ -329,8 +329,13 @@ export default {
                 this.canSearch = true;
                 this.showAt = true;
                 this.atUsers = res.data;
+              }else{
+                this.canSearch = true;
+                this.showAt = false;
+                this.atUsers = res.data;
               }
-              // console.log(res)
+            }).catch((e)=>{
+              this.canSearch = true;
             })
           }
           

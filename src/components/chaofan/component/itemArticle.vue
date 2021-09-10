@@ -138,10 +138,12 @@ import * as api from '@/api/api'
     font-size: 15px;
   }
   /deep/ .detail_line p{
-    line-height: 1.6em;
-    margin: 1.4em 0;
+    line-height: 1.8em;
+    // margin: 1.4em 0;
   }
   /deep/ .detail_line img{
     max-width: 100%;
+    vertical-align: middle;
+    margin: 10px 0;
   }
 </style>
