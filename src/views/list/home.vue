@@ -270,9 +270,19 @@ export default {
   },
   methods: {
     doTagCount(item){
-      let count = this.tagCountList[this.tagCountList.findIndex(it=>it.tag_id==item.id)].count;
+      let count;
+      try{
+        count = this.tagCountList[this.tagCountList.findIndex(it=>it.tag_id==item.id)].count;
+      }catch{
+        count = 0;
+      }
       
-      return '('+count+')';
+      if(count){
+        return '('+count+')';
+      }else{
+        return '';
+      }
+      
     },
     listTagPostCount(){
       api.listTagPostCount({forumId: this.params.forumId}).then(res=>{

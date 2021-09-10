@@ -135,10 +135,11 @@ import * as api from '@/api/api'
     overflow: hidden;
     word-break:break-all; /*支持IE，chrome，FF不支持*/
 　　word-wrap:break-word;/*支持IE，chrome，FF*/
-    font-size: 15px;
+    font-size: 16px;
   }
   /deep/ .detail_line p{
     line-height: 1.8em;
+    margin-bottom: 8px;
     // margin: 1.4em 0;
   }
   /deep/ .detail_line img{

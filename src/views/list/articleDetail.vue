@@ -1094,6 +1094,9 @@ queryChildren (parent, list) {
   bottom: 0;
   width: 100%;
   box-sizing: border-box;
+  padding: 4px 10px 0 !important;
+  z-index: 1;
+  border-top: 1px solid #f1f1f1;
   .sub_botton{
     padding: 0;
   }
