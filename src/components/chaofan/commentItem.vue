@@ -217,16 +217,15 @@ export default {
         },
         doText(item){
             if(item.atUsers&&item.atUsers.length){
+                var c;
                 item.atUsers.forEach((it,ins)=>{
-                    console.log(it.userName);
                     let b = it.userName;
-                    if(item.text.includes(b)){
-                        item.text = item.text.replace('@'+b, '<span key="'+ it.userId +'" class="light" style="color:rgba(24, 144, 255,0.8);font-size:14px;">@'+b+'</span>')
-                    }
+                    c = item.text.replace('@'+b, '<span key="'+ it.userId +'" class="light" style="color:rgba(24, 144, 255,0.8);font-size:14px;">@'+b+'</span>')
                 })
-                
+                return c;
+            }else{
+                return item.text
             }
-            return item.text;
         },
         chooseAt(e,it){
       // this.comment = this.comment+it.userName+' ';
