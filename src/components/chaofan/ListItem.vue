@@ -51,7 +51,7 @@
           <!-- <span class="zhiding">置顶</span>  -->
           <div v-if="item.tags.length" class="tags">
             <div  v-for="(it, ins) in item.tags" :key="ins">
-                <span :style="{'backgroundColor': (it.backgroundColor||'red'),'color': it.fontColor||'#fff'}"
+                <span :style="{'backgroundColor': (it.backgroundColor||'#ff9300'),'color': it.fontColor||'#fff'}"
               ># {{ it.name }}</span>
             </div>
             
