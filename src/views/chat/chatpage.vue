@@ -249,6 +249,24 @@ export default {
     }
   },
   methods: {
+    islink(txtContent){
+        var check_www='w{3}'+'[^\\s]*';
+        var check_http='(https|http|ftp|rtsp|mms)://'+'[^(\\s|(\\u4E00-\\u9FFF)))]*';
+        var strRegex=check_http;
+        var httpReg=new RegExp(strRegex,'gi');
+        var  formatTxtContent = txtContent.replace(httpReg, function (httpText)
+            {
+                if(httpText.search('http')<0&&httpText.search('HTTP')<0)
+                {
+                    return '<a class="link" href="' + 'http://' + httpText + '" target="_blank">' + httpText + '</a>';
+                }
+                else
+                {
+                    return '<a class="link" href="'+ httpText + '" target="_blank">' + httpText + '</a>';
+                }
+            });
+        return formatTxtContent;
+    },
     chooseImage(){
       if(this.ISPHONE){
         this.uploadImage();
@@ -438,6 +456,9 @@ export default {
         }
       }
       if (data.type == "load_result" && data.data && data.data.length) {
+        data.data.forEach(item=>{
+          item.content = that.islink(item.content)
+        })
         this.msgList = data.data;
         setTimeout(() => {
           document.getElementById("msg_end").scrollIntoView();

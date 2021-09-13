@@ -241,6 +241,24 @@ export default {
     
   },
   methods: {
+    islink(txtContent){
+        var check_www='w{3}'+'[^\\s]*';
+        var check_http='(https|http|ftp|rtsp|mms)://'+'[^(\\s|(\\u4E00-\\u9FFF)))]*';
+        var strRegex=check_http;
+        var httpReg=new RegExp(strRegex,'gi');
+        var  formatTxtContent = txtContent.replace(httpReg, function (httpText)
+            {
+                if(httpText.search('http')<0&&httpText.search('HTTP')<0)
+                {
+                    return '<a class="link" href="' + 'http://' + httpText + '" target="_blank">' + httpText + '</a>';
+                }
+                else
+                {
+                    return '<a class="link" href="'+ httpText + '" target="_blank">' + httpText + '</a>';
+                }
+            });
+        return formatTxtContent;
+    },
     toNewPage(){
       let id = this.forumInfo.id;
        window.open(location.origin+'/chatpage/'+id, 'newwindow' + 'chatpage_' + id, 'height=600, width=800, top=0, left=0, toolbar=no, menubar=no, scrollbars=no, resizable=no,location=n o, status=no')
@@ -424,6 +442,10 @@ export default {
         
       }
       if (data.type == "load_result" && data.data && data.data.length) {
+        
+        data.data.forEach(item=>{
+          item.content = that.islink(item.content)
+        })
         this.msgList = data.data;
         setTimeout(() => {
           document.getElementById("msg_end").scrollIntoView();

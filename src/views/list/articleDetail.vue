@@ -307,6 +307,9 @@ export default {
       // document.getElementById('')
       let index = e.target.selectionStart;//光标位置
       this.pointIndex = index;
+      if(this.comment[index-1]!='@'){
+        this.showAt = false;
+      }
       if(this.comment.includes('@')){
         this.curInput = e.target;
         let s = this.comment.slice(0,index);
@@ -738,9 +741,12 @@ queryChildren (parent, list) {
     getLists(){
       let params = this.params;
       api.listCommentsV0(params).then(res=>{
-        this.lists.push(...res.data);
-        let data = this.lists;
-        this.treeData = this.transformTree(data);
+        if(res.data.length){
+          this.lists.push(...res.data);
+          let data = this.lists;
+          this.treeData = this.transformTree(data);
+        }
+        
       })
     },
     

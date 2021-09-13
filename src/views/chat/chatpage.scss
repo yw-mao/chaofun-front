@@ -256,3 +256,11 @@
     text-align: center;
     margin: 8px 0;
 }
+/deep/ .link{
+    cursor: pointer;
+    color: $linkcolor;
+    &:hover{
+        // color: #ff9300;
+        text-decoration: underline;
+    }
+}

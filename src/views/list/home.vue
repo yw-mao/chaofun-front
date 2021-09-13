@@ -30,7 +30,7 @@
       <div style="height: 50px"></div>
       <el-row :gutter="24">
         <el-col :span="isPhone ? 24 : doWidth()" :offset="-1">
-          <div class="navs" :style="{ left: ISPHONE ? '0' : '-60px' }">
+          <div class="navs" :style="{ left: ISPHONE ? '0' : '-40px' }">
             <div style="width: 100%">
               <selectList
                 @updateList="updateList"
@@ -38,7 +38,7 @@
               ></selectList>
             </div>
           </div>
-          <div class="grid-content" :style="{ left: ISPHONE ? '0' : '-60px' }">
+          <div class="grid-content" :style="{ left: ISPHONE ? '0' : '-40px' }">
             <ListItem
               v-if="$store.state.user.listMode == 'normal'"
               :marker="params.marker"
@@ -476,7 +476,7 @@ export default {
 }
 .fixed_tag {
   position: fixed;
-  width: 110px;
+  width: 120px;
   // height: 700px;
   top: 60px;
   bottom: 0;
@@ -490,12 +490,13 @@ export default {
 }
 .tag_item {
   border: 1px solid transparent;
-  line-height: 30px;
-  text-align: center;
+  line-height: 36px;
+  // text-align: center;
   margin: 10px 0;
-  border-radius: 20px;
+  border-radius: 4px;
   cursor: pointer;
   font-weight: bold;
+  padding-left: 5px;
   span{
     font-size: 13px;
   }

@@ -208,7 +208,7 @@ export default {
       let right = (winWidth - 640) / 2;
 
       return {
-        'left': right - 160 + 'px'
+        'left': right - 170 + 'px'
       }
     },
     doRightOffset() {

@@ -216,16 +216,18 @@ export default {
             }
         },
         doText(item){
+            var m = item.text;
             if(item.atUsers&&item.atUsers.length){
-                var c;
+                
                 item.atUsers.forEach((it,ins)=>{
                     let b = it.userName;
-                    c = item.text.replace('@'+b, '<span key="'+ it.userId +'" class="light" style="color:rgba(24, 144, 255,0.8);font-size:14px;">@'+b+'</span>')
+                    if(m.includes(it.userName)){
+                        m = m.replace('@'+b, '<span key="'+ it.userId +'" class="light" style="color:rgba(24, 144, 255,0.8);font-size:14px;">@'+b+'</span>')
+                    }
                 })
-                return c;
-            }else{
-                return item.text
+                
             }
+            return m;
         },
         chooseAt(e,it){
       // this.comment = this.comment+it.userName+' ';
@@ -250,6 +252,9 @@ export default {
       // document.getElementById('')
       let index = e.target.selectionStart;//光标位置
       this.pointIndex = index;
+      if(this.comment[index-1]!='@'){
+        this.showAt = false;
+      }
       if(this.comment.includes('@')){
         this.curInput = e.target;
         let s = this.comment.slice(0,index);

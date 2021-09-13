@@ -133,7 +133,7 @@
             <!-- 下拉菜单<i class="el-icon-arrow-down el-icon--right"></i> -->
             <i class="el-icon-more" style="font-size: 24px"></i>
           </span>
-          <el-dropdown-menu slot="dropdown">
+          <el-dropdown-menu style="width:150px;" slot="dropdown">
             <el-dropdown-item command="添加标签">
               <div @click.stop="toadd" class="addTag">添加标签 ></div>
             </el-dropdown-item>
@@ -165,13 +165,24 @@
             <el-dropdown-item v-if="item.canChangeTitle" command="加入合集">
               <div @click.stop="toCollect" class="addTag">加入合集 ></div>
             </el-dropdown-item>
-            <div v-if="showCollect" class="showTags showCol">
+            <div v-if="showCollect" class="showTags">
               <div v-if="collectList.length">
                 <div class="k" v-for="(it, ins) in collectList" @click="postCollect(it)" :key="ins">
                     {{ it.name }}
                 </div>
+                <!-- <el-radio-group @change="aaa" v-model="tags">
+                  <div class="k" v-for="(it, ins) in collectList" :key="ins">
+                    <el-radio
+                      @change="changeBox($event, it)"
+                      :label="it.id"
+                      :value="it.name"
+                      >{{ it.name }}</el-radio
+                    >
+                  </div>
+                </el-radio-group>
+                <div class="k add_collect" >新增合集</div> -->
               </div>
-              <div class="add_collect" v-else>暂无合集</div>
+              <div v-else class="add_collect" >新增合集</div>
             </div>
             <el-dropdown-item
               v-if="item.forum.admin && !item.isPin"
@@ -586,10 +597,10 @@ h1 {
   user-select: none;
 }
 .showTags {
-  padding: 10px 20px;
+  padding: 10px 10px;
   background: #f1f1f1;
   line-height: 30px;
-  text-align: center;
+  text-align: left;
   -moz-user-select: none; /*火狐*/
 
   -webkit-user-select: none; /*webkit浏览器*/
@@ -600,11 +611,17 @@ h1 {
 
   user-select: none;
   .k {
+    padding-left: 8px;
+    width: 100%;
+    box-sizing: border-box;
     &:hover {
       background: #fff;
       cursor: pointer;
     }
   }
+}
+.el-radio-group{
+  width: 100%;
 }
 .showCol{
   padding: 20px 10px;
@@ -616,6 +633,12 @@ h1 {
       color: #ff9300;
     }
   }
+}
+.k{
+  line-height: 40px;
+}
+.el-radio:last-child{
+  vertical-align: middle;
 }
 .add_collect{
   font-size: 12px;
