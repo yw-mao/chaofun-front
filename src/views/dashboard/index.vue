@@ -41,7 +41,7 @@
           <div
             class="grid-content"
             
-            :style="{left: ISPHONE?'0':'-60px'}"
+            :style="{left: ISPHONE?'0':'-40px'}"
           >
             <ListItem
               v-if="isRecommend || $store.state.user.listMode == 'normal'"
@@ -85,7 +85,7 @@
       @click="reFresh"
       v-if="isRecommend && ISPHONE"
       class="reFresh"
-      :style="{left: ISPHONE?'0':'-60px'}"
+      :style="{left: ISPHONE?'0':'-40px'}"
     >
       <i class="el-icon-refresh"></i>
     </div>

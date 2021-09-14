@@ -166,23 +166,36 @@
               <div @click.stop="toCollect" class="addTag">加入合集 ></div>
             </el-dropdown-item>
             <div v-if="showCollect" class="showTags">
-              <div v-if="collectList.length">
-                <div class="k" v-for="(it, ins) in collectList" @click="postCollect(it)" :key="ins">
+              <div >
+                <!-- <div class="k" v-for="(it, ins) in collectList" @click="postCollect(it)" :key="ins">
                     {{ it.name }}
-                </div>
-                <!-- <el-radio-group @change="aaa" v-model="tags">
+                </div> -->
+                <!-- <el-checkbox-group @change="aaa" v-model="tags">
+                  <div class="k" v-for="(it, ins) in collectList" :key="ins">
+                    <el-checkbox
+                      @change="changeBox($event, it)"
+                      :label="it.id"
+                      :value="it.name"
+                      >{{ it.name }}</el-checkbox
+                    >
+                  </div>
+                </el-checkbox-group> -->
+                <el-radio-group v-model="collectId">
                   <div class="k" v-for="(it, ins) in collectList" :key="ins">
                     <el-radio
-                      @change="changeBox($event, it)"
                       :label="it.id"
                       :value="it.name"
                       >{{ it.name }}</el-radio
                     >
                   </div>
                 </el-radio-group>
-                <div class="k add_collect" >新增合集</div> -->
+                <div class="addrows">
+                  <el-input type="text" maxlength="20" v-model="collectName" placeholder="合集名称"></el-input>
+                  <span @click="toAddCollect">新增</span>
+                </div>
+                <div @click="postCollect" class="add_collect" >确定</div>
               </div>
-              <div v-else class="add_collect" >新增合集</div>
+              <!-- <div v-else class="add_collect" >新增合集</div> -->
             </div>
             <el-dropdown-item
               v-if="item.forum.admin && !item.isPin"
@@ -198,7 +211,7 @@
             <el-dropdown-item v-if="item.forumAdmin&&item.disableComment" command="开启评论">开启评论</el-dropdown-item>
             <el-dropdown-item v-if="item.forumAdmin&&!item.disableComment" command="关闭评论">关闭评论</el-dropdown-item>
             <el-dropdown-item command="删除">删除帖子</el-dropdown-item>
-            <el-dropdown-item command="关闭">关闭</el-dropdown-item>
+            <el-dropdown-item command="关闭"> <div ref="cocolse">关闭</div> </el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
       </div>
@@ -223,6 +236,8 @@ export default {
   name: "",
   data() {
     return {
+      collectId: '',
+      collectName: '',
       dialogVisible: false,
       hasGetCollect: false,
       showCollect: false,
@@ -263,16 +278,35 @@ export default {
   },
   mounted() {},
   methods: {
-    postCollect(it){
-      let params  = {
-        postId: this.item.postId,
-        collectionId: it.id
+    toAddCollect(){
+      if(this.collectName){
+        api.addCollection({name: this.collectName}).then(res=>{
+          if(res.success){
+            this.collectList.push(res.data);
+            this.collectName = '';
+          }
+        })
+      }else{
+        this.$toast('请输入合集名称');
       }
-      api.addPostCollection(params).then(res=>{
-        if(res.success){
-          this.$toast('加入合集成功');
+    },
+    postCollect(it){
+      if(this.collectId){
+        let params  = {
+          postId: this.item.postId,
+          collectionId: this.collectId
         }
-      })
+        api.addPostCollection(params).then(res=>{
+          if(res.success){
+            // document.getElementById('cocolse').click()
+            this.$refs.cocolse.click();
+            this.$toast('加入合集成功');
+          }
+        })
+      }else{
+        this.$toast('还没有选中合集');
+      }
+      
     },
     addCollection(){
       api.addCollection({name: '测试合集_2'}).then(res=>{
@@ -308,7 +342,9 @@ export default {
             postId: this.item.postId,
             tagId: it.id,
           })
-          .then((res) => {});
+          .then((res) => {
+            this.$refs.cocolse.click();
+          });
       }
       this.$EventBus.$emit("refreshItemTag", {
         index: this.index,
@@ -323,6 +359,7 @@ export default {
       };
       api.addTag(params).then((res) => {
         if (res.success) {
+          this.$refs.cocolse.click();
           this.$toast("添加标签成功");
         }
       });
@@ -335,6 +372,10 @@ export default {
       }
     },
     toCollect(){
+      if(this.item.collection){
+        this.collectId = JSON.parse(JSON.stringify(this.item)).collection.id;
+      }
+      
       if (this.hasGetCollect) {
         this.showCollect = !this.showCollect;
       } else {
@@ -598,7 +639,7 @@ h1 {
 }
 .showTags {
   padding: 10px 10px;
-  background: #f1f1f1;
+  background: #f7f7f7;
   line-height: 30px;
   text-align: left;
   -moz-user-select: none; /*火狐*/
@@ -641,9 +682,34 @@ h1 {
   vertical-align: middle;
 }
 .add_collect{
-  font-size: 12px;
-  border: 1px solid #666;
+  font-size: 14px;
   color: #666;
   border-radius: 4px;
+  width: 60px;
+  height: 32px;
+  text-align: center;
+  line-height: 32px;
+  background: #1890ff;
+  color: #fff;
+  margin: 10px auto 4px;
 }
+.addrows{
+  display: flex;
+  span{
+    flex: 0 0 40px;
+    text-align: center;
+    font-size: 13px;
+    background: #ff9300;
+    color: #fff;
+    line-height: 30px;
+    height: 30px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+}
+/deep/ .el-input__inner{
+  padding: 0 4px;
+  height: 30px;
+}
+
 </style>

@@ -179,7 +179,86 @@
             <el-button type="primary" @click="centerDialogVisible = false">确 定</el-button>
         </span> -->
     </el-dialog>
-    
+    buildscript {
+    ext.kotlin_version = '1.3.50'
+    repositories {
+        // 配置HMS Core SDK的Maven仓地址。
+        maven {
+            url 'https://developer.huawei.com/repo/'
+        }
+        google()
+        jcenter()
+
+        maven {
+            url 'http://maven.aliyun.com/nexus/content/repositories/releases/'
+        }
+
+        maven {
+            url 'https://maven.aliyun.com/repository/jcenter'
+        }
+        maven { url 'https://dl.bintray.com/umsdk/release' }
+
+        maven { url "https://dl.bintray.com/thelasterstar/maven/" }
+
+
+    }
+
+    dependencies {
+        classpath 'com.android.tools.build:gradle:3.6.0-rc01'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath 'com.aliyun.ams:emas-services:1.0.1'
+
+    }
+
+}
+
+// allprojects {
+//     repositories {
+//         google()
+//         jcenter()
+//     }
+// }
+def flutterProjectRoot = rootProject.projectDir.parentFile.toPath()
+def plugins = new Properties()
+def pluginsFile = new File(flutterProjectRoot.toFile(), '.flutter-plugins')
+if (pluginsFile.exists()) {
+    pluginsFile.withReader('UTF-8') { reader -> plugins.load(reader) }
+}
+
+allprojects {
+    repositories {
+        google()
+        jcenter()
+        // flatDir {
+        //     dirs "${plugins.get("flutter_tencentplayer")}android/libs"
+        // }
+        maven { url 'http://download.flutter.io' }
+        maven {
+            url 'http://maven.aliyun.com/nexus/content/repositories/releases/'
+        }
+        maven { url 'https://dl.bintray.com/umsdk/release' }
+
+        maven { url "https://dl.bintray.com/thelasterstar/maven/" }
+
+
+        maven {
+            url 'https://maven.aliyun.com/repository/jcenter'
+        }
+    }
+}
+
+rootProject.buildDir = '../build'
+subprojects {
+    project.buildDir = "${rootProject.buildDir}/${project.name}"
+}
+subprojects {
+    project.evaluationDependsOn(':app')
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
+
 
   </div>
 </template>
@@ -1148,6 +1227,7 @@ queryChildren (parent, list) {
 }
 .forum_desc,.fensi{
   padding: 20px 0 !important;
+  text-align: center;
 }
 .forum_desc{
   margin-bottom: 30px;
