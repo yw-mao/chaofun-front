@@ -54,7 +54,7 @@
                           <div v-if="replayItem" @click="cancelReplay" style="padding: 6px 0px;cursor:pointer;float:left;">取消回复</div>
                           <el-input :disabled="pagedata.disableComment&&!pagedata.forumAdmin" style="font-size:14px;" v-on:focus="inputFocus" @keyup.native="bindInput" 
                           v-on:blur="inputBlur" type="textarea" @focus="doLogin" class="textarea" 
-                          :placeholder="pagedata.disableComment&&!pagedata.forumAdmin?'该帖已关闭评论功能，只有版主能够评论该帖':'发表你的想法'" 
+                          :placeholder="pagedata.disableComment&&!pagedata.forumAdmin?'该帖已关闭评论功能，只有版主能够评论该帖':'评论千万条，友善第一条'"
                           :autosize="{ minRows: 2, maxRows: 4}"  v-model="comment">
                           </el-input>
                           <div class="sub_botton" v-loading="imagesUploading">
