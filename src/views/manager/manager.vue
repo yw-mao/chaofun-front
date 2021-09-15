@@ -1,66 +1,74 @@
 <template>
-  <div class="dashboard-container">
-    <!-- <component :is="currentRole" /> -->
-    <div style="height:50px;"></div>
-    <div style="font-weight: bold; font-size: 28px">做国内最好的内容社区</div>
-    <div style="display: flex">
-      <div style="width: 500px">
-        <div>设置推送内容</div>
-        <div>
-          <div>
-            <div style="max-width:600px;margin-top:10px;">
-              <el-input type="textarea"  maxlength="56" v-model="params.title" style="resize:none;overflow:hidden;" placeholder="请设置推送标题"></el-input>
-            </div>
-            <div style="max-width:600px;margin-top:10px;">
-              <el-input type="textarea"  maxlength="56" v-model="params.body" style="resize:none;overflow:hidden;" placeholder="请设置推送内容"></el-input>
-            </div>
-            <div style="max-width:600px;margin-top:10px;">
-              <el-input type="textarea"  maxlength="56" v-model="params.url" style="resize:none;overflow:hidden;" placeholder="请设置推送链接"></el-input>
-            </div>
-            <div style="max-width:600px;margin-top:10px;">
-              <el-input type="input"  maxlength="56" v-model="params.platform" style="resize:none;overflow:hidden;" placeholder="填写 'ios'、'android'、或 'all' (不用引号)"></el-input>
-            </div>
-            <el-button @click="push" block>推送消息</el-button>
-          </div>
-          <div style="margin-top: 20px">
-            <div style="font-weight: bold">
-              统计信息
-            </div>
-            <div>秘密花园队列: {{this.websiteInfo.secretDelay}}</div>
-            <div>24小时注册用户数: {{this.websiteInfo.past24HRegisters}}</div>
-            <div>24小时帖子数: {{this.websiteInfo.past24HPosts}}</div>
-            <div>24小时评论数: {{this.websiteInfo.past24HComments}}</div>
-            <div>24小时登录点赞数: {{this.websiteInfo.past24HLoginVoteCount}}</div>
-            <div>24小时原创帖子数: {{this.websiteInfo.past24HOriginPosts}}</div>
-            <div>总注册用户: {{this.websiteInfo.totalRegisters}}</div>
-            <div>百度收录数: {{this.websiteInfo.baiduIncluded}}</div>
-          </div>
+  <div id="container"
+      class="dashboard-container container infinite-list"
+      ref="container"
+      :style="{ height: scrollHeight + 'px' }">
+    <div>
+      <div style="height:50px;"></div>
+      <div class="main_content">
+        <div class="main_center">
+          <div style="font-weight: bold; font-size: 28px">做国内最好的内容社区</div>
+          <div style="display: flex">
+            <div style="width: 500px">
+              <div>设置推送内容</div>
+              <div>
+                <div>
+                  <div style="max-width:600px;margin-top:10px;">
+                    <el-input type="textarea"  maxlength="56" v-model="params.title" style="resize:none;overflow:hidden;" placeholder="请设置推送标题"></el-input>
+                  </div>
+                  <div style="max-width:600px;margin-top:10px;">
+                    <el-input type="textarea"  maxlength="56" v-model="params.body" style="resize:none;overflow:hidden;" placeholder="请设置推送内容"></el-input>
+                  </div>
+                  <div style="max-width:600px;margin-top:10px;">
+                    <el-input type="textarea"  maxlength="56" v-model="params.url" style="resize:none;overflow:hidden;" placeholder="请设置推送链接"></el-input>
+                  </div>
+                  <div style="max-width:600px;margin-top:10px;">
+                    <el-input type="input"  maxlength="56" v-model="params.platform" style="resize:none;overflow:hidden;" placeholder="填写 'ios'、'android'、或 'all' (不用引号)"></el-input>
+                  </div>
+                  <el-button @click="push" block>推送消息</el-button>
+                </div>
+                <div style="margin-top: 20px">
+                  <div style="font-weight: bold">
+                    统计信息
+                  </div>
+                  <div>秘密花园队列: {{this.websiteInfo.secretDelay}}</div>
+                  <div>24小时注册用户数: {{this.websiteInfo.past24HRegisters}}</div>
+                  <div>24小时帖子数: {{this.websiteInfo.past24HPosts}}</div>
+                  <div>24小时评论数: {{this.websiteInfo.past24HComments}}</div>
+                  <div>24小时登录点赞数: {{this.websiteInfo.past24HLoginVoteCount}}</div>
+                  <div>24小时原创帖子数: {{this.websiteInfo.past24HOriginPosts}}</div>
+                  <div>总注册用户: {{this.websiteInfo.totalRegisters}}</div>
+                  <div>百度收录数: {{this.websiteInfo.baiduIncluded}}</div>
+                </div>
 
-          <div style="margin-top: 20px">
-            <div style="font-weight: bold">
-              设置活动</div>
-            <div >
-              <div style="max-width:600px;margin-top:10px;">
-                <el-input type="textarea"  maxlength="56" v-model="activity.title" style="resize:none;overflow:hidden;" placeholder="请设置活动标题"></el-input>
+                <div style="margin-top: 20px">
+                  <div style="font-weight: bold">
+                    设置活动</div>
+                  <div >
+                    <div style="max-width:600px;margin-top:10px;">
+                      <el-input type="textarea"  maxlength="56" v-model="activity.title" style="resize:none;overflow:hidden;" placeholder="请设置活动标题"></el-input>
+                    </div>
+                    <div style="max-width:600px;margin-top:10px;">
+                      <el-input type="textarea"  maxlength="56" v-model="activity.url" style="resize:none;overflow:hidden;" placeholder="请设置活动链接（必填）"></el-input>
+                    </div>
+                    <div style="max-width:600px;margin-top:10px;">
+                      <el-input type="textarea"  maxlength="56" v-model="activity.imageName" style="resize:none;overflow:hidden;" placeholder="请设置活动图片"></el-input>
+                    </div>
+                    <div style="max-width:600px;margin-top:10px;">
+                      <el-input type="textarea"  maxlength="56" v-model="activity.status" style="resize:none;overflow:hidden;" placeholder="请设置活动状态，如果为文字活动则是 'word', 如果是图片活动则是 'image' "></el-input>
+                    </div>
+                    <el-button @click="save_active" block>保存活动</el-button>
+                  </div>
+                </div>
               </div>
-              <div style="max-width:600px;margin-top:10px;">
-                <el-input type="textarea"  maxlength="56" v-model="activity.url" style="resize:none;overflow:hidden;" placeholder="请设置活动链接（必填）"></el-input>
+            </div>
+            <div style="margin-left: 30px; max-width: 500px;">
+              <div style="font-size: 20px">评论列表</div>
+              <div v-for="(item,index) in comments" :key="index">
+                <pre>评论:<a :href="'/p/' + item.postId">{{item.text.replace('\n','')}}</a>     用户: <a :href="'/user/' + item.userInfo.userId">{{item.userInfo.userName}}</a></pre>
               </div>
-              <div style="max-width:600px;margin-top:10px;">
-                <el-input type="textarea"  maxlength="56" v-model="activity.imageName" style="resize:none;overflow:hidden;" placeholder="请设置活动图片"></el-input>
-              </div>
-              <div style="max-width:600px;margin-top:10px;">
-                <el-input type="textarea"  maxlength="56" v-model="activity.status" style="resize:none;overflow:hidden;" placeholder="请设置活动状态，如果为文字活动则是 'word', 如果是图片活动则是 'image' "></el-input>
-              </div>
-              <el-button @click="save_active" block>保存活动</el-button>
             </div>
           </div>
-        </div>
-      </div>
-      <div style="margin-left: 30px; max-width: 500px;">
-        <div style="font-size: 20px">评论列表</div>
-        <div v-for="item in comments">
-          <pre>评论:<a :href="'/p/' + item.postId">{{item.text.replace('\n','')}}</a>     用户: <a :href="'/user/' + item.userInfo.userId">{{item.userInfo.userName}}</a></pre>
         </div>
       </div>
     </div>

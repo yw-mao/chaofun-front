@@ -90,7 +90,6 @@ export default {
     },
     toPosition() {
       if (this.$route.query.time) {
-        console.log('111', this.$('.infinite-list'))
         this.$('.infinite-list').animate({ scrollTop: localStorage.getItem('storedata') ? JSON.parse(localStorage.getItem('storedata')).top : 0 }, 10);
         setTimeout(() => {
           localStorage.removeItem('storedata')
