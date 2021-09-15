@@ -1,14 +1,78 @@
 <template>
-  <div class="dashboard-container">
-    <!-- <component :is="currentRole" /> -->
-    <div
-      id="container"
-      class="container infinite-list"
+  <div id="container"
+      class="dashboard-container container infinite-list"
       ref="container"
-      :style="{ height: scrollHeight + 'px' }"
-    >
+      :style="{ height: scrollHeight + 'px' }">
+    
+    <div>
       <div style="height:50px;"></div>
-      <el-row :gutter="24">
+      <div class="main_content">
+        <!-- <div v-if="!ISPHONE" class="main_left">
+          
+        </div> -->
+        <div class="main_center">
+          <div v-if="ISPHONE" class="search_icon">
+            <el-input
+              class="search_input"
+              placeholder="请输入内容"
+              prefix-icon="el-icon-search"
+              @change="toSearch(keyword)"
+              v-model="keyword"
+            >
+            </el-input>
+          </div>
+          <div class="navs" style="width: 640px; margin: 0px auto">
+            <div
+              @click="chooseType('post')"
+              :class="{ active: searchType == 'post' }"
+            >
+              帖 子
+            </div>
+            <div
+              @click="chooseType('user')"
+              :class="{ active: searchType == 'user' }"
+            >
+              用 户
+            </div>
+          </div>
+          <div
+            class="grid-content"
+            style="
+              overflow: auto;
+              width: 640px;
+              max-width: 100%;
+              margin: 0 auto;
+            "
+          >
+            <div v-if="searchType == 'post'">
+              <ListItem
+                :pagenum="params.pageNum"
+                :isindex="true"
+                :lists="lists"
+              ></ListItem>
+            </div>
+            <div v-if="searchType == 'user'">
+              <attentionItem
+                v-for="(item, index) in lists"
+                :item="item"
+                :key="index"
+              ></attentionItem>
+            </div>
+
+            <load-text
+              :ifcanget="ifcanget"
+              :hasContent="hasContent"
+              :loadAll="loadAll"
+            ></load-text>
+          </div>
+
+        </div>
+        <!-- <div v-if="!ISPHONE" class="main_right">
+         
+        </div> -->
+
+      </div>
+      <!-- <el-row :gutter="24">
         <el-col :span="isPhone ? 24 : doWidth()" :offset="0">
           <div v-if="ISPHONE" class="search_icon">
             <el-input
@@ -65,7 +129,7 @@
             ></load-text>
           </div>
         </el-col>
-      </el-row>
+      </el-row> -->
     </div>
   </div>
 </template>

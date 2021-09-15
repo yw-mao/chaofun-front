@@ -29,8 +29,8 @@ export default {
   min-height: calc(100vh);
   width: 100%;
   position: relative;
-  overflow: hidden;
-  padding: 10px;
+  // overflow: hidden;
+  padding: 0px;
   box-sizing: border-box;
   background:#f7f7f7;
 }
@@ -61,7 +61,7 @@ export default {
 // fix css style bug in open el-dialog
 .el-popup-parent--hidden {
   .fixed-header {
-    padding-right: 15px;
+    // padding-right: 15px;
   }
 }
 </style>

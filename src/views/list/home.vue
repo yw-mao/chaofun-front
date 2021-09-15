@@ -1,36 +1,34 @@
 <template>
-  <div class="dashboard-container">
-    <!-- <component :is="currentRole" /> -->
-    <div
-      v-if="!ISPHONE && tagList.length"
-      class="fixed_tag"
-      :style="doTagLeftStyle()"
-    >
-      <div
-        @click="checkTag({ id: '' })"
-        :class="['tag_item', { tag_item_active: !params.tagId }]"
-      >
-        全部
-      </div>
-      <div
-        @click="checkTag(item)"
-        v-for="(item, index) in tagList"
-        :key="index"
-        :class="['tag_item', { tag_item_active: item.id == params.tagId }]"
-      >
-        # {{ item.name }} <span v-if="tagCountList.length">{{doTagCount(item)}}</span>
-      </div>
-    </div>
-    <div
-      id="container"
-      class="container infinite-list"
+  <div id="container"
+      class="dashboard-container container infinite-list"
       ref="container"
-      :style="{ height: scrollHeight + 'px' }"
-    >
+      :style="{ height: scrollHeight + 'px' }">
+    <div>
       <div style="height: 50px"></div>
-      <el-row :gutter="24">
-        <el-col :span="isPhone ? 24 : doWidth()" :offset="-1">
-          <div class="navs" :style="{ left: ISPHONE ? '0' : '-40px' }">
+      <div class="main_content">
+        <div v-if="!ISPHONE" class="main_left">
+          <div
+            v-if="tagList.length"
+            class="fixed_tag"
+          >
+            <div
+              @click="checkTag({ id: '' })"
+              :class="['tag_item', { tag_item_active: !params.tagId }]"
+            >
+              全部
+            </div>
+            <div
+              @click="checkTag(item)"
+              v-for="(item, index) in tagList"
+              :key="index"
+              :class="['tag_item', { tag_item_active: item.id == params.tagId }]"
+            >
+              # {{ item.name }} <span v-if="tagCountList.length">{{doTagCount(item)}}</span>
+            </div>
+          </div>
+        </div>
+        <div class="main_center">
+          <div class="navs" :style="{ left: ISPHONE ? '0' : '0px' }">
             <div style="width: 100%">
               <selectList
                 @updateList="updateList"
@@ -38,7 +36,7 @@
               ></selectList>
             </div>
           </div>
-          <div class="grid-content" :style="{ left: ISPHONE ? '0' : '-40px' }">
+          <div class="grid-content" :style="{ left: ISPHONE ? '0' : '0px' }">
             <ListItem
               v-if="$store.state.user.listMode == 'normal'"
               :marker="params.marker"
@@ -55,30 +53,27 @@
             ></SimListItem>
             <load-text :ifcanget="ifcanget" :loadAll="loadAll"></load-text>
           </div>
-        </el-col>
-        <!-- <el-col v-if="!ISPHONE&&clientWidth>865" :span="4" :offset="0">
-          <div v-if="!isPhone" style="min-width:270px;padding-top: 60px;" class="grid-content bg-purple content-right">
-            <RightCom :forumInfo="forumInfo" @getForumInfo="getForumInfo" :islogin="islogin"></RightCom>
-          </div>
-        </el-col> -->
-        <div
-          v-if="!ISPHONE && clientWidth > 865"
-          class="fixed_r"
-          :style="doRightStyle()"
-        >
+        </div>
+        <div v-if="!ISPHONE" class="main_right">
           <div
-            v-if="!ISPHONE"
-            style="min-width: 300px; padding-top: 10px"
-            class="grid-content bg-purple content-right"
-          >
-            <RightCom
-              :forumInfo="forumInfo"
-              @getForumInfo="getForumInfo"
-              :islogin="islogin"
-            ></RightCom>
+            v-if="!ISPHONE && clientWidth > 865"
+            class="fixed_r">
+            <div
+              v-if="!ISPHONE"
+              style="min-width: 300px; padding-top: 10px"
+              class="grid-content bg-purple content-right"
+            >
+              <RightCom
+                :forumInfo="forumInfo"
+                @getForumInfo="getForumInfo"
+                :islogin="islogin"
+              ></RightCom>
+            </div>
           </div>
         </div>
-      </el-row>
+
+      </div>
+
     </div>
     <fixedBottom></fixedBottom>
   </div>
@@ -425,6 +420,8 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+
+
 .el-row {
   margin-bottom: 20px;
 

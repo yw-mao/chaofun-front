@@ -111,8 +111,55 @@ div:focus {
 .fixed_r{
   position: fixed;
   top: 0px;
-  right: 210px;
+  // right: 210px;
   width: 290px;
+}
+
+.dashboard-container{
+  overflow-x: hidden;
+}
+@media screen and (min-width: 1080px) {
+    .main_content{
+      display: flex;
+      justify-content: space-between;
+      
+      width: 1080px;
+      margin: 0 auto;
+      max-width: 100%;
+      .main_left{
+        display: block;
+        flex: 0 0 130px;
+      }
+      .main_center{
+        flex: 1;
+        margin-top: 10px;
+      }
+      .main_right{
+        display: block;
+        flex: 0 0 270px;
+      }
+    }
+}
+@media screen and (max-width: 1079px) {
+    .main_content{
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      margin: 0 auto;
+      max-width: 100%;
+      .main_left{
+        display: none;
+      }
+      .main_center{
+        flex: 1;
+        width: 100%;
+        margin-top: 10px;
+      }
+      .main_right{
+        display: none;
+        flex: 0 0 270px;
+      }
+    }
 }
 
 aside {
@@ -239,7 +286,7 @@ a,button,input,textarea,img{
 body {
   height: 100%;
   width: 100vw;
-  overflow: hidden;
+  overflow-x: hidden;
   // font-family: Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei, 微软雅黑, Arial, sans-serif;
   font-size: 14px;
   line-height: 1.43;

@@ -1,11 +1,16 @@
 <template>
-  <div class="dashboard-container">
-    <!-- <component :is="currentRole" /> -->
-    <div id="container" class="container infinite-list" ref="container" :style="{height: scrollHeight+'px'}">
+  <div id="container"
+      class="dashboard-container container infinite-list"
+      ref="container"
+      :style="{ height: scrollHeight + 'px' }">
+
+    <div>
       <div style="height:50px;"></div>
-      <el-row :gutter="24">
-        <el-col :span="isPhone?24:doWidth()" :offset="0" >
+      <div class="main_content">
+        <!-- <div v-if="!ISPHONE" class="main_left">
           
+        </div> -->
+        <div class="main_center">
           <div class="grid-content"  style="overflow:auto; width: 740px; max-width: 100%;margin:0 auto;">
             <div class="ccc">
                 <div v-if="!ISPHONE" class="left_navs">
@@ -14,7 +19,6 @@
                     </div>
                 </div>
                 <div class="right_main">
-                    <!-- <div>全部板块</div>  -->
                     <div v-for="(item,index) in listsData" :key="index"  @click="toUrl({path:'/f/'+item.id})">
                         <div class="item">
                           <img :src="'https://i.chao.fun/'+item.imageName+'?x-oss-process=image/resize,h_80'" alt="">
@@ -22,7 +26,6 @@
                             <div class="name">{{item.name}}</div>
 
                             <div class="desc">{{item.desc}}</div>
-                            <!-- <span class="followers">关注：{{item.followers}}</span> -->
                           </div>
                           <div class="right">
                             <div class="followers">关注：{{item.followers}}</div>
@@ -34,7 +37,51 @@
                         </div>
                     </div>
                     <div v-if="!listsData.length" class="nothing">
-                        <!-- <img src="../../assets/images/icon/nothing.png" alt=""> -->
+                        <p>暂无板块哦~</p>
+                    </div>
+                </div>
+            </div>
+            
+          </div>
+        </div>
+        <!-- <div v-if="!ISPHONE" class="main_right">
+          <div class="fixed_r">
+            <div v-if="!ISPHONE" style="min-width:300px;padding-top: 10px;" class="grid-content bg-purple content-right">
+              <RightDescribe :forumInfo="forumInfo" @getForumInfo="getForumInfo" :islogin="true"></RightDescribe>
+            </div>
+          </div>
+        </div> -->
+
+      </div>
+      <!-- <el-row :gutter="24">
+        <el-col :span="isPhone?24:doWidth()" :offset="0" >
+          
+          <div class="grid-content"  style="overflow:auto; width: 740px; max-width: 100%;margin:0 auto;">
+            <div class="ccc">
+                <div v-if="!ISPHONE" class="left_navs">
+                    <div @click="chooseCate(item)" v-for="(item,index) in lists" :key="index" :class="['left_li',{'items_title_active':cateId==item.id}]" >
+                        {{item.name}}
+                    </div>
+                </div>
+                <div class="right_main">
+                    <div v-for="(item,index) in listsData" :key="index"  @click="toUrl({path:'/f/'+item.id})">
+                        <div class="item">
+                          <img :src="'https://i.chao.fun/'+item.imageName+'?x-oss-process=image/resize,h_80'" alt="">
+                          <div class="center">
+                            <div class="name">{{item.name}}</div>
+
+                            <div class="desc">{{item.desc}}</div>
+                          </div>
+                          <div class="right">
+                            <div class="followers">关注：{{item.followers}}</div>
+                            <div>
+                              <span @click.stop="toAttent(item,index)" :class="['btn', item.joined?'btn1':'']">{{item.joined?'退出板块':'加入板块'}}</span>
+                              <span @click.stop="toSubs(item,index)" class="btn btn2">发帖</span>
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+                    <div v-if="!listsData.length" class="nothing">
                         <p>暂无板块哦~</p>
                     </div>
                 </div>
@@ -42,7 +89,7 @@
             
           </div>
         </el-col>
-      </el-row>
+      </el-row> -->
     </div>
     
     
