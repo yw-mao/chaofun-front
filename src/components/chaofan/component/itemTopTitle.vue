@@ -664,6 +664,7 @@ h1 {
 .el-radio-group{
   width: 100%;
 }
+
 .showCol{
   padding: 20px 10px;
   font-size: 13px;
@@ -680,6 +681,10 @@ h1 {
 }
 .el-radio:last-child{
   vertical-align: middle;
+  overflow: hidden;
+  text-overflow:ellipsis; 
+  white-space: nowrap;
+  width: 100%;
 }
 .add_collect{
   font-size: 14px;
