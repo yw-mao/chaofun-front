@@ -133,7 +133,7 @@
             <!-- 下拉菜单<i class="el-icon-arrow-down el-icon--right"></i> -->
             <i class="el-icon-more" style="font-size: 24px"></i>
           </span>
-          <el-dropdown-menu slot="dropdown">
+          <el-dropdown-menu style="width:150px;" slot="dropdown">
             <el-dropdown-item command="添加标签">
               <div @click.stop="toadd" class="addTag">添加标签 ></div>
             </el-dropdown-item>
@@ -162,6 +162,41 @@
               </div>
               <div v-else>暂无标签</div>
             </div>
+            <el-dropdown-item v-if="item.canChangeTitle" command="加入合集">
+              <div @click.stop="toCollect" class="addTag">加入合集 ></div>
+            </el-dropdown-item>
+            <div v-if="showCollect" class="showTags">
+              <div >
+                <!-- <div class="k" v-for="(it, ins) in collectList" @click="postCollect(it)" :key="ins">
+                    {{ it.name }}
+                </div> -->
+                <!-- <el-checkbox-group @change="aaa" v-model="tags">
+                  <div class="k" v-for="(it, ins) in collectList" :key="ins">
+                    <el-checkbox
+                      @change="changeBox($event, it)"
+                      :label="it.id"
+                      :value="it.name"
+                      >{{ it.name }}</el-checkbox
+                    >
+                  </div>
+                </el-checkbox-group> -->
+                <el-radio-group v-model="collectId">
+                  <div class="k" v-for="(it, ins) in collectList" :key="ins">
+                    <el-radio
+                      :label="it.id"
+                      :value="it.name"
+                      >{{ it.name }}</el-radio
+                    >
+                  </div>
+                </el-radio-group>
+                <div class="addrows">
+                  <el-input type="text" maxlength="20" v-model="collectName" placeholder="合集名称"></el-input>
+                  <span @click="toAddCollect">新增</span>
+                </div>
+                <div @click="postCollect" class="add_collect" >确定</div>
+              </div>
+              <!-- <div v-else class="add_collect" >新增合集</div> -->
+            </div>
             <el-dropdown-item
               v-if="item.forum.admin && !item.isPin"
               command="置顶"
@@ -173,12 +208,19 @@
               command="取消置顶"
               >取消置顶</el-dropdown-item
             >
+            <el-dropdown-item v-if="item.forumAdmin&&item.disableComment" command="开启评论">开启评论</el-dropdown-item>
+            <el-dropdown-item v-if="item.forumAdmin&&!item.disableComment" command="关闭评论">关闭评论</el-dropdown-item>
             <el-dropdown-item command="删除">删除帖子</el-dropdown-item>
-            <el-dropdown-item command="关闭">关闭</el-dropdown-item>
+            <el-dropdown-item command="关闭"> <div ref="cocolse">关闭</div> </el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
       </div>
     </h1>
+    <dialogs :visible="dialogVisible">
+      <template slot="content">
+        <h1>this is slot2</h1>
+      </template>
+    </dialogs>
   </div>
 </template>
 
@@ -188,10 +230,18 @@ import { Dialog } from "vant";
 import "vant/lib/dialog/style";
 import "moment/locale/zh-cn";
 import moment from "moment";
+
+import dialogs from "../common/dialogs.vue";
 export default {
   name: "",
   data() {
     return {
+      collectId: '',
+      collectName: '',
+      dialogVisible: false,
+      hasGetCollect: false,
+      showCollect: false,
+      collectList: [],
       checkList: [],
       moment: moment,
       showTag: false,
@@ -216,7 +266,9 @@ export default {
       default: 0,
     },
   },
-  components: {},
+  components: {
+    dialogs
+  },
   created() {
     if (this.item.tags.length) {
       this.item.tags.forEach((item) => {
@@ -226,6 +278,45 @@ export default {
   },
   mounted() {},
   methods: {
+    toAddCollect(){
+      if(this.collectName){
+        api.addCollection({name: this.collectName}).then(res=>{
+          if(res.success){
+            this.collectList.push(res.data);
+            this.collectName = '';
+          }
+        })
+      }else{
+        this.$toast('请输入合集名称');
+      }
+    },
+    postCollect(it){
+      if(this.collectId){
+        let params  = {
+          postId: this.item.postId,
+          collectionId: this.collectId
+        }
+        api.addPostCollection(params).then(res=>{
+          if(res.success){
+            // document.getElementById('cocolse').click()
+            this.$refs.cocolse.click();
+            this.$toast('加入合集成功');
+          }
+        })
+      }else{
+        this.$toast('还没有选中合集');
+      }
+      
+    },
+    addCollection(){
+      api.addCollection({name: '测试合集_2'}).then(res=>{
+        this.userCollectionList()
+      })
+    },
+    toAddCol(){
+      // this.dialogVisible = true;
+      this.addCollection();
+    },
     aaa(e) {
       console.log(e);
     },
@@ -251,7 +342,9 @@ export default {
             postId: this.item.postId,
             tagId: it.id,
           })
-          .then((res) => {});
+          .then((res) => {
+            this.$refs.cocolse.click();
+          });
       }
       this.$EventBus.$emit("refreshItemTag", {
         index: this.index,
@@ -266,6 +359,7 @@ export default {
       };
       api.addTag(params).then((res) => {
         if (res.success) {
+          this.$refs.cocolse.click();
           this.$toast("添加标签成功");
         }
       });
@@ -276,6 +370,24 @@ export default {
       } else {
         this.getForumTag();
       }
+    },
+    toCollect(){
+      if(this.item.collection){
+        this.collectId = JSON.parse(JSON.stringify(this.item)).collection.id;
+      }
+      
+      if (this.hasGetCollect) {
+        this.showCollect = !this.showCollect;
+      } else {
+        this.userCollectionList();
+      }
+    },
+    userCollectionList(){
+      api.userCollectionList().then(res=>{
+        this.collectList = res.data;
+        this.hasGetCollect = true;
+        this.showCollect = !this.showCollect;
+      })
     },
     getForumTag() {
       api.getlistTag({ forumId: this.item.forum.id }).then((res) => {
@@ -304,8 +416,33 @@ export default {
         });
       } else if (command == "删除") {
         this.deletePost(this.item, this.index);
-      } else {
+      } else if(command == "关闭评论") {
+        this.disableComment('close');
+        
+      }else if(command == "开启评论") {
+        this.disableComment('open');
+        
       }
+    },
+    disableComment(v){
+      if(v=='close'){
+        api.disableComment({postId: this.item.postId}).then(res=>{
+          this.item.disableComment = true;
+          this.$toast('该帖已关闭评论')
+          if(res.success){
+            this.$EventBus.$emit("resetItem", {index: this.index,item: this.item});
+          }
+        })
+      }else{
+        api.enableComment({postId: this.item.postId}).then(res=>{
+          this.$toast('该帖已开启评论')
+          this.item.disableComment = false;
+          if(res.success){
+            this.$EventBus.$emit("resetItem", {index: this.index,item: this.item});
+          }
+        })
+      }
+      
     },
     toForum(item) {
       localStorage.removeItem("storedata");
@@ -501,10 +638,10 @@ h1 {
   user-select: none;
 }
 .showTags {
-  padding: 10px 20px;
-  background: #f1f1f1;
+  padding: 10px 10px;
+  background: #f7f7f7;
   line-height: 30px;
-  text-align: center;
+  text-align: left;
   -moz-user-select: none; /*火狐*/
 
   -webkit-user-select: none; /*webkit浏览器*/
@@ -515,10 +652,69 @@ h1 {
 
   user-select: none;
   .k {
+    padding-left: 8px;
+    width: 100%;
+    box-sizing: border-box;
     &:hover {
       background: #fff;
       cursor: pointer;
     }
   }
 }
+.el-radio-group{
+  width: 100%;
+}
+
+.showCol{
+  padding: 20px 10px;
+  font-size: 13px;
+  .k {
+    &:hover {
+      background: #fff;
+      cursor: pointer;
+      color: #ff9300;
+    }
+  }
+}
+.k{
+  line-height: 40px;
+}
+.el-radio:last-child{
+  vertical-align: middle;
+  overflow: hidden;
+  text-overflow:ellipsis; 
+  white-space: nowrap;
+  width: 100%;
+}
+.add_collect{
+  font-size: 14px;
+  color: #666;
+  border-radius: 4px;
+  width: 60px;
+  height: 32px;
+  text-align: center;
+  line-height: 32px;
+  background: #1890ff;
+  color: #fff;
+  margin: 10px auto 4px;
+}
+.addrows{
+  display: flex;
+  span{
+    flex: 0 0 40px;
+    text-align: center;
+    font-size: 13px;
+    background: #ff9300;
+    color: #fff;
+    line-height: 30px;
+    height: 30px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+}
+/deep/ .el-input__inner{
+  padding: 0 4px;
+  height: 30px;
+}
+
 </style>

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div  v-if="item.type == 'image'" class="item_image">
+    <div  v-if="item.type == 'image'" :class="['item_image',{'item_image_de': isDetail}]">
       
       <div @click.stop="" v-if="item.imageNums==1" class="imgs">
         <viewer :images="[imgOrigin+item.imageName]">
@@ -152,10 +152,10 @@
       }
     }
   }
-  .item_image{
+  .item_image_de{
     width: 100%;
     .imgs{
-      max-height: 2500px;
+      max-height: 3500px;
       border-radius: 10px;
     }
   }

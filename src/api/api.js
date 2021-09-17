@@ -716,7 +716,76 @@ export function removeTag(params) {
   })
 }
 
+export function userCollectionList(params) {
+  return request({
+    url: '/api/v0/collection/list',
+    method: 'get',
+  })
+}
 
+export function addCollection(params) {
+  return request({
+    url: '/api/v0/collection/add',
+    method: 'get',
+    params
+  })
+}
+
+export function addPostCollection(params) {
+  return request({
+    url: '/api/v0/post/addCollection',
+    method: 'get',
+    params
+  })
+}
+
+export function listPosts(params) {
+  return request({
+    url: '/api/v0/collection/listPosts',
+    method: 'get',
+    params
+  })
+}
+
+export function searchUserForAt(params) {
+  return request({
+    url: '/api/v0/search/searchUserForAt',
+    method: 'get',
+    params
+  })
+}
+
+export function listTagPostCount(params) {
+  return request({
+    url:  `/api/v0/forum/listTagPostCount`,
+    method: 'get',
+    params
+  })
+}
+
+export function phoneLogin(params) {
+  return request({
+    url: '/api/v0/phone/login',
+    method: 'get',
+    params
+  })
+}
+
+export function disableComment(params) {
+  return request({
+    url: '/api/v0/post/disableComment',
+    method: 'get',
+    params
+  })
+}
+
+export function enableComment(params) {
+  return request({
+    url: '/api/v0/post/enableComment',
+    method: 'get',
+    params
+  })
+}
 
 
 

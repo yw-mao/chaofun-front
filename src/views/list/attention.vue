@@ -1,27 +1,30 @@
 <template>
-  <div class="dashboard-container">
-    <!-- <component :is="currentRole" /> -->
-    <div id="container" class="container infinite-list" ref="container" :style="{height: scrollHeight+'px'}">
+  <div id="container"
+      class="dashboard-container container infinite-list"
+      ref="container"
+      :style="{ height: scrollHeight + 'px' }">
+    <div>
       <div style="height:50px;"></div>
-      <el-row :gutter="24">
-        <el-col :span="isPhone?24:doWidth()" :offset="0" >
+      <div class="main_content">
+        <div v-if="!ISPHONE" class="main_left">
+          
+        </div>
+        <div class="main_center">
           <div class="grid-content"  style="overflow:auto; width: 640px; max-width: 100%;margin:0 auto;position:relative;
-              left:-100px;">
+              left:0px;">
              <ListItem :marker="params.marker" :whichOne="whichOne" :pagenum="params.pageNum" :isMy="true" :datas="{type: whichOne}" :isindex="true" :lists="lists"></ListItem>
              <load-text :hasContent="(lists.length||usersData.length)?true:false" :ifcanget="ifcanget" :loadAll="loadAll"></load-text>
           </div>
-        </el-col>
-        <!-- <el-col v-if="!ISPHONE&&clientWidth>865" :span="4" :offset="0">
-          <div v-if="!ISPHONE" style="min-width:300px;padding-top: 60px;" class="grid-content bg-purple content-right">
-            <RightDescribe :forumInfo="forumInfo" @getForumInfo="getForumInfo" :islogin="true"></RightDescribe>
-          </div>
-        </el-col> -->
-        <div class="fixed_r" :style="doRightStyle()">
-          <div v-if="!ISPHONE" style="min-width:300px;padding-top: 60px;" class="grid-content bg-purple content-right">
-            <RightDescribe :forumInfo="forumInfo" @getForumInfo="getForumInfo" :islogin="true"></RightDescribe>
+        </div>
+        <div v-if="!ISPHONE" class="main_right">
+          <div class="fixed_r">
+            <div v-if="!ISPHONE" style="min-width:300px;padding-top: 10px;" class="grid-content bg-purple content-right">
+              <RightDescribe :forumInfo="forumInfo" @getForumInfo="getForumInfo" :islogin="true"></RightDescribe>
+            </div>
           </div>
         </div>
-      </el-row>
+
+      </div>
     </div>
 
   </div>
@@ -65,7 +68,8 @@ export default {
         imageName: '3de7839782b923ea34f0a10af5766072.png',
         name: '关注',
         desc: '您关注人的动态',
-        admin : false
+        admin : false,
+        openChat: false
       },
       ifcanget: true,
       whichOne: 'love',

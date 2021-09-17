@@ -1,5 +1,5 @@
 <template>
-  <div class="chat_box">
+  <div id="chatBox" class="chat_box">
     <div class="title">
       <div class="forum_name">
         <img :src="imgOrigin + forumInfo.imageName" alt="" />
@@ -102,7 +102,7 @@
       </div>
       <div
         id="msg_end"
-        style="height: 0px; margin-bottom: 80px; overflow: hidden"
+        style="height: 0px; margin-bottom: 50px; overflow: hidden"
       ></div>
     </div>
     <div v-if="prevImg" class="tietu">
@@ -216,14 +216,49 @@ export default {
   //   }
   // },
   mounted() {
+
     //   if(!this.$store.state.user.wss){
     //   this.$store.dispatch('user/SET_wss',this.getWss);
     //   }
     if (localStorage.getItem("wsForum")) {
       this.initWebSocket();
     }
+    let self = this;
+    if(document.getElementById('chatBox')){
+      document.getElementById('chatBox').addEventListener('keyup',(e)=>{
+        console.log(111222,e);
+        if(e.code.toLowerCase()=='enter'&&self.prevImg){
+          self.sendImage();
+        }
+      })
+    }
+    var Notification = window.Notification || window.mozNotification || window.webkitNotification;
+    if(Notification){
+        Notification.requestPermission(function(status){})
+    }else{
+        console.log("您的浏览器不支持桌面消息");
+    }
+    
   },
   methods: {
+    islink(txtContent){
+        var check_www='w{3}'+'[^\\s]*';
+        var check_http='(https|http|ftp|rtsp|mms)://'+'[^(\\s|(\\u4E00-\\u9FFF)))]*';
+        var strRegex=check_http;
+        var httpReg=new RegExp(strRegex,'gi');
+        var  formatTxtContent = txtContent.replace(httpReg, function (httpText)
+            {
+                if(httpText.search('http')<0&&httpText.search('HTTP')<0)
+                {
+                    return '<a class="link" href="' + 'http://' + httpText + '" target="_blank">' + httpText + '</a>';
+                }
+                else
+                {
+                    return '<a class="link" href="'+ httpText + '" target="_blank">' + httpText + '</a>';
+                }
+            });
+        return formatTxtContent;
+    },
     toNewPage(){
       let id = this.forumInfo.id;
        window.open(location.origin+'/chatpage/'+id, 'newwindow' + 'chatpage_' + id, 'height=600, width=800, top=0, left=0, toolbar=no, menubar=no, scrollbars=no, resizable=no,location=n o, status=no')
@@ -390,7 +425,9 @@ export default {
           console.log("到达底部");
           that.unread = 0;
           that.showTips = false;
-          document.getElementById("msg_end").scrollIntoView();
+          setTimeout(()=>{
+            document.getElementById("msg_end").scrollIntoView();
+          },10)
         } else {
           that.unread += 1;
           that.showTips = true;
@@ -398,8 +435,17 @@ export default {
           // },2000)
           // that.TipintoView();
         }
+        console.log('document.hidden',document.hidden)
+        if(document.hidden){
+          this.showDeskTopNotice('chao.fun',this.forumInfo.name,data.data);
+        }
+        
       }
       if (data.type == "load_result" && data.data && data.data.length) {
+        
+        data.data.forEach(item=>{
+          item.content = that.islink(item.content)
+        })
         this.msgList = data.data;
         setTimeout(() => {
           document.getElementById("msg_end").scrollIntoView();
@@ -423,7 +469,10 @@ export default {
       this.websock.send(msg);
       this.unread = 0;
       this.showTips = false;
-      document.getElementById("msg_end").scrollIntoView();
+      setTimeout(()=>{
+        document.getElementById("msg_end").scrollIntoView();
+      },10)
+      
       
     },
     inputFocus() {
@@ -600,6 +649,47 @@ export default {
       //     self.$store.dispatch('user/SET_wss',this.getWss);
       // };
       return ws;
+    },
+    showDeskTopNotice(id, title, data){
+        let self = this;
+        var Notification = window.Notification || window.mozNotification || window.webkitNotification;
+        if(Notification){
+            Notification.requestPermission(function(status){
+                //status默认值'default'等同于拒绝 'denied' 意味着用户不想要通知 'granted' 意味着用户同意启用通知
+                if("granted" != status){
+                    return;
+                }else{
+                    var tag = "sds"+Math.random();
+                    var notify = new Notification( title, {
+                        dir:'auto',
+                        data: {forumId: data.forumId},
+                                lang:'zh-CN',
+                                requireInteraction: false,
+                                tag: id,//实例化的notification的id
+                                icon:data.type=='image'?(self.imgOrigin+data.content):('https://i.chao.fun/biz/9563cdd828d2b674c424b79761ccb4c0.png?x-oss-process=image/resize,h_80'),//通知的缩略图,//icon 支持ico、png、jpg、jpeg格式
+                                body: data.type=='text'? (data.sender.userName+'说：'+data.content):(data.type=='image'?data.sender.userName+'【发来一张图片】':data.sender.userName+'-发来未知类型消息') //通知的具体内容
+                        });
+                        notify.onclick=function(val){
+                            //如果通知消息被点击,通知窗口将被激活
+                            console.log(val);
+                            window.focus();
+                            notify.close();
+                            
+                        },
+                        notify.onshow = function () { 
+                            setTimeout(notify.close.bind(notify), 5000); 
+                        }
+                        notify.onerror = function () {
+                            console.log("HTML5桌面消息出错！！！");
+                        };
+                        notify.onclose = function () {
+                            console.log("HTML5桌面消息关闭！！！");
+                        };
+                    }
+            });
+        }else{
+            console.log("您的浏览器不支持桌面消息");
+        }
     },
   },
 };

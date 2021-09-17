@@ -54,7 +54,14 @@ if(process.env.NODE_ENV === 'production'&&process.env.VUE_APP_BASE_WEB){
       path: '/webview/agreement',
       component: () => import('@/views/chaofun-webview/agreement/agreement'),
       name: 'webViewForumIntro',
-      meta: { title: '炒饭用户及隐私政策'},
+      meta: { title: '炒饭隐私政策'},
+      hidden: true
+    },
+    {
+      path: '/webview/useragree',
+      component: () => import('@/views/chaofun-webview/agreement/useragree'),
+      name: 'webViewForumIntro',
+      meta: { title: '炒饭用户协议'},
       hidden: true
     },
   ]

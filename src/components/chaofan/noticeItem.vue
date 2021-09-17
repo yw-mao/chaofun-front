@@ -2,6 +2,7 @@
  <div>
      <div v-if="items.type=='upvote_post'" class="zan">
          <div class="item">
+             <!-- <span class="tab">&lt;点赞&gt;</span> -->
             <span v-if="items.sender" @click.stop="toUser(items.sender)" class="username user_name">【{{items.sender.userName}}】</span>
             <span v-if="!items.sender">未登录访客</span>
             <span>{{moment.duration(moment(items.gmtCreate) - moment()).humanize(true)}}</span>
@@ -38,18 +39,39 @@
             <span v-if="items.sender" @click.stop="toUser(items.sender)" class="username user_name">【{{items.sender.userName}}】</span>
             <span v-if="!items.sender">未登录访客</span>
             <span>{{moment.duration(moment(items.gmtCreate) - moment()).humanize(true)}}</span>
-            <span>回复了评论</span>
+            <span>在</span>
             <span @click="toDetail(items)" class="tiezi_title">【{{items.post.title.length>15?items.post.title.slice(0,15)+'...':items.post.title}}】</span>
          </div>
          <div class="comment">
              <!-- <span></span>评论说： {{items.comment.text}}<span></span> -->
              <span>
-                 {{items.comment.userInfo.userName}} @ {{items.parentComment.userInfo.userName}} ：{{items.comment.text}}
+                 回复了评论：{{items.comment.text}} 
+                 <!-- {{items.comment.userInfo.userName}} @ {{items.parentComment.userInfo.userName}} ：{{items.comment.text}} -->
              </span>
-             <!-- <div>
-                 {{items.parentComment.userInfo.userName}}说：{{items.parentComment.text}}
-             </div> -->
          </div>
+     </div>
+     <div v-if="items.type=='at'" class="pinlun">
+         <div class="item">
+            <span v-if="items.sender" @click.stop="toUser(items.sender)" class="username user_name">【{{items.sender.userName}}】</span>
+            <span v-if="!items.sender">未登录访客</span>
+            <span>{{moment.duration(moment(items.gmtCreate) - moment()).humanize(true)}}</span>
+            在
+            <span @click="toDetail(items)" class="tiezi_title">【{{items.post.title.length>15?items.post.title.slice(0,15)+'...':items.post.title}}】</span>
+            <span>在评论区：</span>
+         </div>
+         <div class="comment">
+             <!-- <img :src="imgOrigin+items.sender.icon+'?x-oss-process=image/resize,h_80'" alt=""> -->
+             <span></span>@你说： {{items.comment.text}}<span></span>
+         </div>
+     </div>
+     <div v-if="items.type=='delete_post'" class="zan">
+       <div class="item">
+         <span>你的帖子 </span>
+         <span @click="toDetail(items)" class="tiezi_title">【{{items.post.title.length>15?items.post.title.slice(0,15)+'...':items.post.title}}】</span>
+         <span>已被删除,</span>
+         <span v-if="items.reason">删除原因为：</span>
+         <span v-if="!items.reason">请阅读炒饭和分区发帖规范。</span>
+       </div>
      </div>
  </div>
 </template>
@@ -139,5 +161,8 @@ import moment from 'moment'
      color: #000;
     font-weight: 600;
     line-height: 20px;
+ }
+ .tab{
+     color: rgb(255, 147, 0);
  }
 </style>

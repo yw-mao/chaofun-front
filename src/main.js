@@ -36,7 +36,6 @@ Viewer.setDefaults({
   // "fullscreen": false, //播放时是否全屏
   // "keyboard": true, //是否支持键盘
   "url": "data-source",
-
 })
 
 import VueScroller from 'vue-scroller'
@@ -84,16 +83,23 @@ Vue.config.productionTip = false
 
 // 加入百度统计
 router.beforeEach((to, from, next) => {
+  
   if (to.path) {
     if (window._hmt) {
       window._hmt.push(['_trackPageview', to.fullPath])
     }
   }
+  console.log('路由切换')
   if(to.path!='/lists'){
     // console.log('aaa')
     store.state.settings.leftNav = 'normal';
     // console.log('aaa',store.state.settings.leftNav)
   }
+  // if(to.meta.keepAlive&&!from.path.includes('/p/')){
+  //   to.meta.keepAlive = false;
+  // }else if(from.path.includes('/p/')&&(to.path.includes('/f/')||to.path.includes('/all')||to.path.includes('/f/'))){
+
+  // }
   next()
 })
 

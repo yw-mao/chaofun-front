@@ -109,7 +109,7 @@ export const constantRoutes = [
             path: 'forumIntro',
             component: () => import('@/views/activity/help/forumIntro'),
             // name: 'webViewForumRank',
-            meta: { title: '板块排名'},
+            meta: { title: '板块排名',keepAlive: false},
             hidden: true
           },
         ],
@@ -119,22 +119,22 @@ export const constantRoutes = [
         path: '',
         component: () => import('@/views/dashboard/index'),
         name: 'Dashboard',
-        meta: { title: '首页', icon: 'dashboard', affix: true },
+        meta: { title: '首页', icon: 'dashboard', affix: true,keepAlive: true, },
         // redirect: '',
         hidden: true
       },
       {
         path: '/middles',
         component: () => import('@/views/dashboard/index'),
-        name: 'Dashboard',
-        meta: { title: '首页', icon: 'dashboard', affix: true },
+        name: 'middles',
+        meta: { title: '首页', icon: 'dashboard', affix: true,keepAlive: true, },
         hidden: true
       },
       {
         path: '/trends',
         component: () => import('@/views/list/attention'),
-        name: 'Dashboard',
-        meta: { title: '关注', icon: 'dashboard', affix: true },
+        name: 'trends',
+        meta: { title: '关注', icon: 'dashboard', affix: true,keepAlive: true, },
         hidden: true
       },
       {
@@ -148,6 +148,7 @@ export const constantRoutes = [
         path: '/submit',
         name: 'submit',
         component: () => import('@/views/submit/submit'),
+        meta: {keepAlive: false},
         hidden: true
       },
       // 新版发布
@@ -167,6 +168,7 @@ export const constantRoutes = [
         path: '/secret',
         name: 'secret',
         component: () => import('@/views/secret/secret'),
+        meta: {keepAlive: false},
         hidden: true
       },
       {
@@ -178,92 +180,92 @@ export const constantRoutes = [
       {
         path: '/f/:forumId',
         component: () => import('@/views/list/home'),
-        name: '/f/1',
-        meta: { title: ''},
+        name: '/f/:forumId',
+        meta: { title: '',keepAlive: true,},
         hidden: true
       },
       {
         path: '/user/:id',
         component: () => import('@/views/list/user'),
         name: 'userhome',
-        meta: { title: ''},
+        meta: { title: '',keepAlive: true,},
         hidden: true
       },
       {
         path: '/setting',
         component: () => import('@/views/list/setting'),
         name: 'setting',
-        meta: { title: '设置'},
+        meta: { title: '设置',keepAlive: false},
         hidden: true
       },
       {
         path: '/f/:id/setting',
         component: () => import('@/views/list/forumSetting'),
         name: 'forumSetting',
-        meta: { title: '板块设置'},
+        meta: { title: '板块设置',keepAlive: false},
         hidden: true
       },
       {
         path: '/submitH5',
         component: () => import('@/views/h5/submit'),
         name: 'submitH5',
-        meta: { title: '设置'},
+        meta: { title: '设置',keepAlive: false},
         hidden: true
       },
       {
         path: '/board',
         component: () => import('@/views/dashboard/board'),
         name: 'board',
-        meta: { title: '设置'},
+        meta: { title: '设置',keepAlive: false},
         hidden: true
       },
       {
         path: '/gamePage',
         component: () => import('@/views/game/gamePage'),
         name: 'gamePage',
-        meta: { title: '设置'},
+        meta: { title: '设置',keepAlive: false},
         hidden: true
       },
       {
         path: '/message',
         component: () => import('@/views/users/message'),
         name: 'message',
-        meta: { title: '我的消息'},
+        meta: { title: '我的消息',keepAlive: false},
         hidden: true
       },
       {
         path: '/h5forward',
         component: () => import('@/components/h5/forward'),
         name: 'h5forward',
-        meta: { title: '转发'},
+        meta: { title: '转发',keepAlive: false},
         hidden: true
       },
       {
         path: '/lists',
         component: () => import('@/views/list/lists'),
         name: 'lists',
-        meta: { title: '全部板块'},
+        meta: { title: '全部板块',keepAlive: false},
         hidden: true
       },
       {
         path: '/manager',
         component: () => import('@/views/manager/manager'),
         name: 'manager',
-        meta: { title: '管理'},
+        meta: { title: '管理',keepAlive: false},
         hidden: true
       },
       {
         path: '/all',
         component: () => import('@/views/dashboard/index'),
-        name: '/all',
-        meta: { title: '全站'},
+        name: 'all',
+        meta: { title: '全站',keepAlive: true,},
         hidden: true
       },
       {
         path: '/recommend',
         component: () => import('@/views/dashboard/index'),
-        name: '/recommend',
-        meta: { title: '推荐'},
+        name: 'recommend',
+        meta: { title: '推荐',keepAlive: true,},
         hidden: true
       },
       

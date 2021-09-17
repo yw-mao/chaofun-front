@@ -254,7 +254,7 @@ import * as api from '@/api/api'
 .rright{
   width: 290px;
   box-sizing: border-box;
-  max-height: calc(100vh - 124px);
+  max-height: calc(100vh - 114px);
   padding: 10px;
   // background: rgb(241,241,241);
   overflow: hidden;

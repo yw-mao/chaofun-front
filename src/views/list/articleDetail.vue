@@ -1,7 +1,8 @@
 <template>
-  <div class="dashboard-container">
+<div>
+  <div>
     <!-- <component :is="currentRole" /> -->
-    <div class="container infinite-list" v-infinite-scroll="load">
+    <div class="container">
       <el-row :gutter="20">
         <el-col :span="isPhone?24:doWidth()" :offset="isPhone?0:5" >
           <el-select v-model="params.order" placeholder="请选择" @change="changes" style="padding: 10px 0;">
@@ -44,17 +45,27 @@
               <el-row :gutter="20">
                   <el-col :span="ISPHONE?24:17" :offset="isPhone?0:0">
                       <div style="height:30px;"></div>
-                      <ListItem :isindex="false" :lists="[this.pagedata]"></ListItem>
+                      <ListItem :isindex="false" :lists="[pagedata]"></ListItem>
                       <div :class="['sub_comment', {'sub_comment_phone':ISPHONE}]">
+                          <div v-show="showAt" class="atuser">
+                            <div v-for="(it,ins) in atUsers" :key="ins" @click="chooseAt($event,it)" class="at_item">
+                              {{it.userName}}
+                            </div>
+                          </div>
                           <div v-if="replayItem" @click="cancelReplay" style="padding: 6px 0px;cursor:pointer;float:left;">取消回复</div>
-                          <el-input v-on:focus="inputFocus" v-on:blur="inputBlur" type="textarea" @focus="doLogin" class="textarea" :placeholder="replayItem?'我对'+replayItem.userInfo.userName+'说：':'发表你的想法'" :autosize="{ minRows: 2, maxRows: 4}"  v-model="comment"></el-input>
+                          <el-input :disabled="pagedata.disableComment&&!pagedata.forumAdmin" style="font-size:14px;" v-on:focus="inputFocus" @keyup.native="bindInput" 
+                          v-on:blur="inputBlur" type="textarea" @focus="doLogin" class="textarea" 
+                          :placeholder="pagedata.disableComment&&!pagedata.forumAdmin?'该帖已关闭评论功能，只有版主能够评论该帖':'评论千万条，友善第一条'"
+                          :autosize="{ minRows: 2, maxRows: 4}"  v-model="comment">
+                          </el-input>
                           <div class="sub_botton" v-loading="imagesUploading">
                             <div class="subims" v-if="images.length">
                                 <a v-for="img in images" :key="img" :href="imgOrigin+img" target="_blank">[附图]</a>
                             </div>
                             <div ></div>
-                            <el-button style="height:36px;" @click="toSub" type="primary">发表</el-button>
+                            <el-button :disabled="pagedata.disableComment&&!pagedata.forumAdmin" style="height:36px;" @click="toSub" type="primary">发表</el-button>
                             <el-upload
+                            :disabled="pagedata.disableComment&&!pagedata.forumAdmin"
                             class="avatar-uploader"
                             action="/api/upload_image"
                             name="file"
@@ -83,7 +94,7 @@
                       </div>
                       <div class="comment_list">
                           <div class="comment_title"><i style="font-size:24px;vertical-align:middle;" class="el-icon-s-comment"></i> 评论</div> 
-                          <commentitem @refreshDelete="refreshDelete" @toReplay2="toReplay2" @refreshComment="refreshComment" :treeData="treeData"></commentitem>
+                          <commentitem :postInfo="{disableComment:pagedata.disableComment,forumAdmin:pagedata.forumAdmin}" @refreshDelete="refreshDelete" @toReplay2="toReplay2" @refreshComment="refreshComment" :treeData="treeData"></commentitem>
                           <div v-if="!lists.length" class="no_comment">
                               还没有评论，你的机会来了 ~
                           </div> 
@@ -94,36 +105,57 @@
                           <div v-if="forumInfo" class="asa">
                             <div class="forum_con">
                               <div v-if="forumInfo.admin" @click="manage" style="position: absolute; right: 20px; width: 40px; color: blue;">管理</div>
-                              <div class="fir">
-                              <img :src="imgOrigin+forumInfo.imageName+'?x-oss-process=image/resize,h_80'" />
-                              <div>{{forumInfo.name}}</div>
-                              </div>
-                              <div class="fensi">
-                                  <div>粉丝：{{forumInfo.followers}}</div>
-                                  <div>帖子：{{forumInfo.posts}}</div>
-                              </div> 
-                              <div class="forum_desc">{{forumInfo.desc}}</div> 
-                              <div class="forum_add">
+                                <div class="fir">
+                                <img :src="imgOrigin+forumInfo.imageName+'?x-oss-process=image/resize,h_80'" />
+                                <div>{{forumInfo.name}}</div>
+                                </div>
+                                <div class="fensi">
+                                    <div>粉丝：{{forumInfo.followers}}</div>
+                                    <div>帖子：{{forumInfo.posts}}</div>
+                                </div> 
+                                <div class="forum_desc">{{forumInfo.desc}}</div> 
+                                <div class="forum_add">
 
-                                  <el-button @click="inout(1)" v-if="!forumInfo.joined" type="primary" block>
-                                  进入板块
-                                  </el-button>
-                                  <el-button @click="inout(2)" v-else type="danger" onClick={outForum} block>
-                                  退出板块
-                                  </el-button>
-                              
-                              </div> 
-                              <div class="forum_add">
-                              <el-button @click="gotoSubmit" type="primary" block>
-                                  发帖
-                              </el-button>
-                              </div>
-                              <div v-if="forumInfo.id=='84'||forumInfo.id=='22' ||forumInfo.id=='97' || forumInfo.id=='65' || forumInfo.id=='93' || forumInfo.id=='3'" class="forum_add">
-                                <el-button @click="gotoChat" style="width:100%;" type="success" block>
-                                  加入版聊
+                                    <el-button @click="inout(1)" v-if="!forumInfo.joined" type="primary" block>
+                                    进入板块
+                                    </el-button>
+                                    <el-button @click="inout(2)" v-else type="danger" onClick={outForum} block>
+                                    退出板块
+                                    </el-button>
+                                
+                                </div> 
+                                <div class="forum_add">
+                                <el-button @click="gotoSubmit" type="primary" block>
+                                    发帖
                                 </el-button>
+                                </div>
+                                <div v-if="forumInfo.openChat" class="forum_add">
+                                  <el-button @click="gotoChat" style="width:100%;" type="success" block>
+                                    加入版聊
+                                  </el-button>
+                                </div>
+                            </div> 
+                          </div>
+                          <div v-if="pagedata.collection" class="heji">
+                            <div class="col_title">合集：《{{pagedata.collection.name}}》</div>
+                            <div @click="toDetail(it)" v-for="(it,inds) in collectList" :key="inds" class="col_item">
+                              <div :style="{'background-image': `url(${doColBg(it)})`}" class="col_img">
+                                <!-- <img src="https://i.chao.fun/biz/de1910aadfac6f7b7fbef647e7ff4b1b.jpeg" alt=""> -->
                               </div>
-                          </div> 
+                              <div class="c_main">
+                                <div class="cc_title"><span class="sim_tab">[{{doType(it)}}]</span> {{it.title}}</div>
+                                <div>
+                                  <span class="from">
+                                    大约
+                                    {{
+                                      moment
+                                        .duration(moment(it.gmtCreate) - moment())
+                                        .humanize(true)
+                                    }}
+                                  </span>
+                                </div>
+                              </div>
+                            </div>
                           </div>
                           <!-- <RightCom :islogin="islogin"></RightCom> -->
                       </div>
@@ -135,20 +167,21 @@
         </div>
         <div v-if="!hasData" class="is404">
           <div>
-            <div class="s404">404</div>
+            <div class="s404">
+              <img src="https://i.chao.fun/biz/d5eb6aa7ed1fb2a5a0a04abbcc170e03.png" alt="">
+            </div>
             <p>帖子已被删除或不存在 <span @click="back" class="lookother">看看其他 ></span></p>
           </div>
           
         </div>
-        <!-- <span>需要注意的是内容是默认不居中的</span>
-        <span slot="footer" class="dialog-footer">
-            <el-button @click="centerDialogVisible = false">取 消</el-button>
-            <el-button type="primary" @click="centerDialogVisible = false">确 定</el-button>
-        </span> -->
     </el-dialog>
-    
+
+
 
   </div>
+  
+</div>
+  
 </template>
 
 <script>
@@ -172,7 +205,7 @@ export default {
       params:{
         postId: '',
         pageNum: 0,
-        pageSize: 40,
+        pageSize: 100,
         order: localStorage.getItem('chao.fun.timeline.order') == null ? 'hot': localStorage.getItem('chao.fun.timeline.order')
       },
       options: [
@@ -204,6 +237,16 @@ export default {
       imagesUploading: false,
       imagesNum: 0,
       imagesLimit: 9,
+      collectList: [],
+      atUsers: [],
+      showAt: false,
+      canSearch: true,
+      curInput: '',
+      ats: [],
+      pointIndex: '',
+      atIndex: '',
+      searchkey: '',
+      atUserName: []
     }
   },
   components: {
@@ -235,11 +278,180 @@ export default {
     let params = this.$route.params;
     this.params.postId = params.postId;
     this.getDetail();
+    this.getLists();
   },
   beforeMount () {
     this.inputBlur()
   },
   methods:{
+    chooseAt(e,it){
+      // this.comment = this.comment+it.userName+' ';
+      if(this.searchkey){
+        this.comment = this.comment.replace('@'+this.searchkey,'@'+it.userName+' ')
+      }else{
+        this.comment = this.comment+it.userName+' ';
+      }
+      this.searchkey = '';
+      this.showAt = false;
+      this.ats.push(it.userId);
+      this.atUserName.push('@'+it.userName);
+      console.log('this.atUserName',this.atUserName)
+      console.log(this.$(this.curInput));
+      this.$(this.curInput).focus();
+      // this.curInput
+    },
+    bindInput(e){
+      console.log(e);
+      // let last = e.slice(-1);
+      // console.log(last);
+      // document.getElementById('')
+      let index = e.target.selectionStart;//光标位置
+      this.pointIndex = index;
+      if(this.comment[index-1]!='@'){
+        this.showAt = false;
+      }
+      if(this.comment.includes('@')){
+        this.curInput = e.target;
+        let s = this.comment.slice(0,index);
+        
+        let i = s.lastIndexOf('@');
+        // if(index==i){return false}
+        let str = this.comment.slice(i+1,index);
+        let isHave = str.includes(' ');
+        if(!isHave){
+          this.atIndex = i;
+          let params = {
+            keyword: str
+          }
+          this.searchkey = str;
+          if(this.canSearch){
+            this.canSearch = false;
+            api.searchUserForAt(params).then(res=>{
+              if(res.success&&res.data.length){
+                
+                this.canSearch = true;
+                this.showAt = true;
+                this.atUsers = res.data;
+              }else{
+                this.canSearch = true;
+                this.showAt = false;
+                this.atUsers = res.data;
+              }
+            }).catch((e)=>{
+              this.canSearch = true;
+            })
+          }
+          
+        }
+        if(e.code=='Backspace'&&this.atUserName.length){
+          this.atUserName.forEach((item,ins)=>{
+            if(item.includes('@'+str)&&item.slice(0,-1)=='@'+str){
+              this.ats.splice(ins,1);
+              this.atUserName.splice(ins,1);
+              console.log(this.ats,this.atUserName);
+            }
+          })
+        }
+        console.log(str)
+      }
+      
+    },
+    doType(item) {
+      var t = item.type;
+      switch (t) {
+        case "link":
+          return "链接";
+          break;
+        case "gif":
+          return "GIF";
+          break;
+        case "image":
+          return "图片";
+          break;
+        case "inner_video":
+          return "视频";
+          break;
+        case "article":
+          return "文章";
+          break;
+        case "vote":
+          return "投票";
+          break;
+        case "forward":
+          return "转发";
+          break;
+        default:
+          return "其他";
+      }
+    },
+    toDetail(item){
+      this.$router.push({
+          name: "articleDetail",
+          params: { postId: item.postId },
+        });
+    },
+    doColBg(it){
+      // imgOrigin+it.imageName
+      return this.doImageUrl(it)
+    },
+    listPosts(){
+      if(!this.pagedata.collection){return;}
+      let params = {
+        collectionId: this.pagedata.collection.id
+      }
+      api.listPosts(params).then(res=>{
+        this.collectList = res.data;
+      })  
+    },
+    doImageUrl(item) {
+      var t = item.type;
+      // debugger
+      switch (t) {
+        case "link":
+        case "gif":
+          return this.doLink(item);
+          break;
+        case "inner_video":
+          return (
+            this.imgOrigin +
+            item["video"] +
+            "?x-oss-process=video/snapshot,t_0,h_500"
+          );
+          break;
+        case "article":
+          return (
+            this.imgOrigin +
+            "biz/b64193b7beca6ae243341273adddf494.png?x-oss-process=image/resize,h_150"
+          );
+          break;
+        case "image":
+          return (
+            this.imgOrigin +
+            item.imageName +
+            "?x-oss-process=image/resize,h_150"
+          );
+          break;
+        case "forward":
+          return this.doImageUrl(item.sourcePost);
+          break;
+      }
+    },
+    doLink(item) {
+      if (item.cover) {
+        if (item.cover.includes(".ico")) {
+          return this.imgOrigin + item.cover;
+        } else {
+          return (
+            this.imgOrigin + item.cover + "?x-oss-process=image/resize,h_150"
+          );
+        }
+      } else {
+        return (
+          this.imgOrigin +
+          "biz/b06148ccba2c8b527d979942131a9fd9.png?x-oss-process=image/resize,h_150"
+        );
+      }
+    },
     handleAvatarSuccess(res, file) {
         if(res.success){
             this.imageUrl = URL.createObjectURL(file.raw);
@@ -308,8 +520,11 @@ export default {
       this.showIcon = true
     },
     chooseEmoji(item){
-      this.comment += item;
-      this.showIcon = false
+      if(!this.pagedata.disableComment||this.pagedata.forumAdmin){
+        this.comment += item;
+        this.showIcon = false
+      }
+      
     },
     manage() {
       this.$router.push({path:'/f/' + this.forumInfo.id + '/setting'})
@@ -509,11 +724,13 @@ queryChildren (parent, list) {
     getDetail(){
       api.getPostInfo({postId: this.params.postId}).then(res=>{
         if(res.success){
+          
           let data = res.data;
           this.pagedata = data;
           this.forumInfo = res.data.forum;
           console.log(res.data.forum,'res')
           document.title = res.data.title + " - 炒饭";
+          this.listPosts()
         } else {
           this.hasData = false;
           this.$store.commit('var/SET_PATH',this.$route.fullPath)
@@ -524,15 +741,15 @@ queryChildren (parent, list) {
     getLists(){
       let params = this.params;
       api.listCommentsV0(params).then(res=>{
-        this.lists.push(...res.data);
-        let data = this.lists;
-        this.treeData = this.transformTree(data);
+        if(res.data.length){
+          this.lists.push(...res.data);
+          let data = this.lists;
+          this.treeData = this.transformTree(data);
+        }
+        
       })
     },
-    load () {
-        this.params.pageNum += 1;
-        this.getLists()
-    },
+    
     back(){
       if(this.forumInfo&&this.forumInfo.id){
         this.centerDialogVisible = false;
@@ -567,15 +784,34 @@ queryChildren (parent, list) {
       if(this.canSub){
         this.doLoginStatus().then(res=>{
             let comment = this.comment;
+            
             if(res){
                 if(!this.comment) return;
+                let reg = new RegExp(/@[^(\s)]+/g);
+                let a = comment.match(reg);
+                console.log(a)
+                var ats = [];
+                if(a){
+                  a.forEach((item,index)=>{
+                    if(this.atUserName.includes(item)){
+                      let i = this.atUserName.findIndex(it=>it==item);
+                      ats.push(this.ats[i]);
+                    }
+                  });
+                  console.log('atc',ats)
+                  console.log(this.ats);
+                  console.log(this.atUserName)
+                }
+                
                 let params = {
                   parentId: this.replayItem&&this.replayItem.id?this.replayItem.id:'',
                   postId: this.params.postId,
                   comment: this.comment,
-                  imageNames: this.images.join(',')
+                  imageNames: this.images.join(','),
+                  ats: ats.join(',')
                 }
                 this.canSub = false;
+                console.log(params)
                 api.addComments(params).then(res=>{
                   if(res.success){
                       this.images = [];
@@ -656,7 +892,7 @@ queryChildren (parent, list) {
   flex-direction: row-reverse;
     .forum_con{
         padding: 30px 20px;
-        border: 1px solid #ddd;
+        border: 1px solid #f1f1f1;
         width: 100%;
         min-width: 270px;
         max-width: 280px;
@@ -666,8 +902,8 @@ queryChildren (parent, list) {
 /deep/ .item .rights{
   padding-right: 0;
 }
-/deep/ .el-dialog{
-    margin-top:0 !important;
+.el-dialog{
+    
     height:100vh;
     overflow-x: hidden;
     div{
@@ -676,8 +912,17 @@ queryChildren (parent, list) {
         text-align: left;
     }
 }
+/deep/ .el-dialog--center .el-dialog__body{
+  padding: 0;
+}
 /deep/ .el-loading-spinner{
     top: 10%;
+}
+/deep/ .el-dialog__header{
+  padding: 0;
+}
+/deep/ .el-dialog{
+  margin-top:0 !important;
 }
 /deep/ .pc_dialog{
   height: 100vh;
@@ -752,7 +997,7 @@ queryChildren (parent, list) {
     .asa{
         .forum_con{
             padding: 30px 20px;
-            border: 1px solid #ddd;
+            border: 1px solid #f1f1f1;
             width: 100%;
             min-width: 244px;
             box-sizing: border-box;
@@ -765,9 +1010,39 @@ queryChildren (parent, list) {
 .content-right{
     position: relative;
 }
+/deep/ .light{
+  cursor: pointer;
+  &:hover{
+    text-decoration: underline;
+  }
+}
 .sub_comment{
     padding: 10px 0 0 50px !important;
-    // position: relative;
+    position: relative;
+    .atuser{
+      position: absolute;
+      top: 70px;
+      left: 50px;
+      background: #fff;
+      border: 1px solid #ddd;
+      z-index: 10;
+      padding: 10px 0;
+      width: 100px;
+      .at_item{
+        padding: 0 10px;
+        line-height: 28px;
+        font-size: 13px;
+        white-space:nowrap;
+        overflow:hidden;
+        text-overflow:ellipsis;
+        cursor: pointer;
+        &:hover{
+          color: #ff9300;
+          background: #eee;
+        }
+      } 
+      // display: flex;
+    }
     .textarea{
         resize: none;
         font-size: 16px;
@@ -825,6 +1100,9 @@ queryChildren (parent, list) {
   bottom: 0;
   width: 100%;
   box-sizing: border-box;
+  padding: 4px 10px 0 !important;
+  z-index: 1;
+  border-top: 1px solid #f1f1f1;
   .sub_botton{
     padding: 0;
   }
@@ -870,6 +1148,7 @@ queryChildren (parent, list) {
 }
 .forum_desc,.fensi{
   padding: 20px 0 !important;
+  text-align: center;
 }
 .forum_desc{
   margin-bottom: 30px;
@@ -879,16 +1158,21 @@ queryChildren (parent, list) {
   justify-content: space-around;
   align-items: center;
   text-align: center;
-  height: 600px;
+  height: 100vh;
   .s404{
-    font-size: 128px;
+    font-size: 44px;
+    
     color: cornflowerblue;
+  }
+  p{
+    text-align: center;
   }
   .lookother{
     padding-left: 10px;
     color: cornflowerblue;
     text-decoration: underline;
     cursor: pointer;
+    font-size: 15px;
   }
 }
 .icons{
@@ -922,5 +1206,65 @@ queryChildren (parent, list) {
 }
 .comment_list{
   padding-bottom: 200px !important;
+}
+.dialog_main2 .heji{
+  min-height: 180px;
+  color: #fff;
+  margin: 10px 0px 10px 14px;
+  padding: 10px 10px;
+  border: 1px solid #f1f1f1;
+  color: #333;
+  // margin-top: 10px;
+  .col_title{
+    color: #333;
+    font-size: 16px;
+    line-height: 40px;
+    overflow: hidden;
+    text-overflow:ellipsis; 
+    white-space: nowrap;
+  }
+  .col_item{
+    padding: 4px;
+    border-bottom: 1px solid #f1f1f1;
+    margin-bottom: 5px;
+    cursor: pointer;
+    display: flex;
+    .col_img{
+      flex: 0 0 60px;
+      height: 60px;
+      background-position: center;
+      background-size: cover;
+      background-repeat: no-repeat;
+      border-radius: 4px;
+      margin-right: 6px;
+      img{
+        width: 100%;
+        height: 120px;
+      }
+    }
+    .c_main{
+      flex: 1;
+      .sim_tab {
+        font-size: 14px;
+        color: #888;
+        font-weight: normal;
+      }
+      .from{
+        font-size: 12px;
+        margin-top: 0;
+        color: #999;
+      }
+    }
+    .cc_title{
+      // padding: 4px 0;
+      display: -webkit-box; 
+      -webkit-box-orient: vertical; 
+      -webkit-line-clamp: 2; 
+      overflow: hidden;
+    }
+    &:hover{
+      color: $linkcolor;
+    }
+  }
 }
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div id="chatBox" class="container">
       <div :class="['chat_box',{'chat_box_phone': ISPHONE}]">
         <div class="title">
         <div class="forum_name">
@@ -103,7 +103,7 @@
         </div>
         <div
             id="msg_end"
-            style="height: 0px; margin-bottom: 80px; overflow: hidden"
+            style="height: 0px; margin-bottom: 50px; overflow: hidden"
         ></div>
         </div>
         <div v-if="prevImg" class="tietu">
@@ -126,6 +126,7 @@
         <div class="bottom_send">
         <!-- <form action="" onsubmit="return false;"> -->
           <input
+              ref="inputs"
               autofocus
               @keydown="clientClickButton"
               @focus="inputFocus"
@@ -135,6 +136,7 @@
           />
         <!-- </form> -->
         <el-upload
+            v-if="!isApp"
             class="avatar-uploader"
             action="/api/upload_image"
             name="file"
@@ -154,6 +156,13 @@
             alt=""
             />
         </el-upload>
+        <img
+          v-if="isApp"
+            @click="chooseImage"
+          style="vertical-align: middle; margin-right: 0px; cursor: pointer"
+          src="../../assets/images/icon/choose.png"
+          alt=""
+          />
         <div @click="send" class="send">发送</div>
         </div>
     </div>
@@ -169,6 +178,7 @@ export default {
   components: { ThemePicker },
   data() {
     return {
+      isApp: false,
       moment: moment,
       connectCount: 0,
       onlineCount: 0,
@@ -198,6 +208,9 @@ export default {
   computed: {},
   created() {
     this.getForumInfo();
+    if(this.$route.query.source=='app'){
+      this.isApp = true;
+    }
   },
   destroyed() {
     if (this.websock) {
@@ -209,12 +222,57 @@ export default {
     }
   },
   mounted() {
+    console.log(navigator.userAgent);
     console.log(this.$route.path);
     if (this.$route.params.id) {
       this.initWebSocket();
     }
+    let self = this;
+    if(document.getElementById('chatBox')){
+      document.getElementById('chatBox').addEventListener('keyup',(e)=>{
+        console.log(111222,e);
+        if(e.code.toLowerCase()=='enter'&&self.prevImg){
+          self.sendImage();
+        }
+      })
+    }
+    try{
+      let self = this;
+      window.setUploadImage = function (message) {
+        self.imgSendType = "upload";
+        self.realImageUrl = message;
+        self.prevImg = self.imgOrigin + message;
+        // self.sendImage();
+      }
+    }catch{
+
+    }
   },
   methods: {
+    islink(txtContent){
+        var check_www='w{3}'+'[^\\s]*';
+        var check_http='(https|http|ftp|rtsp|mms)://'+'[^(\\s|(\\u4E00-\\u9FFF)))]*';
+        var strRegex=check_http;
+        var httpReg=new RegExp(strRegex,'gi');
+        var  formatTxtContent = txtContent.replace(httpReg, function (httpText)
+            {
+                if(httpText.search('http')<0&&httpText.search('HTTP')<0)
+                {
+                    return '<a class="link" href="' + 'http://' + httpText + '" target="_blank">' + httpText + '</a>';
+                }
+                else
+                {
+                    return '<a class="link" href="'+ httpText + '" target="_blank">' + httpText + '</a>';
+                }
+            });
+        return formatTxtContent;
+    },
+    chooseImage(){
+      if(this.ISPHONE){
+        this.uploadImage();
+      }
+      // uploadImage
+    },
     getForumInfo() {
         if(this.$route.params.id){
             api.getForumInfo({ forumId: this.$route.params.id }).then((res) => {
@@ -383,7 +441,9 @@ export default {
           console.log("到达底部");
           that.unread = 0;
           that.showTips = false;
-          document.getElementById("msg_end").scrollIntoView();
+          setTimeout(()=>{
+            document.getElementById("msg_end").scrollIntoView();
+          },10)
         } else {
           that.unread += 1;
           that.showTips = true;
@@ -391,8 +451,14 @@ export default {
           // },2000)
           // that.TipintoView();
         }
+        if(document.hidden){
+          this.showDeskTopNotice('chao.fun',this.forumInfo.name,data.data);
+        }
       }
       if (data.type == "load_result" && data.data && data.data.length) {
+        data.data.forEach(item=>{
+          item.content = that.islink(item.content)
+        })
         this.msgList = data.data;
         setTimeout(() => {
           document.getElementById("msg_end").scrollIntoView();
@@ -427,7 +493,9 @@ export default {
       this.content = "";
       this.unread = 0;
       this.showTips = false;
-      document.getElementById("msg_end").scrollIntoView();
+      setTimeout(()=>{
+        document.getElementById("msg_end").scrollIntoView();
+      },10)
     },
     inputFocus() {
       document.addEventListener("paste", this.toPaste);
@@ -468,6 +536,13 @@ export default {
         this.prevblob = blob;
       }
     },
+    uploadImage(){
+
+      window.flutter_inappwebview.callHandler('uploadImage').then(function(result) {
+
+      });
+
+    },
     closeImage() {
       this.prevImg = "";
       this.prevblob = "";
@@ -475,20 +550,32 @@ export default {
       this.$refs.replyImageUpload.clearFiles();
     },
     sendImage() {
-      if (this.imgSendType == "upload") {
+      if(!this.isApp){
+        if (this.imgSendType == "upload") {
+          let params = {
+            type: "image",
+            content: this.realImageUrl,
+          };
+          this.websocketsend(JSON.stringify(params));
+          this.prevImg = "";
+          this.prevblob = "";
+          this.realImageUrl = "";
+          this.$refs.replyImageUpload.clearFiles();
+        } else {
+          // this.imgSendType = 'upload';
+          this.$refs.replyImageUpload.$children[0].uploadFiles([this.prevblob]);
+        }
+      }else{
         let params = {
-          type: "image",
-          content: this.realImageUrl,
+            type: "image",
+            content: this.realImageUrl,
         };
         this.websocketsend(JSON.stringify(params));
         this.prevImg = "";
         this.prevblob = "";
         this.realImageUrl = "";
-        this.$refs.replyImageUpload.clearFiles();
-      } else {
-        // this.imgSendType = 'upload';
-        this.$refs.replyImageUpload.$children[0].uploadFiles([this.prevblob]);
       }
+      
     },
     handleAvatarSuccess(res, file) {
       if (res.success) {
@@ -526,6 +613,7 @@ export default {
     },
     send() {
       console.log(1);
+      this.$refs.inputs.focus()
       if (this.content) {
         let params = {
           type: "text",
@@ -533,6 +621,9 @@ export default {
         };
         this.websocketsend(JSON.stringify(params));
       }
+
+
+
       // try{
       //     this.$store.state.user.wss.send(JSON.stringify(params));
       //     this.content = ''
@@ -545,64 +636,46 @@ export default {
       this.$store.dispatch("user/SET_showChatBox", false);
     },
     ccc() {},
-    getWss(ps) {
-      let self = this;
-      var ws = new WebSocket("wss://chao.fun/ws/v0/forumChat/1");
-      var heartCheck = {
-        timeout: 1000, //60ms
-        timeoutObj: null,
-        serverTimeoutObj: null,
-        reset: function () {
-          clearTimeout(this.timeoutObj);
-          clearTimeout(this.serverTimeoutObj);
-          this.start();
-        },
-        start: function () {
-          var self = this;
-          this.timeoutObj = setTimeout(function () {
-            // ws.send("HeartBeat");
-            ws.send(
-              ps ? JSON.stringify(ps) : '{"type":"text","content":"你好"}'
-            );
-            self.serverTimeoutObj = setTimeout(function () {
-              ws.close(); //如果onclose会执行reconnect，我们执行ws.close()就行了.如果直接执行reconnect 会触发onclose导致重连两次
-            }, self.timeout);
-          }, this.timeout);
-        },
-      };
-      ws.onopen = function () {
-        heartCheck.start();
-      };
-      ws.onmessage = function (event) {
-        // heartCheck.reset();
-        let data = JSON.parse(event.data);
-        self.msgList.push(data.data);
-      };
-      ws.onclose = function () {
-        // reconnect();
-        heartCheck.reset();
-      };
-      ws.onerror = function () {
-        // reconnect();
-        heartCheck.reset();
-      };
-      ws.onopen = function () {
-        ws.send(ps ? JSON.stringify(ps) : '{"type":"text","content":"你好"}');
-      };
-      ws.onmessage = function (event) {
-        let data = JSON.parse(event.data);
-        self.msgList.push(data.data);
-      };
-      ws.onreconnect = function () {
-        console.log("reconnecting...");
-      };
-      // ws.onerror = function(event) {
-      //     // let data = JSON.parse(event.data);
-      //     // self.msgList.push(data.data);
-      //     console.log(event);
-      //     self.$store.dispatch('user/SET_wss',this.getWss);
-      // };
-      return ws;
+    showDeskTopNotice(id, title, data){
+        let self = this;
+        var Notification = window.Notification || window.mozNotification || window.webkitNotification;
+        if(Notification){
+            Notification.requestPermission(function(status){
+                //status默认值'default'等同于拒绝 'denied' 意味着用户不想要通知 'granted' 意味着用户同意启用通知
+                if("granted" != status){
+                    return;
+                }else{
+                    var tag = "sds"+Math.random();
+                    var notify = new Notification( title, {
+                        dir:'auto',
+                        data: {forumId: data.forumId},
+                                lang:'zh-CN',
+                                requireInteraction: false,
+                                tag: id,//实例化的notification的id
+                                icon:data.type=='image'?(self.imgOrigin+data.content):('https://i.chao.fun/biz/9563cdd828d2b674c424b79761ccb4c0.png?x-oss-process=image/resize,h_80'),//通知的缩略图,//icon 支持ico、png、jpg、jpeg格式
+                                body: data.type=='text'? (data.sender.userName+'说：'+data.content):(data.type=='image'?data.sender.userName+'【发来一张图片】':data.sender.userName+'-发来未知类型消息') //通知的具体内容
+                        });
+                        notify.onclick=function(val){
+                            //如果通知消息被点击,通知窗口将被激活
+                            console.log(val);
+                            window.focus();
+                            notify.close();
+                            
+                        },
+                        notify.onshow = function () { 
+                            setTimeout(notify.close.bind(notify), 5000); 
+                        }
+                        notify.onerror = function () {
+                            console.log("HTML5桌面消息出错！！！");
+                        };
+                        notify.onclose = function () {
+                            console.log("HTML5桌面消息关闭！！！");
+                        };
+                    }
+            });
+        }else{
+            console.log("您的浏览器不支持桌面消息");
+        }
     },
   },
 };

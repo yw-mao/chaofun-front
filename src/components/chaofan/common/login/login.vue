@@ -1,17 +1,22 @@
 <template>
- <div v-if="show" class="cover">  
-    <div v-if="logStatus == 'login'" class="ycovers ">
+ <div  v-if="show" class="cover">  
+    <div @keyup="enters" v-if="logStatus == 'login'" class="ycovers ">
       <div class="ycontainer">
         <img @click="cancelLogin" class="cancel" :src='cancelImg'/>
-        <h1>用户登录</h1>
-        <div style="">
-          <input type="text" v-model="params.userName"  placeholder="用户名"/>
+        <div class="tnames">
+          <div @click="checkoutLoginType('account')" :class="['tts',{'tts_act':loginType=='account'}]">账号登录</div>
+          <div @click="checkoutLoginType('phone')" :class="['tts',{'tts_act':loginType=='phone'}]">短信登录</div>
+        </div>
+        <div v-if="loginType=='account'" style="">
+          <input type="text" v-model="params.userName"  placeholder="用户名 / 手机号"/>
           <input type="password" v-model="params.password"  placeholder="密码"/>
-          <!-- <input type="text" v-model="params.userName"  placeholder="手机号"/>
+        </div>
+        <div v-if="loginType=='phone'" style="">
+          <input type="text" v-model="params.phone"  placeholder="手机号"/>
           <div class="code_con">
-            <input class="code" type="text">
-            <span>发送验证码</span>
-          </div> -->
+            <input placeholder="验证码" maxlength="6" class="code" v-model="params.code" type="text">
+            <span @click="sendCode">{{time?time+'s':'发送验证码'}}</span>
+          </div>
         </div>
         <div class="remPassword">
           <!-- <input  type="checkbox"/> -->
@@ -22,15 +27,43 @@
         <p>还未注册？ <span @click='toWhat("register")'>去注册</span></p>
       </div>
     </div>
-    <div v-if="logStatus == 'register'" class="ycovers ">
+    <div @keyup="enters" v-if="logStatus == 'register'" class="ycovers ">
       <div class="ycontainer">
         <img @click="cancelLogin" class="cancel" :src='cancelImg'/>
-        <h1>快速注册</h1>
+        <!-- <h1>快速注册</h1> -->
+        <div class="tnames">
+          <div class="tts_act">快速注册</div>
+        </div>
         <div>
           <input type="text" v-model="params.userName" placeholder="用户名"/>
-          <input type="password" v-model="params.repassword"  placeholder="密码"/>
+          <!-- <input type="password" v-model="params.repassword"  placeholder="密码"/> -->
           <input type="password" v-model="params.password" placeholder="确认密码"/>
+          
         </div>
+        <div class="phonever">
+          <div class="title">手机号验证</div>
+          <input type="text" v-model="params.phone"  placeholder="手机号"/>
+          <div class="code_con">
+            <input placeholder="验证码" maxlength="6" class="code" v-model="params.code" type="text">
+            <span @click="sendCode">{{time?time+'s':'发送验证码'}}</span>
+          </div>
+        </div>
+        <!-- <div v-if="showSlider" class="sliders">
+          <div class="slid">
+            <div class="title">滑动验证</div>
+            <slide-verify :l="42"
+            :r="10"
+            :w="270"
+            :h="180"
+            @success="onSuccess"
+            @fail="onFail"
+            @refresh="onRefresh"
+            :slider-text="text"
+            ></slide-verify>
+            <div @click="showSlider = false" class="tclose">关闭</div>
+          </div>
+          
+        </div> -->
         <div @click="logOrReg(2)" class="ylogin">注册</div>
         <p>已有账号？ <span @click='toWhat("login")'>去登录</span></p>
       </div>
@@ -44,19 +77,33 @@ import * as api from '@/api/api'
 import { mapState } from 'vuex'
 import {deepClone,randomRange} from '@/utils'
 import { Checkbox } from 'element-ui'
+// import SlideVerify from 'vue-monoplasty-slide-verify';
+// Vue.use(SlideVerify);
  export default {
    name: '',
    data(){
      return {
+       showSlider: false,
          cancelImg: require('@/assets/images/icon/cancel1.png'),
          show: false,
          params: {
           userName: '',
-          password: ''
+          password: '',
+          phone: '',
+          code: ''
         },
         ifRemember: false,
         registerSuccess: true,
-        logStatus: 'login'
+        logStatus: 'login',
+        msg: '123123',
+        text: '向右滑',
+        timer: null,
+        time: null,
+        loginType: 'account',
+        phoneParams: {
+          phone: '',
+          code: ''
+        }
      }
    },
    computed:{
@@ -75,7 +122,7 @@ import { Checkbox } from 'element-ui'
     //  }
    },
    components: {
-     'el-checkbox': Checkbox
+     'el-checkbox': Checkbox,
    },
    watch:{
     logStatus(v){
@@ -113,9 +160,73 @@ import { Checkbox } from 'element-ui'
      }
    },
    mounted() {
+     let self = this;
+     if(document.getElementById('loginBox')){
+       document.getElementById('loginBox').addEventListener('keyup',(e)=>{
+        if(e.code.toLowerCase()=='enter'){
+          if(self.logStatus=='login'){
+            self.logOrReg(1);
+          }else{
+            self.logOrReg(1);
+          }
+        }
+      })
+     }
     
    },
    methods: {
+     enters(e){
+      
+       if(e.code.toLowerCase()=='enter'){
+          if(this.logStatus=='login'){
+            this.logOrReg(1);
+          }else{
+            this.logOrReg(1);
+          }
+        }
+     },
+    checkoutLoginType(v){
+      this.loginType = v;
+    },
+    sendCode(){
+      if(this.time) return;
+      if(this.params.phone&&(/^1[3456789]\d{9}$/.test(this.params.phone))){
+        // this.showSlider = true;
+        this.onSuccess()
+      }else{
+        this.$toast('请正确输入手机号')
+      }
+    },
+    onSuccess(){
+      this.msg = 'login success'
+      api.getCode({phone: this.params.phone}).then(res=>{
+        if(res.success){
+          this.$toast('发送验证码成功')
+          this.showSlider = false;
+          this.time = 60;
+          this.timer = setInterval(()=>{
+            if(this.time>1){
+              this.time -= 1;
+            }else{
+              clearInterval(this.timer);
+              this.time = null;
+              this.timer = null;
+            }
+            
+          },1000)
+        }else{
+          this.$toast(res.message)
+        }
+      })
+      
+      // getCode
+    },
+    onFail(){
+      this.msg = ''
+    },
+    onRefresh(){
+      this.msg = ''
+    },
     toUrls(item,params){
        this.postBehavior(item.postId,'jump');
        this.toUrl(params)
@@ -139,23 +250,47 @@ import { Checkbox } from 'element-ui'
 
       
       if(v==1&&this.ifNull(v)){
-        api.toLogin(params).then(res=>{
-          if(res.success){
-            if(this.ifRemember){
-              let random = randomRange(40);
-              let a = this.tils().encode(params.userName);
-              let p = this.tils().encode(params.password);
-              localStorage.setItem('u',a+'||'+p)
+        if(this.loginType=='account'){
+          api.toLogin(params).then(res=>{
+            if(res.success){
+              if(this.ifRemember){
+                let random = randomRange(40);
+                let a = this.tils().encode(params.userName);
+                let p = this.tils().encode(params.password);
+                localStorage.setItem('u',a+'||'+p)
+              }else{
+                localStorage.removeItem('u')
+              }
+              // debugger
+              this.getUserInfo()
             }else{
-              localStorage.removeItem('u')
+              this.$toast(res.errorMessage);
             }
-            // debugger
-            this.getUserInfo()
-          }else{
-            this.$toast('登录失败，用户名或密码错误');
+            // localStorage.setItem('userInfo',JSON.stringify(res.data))
+          })
+        }else{
+          let par = {
+            phone: params.phone,
+            code: params.code,
           }
-          // localStorage.setItem('userInfo',JSON.stringify(res.data))
-        })
+          api.phoneLogin(par).then(res=>{
+            if(res.success){
+              if(this.ifRemember){
+                let random = randomRange(40);
+                let a = this.tils().encode(params.userName);
+                let p = this.tils().encode(params.password);
+                localStorage.setItem('u',a+'||'+p)
+              }else{
+                localStorage.removeItem('u')
+              }
+              // debugger
+              this.getUserInfo()
+            }else{
+              this.$toast(res.errorMessage);
+            }
+          })
+        }
+        
       }else if(v==2&&this.ifNull(v)){
         api.toRegister(params).then(res=>{
           if(res.success){
@@ -170,20 +305,31 @@ import { Checkbox } from 'element-ui'
     },
     ifNull(v){
       let params = deepClone(this.params);
+      // let phoneParams = deepClone(this.phoneParams);
       if(v == 1){
-        if(params.userName&&params.password){
-          return true
-        }else{
-          return false
-        }
-      }else{
-        if(params.userName&&params.password&&params.repassword){
-          if(params.password == params.repassword){
+        if(this.loginType=='account'){
+          if(params.userName&&params.password){
             return true
           }else{
-            this.$message.error('两次输入的密码不正确')
+            this.$toast('请输入用户名和密码')
             return false
           }
+        }else{
+          if(params.phone&&params.code){
+            return true
+          }else{
+            this.$toast('请输入手机号或验证码')
+            return false
+          }
+        }
+        
+      }else{
+        if(!params.phone||!(/^1[3456789]\d{9}$/.test(params.phone))||!params.code){
+          this.$toast('请完成手机号码验证')
+          return false;
+        }
+        if(params.userName&&params.password){
+          return true
           
         }else{
           return false
@@ -234,12 +380,14 @@ import { Checkbox } from 'element-ui'
   justify-content: space-around;
   .ycontainer{
     background: #fff;
-    width: 320px;
+    width: 400px;
+    max-width: 90%;
     // height: 350px;
     box-sizing: border-box;
     padding: 30px;
     border-radius: 10px;
     position: relative;
+    min-height: 330px;
     .cancel{
       position: absolute;
       top: 14px;
@@ -256,15 +404,40 @@ import { Checkbox } from 'element-ui'
       color: #e23d0e;
       margin-bottom: 10px;
     }
+    .tnames{
+      display: flex;
+      font-size: 16px;
+      margin-bottom: 10px;
+      border-bottom: 1px solid #ddd;
+      padding-bottom: 10px;
+      div{
+        // margin-right: 20px;
+        // padding: 4px 8px;
+        // background: #f7f7f7;
+        cursor: pointer;
+      }
+      .tts:nth-child(1){
+        padding-right: 20px;
+        border-right: 1px solid #ddd;
+      }
+      .tts:nth-child(2){
+        padding-left: 20px;
+        
+      }
+      .tts_act{
+        color: #e23d0e;
+      }
+    }
     input{
-      height: 34px;
+      height: 44px;
       outline: none;
       border: 1px solid #ededed;
-      background: #f6f7f8;
-      font-size: 14px;
+      background: #f9f9f9;
+      font-size: 15px;
       margin-top: 10px;
       width: 100%;
       padding-left: 10px;
+      border-radius: 8px;
     }
     .remPassword{
       line-height: 30px;
@@ -281,26 +454,44 @@ import { Checkbox } from 'element-ui'
       display: flex;
       justify-content: space-between;
       input{
-        width: 150px;
+        flex: 1;
+        margin-right: 20px;
       }
       span{
-        line-height: 34px;
+        line-height: 40px;
         margin-top: 10px;
         text-align: center;
         flex: 0 0 100px;
         border: 1px solid #ddd;
         cursor: pointer;
+        color: #666;
+        border-radius: 8px;
+        moz-user-select: -moz-none;
+        -moz-user-select: none;
+        -o-user-select:none;
+        -khtml-user-select:none;
+        -webkit-user-select:none;
+        -ms-user-select:none;
+        user-select:none;
       }
     }
     .ylogin{
       background: #e23d0e;
       color: #fff;
+      font-size: 16px;
       text-align: center;
-      line-height: 34px;
+      line-height: 44px;
       border-radius: 10px;
-      margin-top: 24px;
+      margin-top: 34px;
       margin-bottom: 24px;
       cursor: pointer;
+      moz-user-select: -moz-none;
+      -moz-user-select: none;
+      -o-user-select:none;
+      -khtml-user-select:none;
+      -webkit-user-select:none;
+      -ms-user-select:none;
+      user-select:none;
     }
     p{
       font-size: 12px;
@@ -309,6 +500,44 @@ import { Checkbox } from 'element-ui'
         color: #e23d0e;
         cursor: pointer;
       }
+    }
+  }
+}
+.phonever{
+  .title{
+    font-weight: bold;
+    margin-top: 16px;
+  }
+}
+.sliders{
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  right: 0;
+  bottom: 0;
+  background: rgba(255,255,255,1);
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  border-radius: 10px;
+  .title{
+    padding: 8px 4px 10px;
+    font-size: 16px;
+    font-weight: bold;
+  }
+  .slid{
+    // border: 1px solid #f1f1f1;
+    padding: 4px;
+    padding-bottom: 40px;
+    .tclose{
+      text-align: center;
+      margin-top: 20px;
+      position: absolute;
+      bottom: 30px;
+      left: 140px;
+      cursor: pointer;
+      font-size: 13px;
+      color: #999;
     }
   }
 }

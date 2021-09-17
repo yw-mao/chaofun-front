@@ -7,7 +7,7 @@
       </el-breadcrumb-item> -->
       
     </transition-group>
-    <div class="block">
+    <div class="inline-flex">
         <!-- <el-cascader
           :placeholder="levelList[levelList.length-1].meta.title"
           :options="options"
@@ -26,12 +26,12 @@
             :loading="loading">
             <el-option
               v-for="item in options"
-              :key="item.link"
+              :key="item.name"
               :label="item.title"
               :value="item.link"><img class="sicon" :src="imgOrigin+item.icon" alt=""> <span>{{item.title}}</span>
             </el-option>
           </el-select>
-          <span @click="toUrl({name: 'lists'})" class="af"> <img src="./all.png" alt=""> 全部板块</span>
+          <span @click="toUrl({name: 'lists'})" class="af"> <img src="./all.png" alt=""> <em v-if="!ISPHONE">全部板块</em></span>
       </div>
       <!-- <div v-else class="block block2">
           <input  type="text" placeholder="搜索板块">
@@ -112,8 +112,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.inline-flex {
+  display: inline-flex;
+}
 .app-breadcrumb.el-breadcrumb {
-  display: inline-block;
+  display: inline-flex;
   font-size: 14px;
   line-height: 50px;
   margin-left: 8px;
@@ -133,6 +136,8 @@ export default {
   background: #ddd;
 }
 .af{
+  display: inline-block;
+  // width: 90px;
   font-size: 14px;
   cursor: pointer;
   img{
@@ -142,6 +147,9 @@ export default {
   }
   &:hover{
     color: #1890ff;
+  }
+  em {
+    font-style: normal;
   }
 }
 </style>

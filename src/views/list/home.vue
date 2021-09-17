@@ -1,36 +1,34 @@
 <template>
-  <div class="dashboard-container">
-    <!-- <component :is="currentRole" /> -->
-    <div
-      v-if="!ISPHONE && tagList.length"
-      class="fixed_tag"
-      :style="doTagLeftStyle()"
-    >
-      <div
-        @click="checkTag({ id: '' })"
-        :class="['tag_item', { tag_item_active: !params.tagId }]"
-      >
-        全部
-      </div>
-      <div
-        @click="checkTag(item)"
-        v-for="(item, index) in tagList"
-        :key="index"
-        :class="['tag_item', { tag_item_active: item.id == params.tagId }]"
-      >
-        # {{ item.name }}
-      </div>
-    </div>
-    <div
-      id="container"
-      class="container infinite-list"
+  <div id="container"
+      class="dashboard-container container infinite-list"
       ref="container"
-      :style="{ height: scrollHeight + 'px' }"
-    >
+      :style="{ height: scrollHeight + 'px' }">
+    <div>
       <div style="height: 50px"></div>
-      <el-row :gutter="24">
-        <el-col :span="isPhone ? 24 : doWidth()" :offset="-1">
-          <div class="navs" :style="{ left: ISPHONE ? '0' : '-60px' }">
+      <div class="main_content">
+        <div v-if="!ISPHONE" class="main_left">
+          <div
+            v-if="tagList.length"
+            class="fixed_tag"
+          >
+            <div
+              @click="checkTag({ id: '' })"
+              :class="['tag_item', { tag_item_active: !params.tagId }]"
+            >
+              全部
+            </div>
+            <div
+              @click="checkTag(item)"
+              v-for="(item, index) in tagList"
+              :key="index"
+              :class="['tag_item', { tag_item_active: item.id == params.tagId }]"
+            >
+              # {{ item.name }} <span v-if="tagCountList.length">{{doTagCount(item)}}</span>
+            </div>
+          </div>
+        </div>
+        <div class="main_center">
+          <div class="navs" :style="{ left: ISPHONE ? '0' : '0px' }">
             <div style="width: 100%">
               <selectList
                 @updateList="updateList"
@@ -38,47 +36,48 @@
               ></selectList>
             </div>
           </div>
-          <div class="grid-content" :style="{ left: ISPHONE ? '0' : '-60px' }">
-            <ListItem
-              v-if="$store.state.user.listMode == 'normal'"
-              :marker="params.marker"
-              :keys="params.key"
-              :isindex="false"
-              :lists="lists"
-            ></ListItem>
-            <SimListItem
-              v-else
-              :marker="params.marker"
-              :keys="params.key"
-              :isindex="true"
-              :lists="lists"
-            ></SimListItem>
+          <div class="grid-content" :style="{ left: ISPHONE ? '0' : '0px' }">
+            <keep-alive>
+              <ListItem
+                v-if="$store.state.user.listMode == 'normal'"
+                :marker="params.marker"
+                :keys="params.key"
+                :isindex="false"
+                :lists="lists"
+              ></ListItem>
+              <SimListItem
+                v-else
+                :marker="params.marker"
+                :keys="params.key"
+                :isindex="true"
+                :lists="lists"
+              ></SimListItem>
+            
+            </keep-alive>
+            
             <load-text :ifcanget="ifcanget" :loadAll="loadAll"></load-text>
           </div>
-        </el-col>
-        <!-- <el-col v-if="!ISPHONE&&clientWidth>865" :span="4" :offset="0">
-          <div v-if="!isPhone" style="min-width:270px;padding-top: 60px;" class="grid-content bg-purple content-right">
-            <RightCom :forumInfo="forumInfo" @getForumInfo="getForumInfo" :islogin="islogin"></RightCom>
-          </div>
-        </el-col> -->
-        <div
-          v-if="!ISPHONE && clientWidth > 865"
-          class="fixed_r"
-          :style="doRightStyle()"
-        >
+        </div>
+        <div v-if="!ISPHONE" class="main_right">
           <div
-            v-if="!ISPHONE"
-            style="min-width: 300px; padding-top: 10px"
-            class="grid-content bg-purple content-right"
-          >
-            <RightCom
-              :forumInfo="forumInfo"
-              @getForumInfo="getForumInfo"
-              :islogin="islogin"
-            ></RightCom>
+            v-if="!ISPHONE && clientWidth > 865"
+            class="fixed_r">
+            <div
+              v-if="!ISPHONE"
+              style="min-width: 300px; padding-top: 10px"
+              class="grid-content bg-purple content-right"
+            >
+              <RightCom
+                :forumInfo="forumInfo"
+                @getForumInfo="getForumInfo"
+                :islogin="islogin"
+              ></RightCom>
+            </div>
           </div>
         </div>
-      </el-row>
+
+      </div>
+
     </div>
     <fixedBottom></fixedBottom>
   </div>
@@ -101,6 +100,7 @@ export default {
   // components: { adminDashboard, editorDashboard },
   data() {
     return {
+      hasGetData: false,
       pinList: [],
       currentRole: "adminDashboard",
       count: 5,
@@ -172,6 +172,7 @@ export default {
         },
       ],
       tagList: [],
+      tagCountList: [],
     };
   },
   components: {
@@ -191,14 +192,23 @@ export default {
   computed: {
     ...mapGetters(["roles", "islogin"]),
   },
+  activated(){
+    console.log('666',this.$route.query)
+    if(this.$route.query.time){
+      this.toPosition();
+    }
+    this.getForumInfo();
+    
+  },
   mounted() {
+    console.log(777)
     if (document.body.clientWidth < 700) {
       this.isPhone = true;
     }
     if (this.$route.query.game) {
       localStorage.setItem("gamemodule", true);
     }
-    this.toPosition();
+    
     let self = this;
     this.$refs.container.addEventListener("scroll", function () {
       let scrollTop = self.$refs.container.scrollTop;
@@ -245,9 +255,14 @@ export default {
         }
       }
     });
+    this.$EventBus.$on("resetItem", (params) => {
+      //需要执行的代码
+      this.lists.splice(params.index,1,params.item)
+    });
   },
 
   created() {
+    console.log(555)
     let id = this.$route.path.split("/")[2];
     if (!isNaN(id)) {
       this.params.forumId = id;
@@ -259,10 +274,31 @@ export default {
     //   this.params.pageSize = 7
     // }
     this.params.forumId = this.$route.params.forumId;
-    this.getForumInfo();
+    
+    
     this.load();
   },
   methods: {
+    doTagCount(item){
+      let count;
+      try{
+        count = this.tagCountList[this.tagCountList.findIndex(it=>it.tag_id==item.id)].count;
+      }catch{
+        count = 0;
+      }
+      
+      if(count){
+        return '('+count+')';
+      }else{
+        return '';
+      }
+      
+    },
+    listTagPostCount(){
+      api.listTagPostCount({forumId: this.params.forumId}).then(res=>{
+        this.tagCountList = res.data;
+      })
+    },
     saveTagId() {
       if (this.params.tagId) {
         localStorage.setItem("tagInfo", JSON.stringify(this.params));
@@ -307,12 +343,12 @@ export default {
       this.getLists("first");
     },
     getForumInfo() {
+      
       api.getForumInfo({ forumId: this.params.forumId }).then((res) => {
         if (res.success) {
           this.forumInfo = res.data;
-          this.$store.dispatch("var/SET_formName", res.data.name);
           document.title = "【" + res.data.name + "】- " + document.title;
-
+          this.$store.dispatch("var/SET_formName", this.forumInfo.name);
           if (res.data.desc) {
             document
               .querySelector('meta[name="description"]')
@@ -332,6 +368,7 @@ export default {
     },
     getForumTag() {
       api.getlistTag({ forumId: this.params.forumId }).then((res) => {
+        this.listTagPostCount();
         this.tagList = res.data;
       });
     },
@@ -344,6 +381,8 @@ export default {
 
           //获取标签列表
           this.getForumTag();
+        }
+        if(params.order=='hot'&&!params.tagId){
           this.listPins();
         }
       }
@@ -396,6 +435,8 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+
+
 .el-row {
   margin-bottom: 20px;
 
@@ -447,7 +488,7 @@ export default {
 }
 .fixed_tag {
   position: fixed;
-  width: 90px;
+  width: 120px;
   // height: 700px;
   top: 60px;
   bottom: 0;
@@ -461,12 +502,16 @@ export default {
 }
 .tag_item {
   border: 1px solid transparent;
-  line-height: 30px;
-  text-align: center;
+  line-height: 36px;
+  // text-align: center;
   margin: 10px 0;
-  border-radius: 20px;
+  border-radius: 4px;
   cursor: pointer;
   font-weight: bold;
+  padding-left: 5px;
+  span{
+    font-size: 13px;
+  }
   &:hover {
     border: 1px solid #f1f1f1;
     background: #f1f1f1;

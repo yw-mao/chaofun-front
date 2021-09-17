@@ -67,17 +67,19 @@ import * as api from '@/api/api'
       var imgs = el.getElementsByTagName("img");
       console.log(imgs);
       let im = [];
-      imgs.forEach((item,index)=>{
-        item.addEventListener('click',function(e){
-          
-          let src = e.target.currentSrc;
-          document.getElementById('k'+index).click();
-          console.log(src)
+      setTimeout(()=>{
+        el.getElementsByTagName("img").forEach((item,index)=>{
+          item.addEventListener('click',function(e){
+            
+            let src = e.target.currentSrc;
+            document.getElementById('k'+index).click();
+            console.log(src)
+          })
+          im.push(item.currentSrc);
         })
-        im.push(item.currentSrc);
-      })
-      this.imgsArr = im;
-      console.log(this.imgsArr)
+        this.imgsArr = im;
+        console.log(this.imgsArr)
+      },50)
     }
     
    },
@@ -133,13 +135,16 @@ import * as api from '@/api/api'
     overflow: hidden;
     word-break:break-all; /*支持IE，chrome，FF不支持*/
 　　word-wrap:break-word;/*支持IE，chrome，FF*/
-    font-size: 15px;
+    font-size: 16px;
   }
   /deep/ .detail_line p{
-    line-height: 1.6em;
-    margin: 1.4em 0;
+    line-height: 1.8em;
+    margin-bottom: 8px;
+    // margin: 1.4em 0;
   }
   /deep/ .detail_line img{
     max-width: 100%;
+    vertical-align: middle;
+    margin: 10px 0;
   }
 </style>

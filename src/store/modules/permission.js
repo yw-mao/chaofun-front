@@ -87,11 +87,16 @@ const actions = {
             var b = []
             item.menues.forEach(item2=>{
               var obj2 = {
-                name: item2.link,
+                name: item2.link+index+parseInt(Math.random()*1000),
                 path: `${item2.forumId=='all'?'/all':item2.link}`,
                 hide: false,
                 component: () => import(`@/views/${doRoute(item2)}`),
-                meta: {title: item2.title,icon: 'https://i.chao.fun/'+item2.icon + '?x-oss-process=image/resize,h_80',forumId:item2.forumId}
+                meta: {
+                  title: item2.title,icon: 'https://i.chao.fun/'+item2.icon + '?x-oss-process=image/resize,h_80',
+                  forumId:item2.forumId,
+                  forumName: item2.title,
+                  keepAlive: true,
+                }
               }
               b.push(obj2)
             })

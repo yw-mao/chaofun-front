@@ -1,11 +1,15 @@
 <template>
-  <div class="dashboard-container">
-    <!-- <component :is="currentRole" /> -->
-    <div id="container" class="container infinite-list" ref="container" :style="{height: scrollHeight+'px'}">
+  <div id="container"
+      class="dashboard-container container infinite-list"
+      ref="container"
+      :style="{ height: scrollHeight + 'px' }">
+    <div>
       <div style="height:50px;"></div>
-      <el-row :gutter="24">
-        <el-col :span="isPhone?24:doWidth()" :offset="0" >
+      <div class="main_content">
+        <div v-if="!ISPHONE" class="main_left">
           
+        </div>
+        <div class="main_center">
           <div class="grid-content"  style="overflow:auto; width: 640px; max-width: 100%;margin:0 auto;">
               <div class="mynavs">
                 <div @click="checkout('love')" :class="['navItem',{active_nav: whichOne == 'love'}]">点赞</div>
@@ -18,8 +22,12 @@
               <attentionItem v-else v-for="(item,index) in usersData" :item="item"  :key="index"></attentionItem>
              <load-text :hasContent="(lists.length||usersData.length)?true:false" :ifcanget="ifcanget" :loadAll="loadAll"></load-text>
           </div>
-        </el-col>
-      </el-row>
+        </div>
+        <div v-if="!ISPHONE" class="main_right">
+          
+        </div>
+
+      </div>
     </div>
     
     

@@ -1,5 +1,5 @@
 <template>
-  <div :class="classObj" class="app-wrapper" :style="doTheme('bodyStyle')">
+  <div :class="classObj" class="app-wrapper">
     <div v-if="device==='mobile'&&sidebar.opened" class="drawer-bg" @click="handleClickOutside" />
     <sidebar :style="ISPHONE?{backgroundColor: '#fff'}:doTheme('sidebarStyle')" class="sidebar-container"  />
     <div :class="[{hasTagsView:true||needTagsView},'main-container']">
@@ -7,14 +7,14 @@
         <navbar :islogin="islogin" :userinfo="userinfo" />
       </div>
       
-      <app-main :style="doTheme('contentStyle')"/>
-      <right-panel v-if="showSettings">
+      <app-main />
+      <!-- <right-panel v-if="showSettings">
         <settings />
-      </right-panel>
+      </right-panel> -->
     </div>
     <div v-if="!ISPHONE" class="beian">
       <div>本站已在 Github 开源：<a href="https://github.com/www-chao-fun/chaofun-front" target="_blank">chaofun-front</a></div>
-      Copyright © 2019 - 2021 炒饭 <img style="width:16px" src="../assets/images/bbcc.png" alt=""> <a target="_blank" href="http://www.beian.miit.gov.cn">粤ICP备19153164号-1</a>
+      Copyright © 2019 - 2021 炒饭 <img style="width:16px" src="../assets/images/bbcc.png" alt=""> <a target="_blank" href="https://beian.miit.gov.cn/">粤ICP备19153164号</a>
     </div>
     <chat v-if="$store.state.user.showChatBox&&!($route.path.includes('/chatpage'))"></chat>
   </div>

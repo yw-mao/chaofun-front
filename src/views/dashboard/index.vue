@@ -1,17 +1,18 @@
 <template>
-  <div class="dashboard-container">
-    <div
-      id="container"
-      class="container infinite-list"
+  <div id="container"
+      class="dashboard-container container infinite-list"
       ref="container"
-      :style="{ height: scrollHeight + 'px' }"
-    >
+      :style="{ height: scrollHeight + 'px' }">
+    <div>
       <div style="height: 50px"></div>
-      <el-row :gutter="24">
-        <el-col :span="isPhone ? 24 : doWidth()" :offset="0">
+      <div class="main_content">
+        <div v-if="!ISPHONE" class="main_left">
+          
+        </div>
+        <div class="main_center">
           <div
             class="navs"
-            :style="{left: ISPHONE?'0':'-60px'}"
+            :style="{left: ISPHONE?'0':'0px'}"
           >
             <div v-if="!isRecommend">
               <selectList
@@ -41,7 +42,7 @@
           <div
             class="grid-content"
             
-            :style="{left: ISPHONE?'0':'-60px'}"
+            :style="{left: ISPHONE?'0':'0px'}"
           >
             <ListItem
               v-if="isRecommend || $store.state.user.listMode == 'normal'"
@@ -59,33 +60,31 @@
             ></SimListItem>
             <load-text :ifcanget="ifcanget" :loadAll="loadAll"></load-text>
           </div>
-        </el-col>
-        <!-- <el-col v-if="!ISPHONE&&clientWidth>865" :span="8" :offset="0">
-          <div v-if="!ISPHONE" style="min-width:300px;padding-top: 60px;" class="grid-content bg-purple content-right">
-            <RightDescribe :forumInfo="forumInfo" @getForumInfo="getForumInfo" :islogin="islogin"></RightDescribe>
-          </div>
-        </el-col> -->
-        <div class="fixed_r" :style="doRightStyle()">
-          <div
-            v-if="!ISPHONE"
-            style="min-width: 300px; padding-top: 10px"
-            class="grid-content bg-purple content-right"
-          >
-            <RightDescribe
-              :forumInfo="forumInfo"
-              @getForumInfo="getForumInfo"
-              :islogin="islogin"
-            ></RightDescribe>
+        </div>
+        <div v-if="!ISPHONE" class="main_right">
+          <div class="fixed_r">
+            <div
+              v-if="!ISPHONE"
+              style="min-width: 300px; padding-top: 10px"
+              class="grid-content bg-purple content-right"
+            >
+              <RightDescribe
+                :forumInfo="forumInfo"
+                @getForumInfo="getForumInfo"
+                :islogin="islogin"
+              ></RightDescribe>
+            </div>
           </div>
         </div>
-      </el-row>
+
+      </div>
     </div>
 
     <div
       @click="reFresh"
       v-if="isRecommend && ISPHONE"
       class="reFresh"
-      :style="{left: ISPHONE?'0':'-60px'}"
+      :style="{left: ISPHONE?'0':'-40px'}"
     >
       <i class="el-icon-refresh"></i>
     </div>
@@ -202,9 +201,10 @@ export default {
       }
     });
   },
-  mounted() {
-    if (document.body.clientWidth < 700) {
-      this.isPhone = true;
+  activated(){
+    console.log('666',this.$route.query)
+    if(this.$route.query.time){
+      this.toPosition();
     }
     if (this.$route.path.includes("/all")) {
       this.$store.dispatch("var/SET_formName", "全站");
@@ -213,6 +213,12 @@ export default {
     } else {
       this.$store.dispatch("var/SET_formName", "首页");
     }
+  },
+  mounted() {
+    if (document.body.clientWidth < 700) {
+      this.isPhone = true;
+    }
+    
     this.keyword = this.$route.query.q;
     this.toPosition();
     // console.log('scrollHeight',this.scrollHeight)

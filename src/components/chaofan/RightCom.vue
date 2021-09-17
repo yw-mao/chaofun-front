@@ -28,7 +28,7 @@
               发帖
             </el-button>
           </div>
-          <div v-if="$store.state.user.userInfo.userId==2|| forumInfo.id=='84'||forumInfo.id=='22' ||forumInfo.id=='97' || forumInfo.id=='65' || forumInfo.id=='93' || forumInfo.id=='3'" class="forum_add">
+          <div v-if="forumInfo.openChat" class="forum_add">
             <el-button @click="gotoChat" style="width:100%;" type="success" block>
               加入版聊
             </el-button>
@@ -305,7 +305,7 @@
     background-color: #999;
   }
   .rright{
-    max-height: calc(100vh - 124px);
+    max-height: calc(100vh - 114px);
     padding: 10px;
     // background: rgb(241,241,241);
     overflow: hidden;

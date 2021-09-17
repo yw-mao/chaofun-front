@@ -62,9 +62,10 @@
                 <span class="zhiding">版主置顶</span>
               </div>
               <div v-if="item.tags.length" class="tags">
-                <span v-for="(item, index) in item.tags" :key="index"
-                  ># {{ item.name }}</span
-                >
+                <div  v-for="(it, ins) in item.tags" :key="ins">
+                <span :style="{'backgroundColor': (it.backgroundColor||'#ff9300'),'color': it.fontColor||'#fff'}"
+                ># {{ it.name }}</span>
+                </div>
               </div>
               <span class="sim_tab"> [{{ doType(item) }}] </span>
               {{ item.title }}
@@ -703,6 +704,10 @@ export default {
           this.postBehavior(item.postId, "detail");
           localStorage.setItem("storedata", JSON.stringify(obj));
           localStorage.setItem("spage", this.$route.path);
+
+          this.$EventBus.$emit("refreshItemTag", {
+            way: 'saveTagId'
+          });
           this.$router.push({
             name: "articleDetail",
             params: { postId: item.postId },
