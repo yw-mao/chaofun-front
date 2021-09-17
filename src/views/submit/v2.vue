@@ -267,6 +267,7 @@
                 </el-popover>
 
                  <el-popover
+                  title="选择一个合集"
                   class="collection-selector"
                   popper-class="collection-selector-popover"
                   placement="top-start"
@@ -275,19 +276,21 @@
                   v-model="collectionModalVisible"
                   @hide="collectionSelectorHide"
                 >
-                  <el-input
-                    placeholder="搜索合集"
-                    prefix-icon="el-icon-search"
-                    v-model="collectionSearch"
-                  >
-                  </el-input>
-                  <el-radio-group v-model="collectionId" @change="changeCollection">
-                    <div class="collection-option" v-for="item in collections.filter(collection => collection.name.indexOf(collectionSearch) > -1)" v-bind:key="item.id">
-                      <el-radio :label="item.id" >
-                        {{ item.name }}
-                      </el-radio>
-                    </div>
-                  </el-radio-group>
+                  <div class="collection-search">
+                    <el-input
+                      placeholder="搜索合集"
+                      prefix-icon="el-icon-search"
+                      v-model="collectionSearch"
+                    >
+                    </el-input>
+                    <el-radio-group v-model="collectionId" @change="changeCollection">
+                      <div class="collection-option" v-for="item in collections.filter(collection => collection.name.indexOf(collectionSearch) > -1)" v-bind:key="item.id">
+                        <el-radio :label="item.id" >
+                          {{ item.name }}
+                        </el-radio>
+                      </div>
+                    </el-radio-group>
+                  </div>
 
                   <el-form class="collection-add" label-position="top">
                     <el-form-item label="新增合集">
@@ -300,20 +303,19 @@
 
                   <div class="collection-buttons">
                     <el-button
-                      :disabled="tag === null"
-                      @click="confirmTag"
+                      :disabled="collection === null"
+                      @click="confirmCollection"
                       type="primary"
                       round
                     >选 择</el-button>
-                    <el-button @click="clearTag" round>清除选择</el-button>
+                    <el-button @click="clearCollection" round>清除选择</el-button>
                   </div>
   
                   <el-button
                     slot="reference"
                     icon="el-icon-collection"
-                    v-bind:class="{ 'tag-button-no-tag': !post.collectionId }"
-                    :style="{ backgroundColor: tag && tag.backgroundColor || '#ff9300', borderColor: tag && tag.backgroundColor || '#ff9300' }"
-                  >{{post.collectionId && tag && '#' + tag.name || '合 集'}} <i class="el-icon-arrow-down" v-if="post.collectionId" /></el-button>
+                    v-bind:class="{ 'collection-button-no-collection': !post.collectionId }"
+                  >{{post.collectionId && collection && collection.name || '合 集'}} <i class="el-icon-arrow-down" v-if="post.collectionId" /></el-button>
                 </el-popover>
               </div>
             </el-row>
@@ -863,6 +865,8 @@
         padding: 4px 16px;
         border: 1px solid;
         border-radius: 9999px;
+        background: #16679f;
+        border-color: #16679f;
         color: #fff;
         font-size: 14px;
         font-weight: 500;
@@ -889,7 +893,7 @@
             margin-left: 6px;
           }
         }
-        &.tag-button-no-tag {
+        &.collection-button-no-collection {
           background: transparent !important;
           color: #606266 !important;
           border-color: #606266 !important;
@@ -1459,7 +1463,48 @@
 
 .collection-selector-popover {
   padding: 0;
-  background: #f6f7f8;
+  .el-popover__title {
+    padding: 16px;
+    margin: 0;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 20px;
+    border-bottom: 1px solid #edeff1;
+  }
+  .collection-search {
+    height: 250px;
+    background: #f6f7f8;
+    padding: 16px 0;
+    .el-input {
+      padding: 0 16px 16px;
+      .el-input__prefix {
+        height: 36px;
+        left: 21px;
+      }
+    }
+    .el-radio-group {
+      .el-radio__input {
+        &.is-checked .el-radio__inner {
+          border-color: #16679f;
+          background: #16679f;
+        }
+        &.is-checked + .el-radio__label {
+          color: #16679f;
+        }
+        .el-radio__inner:hover {
+          border-color: #16679f;
+        }
+      }
+    }
+    .collection-option {
+      cursor: pointer;
+      line-height: 16px;
+      padding: 4px 16px;
+      display: flex;
+      flex-direction: row;
+    }
+  }
+  
   .collection-add {
     background: #fff;
     padding: 16px;
