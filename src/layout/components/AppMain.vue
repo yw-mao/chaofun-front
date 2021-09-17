@@ -2,9 +2,21 @@
   <section class="app-main">
         <!-- <div style="height:50px;background:transparent;"></div> -->
 <!--    <transition name="fade-transform" mode="out-in">-->
-<!--      <keep-alive :include="cachedViews">-->
+    <!-- <keep-alive>
+        <router-view :key="key"/>
+    </keep-alive> -->
+    <keep-alive>
+      <router-view :key="key" v-if="$route.meta.keepAlive">
+        <!-- 这里是会被缓存的视图组件 -->
+      </router-view>
+    </keep-alive>
+
+    <router-view :key="key" v-if="!$route.meta.keepAlive">
+      <!-- 这里是不被缓存的视图组件 -->
+    </router-view>
+     <!-- <keep-alive>
         <router-view :key="key" />
-<!--      </keep-alive>-->
+     </keep-alive> -->
 <!--    </transition>-->
   </section>
 </template>

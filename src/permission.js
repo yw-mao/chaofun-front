@@ -18,6 +18,7 @@ doRoute()
 router.beforeEach(async(to, from, next) => {
   // start progress bar
   // NProgress.start()
+  
   if(!to.path.includes('/f')){
     store.dispatch('var/SET_formName', '')
   }

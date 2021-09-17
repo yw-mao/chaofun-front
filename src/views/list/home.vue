@@ -37,20 +37,24 @@
             </div>
           </div>
           <div class="grid-content" :style="{ left: ISPHONE ? '0' : '0px' }">
-            <ListItem
-              v-if="$store.state.user.listMode == 'normal'"
-              :marker="params.marker"
-              :keys="params.key"
-              :isindex="false"
-              :lists="lists"
-            ></ListItem>
-            <SimListItem
-              v-else
-              :marker="params.marker"
-              :keys="params.key"
-              :isindex="true"
-              :lists="lists"
-            ></SimListItem>
+            <keep-alive>
+              <ListItem
+                v-if="$store.state.user.listMode == 'normal'"
+                :marker="params.marker"
+                :keys="params.key"
+                :isindex="false"
+                :lists="lists"
+              ></ListItem>
+              <SimListItem
+                v-else
+                :marker="params.marker"
+                :keys="params.key"
+                :isindex="true"
+                :lists="lists"
+              ></SimListItem>
+            
+            </keep-alive>
+            
             <load-text :ifcanget="ifcanget" :loadAll="loadAll"></load-text>
           </div>
         </div>
@@ -96,6 +100,7 @@ export default {
   // components: { adminDashboard, editorDashboard },
   data() {
     return {
+      hasGetData: false,
       pinList: [],
       currentRole: "adminDashboard",
       count: 5,
@@ -187,14 +192,23 @@ export default {
   computed: {
     ...mapGetters(["roles", "islogin"]),
   },
+  activated(){
+    console.log('666',this.$route.query)
+    if(this.$route.query.time){
+      this.toPosition();
+    }
+    this.getForumInfo();
+    
+  },
   mounted() {
+    console.log(777)
     if (document.body.clientWidth < 700) {
       this.isPhone = true;
     }
     if (this.$route.query.game) {
       localStorage.setItem("gamemodule", true);
     }
-    this.toPosition();
+    
     let self = this;
     this.$refs.container.addEventListener("scroll", function () {
       let scrollTop = self.$refs.container.scrollTop;
@@ -248,6 +262,7 @@ export default {
   },
 
   created() {
+    console.log(555)
     let id = this.$route.path.split("/")[2];
     if (!isNaN(id)) {
       this.params.forumId = id;
@@ -259,7 +274,7 @@ export default {
     //   this.params.pageSize = 7
     // }
     this.params.forumId = this.$route.params.forumId;
-    this.getForumInfo();
+    
     
     this.load();
   },
@@ -328,12 +343,12 @@ export default {
       this.getLists("first");
     },
     getForumInfo() {
+      
       api.getForumInfo({ forumId: this.params.forumId }).then((res) => {
         if (res.success) {
           this.forumInfo = res.data;
-          this.$store.dispatch("var/SET_formName", res.data.name);
           document.title = "【" + res.data.name + "】- " + document.title;
-
+          this.$store.dispatch("var/SET_formName", this.forumInfo.name);
           if (res.data.desc) {
             document
               .querySelector('meta[name="description"]')

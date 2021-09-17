@@ -155,6 +155,13 @@ export default {
   computed: {
     ...mapGetters(["roles", "islogin"]),
   },
+  activated(){
+    console.log('666',this.$route.query)
+    if(this.$route.query.time){
+      this.toPosition();
+    }
+    
+  },
   beforeRouteEnter(to, from, next) {
     // console.log("from", from);
     if (from.path.includes("/p/")) {

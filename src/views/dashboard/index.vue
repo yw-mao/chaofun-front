@@ -201,9 +201,10 @@ export default {
       }
     });
   },
-  mounted() {
-    if (document.body.clientWidth < 700) {
-      this.isPhone = true;
+  activated(){
+    console.log('666',this.$route.query)
+    if(this.$route.query.time){
+      this.toPosition();
     }
     if (this.$route.path.includes("/all")) {
       this.$store.dispatch("var/SET_formName", "全站");
@@ -212,6 +213,12 @@ export default {
     } else {
       this.$store.dispatch("var/SET_formName", "首页");
     }
+  },
+  mounted() {
+    if (document.body.clientWidth < 700) {
+      this.isPhone = true;
+    }
+    
     this.keyword = this.$route.query.q;
     this.toPosition();
     // console.log('scrollHeight',this.scrollHeight)

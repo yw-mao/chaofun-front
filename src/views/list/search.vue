@@ -196,6 +196,13 @@ export default {
   computed: {
     ...mapGetters(["roles", "islogin"]),
   },
+  activated(){
+    console.log('666',this.$route.query)
+    if(this.$route.query.time){
+      this.toPosition();
+    }
+    
+  },
   mounted() {
     if (document.body.clientWidth < 700) {
       this.isPhone = true;
