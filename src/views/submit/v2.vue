@@ -38,7 +38,7 @@
         <div class="postbox">
           <el-radio-group v-model="type" @change="$refs.form.clearValidate()">
             <el-radio-button label="article">
-              <i class="el-icon-tickets"></i> 帖子
+              <i class="el-icon-tickets"></i> 文章
             </el-radio-button>
             <el-radio-button label="image">
               <i class="el-icon-picture-outline"></i> 图片/视频
@@ -210,6 +210,61 @@
                   <i :class="[post.anonymity ? 'el-icon-check' : 'el-icon-plus']" />
                   <span>匿名</span>
                 </el-checkbox>
+
+                <el-popover
+                  class="tag-selector"
+                  popper-class="tag-selector-popover"
+                  placement="top-start"
+                  width="400"
+                  trigger="click"
+                  v-model="tagModalVisible"
+                  v-if="tags.length > 0"
+                  @hide="tagSelectorHide"
+                >
+                  <div class="tag-title">
+                    <p v-if="tag">
+                      <el-tag :color="tag.backgroundColor || '#ff9300'">
+                        #{{ tag.name }}
+                      </el-tag>
+                      <span> [类型] </span>
+                      {{post.title || '帖子标题'}}
+                    </p>
+                    <p v-else>
+                      没有选择标签
+                    </p>
+                  </div>
+                  <el-input
+                    placeholder="搜索标签"
+                    prefix-icon="el-icon-search"
+                    v-model="tagSearch"
+                  >
+                  </el-input>
+                  <el-radio-group v-model="tagId" @change="changeTag">
+                    <div class="tag-option" v-for="item in tags.filter(tag => tag.name.indexOf(tagSearch) > -1)" v-bind:key="item.id">
+                      <el-radio :label="item.id" >
+                        <el-tag :color="item.backgroundColor || '#ff9300'">
+                        #{{ item.name }}
+                        </el-tag>
+                      </el-radio>
+                    </div>
+                  </el-radio-group>
+                  <div class="tag-buttons">
+                    <el-button
+                      :disabled="tag === null"
+                      @click="confirmTag"
+                      type="primary"
+                      round
+                    >选 择</el-button>
+                    <el-button @click="clearTag" round>清除选择</el-button>
+                  </div>
+
+                  <el-button
+                    slot="reference"
+                    icon="el-icon-price-tag"
+                    v-bind:class="{ 'tag-button-no-tag': !post.tagId }"
+                    :style="{ backgroundColor: tag && tag.backgroundColor || '#ff9300', borderColor: tag && tag.backgroundColor || '#ff9300' }"
+                  >{{post.tagId && tag && '#' + tag.name || '标签'}} <i class="el-icon-arrow-down" v-if="post.tagId" /></el-button>
+                </el-popover>
               </div>
             </el-row>
             <el-divider></el-divider>
@@ -268,14 +323,13 @@
       </el-card>
     </el-aside>
   </el-container>
-
 </template>
 
 <script>
   import Vue from 'vue';
   import draggable from 'vuedraggable'
   import Editor from '@/components/Editor/Tiptap.vue'
-  import { getForumInfo, searchForum, getUrlTitle } from '@/api/api'
+  import { getForumInfo, searchForum, getlistTag, getUrlTitle } from '@/api/api'
   import { logo } from '@/settings'
 
   export default {
@@ -307,6 +361,7 @@
           ],
           voteDuration: 3,
           anonymity: false,
+          tagId: null,
         },
         forums: [],
         filelist: [],
@@ -315,11 +370,19 @@
         drag: false,
         isDrag: false,
         filedata: {}, // 文件参数
+        tags: [], // Tag 列表
+        tag: null, // 选中Tag
+        tagId: null, // 预选Tag
+        tagSearch: '', // Tag 搜索
+        tagModalVisible: false, // Tag Modal是否显示
       }
     },
     mounted() {
       // 加载论坛板块信息
-      this.getForum().then(() => this.getForumCategories());
+      this.getForum().then(() => {
+        this.getForumCategories();
+        this.getForumTag();
+      });
 
       // 拖拽更改Hover样式
       document.addEventListener('dragover', () => {
@@ -343,6 +406,7 @@
     methods: {
       forumSelectOnChange(forumId) {
         this.getForum();
+        this.getForumTag();
         this.$router.push({params: { forumId }});
       },
       async getForum() {
@@ -367,6 +431,34 @@
             icon: this.forum.imageName,
             title: this.forum.name,
           });
+        }
+      },
+      // === Tag ===
+      // 获取论坛Tag
+      async getForumTag() {
+        const result = await getlistTag({ forumId: this.forum.id });
+        this.tags = result.data;
+      },
+      // 修改Tag
+      changeTag(label) {
+        this.tag = this.tags.find(tag => tag.id === label);
+      },
+      // 清除Tag
+      clearTag() {
+        this.tag = null;
+        this.tagId = null;
+        this.post.tagId = null;
+      },
+      // 确认Tag
+      confirmTag() {
+        this.tagModalVisible = false;
+        this.post.tagId = this.tagId
+      },
+      // 关闭事件
+      tagSelectorHide() {
+        if (this.tagId && this.post.tagId !== this.tagId) {
+          this.tagId = null;
+          this.tag = null;
         }
       },
 
@@ -627,6 +719,7 @@
       align-items: center;
       justify-content: center;
       width: auto;
+      margin-right: 4px;
       .el-checkbox__inner {
         display: none;
       }
@@ -648,6 +741,49 @@
         border-color: #16679f;
         .el-checkbox__label {
           color: #fff;
+        }
+      }
+    }
+
+    /deep/ .tag-selector {
+      display: flex;
+      margin-right: 4px;
+
+      .el-button {
+        position: relative;
+        padding: 4px 16px;
+        border: 1px solid;
+        border-radius: 9999px;
+        color: #fff;
+        font-size: 14px;
+        font-weight: 500;
+        min-height: 32px;
+        height: auto;
+        min-width: 32px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: auto;
+        i {
+          font-size: 20px;
+          font-weight: 400;
+          height: 20px;
+          line-height: 20px;
+          margin-right: 8px;
+        }
+        span {
+          margin: 0;
+          line-height: 20px;
+
+          i {
+            font-size: 16px;
+            margin-left: 6px;
+          }
+        }
+        &.tag-button-no-tag {
+          background: transparent !important;
+          color: #606266 !important;
+          border-color: #606266 !important;
         }
       }
     }
@@ -858,7 +994,6 @@
                   line-height: 20px;
                 }
               }
-             
             }
           }
         }
@@ -1078,6 +1213,90 @@
       display: flex;
     }
   }
+}
+
+.tag-selector-popover {
   
+  .tag-title {
+    display: flex;
+    text-align: center;
+    padding: 22px 16px 22px;
+    p {
+      line-height: 24px;
+      font-size: 16px;
+    }
+    span {
+      font-size: 16px;
+      color: #888;
+      font-weight: 400;
+      &.el-tag {
+        font-size: 13px;
+        color: #fff;
+      }
+    }
+  }
+  .el-input {
+    padding: 0 16px;
+    margin-bottom: 16px;
+    /deep/ .el-input__prefix {
+      left: 21px;
+    }
+  }
+  .el-radio-group {
+    height: 300px;
+    /deep/ .el-radio__input {
+      &.is-checked .el-radio__inner {
+        border-color: #16679f;
+        background: #16679f;
+      }
+      .el-radio__inner:hover {
+        border-color: #16679f;
+      }
+    }
+  }
+  .tag-option {
+    cursor: pointer;
+    line-height: 16px;
+    padding: 4px 16px;
+  }
+  .el-tag {
+    display: inline-block;
+    vertical-align: middle;
+    padding: 2px 6px;
+    background: #ff9300;
+    border-radius: 4px;
+    font-size: 13px;
+    color: #fff;
+    border: none;
+    height: 22px;
+    line-height: 18px;
+  }
+  .tag-buttons {
+    background: #edeff1;
+    border: none;
+    display: flex;
+    flex-direction: row-reverse;
+    padding: 16px;
+    button {
+      margin: 0 0 0 8px;
+      &.el-button--primary {
+        background: #16679f;
+        border-color: #16679f;
+      }
+      &.is-disabled {
+        background: #788898;
+        border-color: #788898;
+      }
+    }
+  }
+}
+</style>
+
+<style lang="scss">
+.tag-selector-popover {
+  padding: 0px;
+  .popper__arrow::after {
+    border-top-color: #edeff1 !important;
+  }
 }
 </style>
