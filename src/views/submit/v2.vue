@@ -211,112 +211,10 @@
                   <span>匿 名</span>
                 </el-checkbox>
 
-                <el-popover
-                  class="tag-selector"
-                  popper-class="tag-selector-popover"
-                  placement="top-start"
-                  width="400"
-                  trigger="click"
-                  v-model="tagModalVisible"
-                  v-if="tags.length > 0"
-                  @hide="tagSelectorHide"
-                >
-                  <div class="tag-title">
-                    <p v-if="tag">
-                      <el-tag :color="tag.backgroundColor || '#ff9300'">
-                        #{{ tag.name }}
-                      </el-tag>
-                      <span> [类型] </span>
-                      {{post.title || '帖子标题'}}
-                    </p>
-                    <p v-else>
-                      没有选择标签
-                    </p>
-                  </div>
-                  <el-input
-                    placeholder="搜索标签"
-                    prefix-icon="el-icon-search"
-                    v-model="tagSearch"
-                  >
-                  </el-input>
-                  <el-radio-group v-model="tagId" @change="changeTag">
-                    <div class="tag-option" v-for="item in tags.filter(tag => tag.name.indexOf(tagSearch) > -1)" v-bind:key="item.id">
-                      <el-radio :label="item.id" >
-                        <el-tag :color="item.backgroundColor || '#ff9300'">
-                        #{{ item.name }}
-                        </el-tag>
-                      </el-radio>
-                    </div>
-                  </el-radio-group>
-                  <div class="tag-buttons">
-                    <el-button
-                      :disabled="tag === null"
-                      @click="confirmTag"
-                      type="primary"
-                      round
-                    >选 择</el-button>
-                    <el-button @click="clearTag" round>清除选择</el-button>
-                  </div>
+                <TagSelector v-bind:forumId="post.forumId" v-model="post.tagId" />
 
-                  <el-button
-                    slot="reference"
-                    icon="el-icon-price-tag"
-                    v-bind:class="{ 'tag-button-no-tag': !post.tagId }"
-                    :style="{ backgroundColor: tag && tag.backgroundColor || '#ff9300', borderColor: tag && tag.backgroundColor || '#ff9300' }"
-                  >{{post.tagId && tag && '#' + tag.name || '标 签'}} <i class="el-icon-arrow-down" v-if="post.tagId" /></el-button>
-                </el-popover>
+                <CollectionSelector v-model="post.collectionId" />
 
-                 <el-popover
-                  title="选择一个合集"
-                  class="collection-selector"
-                  popper-class="collection-selector-popover"
-                  placement="top-start"
-                  width="400"
-                  trigger="click"
-                  v-model="collectionModalVisible"
-                  @hide="collectionSelectorHide"
-                >
-                  <div class="collection-search">
-                    <el-input
-                      placeholder="搜索合集"
-                      prefix-icon="el-icon-search"
-                      v-model="collectionSearch"
-                    >
-                    </el-input>
-                    <el-radio-group v-model="collectionId" @change="changeCollection">
-                      <div class="collection-option" v-for="item in collections.filter(collection => collection.name.indexOf(collectionSearch) > -1)" v-bind:key="item.id">
-                        <el-radio :label="item.id" >
-                          {{ item.name }}
-                        </el-radio>
-                      </div>
-                    </el-radio-group>
-                  </div>
-
-                  <el-form class="collection-add" label-position="top">
-                    <el-form-item label="新增合集">
-                      <p>允许文字和Emoj表情</p>
-                      <el-input v-model="newCollection.name">
-                        <el-button type="primary" @click="onAddCollection" slot="append">新增</el-button>
-                      </el-input>
-                    </el-form-item>
-                  </el-form>
-
-                  <div class="collection-buttons">
-                    <el-button
-                      :disabled="collection === null"
-                      @click="confirmCollection"
-                      type="primary"
-                      round
-                    >选 择</el-button>
-                    <el-button @click="clearCollection" round>清除选择</el-button>
-                  </div>
-  
-                  <el-button
-                    slot="reference"
-                    icon="el-icon-collection"
-                    v-bind:class="{ 'collection-button-no-collection': !post.collectionId }"
-                  >{{post.collectionId && collection && collection.name || '合 集'}} <i class="el-icon-arrow-down" v-if="post.collectionId" /></el-button>
-                </el-popover>
               </div>
             </el-row>
             <el-divider></el-divider>
@@ -381,7 +279,9 @@
   import Vue from 'vue';
   import draggable from 'vuedraggable'
   import Editor from '@/components/Editor/Tiptap.vue'
-  import { getForumInfo, searchForum, getlistTag, getUrlTitle, userCollectionList, addCollection } from '@/api/api'
+  import TagSelector from '@/components/Submit/TagSelector.vue'
+  import CollectionSelector from '@/components/Submit/CollectionSelector.vue'
+  import { getForumInfo, searchForum, getUrlTitle } from '@/api/api'
   import { logo } from '@/settings'
 
   export default {
@@ -389,6 +289,8 @@
     components: {
       Editor,
       draggable,
+      TagSelector,
+      CollectionSelector,
     },
     data() {
       return {
@@ -423,29 +325,13 @@
         drag: false,
         isDrag: false,
         filedata: {}, // 文件参数
-        tags: [], // Tag 列表
-        tag: null, // 选中Tag
-        tagId: null, // 预选Tag
-        tagSearch: '', // Tag 搜索
-        tagModalVisible: false, // Tag Modal是否显示
-        collections: [], // 用户合集
-        collectionSearch: '', // 合集搜索
-        collectionId: null, // 合集ID
-        collection: null, // 合集当前选中
-        newCollection: {
-          name: null,
-        }, // 新增合集
       }
     },
     mounted() {
       // 加载论坛板块信息
       this.getForum().then(() => {
         this.getForumCategories();
-        this.getForumTag();
       });
-
-      // 加载用户合集
-      this.getCollection();
 
       // 拖拽更改Hover样式
       document.addEventListener('dragover', () => {
@@ -469,7 +355,6 @@
     methods: {
       forumSelectOnChange(forumId) {
         this.getForum();
-        this.getForumTag();
         this.$router.push({params: { forumId }});
       },
       async getForum() {
@@ -496,82 +381,7 @@
           });
         }
       },
-      // === Tag ===
-      // 获取论坛Tag
-      async getForumTag() {
-        const result = await getlistTag({ forumId: this.forum.id });
-        this.tags = result.data;
-      },
-      // 修改Tag
-      changeTag(label) {
-        this.tag = this.tags.find(tag => tag.id === label);
-      },
-      // 清除Tag
-      clearTag() {
-        this.tag = null;
-        this.tagId = null;
-        this.post.tagId = null;
-        this.tagSearch = '';
-      },
-      // 确认Tag
-      confirmTag() {
-        this.tagModalVisible = false;
-        this.post.tagId = this.tagId;
-        this.tagSearch = '';
-      },
-      // 关闭事件
-      tagSelectorHide() {
-        if (this.tagId && this.post.tagId !== this.tagId) {
-          this.tagId = null;
-          this.tag = null;
-          this.tagSearch = '';
-        }
-      },
-      // === Collection ===
-      // 获取Collection
-      async getCollection() {
-        const result = await userCollectionList();
-        this.collections = result.data;
-      },
-      // 修改Collection
-      changeCollection(label) {
-        this.collection = this.collections.find(collection => collection.id === label);
-      },
-      // 清除Collection
-      clearCollection() {
-        this.collection = null;
-        this.collectionId = null;
-        this.post.collectionId = null;
-        this.collectionSearch = '';
-          this.newCollection.name = '';
-      },
-      // 确认Collection
-      confirmCollection() {
-        this.collectionModalVisible = false;
-        this.post.collectionId = this.collectionId;
-        this.collectionSearch = '';
-          this.newCollection.name = '';
-      },
-      // 关闭事件
-      collectionSelectorHide() {
-        if (this.collectionId && this.post.collectionId !== this.collectionId) {
-          this.collectionId = null;
-          this.collection = null;
-          this.collectionSearch = '';
-          this.newCollection.name = '';
-        }
-      },
-      // 新增合集
-      async onAddCollection() {
-        const result = await addCollection(this.newCollection);
-        if (result.success && result.data) {
-          this.collections.push(result.data);
-          this.newCollection.name = '';
-          return;
-        }
-
-        // TODO: 提示新增错误
-      },
+      
 
       // === 图片/视频 上传组件==
       // 上传之前
@@ -854,92 +664,6 @@
         border-color: #16679f;
         .el-checkbox__label {
           color: #fff;
-        }
-      }
-    }
-
-
-    /deep/ .collection-selector {
-      .el-button {
-        position: relative;
-        padding: 4px 16px;
-        border: 1px solid;
-        border-radius: 9999px;
-        background: #16679f;
-        border-color: #16679f;
-        color: #fff;
-        font-size: 14px;
-        font-weight: 500;
-        min-height: 32px;
-        height: auto;
-        min-width: 32px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: auto;
-        i {
-          font-size: 20px;
-          font-weight: 400;
-          height: 20px;
-          line-height: 20px;
-          margin-right: 8px;
-        }
-        span {
-          margin: 0;
-          line-height: 20px;
-
-          i {
-            font-size: 16px;
-            margin-left: 6px;
-          }
-        }
-        &.collection-button-no-collection {
-          background: transparent !important;
-          color: #606266 !important;
-          border-color: #606266 !important;
-        }
-      }
-    }
-
-    /deep/ .tag-selector {
-      display: flex;
-      margin-right: 4px;
-
-      .el-button {
-        position: relative;
-        padding: 4px 16px;
-        border: 1px solid;
-        border-radius: 9999px;
-        color: #fff;
-        font-size: 14px;
-        font-weight: 500;
-        min-height: 32px;
-        height: auto;
-        min-width: 32px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: auto;
-        i {
-          font-size: 20px;
-          font-weight: 400;
-          height: 20px;
-          line-height: 20px;
-          margin-right: 8px;
-        }
-        span {
-          margin: 0;
-          line-height: 20px;
-
-          i {
-            font-size: 16px;
-            margin-left: 6px;
-          }
-        }
-        &.tag-button-no-tag {
-          background: transparent !important;
-          color: #606266 !important;
-          border-color: #606266 !important;
         }
       }
     }
@@ -1371,194 +1095,6 @@
     .postbox-rules {
       display: flex;
     }
-  }
-}
-
-
-.tag-selector-popover {
-  .tag-title {
-    display: flex;
-    text-align: center;
-    padding: 22px 16px 22px;
-    p {
-      line-height: 24px;
-      font-size: 16px;
-    }
-    span {
-      font-size: 16px;
-      color: #888;
-      font-weight: 400;
-      &.el-tag {
-        font-size: 13px;
-        color: #fff;
-      }
-    }
-  }
-  .el-input {
-    padding: 0 16px;
-    margin-bottom: 16px;
-    /deep/ .el-input__prefix {
-      left: 21px;
-    }
-  }
-  .el-radio-group {
-    height: 300px;
-    /deep/ .el-radio__input {
-      &.is-checked .el-radio__inner {
-        border-color: #16679f;
-        background: #16679f;
-      }
-      .el-radio__inner:hover {
-        border-color: #16679f;
-      }
-    }
-  }
-  .tag-option {
-    cursor: pointer;
-    line-height: 16px;
-    padding: 4px 16px;
-  }
-  .el-tag {
-    display: inline-block;
-    vertical-align: middle;
-    padding: 2px 6px;
-    background: #ff9300;
-    border-radius: 4px;
-    font-size: 13px;
-    color: #fff;
-    border: none;
-    height: 22px;
-    line-height: 18px;
-  }
-  .tag-buttons {
-    background: #edeff1;
-    border: none;
-    display: flex;
-    flex-direction: row-reverse;
-    padding: 16px;
-    button {
-      margin: 0 0 0 8px;
-      &.el-button--primary {
-        background: #16679f;
-        border-color: #16679f;
-      }
-      &.is-disabled {
-        background: #788898;
-        border-color: #788898;
-      }
-    }
-  }
-}
-
-
-</style>
-
-<style lang="scss">
-.tag-selector-popover {
-  padding: 0px;
-  .popper__arrow::after {
-    border-top-color: #edeff1 !important;
-  }
-}
-
-.collection-selector-popover {
-  padding: 0;
-  .el-popover__title {
-    padding: 16px;
-    margin: 0;
-    font-size: 16px;
-    font-weight: 500;
-    line-height: 20px;
-    border-bottom: 1px solid #edeff1;
-  }
-  .collection-search {
-    height: 250px;
-    background: #f6f7f8;
-    padding: 16px 0;
-    .el-input {
-      padding: 0 16px 16px;
-      .el-input__prefix {
-        height: 36px;
-        left: 21px;
-      }
-    }
-    .el-radio-group {
-      .el-radio__input {
-        &.is-checked .el-radio__inner {
-          border-color: #16679f;
-          background: #16679f;
-        }
-        &.is-checked + .el-radio__label {
-          color: #16679f;
-        }
-        .el-radio__inner:hover {
-          border-color: #16679f;
-        }
-      }
-    }
-    .collection-option {
-      cursor: pointer;
-      line-height: 16px;
-      padding: 4px 16px;
-      display: flex;
-      flex-direction: row;
-    }
-  }
-  
-  .collection-add {
-    background: #fff;
-    padding: 16px;
-    .el-form-item {
-      margin: 0;
-      .el-form-item__label {
-        font-size: 10px;
-        font-weight: 700;
-        letter-spacing: .5px;
-        line-height: 12px;
-        color: #606266;
-        margin-bottom: 8px;
-        padding: 0;
-      }
-      .el-form-item__content {
-        line-height: 1;
-        p {
-          font-size: 12px;
-          font-weight: 400;
-          line-height: 16px;
-          color: #5a5e66;
-          margin-bottom: 8px;
-          text-align: left;
-        }
-        .el-input {
-          border: 1px solid #edeff1;
-          background-color: #f6f7f8;
-          border-radius: 4px;
-          color: #5a5e66;
-        }
-      }
-      
-    }
-  }
-  .collection-buttons {
-    background: #edeff1;
-    border: none;
-    display: flex;
-    flex-direction: row-reverse;
-    padding: 16px;
-    button {
-      margin: 0 0 0 8px;
-      &.el-button--primary {
-        background: #16679f;
-        border-color: #16679f;
-      }
-      &.is-disabled {
-        background: #788898;
-        border-color: #788898;
-      }
-    }
-  }
-  .popper__arrow::after {
-    border-top-color: #edeff1 !important;
   }
 }
 </style>
