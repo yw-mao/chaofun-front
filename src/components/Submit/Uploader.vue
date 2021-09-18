@@ -31,7 +31,7 @@
 <script>
 import ajax from 'element-ui/packages/upload/src/ajax';
 import UploadList from './UploadList';
-import EXIF from 'exif-js';
+import exif from '@/utils/exif-check';
 
 function noop() {}
 
@@ -177,7 +177,7 @@ export default {
       if (!files) return;
       this.uploadFiles(files);
     },
-    uploadFiles(files) {
+    async uploadFiles(files) {
       if (this.limit && this.fileList.length + files.length > this.limit) {
         this.onExceed && this.onExceed(files, this.fileList);
         return;
@@ -188,18 +188,17 @@ export default {
 
       // 检测图片
       for (let index = 0; index < postFiles.length; index++) {
-        const rawFile = postFiles[index];
-        const data = EXIF.getData(rawFile, function() {
-          const Model = EXIF.getAllTags(this);
-          console.log(Model);
-        });
-        console.log(data);
-      }
-
-      postFiles.forEach(rawFile => {
+        let rawFile = postFiles[index];
+        const data = await exif(rawFile, this.$createElement);
+        if (data === false) {
+          return;
+        }
+        if (data !== true) {
+          rawFile = data;
+        }
         this.handleStart(rawFile);
         if (this.autoUpload) this.upload(rawFile);
-      });
+      }
     },
     upload(rawFile) {
       this.$refs.input.value = null;
