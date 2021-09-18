@@ -201,10 +201,14 @@ export default {
       color: $linkcolor;
     }
     .item{
-      padding: 0 40px;
+      padding: 0 34px;
       transition: all 2s linear;
+      
       .item_title{
         line-height: 50px;
+        overflow: hidden;
+        text-overflow:ellipsis; 
+        white-space: nowrap;
         .items_title_icon{
           width:24px;
           height:24px;

@@ -759,6 +759,7 @@ queryChildren (parent, list) {
         
     },
     close(e){
+        localStorage.setItem("simple", JSON.stringify(this.pagedata));
         if(localStorage.getItem('storedata')){
             var obj = JSON.parse(localStorage.getItem('storedata'));
             let {params,query} = obj.from;

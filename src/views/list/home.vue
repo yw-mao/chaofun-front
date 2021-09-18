@@ -198,7 +198,16 @@ export default {
       this.toPosition();
     }
     this.getForumInfo();
-    
+    if(localStorage.getItem('simple')){
+      let data = JSON.parse(localStorage.getItem('simple'));
+      
+      this.lists.forEach((its,index)=>{
+        if(data.postId==its.postId){
+          this.lists.splice(index,1,data)
+        }
+      })
+      localStorage.removeItem('simple')
+    }
   },
   mounted() {
     console.log(777)
@@ -309,6 +318,7 @@ export default {
         res.data.forEach((item) => {
           item.isPin = true;
         });
+        this.pinList = res.data;
         this.lists.unshift(...res.data);
       });
     },

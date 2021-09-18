@@ -213,6 +213,17 @@ export default {
     } else {
       this.$store.dispatch("var/SET_formName", "首页");
     }
+    // 更新数据
+    if(localStorage.getItem('simple')){
+      let data = JSON.parse(localStorage.getItem('simple'));
+      
+      this.lists.forEach((its,index)=>{
+        if(data.postId==its.postId){
+          this.lists.splice(index,1,data)
+        }
+      })
+      localStorage.removeItem('simple')
+    }
   },
   mounted() {
     if (document.body.clientWidth < 700) {

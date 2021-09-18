@@ -490,6 +490,7 @@ export default {
       // data.list.splice(this.index,1,item);
       localStorage.setItem("storedata", JSON.stringify(data));
       console.log("data", data);
+      
     },
     doFocued(bool, id) {
       this.lists.forEach((it) => {
@@ -655,6 +656,8 @@ export default {
         }
       }
       this.updateList(index, item);
+      console.log('更新数据')
+      // this.$EventBus.$emit("resetItem", {index: index,item: item});
       //  this.$EventBus.$emit('updateVote',{index: this.index,item: item});
     },
   },

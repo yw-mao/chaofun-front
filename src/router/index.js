@@ -155,6 +155,7 @@ export const constantRoutes = [
         path: '/my',
         name: 'my',
         component: () => import('@/views/list/my'),
+        meta: {keepAlive: true},
         hidden: true
       },
       {
@@ -168,6 +169,7 @@ export const constantRoutes = [
         path: '/search',
         name: 'search',
         component: () => import('@/views/list/search'),
+        meta: { title: '',keepAlive: false,},
         hidden: true
       },
       {
