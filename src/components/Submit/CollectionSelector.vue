@@ -61,7 +61,6 @@ export default {
       type: String,
       required: false,
     },
-    
   },
   model: {
     prop: 'dataCollectionId',

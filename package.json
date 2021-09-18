@@ -20,6 +20,7 @@
     "dropzone": "^5.5.1",
     "echarts": "^4.6.0",
     "element-ui": "^2.13.0",
+    "exif-js": "^2.3.0",
     "file-saver": "^2.0.2",
     "fuse.js": "^3.4.6",
     "html-webpack-plugin-for-multihtml": "^2.30.2",

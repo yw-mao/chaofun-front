@@ -79,53 +79,8 @@
               </el-form-item>
             </el-row>
 
-            <el-row v-if="type === 'image'">
-              <el-upload
-                action="/api/upload_image"
-                class="image-uploader"
-                :data="filedata"
-                :file-list="filelist"
-                :before-upload="imageBeforeUpload"
-                :on-progress="imageGettProgress"
-                :on-remove="imageUploadRemove"
-                :on-error="imageUploadError"
-                :on-success="imageUploadSuccess"
-                @click="imageUploadHandleClick"
-                :show-file-list="false"
-                v-bind:class="{
-                  'drag-hover': isDrag && !drag,
-                  'el-upload-free': filelist.length === 0,
-                }"
-                :drag="!drag"
-                multiple
-              >
-                <div class="image-uploader-list" v-if="filelist.length > 0">
-                  <div class="image-uploader-sort" @click="$event.stopPropagation()">
-                    <draggable
-                      class="image-uploader-sort-list"
-                      ghost-class="ghost"
-                      v-model="filelist"
-                      @start="drag=true"
-                      @end="drag=false"
-                      :move="imageSorterMove"
-                      draggable=".image-uploader-file"
-                    >
-                      <div v-for="file in filelist" :key="file.uid" class="image-uploader-file">
-                        <span :style="{
-                          backgroundImage: `url(${file.url})`
-                        }">
-                        </span>
-                      </div>
-                      <span class="image-uploader-btn" slot="default">
-                        <i class="el-icon-plus"></i>
-                      </span>
-                    </draggable>
-                  </div>
-                </div>
-                <div class="image-uploader-free" v-else>
-                  将文件拖到此处，或 <el-button round>点击上传</el-button>
-                </div>
-              </el-upload>
+            <el-row class="image-box" v-if="type === 'image'">
+              <Uploader v-model="post.ossNames" action="/api/upload_image" />
             </el-row>
             <el-row v-if="type === 'link'">
               <el-form-item
@@ -276,11 +231,11 @@
 </template>
 
 <script>
-  import Vue from 'vue';
   import draggable from 'vuedraggable'
-  import Editor from '@/components/Editor/Tiptap.vue'
-  import TagSelector from '@/components/Submit/TagSelector.vue'
-  import CollectionSelector from '@/components/Submit/CollectionSelector.vue'
+  import Editor from '@/components/Editor/Tiptap'
+  import TagSelector from '@/components/Submit/TagSelector'
+  import CollectionSelector from '@/components/Submit/CollectionSelector'
+  import Uploader from '@/components/Submit/Uploader'
   import { getForumInfo, searchForum, getUrlTitle } from '@/api/api'
   import { logo } from '@/settings'
 
@@ -291,6 +246,7 @@
       draggable,
       TagSelector,
       CollectionSelector,
+      Uploader,
     },
     data() {
       return {
@@ -317,13 +273,11 @@
           anonymity: false,
           tagId: null,
           collectionId: null,
+          ossNames: null,
         },
         forums: [],
-        filelist: [],
         loading: false,
         drafts: 0, // 草稿箱数量
-        drag: false,
-        isDrag: false,
         filedata: {}, // 文件参数
       }
     },
@@ -331,18 +285,6 @@
       // 加载论坛板块信息
       this.getForum().then(() => {
         this.getForumCategories();
-      });
-
-      // 拖拽更改Hover样式
-      document.addEventListener('dragover', () => {
-        if (this.type === 'image') {
-          this.isDrag = true;
-        }
-      });
-      document.addEventListener('dragleave', () => {
-        if (this.type === 'image') {
-          this.isDrag = false;
-        }
       });
     },
     beforeDestroy() {
@@ -382,56 +324,6 @@
         }
       },
       
-
-      // === 图片/视频 上传组件==
-      // 上传之前
-      imageBeforeUpload(file) {
-        this.isDrag = false; // 关闭drag效果
-        this.filedata.fileName = file.name
-        this.filelist.push({
-          uid: file.uid,
-          name: file.name,
-          url: window.URL.createObjectURL(file),
-        });
-        return true
-      },
-      // 上传进度更新
-      imageGettProgress(event, file, fileList) {
-        console.log(file, fileList, this.filelist);
-      },
-      // 删除图片
-      imageUploadRemove(file) {
-        // 去除图片
-        this.filelist = this.filelist.filter(f => f.uid === file.uid);
-      },
-       // 上传成功处理
-      imageUploadSuccess(response, file) {
-        if (response.success && response.data) {
-          this.filedata = {}
-          this.filelist.find(f => f.uid === file.uid).url = this.imgOrigin + response.data;
-        }
-      },
-      // 上传失败
-      imageUploadError(file) {
-        // 去除图片
-        this.filelist = this.filelist.filter(f => f.uid === file.uid);
-      },
-      // imageSorterDragStart(e) {
-      //   this.isDrag = false;
-      //   e.preventDefault();
-      // },
-      // imageSorterDragStop(e) {
-      //   this.isDrag = false;
-      //   e.preventDefault();
-      // },
-      imageSorterMove() {
-        console.log(222)
-        this.isDrag = false;
-        return true;
-      },
-      imageUploadHandleClick() {
-        console.lo(3);
-      },
       // === 链接相关 ===
       // 通过URL获取链接标题
       async getUrlTitle() {
@@ -670,105 +562,8 @@
     .el-divider {
       margin: 0;
     }
-    .image-uploader {
-      padding: 12px;
-      border: 1px dashed #DCDFE6;
-      border-radius: 4px;
-      box-sizing: border-box;
-      /deep/ .el-upload {
-        display: flex;
-        width: auto;
-        height: auto;
-        line-height: inherit;
-       
-        .el-upload-dragger {
-          width: 100%;
-          height: auto;
-          border: none;
-          .el-upload__text {
-            line-height: 36px;
-          }
-        }
-        .image-uploader-list {
-          display: flex;
-          flex-flow: row wrap;
-          width: 100%;
-          box-sizing: border-box;
-          .image-uploader-sort {
-            display: inline-flex;
-            overflow-x: auto;
-            width: 100%;
-          }
-        }
-      }
-      &.drag-hover {
-         /deep/ .el-upload {
-           border-color: #fc471e;
-         }
-         /deep/ .el-upload-list--picture-card {
-           z-index: 0;
-         }
-      }
-      &.el-upload-free {
-        /deep/ .el-upload {
-          min-height: 280px;
-          display: flex;
-          justify-content: center;
-          flex-flow: column nowrap;
-          flex-grow: 1;
-          text-align: center;
-          .image-uploader-free {
-            font-size: 16px;
-          }
-        }
-      }
-      .image-uploader-sort-list {
-        display: inline-flex;
-        width: 100%;
-        .image-uploader-file {
-          margin: 0 12px 12px 0;
-          padding: 0;
-          position: relative;
-          align-items: center;
-          border-radius: 4px;
-          border: 2px solid #5a5e66;
-          box-sizing: border-box;
-          display: flex;
-          height: 150px;
-          width: 150px;
-          justify-content: center;
-          span {
-            background-position: 50%;
-            background-size: cover;
-            border-radius: 4px;
-            display: block;
-            width: 134px;
-            height: 134px;
-            margin: 6px;
-            opacity: 1;
-            outline: none;
-          }
-        }
-        .ghost {
-          opacity: 0.5;
-        }
-      }
-      .image-uploader-btn {
-        .el-icon-plus {
-          align-items: center;
-          border: 1px dashed #606266;
-          border-radius: 4px;
-          display: flex;
-          width: 150px;
-          height: 150px;
-          justify-content: center;
-          font-size: 40px;
-          color: #606266;
-          &:hover {
-            color: #5a5e66;
-          }
-        }
-      }
+    .image-box {
+      margin-bottom: 22px;
     }
     // 投票样式
     .vote-box {
@@ -1076,14 +871,6 @@
       }
     }
   }
-
-  @media (max-width: 600px) {
-    .section-submit-form {
-      min-width: 0;
-      width: 100%;
-      margin-right: 0;
-    }
-  }
 }
 
 @media (max-width: 992px) {
@@ -1094,6 +881,16 @@
     }
     .postbox-rules {
       display: flex;
+    }
+  }
+}
+@media (max-width: 600px) {
+  .section-submit {
+    padding: 60px 8px;
+    .section-submit-form {
+      min-width: 0;
+      width: 100%;
+      margin-right: 0;
     }
   }
 }
