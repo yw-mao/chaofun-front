@@ -61,8 +61,8 @@
                 <el-progress v-if="progressFlag" :percentage="loadProgress"></el-progress>
                 <div class="imgList">
                   <div v-for="(item,index) in fileLists" :key="index" class="li">
-                    <img v-if="!item.endsWith('.mp4')" :src="imgOrigin+item + '?x-oss-process=image/resize,h_150'" alt="">
-                    <img v-if="item.endsWith('.mp4')" :src="imgOrigin+item + '?x-oss-process=video/snapshot,t_1,h_150'" alt="">
+                    <img v-if="!item.endsWith('.mp4') && !item.endsWith('.mkv')" :src="imgOrigin+item + '?x-oss-process=image/resize,h_150'" alt="">
+                    <img v-if="item.endsWith('.mp4') || item.endsWith('.mkv')" :src="imgOrigin+item + '?x-oss-process=video/snapshot,t_1,h_150'" alt="">
                     <span class="del" @click="deleteImg(index)">删除</span>
                   </div>
                 </div>
