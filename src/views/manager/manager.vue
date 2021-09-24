@@ -40,7 +40,7 @@
           </div>
 
           <div style="display: flex" v-show="nowIndex===1">
-            <div>
+            <div  style="width: 500px">
               <div>设置推送内容</div>
               <div>
                 <div>
@@ -59,6 +59,34 @@
                   <el-button @click="push" block>推送消息</el-button>
                 </div>
               </div>
+
+              <div>设置 iOS 版本信息</div>
+              <div>
+                <div>
+                  <div style="max-width:600px;margin-top:10px;">
+                    <el-input type="input"  maxlength="56" v-model="iosVersion.version" style="resize:none;overflow:hidden;" placeholder="请设置iOS版本"></el-input>
+                  </div>
+                  <div style="max-width:600px;margin-top:10px;">
+                    <el-input type="textarea" v-model="iosVersion.content" style="resize:none;overflow:hidden;" placeholder="请设置iOS版本升级内容"></el-input>
+                  </div>
+                  <el-button @click="updateiOSVersion" block>更新</el-button>
+                </div>
+              </div>
+
+              <div>设置 Android 版本信息</div>
+              <div>
+                <div>
+                  <div style="max-width:600px;margin-top:10px;">
+                    <el-input type="input"  maxlength="56" v-model="androidVersion.version" style="resize:none;overflow:hidden;" placeholder="请设置Android版本"></el-input>
+                  </div>
+                  <div style="max-width:600px;margin-top:10px;">
+                    <el-input type="textarea"  v-model="androidVersion.content" style="resize:none;overflow:hidden;" placeholder="请设置Android版本升级内容"></el-input>
+                  </div>
+                  <el-button @click="updateAndroidVersion" block>更新</el-button>
+                </div>
+              </div>
+
+            </div>
             </div>
           </div>
 
@@ -84,6 +112,10 @@
             </div>
           </div>
 
+          <div style="display: flex" v-show="nowIndex===3">
+            <iframe style="width: 100%; height: 500px"  src="https://bi.aliyuncs.com/token3rd/dashboard/view/pc.htm?pageId=42d951bd-d813-44f0-9984-71ae3d89f0f4&accessToken=a1a2cff6ee74dd1ebf0c45b694778389"></iframe>
+          </div>
+
         </div>
       </div>
     </div>
@@ -98,7 +130,7 @@
       return {
         websiteInfo: '1',
 
-        tabsParam:['基础设置','App设置', '活动设置'],//（这个也可以用对象key，value来实现）
+        tabsParam:['基础设置','App设置', '活动设置','统计信息'],//（这个也可以用对象key，value来实现）
         nowIndex:0,//默认第一个tab为激活状态
         comments: [],
         params: {
@@ -112,7 +144,25 @@
           url: '',
           status: '',
           imageName: '',
+        },
+
+        iosVersion: {
+          version: '',
+          content: '',
+          force: false,
+          action: 'check',
+          platform: 'ios',
+
+        },
+
+        androidVersion: {
+          version: '',
+          content: '',
+          force: false,
+          action: 'check',
+          platform: 'android',
         }
+
       }
     },
     mounted(){
@@ -128,6 +178,18 @@
       api.getActivity({}).then(res => {
         if (res.success && res.data != null) {
           this.activity = res.data;
+        }
+      });
+
+      api.getVersion({'platform': 'ios'}).then(res => {
+        if (res.success && res.data != null) {
+          this.iosVersion = res.data;
+        }
+      });
+
+      api.getVersion({'platform': 'android'}).then(res => {
+        if (res.success && res.data != null) {
+          this.androidVersion = res.data;
         }
       });
     },
@@ -154,6 +216,17 @@
         });
       },
 
+      updateiOSVersion() {
+        api.setVersion(this.iosVersion).then()(res => {
+
+        });
+      },
+
+      updateAndroidVersion() {
+        api.setVersion(this.androidVersion).then()(res => {
+
+        });
+      },
       save_active() {
         api.save_activity(this.activity).then()(res => {
           if (res.success) {

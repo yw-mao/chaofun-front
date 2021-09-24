@@ -15,8 +15,7 @@
                 <span>炒饭超Fun</span>
             </div>
             <div class="build_info">
-                <div class="info_item"> iOS: 2.25.1 | Android: 2.25.1 </div>
-                <div class="info_item"> 更新时间 2021.09.08 </div>
+                <div class="info_item"> iOS: {{iosVersion.version}} | Android: {{androidVersion.version}} </div>
             </div>
         </div>
         <div v-if="ISPHONE" class="down_btn">
@@ -85,6 +84,7 @@
 
 <script>
 import Vue from 'vue';
+import * as api from '../../api/api'
 // import
  export default {
    name: '',
@@ -93,7 +93,23 @@ import Vue from 'vue';
          show: false,
          value: '',
          showCover: false,
-         isiOS: false
+         isiOS: false,
+         iosVersion: {
+             version: '',
+             content: '',
+             force: false,
+             action: 'check',
+             platform: 'ios',
+
+         },
+
+         androidVersion: {
+             version: '',
+             content: '',
+             force: false,
+             action: 'check',
+             platform: 'android',
+         }
      }
    },
    components: {
@@ -113,6 +129,18 @@ import Vue from 'vue';
         // if(this.ISPHONE&&!isiOS&&this.$route.query.from=='h5'&&!this.isWeiXin()){
         //     // location.href = `opentest://host`;
         // }
+
+       api.getVersion({'platform': 'ios'}).then(res => {
+           if (res.success && res.data != null) {
+               this.iosVersion = res.data;
+           }
+       });
+
+       api.getVersion({'platform': 'android'}).then(res => {
+           if (res.success && res.data != null) {
+               this.androidVersion = res.data;
+           }
+       });
      
    },
    methods: {

@@ -432,6 +432,15 @@ export function getActivity(params) {
 }
 
 /**  */
+export function getVersion(params) {
+  return request({
+    url: '/api/dev/getVersion',
+    method: 'get',
+    params
+  })
+}
+
+/**  */
 export function push(params) {
   return request({
     url: '/api/dev/push',
@@ -601,6 +610,14 @@ export function modlist(params) {
 export function getUrlTitle(params) {
   return request({
     url: '/api/v0/httpurl/title',
+    method: 'post',
+    data: qs.stringify(params)
+  })
+}
+
+export function setVersion(params) {
+  return request({
+    url: '/api/dev/setVersion',
     method: 'post',
     data: qs.stringify(params)
   })
