@@ -87,10 +87,11 @@
               </div>
 
             </div>
-            </div>
-          </div>
+        </div>
 
-          <div style="display: flex" v-show="nowIndex===2">
+        <div style="display: flex" v-show="nowIndex===2">
+          <div  style="width: 500px">
+
             <div style="margin-top: 20px">
               <div style="font-weight: bold">
                 设置活动</div>
@@ -111,14 +112,15 @@
               </div>
             </div>
           </div>
-
-          <div style="display: flex" v-show="nowIndex===3">
-            <iframe style="width: 100%; height: 500px"  src="https://bi.aliyuncs.com/token3rd/dashboard/view/pc.htm?pageId=42d951bd-d813-44f0-9984-71ae3d89f0f4&accessToken=a1a2cff6ee74dd1ebf0c45b694778389"></iframe>
-          </div>
-
         </div>
+
+        <div style="display: flex" v-show="nowIndex===3">
+          <iframe style="width: 100%; height: 500px"  src="https://bi.aliyuncs.com/token3rd/dashboard/view/pc.htm?pageId=42d951bd-d813-44f0-9984-71ae3d89f0f4&accessToken=a1a2cff6ee74dd1ebf0c45b694778389"></iframe>
+        </div>
+
       </div>
     </div>
+  </div>
   </div>
 </template>
 <script>
