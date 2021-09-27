@@ -173,7 +173,7 @@ import * as api from '@/api/api'
       border-radius: 4px;
       .bg{
         position: absolute;
-        background: #FbF5EC;
+        background: #ffbc5d;
         width: 50%;
         left: 0;
         top: 0;
