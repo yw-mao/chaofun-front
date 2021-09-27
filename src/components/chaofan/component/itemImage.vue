@@ -10,8 +10,12 @@
       </div>
       <div @click.stop="" v-if="item.imageNums!=1" class="imgLists">
         <viewer :images="item.o_imgs">
-          <div v-for="(item2,index2) in item.images" :key="index2" :class="doImgClass(item.images)" :style="doMoreImgStyle(item,item2)" :alt="item.title" :title="item.title">
-            <img  style="opacity:0;width:100%;height:100%;" :data-source="imgOrigin+item2"   :key="item2" :alt="item.title" :title="item.title">
+          <div v-for="(item2,index2) in item.images" :key="index2" :class="doImgClass(item.images)" :style="doMoreImgStyle(item,item2)" 
+          :alt="item.title.includes('/')?'':item.title" 
+          :title="item.title.includes('/')?'':item.title">
+            <img  style="opacity:0;width:100%;height:100%;" :data-source="imgOrigin+item2"   
+            :key="item2" :alt="item.title.includes('/')?'':item.title" 
+            :title="item.title.includes('/')?'':item.title">
           </div>
         </viewer>
       </div>
