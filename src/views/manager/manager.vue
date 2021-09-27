@@ -30,7 +30,14 @@
                   <div>百度收录数: {{this.websiteInfo.baiduIncluded}}</div>
                 </div>
               </div>
+              <div style="font-weight: bold; margin-top: 20px">
+                版主激励
+              </div>
+              <div style="max-width:600px;margin-top:10px;">
+                <el-input type="textarea"  maxlength="56" v-model="params.title" style="resize:none;overflow:hidden;" placeholder="请设置推送标题"></el-input>
+              </div>
             </div>
+
             <div style="margin-left: 30px; max-width: 500px;">
               <div style="font-size: 20px">评论列表</div>
               <div v-for="(item,index) in comments" :key="index">
@@ -154,9 +161,9 @@
           force: false,
           action: 'check',
           platform: 'ios',
-
         },
 
+        forumAdminMoney: 0.0,
         androidVersion: {
           version: '',
           content: '',

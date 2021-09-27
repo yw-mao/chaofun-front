@@ -441,6 +441,15 @@ export function getVersion(params) {
 }
 
 /**  */
+export function getForumAdminMoney(params) {
+  return request({
+    url: '/api/dev/getForumAdminMoney',
+    method: 'get',
+    params
+  })
+}
+
+/**  */
 export function push(params) {
   return request({
     url: '/api/dev/push',
