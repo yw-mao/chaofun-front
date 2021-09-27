@@ -16,8 +16,8 @@ if(process.env.NODE_ENV === 'production'&&process.env.VUE_APP_BASE_WEB){
       hidden: true
     },
     {
-      path: '/webview/forum/seting',
-      component: () => import('@/views/chaofun-webview/forum/seting'),
+      path: '/webview/forum/setting',
+      component: () => import('@/views/chaofun-webview/forum/setting'),
       name: 'forumseting',
       meta: { title: 'forumseting'},
       hidden: true

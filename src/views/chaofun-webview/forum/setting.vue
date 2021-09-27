@@ -28,6 +28,10 @@
       <div class="tips">24小时全站板块综合排名: {{modInfo.rank}} </div>
 
       <div class="fixed_bottom">
+        <div @click="toSave" class="btns">标签管理</div>
+      </div>
+
+      <div class="fixed_bottom">
           <div @click="toSave" class="btns">保存</div>
       </div>
     </div>
