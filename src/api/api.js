@@ -726,6 +726,14 @@ export function getlistTag(params) {
   })
 }
 
+export function listNotify(params) {
+  return request({
+    url: '/api/v0/forum/listNotify',
+    method: 'get',
+    params
+  })
+}
+
 export function addTag(params) {
   return request({
     url: '/api/v0/post/addTag',
@@ -737,6 +745,14 @@ export function addTag(params) {
 export function forumAddTag(params) {
   return request({
     url: '/api/v0/forum/addTag',
+    method: 'get',
+    params
+  })
+}
+
+export function forumNotify(params) {
+  return request({
+    url: '/api/v0/forum/notify',
     method: 'get',
     params
   })

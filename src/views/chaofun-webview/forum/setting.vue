@@ -23,7 +23,7 @@
       </div>
 
       <div class="bottom">
-        <div @click="toBeContinue" class="btns">推送消息</div>
+        <div @click="toNotify" class="btns">发送通知</div>
       </div>
 
       <div class="bottom">
@@ -97,6 +97,17 @@ export default {
     },
     toSave(){
         this.toSign();
+    },
+
+    toNotify() {
+      try {
+        window.flutter_inappwebview.callHandler('toViewPage', {
+          url: "https://chao.fun/webview/forum/notify" + "?forumId=" + this.forumId,
+          title: '标签管理',
+          showHeader: true
+        })      } catch (e) {
+        window.open(location.origin + '/webview/forum/notify?forumId=' + this.forumId);
+      }
     },
     toManageTag() {
       try {

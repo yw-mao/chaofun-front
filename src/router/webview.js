@@ -36,6 +36,13 @@ routes = [
     hidden: true
   },
   {
+    path: '/webview/forum/notify',
+    component: () => import('@/views/chaofun-webview/forum/notify'),
+    name: 'forumnotify',
+    meta: { title: 'forumnotify'},
+    hidden: true
+  },
+  {
     path: '/webview/activity/index',
     component: () => import('@/views/chaofun-webview/activity/index'),
     name: 'activityindex',
