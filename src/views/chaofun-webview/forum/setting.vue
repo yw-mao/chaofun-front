@@ -23,11 +23,11 @@
       </div>
 
       <div class="bottom">
-        <div @click="toManageTag" class="btns">推送消息</div>
+        <div @click="" class="btns">推送消息</div>
       </div>
 
       <div class="bottom">
-        <div @click="toManageTag" class="btns">用户封禁</div>
+        <div @click="" class="btns">用户封禁</div>
       </div>
     </div>
   </div>
@@ -96,7 +96,14 @@ export default {
         this.toSign();
     },
     toManageTag() {
-      this.$toast('正在支持');
+      try {
+        window.flutter_inappwebview.callHandler('toViewPage', {
+          url: "https://chao.fun/webview/forum/tag" + "?forumId=" + this.forumId,
+          title: '标签管理',
+          showHeader: true
+        })      } catch (e) {
+        window.open(location.origin + '/webview/forum/tag?forumId=' + this.forumId);
+      }
     },
 
     toAnalytics() {

@@ -734,6 +734,22 @@ export function addTag(params) {
   })
 }
 
+export function forumAddTag(params) {
+  return request({
+    url: '/api/v0/forum/addTag',
+    method: 'get',
+    params
+  })
+}
+
+export function forumRemoveTag(params) {
+  return request({
+    url: '/api/v0/forum/removeTag',
+    method: 'get',
+    params
+  })
+}
+
 export function removeTag(params) {
   return request({
     url: '/api/v0/post/removeTag',
