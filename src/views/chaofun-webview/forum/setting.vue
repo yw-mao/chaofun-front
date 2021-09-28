@@ -23,11 +23,11 @@
       </div>
 
       <div class="bottom">
-        <div @click="" class="btns">推送消息</div>
+        <div @click="toBeContinue" class="btns">推送消息</div>
       </div>
 
       <div class="bottom">
-        <div @click="" class="btns">用户封禁</div>
+        <div @click="toBeContinue" class="btns">用户封禁</div>
       </div>
     </div>
   </div>
@@ -92,6 +92,9 @@ export default {
   },
 
   methods:{
+    toBeContinue() {
+      this.$toast('尽情期待：）');
+    },
     toSave(){
         this.toSign();
     },
