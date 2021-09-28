@@ -120,8 +120,21 @@
             </div>
           </div>
         </div>
-
-        <div style="display: flex" v-show="nowIndex===3">
+        <div style="display: flex; width: 100%" v-show="nowIndex===3">
+          <div v-for="(item,lists) in notifyList" :key="index" class="item">
+            <div>
+              <div>标题: {{item.title}} </div>
+              <div>内容: {{item.content}} </div>
+              <div>链接: {{item.link}} </div>
+              <div>板块id: {{item.forumId}} </div>
+            </div>
+            <div style="justify-content: space-between;">
+              <el-button style="margin-top: 10px">通过</el-button>
+              <el-button style="margin-top: 10px">拒绝</el-button>
+            </div>
+          </div>
+        </div>
+        <div style="display: flex" v-show="nowIndex===4">
           <iframe style="width: 100%; height: 500px"  src="https://bi.aliyuncs.com/token3rd/dashboard/view/pc.htm?pageId=42d951bd-d813-44f0-9984-71ae3d89f0f4&accessToken=a1a2cff6ee74dd1ebf0c45b694778389"></iframe>
         </div>
 
@@ -138,8 +151,8 @@
     data() {
       return {
         websiteInfo: '1',
-
-        tabsParam:['基础设置','App设置', '活动设置','统计信息'],//（这个也可以用对象key，value来实现）
+        tabsParam:['基础设置','App设置', '活动设置','通知审批','统计信息'],//（这个也可以用对象key，value来实现）
+        notifyList: [],
         nowIndex:0,//默认第一个tab为激活状态
         comments: [],
         params: {
@@ -201,6 +214,12 @@
           this.androidVersion = res.data;
         }
       });
+
+      api.listAllNotify({status: 0}).then(res => {
+        if (res.success && res.data != null) {
+          this.notifyList = res.data;
+        }
+      });
     },
 
     methods: {
@@ -255,7 +274,7 @@
     background:yellow;
   }
   .tabs{
-    width: 400px;
+    width: 500px;
     height: 40px;
   }
   .li-tab{
@@ -268,5 +287,13 @@
   }
   .divTab{
     width: 200px;height: 300px;
+  }
+  .item {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 16px;
+    border-bottom: 1px solid #f1f1f1;
+    overflow: hidden;
   }
 </style>

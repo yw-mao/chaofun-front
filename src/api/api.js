@@ -734,6 +734,15 @@ export function listNotify(params) {
   })
 }
 
+export function listAllNotify(params) {
+  return request({
+    url: '/api/dev/listAllNotify',
+    method: 'get',
+    params
+  })
+}
+
+
 export function addTag(params) {
   return request({
     url: '/api/v0/post/addTag',

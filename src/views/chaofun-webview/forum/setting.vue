@@ -103,9 +103,10 @@ export default {
       try {
         window.flutter_inappwebview.callHandler('toViewPage', {
           url: "https://chao.fun/webview/forum/notify" + "?forumId=" + this.forumId,
-          title: '标签管理',
+          title: '发送通知',
           showHeader: true
-        })      } catch (e) {
+        })
+      } catch (e) {
         window.open(location.origin + '/webview/forum/notify?forumId=' + this.forumId);
       }
     },
