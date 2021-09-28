@@ -129,8 +129,8 @@
               <div>板块id: {{item.forumId}} </div>
             </div>
             <div style="justify-content: space-between;">
-              <el-button style="margin-top: 10px">通过</el-button>
-              <el-button style="margin-top: 10px">拒绝</el-button>
+              <el-button @click="approveNotify(item.id)" style="margin-top: 10px">通过</el-button>
+              <el-button @click="refuseNotify(item.id)" style="margin-top: 10px">拒绝</el-button>
             </div>
           </div>
         </div>
@@ -223,6 +223,38 @@
     },
 
     methods: {
+      approveNotify(notifyId) {
+        Dialog.confirm({
+          title: '确认通知',
+          messageAlign: 'left'
+        }).then(() => {
+          api.approveNotify({'notifyId': notifyId}).then()(res => {
+            if (res.success) {
+              location.reload();
+            } else {
+              this.$toast(res.errorMessage)
+            }
+          });
+        }).catch(() => {
+          // on cancel
+        });
+      },
+      refuseNotify(notifyId) {
+          Dialog.confirm({
+            title: '确认拒绝',
+            messageAlign: 'left'
+          }).then(() => {
+            api.refuseNotify({'notifyId': notifyId}).then()(res => {
+              if (res.success) {
+                location.reload();
+              } else {
+                this.$toast(res.errorMessage)
+              }
+            });
+          }).catch(() => {
+            // on cancel
+          });
+      },
       toggleTabs:function(index){
         this.nowIndex=index;
       },

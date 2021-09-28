@@ -459,6 +459,23 @@ export function push(params) {
 }
 
 /**  */
+export function approveNotify(params) {
+  return request({
+    url: '/api/v0/dev/approveNotify',
+    method: 'get',
+    params
+  })
+}
+
+export function refuseNotify(params) {
+  return request({
+    url: '/api/v0/dev/refuseNotify',
+    method: 'get',
+    params
+  })
+}
+
+/**  */
 export function save_activity(params) {
   return request({
     url: '/api/dev/setActivity',
