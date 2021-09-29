@@ -224,7 +224,7 @@
 import * as api from "@/api/api";
 import { Dialog } from "vant";
 import "vant/lib/dialog/style";
-import "moment/locale/zh-cn";
+// import "moment/locale/zh-cn";
 import moment from "moment";
 
 import dialogs from "../common/dialogs.vue";

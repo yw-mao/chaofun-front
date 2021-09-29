@@ -158,7 +158,7 @@
 
 <script>
 import ThemePicker from "@/components/ThemePicker";
-import 'moment/locale/zh-cn'
+// import 'moment/locale/zh-cn'
 import moment from "moment";
 export default {
   components: { ThemePicker },

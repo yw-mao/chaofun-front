@@ -192,7 +192,7 @@ import { mapGetters,mapState } from "vuex";
 import * as api from "../../api/api";
 import ListItem from "../../components/chaofan/ListItemWidth.vue";
 import RightCom from "@/components/chaofan/RightCom";
-import "moment/locale/zh-cn";
+// import "moment/locale/zh-cn";
 import moment from "moment";
 import commentitem from "@/components/chaofan/commentItem";
 export default {

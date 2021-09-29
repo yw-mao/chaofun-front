@@ -365,7 +365,7 @@ import itemArticle from "./component/itemArticle";
 import itemVote from "./component/itemVote";
 // import itemForwardTitle from "./component/itemForwardTitle";
 
-import "moment/locale/zh-cn";
+// import "moment/locale/zh-cn";
 import moment from "moment";
 
 import forwardH5 from "../h5/forward";

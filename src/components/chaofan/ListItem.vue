@@ -471,9 +471,9 @@ import * as api from "@/api/api";
 import VueClipboard from "vue-clipboard2";
 import forward from "./Forward";
 import Vue from "vue";
-import { Dialog } from "vant";
+// import { Dialog } from "vant";
 import videoDialog from "./videoDialog";
-import "vant/lib/dialog/style";
+// import "vant/lib/dialog/style";
 Vue.use(VueClipboard);
 
 import itemTopTitle from "./component/itemTopTitle";
