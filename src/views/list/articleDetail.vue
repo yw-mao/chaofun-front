@@ -144,7 +144,7 @@
                               </div>
                               <div class="c_main">
                                 <div class="cc_title"><span class="sim_tab">[{{doType(it)}}]</span> {{it.title}}</div>
-                                <div @click="changeTimeFormat">
+                                <div @click="changeTimeFormat" title="点击切换时间格式">
                                   <span class="from" v-if="humanizeTimeFormat">
                                     大约
                                     {{
