@@ -34,7 +34,9 @@
             <div class="user_info">
                 <img :src="imgOrigin+item.userInfo.icon+'?x-oss-process=image/resize,h_40'" alt="">
                 <span  @click.stop="toUser(item.userInfo)" class="username">{{item.userInfo.userName}}</span>
-                <span class="time">{{moment.duration(moment(item.gmtCreate) - moment()).humanize(true)}}</span>
+                <span class="time" v-if="humanizeTimeFormat" @click="changeTimeFormat">{{moment.duration(moment(item.gmtCreate) - moment()).humanize(true)}}</span>
+                <span class="time" v-else @click="changeTimeFormat">{{moment(item.gmtCreate).format('YYYY年MM月DD日 HH:mm:ss')}}</span>
+
                 <div class="zan_shu" style="display:inline-block;padding-left:20px;"> <span>{{item.ups - item.downs}}个赞</span></div>
                 <div v-if="ISPHONE&&(!postInfo.disableComment||postInfo.forumAdmin)" @click="toReplay2(item)" class="zan_shu" style="display:inline-block;padding-left:20px;">回复</div>
                 <div v-if="!ISPHONE&&(!postInfo.disableComment||postInfo.forumAdmin)" @click="toReplay(item)" class="zan_shu" style="display:inline-block;padding-left:20px;">回复</div>
@@ -497,7 +499,11 @@ export default {
         },
         inputBlur() {
             document.removeEventListener('paste',this.toPaste);
-        }
+        },
+        // 修改时间格式
+        changeTimeFormat() {
+            this.humanizeTimeFormat = !this.humanizeTimeFormat;
+        },
     }
 }
 </script>
@@ -715,5 +721,8 @@ export default {
         opacity: 0;
         z-index: 10;
     }
+}
+.time {
+    cursor: pointer;
 }
 </style>

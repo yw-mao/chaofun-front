@@ -117,12 +117,8 @@
             </div>
           </div>
         </span>
-        <span
-          >大约
-          {{
-            moment.duration(moment(item.gmtCreate) - moment()).humanize(true)
-          }}</span
-        >
+        <span class="time" v-if="humanizeTimeFormat" @click="changeTimeFormat">{{moment.duration(moment(item.gmtCreate) - moment()).humanize(true)}}</span>
+        <span class="time" v-else @click="changeTimeFormat">{{moment(item.gmtCreate).format('YYYY年MM月DD日 HH:mm:ss')}}</span>
       </div>
       <!-- <div v-if="isMy&&datas.type=='pub'" @click.stop="deletePost(item,index)" class="delete">删除</div> -->
       <div @click.stop="" class="delete" v-if="item.canDeleted">
@@ -506,6 +502,10 @@ export default {
         });
       }
       this.$emit("doFocued", bool, id);
+    },
+    // 修改时间格式
+    changeTimeFormat() {
+      this.humanizeTimeFormat = !this.humanizeTimeFormat;
     },
   },
 };
