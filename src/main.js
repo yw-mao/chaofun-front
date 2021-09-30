@@ -2,44 +2,7 @@ import Vue from 'vue'
 import Cookies from 'js-cookie'
 import 'normalize.css/normalize.css' // a modern alternative to CSS resets
 
-import { 
-  Badge,
-  Breadcrumb,
-  BreadcrumbItem,
-  Button,
-  Cascader,
-  Checkbox,
-  CheckboxGroup,
-  Col,
-  ColorPicker,
-  Dialog
-  as
-  ElDialog,
-  Dropdown,
-  DropdownMenu,
-  DropdownItem,
-  Form,
-  FormItem,
-  Icon,
-  Input,Menu,
-  Loading,
-  Option,
-  Pagination,
-  Progress,
-  Popover,
-  Radio,
-  RadioGroup,
-  Row,
-  Select,
-  Submenu,
-  Switch,
-  Table,
-  Tabs,
-  TabPane,
-  Tag,
-  TableColumn,
-  Upload
-} from 'element-ui';
+import Element from 'element-ui';
 import './styles/element-variables.scss'
 import '@/styles/index.scss' // global css
 
@@ -109,49 +72,10 @@ if (process.env.NODE_ENV === 'production') {
 import moment from 'moment';
 moment.locale('zh-cn');
 
-// Element 按需加载
-Vue.prototype.$ELEMENT = {
+Vue.use(Element, {
   size: Cookies.get('size') || 'medium', // set element-ui default size
   i18n: (key, value) => i18n.t(key, value)
-};
-Vue.use(Badge);
-Vue.use(Breadcrumb);
-Vue.use(BreadcrumbItem);
-Vue.use(Button);
-Vue.use(Cascader);
-Vue.use(Checkbox);
-Vue.use(CheckboxGroup);
-Vue.use(Col);
-Vue.use(ColorPicker);
-Vue.use(ElDialog);
-Vue.use(Dropdown);
-Vue.use(DropdownMenu);
-Vue.use(DropdownItem);
-Vue.use(Form);
-Vue.use(FormItem);
-Vue.use(Icon);
-Vue.use(Input,Menu);
-Vue.use(Option);
-Vue.use(Pagination);
-Vue.use(Progress);
-Vue.use(Popover);
-Vue.use(Radio);
-Vue.use(RadioGroup);
-Vue.use(Row);
-Vue.use(Select);
-Vue.use(Submenu);
-Vue.use(Switch);
-Vue.use(Tabs);
-Vue.use(Table);
-Vue.use(TabPane);
-Vue.use(Tag);
-Vue.use(TableColumn);
-Vue.use(Upload);
-Vue.use(Loading.directive);
-// Vue.use(Element, {
-//   size: Cookies.get('size') || 'medium', // set element-ui default size
-//   i18n: (key, value) => i18n.t(key, value)
-// })
+})
 
 // register global utility filters
 Object.keys(filters).forEach(key => {
