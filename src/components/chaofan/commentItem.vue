@@ -43,7 +43,7 @@
                 <div v-if="item.canDeleted" @refreshDelete="refreshDelete" @click="deleteComment(item)" class="to_delete">删除</div>
             </div> 
             <div class="content">
-                <p v-if="!item.atUsers" v-html="item.text"></p>
+                <p v-if="!item.atUsers" v-html="islink(item.text)"></p>
                 <p v-if="item.atUsers" @click="clickComment($event)" v-html="doText(item)"></p>
                 <span v-if="item.imageNames" class="comImgs">
                     <viewer :images="doImgs(item.imageNames)">
@@ -217,8 +217,27 @@ export default {
                 this.toUser({userId: key});
             }
         },
+        islink(txtContent){
+            var check_www='w{3}'+'[^\\s]*';
+            var check_http='(https|http|ftp|rtsp|mms)://'+'[^(\\s|(\\u4E00-\\u9FFF)))]*';
+            var strRegex=check_http;
+            var httpReg=new RegExp(strRegex,'gi');
+            var  formatTxtContent = txtContent.replace(httpReg, function (httpText)
+            {
+                if(httpText.search('http')<0&&httpText.search('HTTP')<0)
+                {
+                    return '<a class="link" href="' + 'http://' + httpText + '" target="_blank">' + httpText + '</a>';
+                }
+                else
+                {
+                    return '<a class="link" href="'+ httpText + '" target="_blank">' + httpText + '</a>';
+                }
+            });
+            return formatTxtContent;
+        },
         doText(item){
-            var m = item.text;
+            return '1';
+            var m = this.islink(item.text);
             if(item.atUsers&&item.atUsers.length){
                 
                 item.atUsers.forEach((it,ins)=>{
