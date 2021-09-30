@@ -38,7 +38,9 @@ import {
   TabPane,
   Tag,
   TableColumn,
-  Upload
+  Upload,
+  TimePicker,
+  DatePicker,
 } from 'element-ui';
 import './styles/element-variables.scss'
 import '@/styles/index.scss' // global css
@@ -144,6 +146,8 @@ Vue.use(Switch);
 Vue.use(Tabs);
 Vue.use(Table);
 Vue.use(TabPane);
+Vue.use(TimePicker);
+Vue.use(DatePicker);
 Vue.use(Tag);
 Vue.use(TableColumn);
 Vue.use(Upload);
