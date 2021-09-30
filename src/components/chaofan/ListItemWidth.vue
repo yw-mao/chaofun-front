@@ -680,8 +680,9 @@ export default {
 .item {
   .rights {
     max-width: none;
-    width: 100%;
-    padding-right: 50px;
+    width: auto;
+    overflow: hidden;
+    // padding-right: 50px;
     // padding-right: 250px;
   }
   .b_icon {
