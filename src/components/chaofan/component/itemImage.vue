@@ -4,8 +4,8 @@
       
       <div @click.stop="" v-if="item.imageNums==1" class="imgs">
         <viewer :images="[imgOrigin+item.imageName]">
-          <img :src="imgOrigin+item.imageName" :data-source="imgOrigin+item.imageName" v-if="isDetail" :style="doImgStyle(item.width,item.height)" :alt="item.title" :title="item.title">
-          <img :src="imgOrigin+item.imageName+ (item.imageName.includes('.gif')? '': '?x-oss-process=image/resize,h_512')" :data-source="imgOrigin+item.imageName" v-if="!isDetail" :style="doImgStyle(item.width,item.height)" :alt="item.title" :title="item.title">
+          <img :data-src="imgOrigin+item.imageName" :data-source="imgOrigin+item.imageName" v-if="isDetail" :style="doImgStyle(item.width,item.height)" :alt="item.title" :title="item.title" class="lazyload">
+          <img :data-src="imgOrigin+item.imageName+ (item.imageName.includes('.gif')? '': '?x-oss-process=image/resize,h_512')" :data-source="imgOrigin+item.imageName" v-if="!isDetail" :style="doImgStyle(item.width,item.height)" :alt="item.title" :title="item.title" class="lazyload">
         </viewer>
       </div>
       <div @click.stop="" v-if="item.imageNums!=1" class="imgLists">
@@ -13,9 +13,14 @@
           <div v-for="(item2,index2) in item.images" :key="index2" :class="doImgClass(item.images)" :style="doMoreImgStyle(item,item2)" 
           :alt="item.title.includes('/')?'':item.title" 
           :title="item.title.includes('/')?'':item.title">
-            <img  style="opacity:0;width:100%;height:100%;" :data-source="imgOrigin+item2"   
-            :key="item2" :alt="item.title.includes('/')?'':item.title" 
-            :title="item.title.includes('/')?'':item.title">
+            <img
+              style="opacity:0;width:100%;height:100%;"
+              :data-source="imgOrigin+item2"
+              :data-src="imgOrigin+item2+(item2.includes('.gif')? '': '?x-oss-process=image/resize,h_512')"  
+              :key="item2" :alt="item.title.includes('/')?'':item.title" 
+              :title="item.title.includes('/')?'':item.title"
+              class="lazyload"
+            />
           </div>
         </viewer>
       </div>
@@ -24,6 +29,7 @@
 </template>
 
 <script>
+  import 'lazysizes';
   import * as api from '@/api/api'
   export default {
     name: '',
