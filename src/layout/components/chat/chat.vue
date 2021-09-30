@@ -416,6 +416,7 @@ export default {
       let data = JSON.parse(event.data);
       if (data.data.type != "heartbeat" && data.data.content) {
         that.msgList.push(data.data);
+        data.data.content = this.islink(data.data.content);
         let chat_con = document.getElementById("chat_con");
         if (
           chat_con.scrollHeight - chat_con.scrollTop > 200 &&
