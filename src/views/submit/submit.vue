@@ -206,8 +206,8 @@
 
 <script>
   import Vue from 'vue'
-  import { mavonEditor } from 'mavon-editor'
-  import 'mavon-editor/dist/css/index.css'
+  // import { mavonEditor } from 'mavon-editor'
+  // import 'mavon-editor/dist/css/index.css'
   import * as api from '../../api/api'
   import request from '@/utils/request'
   import md5 from 'js-md5';
@@ -390,7 +390,8 @@
       }
     },
     components: {
-      mavonEditor,quillEditor
+      // mavonEditor,
+      quillEditor
     },
     beforeCreate(vm){
       console.log('this.ISPHONE',this.ISPHONE)

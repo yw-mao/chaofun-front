@@ -385,7 +385,7 @@
 
 <script>
 import * as api from "@/api/api";
-import "moment/locale/zh-cn";
+// import "moment/locale/zh-cn";
 import moment from "moment";
 import VueClipboard from "vue-clipboard2";
 import forward from "./Forward";

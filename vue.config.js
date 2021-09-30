@@ -1,5 +1,6 @@
 // vue.config.js
 const path = require("path");
+const webpack = require('webpack');
 
 const resolve = dir => {
   return path.join(__dirname, dir);
@@ -109,6 +110,12 @@ module.exports = {
       // 删除预加载
       config.plugins.delete('preload');
       config.plugins.delete('prefetch');
+      // 删除多余moment语言包
+      config.plugin("ignore")
+        .use(
+          new webpack.ContextReplacementPlugin(/moment[/\\]locale$/, /zh-cn$/)
+        );
+      
       // 压缩代码
       config.optimization.minimize(true);
       // 分割代码

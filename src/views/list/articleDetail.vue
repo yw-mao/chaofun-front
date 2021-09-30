@@ -144,14 +144,17 @@
                               </div>
                               <div class="c_main">
                                 <div class="cc_title"><span class="sim_tab">[{{doType(it)}}]</span> {{it.title}}</div>
-                                <div>
-                                  <span class="from">
+                                <div @click="changeTimeFormat" title="点击切换时间格式">
+                                  <span class="from" v-if="humanizeTimeFormat">
                                     大约
                                     {{
                                       moment
                                         .duration(moment(it.gmtCreate) - moment())
                                         .humanize(true)
                                     }}
+                                  </span>
+                                  <span class="from" v-else>
+                                    {{moment(it.gmtCreate).format('YYYY年MM月DD日 HH:mm:ss')}}
                                   </span>
                                 </div>
                               </div>
@@ -189,7 +192,7 @@ import { mapGetters,mapState } from "vuex";
 import * as api from "../../api/api";
 import ListItem from "../../components/chaofan/ListItemWidth.vue";
 import RightCom from "@/components/chaofan/RightCom";
-import "moment/locale/zh-cn";
+// import "moment/locale/zh-cn";
 import moment from "moment";
 import commentitem from "@/components/chaofan/commentItem";
 export default {
@@ -876,7 +879,11 @@ queryChildren (parent, list) {
     },
     inputBlur() {
       document.removeEventListener('paste',this.toPaste);
-    }
+    },
+    // 修改时间格式
+    changeTimeFormat() {
+      this.humanizeTimeFormat = !this.humanizeTimeFormat;
+    },
   }
 }
 </script>

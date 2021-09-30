@@ -22,6 +22,7 @@ export default {
       isAndroid: navigator.userAgent.indexOf('Android') > -1 || navigator.userAgent.indexOf('Adr') > -1,
       scrollHeight: document.body.clientHeight - 0,
       opened: true,
+      humanizeTimeFormat: true,
       // login: login
     };
   },
