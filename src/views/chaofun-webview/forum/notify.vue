@@ -46,7 +46,7 @@
         <div>标题: {{item.title}} </div>
         <div>内容: {{item.content}} </div>
         <div>链接: {{item.link}} </div>
-        <div v-if="item.sendTime">定时: {{item.sendTime}} </div>
+        <div v-if="item.sendTime">定时: {{moment(item.sendTime).format('YYYY年MM月DD日 HH:mm:ss')}} </div>
       </div>
       <div style="display: flex; justify-content: space-between;width: 20%">
         <div v-if="item.status===0">审批中</div>
@@ -61,6 +61,9 @@
 
 <script>
   import * as api from '@/api/api'
+  import "moment/locale/zh-cn";
+  import moment from "moment";
+
   export default {
     name: "notify",
     data() {
@@ -68,6 +71,7 @@
         value1: '',
         displayAdd: false,
         lists: [],
+        moment: moment,
         addNotifyTitle: '',
         addNotifyContent: '',
         addNotifyLink: ''
