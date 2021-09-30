@@ -467,7 +467,6 @@
 
 <script>
 import * as api from "@/api/api";
-
 import VueClipboard from "vue-clipboard2";
 import forward from "./Forward";
 import Vue from "vue";
@@ -567,7 +566,7 @@ export default {
   },
   mounted() {
     if (this.$route.query.time) {
-      console.log("this.top", this.top);
+      // console.log("this.top", this.top);
       this.$(".infinite-list").animate({ scrollTop: this.top }, 10);
       setTimeout(() => {
         localStorage.removeItem("storedata");
