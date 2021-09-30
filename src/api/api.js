@@ -753,7 +753,7 @@ export function listNotify(params) {
 
 export function listAllNotify(params) {
   return request({
-    url: '/api/dev/listAllNotify',
+    url: '/api/v0/dev/listAllNotify',
     method: 'get',
     params
   })
