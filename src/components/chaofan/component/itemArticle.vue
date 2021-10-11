@@ -38,7 +38,7 @@
 
 <script>
 import 'lazysizes';
-import * as api from '@/api/api'
+// import * as api from '@/api/api'
 export default {
    name: '',
    data(){
@@ -104,9 +104,14 @@ export default {
     filterContent(content) {
       // 列表图片优化（GIF）
       try {
-        content = content.replace(/<img src="([^"]*?)">/g, '<img class="lazyload" data-src="' + ('$1'.endsWith('.gif') ? '$1' : '$1?x-oss-process=image/resize,h_512"') + '>');
+        if (content.indexOf('data:image') === -1 && content.indexOf('.gif') === -1 ) {
+          content = content.replace(/<img src="([^"]*?)">/g,
+            '<img class="lazyload" data-src="$1?x-oss-process=image/resize,h_512" src="/assets/images/loading.gif">'
+          );
+        }
       } catch (error) {
         // 出现错误不进行替换
+        console.log(error);
       }
       return content;
     }
