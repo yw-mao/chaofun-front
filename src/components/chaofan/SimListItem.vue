@@ -702,8 +702,12 @@ export default {
           obj.marker = this.marker;
           obj.key = this.keys;
           this.postBehavior(item.postId, "detail");
-          localStorage.setItem("storedata", JSON.stringify(obj));
-          localStorage.setItem("spage", this.$route.path);
+          try {
+            localStorage.setItem("storedata", JSON.stringify(obj));
+            localStorage.setItem("spage", this.$route.path);
+          } catch (e) {
+            console.log(e);
+          }
 
           this.$EventBus.$emit("refreshItemTag", {
             way: 'saveTagId'

@@ -236,7 +236,6 @@ export default {
             return formatTxtContent;
         },
         doText(item){
-            return '1';
             var m = this.islink(item.text);
             if(item.atUsers&&item.atUsers.length){
                 
