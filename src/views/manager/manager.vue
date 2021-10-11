@@ -127,6 +127,7 @@
               <div>内容: {{item.content}} </div>
               <div>链接: {{item.link}} </div>
               <div>板块id: {{item.forumId}} </div>
+              <div>定时发送:  </div>
             </div>
             <div style="justify-content: space-between;">
               <el-button @click="approveNotify(item.id)" style="margin-top: 10px">通过</el-button>
