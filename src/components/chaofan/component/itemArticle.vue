@@ -106,7 +106,7 @@ export default {
       try {
         if (content.indexOf('data:image') === -1 && content.indexOf('.gif') === -1 ) {
           content = content.replace(/<img src="([^"]*?)">/g,
-            '<img class="lazyload" data-src="$1?x-oss-process=image/resize,h_512" src="/assets/images/loading.gif">'
+            '<img class="lazyload" data-src="$1?x-oss-process=image/resize,h_512">'
           );
         }
       } catch (error) {
