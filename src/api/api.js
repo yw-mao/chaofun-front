@@ -108,6 +108,15 @@ export function applyForum(query) {
   })
 }
 
+/** 申请板块 */
+export function applyMod(query) {
+  return request({
+    url: '/api/v0/apply_mod',
+    method: 'get',
+    params: query
+  })
+}
+
 /** 转发帖子 */
 export function submitForward(params) {
   return request({

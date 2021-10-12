@@ -1,6 +1,6 @@
 <template>
   <div id="rright" class="rright">
-    <apply-forum :dialogTableVisible="dialogTableVisible" @hideFunc="hideApplyForum"></apply-forum>
+    <apply-forum :dialogTableVisible="showApplyForum" @hideFunc="hideApplyForum"></apply-forum>
     <div v-if="!ISPHONE" class="right_content">
       <div v-if="forumInfo" class="asa">
         <div class="forum_con">
@@ -36,11 +36,13 @@
           </div>
         </div>
       </div>
-      <div v-if="forumAdmin.length" class="admin">
+      <div class="admin">
         <div class="admin_header admin_titles"> 版主 </div>
-        <div v-for="(item,index) in forumAdmin" :key="index" class="admin_item">
+        <div v-if="forumAdmin.length" v-for="(item,index) in forumAdmin" :key="index" class="admin_item">
           <span @click="toUser(item)" class="admin_name">{{item.userName}}</span>
         </div>
+        <el-button v-if="!forumAdmin.length" @click="showApplyMod = true">暂无版主 申请版主</el-button>
+        <apply-mod :dialogTableVisible="showApplyMod" :forum-id="forumId" @hideFunc="hideApplyMod" ></apply-mod>
       </div>
       <div  class="tologin">
         <div @click="reload" class="body-right">
@@ -121,11 +123,13 @@
 <script>
   import snake from '@/components/game/snake/snake3.vue'
   import * as api from '@/api/api'
+  import ApplyMod from "./ApplyMod";
   export default {
     name: '',
     data(){
       return {
-        dialogTableVisible: false,
+        showApplyMod: false,
+        showApplyForum: false,
         forumAdmin: [],
         gamemodule: localStorage.getItem('gamemodule'),
         forumId: '',
@@ -155,6 +159,7 @@
       }
     },
     components: {
+      ApplyMod,
       snake
     },
     created() {
@@ -286,7 +291,10 @@
         })
       },
       hideApplyForum() {
-        this.dialogTableVisible = false;
+        this.showApplyForum = false;
+      },
+      hideApplyMod() {
+        this.showApplyMod = false;
       }
     }
   }
