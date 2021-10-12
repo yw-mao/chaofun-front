@@ -193,7 +193,7 @@
         })
       },
       gotoAddForum(){
-        this.$toast('请添加 cijianzy 微信增加板块');
+        this.dialogTableVisible=true;
       },
       getGameTop(){
         api.getGameTop({top: 10}).then(res=>{
