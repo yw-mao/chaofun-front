@@ -477,6 +477,23 @@ export function push(params) {
 }
 
 /**  */
+export function approveApply(params) {
+  return request({
+    url: '/api/v0/dev/approveApply',
+    method: 'get',
+    params
+  })
+}
+
+/**  */
+export function refuseApply(params) {
+  return request({
+    url: '/api/v0/dev/refuseApply',
+    method: 'get',
+    params
+  })
+}
+/**  */
 export function approveNotify(params) {
   return request({
     url: '/api/v0/dev/approveNotify',
@@ -777,6 +794,13 @@ export function listAllNotify(params) {
   })
 }
 
+export function listAllApply(params) {
+  return request({
+    url: '/api/v0/dev/listAllApply',
+    method: 'get',
+    params
+  })
+}
 
 export function addTag(params) {
   return request({

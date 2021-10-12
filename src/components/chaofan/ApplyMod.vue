@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-dialog title="版主申请" :visible.sync="dialogTableVisible" :append-to-body="true">
+    <el-dialog title="版主申请" :visible.sync="dialogTableVisible" :append-to-body="true" :before-close="hide">
       <el-form :model="form">
         <el-form-item label="申请理由:">
           <el-input v-model="form.applyModReason" autocomplete="off"></el-input>

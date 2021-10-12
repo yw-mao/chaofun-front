@@ -136,6 +136,22 @@
           </div>
         </div>
         <div style="display: flex" v-show="nowIndex===4">
+          <div v-for="(item,lists) in applyList" :key="index" class="item">
+            <div v-if="item.type == 'apply_mod'">
+              <div> 用户 {{item.userId}} 申请板块 {{item.forumId}} 版主 </div>
+              <div> 原因为 {{item.arg1}}</div>
+            </div>
+            <div v-if="item.type == 'apply_forum'">
+              <div> 用户 {{item.userId}} 申请创建板块 {{item.arg1}} </div>
+              <div> 原因为 {{item.arg2}}</div>
+            </div>
+            <div style="justify-content: space-between;">
+              <el-button @click="approveApply(item.id)" style="margin-top: 10px">通过</el-button>
+              <el-button @click="refuseApply(item.id)" style="margin-top: 10px">拒绝</el-button>
+            </div>
+          </div>
+        </div>
+        <div style="display: flex" v-show="nowIndex===5">
           <iframe style="width: 100%; height: 500px"  src="https://bi.aliyuncs.com/token3rd/dashboard/view/pc.htm?pageId=42d951bd-d813-44f0-9984-71ae3d89f0f4&accessToken=a1a2cff6ee74dd1ebf0c45b694778389"></iframe>
         </div>
 
@@ -152,10 +168,11 @@
     data() {
       return {
         websiteInfo: '1',
-        tabsParam:['基础设置','App设置', '活动设置','通知审批','统计信息'],//（这个也可以用对象key，value来实现）
+        tabsParam:['基础设置','App设置', '活动设置','通知审批','板块申请','统计信息'],//（这个也可以用对象key，value来实现）
         notifyList: [],
         nowIndex:0,//默认第一个tab为激活状态
         comments: [],
+        applyList: [],
         params: {
           title: '',
           body: '',
@@ -221,9 +238,48 @@
           this.notifyList = res.data;
         }
       });
+
+      api.listAllApply({status: 0}).then(res => {
+        if (res.success && res.data != null) {
+          this.applyList = res.data;
+        }
+      });
     },
 
     methods: {
+      approveApply(applyId) {
+        Dialog.confirm({
+          title: '通过申请',
+          messageAlign: 'left'
+        }).then(() => {
+          api.approveApply({'applyId': applyId}).then()(res => {
+            if (res.success) {
+              location.reload();
+            } else {
+              this.$toast(res.errorMessage)
+            }
+          });
+        }).catch(() => {
+          // on cancel
+        });
+      },
+      refuseApply(applyId) {
+        Dialog.confirm({
+          title: '确认拒绝',
+          messageAlign: 'left'
+        }).then(() => {
+          api.refuseApply({'applyId': applyId}).then()(res => {
+            if (res.success) {
+              location.reload();
+            } else {
+              this.$toast(res.errorMessage)
+            }
+          });
+        }).catch(() => {
+          // on cancel
+        });
+      },
+
       approveNotify(notifyId) {
         Dialog.confirm({
           title: '确认通知',
@@ -307,7 +363,7 @@
     background:yellow;
   }
   .tabs{
-    width: 500px;
+    width: 600px;
     height: 40px;
   }
   .li-tab{

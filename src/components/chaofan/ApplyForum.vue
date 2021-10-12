@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-dialog title="板块创建" :visible.sync="dialogTableVisible" :append-to-body="true">
+    <el-dialog title="板块创建" :visible.sync="dialogTableVisible" :append-to-body="true" :before-close="hide">
       <el-form :model="form">
         <el-form-item label="板块名称:">
           <el-input v-model="form.submitForum" autocomplete="off"></el-input>
