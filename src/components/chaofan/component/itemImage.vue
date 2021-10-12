@@ -4,8 +4,8 @@
       
       <div @click.stop="" v-if="item.imageNums==1" class="imgs">
         <viewer :images="[imgOrigin+item.imageName]">
-          <img :data-src="imgOrigin+item.imageName" :data-source="imgOrigin+item.imageName" v-if="isDetail" :style="doImgStyle(item.width,item.height)" :alt="item.title" :title="item.title" src="/assets/images/loading.gif" class="lazyload">
-          <img :data-src="imgOrigin+item.imageName+ (item.imageName.includes('.gif')? '': '?x-oss-process=image/resize,h_512')" :data-source="imgOrigin+item.imageName" v-if="!isDetail" :style="doImgStyle(item.width,item.height)" :alt="item.title" :title="item.title" src="/assets/images/loading.gif" class="lazyload">
+          <img :data-src="imgOrigin+item.imageName" :data-source="imgOrigin+item.imageName" v-if="isDetail" :style="doImgStyle(item.width,item.height)" :alt="item.title" :title="item.title" class="lazyload">
+          <img :data-src="imgOrigin+item.imageName+ (item.imageName.includes('.gif')? '': '?x-oss-process=image/resize,h_512')" :data-source="imgOrigin+item.imageName" v-if="!isDetail" :style="doImgStyle(item.width,item.height)" :alt="item.title" :title="item.title" class="lazyload">
         </viewer>
       </div>
       <div @click.stop="" v-if="item.imageNums!=1" class="imgLists">
@@ -17,7 +17,6 @@
               style="opacity:0;width:100%;height:100%;"
               :data-source="imgOrigin+item2"
               :data-src="imgOrigin+item2+(item2.includes('.gif')? '': '?x-oss-process=image/resize,h_512')"
-              src="/assets/images/loading.gif"
               :key="item2" :alt="item.title.includes('/')?'':item.title" 
               :title="item.title.includes('/')?'':item.title"
               class="lazyload"
