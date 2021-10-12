@@ -1,5 +1,6 @@
 <template>
   <div id="rright" class="rright">
+    <apply-forum :dialogTableVisible="dialogTableVisible" @hideFunc="hideApplyForum"></apply-forum>
     <div v-if="!ISPHONE" class="right_content">
       <div v-if="forumInfo" class="asa">
         <div class="forum_con">
@@ -124,6 +125,7 @@
     name: '',
     data(){
       return {
+        dialogTableVisible: false,
         forumAdmin: [],
         gamemodule: localStorage.getItem('gamemodule'),
         forumId: '',
@@ -282,7 +284,9 @@
             this.$router.push({name: 'submit'})
           }
         })
-
+      },
+      hideApplyForum() {
+        this.dialogTableVisible = false;
       }
     }
   }

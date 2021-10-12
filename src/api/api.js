@@ -99,6 +99,15 @@ export function uploadImage(params) {
   })
 }
 
+/** 申请板块 */
+export function applyForum(query) {
+  return request({
+    url: '/api/v0/apply_forum',
+    method: 'get',
+    params: query
+  })
+}
+
 /** 转发帖子 */
 export function submitForward(params) {
   return request({

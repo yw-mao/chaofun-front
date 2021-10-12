@@ -73,6 +73,11 @@
          <span v-if="!items.reason">请阅读炒饭和分区发帖规范。</span>
        </div>
      </div>
+   <div v-if="items.type=='text_notice'" class="zan">
+     <div class="item">
+       <span>{{item.text}}</span>
+     </div>
+   </div>
  </div>
 </template>
 
