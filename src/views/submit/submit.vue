@@ -639,9 +639,13 @@
                     this.$router.replace({path: this.baseForm.forumId})
                   },1500)
                 } else {
-                  this.submitTitle = '发布'
+                  this.submitTitle = '发布';
                   this.disableSubmit = false;
                 }
+              }).catch(error => {
+                this.submitTitle = '发布';
+                this.disableSubmit = false;
+                this.$toast('发布失败，请联系开发同学查看');
               })
             }else if(this.activeName == 'second'){
               let params = {
