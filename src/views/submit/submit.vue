@@ -405,14 +405,14 @@
     beforeMount(){
       this.editorOption = {
         modules: {
-           ImageExtend: {
-              loading: true,
-              name: 'img',
-              action: '/api/upload_image',
-              response: (res) => {
-                return 'https://i.chao.fun/'+res.data
-              }
-            },
+          ImageExtend: {
+            loading: true,
+            name: 'img',
+            action: '/api/upload_image',
+            response: (res) => {
+              return 'https://i.chao.fun/' + res.data
+            }
+          },
           toolbar: {
             // container: toolbarOptions,  // 工具栏选项
             container: [
@@ -425,6 +425,24 @@
               ['link', 'image'], //上传图片
             ],
             handlers: handlers  // 事件重写
+          },
+          clipboard: {
+            matchers: [
+              [
+                'IMG',
+                () => {
+                  const Delta = Quill.import('delta');
+                  return new Delta().insert('');
+                }
+              ],
+              [
+                'PICTURE',
+                () => {
+                  const Delta = Quill.import('delta');
+                  return new Delta().insert('');
+                }
+              ],
+            ],
           }
         }
       }
@@ -504,18 +522,18 @@
         })
       },
       toPaste(e){
-        console.log(111)
+        console.log('begin to paste');
         var cbd = e.clipboardData;
         var ua = window.navigator.userAgent;
         if ( !(e.clipboardData && e.clipboardData.items) ) {
           return ;
         }
-        if(cbd.items && cbd.items.length === 2 && cbd.items[0].kind === "string" && cbd.items[1].kind === "file" && cbd.types && cbd.types.length === 2 && cbd.types[0] === "text/plain" && cbd.types[1] === "Files" && ua.match(/Macintosh/i) && Number(ua.match(/Chrome\/(\d{2})/i)[1]) < 49){
+        if (cbd.items && cbd.items.length === 2 && cbd.items[0].kind === "string" && cbd.items[1].kind === "file" && cbd.types && cbd.types.length === 2 && cbd.types[0] === "text/plain" && cbd.types[1] === "Files" && ua.match(/Macintosh/i) && Number(ua.match(/Chrome\/(\d{2})/i)[1]) < 49){
           return;
         }
         // for(var i = 0; i < cbd.items.length; i++) {
         var item = cbd.items[cbd.items.length-1];
-        if(item.kind == "file"){
+        if (item.kind == "file") {
           var blob = item.getAsFile();
           if (blob.size === 0) {
             return;
@@ -712,7 +730,7 @@
       handleClick(tab, event){
         if(tab.paneName=='third'){
            this.$nextTick(()=>{
-              document.getElementsByClassName('quill-editor')[0].addEventListener('click',(e)=>{this.imgClick(e)})
+            document.getElementsByClassName('quill-editor')[0].addEventListener('click',(e)=>{this.imgClick(e)})
           })
         }else{
           document.getElementsByClassName('quill-editor')[0].removeEventListener('click',(e)=>{this.imgClick(e)})
