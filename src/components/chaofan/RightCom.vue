@@ -190,7 +190,6 @@
             
           }
         })
-        
       },
       modlist(){
         api.modlist({forumId: this.forumId}).then(res=>{

@@ -27,8 +27,13 @@
       </div>
 
       <div class="bottom">
+        <div @click="toModManager" class="btns">管理版主</div>
+      </div>
+
+      <div class="bottom">
         <div @click="toBeContinue" class="btns">用户封禁</div>
       </div>
+
     </div>
   </div>
 </template>
@@ -131,6 +136,19 @@ export default {
         window.open(location.origin + '/webview/forum/analytics?forumId=' + this.forumId);
       }
     },
+
+    toModManager() {
+      try {
+        window.flutter_inappwebview.callHandler('toViewPage', {
+          url: "https://chao.fun/webview/forum/mod_manager" + "?forumId=" + this.forumId,
+          title: '版主管理',
+          showHeader: true
+        })
+      } catch (e) {
+        window.open(location.origin + '/webview/forum/mod_manager?forumId=' + this.forumId);
+      }
+    },
+
     uploadImage(){
 
       window.flutter_inappwebview.callHandler('uploadImage').then(function(result) {

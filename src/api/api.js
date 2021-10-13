@@ -834,6 +834,23 @@ export function forumRemoveTag(params) {
   })
 }
 
+export function forumRemoveMod(params) {
+  return request({
+    url: '/api/v0/mod/remove',
+    method: 'get',
+    params
+  })
+}
+
+export function forumAddMod(params) {
+  return request({
+    url: '/api/v0/mod/add',
+    method: 'get',
+    params
+  })
+}
+
+
 export function removeTag(params) {
   return request({
     url: '/api/v0/post/removeTag',

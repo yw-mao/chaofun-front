@@ -22,6 +22,13 @@ routes = [
     hidden: true
   },
   {
+    path: '/webview/forum/mod_manager',
+    component: () => import('@/views/chaofun-webview/forum/ModManager'),
+    name: 'mod_manager',
+    meta: { title: '版主管理'},
+    hidden: true
+  },
+  {
     path: '/webview/forum/analytics',
     component: () => import('@/views/chaofun-webview/forum/analytics'),
     name: 'forumanalytics',
