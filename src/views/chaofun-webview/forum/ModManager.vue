@@ -10,7 +10,7 @@
               <el-autocomplete
                   v-model="state"
                   :fetch-suggestions="querySearchAsync"
-                  placeholder="请输入内容"
+                  placeholder="搜索用户名"
                   @select="handleSelect"
               ></el-autocomplete>
             </div>
