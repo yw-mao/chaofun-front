@@ -891,7 +891,7 @@ export default {
 }
 @media screen and (max-width: 700px) {
   .inner_videoc {
-    min-height: 290px;
+    min-height: auto;
   }
 }
 /deep/ .item {
