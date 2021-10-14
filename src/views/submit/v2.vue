@@ -37,11 +37,11 @@
       <el-form :model="post" ref="form">
         <div class="postbox">
           <el-radio-group v-model="type" @change="$refs.form.clearValidate()">
-            <el-radio-button label="article">
-              <i class="el-icon-tickets"></i> 文章
-            </el-radio-button>
             <el-radio-button label="image">
               <i class="el-icon-picture-outline"></i> 图片/视频
+            </el-radio-button>
+            <el-radio-button label="article">
+              <i class="el-icon-tickets"></i> 文章
             </el-radio-button>
             <el-radio-button label="link">
               <i class="el-icon-link"></i> 链接
@@ -75,7 +75,7 @@
                   { required: true, message: '请输入内容', trigger: 'blur' },
                 ]"
               >
-                <editor v-model="post.content" />
+                <editor :content="post.content" ref="editor" />
               </el-form-item>
             </el-row>
 
@@ -175,7 +175,7 @@
             <el-divider></el-divider>
           </div>
           <div class="postbox-buttons">
-            <el-button type="primary" round>发 布</el-button>
+            <el-button type="primary" round @click="submit">发 布</el-button>
             <el-button round>保存草稿箱</el-button>
           </div>
           <div class="postbox-rules">
@@ -232,7 +232,7 @@
 
 <script>
   import draggable from 'vuedraggable'
-  import Editor from '@/components/Editor/Tiptap'
+  import Editor from '@/components/Submit/Editor'
   import TagSelector from '@/components/Submit/TagSelector'
   import CollectionSelector from '@/components/Submit/CollectionSelector'
   import Uploader from '@/components/Submit/Uploader'
@@ -251,7 +251,7 @@
     data() {
       return {
         logo,
-        type: 'article',
+        type: 'image',
         forum: {
           name: '',
           id:  this.$route.params.forumId,
@@ -347,6 +347,14 @@
           this.post.options.splice(index, 1);
         }
       },
+
+      // === 提交 ===
+      submit() {
+        this.post.content = this.$refs.editor.get();
+        console.log(this.post.content);
+        console.log(this.post.ossNames);
+        
+      }
     }
   }
 </script>
