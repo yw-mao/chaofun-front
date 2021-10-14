@@ -137,6 +137,12 @@
           :index="0"
           :item="item"
         ></itemVote>
+        <itemPrediction
+            v-if="item.type == 'prediction'"
+            @callBack="callBack"
+            :index="0"
+            :item="item"
+        ></itemPrediction>
 
         <!-- 转发 -->
         <div v-if="item.type == 'forward'" class="item_forward">
@@ -270,7 +276,8 @@
             item.type != 'article' &&
             item.type != 'forward' &&
             item.type != 'vote' &&
-            item.type != 'inner_video'
+            item.type != 'inner_video' &&
+            item.type != 'prediction'
           "
           class="item_article"
         >
@@ -406,6 +413,7 @@ import itemVideo from "./component/itemVideo";
 import itemArticle from "./component/itemArticle";
 import itemVote from "./component/itemVote";
 import itemForwardTitle from "./component/itemForwardTitle";
+import itemPrediction from "./component/itemPrediction";
 
 export default {
   name: "list-item",
@@ -457,6 +465,7 @@ export default {
     itemVote,
     itemForwardTitle,
     itemVideo,
+    itemPrediction,
   },
   created() {},
   mounted() {

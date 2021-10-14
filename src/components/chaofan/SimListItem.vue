@@ -505,6 +505,9 @@ export default {
         case "vote":
           return "投票";
           break;
+        case "prediction":
+          return "竞猜";
+          break;
         case "forward":
           return "转发";
           break;

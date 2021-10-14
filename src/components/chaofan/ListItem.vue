@@ -201,6 +201,15 @@
             :item="item"
           ></itemVote>
 
+          <!-- 投票 -->
+          <itemPrediction
+              v-if="item.type == 'prediction'"
+              @callBack="callBack"
+              :index="index"
+              :item="item"
+          ></itemPrediction>
+
+
           <!-- 转发 -->
           <div
             v-if="item.type == 'forward'"
@@ -351,7 +360,8 @@
               item.type != 'article' &&
               item.type != 'forward' &&
               item.type != 'vote' &&
-              item.type != 'inner_video'
+              item.type != 'inner_video' &&
+              item.type != 'prediction'
             "
             @click="toDetail(item)"
             class="item_article"
@@ -483,6 +493,7 @@ import itemVideo from "./component/itemVideo";
 import itemIframeVideo from "./component/itemIframeVideo";
 import itemArticle from "./component/itemArticle";
 import itemVote from "./component/itemVote";
+import itemPrediction from "./component/itemPrediction";
 import itemForwardTitle from "./component/itemForwardTitle";
 
 import forwardH5 from "../h5/forward";
@@ -551,6 +562,7 @@ export default {
     itemIframeVideo,
     itemArticle,
     itemVote,
+    itemPrediction,
     itemForwardTitle,
     itemVideo,
   },
