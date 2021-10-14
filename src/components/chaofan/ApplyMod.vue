@@ -34,7 +34,7 @@
         default: false
       },
       forumId: {
-        type: Number,
+        type: String,
         default: null
       }
     },

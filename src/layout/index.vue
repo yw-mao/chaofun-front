@@ -13,7 +13,7 @@
       </right-panel> -->
     </div>
     <div v-if="!ISPHONE" class="beian">
-      <div>本站已在 Github 开源：<a href="https://github.com/www-chao-fun/chaofun-front" target="_blank">chaofun-front</a></div>
+      <div>本站&小程序「炒饭超Fun」已在 Github 开源：<a href="https://github.com/www-chao-fun" target="_blank">www-chao-fun</a></div>
       Copyright © 2019 - 2021 炒饭 <img style="width:16px" src="../assets/images/bbcc.png" alt=""> <a target="_blank" href="https://beian.miit.gov.cn/">粤ICP备19153164号</a>
     </div>
     <chat v-if="$store.state.user.showChatBox&&!($route.path.includes('/chatpage'))"></chat>

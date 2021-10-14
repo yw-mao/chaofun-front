@@ -124,6 +124,7 @@
   import snake from '@/components/game/snake/snake3.vue'
   import * as api from '@/api/api'
   import ApplyMod from "./ApplyMod";
+  import ApplyForum from "./ApplyForum";
   export default {
     name: '',
     data(){
@@ -160,6 +161,7 @@
     },
     components: {
       ApplyMod,
+      ApplyForum,
       snake
     },
     created() {
