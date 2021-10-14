@@ -385,7 +385,7 @@
 
 <script>
 import * as api from "@/api/api";
-import "moment/locale/zh-cn";
+// import "moment/locale/zh-cn";
 import moment from "moment";
 import VueClipboard from "vue-clipboard2";
 import forward from "./Forward";
@@ -490,6 +490,7 @@ export default {
       // data.list.splice(this.index,1,item);
       localStorage.setItem("storedata", JSON.stringify(data));
       console.log("data", data);
+      
     },
     doFocued(bool, id) {
       this.lists.forEach((it) => {
@@ -655,6 +656,8 @@ export default {
         }
       }
       this.updateList(index, item);
+      console.log('更新数据')
+      // this.$EventBus.$emit("resetItem", {index: index,item: item});
       //  this.$EventBus.$emit('updateVote',{index: this.index,item: item});
     },
   },
@@ -677,8 +680,9 @@ export default {
 .item {
   .rights {
     max-width: none;
-    width: 100%;
-    padding-right: 50px;
+    width: auto;
+    overflow: hidden;
+    // padding-right: 50px;
     // padding-right: 250px;
   }
   .b_icon {

@@ -467,13 +467,12 @@
 
 <script>
 import * as api from "@/api/api";
-
 import VueClipboard from "vue-clipboard2";
 import forward from "./Forward";
 import Vue from "vue";
-import { Dialog } from "vant";
+// import { Dialog } from "vant";
 import videoDialog from "./videoDialog";
-import "vant/lib/dialog/style";
+// import "vant/lib/dialog/style";
 Vue.use(VueClipboard);
 
 import itemTopTitle from "./component/itemTopTitle";
@@ -567,7 +566,7 @@ export default {
   },
   mounted() {
     if (this.$route.query.time) {
-      console.log("this.top", this.top);
+      // console.log("this.top", this.top);
       this.$(".infinite-list").animate({ scrollTop: this.top }, 10);
       setTimeout(() => {
         localStorage.removeItem("storedata");
@@ -892,7 +891,7 @@ export default {
 }
 @media screen and (max-width: 700px) {
   .inner_videoc {
-    min-height: 290px;
+    min-height: auto;
   }
 }
 /deep/ .item {

@@ -117,12 +117,8 @@
             </div>
           </div>
         </span>
-        <span
-          >大约
-          {{
-            moment.duration(moment(item.gmtCreate) - moment()).humanize(true)
-          }}</span
-        >
+        <span class="time" v-if="humanizeTimeFormat" title="点击切换时间格式" @click="changeTimeFormat">{{moment.duration(moment(item.gmtCreate) - moment()).humanize(true)}}</span>
+        <span class="time" v-else @click="changeTimeFormat" title="点击切换时间格式">{{moment(item.gmtCreate).format('YYYY年MM月DD日 HH:mm:ss')}}</span>
       </div>
       <!-- <div v-if="isMy&&datas.type=='pub'" @click.stop="deletePost(item,index)" class="delete">删除</div> -->
       <div @click.stop="" class="delete" v-if="item.canDeleted">
@@ -228,7 +224,7 @@
 import * as api from "@/api/api";
 import { Dialog } from "vant";
 import "vant/lib/dialog/style";
-import "moment/locale/zh-cn";
+// import "moment/locale/zh-cn";
 import moment from "moment";
 
 import dialogs from "../common/dialogs.vue";
@@ -506,6 +502,10 @@ export default {
         });
       }
       this.$emit("doFocued", bool, id);
+    },
+    // 修改时间格式
+    changeTimeFormat() {
+      this.humanizeTimeFormat = !this.humanizeTimeFormat;
     },
   },
 };

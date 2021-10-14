@@ -34,14 +34,16 @@
             <div class="user_info">
                 <img :src="imgOrigin+item.userInfo.icon+'?x-oss-process=image/resize,h_40'" alt="">
                 <span  @click.stop="toUser(item.userInfo)" class="username">{{item.userInfo.userName}}</span>
-                <span class="time">{{moment.duration(moment(item.gmtCreate) - moment()).humanize(true)}}</span>
+                <span class="time" v-if="humanizeTimeFormat" @click="changeTimeFormat" title="点击切换时间格式">{{moment.duration(moment(item.gmtCreate) - moment()).humanize(true)}}</span>
+                <span class="time" v-else @click="changeTimeFormat" title="点击切换时间格式">{{moment(item.gmtCreate).format('YYYY年MM月DD日 HH:mm:ss')}}</span>
+
                 <div class="zan_shu" style="display:inline-block;padding-left:20px;"> <span>{{item.ups - item.downs}}个赞</span></div>
                 <div v-if="ISPHONE&&(!postInfo.disableComment||postInfo.forumAdmin)" @click="toReplay2(item)" class="zan_shu" style="display:inline-block;padding-left:20px;">回复</div>
                 <div v-if="!ISPHONE&&(!postInfo.disableComment||postInfo.forumAdmin)" @click="toReplay(item)" class="zan_shu" style="display:inline-block;padding-left:20px;">回复</div>
                 <div v-if="item.canDeleted" @refreshDelete="refreshDelete" @click="deleteComment(item)" class="to_delete">删除</div>
             </div> 
             <div class="content">
-                <p v-if="!item.atUsers" v-html="item.text"></p>
+                <p v-if="!item.atUsers" v-html="islink(item.text)"></p>
                 <p v-if="item.atUsers" @click="clickComment($event)" v-html="doText(item)"></p>
                 <span v-if="item.imageNames" class="comImgs">
                     <viewer :images="doImgs(item.imageNames)">
@@ -215,8 +217,26 @@ export default {
                 this.toUser({userId: key});
             }
         },
+        islink(txtContent){
+            var check_www='w{3}'+'[^\\s]*';
+            var check_http='(https|http|ftp|rtsp|mms)://'+'[^(\\s|(\\u4E00-\\u9FFF)))]*';
+            var strRegex=check_http;
+            var httpReg=new RegExp(strRegex,'gi');
+            var  formatTxtContent = txtContent.replace(httpReg, function (httpText)
+            {
+                if(httpText.search('http')<0&&httpText.search('HTTP')<0)
+                {
+                    return '<a class="link" href="' + 'http://' + httpText + '" target="_blank">' + httpText + '</a>';
+                }
+                else
+                {
+                    return '<a class="link" href="'+ httpText + '" target="_blank">' + httpText + '</a>';
+                }
+            });
+            return formatTxtContent;
+        },
         doText(item){
-            var m = item.text;
+            var m = this.islink(item.text);
             if(item.atUsers&&item.atUsers.length){
                 
                 item.atUsers.forEach((it,ins)=>{
@@ -497,7 +517,11 @@ export default {
         },
         inputBlur() {
             document.removeEventListener('paste',this.toPaste);
-        }
+        },
+        // 修改时间格式
+        changeTimeFormat() {
+            this.humanizeTimeFormat = !this.humanizeTimeFormat;
+        },
     }
 }
 </script>
@@ -715,5 +739,8 @@ export default {
         opacity: 0;
         z-index: 10;
     }
+}
+.time {
+    cursor: pointer;
 }
 </style>

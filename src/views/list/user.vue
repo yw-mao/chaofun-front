@@ -156,11 +156,18 @@ export default {
     ...mapGetters(["roles", "islogin"]),
   },
   activated(){
-    console.log('666',this.$route.query)
     if(this.$route.query.time){
       this.toPosition();
     }
-    
+    if(localStorage.getItem('simple')){
+      let data = JSON.parse(localStorage.getItem('simple'));
+      this.lists.forEach((its,index)=>{
+        if(data.postId==its.postId){
+          this.lists.splice(index,1,data)
+        }
+      })
+      localStorage.removeItem('simple')
+    }
   },
   beforeRouteEnter(to, from, next) {
     // console.log("from", from);

@@ -2,7 +2,8 @@ import Vue from 'vue'
 import Cookies from 'js-cookie'
 import 'normalize.css/normalize.css' // a modern alternative to CSS resets
 
-import Element from 'element-ui'
+import Element from 'element-ui';
+
 import './styles/element-variables.scss'
 import '@/styles/index.scss' // global css
 
@@ -14,8 +15,10 @@ import router from './router'
 
 Vue.prototype.$EventBus = new Vue();
 
-import VConsole from 'vconsole/dist/vconsole.min.js';
-const vConsole = process.env.NODE_ENV === 'development' ? new VConsole():'';
+if (process.env.NODE_ENV === 'development') {
+  const VConsole = require('vconsole');
+  new VConsole();
+}
 
 import Viewer from 'v-viewer'
 import './assets/css/viewer.css'
@@ -66,10 +69,14 @@ Vue.use(Toast).use(Dialog).use(Cell).use(NumberKeyboard).use(Field).use(Popup);
 if (process.env.NODE_ENV === 'production') {
 }
 
+// Moment.js 设置默认中文
+import moment from 'moment';
+moment.locale('zh-cn');
+
 Vue.use(Element, {
   size: Cookies.get('size') || 'medium', // set element-ui default size
   i18n: (key, value) => i18n.t(key, value)
-})
+});
 
 // register global utility filters
 Object.keys(filters).forEach(key => {

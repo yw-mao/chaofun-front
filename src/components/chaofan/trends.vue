@@ -209,7 +209,7 @@
 
 <script>
 import * as api from '../../api/api'
-import 'moment/locale/zh-cn'
+// import 'moment/locale/zh-cn'
 import moment from 'moment'
 import VueClipboard from 'vue-clipboard2'
 import forward from './Forward'
@@ -474,8 +474,12 @@ import forwardH5 from '../h5/forward'
           obj.marker = this.marker;
           obj.key = this.keys;
           this.postBehavior(item.postInfo.postId,'detail');
-          localStorage.setItem('storedata',JSON.stringify(obj))
-          localStorage.setItem('spage',this.$route.path);
+          try {
+            localStorage.setItem('storedata', JSON.stringify(obj))
+            localStorage.setItem('spage', this.$route.path);
+          } catch (e) {
+            console.log(e)
+          }
           this.$router.push({name: 'articleDetail',params:{postId: item.postInfo.postId}})
           setTimeout(()=>{
             this.canTo = true

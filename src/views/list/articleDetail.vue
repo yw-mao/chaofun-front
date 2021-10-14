@@ -23,7 +23,7 @@
     <el-dialog
     :visible.sync="centerDialogVisible"
     opacity="1"
-    :width="ISPHONE?'100%':'60%'"
+    :width="ISPHONE?'100%':'calc(100% - 160px)'"
     :show-close="false"
     :close-on-press-escape="false"
     :class="[{'pc_dialog':!ISPHONE},{'phone_dialog':ISPHONE}]"
@@ -43,7 +43,7 @@
           <div :class="['dialog_main',{'dialog_main2':!ISPHONE}]">
             <div class="dialog_main_content">
               <el-row :gutter="20">
-                  <el-col :span="ISPHONE?24:17" :offset="isPhone?0:0">
+                  <el-col :span="ISPHONE?24:17" :offset="isPhone?0:0" :lg="17" :md="24" :sm="24" :xs="24">
                       <div style="height:30px;"></div>
                       <ListItem :isindex="false" :lists="[pagedata]"></ListItem>
                       <div :class="['sub_comment', {'sub_comment_phone':ISPHONE}]">
@@ -100,7 +100,7 @@
                           </div> 
                       </div>
                   </el-col>
-                  <el-col :span="7" :offset="0">
+                  <el-col :span="7" :offset="0" class="content-right-wrapper">
                       <div v-if="!ISPHONE" class="grid-content bg-purple content-right">
                           <div v-if="forumInfo" class="asa">
                             <div class="forum_con">
@@ -144,14 +144,17 @@
                               </div>
                               <div class="c_main">
                                 <div class="cc_title"><span class="sim_tab">[{{doType(it)}}]</span> {{it.title}}</div>
-                                <div>
-                                  <span class="from">
+                                <div @click="changeTimeFormat" title="点击切换时间格式">
+                                  <span class="from" v-if="humanizeTimeFormat">
                                     大约
                                     {{
                                       moment
                                         .duration(moment(it.gmtCreate) - moment())
                                         .humanize(true)
                                     }}
+                                  </span>
+                                  <span class="from" v-else>
+                                    {{moment(it.gmtCreate).format('YYYY年MM月DD日 HH:mm:ss')}}
                                   </span>
                                 </div>
                               </div>
@@ -189,7 +192,7 @@ import { mapGetters,mapState } from "vuex";
 import * as api from "../../api/api";
 import ListItem from "../../components/chaofan/ListItemWidth.vue";
 import RightCom from "@/components/chaofan/RightCom";
-import "moment/locale/zh-cn";
+// import "moment/locale/zh-cn";
 import moment from "moment";
 import commentitem from "@/components/chaofan/commentItem";
 export default {
@@ -759,14 +762,20 @@ queryChildren (parent, list) {
         
     },
     close(e){
-        if(localStorage.getItem('storedata')){
-            var obj = JSON.parse(localStorage.getItem('storedata'));
-            let {params,query} = obj.from;
-            query.time = new Date().getTime()
-            this.$router.replace({path: obj.from.path,params,query})
-        }else{
-            this.$router.replace({path: `/f/${this.forumInfo.id}`})
-        }
+      // 不存在的情况特殊处理
+      if (!this.hasData) {
+        this.back();
+        return;
+      }
+      localStorage.setItem("simple", JSON.stringify(this.pagedata));
+      if(localStorage.getItem('storedata')){
+          var obj = JSON.parse(localStorage.getItem('storedata'));
+          let {params,query} = obj.from;
+          query.time = new Date().getTime()
+          this.$router.replace({path: obj.from.path,params,query})
+      }else{
+          this.$router.replace({path: `/f/${this.forumInfo.id}`})
+      }
         
     },
     doZanComment(v,item){
@@ -875,7 +884,11 @@ queryChildren (parent, list) {
     },
     inputBlur() {
       document.removeEventListener('paste',this.toPaste);
-    }
+    },
+    // 修改时间格式
+    changeTimeFormat() {
+      this.humanizeTimeFormat = !this.humanizeTimeFormat;
+    },
   }
 }
 </script>
@@ -928,7 +941,7 @@ queryChildren (parent, list) {
   height: 100vh;
   overflow-y: hidden;
   .el-dialog{
-    min-width: 1150px;
+    max-width: 1280px;
   }
 }
 .dialog_top{
@@ -939,29 +952,35 @@ queryChildren (parent, list) {
     // left: 10%;
     display: flex;
     background: #000;
-    div{
-        color: #fff;
-        padding: 10px 20px;
-        box-sizing: border-box;
+    div {
+      color: #fff;
+      padding: 10px 20px;
+      box-sizing: border-box;
     }
     .left{
-        flex: 1;
-        height: 54px;
-         text-overflow: -o-ellipsis-lastline;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  line-clamp: 2;
-  -webkit-box-orient: vertical;
-        .title{
-            padding-left: 20px;
-        }
+      flex: 1;
+      height: 54px;
+      line-height: 34px;
+      // text-overflow: -o-ellipsis-lastline;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      // display: -webkit-box;
+      // -webkit-line-clamp: 2;
+      // line-clamp: 2;
+      // -webkit-box-orient: vertical;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      .title{
+        padding-left: 20px;
+        
+      }
     }
     .right{
-        flex: 0 0 70px;
-        cursor: pointer;
-        text-align: center;
+      flex: 0 0 70px;
+      line-height: 34px;
+      cursor: pointer;
+      text-align: center;
     }
 }
 .dialog_main{
@@ -1265,6 +1284,11 @@ queryChildren (parent, list) {
     &:hover{
       color: $linkcolor;
     }
+  }
+}
+@media (max-width: 1199px) {
+  .content-right-wrapper {
+    display: none;
   }
 }
 </style>

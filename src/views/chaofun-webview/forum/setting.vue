@@ -4,32 +4,36 @@
     <div class="container">
         <div class="title">设置板块 ICON</div>
         <div>
-            <!-- <el-upload
-            class="avatar-uploader"
-            action="/api/upload_image"
-            name="file"
-            :data="filedata"
-            :show-file-list="false"
-            :on-success="handleAvatarSuccess"
-            :before-upload="beforeAvatarUpload">
-            <img v-if="forumInfo.imageName" :src="imgOrigin + forumInfo.imageName" class="avatar">
-            <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-            </el-upload> -->
             <img v-if="forumInfo.imageName" @click="uploadImage" :src="imgOrigin + forumInfo.imageName" class="avatar">
         </div>
       <div class="title">设置板块描述</div>
       <div style="max-width:600px;margin-top:10px;">
           <el-input type="textarea" maxlength="56" v-model="desc" style="resize:none;height:64px !important;overflow:hidden;margin-bottom:20px;" placeholder="请设置板块介绍"></el-input>
         </div>
-      <div class="title">累计版主激励: {{modInfo.money}} 元 </div>
-      <div class="tips" style="margin-top:0;line-height:24px;margin-bottom: 10px" slot="tip">(按照每日板块活跃度分配，每日3点过5分更新，请加微信: wwwchaofun 提取, 多版主板块请协商提取)</div>
-      <div class="tips">24小时帖子数: {{modInfo.past24HPosts}} </div>
-      <div class="tips">24小时帖子获赞数(不包括楼主自己的赞): {{modInfo.past24HVotes}} </div>
-      <div class="tips">24小时全站板块综合排名: {{modInfo.rank}} </div>
-
-      <div class="fixed_bottom">
-          <div @click="toSave" class="btns">保存</div>
+      <div class="bottom">
+        <div @click="toSave" class="btns">保存ICON和描述</div>
       </div>
+
+      <div class="bottom">
+        <div @click="toAnalytics" class="btns">统计信息</div>
+      </div>
+
+      <div class="bottom">
+        <div @click="toManageTag" class="btns">标签管理</div>
+      </div>
+
+      <div class="bottom">
+        <div @click="toNotify" class="btns">发送通知</div>
+      </div>
+
+      <div class="bottom">
+        <div @click="toModManager" class="btns">管理版主</div>
+      </div>
+
+      <div class="bottom">
+        <div @click="toBeContinue" class="btns">用户封禁</div>
+      </div>
+
     </div>
   </div>
 </template>
@@ -93,9 +97,58 @@ export default {
   },
 
   methods:{
+    toBeContinue() {
+      this.$toast('尽情期待：）');
+    },
     toSave(){
         this.toSign();
     },
+
+    toNotify() {
+      try {
+        window.flutter_inappwebview.callHandler('toViewPage', {
+          url: "https://chao.fun/webview/forum/notify" + "?forumId=" + this.forumId,
+          title: '发送通知',
+          showHeader: true
+        })
+      } catch (e) {
+        window.open(location.origin + '/webview/forum/notify?forumId=' + this.forumId);
+      }
+    },
+    toManageTag() {
+      try {
+        window.flutter_inappwebview.callHandler('toViewPage', {
+          url: "https://chao.fun/webview/forum/tag" + "?forumId=" + this.forumId,
+          title: '标签管理',
+          showHeader: true
+        })      } catch (e) {
+        window.open(location.origin + '/webview/forum/tag?forumId=' + this.forumId);
+      }
+    },
+
+    toAnalytics() {
+      try {
+        window.flutter_inappwebview.callHandler('toViewPage', {
+          url: "https://chao.fun/webview/forum/analytics" + "?forumId=" + this.forumId,
+          title: '板块统计',
+          showHeader: true
+        })      } catch (e) {
+        window.open(location.origin + '/webview/forum/analytics?forumId=' + this.forumId);
+      }
+    },
+
+    toModManager() {
+      try {
+        window.flutter_inappwebview.callHandler('toViewPage', {
+          url: "https://chao.fun/webview/forum/mod_manager" + "?forumId=" + this.forumId,
+          title: '版主管理',
+          showHeader: true
+        })
+      } catch (e) {
+        window.open(location.origin + '/webview/forum/mod_manager?forumId=' + this.forumId);
+      }
+    },
+
     uploadImage(){
 
       window.flutter_inappwebview.callHandler('uploadImage').then(function(result) {
@@ -171,21 +224,20 @@ export default {
           margin-bottom: 2px;
       }
   }
-  .fixed_bottom{
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      padding: 4px 10px 10px;
-      .btns{
-          width: 80%;
-          margin: 0 auto;
-          line-height: 44px;
-          background: #FF9300;
-          color: #fff;
-          border-radius: 30px;
-          text-align: center;
-          font-size: 16px;
-      }
+  .bottom{
+    left: 0;
+    right: 0;
+    padding: 4px 10px 10px;
+    .btns{
+      width: 80%;
+      margin: 0 auto;
+      line-height: 44px;
+      background: #FF9300;
+      color: #fff;
+      border-radius: 30px;
+      text-align: center;
+      font-size: 16px;
+    }
   }
+
 </style>

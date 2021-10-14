@@ -22,6 +22,7 @@ export default {
       isAndroid: navigator.userAgent.indexOf('Android') > -1 || navigator.userAgent.indexOf('Adr') > -1,
       scrollHeight: document.body.clientHeight - 0,
       opened: true,
+      humanizeTimeFormat: true,
       // login: login
     };
   },
@@ -90,7 +91,7 @@ export default {
     },
     toPosition() {
       if (this.$route.query.time) {
-        this.$('.infinite-list').animate({ scrollTop: localStorage.getItem('storedata') ? JSON.parse(localStorage.getItem('storedata')).top : 0 }, 10);
+        this.$('.infinite-list').animate({ scrollTop: localStorage.getItem('storedata') ? JSON.parse(localStorage.getItem('storedata')).top : 0 }, 0);
         setTimeout(() => {
           localStorage.removeItem('storedata')
           localStorage.removeItem('spage')

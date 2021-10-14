@@ -1,32 +1,40 @@
 <template>
-  <div class="dashboard-container">
-    <!-- <component :is="currentRole" /> -->
-    <div class="container">
-        <div class="title">设置板块 ICON</div>
+  <div id="container"
+      class="dashboard-container container infinite-list"
+      ref="container"
+      :style="{ height: scrollHeight + 'px' }">
+      <div>
+        <div style="height:50px;"></div>
         <div>
-            <el-upload
-            class="avatar-uploader"
-            action="/api/upload_image"
-            name="file"
-            :data="filedata"
-            :show-file-list="false"
-            :on-success="handleAvatarSuccess"
-            :before-upload="beforeAvatarUpload">
-            <img v-if="forumInfo.imageName" :src="imgOrigin + forumInfo.imageName" class="avatar">
-            <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-            </el-upload>
+          <div class="main_content">
+            <div class="main_center">
+              <div class="title">设置板块 ICON</div>
+                <div>
+                    <el-upload
+                    class="avatar-uploader"
+                    action="/api/upload_image"
+                    name="file"
+                    :data="filedata"
+                    :show-file-list="false"
+                    :on-success="handleAvatarSuccess"
+                    :before-upload="beforeAvatarUpload">
+                    <img v-if="forumInfo.imageName" :src="imgOrigin + forumInfo.imageName" class="avatar">
+                    <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                    </el-upload>
+                </div>
+              <div class="title">设置板块描述</div>
+              <div style="max-width:600px;margin-top:10px;">
+                  <el-input type="textarea" @blur="toSign" maxlength="56" v-model="desc" style="resize:none;height:100px !important;overflow:hidden;" placeholder="请设置板块介绍"></el-input>
+                </div>
+              <div class="title">累计版主激励: {{modInfo.money}} 元 </div>
+              <div style="margin-top:0;line-height:24px;margin-bottom: 10px" slot="tip">(按照每日板块活跃度分配，每日3点过5分更新，请加微信: wwwchaofun 提取, 多版主板块请协商提取)</div>
+              <div class="title">24小时帖子数: {{modInfo.past24HPosts}} </div>
+              <div class="title">24小时帖子获赞数(不包括楼主自己的赞): {{modInfo.past24HVotes}} </div>
+              <div class="title">24小时全站板块综合排名: {{modInfo.rank}} </div>
+            </div>
+          </div>
         </div>
-      <div class="title">设置板块描述</div>
-      <div style="max-width:600px;margin-top:10px;">
-          <el-input type="textarea" @blur="toSign" maxlength="56" v-model="desc" style="resize:none;height:100px !important;overflow:hidden;" placeholder="请设置板块介绍"></el-input>
-        </div>
-      <div class="title">累计版主激励: {{modInfo.money}} 元 </div>
-      <div style="margin-top:0;line-height:24px;margin-bottom: 10px" slot="tip">(按照每日板块活跃度分配，每日3点过5分更新，请加微信: wwwchaofun 提取, 多版主板块请协商提取)</div>
-      <div class="title">24小时帖子数: {{modInfo.past24HPosts}} </div>
-      <div class="title">24小时帖子获赞数(不包括楼主自己的赞): {{modInfo.past24HVotes}} </div>
-      <div class="title">24小时全站板块综合排名: {{modInfo.rank}} </div>
-
-    </div>
+      </div>
   </div>
 </template>
 

@@ -99,6 +99,24 @@ export function uploadImage(params) {
   })
 }
 
+/** 申请板块 */
+export function applyForum(query) {
+  return request({
+    url: '/api/v0/apply_forum',
+    method: 'get',
+    params: query
+  })
+}
+
+/** 申请板块 */
+export function applyMod(query) {
+  return request({
+    url: '/api/v0/apply_mod',
+    method: 'get',
+    params: query
+  })
+}
+
 /** 转发帖子 */
 export function submitForward(params) {
   return request({
@@ -432,9 +450,61 @@ export function getActivity(params) {
 }
 
 /**  */
+export function getVersion(params) {
+  return request({
+    url: '/api/dev/getVersion',
+    method: 'get',
+    params
+  })
+}
+
+/**  */
+export function getForumAdminMoney(params) {
+  return request({
+    url: '/api/dev/getForumAdminMoney',
+    method: 'get',
+    params
+  })
+}
+
+/**  */
 export function push(params) {
   return request({
     url: '/api/dev/push',
+    method: 'get',
+    params
+  })
+}
+
+/**  */
+export function approveApply(params) {
+  return request({
+    url: '/api/v0/dev/approveApply',
+    method: 'get',
+    params
+  })
+}
+
+/**  */
+export function refuseApply(params) {
+  return request({
+    url: '/api/v0/dev/refuseApply',
+    method: 'get',
+    params
+  })
+}
+/**  */
+export function approveNotify(params) {
+  return request({
+    url: '/api/v0/dev/approveNotify',
+    method: 'get',
+    params
+  })
+}
+
+export function refuseNotify(params) {
+  return request({
+    url: '/api/v0/dev/refuseNotify',
     method: 'get',
     params
   })
@@ -606,6 +676,14 @@ export function getUrlTitle(params) {
   })
 }
 
+export function setVersion(params) {
+  return request({
+    url: '/api/dev/setVersion',
+    method: 'post',
+    data: qs.stringify(params)
+  })
+}
+
 /** 设置手机号 */
 export function setPhone(params) {
   return request({
@@ -700,6 +778,30 @@ export function getlistTag(params) {
   })
 }
 
+export function listNotify(params) {
+  return request({
+    url: '/api/v0/forum/listNotify',
+    method: 'get',
+    params
+  })
+}
+
+export function listAllNotify(params) {
+  return request({
+    url: '/api/v0/dev/listAllNotify',
+    method: 'get',
+    params
+  })
+}
+
+export function listAllApply(params) {
+  return request({
+    url: '/api/v0/dev/listAllApply',
+    method: 'get',
+    params
+  })
+}
+
 export function addTag(params) {
   return request({
     url: '/api/v0/post/addTag',
@@ -707,6 +809,47 @@ export function addTag(params) {
     params
   })
 }
+
+export function forumAddTag(params) {
+  return request({
+    url: '/api/v0/forum/addTag',
+    method: 'get',
+    params
+  })
+}
+
+export function forumNotify(params) {
+  return request({
+    url: '/api/v0/forum/notify',
+    method: 'get',
+    params
+  })
+}
+
+export function forumRemoveTag(params) {
+  return request({
+    url: '/api/v0/forum/removeTag',
+    method: 'get',
+    params
+  })
+}
+
+export function forumRemoveMod(params) {
+  return request({
+    url: '/api/v0/mod/remove',
+    method: 'get',
+    params
+  })
+}
+
+export function forumAddMod(params) {
+  return request({
+    url: '/api/v0/mod/add',
+    method: 'get',
+    params
+  })
+}
+
 
 export function removeTag(params) {
   return request({

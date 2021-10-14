@@ -365,7 +365,7 @@ import itemArticle from "./component/itemArticle";
 import itemVote from "./component/itemVote";
 // import itemForwardTitle from "./component/itemForwardTitle";
 
-import "moment/locale/zh-cn";
+// import "moment/locale/zh-cn";
 import moment from "moment";
 
 import forwardH5 from "../h5/forward";
@@ -702,8 +702,12 @@ export default {
           obj.marker = this.marker;
           obj.key = this.keys;
           this.postBehavior(item.postId, "detail");
-          localStorage.setItem("storedata", JSON.stringify(obj));
-          localStorage.setItem("spage", this.$route.path);
+          try {
+            localStorage.setItem("storedata", JSON.stringify(obj));
+            localStorage.setItem("spage", this.$route.path);
+          } catch (e) {
+            console.log(e);
+          }
 
           this.$EventBus.$emit("refreshItemTag", {
             way: 'saveTagId'

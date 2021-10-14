@@ -1,5 +1,6 @@
 <template>
   <div id="rright" class="rright">
+    <apply-forum :dialogTableVisible="showApplyForum" @hideFunc="hideApplyForum"></apply-forum>
     <div v-if="!ISPHONE" class="right_content">
       <div v-if="forumInfo" class="asa">
         <div class="forum_con">
@@ -35,11 +36,13 @@
           </div>
         </div>
       </div>
-      <div v-if="forumAdmin.length" class="admin">
+      <div class="admin">
         <div class="admin_header admin_titles"> 版主 </div>
-        <div v-for="(item,index) in forumAdmin" :key="index" class="admin_item">
+        <div v-if="forumAdmin.length" v-for="(item,index) in forumAdmin" :key="index" class="admin_item">
           <span @click="toUser(item)" class="admin_name">{{item.userName}}</span>
         </div>
+        <el-button v-if="!forumAdmin.length" @click="showApplyMod = true">暂无版主 申请版主</el-button>
+        <apply-mod :dialogTableVisible="showApplyMod" :forum-id="forumId" @hideFunc="hideApplyMod" ></apply-mod>
       </div>
       <div  class="tologin">
         <div @click="reload" class="body-right">
@@ -57,7 +60,7 @@
           <span data-v-265cb265="" style="background: red; color: rgb(255, 255, 255); font-size: 10px; vertical-align: middle; height: 18px; line-height: 18px; padding: 0px 4px; border-radius: 4px;">Hot</span>
         </div>
         <div @click="gotoAddForum" class="body-right">
-          添加板块
+          板块创建
         </div>
         <div v-if="false" class="game">
           <div style="height:20px;background:#f1f1f1;"></div>
@@ -120,10 +123,13 @@
 <script>
   import snake from '@/components/game/snake/snake3.vue'
   import * as api from '@/api/api'
+  import ApplyMod from "./ApplyMod";
   export default {
     name: '',
     data(){
       return {
+        showApplyMod: false,
+        showApplyForum: false,
         forumAdmin: [],
         gamemodule: localStorage.getItem('gamemodule'),
         forumId: '',
@@ -153,6 +159,7 @@
       }
     },
     components: {
+      ApplyMod,
       snake
     },
     created() {
@@ -183,7 +190,6 @@
             
           }
         })
-        
       },
       modlist(){
         api.modlist({forumId: this.forumId}).then(res=>{
@@ -191,7 +197,7 @@
         })
       },
       gotoAddForum(){
-        this.$toast('请添加 cijianzy 微信增加板块');
+        this.showApplyForum=true;
       },
       getGameTop(){
         api.getGameTop({top: 10}).then(res=>{
@@ -282,7 +288,12 @@
             this.$router.push({name: 'submit'})
           }
         })
-
+      },
+      hideApplyForum() {
+        this.showApplyForum = false;
+      },
+      hideApplyMod() {
+        this.showApplyMod = false;
       }
     }
   }

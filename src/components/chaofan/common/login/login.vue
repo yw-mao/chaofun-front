@@ -176,7 +176,6 @@ import { Checkbox } from 'element-ui'
    },
    methods: {
      enters(e){
-      
        if(e.code.toLowerCase()=='enter'){
           if(this.logStatus=='login'){
             this.logOrReg(1);

@@ -61,8 +61,8 @@
                 <el-progress v-if="progressFlag" :percentage="loadProgress"></el-progress>
                 <div class="imgList">
                   <div v-for="(item,index) in fileLists" :key="index" class="li">
-                    <img v-if="!item.endsWith('.mp4')" :src="imgOrigin+item + '?x-oss-process=image/resize,h_150'" alt="">
-                    <img v-if="item.endsWith('.mp4')" :src="imgOrigin+item + '?x-oss-process=video/snapshot,t_1,h_150'" alt="">
+                    <img v-if="!item.endsWith('.mp4') && !item.endsWith('.mkv')" :src="imgOrigin+item + '?x-oss-process=image/resize,h_150'" alt="">
+                    <img v-if="item.endsWith('.mp4') || item.endsWith('.mkv')" :src="imgOrigin+item + '?x-oss-process=video/snapshot,t_1,h_150'" alt="">
                     <span class="del" @click="deleteImg(index)">删除</span>
                   </div>
                 </div>
@@ -206,8 +206,8 @@
 
 <script>
   import Vue from 'vue'
-  import { mavonEditor } from 'mavon-editor'
-  import 'mavon-editor/dist/css/index.css'
+  // import { mavonEditor } from 'mavon-editor'
+  // import 'mavon-editor/dist/css/index.css'
   import * as api from '../../api/api'
   import request from '@/utils/request'
   import md5 from 'js-md5';
@@ -390,7 +390,8 @@
       }
     },
     components: {
-      mavonEditor,quillEditor
+      // mavonEditor,
+      quillEditor
     },
     beforeCreate(vm){
       console.log('this.ISPHONE',this.ISPHONE)
@@ -404,14 +405,14 @@
     beforeMount(){
       this.editorOption = {
         modules: {
-           ImageExtend: {
-              loading: true,
-              name: 'img',
-              action: '/api/upload_image',
-              response: (res) => {
-                return 'https://i.chao.fun/'+res.data
-              }
-            },
+          ImageExtend: {
+            loading: true,
+            name: 'img',
+            action: '/api/upload_image',
+            response: (res) => {
+              return 'https://i.chao.fun/' + res.data
+            }
+          },
           toolbar: {
             // container: toolbarOptions,  // 工具栏选项
             container: [
@@ -424,6 +425,24 @@
               ['link', 'image'], //上传图片
             ],
             handlers: handlers  // 事件重写
+          },
+          clipboard: {
+            matchers: [
+              [
+                'IMG',
+                () => {
+                  const Delta = Quill.import('delta');
+                  return new Delta().insert('');
+                }
+              ],
+              [
+                'PICTURE',
+                () => {
+                  const Delta = Quill.import('delta');
+                  return new Delta().insert('');
+                }
+              ],
+            ],
           }
         }
       }
@@ -503,18 +522,18 @@
         })
       },
       toPaste(e){
-        console.log(111)
+        console.log('begin to paste');
         var cbd = e.clipboardData;
         var ua = window.navigator.userAgent;
         if ( !(e.clipboardData && e.clipboardData.items) ) {
           return ;
         }
-        if(cbd.items && cbd.items.length === 2 && cbd.items[0].kind === "string" && cbd.items[1].kind === "file" && cbd.types && cbd.types.length === 2 && cbd.types[0] === "text/plain" && cbd.types[1] === "Files" && ua.match(/Macintosh/i) && Number(ua.match(/Chrome\/(\d{2})/i)[1]) < 49){
+        if (cbd.items && cbd.items.length === 2 && cbd.items[0].kind === "string" && cbd.items[1].kind === "file" && cbd.types && cbd.types.length === 2 && cbd.types[0] === "text/plain" && cbd.types[1] === "Files" && ua.match(/Macintosh/i) && Number(ua.match(/Chrome\/(\d{2})/i)[1]) < 49){
           return;
         }
         // for(var i = 0; i < cbd.items.length; i++) {
         var item = cbd.items[cbd.items.length-1];
-        if(item.kind == "file"){
+        if (item.kind == "file") {
           var blob = item.getAsFile();
           if (blob.size === 0) {
             return;
@@ -638,9 +657,13 @@
                     this.$router.replace({path: this.baseForm.forumId})
                   },1500)
                 } else {
-                  this.submitTitle = '发布'
+                  this.submitTitle = '发布';
                   this.disableSubmit = false;
                 }
+              }).catch(error => {
+                this.submitTitle = '发布';
+                this.disableSubmit = false;
+                this.$toast('发布失败，请联系开发同学查看');
               })
             }else if(this.activeName == 'second'){
               let params = {
@@ -711,7 +734,7 @@
       handleClick(tab, event){
         if(tab.paneName=='third'){
            this.$nextTick(()=>{
-              document.getElementsByClassName('quill-editor')[0].addEventListener('click',(e)=>{this.imgClick(e)})
+            document.getElementsByClassName('quill-editor')[0].addEventListener('click',(e)=>{this.imgClick(e)})
           })
         }else{
           document.getElementsByClassName('quill-editor')[0].removeEventListener('click',(e)=>{this.imgClick(e)})
