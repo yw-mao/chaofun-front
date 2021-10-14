@@ -167,16 +167,16 @@ export default {
     document.removeEventListener('paste', this.toPaste);    
   },
   watch: {
-    fileList: {
-      immediate: true,
-      handler(fileList) {
-        this.files = fileList.map(item => {
-          item.uid = item.uid || (Date.now() + this.tempIndex++);
-          item.status = item.status || 'success';
-          return item;
-        });
-      }
-    }
+    // fileList: {
+    //   immediate: true,
+    //   handler(fileList) {
+    //     this.files = fileList.map(item => {
+    //       item.uid = item.uid || (Date.now() + this.tempIndex++);
+    //       item.status = item.status || 'success';
+    //       return item;
+    //     });
+    //   }
+    // }
   },
   methods: {
     // === Drag ===
@@ -196,6 +196,9 @@ export default {
       if (!this.disabled) {
         this.moving = movingStatus;
       }
+      // 同步数据
+      this.fileList = this.files.map(file => file.response.data);
+      this.$emit('input', this.fileList);
     },
 
     // === Upload ===
@@ -348,6 +351,8 @@ export default {
           if (rawFile.name.split('.').pop().toLowerCase() !== res.data.split('.').pop().toLowerCase()) {
             file.url = `${this.imgOrigin}${res.data}`
           }
+          this.fileList.push(res.data);
+          this.$emit('input',  this.fileList);
           this.onSuccess(res, file, this.files);
           this.onChange(file, this.files);
           return;
@@ -381,6 +386,10 @@ export default {
         this.abort(file);
         let fileList = this.files;
         fileList.splice(fileList.indexOf(file), 1);
+
+        // 删除照片
+        this.fileList.splice(this.fileList.indexOf(file.response.data), 1);
+        this.$emit('input',  this.fileList);
         this.onRemove(file, fileList);
         if (this.isVideo) {
           // 视频处理

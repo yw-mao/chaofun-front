@@ -71,9 +71,6 @@
             <el-row v-if="['article', 'vote'].includes(type)">
               <el-form-item
                 prop="content"
-                :rules="[
-                  { required: true, message: '请输入内容', trigger: 'blur' },
-                ]"
               >
                 <editor :content="post.content" ref="editor" />
               </el-form-item>
@@ -176,7 +173,7 @@
           </div>
           <div class="postbox-buttons">
             <el-button type="primary" round @click="submit">发 布</el-button>
-            <el-button round>保存草稿箱</el-button>
+            <el-button v-if="type === 'article'" round>保存草稿箱</el-button>
           </div>
           <div class="postbox-rules">
             <p><i class="el-icon-warning-outline" /> 严禁发布色情、暴恐、赌博及其他违反网络安全法的内容，或涉嫌隐私或未经授权的私人图片及信息，如违规发布，请自行删除或管理员强制删除。 </p>
@@ -350,10 +347,16 @@
 
       // === 提交 ===
       submit() {
-        this.post.content = this.$refs.editor.get();
-        console.log(this.post.content);
+        if (['article', 'vote'].includes(this.type)) {
+          // 同步内容
+          this.post.content = this.$refs.editor.get();
+        }
         console.log(this.post.ossNames);
-        
+        this.$refs.form.validate(result => {
+          if (!result) {
+            alert('校验失败');
+          }
+        });
       }
     }
   }
