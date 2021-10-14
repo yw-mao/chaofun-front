@@ -26,6 +26,12 @@
           backgroundImage: `url(${file.url})`
         }">
         </span>
+        <el-progress
+          v-if="file.status === 'uploading'"
+          type="circle"
+          :stroke-width="6"
+          :percentage="parsePercentage(file.percentage)">
+        </el-progress>
         <span class="el-upload-list__item-actions">
           <span
             class="el-upload-list__item-preview"
@@ -46,7 +52,6 @@
           <i class="el-icon-plus"></i>
         </span>
       </li>
-      
     </transition-group>
   </draggable>
 </template>
@@ -75,7 +80,11 @@ export default {
     handleRemove: Function,
     handleClick: Function,
     handlePreview: Function,
-    listType: String
+    listType: String,
+    isVideo: {
+      type: Boolean,
+      default: false
+    },
   },
   methods: {
     handleStart() {
@@ -85,7 +94,10 @@ export default {
     handleEnd() {
       this.drag = false;
       this.handleMove(false);
-    }
+    },
+    parsePercentage(val) {
+      return parseInt(val, 10);
+    },
   }
 }
 </script>

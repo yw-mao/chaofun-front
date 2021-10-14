@@ -79,7 +79,7 @@ export default {
     }
   },
   mounted() {
-    this.getForumTag(this.forumId);
+    this.forumId && this.getForumTag(this.forumId);
   },
   watch: {
    forumId(newId, oldId) {

@@ -8,6 +8,17 @@
     @dragover.prevent="onDragover"
     @dragleave.prevent="dragover = false"
   >
+    <UploadVideo
+      v-model="files[0]"
+      :disabled="disabled"
+      :handleRemove="handleRemove"
+      :handleMove="onMove"
+      :handlePreview="onPreview"
+      :handleClick="handleClick"
+      :listType="listType"
+      v-if="files.length > 0 && isVideo"
+    >
+    </UploadVideo>
     <UploadList
       v-model="files"
       :disabled="disabled"
@@ -16,7 +27,7 @@
       :handlePreview="onPreview"
       :handleClick="handleClick"
       :listType="listType"
-      v-if="files.length > 0"
+      v-else-if="files.length > 0"
     >
     </UploadList>
     <div class="image-uploader-free" @click="handleClick" v-else>
@@ -31,6 +42,7 @@
 <script>
 import ajax from 'element-ui/packages/upload/src/ajax';
 import UploadList from './UploadList';
+import UploadVideo from './UploadVideo';
 import exif from '@/utils/exif-check';
 
 function noop() {}
@@ -38,6 +50,7 @@ function noop() {}
 export default {
   components: {
     UploadList,
+    UploadVideo,
   },
   model: {
     prop: 'fileList',
@@ -114,7 +127,7 @@ export default {
     },
     listType: {
       type: String,
-      default: 'picture' // text,picture,picture-card
+      default: 'picture'
     },
     httpRequest: {
       type: Function,
@@ -125,7 +138,12 @@ export default {
     onExceed: {
       type: Function,
       default: noop
-    }
+    },
+    // 是否支持粘贴上传
+    pasteUpload: {
+      type: Boolean,
+      default: true,
+    },
   },
   data() {
     return {
@@ -135,9 +153,18 @@ export default {
       fileList: [],
       draging: false,
       isDrag: false,
+      isVideo: false, // 是否视频模式
       tempIndex: 1,
       reqs: {},
     };
+  },
+  mounted() {
+    // 监听粘贴上传
+    document.addEventListener('paste', this.toPaste);
+  },
+  unmounted() {
+    // 移除监听上传
+    document.removeEventListener('paste', this.toPaste);    
   },
   watch: {
     fileList: {
@@ -189,13 +216,32 @@ export default {
       // 检测图片
       for (let index = 0; index < postFiles.length; index++) {
         let rawFile = postFiles[index];
-        const data = await exif(rawFile, this.$createElement);
-        if (data === false) {
-          return;
+        // 如果视频只上传第一个
+        if (['video/mp4', 'video/quicktime', 'video/x-quicktime', 'image/mov', 'video/avi', 'application/mp4'].includes(rawFile.type)) {
+          if (this.files.length > 0) {
+            this.$message.error('图片和视频不能同时上传，并且只支持上传1个视频！', {
+              duration: 5000,
+            });
+            return;
+          }
+          // 视频上传模式
+          this.isVideo = true;
+          this.handleStart(rawFile);
+          if (this.autoUpload) this.upload(rawFile);
+          break;
         }
-        if (data !== true) {
-          rawFile = data;
+
+        // TODO: 前端暂时只做jpg检测，其他格式（TIFF, HEIC）后端默认会转成jpg
+        if (['image/jpeg'].includes(rawFile.type)) {
+          const data = await exif(rawFile, this.$createElement);
+          if (data === false) {
+            return;
+          }
+          if (data !== true) {
+            rawFile = data;
+          }
         }
+       
         this.handleStart(rawFile);
         if (this.autoUpload) this.upload(rawFile);
       }
@@ -246,14 +292,14 @@ export default {
         filename: this.name,
         action: this.action,
         onProgress: e => {
-          this.onProgress(e, rawFile);
+          this.handleProgress(e, rawFile);
         },
         onSuccess: res => {
           this.handleSuccess(res, rawFile);
           delete this.reqs[uid];
         },
         onError: err => {
-          this.onError(err, rawFile);
+          this.handleError(err, rawFile);
           delete this.reqs[uid];
         }
       };
@@ -294,32 +340,52 @@ export default {
     },
     handleSuccess(res, rawFile) {
       const file = this.getFile(rawFile);
-      if (file) {
-        file.status = 'success';
-        file.response = res;
-        console.log(file);
-        this.onSuccess(res, file, this.files);
-        this.onChange(file, this.files);
+      try {
+        if (file && res && res.success) {
+          file.status = 'success';
+          file.response = res;
+          // 转换格式图片后缀不一致更换图片地址
+          if (rawFile.name.split('.').pop().toLowerCase() !== res.data.split('.').pop().toLowerCase()) {
+            file.url = `${this.imgOrigin}${res.data}`
+          }
+          this.onSuccess(res, file, this.files);
+          this.onChange(file, this.files);
+          return;
+        }
+      } catch (error) {
+        // 内部错误
+        console.log(error);
       }
+      
+      this.handleError(res.errorMessage || '上传错误，请重试！', rawFile);
     },
     handleError(err, rawFile) {
       const file = this.getFile(rawFile);
       const fileList = this.files;
       file.status = 'fail';
       fileList.splice(fileList.indexOf(file), 1);
+      this.$message.error(err);
       this.onError(err, file, this.files);
       this.onChange(file, this.files);
+      // 视频处理
+      if (this.isVideo) {
+        // 视频处理
+        this.isVideo = false;
+      }
     },
     handleRemove(file, raw) {
       if (raw) {
         file = this.getFile(raw);
       }
       let doRemove = () => {
-        console.log(file);
         this.abort(file);
         let fileList = this.files;
         fileList.splice(fileList.indexOf(file), 1);
         this.onRemove(file, fileList);
+        if (this.isVideo) {
+          // 视频处理
+          this.isVideo = false;
+        }
       };
       if (!this.beforeRemove) {
         doRemove();
@@ -374,6 +440,33 @@ export default {
     clearFiles() {
       this.uploadFiles = [];
     },
+    // 粘贴上传
+    toPaste(event) {
+      const { pasteUpload } = this;
+      // 是否允许上传
+      if (!pasteUpload) {
+        return;
+      }
+
+      // 获取剪贴板文件
+      const items = (event.clipboardData && event.clipboardData.items) || [];
+      if (!items || !items.length) {
+        return;
+      }
+      let file = null;
+      for (let i = 0; i < items.length; i++) {
+        if (items[i].type.indexOf('image') !== -1) {
+          file = items[i].getAsFile();
+          break;
+        }
+      }
+      // 没有图片那么不上传
+      if (!file) {
+        return;
+      }
+      
+      this.uploadFiles([ file ]);
+    }
   },
 }
 </script>

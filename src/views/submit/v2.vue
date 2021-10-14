@@ -3,7 +3,7 @@
     <el-main>
       <el-container class="section-submit-header">
         <el-col>发帖</el-col>
-        <el-button type="text">草稿箱 <span>{{drafts}}</span></el-button>
+        <el-button v-if="type === 'article'" type="text">草稿箱 <span>{{drafts}}</span></el-button>
       </el-container>
 
       <el-container>
@@ -297,7 +297,7 @@
     methods: {
       forumSelectOnChange(forumId) {
         this.getForum();
-        this.$router.push({params: { forumId }});
+        this.$router.push({ path: `/f/${forumId}/submit` });
       },
       async getForum() {
         if (this.forum.id) {
@@ -314,8 +314,7 @@
         const result = await searchForum({ keyword });
         this.forums = result.data;
         // 如果没找对应板块，那么插入默认
-        if (!this.forums.find(forum => forum.forumId === this.forum.id)) {
-          console.log( this.forum.id);
+        if (this.forum.id && !this.forums.find(forum => forum.forumId === this.forum.id)) {
           this.forums.push({
             forumId: this.forum.id,
             icon: this.forum.imageName,
@@ -365,7 +364,7 @@
       padding: 0;
       font-size: 18px;
       font-weight: 500;
-      line-height: 22px;
+      line-height: 34px;
     }
     .el-button {
       position: relative;
