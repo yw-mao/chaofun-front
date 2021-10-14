@@ -18,15 +18,32 @@
 从master分支Fork以后，修改后直接提PR到master分支。
 
 ## 初始化
+### 使用 npm 初始化
 ```
 npm install
 ```
+### 使用 yarn 初始化
+```
+yarn
+```
 
-## 本地编译
+## 本地运行
+### 使用 npm 运行
 ```
 npm run serve
+```
 或者
+```
 npm run dev
+```
+
+### 使用 yarn 运行
+```
+yarn serve
+```
+或者
+```
+yarn dev
 ```
 
 ## 接口

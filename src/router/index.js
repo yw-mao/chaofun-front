@@ -151,6 +151,20 @@ export const constantRoutes = [
         meta: {keepAlive: false},
         hidden: true
       },
+      // 新版发布
+      {
+        path: '/f/submit',
+        name: 'submitV2',
+        component: () => import('@/views/submit/v2'),
+        hidden: true
+      },
+      // 新版论坛发布
+      {
+        path: '/f/:forumId/submit',
+        name: 'submitV2',
+        component: () => import('@/views/submit/v2'),
+        hidden: true
+      },
       {
         path: '/my',
         name: 'my',
