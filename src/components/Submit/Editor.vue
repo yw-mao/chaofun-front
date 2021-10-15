@@ -18,6 +18,7 @@
 import '@toast-ui/editor/dist/toastui-editor.css';
 import '@toast-ui/editor/dist/i18n/zh-cn';
 import { Editor } from '@toast-ui/vue-editor';
+import { uploadImage } from '@/api/api';
 
 export default {
   components: {
@@ -43,6 +44,7 @@ export default {
         },
         placeholder: '写点什么吧~',
         minHeight: '300px',
+        autofocus: false,
       },
     };
   },
@@ -84,7 +86,7 @@ export default {
   .switch-mode {
     position: absolute;
     right: 5px;
-    top: 10px;
+    top: 12px;
     border: none;
     color: #ff2d20;
     background-color: transparent;
@@ -98,8 +100,13 @@ export default {
 }
 .toastui-editor-defaultUI {
   .toastui-editor-toolbar {
+    padding: 0 100px 0 0;
+    background-color: #f7f9fc;
+    border-bottom: 1px solid #ebedf2;
     .toastui-editor-defaultUI-toolbar {
       padding: 0;
+      background: none;
+      border: none;
     }
   }
   .ProseMirror {

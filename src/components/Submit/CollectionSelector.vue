@@ -91,11 +91,13 @@ export default {
     // 修改Collection
     changeCollection(label) {
       this.collection = this.collections.find(collection => collection.id === label);
+      this.$emit('input', label);
     },
     // 清除Collection
     clearCollection() {
       this.collection = null;
       this.collectionId = null;
+      this.$emit('input', this.collectionId);
       this.dataCollectionId = null;
       this.collectionSearch = '';
       this.newCollection.name = '';
@@ -111,6 +113,7 @@ export default {
     collectionSelectorHide() {
       if (this.collectionId && this.dataCollectionId !== this.collectionId) {
         this.collectionId = null;
+        this.$emit('input', this.collectionId);
         this.collection = null;
         this.collectionSearch = '';
         this.newCollection.name = '';

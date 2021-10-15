@@ -83,8 +83,6 @@ export default {
   },
   watch: {
    forumId(newId, oldId) {
-     // do something
-     console.log(newId, oldId);
      if (newId !== oldId) {
        this.getForumTag(this.forumId);
        this.clearTag();
@@ -107,12 +105,14 @@ export default {
       this.tag = null;
       this.tagId = null;
       this.dataTagId = null;
+      this.$emit('input', this.dataTagId);
       this.tagSearch = '';
     },
     // 确认Tag
     confirmTag() {
       this.tagModalVisible = false;
       this.dataTagId = this.tagId;
+      this.$emit('input', this.dataTagId);
       this.tagSearch = '';
     },
     // 关闭事件
