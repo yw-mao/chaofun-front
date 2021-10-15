@@ -4,7 +4,7 @@
     <div :class="['container', 'containers',{'phone_container':ISPHONE}]">
       
       <el-form :model="baseForm"  ref="baseForm" label-width="100px" class="demo-ruleForm">
-        <el-form-item label="板块：" prop="forumId">
+        <el-form-item label="板块：" prop="forumId" class="demo-forum-selector">
           <el-select
               v-model="baseFormName"
               filterable
@@ -22,6 +22,7 @@
                 :value="item.link"><img class="sicon" :src="imgOrigin+item.icon" alt=""> <span>{{item.title}}</span>
             </el-option>
           </el-select>
+          <el-button type="primary" round @click="gotoV2">尝试新版</el-button>
         </el-form-item>
         <div class="content">
 
@@ -776,6 +777,11 @@
           }
         })
       },
+      gotoV2() {
+        const path = this.baseForm.forumId ? `${this.baseForm.forumId}/submit` : `/f/submit`;
+        console.log(path, 'path');
+        this.$router.push({ path });
+      },
     }
   }
 </script>
@@ -924,5 +930,12 @@
   /deep/ .el-dialog__body{
     display: flex;
     justify-content: center;
+  }
+  .demo-forum-selector {
+    position: relative;
+    .el-button {
+      position: absolute;
+      right: 0;
+    }
   }
 </style>
