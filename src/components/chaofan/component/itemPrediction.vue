@@ -51,8 +51,14 @@
                   </div>
                 </div>
             </div>
-            <div v-if="!checkoutVote(item.options)" class="vote_bottom">
+            <div v-if="!checkoutVote(item.options) && item.predictionStatus === 'live'" class="vote_bottom">
               <div @click="toPredict(item,index)" class="toup">竞猜</div>
+            </div>
+            <div v-if="item.predictionStatus === 'pause'" class="vote_bottom">
+              <el-button>竞猜正在等待结果</el-button>
+            </div>
+            <div v-if="item.predictionStatus === 'end'" class="vote_bottom">
+              <el-button>竞猜已出结果</el-button>
             </div>
             <el-button @click="toPredictionsTournament(item.predictionsTournament.id)" style="width: 100%;margin-top: 10px">{{item.predictionsTournament.name}}</el-button>
         </div>
@@ -230,11 +236,13 @@ import newDialog from '../../../layout/components/dialog/newDialog'
      },
 
      joinConfirm(item, index) {
-       this.$alert('你确定要参加本次竞猜吗', '参加本次竞猜默认会给你本次竞猜1000积分，只作用于本次有奖竞猜活动', {
+       this.$alert('默认会给你本次竞猜活动「1000」积分，只作用于本次有奖竞猜活动(一个活动有多个竞猜)，本次竞猜活动积分不能兑换任何实物,只用于排名。你确定要参加本次竞猜活动?', '参加本次竞猜活动？', {
          confirmButtonText: '确定',
          callback: action => {
            if (action == 'confirm') {
-             this.toSetTokens(item, index);
+             api.joinPredictionsTournament({predictionsTournamentId: item.predictionsTournament.id}).then(res => {
+               this.checkJoin(item, index);
+             })
            }
          }
        });
@@ -242,24 +250,26 @@ import newDialog from '../../../layout/components/dialog/newDialog'
 
      checkJoin(item, index) {
        api.checkJoinTournament({predictionsTournamentId: item.predictionsTournament.id}).then(res=> {
+         console.log("get checkJoinTournament")
+         console.log(res)
           // 如果参加了，直接设置竞猜金额
-          if (res.data) {
-            this.toSetTokens(item, index);
+          if (res.data !== null) {
+            this.toSetTokens(item, index, res.data);
           } else {
             this.joinConfirm(item, index);
           }
        });
      },
 
-     toSetTokens(item, index) {
-       this.$prompt('请输入下注积分', '提示', {
+     toSetTokens(item, index, data) {
+       this.$prompt('请输入下注积分, 本次活动剩余积分: ' + data.restTokens , '下注', {
          confirmButtonText: '确定',
          cancelButtonText: '取消',
          inputPlaceholder: '请输入',
-         inputPattern: [0-9],
+         inputPattern: /[0-9]/,
          inputErrorMessage: '必须是数字'
        }).then(({ value }) => {
-         this.toToup(item, index)
+         this.toToup(item, index, value)
        }).catch(() => {
          this.$message({
            type: 'info',
@@ -268,9 +278,9 @@ import newDialog from '../../../layout/components/dialog/newDialog'
        });
      },
 
-     toToup(item,index){
+     toToup(item,index, value){
        // 这里的 Tokens 就是竞猜积分
-       api.toVote({postId: item.postId,option: item.chooseOption, tokens: this.tokens}).then(res=>{
+       api.toVote({postId: item.postId, option: item.chooseOption, tokens: value}).then(res=>{
          api.getPostInfo({postId: item.postId}).then(res=>{
            this.item = res.data;
            this.$emit('callBack',index,res.data);
