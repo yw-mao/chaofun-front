@@ -20,8 +20,7 @@
             >
               <div class="top_info">
                 <div class="t_left">
-                    <div class="s_title">锦标赛预测</div>
-                    <div class="b_title">英雄联盟S11大赛有奖竞猜</div>
+                    <div class="b_title">2021年英雄联盟S11竞猜活动, 前十奖励Mark杯</div>
                 </div>
                 <div class="t_right">
                   <div @click="joinConfirm" v-if="userData&&!userData.userId" class="btnss">立即参与</div>
