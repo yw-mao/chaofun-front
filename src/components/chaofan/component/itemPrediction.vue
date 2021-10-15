@@ -21,8 +21,14 @@
                   </div>
                 </div>
             </div>
-            <div v-if="!checkoutVote(item.options)" class="vote_bottom">
+            <div v-if="!checkoutVote(item.options) && item.predictionStatus === 'live'" class="vote_bottom">
               <div @click="toPredict(item,index)" class="toup">竞猜</div>
+            </div>
+            <div v-if="item.predictionStatus === 'pause'" class="vote_bottom">
+              <el-button>竞猜正在等待结果</el-button>
+            </div>
+            <div v-if="item.predictionStatus === 'end'" class="vote_bottom">
+              <el-button>竞猜已出结果</el-button>
             </div>
             <el-button @click="toPredictionsTournament(item.predictionsTournament.id)" style="width: 100%;margin-top: 10px">{{item.predictionsTournament.name}}</el-button>
         </div>
@@ -97,7 +103,7 @@ import * as api from '@/api/api'
          callback: action => {
            if (action == 'confirm') {
              api.joinPredictionsTournament({predictionsTournamentId: item.predictionsTournament.id}).then(res => {
-               this.toSetTokens(item, index, res.data);
+               this.checkJoin(item, index);
              })
            }
          }
