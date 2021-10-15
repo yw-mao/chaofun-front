@@ -198,6 +198,9 @@ export default {
       }
     }
     .el-radio-group {
+      height: 180px;
+      overflow: scroll;
+      width: 100%;
       .el-radio__input {
         &.is-checked .el-radio__inner {
           border-color: #16679f;
