@@ -1,53 +1,65 @@
 <template>
-  <div @click.stop="" class="display prid">
-    <div></div>
-    <div v-if="!checkoutVote(item.options)" class="p_right">
-      <div v-for="(its,ind) in item.options" :key="ind" @click="toPredict(item, index, ind)" class="p_li">
-        {{its.optionName}}
+  <div style="background: #303030;">
+    <div>
+      <div v-if="item.predictionStatus === 'live'" style="font-size: 16px; color: #FFFFFF "> 状态：进行中</div>
+      <div v-if="item.predictionStatus === 'pause'" style="font-size: 16px; color: #FFFFFF "> 状态：等待结果中</div>
+      <div v-if="item.predictionStatus === 'end'" style="font-size: 16px; color: #FFFFFF "> 状态：已出结果：{{item.options[item.predictionRightOption-1].optionName}}</div>
+      <div v-if="item.predictedTokens" style="font-size: 16px; color: #FFFFFF ">
+        投票：{{item.optionVoteCount}} 人, 已下注: {{item.predictedTokens}} 积分
       </div>
-      <div v-if="$route.path!='/prediction'" @click.stop="toMore" class="p_li p_li_btn">
-        {{item.predictionsTournament.name}}
+      <div v-else style="font-size: 16px; color: #FFFFFF ">
+        投票：{{item.optionVoteCount}} 人
       </div>
     </div>
-    <div v-if="checkoutVote(item.options)" class="p_right p_right_2">
-      <div v-for="(its,ind) in item.options" :key="ind" class="p_li">
-
-        <div class="bg" :style="{width: doBg(its,item.options)}"></div>
-        <div class="b">
-          <div class="c"><span>{{its.optionVote}}</span> {{its.optionName}}</div>
-          <div class="icons">
-            <img v-if="item.chooseOption==(ind+1)" src="../../../assets/images/icon/success.png" alt="">
-          </div>
+    <div @click.stop="" class="display prid">
+      <div v-if="!checkoutVote(item.options)" class="p_right">
+        <div v-for="(its,ind) in item.options" :key="ind" @click="toPredict(item, index, ind)" class="p_li">
+          {{its.optionName}}
+        </div>
+        <div v-if="$route.path!='/prediction'" @click.stop="toMore" class="p_li p_li_btn">
+          {{item.predictionsTournament.name}}
         </div>
       </div>
-      <div v-if="$route.path!='/prediction'" @click.stop="toMore" class="p_li p_li_btn">
-        {{item.predictionsTournament.name}}
-      </div>
-    </div>
-    <new-dialog>
-      <template v-slot:content>
-        <div class="ts">
-          <div @click="close" class="close el-icon-close"></div>
-          <div class="tmain">
-            <div class="t_title">
-              <p>你选择了</p>
-              <p>“ {{selectLine.optionName}} ”</p>
+      <div v-if="checkoutVote(item.options)" class="p_right p_right_2">
+        <div v-for="(its,ind) in item.options" :key="ind" class="p_li">
+
+          <div class="bg" :style="{width: doBg(its,item.options)}"></div>
+          <div class="b">
+            <div class="c"><span>{{its.optionVote}}</span> {{its.optionName}}</div>
+            <div class="icons">
+              <img v-if="item.chooseOption==(ind+1)" src="../../../assets/images/icon/success.png" alt="">
             </div>
-            <div class="desc">你的剩余积分：{{userData.restTokens}}</div>
-            <div class="counts">
-              <div class="cc">
-                <div @click="dealNum('1')" class="reduce el-icon-remove-outline"></div>
-                <span disabled  type="text" class="nums">{{nums}}</span>
-                <div @click="dealNum('2')" class="reduce el-icon-circle-plus-outline"></div>
+          </div>
+        </div>
+        <div v-if="$route.path!='/prediction'" @click.stop="toMore" class="p_li p_li_btn">
+          {{item.predictionsTournament.name}}
+        </div>
+      </div>
+      <new-dialog>
+        <template v-slot:content>
+          <div class="ts">
+            <div @click="close" class="close el-icon-close"></div>
+            <div class="tmain">
+              <div class="t_title">
+                <p>你选择了</p>
+                <p>“ {{selectLine.optionName}} ”</p>
+              </div>
+              <div class="desc">你的剩余积分：{{userData.restTokens}}</div>
+              <div class="counts">
+                <div class="cc">
+                  <div @click="dealNum('1')" class="reduce el-icon-remove-outline"></div>
+                  <span disabled  type="text" class="nums">{{nums}}</span>
+                  <div @click="dealNum('2')" class="reduce el-icon-circle-plus-outline"></div>
+                </div>
               </div>
             </div>
+            <div class="t_bottom">
+              <div @click="sure" class="sure">确定</div>
+            </div>
           </div>
-          <div class="t_bottom">
-            <div @click="sure" class="sure">确定</div>
-          </div>
-        </div>
-      </template>
-    </new-dialog>
+        </template>
+      </new-dialog>
+    </div>
   </div>
 </template>
 
@@ -108,9 +120,6 @@
             }else{
               this.$toast(res.errorMessage)
             }
-
-
-
           })
         }
       },
@@ -192,6 +201,14 @@
       },
 
       toPredict(item, index, chooseOption) {
+        if(item.predictionStatus !== 'live'){
+          if (item.predictionStatus === 'pause') {
+            this.$toast('等待结果中，无法竞猜')
+          } else {
+            this.$toast('竞猜已结束，无法竞猜')
+          }
+          return;
+        }
         this.doLoginStatus().then(r=> {
           if (r) {
             this.checkJoin(item, index, chooseOption)
