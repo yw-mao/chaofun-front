@@ -1,10 +1,8 @@
 <template>
   <div @click.stop="" class="display prid">
-    <!-- <div class="p_left">
-      <div class="p_title">{{item.title}}</div>
-    </div> -->
+    <div></div>
     <div v-if="!checkoutVote(item.options)" class="p_right">
-      <div v-for="(its,ind) in item.options" :key="ind" @click.stop="chooseItem(its,ind)" class="p_li">
+      <div v-for="(its,ind) in item.options" :key="ind" @click="toPredict(item, index, ind)" class="p_li">
         {{its.optionName}}
       </div>
       <div v-if="$route.path!='/prediction'" @click.stop="toMore" class="p_li p_li_btn">
@@ -23,6 +21,7 @@
         </div>
       </div>
       <div v-if="$route.path!='/prediction'" @click.stop="toMore" class="p_li p_li_btn">
+        {{item.predictionsTournament.name}}
       </div>
     </div>
     <new-dialog>
@@ -192,41 +191,41 @@
         this.$toast('还未支持跳转')
       },
 
-      toPredict(item, index) {
+      toPredict(item, index, chooseOption) {
         this.doLoginStatus().then(r=> {
           if (r) {
-            this.checkJoin(item, index)
+            this.checkJoin(item, index, chooseOption)
           }
         })
       },
 
-      joinConfirm(item, index) {
+      joinConfirm(item, index, chooseOption) {
         this.$alert('默认会给你本次竞猜活动「1000」积分，只作用于本次有奖竞猜活动(一个活动有多个竞猜)，本次竞猜活动积分不能兑换任何实物,只用于排名。你确定要参加本次竞猜活动?', '参加本次竞猜活动？', {
           confirmButtonText: '确定',
           callback: action => {
             if (action == 'confirm') {
               api.joinPredictionsTournament({predictionsTournamentId: item.predictionsTournament.id}).then(res => {
-                this.checkJoin(item, index);
+                this.checkJoin(item, index, chooseOption);
               })
             }
           }
         });
       },
 
-      checkJoin(item, index) {
+      checkJoin(item, index, chooseOption) {
         api.checkJoinTournament({predictionsTournamentId: item.predictionsTournament.id}).then(res=> {
           console.log("get checkJoinTournament")
           console.log(res)
           // 如果参加了，直接设置竞猜金额
           if (res.data !== null) {
-            this.toSetTokens(item, index, res.data);
+            this.toSetTokens(item, index, res.data, chooseOption);
           } else {
-            this.joinConfirm(item, index);
+            this.joinConfirm(item, index, chooseOption);
           }
         });
       },
 
-      toSetTokens(item, index, data) {
+      toSetTokens(item, index, data, chooseOption) {
         this.$prompt('请输入下注积分, 本次活动剩余积分: ' + data.restTokens , '下注', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
@@ -234,7 +233,7 @@
           inputPattern: /[0-9]/,
           inputErrorMessage: '必须是数字'
         }).then(({ value }) => {
-          this.toToup(item, index, value)
+          this.toToup(item, index, value, chooseOption)
         }).catch(() => {
           this.$message({
             type: 'info',
@@ -243,9 +242,9 @@
         });
       },
 
-      toToup(item,index, value){
+      toToup(item,index, value, chooseOption){
         // 这里的 Tokens 就是竞猜积分
-        api.toVote({postId: item.postId, option: item.chooseOption, tokens: value}).then(res=>{
+        api.toVote({postId: item.postId, option: chooseOption + 1, tokens: value}).then(res=>{
           api.getPostInfo({postId: item.postId}).then(res=>{
             this.item = res.data;
             this.$emit('callBack',index,res.data);
