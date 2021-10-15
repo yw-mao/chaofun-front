@@ -1,5 +1,5 @@
 <template>
-  <div v-show="show" class="newDialog">
+  <div v-if="show" class="newDialog">
       <slot name="content"></slot>
   </div>
 </template>

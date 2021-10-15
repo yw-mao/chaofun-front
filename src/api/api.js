@@ -974,6 +974,13 @@ export function predictionsjoin(params) {
   })
 }
 
+export function getTotalRank(params) {
+  return request({
+    url: '/api/v0/forum/predictions_tournament/getTotalRank',
+    method: 'get',
+    params
+  })
+}
 
 
 /** 活动查询 */

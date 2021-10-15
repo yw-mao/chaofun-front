@@ -1,18 +1,36 @@
 <template>
   <div @click.stop="" class="display prid">
-    <!-- <div class="p_left">
-      <div class="p_title">{{item.title}}</div>
-    </div> -->
-    <div v-if="!checkoutVote(item.options)" class="p_right">
-      <div v-for="(its,ind) in item.options" :key="ind" @click.stop="chooseItem(its,ind)" class="p_li">
-        {{its.optionName}}
-      </div>
-      <div v-if="$route.path!='/prediction'" @click.stop="toMore" class="p_li p_li_btn">
-        {{item.predictionsTournament.name}}
+    <div class="p_left">
+      <div>
+        <p>参与：{{item.optionVoteCount}}人</p>
+        <p>{{item.predictedTokens?'下注：'+item.predictedTokens+' 积分':'未参与竞猜'}}</p>
+        <p>{{item.predictedWins?'收益：'+item.predictedWins+'积分':'收益：---'}}</p>
+        <!-- <p>剩余积分：{{item.predictedTokens}}积分</p> -->
       </div>
     </div>
+    
+    <div v-if="!checkoutVote(item.options)" class="p_right">
+      <div class="cent">
+        {{doState()}}
+      </div>
+      <div v-for="(its,ind) in item.options" :key="ind" @click.stop="chooseItem(its,ind)" 
+      :class="['p_li',{'acts':
+      item.predictionStatus=='end'&&item.predictionRightOption==(ind+1)}]">
+        {{its.optionName}}
+      </div>
+      <div v-if="$route.path!='/prediction'" @click.stop="toMore" class="p_li p_li_btns">
+        {{item.predictionsTournament.name}}
+      </div>
+      <!-- <div class="icons">
+            <img v-if="item.chooseOption==(ind+1)" src="../../../assets/images/icon/success.png" alt="">
+          </div> -->
+    </div>
     <div v-if="checkoutVote(item.options)" class="p_right p_right_2">
-      <div v-for="(its,ind) in item.options" :key="ind" class="p_li">
+      <div class="cent">
+      {{doState()}}
+    </div>
+      <div v-for="(its,ind) in item.options" :key="ind" :class="['p_li',{'acts':
+      item.predictionStatus=='end'&&item.predictionRightOption==(ind+1)}]">
 
         <div class="bg" :style="{width: doBg(its,item.options)}"></div>
         <div class="b">
@@ -22,10 +40,11 @@
           </div>
         </div>
       </div>
-      <div v-if="$route.path!='/prediction'" @click.stop="toMore" class="p_li p_li_btn">
+      <div v-if="$route.path!='/prediction'" @click.stop="toMore" class="p_li p_li_btns">
+        {{item.predictionsTournament.name}}
       </div>
     </div>
-    <new-dialog>
+    <new-dialog v-if="selectLine.optionName">
       <template v-slot:content>
         <div class="ts">
           <div @click="close" class="close el-icon-close"></div>
@@ -86,11 +105,18 @@
 
     },
     mounted() {
-      this.getScore()
+      // this.getScore()
     },
     methods: {
+      doState(){
+        switch (this.item.predictionStatus){
+          case 'live': return '竞猜进行中（下注中)';break;
+          case 'pause': return '比赛中（停止下注）';break;
+          case 'end':return '竞猜结束';break
+        }
+      },
       toMore(){
-        this.$router.push({name: 'prediction'})
+        this.$router.push({name: 'prediction',query:{id: this.item.predictionsTournament.id}})
       },
       sure(){
         if(this.nums>0){
@@ -135,6 +161,11 @@
 
           }else{
             this.userData = res.data;
+            console.log(this.userData);
+            console.log(this.selectLine);
+            setTimeout(()=>{
+              this.$EventBus.$emit("new-dialog", true);
+            })
           }
         })
       },
@@ -154,14 +185,22 @@
         }
       },
       chooseItem(v,vs){
-        if(this.item.predictionsStatus=='live'){
-          this.getScore()
-          setTimeout(()=>{
-            this.ids = vs;
-            this.selectLine = v;
-            this.$EventBus.$emit("new-dialog", true);
-          })
-        }
+        console.log(v,vs)
+        this.ids = vs;
+        this.selectLine = v;
+        this.doLoginStatus().then(r=> {
+          if (r) {
+            if(this.item.predictionStatus=='live'){
+              
+              
+              
+              setTimeout(()=>{
+                this.getScore()
+              })
+            }
+          }
+        })
+        
 
 
       },
@@ -259,24 +298,32 @@
 </script>
 
 <style type='text/scss' lang='scss' scoped>
+.cent{
+  text-align: center;
+  color: #fff;
+  margin-bottom: 30px;
+}
   .prid{
     background: #303030;
     height: 300px;
     margin-bottom: 10px;
     border-radius: 8px;
-    padding: 28px 50px;
+    padding: 28px 28px;
     display: flex;
     align-items: center;
     .p_left{
-      display: flex;
+      // display: flex;
       align-items: center;
       justify-content: space-around;
       background: #666;
-      flex: 0 0 150px;
+      flex: 0 0 144px;
       box-sizing: border-box;
       // display: grid;
       padding: 12px;
       border-radius: 8px;
+      margin-right: 40px;
+      color: #fff;
+      line-height: 40px;
       .p_title{
         color: #fff;
         line-height: 28px;
@@ -297,15 +344,23 @@
           background: rgba(102, 102, 102,0.7);
         }
       }
+      
     }
+    .acts{
+        border: 1px solid #46d160 !important;
+        // background: #46d160;
+        &:hover{
+          // background: #46d160;
+        }
+      }
     .p_right_2{
       .p_li{
-        text-align: left;
+        // text-align: left;
         display: flex;
         position: relative;
         .bg{
           position: absolute;
-          background: #ffbc5d;
+          background: #666;
           width: 50%;
           left: 1px;
           top: 1px;
@@ -410,15 +465,18 @@
       right: 10px;
     }
   }
-  .p_li_btn{
-    background: linear-gradient(90deg,#ec0623 0,#ff8717);
+.p_li_btns{
+    background: #ff8717;
     margin-top: 30px;
     width: 210px;
     margin: 30px auto;
+    text-align: center !important;
+    display: block !important;
   }
   .el-dialog{
     z-index: 3000;
   }
+
   // .title{
   //     padding: 0 0 10px 0;
   //     font-size: 16px;

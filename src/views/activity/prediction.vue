@@ -21,10 +21,11 @@
               <div class="top_info">
                 <div class="t_left">
                     <div class="s_title">锦标赛预测</div>
-                    <div class="b_title">2021年英雄联盟 世界锦标赛预测</div>
+                    <div class="b_title">英雄联盟S11大赛有奖竞猜</div>
                 </div>
                 <div class="t_right">
-
+                  <div @click="joinConfirm" v-if="userData&&!userData.userId" class="btnss">立即参与</div>
+                  <div v-if="userData&&userData.userId">我的积分： {{userData.restTokens}}</div>
                 </div>
               </div>
               <ListItem
@@ -36,7 +37,17 @@
               ></ListItem>
             </div>
           </div>
-          <div v-if="!ISPHONE" class="main_right"></div>
+          <div v-if="!ISPHONE" class="main_right">
+            <div class="ranks">
+              <div class="r_title">积分排行榜</div>
+              <div v-for="(its,ind) in ranks" :key="ind" class="r_item">
+                <span class="ins">{{ind+1}}</span>
+                <img class="ava" :src="imgOrigin+its.userAO.icon" alt="">
+                <span class="uname">{{its.userAO.userName}}</span>
+                <span class="score">{{its.tokens}}</span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
   </div>
@@ -80,7 +91,9 @@ export default {
       whichOne: "pub",
       loadAll: false,
       userInfo: {},
-      usersData: [],
+      userData: null,
+      ranks: [],
+      predictionsTournamentId: ''
     };
   },
   components: {
@@ -112,8 +125,44 @@ export default {
   },
   created() {
     this.getList();
+    this.getTotalRank();
+    this.getScore()
   },
   methods: {
+    joinConfirm(item, index) {
+        this.$alert('默认会给你本次竞猜活动「1000」积分，只作用于本次有奖竞猜活动(一个活动有多个竞猜)，本次竞猜活动积分不能兑换任何实物,只用于排名。你确定要参加本次竞猜活动?', '参加本次竞猜活动？', {
+          confirmButtonText: '确定',
+          callback: action => {
+            if (action == 'confirm') {
+              api.joinPredictionsTournament({predictionsTournamentId: this.predictionsTournamentId}).then(res => {
+                this.getScore(item, index);
+              })
+            }
+          }
+        });
+      },
+    getScore(){
+      this.predictionsTournamentId = this.$route.query.id
+      let params = {
+        predictionsTournamentId: this.$route.query.id
+      }
+      api.checkJoin(params).then(res=>{
+        if(!res.data){
+          this.userData = {}
+
+        }else{
+          this.userData = res.data;
+        }
+      })
+    },
+    getTotalRank(){
+      let params = {
+            predictionsTournamentId: '1'
+        }
+      api.getTotalRank(params).then(res=>{
+        this.ranks = res.data
+      })
+    },
     getList(){
         let params = {
             predictionsTournamentId: '1'
@@ -150,7 +199,7 @@ export default {
     border-radius: 8px;
     margin-bottom: 10px;
     display: flex;
-    // align-items: center;
+    align-items: center;
     color: #fff;
     justify-content: space-between;
     background: url('https://i.chao.fun/biz/0dd39345f731e512a2308a9cf20b8926.png');
@@ -165,5 +214,47 @@ export default {
             margin-top: 10px;
         }
     }
+    .btnss{
+      line-height: 36px;
+      width: 100px;
+      text-align: center;
+      border-radius: 30px;
+      background: chocolate;
+      font-size: 16px;
+      cursor: pointer;
+    }
 }
+  .ranks{
+    width: 270px;
+    height: 700px;
+    .r_title{
+      padding: 14px;
+      font-size: 18px;
+    }
+    .r_item{
+      display: flex;
+      padding: 8px 14px;
+      font-size: 16px;
+      line-height: 34px;
+      .ava{
+        width: 34px;
+        height: 34px;
+        border-radius: 50%;
+        margin: 0 10px;
+        vertical-align: middle;
+      }
+      .uname{
+        flex: 1;
+        font-size: 14px;
+        white-space:nowrap;
+overflow:hidden;
+text-overflow:ellipsis;
+      }
+      .score{
+        flex: 0 0 50px;
+        font-size: 14px;
+        color: #666;
+      }
+    }
+  }
 </style>
