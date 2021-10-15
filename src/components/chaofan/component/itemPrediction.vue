@@ -124,7 +124,7 @@ import * as api from '@/api/api'
      },
 
      toSetTokens(item, index, data) {
-       this.$prompt('请输入下注积分, 本次比赛剩余积分: ' + data.restTokens , '下注', {
+       this.$prompt('请输入下注积分, 本次活动剩余积分: ' + data.restTokens , '下注', {
          confirmButtonText: '确定',
          cancelButtonText: '取消',
          inputPlaceholder: '请输入',
