@@ -607,6 +607,7 @@ export default {
       console.log(index, data);
       this.lists.splice(index, 1, data);
     },
+    
     getPostInfo(postId) {
       api.getPostInfo({ postId }).then((res) => {});
     },

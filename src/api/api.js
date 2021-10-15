@@ -313,6 +313,16 @@ export function getPostInfo(params) {
   })
 }
 
+/** 获取 帖子详情 */
+export function checkJoinTournament(params) {
+  return request({
+    url: '/api/v0/forum/predictions_tournament/checkJoin',
+    method: 'get',
+    params
+  })
+}
+
+
 /** 添加评论 */
 export function addComments(params) {
   return request({

@@ -22,7 +22,7 @@
                 </div>
             </div>
             <div v-if="!checkoutVote(item.options)" class="vote_bottom">
-              <div @click="toToup(item,index)" class="toup">竞猜</div>
+              <div @click="toPredict(item,index)" class="toup">竞猜</div>
             </div>
             <el-button @click="toPredictionsTournament(item.predictionsTournament.id)" style="width: 100%;margin-top: 10px">{{item.predictionsTournament.name}}</el-button>
         </div>
@@ -36,7 +36,7 @@ import * as api from '@/api/api'
    name: '',
    data(){
      return {
-         
+         tokens: null
      }
    },
    props: {
@@ -60,7 +60,7 @@ import * as api from '@/api/api'
     
    },
    methods: {
-    checkoutVote(list){
+     checkoutVote(list){
        var a = false;
        list.forEach(item=>{
          if(item.optionVote){
@@ -68,34 +68,78 @@ import * as api from '@/api/api'
          }
        })
        return a;
-    },
-    doBg(it,its){
+     },
+     doBg(it,its){
        var num = it.optionVote;
        var total = 0;
        its.forEach(item=>{
-        //  if(item.optionVote){
-           total += item.optionVote*1;
-        //  }
+         //  if(item.optionVote){
+         total += item.optionVote*1;
+         //  }
        })
        return (num*100/total).toFixed(2)+'%';
-    },
-     toPredictionsTournament(id) {
-
      },
-    toToup(item,index){
-       this.doLoginStatus().then(r=>{
-          if(r){
-            console.log(item.chooseOption)
-            api.toVote({postId: item.postId,option: item.chooseOption}).then(res=>{
-              api.getPostInfo({postId: item.postId}).then(res=>{
-                  this.item = res.data;
-                  this.$emit('callBack',index,res.data);
-                  this.$EventBus.$emit('eventRefresh');
-                // this.lists.splice(index,1,res.data)
-                })
-            })
+     toPredictionsTournament(id) {
+       this.$toast('还未支持跳转')
+     },
+
+     toPredict(item, index) {
+       this.doLoginStatus().then(r=> {
+         if (r) {
+            this.checkJoin(item, index)
+         }
+       })
+     },
+
+     joinConfirm(item, index) {
+       this.$alert('你确定要参加本次竞猜吗', '参加本次竞猜默认会给你本次竞猜1000积分，只作用于本次有奖竞猜活动', {
+         confirmButtonText: '确定',
+         callback: action => {
+           if (action == 'confirm') {
+             this.toSetTokens(item, index);
+           }
+         }
+       });
+     },
+
+     checkJoin(item, index) {
+       api.checkJoinTournament({predictionsTournamentId: item.predictionsTournament.id}).then(res=> {
+          // 如果参加了，直接设置竞猜金额
+          if (res.data) {
+            this.toSetTokens(item, index);
+          } else {
+            this.joinConfirm(item, index);
           }
-        })
+       });
+     },
+
+     toSetTokens(item, index) {
+       this.$prompt('请输入下注积分', '提示', {
+         confirmButtonText: '确定',
+         cancelButtonText: '取消',
+         inputPlaceholder: '请输入',
+         inputPattern: [0-9],
+         inputErrorMessage: '必须是数字'
+       }).then(({ value }) => {
+         this.toToup(item, index)
+       }).catch(() => {
+         this.$message({
+           type: 'info',
+           message: '取消输入'
+         });
+       });
+     },
+
+     toToup(item,index){
+       // 这里的 Tokens 就是竞猜积分
+       api.toVote({postId: item.postId,option: item.chooseOption, tokens: this.tokens}).then(res=>{
+         api.getPostInfo({postId: item.postId}).then(res=>{
+           this.item = res.data;
+           this.$emit('callBack',index,res.data);
+           this.$EventBus.$emit('eventRefresh');
+           // this.lists.splice(index,1,res.data)
+         })
+       })
      },
    }
  }
