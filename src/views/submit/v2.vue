@@ -36,7 +36,7 @@
       </el-container>
       <el-form :model="post" ref="form">
         <div class="postbox">
-          <el-radio-group v-model="type" @change="$refs.form.clearValidate()">
+          <el-radio-group v-model="type" @change="$refs.form.clearValidate();$refs.title.focus();">
             <el-radio-button label="image">
               <i class="el-icon-picture-outline"></i> 图片/视频
             </el-radio-button>
@@ -65,6 +65,8 @@
                   v-model="post.title"
                   maxlength="300"
                   show-word-limit
+                  :autofocus="true"
+                  ref="title"
                 />
               </el-form-item>
             </el-row>
@@ -154,12 +156,12 @@
               <div class="checkbox-group">
                 <el-checkbox
                   v-model="post.anonymity"
-                  :true-label="1"
-                  :false-label="0"
+                  true-label="true"
+                  false-label="false"
                   border
                   size="medium"
                 >
-                  <i :class="[post.anonymity ? 'el-icon-check' : 'el-icon-plus']" />
+                  <i :class="[post.anonymity === 'true' ? 'el-icon-check' : 'el-icon-plus']" />
                   <span>匿 名</span>
                 </el-checkbox>
 
@@ -172,7 +174,7 @@
             <el-divider></el-divider>
           </div>
           <div class="postbox-buttons">
-            <el-button type="primary" round @click="submit">发 布</el-button>
+            <el-button type="primary" round @click="submit" :loading="loading">发 布</el-button>
             <el-button v-if="type === 'article'" round>保存草稿箱</el-button>
           </div>
           <div class="postbox-rules">
@@ -182,7 +184,7 @@
       </el-form>
     </el-main>
     <el-aside width="320px">
-      <el-card class="aside-forum" shadow="never">
+      <el-card class="aside-forum" shadow="never" v-if="forum.id">
         <div class="forum-header">
           <img :src="imgOrigin+forum.imageName" :alt="forum.name" v-if="forum.imageName">
           <router-link :to="`/f/${forum.id}`">{{forum.name}}</router-link>
@@ -233,7 +235,15 @@
   import TagSelector from '@/components/Submit/TagSelector'
   import CollectionSelector from '@/components/Submit/CollectionSelector'
   import Uploader from '@/components/Submit/Uploader'
-  import { getForumInfo, searchForum, getUrlTitle } from '@/api/api'
+  import {
+    getForumInfo,
+    searchForum,
+    getUrlTitle,
+    submitImage,
+    submitArticle,
+    submitLink,
+    submitVote,
+  } from '@/api/api'
   import { logo } from '@/settings'
 
   export default {
@@ -267,7 +277,7 @@
             },
           ],
           voteDuration: 3,
-          anonymity: false,
+          anonymity: 'false',
           tagId: null,
           collectionId: null,
           ossNames: null,
@@ -276,6 +286,7 @@
         loading: false,
         drafts: 0, // 草稿箱数量
         filedata: {}, // 文件参数
+        loading: false, // 发布中
       }
     },
     mounted() {
@@ -286,15 +297,10 @@
     },
     beforeDestroy() {
     },
-    watch: {
-      filelist: (fl) => {
-        console.log(fl);
-      }
-    },
     methods: {
       forumSelectOnChange(forumId) {
         this.getForum();
-        this.$router.push({ path: `/f/${forumId}/submit` });
+        // this.$router.push({ path: `/f/${forumId}/submit` });
       },
       async getForum() {
         if (this.forum.id) {
@@ -351,13 +357,78 @@
           // 同步内容
           this.post.content = this.$refs.editor.get();
         }
-        console.log(this.post.ossNames);
         this.$refs.form.validate(result => {
           if (!result) {
-            alert('校验失败');
+            this.$message.error('选项未填写完整');
+            return;
           }
+          const { type, post } = this;
+          if (type === 'image' && (!post.ossNames || post.ossNames.length < 1)) {
+            this.$message.error('请上传至少一张图片或一个视频！');
+            return;
+          }
+          this.doSubmit();
         });
-      }
+      },
+      async doSubmit() {
+        this.loading = true;
+        const loginStatus = await this.doLoginStatus();
+        if (!loginStatus) {
+          return;
+        }
+        const { type, post } = this;
+        let result;
+        // 公共参数
+        const params = {
+          forumId: post.forumId,
+          title: post.title,
+          anonymity: post.anonymity,
+        }
+        if (post.tagId) {
+          params.tagId = post.tagId;
+        }
+        if (post.collectionId) {
+          params.collectionId = post.collectionId;
+        }
+        try {
+          // 图片/视频
+          if (type === 'image') {
+            if (post.ossNames.length === 1) {
+              params.ossName = post.ossNames[0];
+            } else {
+              params.ossNames = post.ossNames.join(',');
+            }
+            result = await submitImage(params);
+          } else if (type === 'article') {
+            params.article = post.content;
+            params.articleType = 'richtext';
+            result = await submitArticle(params);
+          } else if (type === 'link') {
+            params.link = post.link;
+            result = await submitLink(params);
+          } else if (type === 'vote') {
+            params.article = post.content;
+            params.articleType = 'richtext';
+            params.options = JSON.stringify(post.options);
+            result = await submitVote(params);
+          }
+          if (!result || !result.success) {
+            this.$message.error(result.errorMessage);
+            this.loading = false;
+            return;
+          }
+          this.loading = false;
+          this.$message.success('发布成功');
+          setTimeout(() => {
+            this.$router.push({ path: `/f/${post.forumId}` })
+          }, 1500);
+        } catch (error) {
+          console.error(error);
+          // 其他网络问题
+          this.$message.error('发布失败，尝试联系下开发同学！');
+        }
+        this.loading = false;
+      },
     }
   }
 </script>

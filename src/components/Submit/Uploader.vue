@@ -35,7 +35,7 @@
         将文件拖到此处，或 <el-button round>点击上传</el-button>
       </p>
     </div>
-    <input class="el-upload__input" type="file" ref="input" :name="name" @change="handleChange" :multiple="multiple" :accept="accept" />
+    <input class="el-upload__input" type="file" ref="inputUploader" :name="name" @change="handleChange" :multiple="multiple" :accept="accept" />
   </div>
 </template>
 
@@ -162,7 +162,7 @@ export default {
     // 监听粘贴上传
     document.addEventListener('paste', this.toPaste);
   },
-  unmounted() {
+  beforeDestroy() {
     // 移除监听上传
     document.removeEventListener('paste', this.toPaste);    
   },
@@ -250,7 +250,7 @@ export default {
       }
     },
     upload(rawFile) {
-      this.$refs.input.value = null;
+      this.$refs.inputUploader.value = null;
       if (!this.beforeUpload) {
         return this.post(rawFile);
       }
@@ -410,10 +410,9 @@ export default {
       }
     },
     handleClick() {
-      console.log(1);
       if (!this.disabled) {
-        this.$refs.input.value = null;
-        this.$refs.input.click();
+        this.$refs.inputUploader.value = null;
+        this.$refs.inputUploader.click();
       }
     },
     handleKeydown(e) {
