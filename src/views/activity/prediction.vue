@@ -28,7 +28,7 @@
                 </div>
               </div>
               <ListItem
-                v-if="$store.state.user.listMode == 'normal'"
+                
                 :marker="params.marker"
                 :keys="params.key"
                 :isindex="false"

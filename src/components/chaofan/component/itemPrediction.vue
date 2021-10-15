@@ -7,7 +7,9 @@
      <div v-for="(its,ind) in item.options" :key="ind" @click.stop="chooseItem(its,ind)" class="p_li">
        {{its.optionName}}
      </div>
-     
+     <div v-if="$route.path!='/prediction'" @click.stop="toMore" class="p_li p_li_btn">
+       查看更多竞猜
+     </div>
    </div>
    <div v-if="checkoutVote(item.options)" class="p_right p_right_2">
      <div v-for="(its,ind) in item.options" :key="ind" class="p_li">
@@ -19,6 +21,9 @@
               <img v-if="item.chooseOption==(ind+1)" src="../../../assets/images/icon/success.png" alt="">
             </div>
         </div>
+     </div>
+     <div v-if="$route.path!='/prediction'" @click.stop="toMore" class="p_li p_li_btn">
+       查看更多竞猜
      </div>
      <!-- <div v-for="(its,ind) in item.options" :key="ind" class="a">
                   <div class="bg" :style="{width: doBg(its,item.options)}"></div>
@@ -127,6 +132,9 @@ import newDialog from '../../../layout/components/dialog/newDialog'
     this.getScore()
    },
    methods: {
+     toMore(){
+       this.$router.push({name: 'prediction'})
+     },
      sure(){
        if(this.nums>0){
          let params = {postId: this.item.postId,option: this.ids+1,tokens: this.nums};
@@ -136,7 +144,7 @@ import newDialog from '../../../layout/components/dialog/newDialog'
               this.$EventBus.$emit("new-dialog", false);
               setTimeout(()=>{
                 api.getPostInfo({postId: this.item.postId}).then(res=>{
-                      // this.item = res.data;
+                      this.item = res.data;
                       this.$emit('callBack',this.index,res.data);
                       this.$EventBus.$emit('eventRefresh');
                 })
@@ -444,6 +452,12 @@ import newDialog from '../../../layout/components/dialog/newDialog'
     top: 10px;
     right: 10px;
   }
+}
+.p_li_btn{
+  background: linear-gradient(90deg,#ec0623 0,#ff8717);
+  margin-top: 30px;
+  width: 210px;
+  margin: 30px auto;
 }
 .el-dialog{
   z-index: 3000;
