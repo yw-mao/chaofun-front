@@ -19,7 +19,7 @@
         {{its.optionName}}
       </div>
       <div v-if="$route.path!='/prediction'" @click.stop="toMore" class="p_li p_li_btns">
-        {{item.predictionsTournament.name}}
+        S11竞猜活动
       </div>
       <!-- <div class="icons">
             <img v-if="item.chooseOption==(ind+1)" src="../../../assets/images/icon/success.png" alt="">
@@ -41,7 +41,7 @@
         </div>
       </div>
       <div v-if="$route.path!='/prediction'" @click.stop="toMore" class="p_li p_li_btns">
-        {{item.predictionsTournament.name}}
+        S11竞猜活动
       </div>
     </div>
     <new-dialog v-if="selectLine.optionName">
@@ -313,15 +313,15 @@
     align-items: center;
     .p_left{
       // display: flex;
-      align-items: center;
+      align-items: flex-start;
       justify-content: space-around;
       background: #666;
-      flex: 0 0 144px;
+      flex: 0 0 120 px;
       box-sizing: border-box;
       // display: grid;
-      padding: 12px;
+      padding: 6px;
       border-radius: 8px;
-      margin-right: 40px;
+      margin-right: 10px;
       color: #fff;
       line-height: 40px;
       .p_title{
@@ -468,7 +468,6 @@
 .p_li_btns{
     background: #ff8717;
     margin-top: 30px;
-    width: 210px;
     margin: 30px auto;
     text-align: center !important;
     display: block !important;
