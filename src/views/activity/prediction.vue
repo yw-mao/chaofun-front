@@ -20,11 +20,9 @@
             >
               <div class="top_info">
                 <div class="t_left">
-                    <div class="s_title">锦标赛预测</div>
-                    <div class="b_title">2021年英雄联盟 世界锦标赛预测</div>
+                    <div class="b_title">2021年英雄联盟S11预测活动, 前十奖励Mark杯</div>
                 </div>
                 <div class="t_right">
-
                 </div>
               </div>
               <ListItem

@@ -252,10 +252,6 @@
         }).then(({ value }) => {
           this.toToup(item, index, value, chooseOption)
         }).catch(() => {
-          this.$message({
-            type: 'info',
-            message: '取消输入'
-          });
         });
       },
 
