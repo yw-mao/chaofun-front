@@ -92,7 +92,7 @@ import * as api from '@/api/api'
      },
 
      joinConfirm(item, index) {
-       this.$alert('默认会给你本次竞猜1000积分, 只作用于本次有奖竞猜活动, 本场竞赛积分不能兑换任何实物，只用于排名，你确定要参加本次竞猜活动?', '参加本次竞猜活动？', {
+       this.$alert('默认会给你本次竞猜活动「1000」积分，只作用于本次有奖竞猜活动(一个活动有多个竞猜)，本次竞猜活动积分不能兑换任何实物,只用于排名。你确定要参加本次竞猜活动?', '参加本次竞猜活动？', {
          confirmButtonText: '确定',
          callback: action => {
            if (action == 'confirm') {
