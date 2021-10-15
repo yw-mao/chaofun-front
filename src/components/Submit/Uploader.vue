@@ -34,6 +34,7 @@
       <p>
         将文件拖到此处，或 <el-button round>点击上传</el-button>
       </p>
+      <p class="tip">试试直接粘贴图片，更快上传！</p>
     </div>
     <input class="el-upload__input" type="file" ref="inputUploader" :name="name" @change="handleChange" :multiple="multiple" :accept="accept" />
   </div>
@@ -496,5 +497,11 @@ export default {
   flex-grow: 1;
   text-align: center;
   cursor: pointer;
+}
+.tip {
+  line-height: 24px;
+  color: #ff4949;
+  font-size: 16px;
+  font-weight: bold;
 }
 </style>
