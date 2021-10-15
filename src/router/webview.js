@@ -64,6 +64,13 @@ routes = [
     hidden: true
   },
   {
+    path: '/webview/prediction/rank',
+    component: () => import('@/views/chaofun-webview/prediction/rank'),
+    name: 'prediction_rank',
+    meta: { title: '竞猜活动'},
+    hidden: true
+  },
+  {
     path: '/webview/buttonGame/rank',
     component: () => import('@/views/chaofun-webview/buttonGame/rank'),
     name: 'rank',

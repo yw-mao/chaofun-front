@@ -27,6 +27,8 @@
                   <div v-if="userData&&userData.userId">我的积分： {{userData.restTokens}}</div>
                 </div>
               </div>
+
+              <el-button v-if="ISPHONE" @click="toRank" style="width: 100%; margin-bottom: 10px" type="primary" >查看排行</el-button>
               <ListItem
                 
                 :marker="params.marker"
@@ -65,6 +67,7 @@ export default {
   name: "user",
   data() {
     return {
+      ISPHONE: document.body.clientWidth > 800 && !navigator.userAgent.includes('iPad') ? false : true,
       currentRole: "adminDashboard",
       count: 5,
       lists: [],
@@ -161,6 +164,9 @@ export default {
       api.getTotalRank(params).then(res=>{
         this.ranks = res.data
       })
+    },
+    toRank(){
+      window.open(location.origin + '/webview/prediction/rank');
     },
     getList(){
         let params = {

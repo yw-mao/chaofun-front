@@ -740,6 +740,14 @@ export function getButtonRank(params) {
   })
 }
 
+export function getPredictionRank(params) {
+  return request({
+    url: '/api/v0/forum/predictions_tournament/getTotalRank',
+    method: 'get',
+    params
+  })
+}
+
 /** 获取Top的Ups */
 export function getUserTopUps(params) {
   return request({
