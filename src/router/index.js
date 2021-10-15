@@ -277,6 +277,13 @@ export const constantRoutes = [
         meta: { title: '推荐',keepAlive: true,},
         hidden: true
       },
+      {
+        path: '/prediction',
+        component: () => import('@/views/activity/prediction'),
+        name: 'prediction',
+        meta: { title: '竞猜',keepAlive: true,},
+        hidden: true
+      },
       
       // {
       //   path: '/webview/userRank',

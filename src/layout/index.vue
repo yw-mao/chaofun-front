@@ -17,6 +17,7 @@
       Copyright © 2019 - 2021 炒饭 <img style="width:16px" src="../assets/images/bbcc.png" alt=""> <a target="_blank" href="https://beian.miit.gov.cn/">粤ICP备19153164号</a>
     </div>
     <chat v-if="$store.state.user.showChatBox&&!($route.path.includes('/chatpage'))"></chat>
+    <!-- <new-dialog></new-dialog> -->
   </div>
 </template>
 
@@ -34,6 +35,7 @@ import * as api from '@/api/api'
 import RightDescribe from '@/components/chaofan/RightDescribe'
 
 import chat from './components/chat/chat'
+import newDialog from './components/dialog/newDialog'
 
 
 console.log("探寻这里的秘密，\n找到自己的最爱，\n成为这里的主人，\n炒饭-新趣、分享、交流");
@@ -57,7 +59,8 @@ export default {
     BackgroundSet,
     lottery,
     RightDescribe,
-    chat
+    chat,
+    newDialog
     // TagsView
   },
   data(){

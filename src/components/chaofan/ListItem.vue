@@ -373,7 +373,6 @@
         </div>
 
         <div class="tools">
-          <!-- <div><i class="el-icon-star-on"></i> <span>{{item.ups-item.downs}}</span> 点赞</div> -->
           <div v-if="ISPHONE">
             <span v-if="item.vote != 1" @click.stop="doZan(1, item, index)">
               <img
@@ -401,7 +400,6 @@
                 src="../../assets/images/icon/down.png"
                 alt=""
               />
-              <!-- <span>{{item.downs}}</span> -->
             </span>
             <span
               v-if="item.vote == -1 || !ISPHONE"
@@ -414,7 +412,6 @@
                 src="../../assets/images/icon/down_active.png"
                 alt=""
               />
-              <!-- <span>{{item.downs}}</span> -->
             </span>
           </div>
           <div>

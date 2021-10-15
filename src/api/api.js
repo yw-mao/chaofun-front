@@ -940,6 +940,30 @@ export function enableComment(params) {
   })
 }
 
+export function predictionsTournament(params) {
+  return request({
+    url: '/api/v0/forum/predictions_tournament/listPosts',
+    method: 'get',
+    params
+  })
+}
+
+export function checkJoin(params) {
+  return request({
+    url: '/api/v0/forum/predictions_tournament/checkJoin',
+    method: 'get',
+    params
+  })
+}
+
+export function predictionsjoin(params) {
+  return request({
+    url: '/api/v0/forum/predictions_tournament/join',
+    method: 'get',
+    params
+  })
+}
+
 
 
 /** 活动查询 */
