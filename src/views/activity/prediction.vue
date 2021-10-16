@@ -262,8 +262,8 @@ export default {
         flex: 1;
         font-size: 14px;
         white-space:nowrap;
-overflow:hidden;
-text-overflow:ellipsis;
+        overflow:hidden;  
+        text-overflow:ellipsis;
       }
       .score{
         flex: 0 0 50px;

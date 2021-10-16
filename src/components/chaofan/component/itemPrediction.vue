@@ -2,8 +2,9 @@
   <div @click.stop="" class="display prid">
     <div class="p_left">
       <div>
+        <p v-if="item.predictionTotalTokens">总额：{{item.predictionTotalTokens}}</p>
         <p>参与：{{item.optionVoteCount}}人</p>
-        <p>{{item.predictedTokens?'下注：'+item.predictedTokens+'':'未参与竞猜'}}</p>
+        <p>{{item.predictedTokens?'我的：'+item.predictedTokens+'':'未参与竞猜'}}</p>
         <p>{{item.predictedWins?'收益：'+item.predictedWins+'':'收益：---'}}</p>
         <!-- <p>剩余积分：{{item.predictedTokens}}积分</p> -->
       </div>
@@ -57,7 +58,7 @@
             <div class="counts">
               <div class="cc">
                 <div @click="dealNum('1')" class="reduce el-icon-remove-outline"></div>
-                <span disabled  type="text" class="nums">{{nums}}</span>
+                <input @blur="blurs" oninput = "value=value.replace(/[^\d]/g,'')" onselectstart="return false;" type="text" class="nums" v-model="nums">
                 <div @click="dealNum('2')" class="reduce el-icon-circle-plus-outline"></div>
               </div>
             </div>
@@ -108,6 +109,11 @@
       // this.getScore()
     },
     methods: {
+      blurs(){
+        if(this.nums>this.userData.restTokens){
+          this.nums = this.userData.restTokens;
+        }
+      },
       doState(){
         switch (this.item.predictionStatus){
           case 'live': return '竞猜进行中（下注中)';break;
@@ -178,11 +184,11 @@
             this.nums = 0;
           }
         }else{
-          //  if(this.nums-10>0){
-          this.nums += 10;
-          //  }else{
+           if((parseInt(this.nums)+10)<this.userData.restTokens||(parseInt(this.nums)+10)==this.userData.restTokens){
+            this.nums = parseInt(this.nums)+ 10;
+           }else{
           //  this.nums = 0;
-          //  }
+           }
         }
       },
       chooseItem(v,vs){
@@ -467,6 +473,11 @@
       .reduce{
         font-size: 44px;
         vertical-align: middle;
+        -moz-user-select: none;/*火狐*/
+        -webkit-user-select: none;/*webKit 浏览器*/
+        -ms-user-select: none;/*IE10*/
+        -khtml-user-select: none;/*低版本浏览器*/
+        user-select: none;
       }
     }
     .sure{
