@@ -116,8 +116,8 @@
       },
       doState(){
         switch (this.item.predictionStatus){
-          case 'live': return '竞猜进行中（下注中)';break;
-          case 'pause': return '比赛中（停止下注）';break;
+          case 'live': return '竞猜进行中（投放中)';break;
+          case 'pause': return '比赛中（停止投放）';break;
           case 'end':return '竞猜结束';break
         }
       },
@@ -274,7 +274,7 @@
       },
 
       toSetTokens(item, index, data) {
-        this.$prompt('请输入下注积分, 本次活动剩余积分: ' + data.restTokens , '下注', {
+        this.$prompt('请输入投放积分, 本次活动剩余积分: ' + data.restTokens , '投放', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           inputPlaceholder: '请输入',

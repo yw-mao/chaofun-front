@@ -49,10 +49,10 @@
                     <viewer :images="doImgs(item.imageNames)">
                         <div v-for="(i,k) in item.imageNames.split(',')" :key="k">
                             
-                            <span class="aaa" :data-source="imgOrigin+i">
+                            <span class="aaa">
                                 【附图】
                                 <img  style="opacity:0;" :src="imgOrigin+i+'?x-oss-process=image/resize,h_60'" :data-source="imgOrigin+i" >
-                                <img  class="futu" :src="imgOrigin+i+'?x-oss-process=image/resize,h_150'" :data-source="imgOrigin+i" >
+                                <img  class="futu" :src="imgOrigin+i+'?x-oss-process=image/resize,h_150'" >
                             </span>
                         </div>
                     </viewer>
