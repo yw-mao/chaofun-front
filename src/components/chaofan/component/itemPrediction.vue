@@ -3,8 +3,8 @@
     <div class="p_left">
       <div>
         <p>参与：{{item.optionVoteCount}}人</p>
-        <p>{{item.predictedTokens?'下注：'+item.predictedTokens+' 积分':'未参与竞猜'}}</p>
-        <p>{{item.predictedWins?'收益：'+item.predictedWins+'积分':'收益：---'}}</p>
+        <p>{{item.predictedTokens?'下注：'+item.predictedTokens+'':'未参与竞猜'}}</p>
+        <p>{{item.predictedWins?'收益：'+item.predictedWins+'':'收益：---'}}</p>
         <!-- <p>剩余积分：{{item.predictedTokens}}积分</p> -->
       </div>
     </div>
@@ -19,7 +19,7 @@
         {{its.optionName}}
       </div>
       <div v-if="$route.path!='/prediction'" @click.stop="toMore" class="p_li p_li_btns">
-        {{item.predictionsTournament.name}}
+        S11竞猜活动
       </div>
       <!-- <div class="icons">
             <img v-if="item.chooseOption==(ind+1)" src="../../../assets/images/icon/success.png" alt="">
@@ -41,7 +41,7 @@
         </div>
       </div>
       <div v-if="$route.path!='/prediction'" @click.stop="toMore" class="p_li p_li_btns">
-        {{item.predictionsTournament.name}}
+        S11竞猜活动
       </div>
     </div>
     <new-dialog v-if="selectLine.optionName">
@@ -317,25 +317,32 @@
     
     .p_left{
       // display: flex;
-      align-items: center;
+      align-items: flex-start;
       justify-content: space-around;
       background: #666;
-      flex: 0 0 28%;
+      width: 0 0 28%;
       max-width: 144px;
+      min-width: 80px;
       box-sizing: border-box;
       // display: grid;
-      padding: 12px;
+      padding: 6px;
       border-radius: 8px;
       // margin-right: 40px;
       color: #fff;
       // line-height: 40px;
       
-      margin-right: 4%;
+      margin-right: 6%;
+      div{
+        width: 100%;
+      }
       p{
+        font-size: 14px;
+        width: 100%;
+        overflow: hidden;
         margin: 20px 0 20px; 
         white-space:nowrap;
         overflow:hidden;
-        text-overflow:ellipsis;
+        // text-overflow:ellipsis;
       }
       .p_title{
         color: #fff;
@@ -482,7 +489,6 @@
 .p_li_btns{
     background: #ff8717;
     margin-top: 30px;
-    width: 210px;
     margin: 30px auto;
     text-align: center !important;
     display: block !important;
