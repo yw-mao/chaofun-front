@@ -79,6 +79,18 @@ export default {
         // this.$router.push({name: 'userhome',params:{id: userInfo.userId,userInfo}})
       }
     },
+    toUserById(userInfo) {
+      localStorage.removeItem('storedata')
+      localStorage.removeItem('spage')
+      if (userInfo) {
+        if (this.$route.path.includes('/user/')) {
+          localStorage.setItem('whichOne', 'pub');
+        }
+        window.open('/user/' + id, '_blank')
+        // this.$router.push({name: 'userhome',params:{id: userInfo.userId,userInfo}})
+      }
+    },
+
     toSearch() {
       if (this.$route.path == 'search') {
 

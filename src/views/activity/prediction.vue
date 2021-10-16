@@ -41,7 +41,7 @@
           <div v-if="!ISPHONE" class="main_right">
             <div class="ranks">
               <div class="r_title">积分排行榜</div>
-              <div v-for="(its,ind) in ranks" :key="ind" class="r_item">
+              <div v-for="(its,ind) in ranks" :key="ind" @click="toUser(its.userAO)" class="r_item">
                 <span class="ins">{{ind+1}}</span>
                 <img class="ava" :src="imgOrigin+its.userAO.icon" alt="">
                 <span class="uname">{{its.userAO.userName}}</span>
@@ -250,7 +250,7 @@ export default {
       padding: 8px 14px;
       font-size: 16px;
       line-height: 34px;
-      cursor: crosshair;
+      /*cursor: crosshair;*/
       .ava{
         width: 34px;
         height: 34px;
