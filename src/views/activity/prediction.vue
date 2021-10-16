@@ -123,7 +123,10 @@ export default {
     next();
   },
   mounted() {
-    
+    this.$EventBus.$on('eventRefresh', ()=>{
+        //需要执行的代码
+      this.getScore()
+    })
   },
   created() {
     this.getList();
@@ -241,6 +244,7 @@ export default {
       padding: 8px 14px;
       font-size: 16px;
       line-height: 34px;
+      cursor: pointer;
       .ava{
         width: 34px;
         height: 34px;

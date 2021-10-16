@@ -124,10 +124,11 @@
           api.toVote(params).then(res=>{
             if(res.success){
               this.$toast('竞猜成功')
+              this.selectLine = {};
               this.$EventBus.$emit("new-dialog", false);
               setTimeout(()=>{
                 api.getPostInfo({postId: this.item.postId}).then(res=>{
-                  this.item = res.data;
+                  // this.item = res.data;
                   this.$emit('callBack',this.index,res.data);
                   this.$EventBus.$emit('eventRefresh');
                 })
@@ -205,6 +206,7 @@
 
       },
       close(){
+        this.selectLine = {};
         this.$EventBus.$emit("new-dialog", false);
       },
       checkoutVote(list){
@@ -308,25 +310,37 @@
     height: 300px;
     margin-bottom: 10px;
     border-radius: 8px;
-    padding: 28px 28px;
+    padding: 6%;
     display: flex;
     align-items: center;
+    justify-content: space-between;
+    
     .p_left{
       // display: flex;
       align-items: center;
       justify-content: space-around;
       background: #666;
-      flex: 0 0 144px;
+      flex: 0 0 28%;
+      max-width: 144px;
       box-sizing: border-box;
       // display: grid;
       padding: 12px;
       border-radius: 8px;
-      margin-right: 40px;
+      // margin-right: 40px;
       color: #fff;
-      line-height: 40px;
+      // line-height: 40px;
+      
+      margin-right: 4%;
+      p{
+        margin: 20px 0 20px; 
+        white-space:nowrap;
+        overflow:hidden;
+        text-overflow:ellipsis;
+      }
       .p_title{
         color: #fff;
-        line-height: 28px;
+        // line-height: 28px;
+        
         font-size: 18px;
       }
     }
@@ -476,98 +490,4 @@
   .el-dialog{
     z-index: 3000;
   }
-
-  // .title{
-  //     padding: 0 0 10px 0;
-  //     font-size: 16px;
-  //     font-weight: 600;
-  // }
-  // .vote{
-  //     padding-bottom: 12px !important;
-  //   }
-  //   .vote_header{
-  //     display: flex;
-  //     div{
-  //       flex: 0 0 150px;
-  //       line-height: 34px;
-  //       // background: #ddd;
-  //       font-size: 14px;
-  //       color: #999;
-  //     }
-  //   }
-  //   .radio_item{
-  //     padding: 10px 0 8px !important;
-  //     width: 100%;
-  //     box-sizing: border-box;
-  //     display:block;width:100%;white-space: pre-wrap;word-break: break-all;
-  //     line-height: 22px;
-  //   }
-  //   .el-radio{
-  //     width: 100%;
-  //   }
-  //   .vote_bottom{
-  //     display: flex;
-  //     margin-top: 20px !important;
-  //     .toup,.weig{
-  //       flex: 0 0 100px;
-  //       line-height: 34px;
-  //       margin-right: 20px;
-  //       border: 1px solid #ddd;
-  //       text-align: center;
-  //       border-radius: 4px;
-  //     }
-  //     .toup{
-  //       background: #07c160;
-  //       color: #fff;
-  //     }
-  //   }
-  //   .has_choose{
-  //     .a{
-  //       width: 100%;
-  //       // line-height: 40px;
-  //       border: 1px solid #f1f1f1;
-  //       margin-bottom: 8px;
-  //       position: relative;
-  //       border-radius: 4px;
-  //       .bg{
-  //         position: absolute;
-  //         background: #ffbc5d;
-  //         width: 50%;
-  //         left: 0;
-  //         top: 0;
-  //         bottom: 0;
-  //       }
-  //       .b{
-  //         position: relative;
-  //         z-index: 1;
-  //         padding: 0 10px;
-  //         display: flex;
-  //         width: 100%;
-  //         padding: 4px 10px;
-  //         min-height: 40px;
-  //         .c{
-  //           align-items: center;
-  //           flex: 1;
-  //           display: flex;
-  //           align-items: center;
-  //           span{
-  //             display: inline-block;
-  //             width: 30px;
-  //             font-weight: bold;
-  //             text-align: center;
-  //           }
-  //         }
-  //         .img{
-  //           flex: 0 0 40px;
-  //           text-align: center;
-  //           vertical-align: middle;
-  //         }
-  //       }
-  //     }
-  //   }
-  //   .icons{
-  //     img{
-  //       vertical-align: middle;
-  //     }
-  //   }
 </style>
