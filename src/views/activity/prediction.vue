@@ -234,17 +234,23 @@ export default {
 }
   .ranks{
     width: 270px;
-    height: 700px;
+    // height: 700px;
+    padding-bottom: 30px;
+    background: #fff;
+    margin-top: 10px;
+    border-radius: 8px;
     .r_title{
       padding: 14px;
       font-size: 18px;
+      border-bottom: 1px solid #f1f1f1;
+      margin-bottom: 10px;
     }
     .r_item{
       display: flex;
       padding: 8px 14px;
       font-size: 16px;
       line-height: 34px;
-      cursor: pointer;
+      cursor: crosshair;
       .ava{
         width: 34px;
         height: 34px;
