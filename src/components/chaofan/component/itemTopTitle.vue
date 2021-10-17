@@ -130,7 +130,7 @@
             <i class="el-icon-more" style="font-size: 24px"></i>
           </span>
           <el-dropdown-menu style="width:150px;" slot="dropdown">
-            <el-dropdown-item command="添加标签" v-if="tagList.length">
+            <el-dropdown-item command="添加标签">
               <div @click.stop="toadd" class="addTag">添加标签 ></div>
             </el-dropdown-item>
             <div v-if="showTag" class="showTags">
