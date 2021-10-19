@@ -17,12 +17,17 @@
 <script>
 import '@toast-ui/editor/dist/toastui-editor.css';
 import '@toast-ui/editor/dist/i18n/zh-cn';
-import { Editor } from '@toast-ui/vue-editor';
+import Editor from '@toast-ui/editor';
+import { Editor as VueEditor } from '@toast-ui/vue-editor';
 import { uploadImage } from '@/api/api';
+Editor.setLanguage('zh-CN', {
+  'URL': '链接',
+  'Link text': '标题',
+});
 
 export default {
   components: {
-    editor: Editor
+    editor: VueEditor
   },
   data() {
     return {
@@ -47,6 +52,9 @@ export default {
         autofocus: false,
       },
     };
+  },
+  mounted() {
+    this.$refs.editor.invoke('setLanguage');
   },
   methods: {
     onEditorChange() {
@@ -111,6 +119,18 @@ export default {
   }
   .ProseMirror {
     padding: 8px 16px;
+    position: relative;
+    bottom: 0px;
+    top: 0px;
+    box-sizing: content-box;
+  }
+}
+.toastui-editor-popup-body {
+  label {
+    line-height: 15px;
+  }
+  .toastui-editor-button-container {
+    line-height: 32px;
   }
 }
 </style>
