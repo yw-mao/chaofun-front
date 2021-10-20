@@ -446,6 +446,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .fixed_r{
+  position: -webkit-sticky; /* Safari */
   position: sticky;
   top: 50px;
 }
