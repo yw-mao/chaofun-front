@@ -36,8 +36,16 @@
           </div>
         </div>
       </div>
-      <div class="admin">
-        <div class="admin_header admin_titles"> 版主 </div>
+      <div :class="['admin',sticky?'sticky_class':'',showAllAdmin?'sticky_nor':'']">
+        <div class="admin_header admin_titles"> 
+          版主  
+          <span class="iconsss" v-if="sticky">
+            <i @click="toggle" :class="(showAllAdmin)?'el-icon-arrow-up':'el-icon-arrow-down'"></i>
+            
+          </span>
+          
+        </div>
+        
         <div v-if="forumAdmin.length" v-for="(item,index) in forumAdmin" :key="index" class="admin_item">
           <span @click="toUser(item)" class="admin_name">{{item.userName}}</span>
         </div>
@@ -146,7 +154,9 @@
             size: 10, //大小
             timeout: 200, // 每隔多久刷新
           }
-        }
+        },
+        sticky: false,
+        showAllAdmin: false,
       }
     },
     props: {
@@ -169,14 +179,32 @@
       this.forumId = this.$route.params.forumId;
       
     },
+    destroyed(){
+      this.$(".infinite-list")[0].removeEventListener('scroll', this.handleScroll)
+    },
     mounted() {
       // this.getGameTop();
       if(new Date().getDate()==1){
         this.gamemodule = true
       }
-      this.modlist()
+      this.modlist();
+      if(this.$route.params.forumId){
+        this.$(".infinite-list")[0].addEventListener('scroll',()=>{
+          let top = this.$(".infinite-list").scrollTop();
+          if(top>150){
+            this.sticky = true;
+          }else{
+            this.sticky = false;
+          }
+          console.log("top", top);
+        })
+      }
+      
     },
     methods: {
+      toggle(){
+        this.showAllAdmin = !this.showAllAdmin;
+      },
       gotoChat(){
         this.doLoginStatus().then(res=>{
           if(res){
@@ -318,7 +346,7 @@
     background-color: #999;
   }
   .rright{
-    // max-height: calc(100vh - 114px);
+    max-height: calc(100vh - 114px);
     padding: 10px;
     // background: rgb(241,241,241);
     overflow: hidden;
@@ -328,6 +356,7 @@
     }
     .asa{
       border: 1px solid #f1f1f1;
+      position: sticky;
     }
   }
   .tologin{
@@ -335,6 +364,7 @@
     border: 1px solid #f1f1f1;
     border-radius: 6px;
     background: #fff;
+    
     div.body-right{
       padding: 14px;
       border-bottom: 1px solid #f1f1f1;
@@ -508,10 +538,12 @@
   }
   .admin{
     // padding: 0 12px;
-    background: #fafafa;
+    background: #fff;
     // background: #ddd;
     border-radius: 8px;
     margin: 10px 2px 10px;
+    // padding-top: 40px;
+    position: relative;
     .admin_header{
       margin: 0 12px;
       line-height: 36px;
@@ -533,17 +565,41 @@
         }
       }
     }
+    
     .admin_titles{
       margin: 0;
       padding-left: 12px;
       font-size: 16px;
-      fon
+      position: sticky;
+      background: #fff;
+      top: 0;
+      display: flex;
+      justify-content: space-between;
       img{
         width: 22px;
         vertical-align: middle;
       }
+      .iconsss{
+        margin-right: 10px;
+      }
       // background: #f1f1f1;
     }
+  }
+  // .iconsss{
+  //   position: sticky;
+  //   top: 5px;
+  //   right: 5px;
+  // }
+  .sticky_class{
+      height: 140px;
+      overflow: hidden;
+    }
+  .sticky_nor{
+    // width: -moz-calc(100% - 40px);
+    // width: -webkit-calc(100% - 40px);
+    height: calc(100vh - 480px);
+    overflow-y: scroll;
+    // height: 100vh;
   }
   .forummanage{
     float: right;

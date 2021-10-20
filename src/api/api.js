@@ -838,6 +838,54 @@ export function addTag(params) {
   })
 }
 
+export function addForumUserTag(params) {
+  return request({
+    url: '/api/v0/forum/user_tag/add',
+    method: 'get',
+    params
+  })
+}
+
+export function removeUserTag(params) {
+  return request({
+    url: '/api/v0/forum/user_tag/removeUserTag',
+    method: 'get',
+    params
+  })
+}
+
+export function setUserTag(params) {
+  return request({
+    url: '/api/v0/forum/user_tag/set',
+    method: 'get',
+    params
+  })
+}
+export function removeForumUserTag(params) {
+  return request({
+    url: '/api/v0/forum/user_tag/remove',
+    method: 'get',
+    params
+  })
+}
+
+
+export function listForumUserTag(params) {
+  return request({
+    url: '/api/v0/forum/user_tag/list',
+    method: 'get',
+    params
+  })
+}
+
+export function setForumUserTag(params) {
+  return request({
+    url: '/api/v0/forum/user_tag/set',
+    method: 'get',
+    params
+  })
+}
+
 export function forumAddTag(params) {
   return request({
     url: '/api/v0/forum/addTag',

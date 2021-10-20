@@ -23,6 +23,10 @@
       </div>
 
       <div class="bottom">
+        <div @click="toManageUserTag" class="btns">用户标签管理</div>
+      </div>
+
+      <div class="bottom">
         <div @click="toNotify" class="btns">发送通知</div>
       </div>
 
@@ -123,6 +127,16 @@ export default {
           showHeader: true
         })      } catch (e) {
         window.open(location.origin + '/webview/forum/tag?forumId=' + this.forumId);
+      }
+    },
+    toManageUserTag() {
+      try {
+        window.flutter_inappwebview.callHandler('toViewPage', {
+          url: "https://chao.fun/webview/forum/user_tag" + "?forumId=" + this.forumId,
+          title: '标签管理',
+          showHeader: true
+        })      } catch (e) {
+        window.open(location.origin + '/webview/forum/userTag?forumId=' + this.forumId);
       }
     },
 
