@@ -14,13 +14,57 @@
         </div>
       </div>
     </div>
+    <div v-if="this.displayRemove" class="ycovers ">
+      <div class="ycontainer">
+        <div style="">
+          <div>清除用户标签</div>
+          <div style="display: flex; align-items: center">
+            <div style="align-content: center">用户名：</div>
+            <el-autocomplete
+                v-model="state"
+                :fetch-suggestions="querySearchAsync"
+                placeholder="搜索用户名"
+                @select="handleRemoveSelect"
+                style="z-index: 100000"
+            ></el-autocomplete>
+          </div>
+          <div style="display: flex;">
+            <el-button @click="removeUserTag" type="success">清除</el-button>
+            <el-button @click="cancelClean" type="success">取消</el-button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div v-if="this.displayAddUserTag" class="ycovers ">
+      <div class="ycontainer">
+        <div style="">
+          <div>设置用户标签</div>
+          <div style="display: flex; align-items: center">
+            <div style="align-content: center">用户名：</div>
+            <el-autocomplete
+                v-model="state"
+                :fetch-suggestions="querySearchAsync"
+                placeholder="搜索用户名"
+                @select="handleAddSelect"
+            ></el-autocomplete>
+          </div>
+          <div style="display: flex;">
+            <el-button @click="grantUser" type="success">设置</el-button>
+            <el-button @click="cancelSet" type="success">取消</el-button>
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="bottom">
       <div @click="add" class="btns">添加标签</div>
     </div>
+    <div class="bottom">
+      <div @click="toRemoveUserTag" class="btns">清除用户标签</div>
+    </div>
     <div v-for="(item,lists) in lists" :key="index" class="item">
-      <div>{{item.name}}</div>
+      <div>{{item.data}}</div>
       <div style="display: flex; justify-content: space-between;width: 20%">
-        <div @click="toModify">修改</div>
+        <div @click="toGrantUser(item)">添加给用户</div>
         <div @click="toDelete(item, index)">删除</div>
       </div>
     </div>
@@ -29,6 +73,7 @@
 
 <script>
   import * as api from '@/api/api'
+  import {getlistTag} from "../../../api/api";
 
   export default {
     name: "tag",
@@ -36,11 +81,19 @@
     data() {
       return {
         displayAdd: false,
+        displayRemove: false,
+        displayAddUserTag: false,
+        keyword: '',
+        restaurants: [],
+        state: '',
         params: {},
         forumId: '',
         lists:[],
         addTagName: '',
         orderNumber: 0,
+        userIdToClean: 0,
+        userIdToAdd: 0,
+        tagToAdd: 0,
         modInfo: {
           money: 0.0,
           past24HPosts: 0,
@@ -56,9 +109,41 @@
     },
 
     methods: {
+      removeUserTag() {
+        this.displayRemove = false;
+        api.removeUserTag({userId: this.userIdToClean, forumId: this.forumId}).then((res) => {
+          if (res.success) {
+            this.userIdToClean = null;
+            this.state= '';
+            this.$toast('成功');
+          } else {
+            this.$toast(this.errorMessage);
+          }
+        });
+      },
+      toRemoveUserTag() {
+        this.displayRemove = true;
+      },
+      toGrantUser(item) {
+        this.displayAddUserTag = true;
+        this.tagToAdd = item.id;
+      },
+      grantUser() {
+        this.displayAddUserTag = false;
+        api.setUserTag({userId: this.userIdToAdd, forumId: this.forumId, tagId: this.tagToAdd}).then((res) => {
+          if (res.success) {
+            this.userIdToAdd = null;
+            this.tagToAdd = null;
+            this.state = '',
+            this.$toast('成功');
+          } else {
+            this.$toast(this.errorMessage);
+          }
+        });
+      },
       toAdd() {
         if (this.addTagName !== '') {
-          api.addForumUserTag({forumId: this.forumId, name: this.addTagName, type: 'text'}).then((res) => {
+          api.addForumUserTag({forumId: this.forumId, data: this.addTagName, type: 'text'}).then((res) => {
             this.tagName = '';
             this.orderNumber = 0;
             this.displayAdd = false;
@@ -66,21 +151,28 @@
           })
         }
       },
+
       cancelAdd() {
         this.displayAdd = false;
+      },
+      cancelSet() {
+        this.displayAddUserTag= false;
+      },
+      cancelClean() {
+        this.displayRemove = false;
       },
       add() {
         this.displayAdd = true;
       },
-      toModify() {
-        this.$toast('暂不支持');
-      },
+
       toDelete(item, index) {
-        this.$confirm(`是否确定删除标签 【${item.name}】？`, "提示", {
+        this.$confirm(`是否确定删除标签 【${item.data}】？`, "提示", {
           type: "warning",
           // position: center,
         }).then(() => {
-
+          api.removeForumUserTag({tagId: item.id}).then((res) => {
+              this.getTagList();
+          });
         })
       },
       getTagList() {
@@ -88,7 +180,28 @@
           this.lists = res.data;
           this.load()
         })
-      }
+      },
+      handleRemoveSelect(item) {
+        this.userIdToClean = item.userId;
+        console.log(item);
+      },
+      handleAddSelect(item) {
+        this.userIdToAdd = item.userId;
+      },
+
+      querySearchAsync(queryString, cb) {
+        api.getSearchUser({'keyword': queryString, 'pageNum': 1}).then((res) => {
+
+          let result = res.data.data.map(value => {
+            value.value = value.userName
+            return value;
+          });
+          clearTimeout(this.timeout);
+          this.timeout = setTimeout(() => {
+            cb(result);
+          }, 3000 * Math.random());
+        });
+      },
     }
   }
 
@@ -97,7 +210,7 @@
 <style lang="scss" scoped>
   .ycovers {
     position: fixed;
-    z-index: 2012;
+    z-index: 10;
     top: 0;
     left: 0;
     right: 0;
