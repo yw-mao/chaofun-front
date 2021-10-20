@@ -44,7 +44,10 @@
               <div v-for="(its,ind) in ranks" :key="ind" @click="toUser(its.userAO)" class="r_item">
                 <span class="ins">{{ind+1}}</span>
                 <img class="ava" :src="imgOrigin+its.userAO.icon" alt="">
-                <span class="uname">{{its.userAO.userName}}</span>
+                <div style="flex: 1">
+                  <span class="uname">{{its.userAO.userName}}</span>
+                  <span v-if="its.userAO.userTag" title="用户在板块的标签" style="font-size: 14px;background-color: rgb(237, 239, 241); color: rgb(26, 26, 27); padiding: 0, 0;">{{its.userAO.userTag.data}}</span>
+                </div>
                 <span class="score">{{its.tokens}}</span>
               </div>
             </div>
@@ -264,6 +267,7 @@ export default {
         white-space:nowrap;
         overflow:hidden;  
         text-overflow:ellipsis;
+        padding-right: 2px;
       }
       .score{
         flex: 0 0 50px;

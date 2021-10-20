@@ -552,7 +552,7 @@ h1 {
     font-weight: bold;
     cursor: pointer;
     position: relative;
-    padding: 6px 0;
+    padding: 6px 2px;
     font-size: 13px;
     &:hover .hovercon {
       display: block;

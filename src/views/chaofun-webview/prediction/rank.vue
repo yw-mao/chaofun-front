@@ -9,7 +9,10 @@
             <div class="left">
                 <img :src="imgOrigin+item.userAO.icon + '?x-oss-process=image/resize,h_80'" alt="">
                 <div class="info">
-                    <div class="title">{{item.userAO.userName}}</div>
+                  <div>
+                    <span style="padding-right: 2px">{{item.userAO.userName}}</span>
+                    <span v-if="item.userAO.userTag" title="用户在板块的标签" style="font-size: 14px;background-color: rgb(237, 239, 241); color: rgb(26, 26, 27); padiding: 0, 0;">{{item.userAO.userTag.data}}</span>
+                  </div>
                     <p v-if="item.userAO.desc" class="desc">{{item.userAO.desc}}</p>
                 </div>
             </div>
