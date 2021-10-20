@@ -4,7 +4,7 @@
       ref="container"
       :style="{ height: scrollHeight + 'px' }">
     <div>
-      <div style="padding-top: 50px;height:200px;background:red;"></div>
+      <div style="height: 50px"></div>
       <div class="main_content">
         <div v-if="!ISPHONE" class="main_left">
           <div
@@ -64,7 +64,7 @@
             class="fixed_r">
             <div
               v-if="!ISPHONE"
-              style="min-width: 300px; padding-top: 0px"
+              style="min-width: 300px; padding-top: 10px"
               class="grid-content bg-purple content-right"
             >
               <RightCom
@@ -454,7 +454,7 @@ export default {
   top: 0px;
 }
 .rright{
-  // max-height: ;
+  max-height: none;
 }
 
 .el-row {
@@ -507,10 +507,10 @@ export default {
   // display: flex;
 }
 .fixed_tag {
-  position: sticky;
+  position: fixed;
   width: 120px;
   // height: 700px;
-  top: 50px;
+  top: 60px;
   bottom: 0;
   z-index: 10;
   overflow-y: auto;

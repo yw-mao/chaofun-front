@@ -39,12 +39,13 @@
       <div :class="['admin',sticky?'sticky_class':'',showAllAdmin?'sticky_nor':'']">
         <div class="admin_header admin_titles"> 
           版主  
-
-          <span style="float:right;margin-right:10px;" v-if="sticky">
-            <i @click="toggle" :class="showAllAdmin?'el-icon-arrow-up':'el-icon-arrow-down'"></i>
-            <!-- {{showAllAdmin?'收起':''}}查看全部 -->
+          <span class="iconsss" v-if="sticky">
+            <i @click="toggle" :class="(showAllAdmin||sticky)?'el-icon-arrow-up':'el-icon-arrow-down'"></i>
+            
           </span>
+          
         </div>
+        
         <div v-if="forumAdmin.length" v-for="(item,index) in forumAdmin" :key="index" class="admin_item">
           <span @click="toUser(item)" class="admin_name">{{item.userName}}</span>
         </div>
@@ -345,7 +346,7 @@
     background-color: #999;
   }
   .rright{
-    // max-height: calc(100vh - 114px);
+    max-height: calc(100vh - 114px);
     padding: 10px;
     // background: rgb(241,241,241);
     overflow: hidden;
@@ -572,13 +573,23 @@
       position: sticky;
       background: #fff;
       top: 0;
+      display: flex;
+      justify-content: space-between;
       img{
         width: 22px;
         vertical-align: middle;
       }
+      .iconsss{
+        margin-right: 10px;
+      }
       // background: #f1f1f1;
     }
   }
+  // .iconsss{
+  //   position: sticky;
+  //   top: 5px;
+  //   right: 5px;
+  // }
   .sticky_class{
       height: 140px;
       overflow: hidden;
