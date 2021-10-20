@@ -40,7 +40,7 @@
         <div class="admin_header admin_titles"> 
           版主  
           <span class="iconsss" v-if="sticky">
-            <i @click="toggle" :class="(showAllAdmin||sticky)?'el-icon-arrow-up':'el-icon-arrow-down'"></i>
+            <i @click="toggle" :class="(showAllAdmin)?'el-icon-arrow-up':'el-icon-arrow-down'"></i>
             
           </span>
           
