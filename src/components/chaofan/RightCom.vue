@@ -350,6 +350,7 @@
   }
   .help_con_fixed{
     position: fixed;
+    width: 270px;
     top: 50px;
   }
   .advertise{
