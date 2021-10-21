@@ -70,7 +70,8 @@
                 />
               </el-form-item>
             </el-row>
-            <el-row v-if="['article', 'vote'].includes(type)">
+            <!-- 暂时隐藏投票描述 -->
+            <el-row v-if="['article'].includes(type)">
               <el-form-item
                 prop="content"
               >
@@ -129,7 +130,7 @@
                   >
                     新增选项
                   </el-button>
-                  <el-form-item label="投票时长：">
+                  <!-- <el-form-item label="投票时长：">
                     <el-select v-model="post.voteDuration" placeholder="请选择">
                       <el-option
                         v-for="day in 7"
@@ -138,7 +139,7 @@
                         :value="day"
                       />
                     </el-select>
-                  </el-form-item>
+                  </el-form-item> -->
                 </div>
               </div>
               <div class="vote-tips">
@@ -300,7 +301,13 @@
     methods: {
       forumSelectOnChange(forumId) {
         this.getForum();
-        // this.$router.push({ path: `/f/${forumId}/submit` });
+
+        // 静态替换路由
+        history.pushState(
+          {},
+          null,
+          `/f/${forumId}/submit`
+        )
       },
       async getForum() {
         if (this.forum.id) {
@@ -370,6 +377,7 @@
           this.doSubmit();
         });
       },
+      // 提交操作
       async doSubmit() {
         this.loading = true;
         const loginStatus = await this.doLoginStatus();
