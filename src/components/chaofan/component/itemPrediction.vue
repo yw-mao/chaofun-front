@@ -19,7 +19,7 @@
       item.predictionStatus=='end'&&item.predictionRightOption==(ind+1)}]">
         {{its.optionName}}
       </div>
-      <div v-if="$route.path!='/prediction'" @click.stop="toMore" class="p_li p_li_btns">
+      <div v-if="$route.name!='prediction'" @click.stop="toMore" class="p_li p_li_btns">
         S11竞猜活动
       </div>
       <!-- <div class="icons">
@@ -41,7 +41,7 @@
           </div>
         </div>
       </div>
-      <div v-if="$route.path!='/prediction'" @click.stop="toMore" class="p_li p_li_btns">
+      <div v-if="$route.name!='prediction'" @click.stop="toMore" class="p_li p_li_btns">
         S11竞猜活动
       </div>
     </div>
@@ -122,7 +122,7 @@
         }
       },
       toMore(){
-        this.$router.push({name: 'prediction',query:{id: this.item.predictionsTournament.id}})
+        this.$router.push({name: 'prediction',params:{id: this.item.predictionsTournament.id,forumId: this.item.forum.id}})
       },
       sure(){
         if(this.nums>0){

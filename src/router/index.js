@@ -278,7 +278,7 @@ export const constantRoutes = [
         hidden: true
       },
       {
-        path: '/prediction',
+        path: '/predictions/:forumId/:id',
         component: () => import('@/views/activity/prediction'),
         name: 'prediction',
         meta: { title: '竞猜',keepAlive: true,},
