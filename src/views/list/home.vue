@@ -14,12 +14,12 @@
                 <div style="box-sizing: border-box; display:flex;align-items:center;">
                   <h1 class="_2yYPPW47QxD4lFQTKpfpLQ">{{forumInfo.name}}</h1>
                   <div style=" padding-left: 20px; ">
-                    <el-button @click="inout(1)" v-if="!forumInfo.joined" type="primary" round>
+                    <button class="notJoin-button" @click="inout(1)" v-if="!forumInfo.joined">
                       加入板块
-                    </el-button>
-                    <el-button @click="inout(2)" v-else type="danger" round>
+                    </button>
+                    <button class="join-button" @click="inout(2)" v-else type="danger" round>
                       退出板块
-                    </el-button>
+                    </button>
                   </div>
                 </div>
                 <h2 class="_33aRtz9JtW0dIrBNKFAl0y">{{forumInfo.desc}}</h2>

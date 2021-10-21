@@ -524,6 +524,23 @@ ul{
 }
 
 .join-button {
+  border:1px solid #014980;
+  padding: 4px 16px;
+  border-radius:9999px;
+  color: #014980;
+  fill: #014980;
+  background-color: white;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.notJoin-button {
   border:1px solid black;
-  padding: 1px 2px;
+  padding: 4px 16px;
+  border-radius:25px;
+  color: white;
+  fill: #014980;
+  background-color: #014980;
+  font-size: 14px;
+  font-weight: 700;
 }
