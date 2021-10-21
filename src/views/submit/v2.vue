@@ -3,7 +3,7 @@
     <el-main>
       <el-container class="section-submit-header">
         <el-col>发帖</el-col>
-        <el-button v-if="type === 'article'" type="text">草稿箱 <span>{{drafts}}</span></el-button>
+        <el-button v-if="type === 'article'" type="text" @click="unsupported">草稿箱 <span>{{drafts}}</span></el-button>
       </el-container>
 
       <el-container>
@@ -176,7 +176,7 @@
           </div>
           <div class="postbox-buttons">
             <el-button type="primary" round @click="submit" :loading="loading">发 布</el-button>
-            <el-button v-if="type === 'article'" round>保存草稿箱</el-button>
+            <el-button @click="unsupported" v-if="type === 'article'" round>保存草稿箱</el-button>
           </div>
           <div class="postbox-rules">
             <p><i class="el-icon-warning-outline" /> 严禁发布色情、暴恐、赌博及其他违反网络安全法的内容，或涉嫌隐私或未经授权的私人图片及信息，如违规发布，请自行删除或管理员强制删除。 </p>
@@ -445,6 +445,9 @@
       // 返回旧版
       gotoOld() {
         this.toPost(this.forum.id, this.forum.name, this.forum.imageName, false)
+      },
+      unsupported() {
+        this.$toast('暂不支持，尽请期待')
       }
     }
   }
