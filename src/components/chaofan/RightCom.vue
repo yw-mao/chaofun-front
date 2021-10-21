@@ -59,8 +59,6 @@
         <div v-if="false" class="game">
           <div style="height:20px;background:#f1f1f1;"></div>
           <div class="title">贪吃蛇 <span class="tab">愚人节有奖活动</span>
-
-
           </div>
           <snake :datas="datas"></snake>
           <div class="rank">
@@ -101,7 +99,6 @@
           <div @click="goto24HUserRank">24小时用户排名</div>
         </div>
       </div>
-
     </div>
 
     <!--   暂时先隐藏二维码   -->
@@ -220,38 +217,6 @@
           this.gameRank = res.data
         })
       },
-      inout(v){
-        if(this.$store.state.user.islogin){
-          if(v==1){
-            // 加入
-            api.joinForum({forumId: this.forumId}).then(res=>{
-              if(res.success){
-                this.$message({
-                  message: '加入成功',
-                  type: 'success',
-                  offset: 20
-                });
-                this.$emit('getForumInfo')
-                // this.getForumInfo()
-              }
-            })
-          }else if(v==2){
-            api.leaveForum({forumId: this.forumId}).then(res=>{
-              if(res.success){
-                this.$message({
-                  message: '退出成功',
-                  type: 'success',
-                  offset: 20
-                });
-                // this.getForumInfo()
-                this.$emit('getForumInfo')
-              }
-            })
-          }
-        }else{
-          this.showLogin('login')
-        }
-      },
       gotologin(){
         this.showLogin('login')
       },
@@ -332,11 +297,11 @@
     background-color: #999;
   }
   .rright{
-    // max-height: calc(100vh - 114px);
     padding: 10px;
     // background: rgb(241,241,241);
     overflow: hidden;
     overflow-y: auto;
+
     .right_content{
 
     }
@@ -363,6 +328,7 @@
     }
   }
   .help_con{
+    top: 50px;
     margin-top: 10px;
     padding: 14px 0;
     background: #fff;

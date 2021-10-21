@@ -11,77 +11,76 @@
             <img v-if="forumInfo.imageName" :src="imgOrigin+forumInfo.imageName + '?x-oss-process=image/resize,h_70'" class="Mh_Wl6YioFfBc9O1SQ4Jp">
             <div class="_3I4Wpl_rl6oTm02aWPZayD ">
               <div class="_3TG57N4WQtubLLo8SbAXVF">
-                <h1 class="_2yYPPW47QxD4lFQTKpfpLQ">{{forumInfo.name}}</h1>
+                <div style="box-sizing: border-box; display:flex;align-items:center;">
+                  <h1 class="_2yYPPW47QxD4lFQTKpfpLQ">{{forumInfo.name}}</h1>
+                  <div style=" padding-left: 20px; ">
+                    <el-button @click="inout(1)" v-if="!forumInfo.joined" type="primary" round>
+                      加入板块
+                    </el-button>
+                    <el-button @click="inout(2)" v-else type="danger" round>
+                      退出板块
+                    </el-button>
+                  </div>
+                </div>
                 <h2 class="_33aRtz9JtW0dIrBNKFAl0y">{{forumInfo.desc}}</h2>
               </div>
-<!--              <div class="_1Q_zPN5YtTLQVG72WhRuf3">-->
-<!--                <button role="button" tabindex="0" class="_1LHxa-yaHJwrPK8kuyv_Y4 _2iuoyPiKHN3kfOoeIQalDT _2tU8R9NTqhvBrhoNAXWWcP HNozj_dKjQZ59ZsfEegz8 ">-->
-<!--                  <span>-->
-<!--                    <span class="_31L3r0EWsU0weoMZvEJcUA">Joined</span>-->
-<!--                    <span class="_11Zy7Yp4S1ZArNqhUQ0jZW">Leave</span>-->
-<!--                  </span>-->
-<!--                </button>-->
-<!--              </div>-->
-<!--              <div class="_1cAYKT6f3GM-_aZei&#45;&#45;pxM">-->
-<!--                <button type="button" class="_3lH4vtstXYL3BXfT_hrmNu" data-testid="subredditNotificationButton">-->
-<!--                  <i class="qIoApQle9dXP6HkO35IOx icon icon-notification_fill"></i></button>-->
-<!--              </div>-->
+
             </div>
           </div>
         </div>
 
-<!--        <div class="_1gVVmSnHZpkUgVShsn7-ua _15Pk_bZ2XZNa9zBvnxq6HX" style="position:static;background:inherit">-->
-<!--          <div class="_1_TJAX-8zAT3vVN1Iz7cys" style="max-width:1200px">-->
-<!--            <div>-->
-<!--              <a class="_1O30sSXmfkKMRZqSaESf0S _1YpJV_aDQqujwuofx9-eAX uGdFXCHH-nwVp4gU3UaTw" href="/r/anime/">-->
-<!--                Posts-->
-<!--              </a>-->
-<!--              <a class="_1O30sSXmfkKMRZqSaESf0S   jU3ijmuG8CyRDQhPOHdw4" href="/r/anime/predictions/">-->
-<!--                Predictions-->
-<!--              </a>-->
-<!--              <a class="_1O30sSXmfkKMRZqSaESf0S  uGdFXCHH-nwVp4gU3UaTw" href="https://www.reddit.com/r/anime/wiki/rules" rel="noopener nofollow ugc" target="_blank">-->
-<!--                Rules-->
-<!--              </a>-->
-<!--              <div class="hcJJEc0gVBKH5pWCFgdET">-->
-<!--                <div class="_2wtKbmW1aPrT3MyHoaupQh  uGdFXCHH-nwVp4gU3UaTw">-->
-<!--                  <span>-->
-<!--                    Megathreads-->
-<!--                  </span>-->
-<!--                  <svg class="XHbKeEqnW58ib9mTN6jnS u_kypUXmB-k1A5TcC8MI9 _3u_CcXw7slod9vNJKIlYvx" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">-->
-<!--                    <path d="M14.17,9.35,10,13.53,5.83,9.35a.5.5,0,0,1,.35-.85h7.64a.5.5,0,0,1,.35.85"></path>-->
-<!--                  </svg>-->
-<!--                </div>-->
-<!--                <div class="_1T423RClx-mTPxfuiCw4UN " aria-hidden="true" role="list">-->
-<!--                  <a class="_1p4TpHzWWRAkGYYw9_jU-B  " href="https://redd.it/qaavyj" role="listitem" target="_blank" rel="noopener nofollow ugc">Merch Mondays</a>-->
-<!--                  <a class="_1p4TpHzWWRAkGYYw9_jU-B  " href="https://redd.it/qazc14" role="listitem" target="_blank" rel="noopener nofollow ugc">Recommendation Tues</a>-->
-<!--                  <a class="_1p4TpHzWWRAkGYYw9_jU-B  " href="https://redd.it/q7nwyv" role="listitem" target="_blank" rel="noopener nofollow ugc">Thursday Anime Disc</a>-->
-<!--                  <a class="_1p4TpHzWWRAkGYYw9_jU-B  " href="https://redd.it/q8c182" role="listitem" target="_blank" rel="noopener nofollow ugc">Casual Disc Fridays</a>-->
-<!--                  <a class="_1p4TpHzWWRAkGYYw9_jU-B  " href="https://redd.it/q90mkm" role="listitem" target="_blank" rel="noopener nofollow ugc">Misc Anime Questions</a>-->
-<!--                  <a class="_1p4TpHzWWRAkGYYw9_jU-B  " href="https://redd.it/q9noqt" role="listitem" target="_blank" rel="noopener nofollow ugc">Weekly Roundup</a>-->
-<!--                  <a class="_1p4TpHzWWRAkGYYw9_jU-B  " href="https://redd.it/q06gp1" role="listitem" target="_blank" rel="noopener nofollow ugc">Monthly Meta Thread</a>-->
-<!--                </div></div><div class="hcJJEc0gVBKH5pWCFgdET"><div class="_2wtKbmW1aPrT3MyHoaupQh  uGdFXCHH-nwVp4gU3UaTw">-->
-<!--              <span>Wiki &amp; Watch Orders</span>-->
-<!--              <svg class="XHbKeEqnW58ib9mTN6jnS u_kypUXmB-k1A5TcC8MI9 _3u_CcXw7slod9vNJKIlYvx" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">-->
-<!--                <path d="M14.17,9.35,10,13.53,5.83,9.35a.5.5,0,0,1,.35-.85h7.64a.5.5,0,0,1,.35.85"></path>-->
-<!--              </svg>-->
-<!--            </div>-->
-<!--              <div class="_1T423RClx-mTPxfuiCw4UN " aria-hidden="true" role="list"><a class="_1p4TpHzWWRAkGYYw9_jU-B  " href="https://www.reddit.com/r/anime/wiki/watch_order" role="listitem" target="_blank" rel="noopener nofollow ugc">Anime Watch Orders</a>-->
-<!--                <a class="_1p4TpHzWWRAkGYYw9_jU-B  " href="https://reddit.com/r/anime/wiki" role="listitem" target="_blank" rel="noopener nofollow ugc">Index</a>-->
-<!--                <a class="_1p4TpHzWWRAkGYYw9_jU-B  " href="https://reddit.com/r/anime/w/faaq" role="listitem" target="_blank" rel="noopener nofollow ugc">FAAQ</a>-->
-<!--                <a class="_1p4TpHzWWRAkGYYw9_jU-B  " href="https://www.reddit.com/r/anime/wiki/mods" role="listitem" target="_blank" rel="noopener nofollow ugc">Mods</a>-->
-<!--                <a class="_1p4TpHzWWRAkGYYw9_jU-B  " href="https://www.reddit.com/r/anime/wiki/amas" role="listitem" target="_blank" rel="noopener nofollow ugc">AMAs</a>-->
-<!--                <a class="_1p4TpHzWWRAkGYYw9_jU-B  " href="https://www.reddit.com/r/anime/wiki/events" role="listitem" target="_blank" rel="noopener nofollow ugc">Events</a>-->
-<!--                <a class="_1p4TpHzWWRAkGYYw9_jU-B  " href="https://www.reddit.com/r/anime/wiki/rewatches" role="listitem" target="_blank" rel="noopener nofollow ugc">Rewatches</a>-->
-<!--                <a class="_1p4TpHzWWRAkGYYw9_jU-B  " href="https://www.reddit.com/r/anime/wiki/recommendations" role="listitem" target="_blank" rel="noopener nofollow ugc">Recommendations</a>-->
-<!--                <a class="_1p4TpHzWWRAkGYYw9_jU-B  " href="https://www.reddit.com/r/anime/wiki/related_subreddits" role="listitem" target="_blank" rel="noopener nofollow ugc">Related Subreddits</a>-->
-<!--                <a class="_1p4TpHzWWRAkGYYw9_jU-B  " href="https://www.reddit.com/r/anime/wiki/related_sites" role="listitem" target="_blank" rel="noopener nofollow ugc">Related Websites</a>-->
-<!--              </div>-->
-<!--            </div>-->
-<!--              <a class="_1O30sSXmfkKMRZqSaESf0S  uGdFXCHH-nwVp4gU3UaTw" href="https://old.reddit.com/r/anime/comments/id248i/a_quickstart_guide_to_ranime/" rel="noopener nofollow ugc" target="_blank">A Guide to /r/Anime</a>-->
-<!--              <a class="_1O30sSXmfkKMRZqSaESf0S  uGdFXCHH-nwVp4gU3UaTw" href="https://old.reddit.com/r/anime/" rel="noopener nofollow ugc" target="_blank">Old Reddit</a>-->
-<!--            </div>-->
-<!--          </div>-->
-<!--        </div>-->
+        <!--        <div class="_1gVVmSnHZpkUgVShsn7-ua _15Pk_bZ2XZNa9zBvnxq6HX" style="position:static;background:inherit">-->
+        <!--          <div class="_1_TJAX-8zAT3vVN1Iz7cys" style="max-width:1200px">-->
+        <!--            <div>-->
+        <!--              <a class="_1O30sSXmfkKMRZqSaESf0S _1YpJV_aDQqujwuofx9-eAX uGdFXCHH-nwVp4gU3UaTw" href="/r/anime/">-->
+        <!--                Posts-->
+        <!--              </a>-->
+        <!--              <a class="_1O30sSXmfkKMRZqSaESf0S   jU3ijmuG8CyRDQhPOHdw4" href="/r/anime/predictions/">-->
+        <!--                Predictions-->
+        <!--              </a>-->
+        <!--              <a class="_1O30sSXmfkKMRZqSaESf0S  uGdFXCHH-nwVp4gU3UaTw" href="https://www.reddit.com/r/anime/wiki/rules" rel="noopener nofollow ugc" target="_blank">-->
+        <!--                Rules-->
+        <!--              </a>-->
+        <!--              <div class="hcJJEc0gVBKH5pWCFgdET">-->
+        <!--                <div class="_2wtKbmW1aPrT3MyHoaupQh  uGdFXCHH-nwVp4gU3UaTw">-->
+        <!--                  <span>-->
+        <!--                    Megathreads-->
+        <!--                  </span>-->
+        <!--                  <svg class="XHbKeEqnW58ib9mTN6jnS u_kypUXmB-k1A5TcC8MI9 _3u_CcXw7slod9vNJKIlYvx" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">-->
+        <!--                    <path d="M14.17,9.35,10,13.53,5.83,9.35a.5.5,0,0,1,.35-.85h7.64a.5.5,0,0,1,.35.85"></path>-->
+        <!--                  </svg>-->
+        <!--                </div>-->
+        <!--                <div class="_1T423RClx-mTPxfuiCw4UN " aria-hidden="true" role="list">-->
+        <!--                  <a class="_1p4TpHzWWRAkGYYw9_jU-B  " href="https://redd.it/qaavyj" role="listitem" target="_blank" rel="noopener nofollow ugc">Merch Mondays</a>-->
+        <!--                  <a class="_1p4TpHzWWRAkGYYw9_jU-B  " href="https://redd.it/qazc14" role="listitem" target="_blank" rel="noopener nofollow ugc">Recommendation Tues</a>-->
+        <!--                  <a class="_1p4TpHzWWRAkGYYw9_jU-B  " href="https://redd.it/q7nwyv" role="listitem" target="_blank" rel="noopener nofollow ugc">Thursday Anime Disc</a>-->
+        <!--                  <a class="_1p4TpHzWWRAkGYYw9_jU-B  " href="https://redd.it/q8c182" role="listitem" target="_blank" rel="noopener nofollow ugc">Casual Disc Fridays</a>-->
+        <!--                  <a class="_1p4TpHzWWRAkGYYw9_jU-B  " href="https://redd.it/q90mkm" role="listitem" target="_blank" rel="noopener nofollow ugc">Misc Anime Questions</a>-->
+        <!--                  <a class="_1p4TpHzWWRAkGYYw9_jU-B  " href="https://redd.it/q9noqt" role="listitem" target="_blank" rel="noopener nofollow ugc">Weekly Roundup</a>-->
+        <!--                  <a class="_1p4TpHzWWRAkGYYw9_jU-B  " href="https://redd.it/q06gp1" role="listitem" target="_blank" rel="noopener nofollow ugc">Monthly Meta Thread</a>-->
+        <!--                </div></div><div class="hcJJEc0gVBKH5pWCFgdET"><div class="_2wtKbmW1aPrT3MyHoaupQh  uGdFXCHH-nwVp4gU3UaTw">-->
+        <!--              <span>Wiki &amp; Watch Orders</span>-->
+        <!--              <svg class="XHbKeEqnW58ib9mTN6jnS u_kypUXmB-k1A5TcC8MI9 _3u_CcXw7slod9vNJKIlYvx" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">-->
+        <!--                <path d="M14.17,9.35,10,13.53,5.83,9.35a.5.5,0,0,1,.35-.85h7.64a.5.5,0,0,1,.35.85"></path>-->
+        <!--              </svg>-->
+        <!--            </div>-->
+        <!--              <div class="_1T423RClx-mTPxfuiCw4UN " aria-hidden="true" role="list"><a class="_1p4TpHzWWRAkGYYw9_jU-B  " href="https://www.reddit.com/r/anime/wiki/watch_order" role="listitem" target="_blank" rel="noopener nofollow ugc">Anime Watch Orders</a>-->
+        <!--                <a class="_1p4TpHzWWRAkGYYw9_jU-B  " href="https://reddit.com/r/anime/wiki" role="listitem" target="_blank" rel="noopener nofollow ugc">Index</a>-->
+        <!--                <a class="_1p4TpHzWWRAkGYYw9_jU-B  " href="https://reddit.com/r/anime/w/faaq" role="listitem" target="_blank" rel="noopener nofollow ugc">FAAQ</a>-->
+        <!--                <a class="_1p4TpHzWWRAkGYYw9_jU-B  " href="https://www.reddit.com/r/anime/wiki/mods" role="listitem" target="_blank" rel="noopener nofollow ugc">Mods</a>-->
+        <!--                <a class="_1p4TpHzWWRAkGYYw9_jU-B  " href="https://www.reddit.com/r/anime/wiki/amas" role="listitem" target="_blank" rel="noopener nofollow ugc">AMAs</a>-->
+        <!--                <a class="_1p4TpHzWWRAkGYYw9_jU-B  " href="https://www.reddit.com/r/anime/wiki/events" role="listitem" target="_blank" rel="noopener nofollow ugc">Events</a>-->
+        <!--                <a class="_1p4TpHzWWRAkGYYw9_jU-B  " href="https://www.reddit.com/r/anime/wiki/rewatches" role="listitem" target="_blank" rel="noopener nofollow ugc">Rewatches</a>-->
+        <!--                <a class="_1p4TpHzWWRAkGYYw9_jU-B  " href="https://www.reddit.com/r/anime/wiki/recommendations" role="listitem" target="_blank" rel="noopener nofollow ugc">Recommendations</a>-->
+        <!--                <a class="_1p4TpHzWWRAkGYYw9_jU-B  " href="https://www.reddit.com/r/anime/wiki/related_subreddits" role="listitem" target="_blank" rel="noopener nofollow ugc">Related Subreddits</a>-->
+        <!--                <a class="_1p4TpHzWWRAkGYYw9_jU-B  " href="https://www.reddit.com/r/anime/wiki/related_sites" role="listitem" target="_blank" rel="noopener nofollow ugc">Related Websites</a>-->
+        <!--              </div>-->
+        <!--            </div>-->
+        <!--              <a class="_1O30sSXmfkKMRZqSaESf0S  uGdFXCHH-nwVp4gU3UaTw" href="https://old.reddit.com/r/anime/comments/id248i/a_quickstart_guide_to_ranime/" rel="noopener nofollow ugc" target="_blank">A Guide to /r/Anime</a>-->
+        <!--              <a class="_1O30sSXmfkKMRZqSaESf0S  uGdFXCHH-nwVp4gU3UaTw" href="https://old.reddit.com/r/anime/" rel="noopener nofollow ugc" target="_blank">Old Reddit</a>-->
+        <!--            </div>-->
+        <!--          </div>-->
+        <!--        </div>-->
       </div>
       <div class="main_content">
         <div v-if="!ISPHONE" class="main_left">
@@ -143,7 +142,7 @@
           >
             <div
                 v-if="!ISPHONE"
-                style="min-width: 300px; padding-top: 0px"
+                style="min-width: 300px; padding-top: 0px;display: block; height: 100%;"
                 class="grid-content bg-purple content-right"
             >
               <RightCom
@@ -305,7 +304,7 @@
         let conHeight = self.$refs.container.clientHeight;
         // 变量scrollHeight是滚动条的总高度
         let scrollHeight = self.$refs.container.scrollHeight - 4;
-         console.log("距顶部" + scrollTop + "可视区高度" + conHeight + "滚动条总高度" + scrollHeight);
+        console.log("距顶部" + scrollTop + "可视区高度" + conHeight + "滚动条总高度" + scrollHeight);
         // console.log(conTop,conHeight,scrollHeight)
         if (
           conTop + conHeight >= scrollHeight
@@ -366,6 +365,38 @@
       this.load();
     },
     methods: {
+      inout(v){
+        if(this.$store.state.user.islogin){
+          if(v==1){
+            // 加入
+            api.joinForum({forumId: this.params.forumId}).then(res=>{
+              if(res.success){
+                this.$message({
+                  message: '加入成功',
+                  type: 'success',
+                  offset: 20
+                });
+                this.forumInfo.joined = true;
+                // this.getForumInfo()
+              }
+            })
+          }else if(v==2){
+            api.leaveForum({forumId: this.params.forumId}).then(res=>{
+              if(res.success){
+                this.$message({
+                  message: '退出成功',
+                  type: 'success',
+                  offset: 20
+                });
+                this.forumInfo.joined = false;
+                // this.getForumInfo()
+              }
+            })
+          }
+        }else{
+          this.showLogin('login')
+        }
+      },
       doTagCount(item){
         let count;
         try{
@@ -524,8 +555,9 @@
 </script>
 <style lang="scss" scoped>
   .fixed_r{
-    position: sticky;
-    top: 50px;
+    position: relative;
+    display: block;
+    height: 100%;
   }
   .content-right{
     top: 0px;
@@ -668,32 +700,32 @@
 
   }
   ._2yYPPW47QxD4lFQTKpfpLQ {
-    color: var(--newRedditTheme-bodyText);
-    -ms-flex: 1;
-    flex: 1;
+    /*color: var(--newRedditTheme-bodyText);*/
+    /*-ms-flex: 1;*/
+    /*flex: 1;*/
     font-size: 28px;
     font-weight: 700;
-    line-height: 32px;
-    overflow: hidden;
+    /*overflow: hidden;*/
     padding: 0 2px 4px 0;
-    text-overflow: ellipsis;
-    width: 100%;
+    /*text-overflow: ellipsis;*/
+    /*display: inline-block;*/
   }
   ._33aRtz9JtW0dIrBNKFAl0y {
     font-size: 14px;
     font-weight: 500;
     line-height: 18px;
+    padding-top: 5px;
     color: var(--newRedditTheme-metaText);
   }
 
   ._1Q_zPN5YtTLQVG72WhRuf3 {
-    width: 96px;
-    margin: 0;
-    padding: 0;
-    border: 0;
-    font-size: 100%;
-    font: inherit;
-    vertical-align: baseline;
+    /*width: 96px;*/
+    /*margin: 0;*/
+    /*padding: 0;*/
+    /*border: 0;*/
+    /*font-size: 100%;*/
+    /*font: inherit;*/
+    /*vertical-align: baseline;*/
   }
   ._1cAYKT6f3GM-_aZei--pxM {
     margin-left: 8px;
@@ -722,18 +754,8 @@
     margin: 0 auto;
     min-width: 260px;
   }
-  ._1LHxa-yaHJwrPK8kuyv_Y4 ._31L3r0EWsU0weoMZvEJcUA, ._1LHxa-yaHJwrPK8kuyv_Y4:hover ._11Zy7Yp4S1ZArNqhUQ0jZW {
-    display: block;
-  }
-  ._1LHxa-yaHJwrPK8kuyv_Y4 ._31L3r0EWsU0weoMZvEJcUA, ._1LHxa-yaHJwrPK8kuyv_Y4:hover ._11Zy7Yp4S1ZArNqhUQ0jZW {
-    display: block;
-  }
-  ._2tU8R9NTqhvBrhoNAXWWcP {
-    position: relative;
-    border: 1px solid var(--newCommunityTheme-button);
-    color: var(--newCommunityTheme-button);
-    fill: var(--newCommunityTheme-button);
-  }
+
+
   div._15Pk_bZ2XZNa9zBvnxq6HX {
     background: var(--newRedditTheme-body);
     position: static;
@@ -761,5 +783,12 @@
   ._1_TJAX-8zAT3vVN1Iz7cys {
     padding: 0 16px;
   }
+
+
+
+  ._2iuoyPiKHN3kfOoeIQalDT {
+
+  }
+
 
 </style>
