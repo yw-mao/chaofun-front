@@ -152,6 +152,7 @@
                       @change="changeBox($event, it)"
                       :label="it.id"
                       :value="it.name"
+                      style="width: 100%"
                       >{{ it.name }}</el-checkbox
                     >
                   </div>
@@ -182,6 +183,7 @@
                     <el-radio
                       :label="it.id"
                       :value="it.name"
+                      style="width: 100%"
                       >{{ it.name }}</el-radio
                     >
                   </div>
@@ -670,6 +672,7 @@ h1 {
   padding: 20px 10px;
   font-size: 13px;
   .k {
+    width: 100%;
     &:hover {
       background: #fff;
       cursor: pointer;
