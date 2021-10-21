@@ -706,7 +706,6 @@
     font-size: 28px;
     font-weight: 700;
     /*overflow: hidden;*/
-    padding: 0 2px 4px 0;
     /*text-overflow: ellipsis;*/
     /*display: inline-block;*/
   }
