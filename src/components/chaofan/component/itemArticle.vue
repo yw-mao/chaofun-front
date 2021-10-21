@@ -17,10 +17,12 @@
         {{item.title}}
       </div> -->
       <div @click.stop="" class="detail_line" id="detail_line" :style="{width: ISPHONE ? clientWidth-24+'px' : '100%'}">
+        <div v-html="item.article.replace(/\n/g, '')"></div>
+
         <!-- <viewer :trigger="item.article"> -->
-        <div v-for="(_item,ins) in item.article.split('\n')" :key="ins">
+        <!-- <div v-for="(_item,ins) in item.article.split('\n')" :key="ins">
           <div v-html="_item"></div>
-        </div>
+        </div> -->
         <!-- </viewer> -->
       </div>
     </div>
@@ -275,6 +277,91 @@ export default {
       white-space: pre-wrap;
       background-color: transparent;
     }
+  }
+
+  table {
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    margin: 12px 0 14px;
+    color: #222;
+    width: auto;
+    border-collapse: collapse;
+    box-sizing: border-box;
+    td,
+    th {
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      padding: 5px 14px 5px 12px;
+      height: 32px;
+    }
+    th {
+      background-color: #555;
+      font-weight: 300;
+      color: #fff;
+      padding-top: 6px;
+      p {
+        margin: 0;
+        color: #fff;
+      }
+    }
+  }
+  dir,
+  menu,
+  ol,
+  ul {
+    display: block;
+    list-style-type: none;
+    padding-left: 24px;
+    margin: 6px 0 10px;
+    color: #222;
+  }
+  ol {
+    list-style-type: none;
+    counter-reset: li;
+    li {
+      counter-increment: li;
+    }
+  }
+  
+  ol > li:before,
+  ul > li:before {
+    display: inline-block;
+    position: absolute;
+  }
+  ul > li:before {
+    content: "";
+    margin-top: 11px;
+    margin-left: -17px;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background-color: #ccc;
+  }
+  ol > li:before {
+    content: "." counter(li);
+    margin-left: -28px;
+    width: 24px;
+    line-height: 28px;
+    text-align: right;
+    direction: rtl;
+    color: #aaa;
+  }
+  ol ol,
+  ol ul,
+  ul ol,
+  ul ul {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+  }
+  ol li,
+  ul li {
+    position: relative;
+  }
+  ol p,
+  ul p {
+    margin: 0;
+  }
+  hr {
+    border-top: 1px solid #eee;
+    margin: 16px 0;
   }
 }
 </style>
