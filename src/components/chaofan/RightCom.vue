@@ -1,7 +1,7 @@
 <template>
   <div id="rright" class="rright">
     <apply-forum :dialogTableVisible="showApplyForum" @hideFunc="hideApplyForum"></apply-forum>
-    <div v-if="!ISPHONE" class="right_content">
+    <div v-if="!ISPHONE" ref="right_content" class="right_content">
       <div v-if="forumInfo" class="asa">
         <div class="forum_con">
           <div v-if="forumInfo.admin" @click="manage" style="position: absolute; right: 20px;" class="forummanage">管理</div>
@@ -24,7 +24,7 @@
           </div>
         </div>
       </div>
-      <div :class="['admin',sticky?'sticky_class':'',showAllAdmin?'sticky_nor':'']">
+      <div :class="['admin']">
         <div class="admin_header admin_titles"> 
           版主  
           <span class="iconsss" v-if="sticky">
@@ -32,23 +32,19 @@
           </span>
         </div>
         
-        <div v-if="forumAdmin.length" v-for="(item,index) in forumAdmin" :key="index" class="admin_item">
+        <div v-for="(item,index) in forumAdmin" :key="index" class="admin_item">
           <span @click="toUser(item)" class="admin_name">{{item.userName}}</span>
         </div>
         <el-button v-if="!forumAdmin.length" @click="showApplyMod = true">暂无版主 申请版主</el-button>
         <apply-mod :dialogTableVisible="showApplyMod" :forum-id="forumId" @hideFunc="hideApplyMod" ></apply-mod>
       </div>
-      <div  class="tologin">
+      <div class="tologin">
         <div @click="reload" class="body-right">
           刷新
         </div>
         <div v-if="!islogin" @click="gotologin" class="body-right">
           马上登录
         </div>
-        <!-- <div @click="toUrl({name: 'lists'})" class="body-right">
-          全部板块
-          <i style="float:right;color:#999;" class="el-icon-arrow-right"></i>
-        </div> -->
         <div @click="gotoSecret" class="body-right">
           秘密花园
           <span data-v-265cb265="" style="background: red; color: rgb(255, 255, 255); font-size: 10px; vertical-align: middle; height: 18px; line-height: 18px; padding: 0px 4px; border-radius: 4px;">Hot</span>
@@ -83,14 +79,13 @@
             </div>
           </div>
         </div>
-
       </div>
       <div class="chatbtn">
         <div class=""></div>
       </div>
       
       <!-- v-if="$store.state.user.userInfo&&($store.state.user.userInfo.userId==1||$store.state.user.userInfo.userId==2||$store.state.user.userInfo.userId==146)" -->
-      <div class="help_con">
+      <div :class="['help_con',sticky?'help_con_fixed':'']">
         <div class="help_item">
           <div @click="toUrl({path: '/help/forumIntro'})">帮助文档</div>
         </div>
@@ -140,6 +135,7 @@
         },
         sticky: false,
         showAllAdmin: false,
+        rightComHeight: '',
       }
     },
     props: {
@@ -171,10 +167,15 @@
         this.gamemodule = true
       }
       this.modlist();
+      
       if(this.$route.params.forumId){
         this.$(".infinite-list")[0].addEventListener('scroll',()=>{
+          if(!this.rightComHeight){
+            this.rightComHeight = parseInt(window.getComputedStyle(document.getElementById('rright')).height);
+            console.log(this.rightComHeight)
+          }
           let top = this.$(".infinite-list").scrollTop();
-          if(top>150){
+          if(top>this.rightComHeight+30){
             this.sticky = true;
           }else{
             this.sticky = false;
@@ -332,6 +333,8 @@
     margin-top: 10px;
     padding: 14px 0;
     background: #fff;
+    position: sticky;
+    top: 1200px;
     .help_item{
       padding: 8px 14px;
       display: flex;
@@ -344,6 +347,10 @@
         }
       }
     }
+  }
+  .help_con_fixed{
+    position: fixed;
+    top: 50px;
   }
   .advertise{
     margin: 30px 0;
