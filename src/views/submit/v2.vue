@@ -3,7 +3,7 @@
     <el-main>
       <el-container class="section-submit-header">
         <el-col>发帖</el-col>
-        <el-button v-if="type === 'article'" type="text">草稿箱 <span>{{drafts}}</span></el-button>
+        <DraftSelector ref="draft" v-if="type === 'article'" />
       </el-container>
 
       <el-container>
@@ -176,7 +176,7 @@
           </div>
           <div class="postbox-buttons">
             <el-button type="primary" round @click="submit" :loading="loading">发 布</el-button>
-            <el-button v-if="type === 'article'" round>保存草稿箱</el-button>
+            <el-button v-if="type === 'article'" @click="saveDraft"  round>保存草稿箱</el-button>
           </div>
           <div class="postbox-rules">
             <p><i class="el-icon-warning-outline" /> 严禁发布色情、暴恐、赌博及其他违反网络安全法的内容，或涉嫌隐私或未经授权的私人图片及信息，如违规发布，请自行删除或管理员强制删除。 </p>
@@ -237,6 +237,8 @@
   import TagSelector from '@/components/Submit/TagSelector'
   import CollectionSelector from '@/components/Submit/CollectionSelector'
   import Uploader from '@/components/Submit/Uploader'
+  import DraftSelector from '@/components/Submit/DraftSelector'
+
   import {
     getForumInfo,
     searchForum,
@@ -256,6 +258,7 @@
       TagSelector,
       CollectionSelector,
       Uploader,
+      DraftSelector,
     },
     data() {
       return {
@@ -286,7 +289,6 @@
         },
         forums: [],
         loading: false,
-        drafts: 0, // 草稿箱数量
         filedata: {}, // 文件参数
         loading: false, // 发布中
       }
@@ -442,8 +444,15 @@
         }
         this.loading = false;
       },
+      // 保存草稿箱
+      saveDraft() {
+        const { post } = this
+        const content = this.$refs.editor.get()
+        this.$refs.draft.saveDraft(post.title, content)
+      },
       // 返回旧版
       gotoOld() {
+
         this.toPost(this.forum.id, this.forum.name, this.forum.imageName, false)
       }
     }
@@ -464,26 +473,6 @@
       font-size: 18px;
       font-weight: 500;
       line-height: 34px;
-    }
-    .el-button {
-      position: relative;
-      color: #606266;
-      font-size: 12px;
-      font-weight: 700;
-      letter-spacing: .5px;
-      line-height: 24px;
-      text-transform: uppercase;
-      margin-left: 10px;
-      padding: 4px;
-      span {
-        font-weight: 400;
-        line-height: 18px;
-        background: #606266;
-        border-radius: 2px;
-        color: #fff;
-        margin-left: 4px;
-        padding: 1px 3px;
-      }
     }
   }
   .section-submit-form {
