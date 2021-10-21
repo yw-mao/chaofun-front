@@ -226,6 +226,7 @@
           </el-col>
         </el-row>
       </el-card>
+      <el-button class="go-to-old-btn" type="primary" round @click="gotoOld">返回旧版</el-button>
     </el-aside>
   </el-container>
 </template>
@@ -347,6 +348,10 @@
       // === 投票相关 ===
       // 新增选项
       addOption() {
+        if (this.post.options.length > 5) {
+          this.$message.error('最多支持6个选项！');
+          return;
+        }
         this.post.options.push({
           optionName: '',
         });
@@ -437,6 +442,10 @@
         }
         this.loading = false;
       },
+      // 返回旧版
+      gotoOld() {
+        this.toPost(this.forum.id, this.forum.name, this.forum.imageName, false)
+      }
     }
   }
 </script>
@@ -659,7 +668,7 @@
       display: flex;
       flex-direction: row;
       border: 1px solid #DCDFE6;
-      margin: -23px 0 22px;
+      margin: 0 0 22px;
       padding: 8px 0;
       .vote-control {
         flex-grow: 1;
@@ -849,6 +858,12 @@
   .el-aside {
     background: none;
     padding: 0;
+    position: relative;
+    .go-to-old-btn {
+      position: absolute;
+      top: 30px;
+      right: 10px;
+    }
     .el-card {
       margin-top: 15px;
     }
