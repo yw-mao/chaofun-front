@@ -3,7 +3,7 @@
     <el-main>
       <el-container class="section-submit-header">
         <el-col>发帖</el-col>
-        <DraftSelector ref="draft" v-if="type === 'article'" />
+        <DraftSelector @setDraftContent="setDraftContent" ref="draft" v-if="type === 'article'" />
       </el-container>
 
       <el-container>
@@ -448,13 +448,20 @@
       saveDraft() {
         const { post } = this
         const content = this.$refs.editor.get()
-        this.$refs.draft.saveDraft(post.title, content)
+        this.$refs.draft.saveDraft(post.title, content, this.forum.id, this.forum.name)
       },
       // 返回旧版
       gotoOld() {
 
         this.toPost(this.forum.id, this.forum.name, this.forum.imageName, false)
-      }
+      },
+      // 设置草稿内容
+      setDraftContent(draftArticle) {
+        this.post.title = draftArticle.t;
+        this.post.content = draftArticle.c;
+        this.$refs.editor.set(draftArticle.c);
+        this.$refs.form.clearValidate();
+      },
     }
   }
 </script>
