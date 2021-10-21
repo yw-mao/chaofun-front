@@ -175,7 +175,7 @@
             console.log(this.rightComHeight)
           }
           let top = this.$(".infinite-list").scrollTop();
-          if(top>this.rightComHeight+30){
+          if(top>this.rightComHeight+60){
             this.sticky = true;
           }else{
             this.sticky = false;
