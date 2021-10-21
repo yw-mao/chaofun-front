@@ -185,12 +185,14 @@
           }});
       },
       gotoSubmit2(){// 发帖
-        console.log(this.forumInfo)
-        if(this.$store.state.user.islogin){
-          this.$router.push({path: '/submit',query:{id: this.forumInfo.id,name: this.forumInfo.name}})
-        }else{
-          this.showLogin('login')
-        }
+        this.toPost(this.forumInfo.id,this.forumInfo.name,this.forumInfo.imageName)
+
+        // console.log(this.forumInfo)
+        // if(this.$store.state.user.islogin){
+        //   this.$router.push({path: '/submit',query:{id: this.forumInfo.id,name: this.forumInfo.name}})
+        // }else{
+        //   this.showLogin('login')
+        // }
       },
       sets(name,v){
         this[name] = v;

@@ -226,6 +226,7 @@
           </el-col>
         </el-row>
       </el-card>
+      <el-button class="go-to-old-btn" type="primary" round @click="gotoOld">返回旧版</el-button>
     </el-aside>
   </el-container>
 </template>
@@ -441,6 +442,10 @@
         }
         this.loading = false;
       },
+      // 返回旧版
+      gotoOld() {
+        this.toPost(this.forum.id, this.forum.name, this.forum.imageName, false)
+      }
     }
   }
 </script>
@@ -853,6 +858,12 @@
   .el-aside {
     background: none;
     padding: 0;
+    position: relative;
+    .go-to-old-btn {
+      position: absolute;
+      top: 30px;
+      right: 10px;
+    }
     .el-card {
       margin-top: 15px;
     }

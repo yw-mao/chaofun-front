@@ -640,11 +640,12 @@ export default {
       }});
     },
     gotoSubmit(){// 发帖
-      if(this.$store.state.user.islogin){
-        this.$router.push({path: '/submit',query:{id: this.forumInfo.id,name:this.forumInfo.name}})
-      }else{
-        this.showLogin('login')
-      }
+      this.post(this.forumInfo.id, this.forumInfo.name, this.forumInfo.imageName)
+      // if(this.$store.state.user.islogin){
+      //   this.$router.push({path: '/submit',query:{id: this.forumInfo.id,name:this.forumInfo.name}})
+      // }else{
+      //   this.showLogin('login')
+      // }
     },
     changes(){
       localStorage.setItem('chao.fun.timeline.order', this.params.order);

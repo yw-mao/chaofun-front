@@ -779,7 +779,6 @@
       },
       gotoV2() {
         const path = this.baseForm.forumId ? `${this.baseForm.forumId}/submit` : `/f/submit`;
-        console.log(path, 'path');
         this.$router.push({ path });
       },
     }

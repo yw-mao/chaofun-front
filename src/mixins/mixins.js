@@ -47,8 +47,17 @@ export default {
     // console.log(document.getElementsByClassName('nav_con').clientHeight)
   },
   methods: {
-    toPost(id, name, icon) {// 发帖
+    toPost(id, name, icon, isNew = true) { // 发帖
+      // TODO: 移除旧版
       if (this.$store.state.user.islogin) {
+        console.log('ssss');
+        if (isNew) {
+          // 新版
+          const path = id ? `/f/${id}/submit` : '/f/submit';
+          this.$router.push({ path });
+          return;
+        }
+        // 旧版
         this.$router.push({ path: '/submit', query: { id: id, name: name, icon: icon } })
       } else {
         this.$login({
