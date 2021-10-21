@@ -347,6 +347,10 @@
       // === 投票相关 ===
       // 新增选项
       addOption() {
+        if (this.post.options.length > 5) {
+          this.$message.error('最多支持6个选项！');
+          return;
+        }
         this.post.options.push({
           optionName: '',
         });
@@ -659,7 +663,7 @@
       display: flex;
       flex-direction: row;
       border: 1px solid #DCDFE6;
-      margin: -23px 0 22px;
+      margin: 0 0 22px;
       padding: 8px 0;
       .vote-control {
         flex-grow: 1;
