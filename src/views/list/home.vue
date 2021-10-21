@@ -4,7 +4,7 @@
        ref="container"
        :style="{ height: scrollHeight + 'px' }">
     <div>
-      <div style="padding-top: 50px;height:230px; display: block; background-color: white;">
+      <div v-if="!ISPHONE" style="padding-top: 50px;height:230px; display: block; background-color: white;">
         <div style="height: 80px; background-color: #3BA8FF"></div>
         <div class="_3JDs8KEQIXSMn1bTF2ZqJ_" >
           <div class="QscnL9OySMkHhGudEvEya">
@@ -82,6 +82,7 @@
         <!--          </div>-->
         <!--        </div>-->
       </div>
+      <div v-else style="padding-top: 50px;"></div>
       <div class="main_content">
         <div v-if="!ISPHONE" class="main_left">
           <div
