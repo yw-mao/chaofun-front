@@ -1,12 +1,16 @@
 <template>
-  <div class="editor-wrapper">
+  <div
+    class="editor-wrapper"
+    :class="{
+      fullscreen: isFullscreen
+    }"
+  >
     <editor
       v-loading="loading"
       :initialValue="content"
       initialEditType="wysiwyg"
       :options="editorOptions"
       @change="onEditorChange"
-      height="auto"
       ref="editor"
     />
     <el-button class="switch-mode" @click="switchMode" round>
@@ -33,11 +37,17 @@ export default {
     return {
       content: "",
       loading: false,
+      isFullscreen: false,
       editType: 'wysiwyg',
       editorOptions: {
         language: 'zh-CN',
         hideModeSwitch: true,
         toolbarItems: [
+          [{
+            el: this.createFullscreenButton(),
+            command: 'full-screen',
+            tooltip: '全屏'
+          }],
           ['bold', 'italic', 'link', 'strike', 'code'],
           ['heading', 'ul', 'ol', 'quote', 'codeblock'],
           ['table', 'image'],
@@ -84,6 +94,21 @@ export default {
       }
       return `${this.imgOrigin}${result.data}`;
     },
+    // 创建全屏按钮
+    createFullscreenButton() {
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.className = 'toastui-editor-toolbar-icons fullscreen-icon';
+      button.style.backgroundImage = 'none';
+      button.style.margin = '0';
+      button.innerHTML = `<i class="el-icon-monitor" />`;
+      button.addEventListener('click', () => {
+        // toggleEditorFullScreen(this.$refs.editor)
+        this.isFullscreen = !this.isFullscreen;
+      });
+
+      return button;
+    }
   }
 }
 </script>
@@ -122,7 +147,6 @@ export default {
     position: relative;
     bottom: 0px;
     top: 0px;
-    box-sizing: content-box;
   }
 }
 .toastui-editor-popup-body {
@@ -131,6 +155,32 @@ export default {
   }
   .toastui-editor-button-container {
     line-height: 32px;
+  }
+}
+.toastui-editor-toolbar-divider {
+  margin: 14px 4px;
+}
+.fullscreen {
+  height: 100vh !important;
+  width: 100vw;
+  position: fixed;
+  z-index: 9999;
+  top: 0px;
+  left: 0px;
+  background-color: white;
+  .switch-mode {
+    z-index: 99999;
+  }
+  > div {
+    height: 100vh !important;
+  }
+}
+.fullscreen-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  i {
+    font-size: 20px;
   }
 }
 </style>

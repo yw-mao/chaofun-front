@@ -300,7 +300,13 @@
     methods: {
       forumSelectOnChange(forumId) {
         this.getForum();
-        // this.$router.push({ path: `/f/${forumId}/submit` });
+
+        // 静态替换路由
+        history.pushState(
+          {},
+          null,
+          `/f/${forumId}/submit`
+        )
       },
       async getForum() {
         if (this.forum.id) {
