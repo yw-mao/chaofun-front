@@ -5,24 +5,12 @@
       <div v-if="forumInfo" class="asa">
         <div class="forum_con">
           <div v-if="forumInfo.admin" @click="manage" style="position: absolute; right: 20px;" class="forummanage">管理</div>
-          <div class="fir">
-            <img :src="imgOrigin+forumInfo.imageName+'?x-oss-process=image/resize,h_80'" />
-            <div>{{forumInfo.name}}</div>
+          <div class="admin_header admin_titles" style="font-size: 18px">
+            板块信息
           </div>
           <div class="fensi">
-            <div>粉丝：{{forumInfo.followers}}</div>
-            <div>帖子：{{forumInfo.posts}}</div>
-          </div>
-          <div class="forum_desc">{{forumInfo.desc}}</div>
-          <div class="forum_add">
-
-            <el-button @click="inout(1)" v-if="!forumInfo.joined" type="primary" block>
-              加入板块
-            </el-button>
-            <el-button @click="inout(2)" v-else type="danger" onClick={outForum} block>
-              退出板块
-            </el-button>
-
+            <div class="_3XFx6CfPlg-4Usgxm0gK8R">粉丝：{{forumInfo.followers}}</div>
+            <div class="_3XFx6CfPlg-4Usgxm0gK8R">帖子：{{forumInfo.posts}}</div>
           </div>
           <div class="forum_add">
             <el-button @click="gotoSubmit2" type="primary" block>
@@ -41,9 +29,7 @@
           版主  
           <span class="iconsss" v-if="sticky">
             <i @click="toggle" :class="(showAllAdmin)?'el-icon-arrow-up':'el-icon-arrow-down'"></i>
-            
           </span>
-          
         </div>
         
         <div v-if="forumAdmin.length" v-for="(item,index) in forumAdmin" :key="index" class="admin_item">
@@ -346,7 +332,7 @@
     background-color: #999;
   }
   .rright{
-    max-height: calc(100vh - 114px);
+    // max-height: calc(100vh - 114px);
     padding: 10px;
     // background: rgb(241,241,241);
     overflow: hidden;
@@ -614,5 +600,13 @@
     &:hover{
       opacity: 1;
     }
+  }
+  .fensi {
+    font-size: 30px;
+  }
+  ._3XFx6CfPlg-4Usgxm0gK8R {
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 20px;
   }
 </style>

@@ -44,7 +44,8 @@ export default {
   // overflow: hidden;
   padding: 0px;
   box-sizing: border-box;
-  background:#f7f7f7;
+  background: #F0F2F5;
+  -webkit-font-smoothing: antialiased
 }
 @media screen and (max-width: 700px) {
   .app-main {
