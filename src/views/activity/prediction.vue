@@ -150,9 +150,9 @@ export default {
         });
       },
     getScore(){
-      this.predictionsTournamentId = this.$route.query.id
+      this.predictionsTournamentId = this.$route.params.id
       let params = {
-        predictionsTournamentId: this.$route.query.id
+        predictionsTournamentId: this.$route.params.id
       }
       api.checkJoin(params).then(res=>{
         if(!res.data){

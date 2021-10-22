@@ -494,6 +494,9 @@
         this.$refs.editor.set(draftArticle.c);
         this.$refs.form.clearValidate();
       },
+      unsupported() {
+        this.$toast('暂不支持，尽请期待')
+      }
     }
   }
 </script>
