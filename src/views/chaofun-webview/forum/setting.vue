@@ -136,7 +136,7 @@ export default {
           title: '标签管理',
           showHeader: true
         })      } catch (e) {
-        window.open(location.origin + '/webview/forum/userTag?forumId=' + this.forumId);
+        window.open(location.origin + '/webview/forum/user_tag?forumId=' + this.forumId);
       }
     },
 

@@ -43,7 +43,7 @@ routes = [
     hidden: true
   },
   {
-    path: '/webview/forum/userTag',
+    path: '/webview/forum/user_tag',
     component: () => import('@/views/chaofun-webview/forum/userTag'),
     name: 'forumUsertag',
     meta: { title: 'forumUsertag'},
