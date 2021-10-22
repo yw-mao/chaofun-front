@@ -3,7 +3,12 @@
     <el-main>
       <el-container class="section-submit-header">
         <el-col>发帖</el-col>
-        <DraftSelector @setDraftContent="setDraftContent" ref="draft" v-if="type === 'article'" />
+        <DraftSelector
+          @setDraftContent="setDraftContent"
+          ref="draft"
+          v-if="type === 'article'"
+          :draftId="draftId"
+        />
       </el-container>
 
       <el-container>
@@ -36,7 +41,7 @@
       </el-container>
       <el-form :model="post" ref="form">
         <div class="postbox">
-          <el-radio-group v-model="type" @change="$refs.form.clearValidate();$refs.title.focus();">
+          <el-radio-group v-model="type" @change="$refs.form.clearValidate();$refs.title.focus();draftId = null;">
             <el-radio-button label="image">
               <i class="el-icon-picture-outline"></i> 图片/视频
             </el-radio-button>
@@ -166,9 +171,9 @@
                   <span>匿 名</span>
                 </el-checkbox>
 
-                <TagSelector v-bind:forumId="post.forumId" v-model="post.tagId" />
+                <TagSelector ref="tag" v-bind:forumId="post.forumId" v-model="post.tagId" />
 
-                <CollectionSelector v-model="post.collectionId" />
+                <CollectionSelector ref="collection" v-model="post.collectionId" />
 
               </div>
             </el-row>
@@ -176,7 +181,9 @@
           </div>
           <div class="postbox-buttons">
             <el-button type="primary" round @click="submit" :loading="loading">发 布</el-button>
-            <el-button v-if="type === 'article'" @click="saveDraft"  round>保存草稿箱</el-button>
+            <el-button v-if="type === 'article'" @click="saveDraft" round>
+              {{draftId ? '更新草稿' : '保存草稿箱'}}
+            </el-button>
           </div>
           <div class="postbox-rules">
             <p><i class="el-icon-warning-outline" /> 严禁发布色情、暴恐、赌博及其他违反网络安全法的内容，或涉嫌隐私或未经授权的私人图片及信息，如违规发布，请自行删除或管理员强制删除。 </p>
@@ -291,6 +298,7 @@
         loading: false,
         filedata: {}, // 文件参数
         loading: false, // 发布中
+        draftId: null, // 草稿箱
       }
     },
     mounted() {
@@ -302,8 +310,8 @@
     beforeDestroy() {
     },
     methods: {
-      forumSelectOnChange(forumId) {
-        this.getForum();
+      async forumSelectOnChange(forumId) {
+        await this.getForum();
 
         // 静态替换路由
         history.pushState(
@@ -433,6 +441,11 @@
             return;
           }
           this.loading = false;
+          if (this.draftId) {
+            this.$refs.draft.removeDraft(this.draftId)
+          }
+          this.draftId = null; // 清空草稿箱
+
           this.$message.success('发布成功');
           setTimeout(() => {
             this.$router.push({ path: `/f/${post.forumId}` })
@@ -448,17 +461,36 @@
       saveDraft() {
         const { post } = this
         const content = this.$refs.editor.get()
-        this.$refs.draft.saveDraft(post.title, content, this.forum.id, this.forum.name)
+        if (this.draftId) {
+          this.$refs.draft.updateDraft(this.draftId, post.title, content, this.forum.id, this.forum.name, this.post.tagId, this.post.collectionId)
+        } else {
+          this.$refs.draft.saveDraft(post.title, content, this.forum.id, this.forum.name, this.post.tagId, this.post.collectionId)
+        }
       },
       // 返回旧版
       gotoOld() {
-
         this.toPost(this.forum.id, this.forum.name, this.forum.imageName, false)
       },
       // 设置草稿内容
-      setDraftContent(draftArticle) {
-        this.post.title = draftArticle.t;
-        this.post.content = draftArticle.c;
+      async setDraftContent(draftArticle) {
+        // 板块
+        if (draftArticle.f) {
+          this.forum.id = draftArticle.f
+          this.post.forumId = draftArticle.f
+          await this.forumSelectOnChange(draftArticle.f)
+        }
+
+        this.draftId = draftArticle.i
+        this.post.title = draftArticle.t
+        this.post.content = draftArticle.c
+        if (draftArticle.ti) {
+          this.post.tagId = draftArticle.ti;
+          this.$refs.tag.setTag(draftArticle.ti)
+        }
+        if (draftArticle.ci) {
+          this.post.collectionId = draftArticle.ci
+          this.$refs.collection.setCollection(draftArticle.ci)
+        }
         this.$refs.editor.set(draftArticle.c);
         this.$refs.form.clearValidate();
       },

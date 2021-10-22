@@ -90,8 +90,14 @@ export default {
     },
     // 修改Collection
     changeCollection(label) {
-      this.collection = this.collections.find(collection => collection.id === label);
+      this.collection = this.collections.find(collection => collection.id === label)
       this.$emit('input', label);
+    },
+    // 设置Collection Id
+    setCollection(label) {
+      this.collection = this.collections.find(collection => collection.id === label)
+      this.collectionId = label
+      this.dataCollectionId = label;
     },
     // 清除Collection
     clearCollection() {

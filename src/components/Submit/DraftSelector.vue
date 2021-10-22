@@ -16,7 +16,8 @@
             <i class="el-icon-tickets"></i>
           </div>
           <div class="draft-content">
-            <h2>{{item.t}}</h2>
+            <h2 v-if="draftId && draftId === item.i" class="editing">正在编辑：{{item.t}}</h2>
+            <h2 v-else>{{item.t}}</h2>
             <div class="draft-desc">
               <span v-if="item.n">{{item.n}}</span>
               <span class="seprate" v-if="item.n">·</span>
@@ -24,11 +25,15 @@
             </div>
           </div>
           <div class="draft-operation">
-            <el-button icon="el-icon-delete" @click="() => removeDraft(item.i)"></el-button>
+            <el-button icon="el-icon-delete" @click="() => {
+              removeDraft(item.i)
+              this.$toast('删除成功！')
+            }"></el-button>
           </div>
         </li>
       </ul>
       <span slot="footer" class="dialog-footer">
+        <em>草稿箱只会暂存在当前浏览器中！</em>
         <el-button @click="visible = false" round>关 闭</el-button>
       </span>
     </el-dialog>
@@ -44,6 +49,7 @@ export default ({
   props: {
     title: String,
     value: String,
+    draftId: String,
   },
   data() {
     return {
@@ -72,7 +78,7 @@ export default ({
       return [];
     },
     // 保存文章
-    saveDraft(title, content, forumId = 0, formuName = '') {
+    saveDraft(title, content, forumId = 0, formuName = '', tagId, collectionId) {
       this.drafts.push({
         i: nanoid(),
         f: forumId,
@@ -80,6 +86,8 @@ export default ({
         t: title,
         c: content,
         d: moment().unix(),
+        ti: tagId || 0,
+        ci: collectionId || 0,
       })
       const userId = this.$store.state.user.userInfo.userId
       if (!userId) {
@@ -90,7 +98,7 @@ export default ({
       this.$toast('保存草稿成功！')
     },
     // 更新文章
-    updateDraft(id, title, content, forumId = 0, formuName = '') {
+    updateDraft(id, title, content, forumId = 0, formuName = '', tagId, collectionId) {
       const index = this.drafts.findIndex(article => article.i === id);
       if (index === -1) {
         return false;
@@ -107,8 +115,11 @@ export default ({
         t: title,
         c: content,
         d: moment().unix(),
+        ti: tagId || 0,
+        ci: collectionId || 0,
       }
       localStorage.setItem(key, JSON.stringify(this.drafts))
+      this.$toast('更新草稿成功！')
     },
     // 移除草稿
     removeDraft(id) {
@@ -119,7 +130,6 @@ export default ({
       const key = `draft:${userId}:article`
       this.drafts = this.drafts.filter(article => article.i !== id)
       localStorage.setItem(key, JSON.stringify(this.drafts))
-      this.$toast('删除成功！')
     },
     // 设置父组件文章
     setContent(item) {
@@ -190,6 +200,10 @@ export default ({
   .el-dialog__footer {
     padding: 12px 16px;
     border-top: 1px solid #edeff1;
+    em {
+      font-style: normal;
+      color: #ff2d20;
+    }
     .el-button {
       padding-left: 16px;
       padding-right: 16px;
@@ -224,6 +238,9 @@ ul {
         padding-top: 3px;
         word-break: break-all;
         font-weight: normal;
+        &.editing {
+          font-weight: 700;
+        }
       }
       /deep/ .draft-desc {
         font-size: 12px;
