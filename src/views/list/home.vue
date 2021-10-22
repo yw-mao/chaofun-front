@@ -27,7 +27,7 @@
 
             </div>
           </div>
-          <div class="navTab">
+          <div v-if="GameInfo" class="navTab">
             <div @click="checkoutTab('post')" :class="['tab_item',tab=='post'?'tab_item_act':'']">帖子</div>
             <div @click="checkoutTab('prediction')" :class="['tab_item',tab=='prediction'?'tab_item_act':'']">竞猜</div>
           </div>
@@ -107,7 +107,7 @@
         </div>
 
       </div>
-      <prediction :isForumPage="true" :GameInfo="GameInfo" :forumId="params.forumId" v-show="tab=='prediction'"></prediction>
+      <prediction v-if="GameInfo" :isForumPage="true" :GameInfo="GameInfo" :forumId="params.forumId" v-show="tab=='prediction'"></prediction>
 
     </div>
     <fixedBottom></fixedBottom>
@@ -246,6 +246,7 @@
       }
     },
     mounted() {
+      this.getGameInfo();
       console.log(777)
       if (document.body.clientWidth < 700) {
         this.isPhone = true;
@@ -319,17 +320,23 @@
       // }
       this.params.forumId = this.$route.params.forumId;
 
+      if(this.$route.params.type=='predictions'){
+        this.tab = 'prediction'
+      }
 
       this.load();
     },
     methods: {
+      getGameInfo(){
+        api.predictionsGet({forumId: this.params.forumId}).then(res=>{
+          if(res.data){
+            this.GameInfo = res.data;
+          }
+        })
+      },
       checkoutTab(v){
         this.tab = v;
-        // api.predictionsGet({forumId: this.params.forumId}).then(res=>{
-        //   if(res.data){
-        //     this.GameInfo = res.data;
-        //   }
-        // })
+        
       },
       inout(v){
         if(this.$store.state.user.islogin){

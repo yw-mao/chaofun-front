@@ -140,12 +140,13 @@ export default {
         //需要执行的代码
       this.getScore()
     })
+    
   },
   created() {
     this.params.forumId = this.$route.params.forumId || this.forumId;
     this.getList();
-    this.getTotalRank();
-    this.getScore()
+    
+    
   },
   methods: {
     joinConfirm(item, index) {
@@ -161,9 +162,12 @@ export default {
         });
       },
     getScore(){
-      this.predictionsTournamentId = this.$route.params.id
+      if(this.$route.params.id){
+        this.predictionsTournamentId = this.$route.params.id
+      }
+      
       let params = {
-        predictionsTournamentId: this.$route.params.id
+        predictionsTournamentId: this.predictionsTournamentId
       }
       api.checkJoin(params).then(res=>{
         if(!res.data){
@@ -176,7 +180,7 @@ export default {
     },
     getTotalRank(){
       let params = {
-            predictionsTournamentId: '1'
+            predictionsTournamentId: this.predictionsTournamentId
         }
       api.getTotalRank(params).then(res=>{
         this.ranks = res.data
@@ -194,9 +198,12 @@ export default {
         api.predictionsGet({forumId: this.params.forumId}).then(res=>{
           if(res.data){
             this.GameInfo = res.data;
+            this.predictionsTournamentId = res.data.id;
             let params = {
                 predictionsTournamentId: res.data.id,
             }
+            this.getScore();
+            this.getTotalRank();
             api.predictionsTournament(params).then(res=>{
                 if (res.data.marker && res.data.length != 0) {
                     this.ifcanget = true;

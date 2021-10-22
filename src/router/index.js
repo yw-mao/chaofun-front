@@ -187,9 +187,16 @@ export const constantRoutes = [
         hidden: true
       },
       {
-        path: '/f/:forumId',
+        path: `/f/:forumId`,
         component: () => import('@/views/list/home'),
         name: '/f/:forumId',
+        meta: { title: '',keepAlive: true,},
+        hidden: true
+      },
+      {
+        path: `/f/:forumId/:type`,
+        component: () => import('@/views/list/home'),
+        name: '/f/:forumId/:type',
         meta: { title: '',keepAlive: true,},
         hidden: true
       },
