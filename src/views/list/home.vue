@@ -4,7 +4,7 @@
        ref="container"
        :style="{ height: scrollHeight + 'px' }">
     <div>
-      <div v-if="!ISPHONE" style="padding-top: 50px;height:230px; display: block; background-color: white;">
+      <div v-if="!ISPHONE" style="padding-top: 50px; display: block; background-color: white;">
         <div style="height: 80px; background-color: #3BA8FF"></div>
         <div class="_3JDs8KEQIXSMn1bTF2ZqJ_" >
           <div class="QscnL9OySMkHhGudEvEya">
@@ -27,63 +27,14 @@
 
             </div>
           </div>
+          <div class="navTab">
+            <div @click="checkoutTab('post')" :class="['tab_item',tab=='post'?'tab_item_act':'']">帖子</div>
+            <div @click="checkoutTab('prediction')" :class="['tab_item',tab=='prediction'?'tab_item_act':'']">竞猜</div>
+          </div>
         </div>
-
-        <!--        <div class="_1gVVmSnHZpkUgVShsn7-ua _15Pk_bZ2XZNa9zBvnxq6HX" style="position:static;background:inherit">-->
-        <!--          <div class="_1_TJAX-8zAT3vVN1Iz7cys" style="max-width:1200px">-->
-        <!--            <div>-->
-        <!--              <a class="_1O30sSXmfkKMRZqSaESf0S _1YpJV_aDQqujwuofx9-eAX uGdFXCHH-nwVp4gU3UaTw" href="/r/anime/">-->
-        <!--                Posts-->
-        <!--              </a>-->
-        <!--              <a class="_1O30sSXmfkKMRZqSaESf0S   jU3ijmuG8CyRDQhPOHdw4" href="/r/anime/predictions/">-->
-        <!--                Predictions-->
-        <!--              </a>-->
-        <!--              <a class="_1O30sSXmfkKMRZqSaESf0S  uGdFXCHH-nwVp4gU3UaTw" href="https://www.reddit.com/r/anime/wiki/rules" rel="noopener nofollow ugc" target="_blank">-->
-        <!--                Rules-->
-        <!--              </a>-->
-        <!--              <div class="hcJJEc0gVBKH5pWCFgdET">-->
-        <!--                <div class="_2wtKbmW1aPrT3MyHoaupQh  uGdFXCHH-nwVp4gU3UaTw">-->
-        <!--                  <span>-->
-        <!--                    Megathreads-->
-        <!--                  </span>-->
-        <!--                  <svg class="XHbKeEqnW58ib9mTN6jnS u_kypUXmB-k1A5TcC8MI9 _3u_CcXw7slod9vNJKIlYvx" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">-->
-        <!--                    <path d="M14.17,9.35,10,13.53,5.83,9.35a.5.5,0,0,1,.35-.85h7.64a.5.5,0,0,1,.35.85"></path>-->
-        <!--                  </svg>-->
-        <!--                </div>-->
-        <!--                <div class="_1T423RClx-mTPxfuiCw4UN " aria-hidden="true" role="list">-->
-        <!--                  <a class="_1p4TpHzWWRAkGYYw9_jU-B  " href="https://redd.it/qaavyj" role="listitem" target="_blank" rel="noopener nofollow ugc">Merch Mondays</a>-->
-        <!--                  <a class="_1p4TpHzWWRAkGYYw9_jU-B  " href="https://redd.it/qazc14" role="listitem" target="_blank" rel="noopener nofollow ugc">Recommendation Tues</a>-->
-        <!--                  <a class="_1p4TpHzWWRAkGYYw9_jU-B  " href="https://redd.it/q7nwyv" role="listitem" target="_blank" rel="noopener nofollow ugc">Thursday Anime Disc</a>-->
-        <!--                  <a class="_1p4TpHzWWRAkGYYw9_jU-B  " href="https://redd.it/q8c182" role="listitem" target="_blank" rel="noopener nofollow ugc">Casual Disc Fridays</a>-->
-        <!--                  <a class="_1p4TpHzWWRAkGYYw9_jU-B  " href="https://redd.it/q90mkm" role="listitem" target="_blank" rel="noopener nofollow ugc">Misc Anime Questions</a>-->
-        <!--                  <a class="_1p4TpHzWWRAkGYYw9_jU-B  " href="https://redd.it/q9noqt" role="listitem" target="_blank" rel="noopener nofollow ugc">Weekly Roundup</a>-->
-        <!--                  <a class="_1p4TpHzWWRAkGYYw9_jU-B  " href="https://redd.it/q06gp1" role="listitem" target="_blank" rel="noopener nofollow ugc">Monthly Meta Thread</a>-->
-        <!--                </div></div><div class="hcJJEc0gVBKH5pWCFgdET"><div class="_2wtKbmW1aPrT3MyHoaupQh  uGdFXCHH-nwVp4gU3UaTw">-->
-        <!--              <span>Wiki &amp; Watch Orders</span>-->
-        <!--              <svg class="XHbKeEqnW58ib9mTN6jnS u_kypUXmB-k1A5TcC8MI9 _3u_CcXw7slod9vNJKIlYvx" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">-->
-        <!--                <path d="M14.17,9.35,10,13.53,5.83,9.35a.5.5,0,0,1,.35-.85h7.64a.5.5,0,0,1,.35.85"></path>-->
-        <!--              </svg>-->
-        <!--            </div>-->
-        <!--              <div class="_1T423RClx-mTPxfuiCw4UN " aria-hidden="true" role="list"><a class="_1p4TpHzWWRAkGYYw9_jU-B  " href="https://www.reddit.com/r/anime/wiki/watch_order" role="listitem" target="_blank" rel="noopener nofollow ugc">Anime Watch Orders</a>-->
-        <!--                <a class="_1p4TpHzWWRAkGYYw9_jU-B  " href="https://reddit.com/r/anime/wiki" role="listitem" target="_blank" rel="noopener nofollow ugc">Index</a>-->
-        <!--                <a class="_1p4TpHzWWRAkGYYw9_jU-B  " href="https://reddit.com/r/anime/w/faaq" role="listitem" target="_blank" rel="noopener nofollow ugc">FAAQ</a>-->
-        <!--                <a class="_1p4TpHzWWRAkGYYw9_jU-B  " href="https://www.reddit.com/r/anime/wiki/mods" role="listitem" target="_blank" rel="noopener nofollow ugc">Mods</a>-->
-        <!--                <a class="_1p4TpHzWWRAkGYYw9_jU-B  " href="https://www.reddit.com/r/anime/wiki/amas" role="listitem" target="_blank" rel="noopener nofollow ugc">AMAs</a>-->
-        <!--                <a class="_1p4TpHzWWRAkGYYw9_jU-B  " href="https://www.reddit.com/r/anime/wiki/events" role="listitem" target="_blank" rel="noopener nofollow ugc">Events</a>-->
-        <!--                <a class="_1p4TpHzWWRAkGYYw9_jU-B  " href="https://www.reddit.com/r/anime/wiki/rewatches" role="listitem" target="_blank" rel="noopener nofollow ugc">Rewatches</a>-->
-        <!--                <a class="_1p4TpHzWWRAkGYYw9_jU-B  " href="https://www.reddit.com/r/anime/wiki/recommendations" role="listitem" target="_blank" rel="noopener nofollow ugc">Recommendations</a>-->
-        <!--                <a class="_1p4TpHzWWRAkGYYw9_jU-B  " href="https://www.reddit.com/r/anime/wiki/related_subreddits" role="listitem" target="_blank" rel="noopener nofollow ugc">Related Subreddits</a>-->
-        <!--                <a class="_1p4TpHzWWRAkGYYw9_jU-B  " href="https://www.reddit.com/r/anime/wiki/related_sites" role="listitem" target="_blank" rel="noopener nofollow ugc">Related Websites</a>-->
-        <!--              </div>-->
-        <!--            </div>-->
-        <!--              <a class="_1O30sSXmfkKMRZqSaESf0S  uGdFXCHH-nwVp4gU3UaTw" href="https://old.reddit.com/r/anime/comments/id248i/a_quickstart_guide_to_ranime/" rel="noopener nofollow ugc" target="_blank">A Guide to /r/Anime</a>-->
-        <!--              <a class="_1O30sSXmfkKMRZqSaESf0S  uGdFXCHH-nwVp4gU3UaTw" href="https://old.reddit.com/r/anime/" rel="noopener nofollow ugc" target="_blank">Old Reddit</a>-->
-        <!--            </div>-->
-        <!--          </div>-->
-        <!--        </div>-->
       </div>
       <div v-else style="padding-top: 50px;"></div>
-      <div class="main_content">
+      <div v-show="tab=='post'" class="main_content">
         <div v-if="!ISPHONE" class="main_left">
           <div
               v-if="tagList.length"
@@ -156,6 +107,7 @@
         </div>
 
       </div>
+      <prediction :isForumPage="true" :GameInfo="GameInfo" :forumId="params.forumId" v-show="tab=='prediction'"></prediction>
 
     </div>
     <fixedBottom></fixedBottom>
@@ -174,11 +126,14 @@
 
   import selectList from "@/components/chaofan/common/selectList";
 
+  import prediction from '@/views/activity/prediction';
+
   export default {
     name: "Dashboard",
     // components: { adminDashboard, editorDashboard },
     data() {
       return {
+        tab: 'post',
         hasGetData: false,
         pinList: [],
         currentRole: "adminDashboard",
@@ -252,6 +207,7 @@
         ],
         tagList: [],
         tagCountList: [],
+        GameInfo: '',
       };
     },
     components: {
@@ -261,6 +217,7 @@
       fixedBottom,
       selectList,
       SimListItem,
+      prediction
     },
     watch: {
       // 'params.forumId'(v){
@@ -366,6 +323,14 @@
       this.load();
     },
     methods: {
+      checkoutTab(v){
+        this.tab = v;
+        // api.predictionsGet({forumId: this.params.forumId}).then(res=>{
+        //   if(res.data){
+        //     this.GameInfo = res.data;
+        //   }
+        // })
+      },
       inout(v){
         if(this.$store.state.user.islogin){
           if(v==1){
@@ -663,7 +628,7 @@
     -ms-flex-pack: justify;
     justify-content: space-between;
     margin: 0 auto;
-    max-width: 984px;
+    width: 984px;
     padding: 0 16px 0 24px;
   }
 
@@ -672,8 +637,9 @@
     align-items: flex-start;
     display: -ms-flexbox;
     display: flex;
-    margin-bottom: 12px;
+    padding-bottom: 16px;
     margin-top: -14px;
+    // background: red;
   }
   ._2OMsln4_sqrfHjufgGCeio, .Mh_Wl6YioFfBc9O1SQ4Jp {
     border-radius: 100%;
@@ -789,6 +755,30 @@
   ._2iuoyPiKHN3kfOoeIQalDT {
 
   }
-
+.navTab{
+  display: flex;
+  line-height: 40px;
+  padding-left: 68px;
+  font-size: 16px;
+  .tab_item{
+    text-align: center;
+    flex: 0 0 120px;
+    background: #f1f1f1;
+    border: 1px solid #f1f1f1;
+    color: #999;
+    cursor: pointer;
+    &:hover{
+      color: #FF9300;
+      opacity: 0.7;
+    }
+  }
+  .tab_item_act{
+    background: #fff;
+    color: #FF9300;
+    font-weight: bold;
+    // border-top: 1px solid #f1f1f1;
+    // border-left: 1px solid #f1f1f1;
+  }
+}
 
 </style>

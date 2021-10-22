@@ -2,13 +2,13 @@
   <div id="container"
       class="dashboard-container container infinite-list"
       ref="container"
-      :style="{ height: scrollHeight + 'px' }">
+      >
       <div>
-        <div style="height: 50px"></div>
+        <div v-if="!isForumPage" style="height: 50px"></div>
         <div class="main_content">
           <div v-if="!ISPHONE" class="main_left">
           </div>
-          <div class="main_center">
+          <div v-if="GameInfo" class="main_center">
             <div
               class="grid-content"
               style="
@@ -74,7 +74,6 @@ export default {
       currentRole: "adminDashboard",
       count: 5,
       lists: [],
-      forumId: "",
       params: {
         marker: "",
         pageSize: 40,
@@ -97,6 +96,7 @@ export default {
       loadAll: false,
       userInfo: {},
       userData: null,
+      GameInfo: null,
       ranks: [],
       predictionsTournamentId: ''
     };
@@ -118,6 +118,16 @@ export default {
   activated(){
     
   },
+  props: {
+    isForumPage: {
+      type: Boolean,
+      default: false
+    },
+    forumId: {
+      type: String,
+      default: ''
+    }
+  },
   beforeRouteEnter(to, from, next) {
     if (from.path.includes("/p/")) {
     } else {
@@ -132,6 +142,7 @@ export default {
     })
   },
   created() {
+    this.params.forumId = this.$route.params.forumId || this.forumId;
     this.getList();
     this.getTotalRank();
     this.getScore()
@@ -174,31 +185,43 @@ export default {
     toRank(){
       window.open(location.origin + '/webview/prediction/rank');
     },
+    getGameInfo(){
+      api.predictionsGet({forumId: this.params.forumId}).then(res=>{
+
+      })
+    },
     getList(){
-        let params = {
-            predictionsTournamentId: '1'
-        }
-        api.predictionsTournament(params).then(res=>{
-            if (res.data.marker && res.data.length != 0) {
-                this.ifcanget = true;
+        api.predictionsGet({forumId: this.params.forumId}).then(res=>{
+          if(res.data){
+            this.GameInfo = res.data;
+            let params = {
+                predictionsTournamentId: res.data.id,
             }
-            if (res.data.marker) {
-                params.marker = res.data.marker;
-            } else {
+            api.predictionsTournament(params).then(res=>{
+                if (res.data.marker && res.data.length != 0) {
+                    this.ifcanget = true;
+                }
+                if (res.data.marker) {
+                    params.marker = res.data.marker;
+                } else {
+                    if (res.data.length === 0) {
+                        this.loadAll = true;
+                    }
+                }
                 if (res.data.length === 0) {
                     this.loadAll = true;
                 }
-            }
-            if (res.data.length === 0) {
-                this.loadAll = true;
-            }
-            if (params.order == "hot") {
-                params.key = res.data.key;
-            } else {
-                delete params.key;
-            }
-            this.lists.push(...res.data);
+                if (params.order == "hot") {
+                    params.key = res.data.key;
+                } else {
+                    delete params.key;
+                }
+                this.lists.push(...res.data);
+            })
+          }
+          
         })
+        
     }
   },
 };

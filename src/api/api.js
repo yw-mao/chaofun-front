@@ -1038,6 +1038,13 @@ export function getTotalRank(params) {
   })
 }
 
+export function predictionsGet(params) {
+  return request({
+    url: '/api/v0/forum/predictions_tournament/get',
+    method: 'get',
+    params
+  })
+}
 
 /** 活动查询 */
 

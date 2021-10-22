@@ -19,7 +19,7 @@
       item.predictionStatus=='end'&&item.predictionRightOption==(ind+1)}]">
         {{its.optionName}}
       </div>
-      <div v-if="$route.name!='prediction'" @click.stop="toMore" class="p_li p_li_btns">
+      <div v-if="$route.name!='prediction'&&!$route.path.includes('/f/')" @click.stop="toMore" class="p_li p_li_btns">
         S11竞猜活动
       </div>
       <!-- <div class="icons">
@@ -41,7 +41,7 @@
           </div>
         </div>
       </div>
-      <div v-if="$route.name!='prediction'" @click.stop="toMore" class="p_li p_li_btns">
+      <div v-if="$route.name!='prediction'&&!$route.path.includes('/f/')" @click.stop="toMore" class="p_li p_li_btns">
         S11竞猜活动
       </div>
     </div>
