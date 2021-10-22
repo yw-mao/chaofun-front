@@ -640,7 +640,7 @@ export default {
       }});
     },
     gotoSubmit(){// 发帖
-      this.post(this.forumInfo.id, this.forumInfo.name, this.forumInfo.imageName)
+      this.toPost(this.forumInfo.id, this.forumInfo.name, this.forumInfo.imageName)
       // if(this.$store.state.user.islogin){
       //   this.$router.push({path: '/submit',query:{id: this.forumInfo.id,name:this.forumInfo.name}})
       // }else{
