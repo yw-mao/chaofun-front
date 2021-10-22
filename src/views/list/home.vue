@@ -28,8 +28,8 @@
             </div>
           </div>
           <div v-if="GameInfo" class="navTab">
-            <div @click="checkoutTab('post')" :class="['tab_item',tab=='post'?'tab_item_act':'']">帖子</div>
-            <div @click="checkoutTab('prediction')" :class="['tab_item',tab=='prediction'?'tab_item_act':'']">竞猜</div>
+            <div @click="checkoutTab('post')" :class="[tab=='post'?'tab_item_act':'tab_item']">帖子</div>
+            <div @click="checkoutTab('prediction')" :class="[tab=='prediction'?'tab_item_act':'tab_item']">竞猜</div>
           </div>
         </div>
       </div>
@@ -764,24 +764,28 @@
   }
 .navTab{
   display: flex;
-  line-height: 40px;
+  line-height: 35px;
   padding-left: 68px;
-  font-size: 16px;
+  font-size: 15px;
   .tab_item{
     text-align: center;
-    flex: 0 0 120px;
-    background: #f1f1f1;
-    border: 1px solid #f1f1f1;
+    flex: 0 0 60px;
+    /*background: #f1f1f1;*/
+    /*border: 1px solid #f1f1f1;*/
     color: #999;
-    cursor: pointer;
+    /*cursor: pointer;*/
     &:hover{
-      color: #FF9300;
+      color: #0179D2;
+      font-weight: bold;
       opacity: 0.7;
     }
   }
   .tab_item_act{
-    background: #fff;
-    color: #FF9300;
+    text-align: center;
+    flex: 0 0 60px;
+    border-bottom: 3px solid #0179D2;
+    /*background: ;*/
+    color: black;
     font-weight: bold;
     // border-top: 1px solid #f1f1f1;
     // border-left: 1px solid #f1f1f1;
