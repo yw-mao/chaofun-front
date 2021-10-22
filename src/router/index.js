@@ -194,9 +194,16 @@ export const constantRoutes = [
         hidden: true
       },
       {
-        path: `/f/:forumId/:type`,
+        path: '/f/:id/setting',
+        component: () => import('@/views/list/forumSetting'),
+        name: 'forumSetting',
+        meta: { title: '板块设置',keepAlive: false},
+        hidden: true
+      },
+      {
+        path: `/f/:forumId/predictions`,
         component: () => import('@/views/list/home'),
-        name: '/f/:forumId/:type',
+        name: '/f/:forumId/predictions',
         meta: { title: '',keepAlive: true,},
         hidden: true
       },
@@ -214,13 +221,7 @@ export const constantRoutes = [
         meta: { title: '设置',keepAlive: false},
         hidden: true
       },
-      {
-        path: '/f/:id/setting',
-        component: () => import('@/views/list/forumSetting'),
-        name: 'forumSetting',
-        meta: { title: '板块设置',keepAlive: false},
-        hidden: true
-      },
+
       {
         path: '/submitH5',
         component: () => import('@/views/h5/submit'),

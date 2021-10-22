@@ -5,7 +5,7 @@
         <p v-if="item.predictionTotalTokens">总额：{{item.predictionTotalTokens}}</p>
         <p>参与：{{item.optionVoteCount}}人</p>
         <p>{{item.predictedTokens?'我的：'+item.predictedTokens+'':'未参与竞猜'}}</p>
-        <p>{{item.predictedWins?'收益：'+item.predictedWins+'':'收益：---'}}</p>
+        <p>{{item.predictedWins !== null ?' 收益：'+item.predictedWins+'':'收益：---'}}</p>
         <!-- <p>剩余积分：{{item.predictedTokens}}积分</p> -->
       </div>
     </div>
