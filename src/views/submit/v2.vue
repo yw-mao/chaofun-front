@@ -65,13 +65,15 @@
                 ]"
               >
                 <el-input
-                  type="text"
+                  type="textarea"
+                  autosize
                   placeholder="请输入标题"
                   v-model="post.title"
                   maxlength="300"
                   show-word-limit
                   :autofocus="true"
                   ref="title"
+                  class="title"
                 />
               </el-form-item>
             </el-row>
@@ -641,6 +643,26 @@
     margin: 16px;
     .el-row {
       margin: 0;
+    }
+    .title {
+      /deep/ textarea {
+        padding: 12px 8px;
+        resize: none;
+        box-sizing: border-box;
+        overflow: hidden;
+      }
+      /deep/ .el-input__count {
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: .5px;
+        line-height: 12px;
+        text-transform: uppercase;
+        bottom: 12px;
+        pointer-events: none;
+        position: absolute;
+        right: 12px;
+        opacity: 0.65;
+      }
     }
     .checkbox-group {
       display: flex;
