@@ -70,8 +70,8 @@ export default {
     onEditorChange() {
       this.content = this.$refs.editor.invoke('setHtml');
     },
-    set() {
-
+    set(content) {
+      this.content = this.$refs.editor.invoke('setHTML', content);
     },
     get() {
       return this.$refs.editor.invoke('getHTML');

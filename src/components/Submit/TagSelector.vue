@@ -100,6 +100,13 @@ export default {
     changeTag(label) {
       this.tag = this.tags.find(tag => tag.id === label);
     },
+    // 设置Tag
+    async setTag(label) {
+      await this.getForumTag(this.forumId);
+      this.tag = this.tags.find(tag => tag.id === label);
+      this.tagId = label;
+      this.dataTagId = label;
+    },
     // 清除Tag
     clearTag() {
       this.tag = null;
