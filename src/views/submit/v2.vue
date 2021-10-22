@@ -646,7 +646,7 @@
     }
     .title {
       /deep/ textarea {
-         padding: 8px 68px 8px 16px;
+        padding: 12px 8px;
         resize: none;
         box-sizing: border-box;
         overflow: hidden;
@@ -661,6 +661,7 @@
         pointer-events: none;
         position: absolute;
         right: 12px;
+        opacity: 0.65;
       }
     }
     .checkbox-group {
