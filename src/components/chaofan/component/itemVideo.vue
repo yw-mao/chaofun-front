@@ -8,6 +8,7 @@
         <video
           :class="[doHeight()]"
           :autoplay="true"
+          muted
           webkit-playsinline="true"
           x5-video-player-type="h5"
           playsinline="true"
