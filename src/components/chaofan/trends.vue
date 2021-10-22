@@ -668,7 +668,7 @@ import forwardH5 from '../h5/forward'
     position: absolute;
     left: 20px;
     bottom: 20px;
-    z-index: 10;
+    z-index: 8;
     width: 60px;
     height: 60px;
   }
