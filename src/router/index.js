@@ -166,6 +166,13 @@ export const constantRoutes = [
         hidden: true
       },
       {
+        path: '/f/:id/setting',
+        component: () => import('@/views/list/forumSetting'),
+        name: 'forumSetting',
+        meta: { title: '板块设置',keepAlive: false},
+        hidden: true
+      },
+      {
         path: '/my',
         name: 'my',
         component: () => import('@/views/list/my'),
@@ -194,16 +201,9 @@ export const constantRoutes = [
         hidden: true
       },
       {
-        path: '/f/:id/setting',
-        component: () => import('@/views/list/forumSetting'),
-        name: 'forumSetting',
-        meta: { title: '板块设置',keepAlive: false},
-        hidden: true
-      },
-      {
-        path: `/f/:forumId/predictions`,
+        path: `/f/:forumId/:type`,
         component: () => import('@/views/list/home'),
-        name: '/f/:forumId/predictions',
+        name: '/f/:forumId/:type',
         meta: { title: '',keepAlive: true,},
         hidden: true
       },
