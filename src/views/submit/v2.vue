@@ -377,7 +377,8 @@
 
       // === 提交 ===
       submit() {
-        if (['article', 'vote'].includes(this.type)) {
+        // TODO: 增加Vote文章详情
+        if (['article'].includes(this.type)) {
           // 同步内容
           this.post.content = this.$refs.editor.get();
         }
