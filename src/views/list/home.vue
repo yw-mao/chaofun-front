@@ -299,7 +299,7 @@
         let conHeight = self.$refs.container.clientHeight;
         // 变量scrollHeight是滚动条的总高度
         let scrollHeight = self.$refs.container.scrollHeight - 4;
-        console.log("距顶部" + scrollTop + "可视区高度" + conHeight + "滚动条总高度" + scrollHeight);
+        // console.log("距顶部" + scrollTop + "可视区高度" + conHeight + "滚动条总高度" + scrollHeight);
         // console.log(conTop,conHeight,scrollHeight)
         if (
           conTop + conHeight >= scrollHeight
