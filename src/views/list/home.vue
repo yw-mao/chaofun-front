@@ -8,7 +8,10 @@
         <div style="height: 80px; background-color: #3BA8FF"></div>
         <div class="_3JDs8KEQIXSMn1bTF2ZqJ_" >
           <div class="QscnL9OySMkHhGudEvEya">
-            <img v-if="forumInfo.imageName" :src="imgOrigin+forumInfo.imageName + '?x-oss-process=image/resize,h_70'" class="Mh_Wl6YioFfBc9O1SQ4Jp">
+            <div style="width:72px;height:72px;">
+              <img v-if="forumInfo.imageName" :src="imgOrigin+forumInfo.imageName + '?x-oss-process=image/resize,h_70'" class="Mh_Wl6YioFfBc9O1SQ4Jp">
+            </div>
+            
             <div class="_3I4Wpl_rl6oTm02aWPZayD ">
               <div class="_3TG57N4WQtubLLo8SbAXVF">
                 <div style="box-sizing: border-box; display:flex;align-items:center;">
@@ -27,9 +30,10 @@
 
             </div>
           </div>
-          <div v-if="GameInfo" class="navTab">
+          <div v-if="GameInfo||tableList.length" class="navTab">
             <div @click="checkoutTab('post')" :class="[tab=='post'?'tab_item_act':'tab_item']">帖子</div>
-            <div @click="checkoutTab('prediction')" :class="[tab=='prediction'?'tab_item_act':'tab_item']">竞猜</div>
+            <div v-if="GameInfo" @click="checkoutTab('predictions')" :class="[tab=='predictions'?'tab_item_act':'tab_item']">竞猜</div>
+            <div @click="checkoutTab('table')" :class="[tab=='table'?'tab_item_act':'tab_item']">表格</div>
           </div>
         </div>
       </div>
@@ -107,8 +111,38 @@
         </div>
 
       </div>
-      <prediction v-if="GameInfo" :isForumPage="true" :GameInfo="GameInfo" :forumId="params.forumId" v-show="tab=='prediction'"></prediction>
-
+      <prediction v-if="GameInfo" :isForumPage="true" :GameInfo="GameInfo" :forumId="params.forumId" v-show="tab=='predictions'"></prediction>
+      <div v-show="tab=='table'" class="tables">
+        <div v-show="tab=='table'" class="main_content">
+          <div v-if="!ISPHONE" class="main_left">
+          </div>
+          
+          <div class="main_center">
+            <div v-for="(item,index) in tableList" :key="index" class="table_item">
+              <div @click="toggleTable(item)" class="table_title">{{item.name}} <i :class="item.show?'el-icon-minus':'el-icon-plus'"></i></div>
+              <div @click="toggleTable(item)" class="table_desc">{{item.desc}}</div>
+              <div v-show="item.show" class="table_main">
+                <el-table
+                  :data="item.table"
+                  style="width: 100%"
+                  :row-class-name="tableRowClassName">
+                  <el-table-column
+                    v-for="(it,inds) in item.header"
+                    :key="inds"
+                    :label="it"
+                    >
+                    <template slot-scope="scope">
+                      <span>{{scope.row[it]}}</span>
+                    </template>
+                  </el-table-column>
+                </el-table>
+              </div>
+            </div>
+            
+          </div>
+          <div v-if="!ISPHONE" class="main_right"></div>
+        </div>
+      </div>
     </div>
     <fixedBottom></fixedBottom>
   </div>
@@ -208,6 +242,7 @@
         tagList: [],
         tagCountList: [],
         GameInfo: '',
+        tableList: []
       };
     },
     components: {
@@ -247,6 +282,7 @@
     },
     mounted() {
       this.getGameInfo();
+      this.getTableList();
       console.log(777)
       if (document.body.clientWidth < 700) {
         this.isPhone = true;
@@ -321,12 +357,38 @@
       this.params.forumId = this.$route.params.forumId;
 
       if(this.$route.params.type=='predictions'){
-        this.tab = 'prediction'
+        this.tab = 'predictions'
       }
 
       this.load();
     },
     methods: {
+      tableRowClassName({row, rowIndex}) {
+        if (rowIndex %2== 1) {
+          return 'warning-row success-row';
+        } else if (rowIndex === 3) {
+          return 'success-row';
+        }
+        return '';
+      },
+      toggleTable(item){
+        item.show = !item.show;
+        if(!item.table.length){
+          api.tableGet({tableId: item.id}).then(res=>{
+            let lines = res.data.data.split('\n') // 1️⃣
+            let header = lines[0].split(',') // 2️⃣
+            let output = lines.slice(1).map(line => {
+              let fields = line.split(',') // 3️⃣
+              return Object.fromEntries(header.map((h, i) => [h, fields[i]])) // 4️⃣
+            })
+            item.header = header;
+            item.table = output;
+
+            console.log(output)
+            console.log(res);
+          })
+        }
+      },
       getGameInfo(){
         api.predictionsGet({forumId: this.params.forumId}).then(res=>{
           if(res.data){
@@ -334,9 +396,34 @@
           }
         })
       },
+      getTableList(){
+        api.forumtablelist({forumId: this.params.forumId}).then(res=>{
+          res.data.forEach(item=>{
+            item.show = false;
+            item.table = [];
+            item.header = [];
+            // item.desc = '41547878'
+          })
+          this.tableList = res.data;
+        })
+      },
       checkoutTab(v){
         this.tab = v;
-        
+        history.pushState(
+          {},
+          null,
+          `/f/${this.params.forumId}${v=='post'?'':'/'+this.tab}`
+        )
+        // if(v=='table'&&!this.tableList.length){
+        //   api.forumtablelist({forumId: this.params.forumId}).then(res=>{
+        //     res.data.forEach(item=>{
+        //       item.show = false;
+        //       item.table = [];
+        //       item.header = [];
+        //     })
+        //     this.tableList = res.data;
+        //   })
+        // }
       },
       inout(v){
         if(this.$store.state.user.islogin){
@@ -770,6 +857,7 @@
   .tab_item{
     text-align: center;
     flex: 0 0 60px;
+    cursor: pointer;
     /*background: #f1f1f1;*/
     /*border: 1px solid #f1f1f1;*/
     color: #999;
@@ -791,5 +879,35 @@
     // border-left: 1px solid #f1f1f1;
   }
 }
+.tables{
+  
+}
+.table_item{
+  padding: 10px 14px;
+  margin: 0 12px 12px;
+  background: #fff;
+  box-sizing: border-box;
+  border-radius: 4px;
+  .table_title{
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 6px;
+    line-height: 30px;
+    i{
+      float: right;
+      color: #999;
+      line-height: 24px;
+    }
+  }
+}
+.table_main{
+  margin-top: 14px;
+}
+/deep/ .el-table .warning-row {
+    background: oldlace;
+  }
 
+ /deep/ .el-table .success-row {
+    background: #f0f9eb;
+  }
 </style>

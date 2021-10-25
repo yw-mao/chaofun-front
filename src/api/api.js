@@ -1046,5 +1046,22 @@ export function predictionsGet(params) {
   })
 }
 
+export function forumtablelist(params) {
+  return request({
+    url: '/api/v0/forum/table/list',
+    method: 'get',
+    params
+  })
+}
+
+export function tableGet(params) {
+  return request({
+    url: '/api/v0/forum/table/get',
+    method: 'get',
+    params
+  })
+}
+
+
 /** 活动查询 */
 
