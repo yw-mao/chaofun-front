@@ -33,7 +33,7 @@
           <div v-if="GameInfo||tableList.length" class="navTab">
             <div @click="checkoutTab('post')" :class="[tab=='post'?'tab_item_act':'tab_item']">帖子</div>
             <div v-if="GameInfo" @click="checkoutTab('predictions')" :class="[tab=='predictions'?'tab_item_act':'tab_item']">竞猜</div>
-            <div @click="checkoutTab('table')" :class="[tab=='table'?'tab_item_act':'tab_item']">表格</div>
+            <div v-if="tableList.length" @click="checkoutTab('table')" :class="[tab=='table'?'tab_item_act':'tab_item']">表格</div>
           </div>
         </div>
       </div>
@@ -123,9 +123,15 @@
               <div @click="toggleTable(item)" class="table_desc">{{item.desc}}</div>
               <div v-show="item.show" class="table_main">
                 <el-table
+
                   :data="item.table"
                   style="width: 100%"
                   :row-class-name="tableRowClassName">
+                  <el-table-column width="50" align="center">
+                    <template slot-scope="scope">
+                      <span>{{scope.$index+1}}</span>
+                    </template>
+                  </el-table-column>
                   <el-table-column
                     v-for="(it,inds) in item.header"
                     :key="inds"
@@ -356,8 +362,8 @@
       // }
       this.params.forumId = this.$route.params.forumId;
 
-      if(this.$route.params.type=='predictions'){
-        this.tab = 'predictions'
+      if(this.$route.params.type){
+        this.tab = this.$route.params.type
       }
 
       this.load();
