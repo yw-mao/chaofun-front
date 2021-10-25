@@ -122,7 +122,7 @@
         }
       },
       toMore(){
-        this.$router.push({name: 'prediction',params:{id: this.item.predictionsTournament.id,forumId: this.item.forum.id}})
+        this.$router.push('/f/' + this.item.forumId + '/predictions')
       },
       sure(){
         if(this.nums>0){
