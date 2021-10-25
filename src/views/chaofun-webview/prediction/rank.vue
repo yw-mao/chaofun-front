@@ -36,23 +36,34 @@ export default {
   },
   data(){
       return {
-          pagedata: []
+          pagedata: [],
+          params : {
+            predictionsTournamentId: '1'
+          }
       }
+  },
+  props: {
+    id: {
+      type: String,
+      default: ''
+    },
+    name: {
+      type: String,
+      default: ''
+    }
   },
   created(){
   },
   mounted(){
-    this.getButtonRank()
-    document.title = "2021年英雄联盟S11竞猜活动排名";
+    this.params.predictionsTournamentId = this.$route.query.id;
+    this.getButtonRank();
+    document.title = (this.$route.query.name ? this.$route.query.name : '')  + "竞猜排名";
   },
   methods:{
     getButtonRank(){
-      let params = {
-        predictionsTournamentId: '1'
-      }
-        api.getPredictionRank(params).then(res=>{
+      api.getPredictionRank(this.params).then(res=>{
             this.pagedata = res.data
-        })
+      })
     },
     toUser(item){
         try {
