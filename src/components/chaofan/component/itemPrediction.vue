@@ -313,7 +313,7 @@
 }
   .prid{
     background: #303030;
-    height: 300px;
+    min-height: 300px;
     margin-bottom: 10px;
     border-radius: 8px;
     padding: 6%;
