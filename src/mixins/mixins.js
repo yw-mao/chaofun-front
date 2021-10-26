@@ -67,8 +67,9 @@ export default {
         });
       }
     },
-    showLogin() {
+    showLogin(logStatus) {
       this.$login({
+        logStatus: logStatus||'login',
         callBack: () => {
           this.$store.dispatch('user/getInfo')
         }

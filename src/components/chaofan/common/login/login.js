@@ -15,6 +15,7 @@ const login = (option = {}) => { // 对外调用的方法
   // console.log('Instance:', Instance)
   Instance.vm = Instance.$mount() // 挂载
   // console.log('mounted', Instance.vm.$el)
+  Instance.vm.logStatus = option.logStatus||'login';
   Instance.vm.show = true
   document.body.appendChild(Instance.vm.$el) // 插入到body
 }

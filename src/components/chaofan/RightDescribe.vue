@@ -118,7 +118,7 @@
       this.forumId = this.$route.params.forumId
     },
     mounted() {
-      this.getGameTop();
+      // this.getGameTop();
       this.getActivity();
       if(new Date().getDate()==1){
         this.gamemodule = true

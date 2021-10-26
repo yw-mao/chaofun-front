@@ -1062,6 +1062,21 @@ export function tableGet(params) {
   })
 }
 
+export function bindUserWithWeChatOAuthWithPassword(params) {
+  return request({
+    url: '/api/v0/account/bindUserWithWeChatOAuthWithPassword',
+    method: 'get',
+    params
+  })
+}
+
+export function loginWithWeChatOAuth(params) {
+  return request({
+    url: '/api/v0/account/loginWithWeChatOAuth',
+    method: 'get',
+    params
+  })
+}
 
 /** 活动查询 */
 
