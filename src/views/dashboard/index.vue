@@ -333,7 +333,7 @@ export default {
   methods: {
     loginWithWeChatOAuth(code){//判断是否绑定账号
       api.loginWithWeChatOAuth({authCode: code}).then(res=>{
-        if(res.errorCode =='need_register'){
+        if(res.errorCode =='need_register'||res.errorCode =='get_wechat_user_info_error'){
           this.showLogin('bind');
         }else{
           history.replaceState({ page: 3 }, "title 3", location.pathname);
