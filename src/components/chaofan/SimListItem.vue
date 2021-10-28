@@ -531,8 +531,7 @@ export default {
           break;
         case "article":
           return (
-            this.imgOrigin +
-            "biz/b64193b7beca6ae243341273adddf494.png?x-oss-process=image/resize,h_150"
+            this.imgOrigin + (item.imageName ? item.imageName : 'biz/b64193b7beca6ae243341273adddf494.png') + '?x-oss-process=image/resize,h_150'
           );
           break;
         case "image":
