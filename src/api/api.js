@@ -478,6 +478,14 @@ export function getVersion(params) {
   })
 }
 
+export function getLatestAppVersion(params) {
+  return request({
+    url: '/api/v0/app/getLatestAppVersion',
+    method: 'get',
+    params
+  })
+}
+
 /**  */
 export function getForumAdminMoney(params) {
   return request({

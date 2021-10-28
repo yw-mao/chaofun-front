@@ -130,17 +130,14 @@ import * as api from '../../api/api'
         //     // location.href = `opentest://host`;
         // }
 
-       api.getVersion({'platform': 'ios'}).then(res => {
+       api.getLatestAppVersion({'platform': 'ios'}).then(res => {
            if (res.success && res.data != null) {
-               this.iosVersion = res.data;
+               this.iosVersion = res.data.ios;
+               this.androidVersion= res.data.android;
            }
        });
 
-       api.getVersion({'platform': 'android'}).then(res => {
-           if (res.success && res.data != null) {
-               this.androidVersion = res.data;
-           }
-       });
+
      
    },
    methods: {
