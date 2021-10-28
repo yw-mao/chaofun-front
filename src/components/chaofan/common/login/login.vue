@@ -6,6 +6,10 @@
         <div class="tnames">
           <div @click="checkoutLoginType('account')" :class="['tts',{'tts_act':loginType=='account'}]">账号登录</div>
           <div @click="checkoutLoginType('phone')" :class="['tts',{'tts_act':loginType=='phone'}]">短信登录</div>
+          <div v-if="!ISPHONE" @click="checkoutLoginType('scan')" :class="['tts',{'tts_act':loginType=='scan'}]">
+            <img class="codes" :src="imgOrigin+'biz/7303906d6ddbb39a3616ac81f9d9a46c.png'" alt="">
+            微信扫码
+          </div>
         </div>
         <div v-if="loginType=='account'" style="">
           <input type="text" v-model="params.userName"  placeholder="用户名 / 手机号"/>
@@ -18,13 +22,19 @@
             <span @click="sendCode">{{time?time+'s':'发送验证码'}}</span>
           </div>
         </div>
+        <div v-if="loginType=='scan'" style="">
+          <iframe class="" src="https://open.weixin.qq.com/connect/qrconnect?appid=wx758a87aa8b4a7eb0&redirect_uri=https%3A%2F%2Fchao.fun&response_type=code&scope=snsapi_login&state=STATE#wechat_redirect"  frameborder="0"></iframe>
+        </div>
+        
         <div class="remPassword">
           <!-- <input  type="checkbox"/> -->
           <!-- <el-checkbox style="font-size:12px;" v-model="ifRemember">记住密码</el-checkbox> -->
           
         </div>
-        <div class="ylogin" @click="logOrReg(1)">登录</div>
-        <p>还未注册？ <span @click='toWhat("register")'>去注册</span></p>
+        <div v-if="loginType!='scan'">
+          <div class="ylogin" @click="logOrReg(1)">登录</div>
+          <p>还未注册？ <span @click='toWhat("register")'>去注册</span></p>
+        </div>
       </div>
     </div>
     <div @keyup="enters" v-if="logStatus == 'register'" class="ycovers ">
@@ -32,12 +42,12 @@
         <img @click="cancelLogin" class="cancel" :src='cancelImg'/>
         <!-- <h1>快速注册</h1> -->
         <div class="tnames">
-          <div class="tts_act">快速注册</div>
+          <div class="tts_act">{{isWxscan?'绑定微信-':''}} 快速注册</div>
         </div>
         <div>
           <input type="text" v-model="params.userName" placeholder="用户名"/>
           <!-- <input type="password" v-model="params.repassword"  placeholder="密码"/> -->
-          <input type="password" v-model="params.password" placeholder="确认密码"/>
+          <input type="password" v-model="params.password" placeholder="密码"/>
           
         </div>
         <div class="phonever">
@@ -48,24 +58,28 @@
             <span @click="sendCode">{{time?time+'s':'发送验证码'}}</span>
           </div>
         </div>
-        <!-- <div v-if="showSlider" class="sliders">
-          <div class="slid">
-            <div class="title">滑动验证</div>
-            <slide-verify :l="42"
-            :r="10"
-            :w="270"
-            :h="180"
-            @success="onSuccess"
-            @fail="onFail"
-            @refresh="onRefresh"
-            :slider-text="text"
-            ></slide-verify>
-            <div @click="showSlider = false" class="tclose">关闭</div>
-          </div>
-          
-        </div> -->
         <div @click="logOrReg(2)" class="ylogin">注册</div>
-        <p>已有账号？ <span @click='toWhat("login")'>去登录</span></p>
+        <p v-if="!isWxscan">已有账号？ <span @click='toWhat("login")'>去登录</span></p>
+        <p v-if="isWxscan">已有账号？ <span @click='toWhat("bind")'>去绑定</span></p>
+      </div>
+    </div>
+
+    <div @keyup="enters" v-if="logStatus == 'bind'" class="ycovers ">
+      <div class="ycontainer">
+        <img @click="cancelLogin" class="cancel" :src='cancelImg'/>
+        <!-- <h1>快速注册</h1> -->
+        <div class="tnames">
+          <div class="tts_act">绑定炒饭账号</div>
+        </div>
+        <div>
+          <input type="text" v-model="params.userName" placeholder="用户名"/>
+          <!-- <input type="password" v-model="params.repassword"  placeholder="密码"/> -->
+          <input type="password" v-model="params.password" placeholder="密码"/>
+          
+        </div>
+        
+        <div @click="logOrReg(3)" class="ylogin">确定</div>
+        <p>还未注册？ <span @click='toWhat("register")'>去注册</span></p>
       </div>
     </div>
  </div>
@@ -103,7 +117,8 @@ import { Checkbox } from 'element-ui'
         phoneParams: {
           phone: '',
           code: ''
-        }
+        },
+        isWxscan: false,
      }
    },
    computed:{
@@ -158,6 +173,10 @@ import { Checkbox } from 'element-ui'
        console.log('999')
        this.callBack()
      }
+     
+     if(location.href.includes('code=')){
+        this.isWxscan = true;
+      }
    },
    mounted() {
      let self = this;
@@ -172,7 +191,7 @@ import { Checkbox } from 'element-ui'
         }
       })
      }
-    
+
    },
    methods: {
      enters(e){
@@ -230,8 +249,12 @@ import { Checkbox } from 'element-ui'
        this.postBehavior(item.postId,'jump');
        this.toUrl(params)
     },
-    showLogin(){
+    showLogin(v){
+      debugger
+      console.log('---------',v)
+      this.logStatus = v || 'login';
       this.show = true;
+      
     },
     toWhat(v){
       // this.$store.dispatch('user/SET_logStatus',v)
@@ -246,8 +269,6 @@ import { Checkbox } from 'element-ui'
     },
     logOrReg(v){
       let params = deepClone(this.params);
-
-      
       if(v==1&&this.ifNull(v)){
         if(this.loginType=='account'){
           api.toLogin(params).then(res=>{
@@ -291,8 +312,12 @@ import { Checkbox } from 'element-ui'
         }
         
       }else if(v==2&&this.ifNull(v)){
+        if(location.href.includes('code=')){
+          params.platform = 'wechat';
+        }
         api.toRegister(params).then(res=>{
           if(res.success){
+            history.replaceState({ page: 3 }, "title 3", location.pathname);
             this.getUserInfo()
             this.registerSuccess = true
           }else{
@@ -300,6 +325,18 @@ import { Checkbox } from 'element-ui'
             console.log(123)
           }
         })
+      }else if(v==3){
+        api.bindUserWithWeChatOAuthWithPassword(params).then(res=>{
+          if(res.success){
+            history.replaceState({ page: 3 }, "title 3", location.pathname);
+            this.getUserInfo()
+            this.registerSuccess = true
+          }else{
+            this.$toast(res.errorMessage);
+            console.log(123)
+          }
+        })
+        
       }
     },
     ifNull(v){
@@ -409,6 +446,7 @@ import { Checkbox } from 'element-ui'
       margin-bottom: 10px;
       border-bottom: 1px solid #ddd;
       padding-bottom: 10px;
+      line-height: 24px;
       div{
         // margin-right: 20px;
         // padding: 4px 8px;
@@ -421,7 +459,13 @@ import { Checkbox } from 'element-ui'
       }
       .tts:nth-child(2){
         padding-left: 20px;
+        padding-right: 20px;
         
+        
+      }
+      .tts:nth-child(3){
+        padding-left: 20px;
+        border-left: 1px solid #ddd;
       }
       .tts_act{
         color: #e23d0e;
@@ -539,5 +583,13 @@ import { Checkbox } from 'element-ui'
       color: #999;
     }
   }
+}
+.codes{
+  width: 22px;
+  vertical-align: middle;
+}
+iframe{
+  width: 350px;
+  height: 400px;
 }
 </style>

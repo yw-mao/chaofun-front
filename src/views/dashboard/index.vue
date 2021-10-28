@@ -258,6 +258,9 @@ export default {
   created() {
     // 小程序复制链接
     console.log(this.$route.meta);
+    if(this.$route.query.code){
+      this.loginWithWeChatOAuth(this.$route.query.code);
+    }
     if (this.$route.query.type == 1) {
       let url = decodeURI(this.$route.query.url);
       console.log("url", url);
@@ -328,8 +331,18 @@ export default {
     },
   },
   methods: {
+    loginWithWeChatOAuth(code){//判断是否绑定账号
+      api.loginWithWeChatOAuth({authCode: code}).then(res=>{
+        if(res.errorCode =='need_register'||res.errorCode =='get_wechat_user_info_error'){
+          this.showLogin('bind');
+        }else{
+          history.replaceState({ page: 3 }, "title 3", location.pathname);
+          this.$store.dispatch('user/getInfo')
+        }
+      })
+    },
     nextReplace() {
-      if (this.$route.path == "/") {
+      if (this.$route.path == "/"&&!location.href.includes('code=')) {
         this.$router.replace({ path: "/all" });
       }
     },
