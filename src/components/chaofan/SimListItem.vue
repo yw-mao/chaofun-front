@@ -74,9 +74,10 @@
               <span class="sim_forum">
                 {{ item.forum.name }}
               </span>
-              <span class="from">
+              <span class="from" style="padding-">
                 来自·{{ item.userInfo ? item.userInfo.userName : "测试账号" }}
               </span>
+              <span v-if="item.userInfo.userTag" title="该板块用户的标签" style="font-size: 12px;background-color: rgb(237, 239, 241); color: rgb(26, 26, 27); padding-left: 1px;">{{item.userInfo.userTag.data}}</span>
               <span class="from">
                 大约
                 {{
@@ -887,10 +888,11 @@ export default {
     .sim_info {
       font-size: 12px;
       span {
-        padding-right: 10px;
+        padding-left: 10px;
       }
       .sim_forum {
         font-size: 13px;
+        padding-left: 0px;
         img {
           width: 30px;
           height: 30px;
