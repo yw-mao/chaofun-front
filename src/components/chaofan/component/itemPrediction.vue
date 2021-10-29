@@ -9,12 +9,12 @@
         <!-- <p>剩余积分：{{item.predictedTokens}}积分</p> -->
       </div>
     </div>
-    
+
     <div v-if="!checkoutVote(item.options)" class="p_right">
       <div class="cent">
         {{doState()}}
       </div>
-      <div v-for="(its,ind) in item.options" :key="ind" @click.stop="chooseItem(its,ind)" 
+      <div v-for="(its,ind) in item.options" :key="ind" @click.stop="chooseItem(its,ind)"
       :class="['p_li',{'acts':
       item.predictionStatus=='end'&&item.predictionRightOption==(ind+1)}]">
         {{its.optionName}}
@@ -30,7 +30,7 @@
       <div class="cent">
       {{doState()}}
     </div>
-      <div v-for="(its,ind) in item.options" :key="ind" :class="['p_li',{'acts':
+      <div v-for="(its,ind) in item.options"  :key="ind" @click.stop="chooseItem(its,ind)" :class="['p_li',{'acts':
       item.predictionStatus=='end'&&item.predictionRightOption==(ind+1)}]">
 
         <div class="bg" :style="{width: doBg(its,item.options)}"></div>
@@ -146,9 +146,6 @@
             }else{
               this.$toast(res.errorMessage)
             }
-
-
-
           })
         }
       },
@@ -196,18 +193,34 @@
         }
       },
       chooseItem(v,vs){
-        console.log(v,vs)
-        this.ids = vs;
-        this.selectLine = v;
-        this.doLoginStatus().then(r=> {
-          if (r) {
-            if(this.item.predictionStatus=='live'){
-              setTimeout(()=>{
-                this.getScore()
+        if (this.item.predictionStatus === 'pause') {
+          this.$confirm(`是否确定标记【${v.optionName}】正确 ？`, "提示", {
+            type: "warning",
+            // position: center,
+          }).then(() => {
+            let params = {postId: this.item.postId,option: this.vs+1};
+              api.markPredictionRight(params).then(r => {
+                api.getPostInfo({postId: this.item.postId}).then(res=>{
+                  // this.item = res.data;
+                  this.$emit('callBack',this.index,res.data);
+                  this.$EventBus.$emit('eventRefresh');
+                })
               })
+          })
+        } else if (!this.checkoutVote(this.item.options) && this.item.predictionStatus !== 'end') {
+          console.log(v, vs)
+          this.ids = vs;
+          this.selectLine = v;
+          this.doLoginStatus().then(r => {
+            if (r) {
+              if (this.item.predictionStatus == 'live') {
+                setTimeout(() => {
+                  this.getScore()
+                })
+              }
             }
-          }
-        })
+          })
+        }
       },
       close(){
         this.selectLine = {};
@@ -318,7 +331,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    
+
     .p_left{
       // display: flex;
       align-items: flex-start;
@@ -334,7 +347,7 @@
       // margin-right: 40px;
       color: #fff;
       // line-height: 40px;
-      
+
       margin-right: 6%;
       div{
         width: 100%;
@@ -343,7 +356,7 @@
         font-size: 14px;
         width: 100%;
         overflow: hidden;
-        margin: 20px 0 20px; 
+        margin: 20px 0 20px;
         white-space:nowrap;
         overflow:hidden;
         // text-overflow:ellipsis;
@@ -351,7 +364,7 @@
       .p_title{
         color: #fff;
         // line-height: 28px;
-        
+
         font-size: 18px;
       }
     }
@@ -369,7 +382,7 @@
           background: rgba(102, 102, 102,0.7);
         }
       }
-      
+
     }
     .acts{
         border: 1px solid #46d160 !important;
