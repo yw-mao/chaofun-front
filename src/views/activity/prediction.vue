@@ -30,11 +30,11 @@
 
               <el-button v-if="ISPHONE" @click="toRank" style="width: 100%; margin-bottom: 10px" type="primary" >查看排行</el-button>
               <ListItem
-                
                 :marker="params.marker"
                 :keys="params.key"
                 :isindex="false"
                 :lists="lists"
+                :isPredictionPage="true"
               ></ListItem>
             </div>
           </div>

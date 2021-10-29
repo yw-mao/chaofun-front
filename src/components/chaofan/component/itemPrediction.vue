@@ -19,7 +19,7 @@
       item.predictionStatus=='end'&&item.predictionRightOption==(ind+1)}]">
         {{its.optionName}}
       </div>
-      <div v-if="$route.name!='prediction'&&!$route.path.includes('/f/')" @click.stop="toMore" class="p_li p_li_btns">
+      <div v-if="!isPredictionPage" @click.stop="toMore" class="p_li p_li_btns">
         {{item.predictionsTournament.name}}
       </div>
       <!-- <div class="icons">
@@ -41,7 +41,7 @@
           </div>
         </div>
       </div>
-      <div v-if="$route.name!='prediction'&&!$route.path.includes('/f/')" @click.stop="toMore" class="p_li p_li_btns">
+      <div v-if="!isPredictionPage" @click.stop="toMore" class="p_li p_li_btns">
         {{item.predictionsTournament.name}}
       </div>
     </div>
@@ -97,6 +97,10 @@
       index: {
         type: Number,
         default: 0
+      },
+      isPredictionPage: {
+        type: Boolean,
+        default: false,
       }
     },
     components: {
@@ -198,18 +202,12 @@
         this.doLoginStatus().then(r=> {
           if (r) {
             if(this.item.predictionStatus=='live'){
-              
-              
-              
               setTimeout(()=>{
                 this.getScore()
               })
             }
           }
         })
-        
-
-
       },
       close(){
         this.selectLine = {};

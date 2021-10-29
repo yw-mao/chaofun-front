@@ -207,6 +207,7 @@
               @callBack="callBack"
               :index="index"
               :item="item"
+              :isPredictionPage="isPredictionPage"
           ></itemPrediction>
 
 
@@ -511,6 +512,10 @@ export default {
     };
   },
   props: {
+    isPredictionPage: {
+      type: Boolean,
+      default: false
+    },
     lists: {
       type: Array,
       default() {
