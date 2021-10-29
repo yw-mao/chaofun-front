@@ -1030,6 +1030,14 @@ export function checkJoin(params) {
   })
 }
 
+export function pausePrediction(params) {
+  return request({
+    url: '/api/v0/forum/predictions_tournament/pausePrediction',
+    method: 'get',
+    params
+  })
+}
+
 export function predictionsjoin(params) {
   return request({
     url: '/api/v0/forum/predictions_tournament/join',
