@@ -20,7 +20,7 @@
         {{its.optionName}}
       </div>
       <div v-if="$route.name!='prediction'&&!$route.path.includes('/f/')" @click.stop="toMore" class="p_li p_li_btns">
-        S11竞猜活动
+        {{item.predictionsTournament.name}}
       </div>
       <!-- <div class="icons">
             <img v-if="item.chooseOption==(ind+1)" src="../../../assets/images/icon/success.png" alt="">
@@ -42,7 +42,7 @@
         </div>
       </div>
       <div v-if="$route.name!='prediction'&&!$route.path.includes('/f/')" @click.stop="toMore" class="p_li p_li_btns">
-        S11竞猜活动
+        {{item.predictionsTournament.name}}
       </div>
     </div>
     <new-dialog v-if="selectLine.optionName">
