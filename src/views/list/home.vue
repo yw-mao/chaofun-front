@@ -5,7 +5,8 @@
        :style="{ height: scrollHeight + 'px' }">
     <div>
       <div v-if="!ISPHONE" style="padding-top: 50px; display: block; background-color: white;">
-        <div style="height: 80px; background-color: #3BA8FF"></div>
+      <div v-if="forumInfo.bannerImageName" :style="{'height': '164px', padding: '8px, 16px', background: 'url(' + imgOrigin + forumInfo.bannerImageName + ')  no-repeat center / cover'} "></div>
+    <div v-else style="height: 80px; background-color: #3BA8FF"></div>
         <div class="forum_tab" >
           <div class="forum_desc">
             <div style="width:72px;height:72px;">
