@@ -17,12 +17,12 @@
         {{item.title}}
       </div> -->
       <div @click.stop="" class="detail_line" id="detail_line" :style="{width: ISPHONE ? clientWidth-24+'px' : '100%'}">
-        <div v-html="item.article.replace(/\n/g, '')"></div>
+        <!-- <div v-html="item.article.replace(/\n/g, '')"></div> -->
 
         <!-- <viewer :trigger="item.article"> -->
-        <!-- <div v-for="(_item,ins) in item.article.split('\n')" :key="ins">
+        <div v-for="(_item,ins) in item.article.split('\n')" :key="ins">
           <div v-html="_item"></div>
-        </div> -->
+        </div>
         <!-- </viewer> -->
       </div>
     </div>
