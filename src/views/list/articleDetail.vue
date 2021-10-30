@@ -267,9 +267,9 @@ export default {
     }
     if (window.history && window.history.pushState) {
       console.log(this.var.path404==this.$route.fullPath)
-      if(this.var.path404==this.$route.fullPath){
+      if (this.var.path404 == this.$route.fullPath) {
         history.pushState(null, null, '/');
-             window.addEventListener("popstate", this.onCloseModal, false);
+        window.addEventListener("popstate", this.onCloseModal, false);
       }
     }
     this.$EventBus.$on('eventRefresh', ()=>{
@@ -754,13 +754,12 @@ queryChildren (parent, list) {
       })
     },
     
-    back(){
+    back() {
       if(this.forumInfo&&this.forumInfo.id){
         this.centerDialogVisible = false;
       }else{
         location.href = 'https://chao.fun'
       }
-        
     },
     close(e){
       // 不存在的情况特殊处理
@@ -769,15 +768,20 @@ queryChildren (parent, list) {
         return;
       }
       localStorage.setItem("simple", JSON.stringify(this.pagedata));
-      if(localStorage.getItem('storedata')){
-          var obj = JSON.parse(localStorage.getItem('storedata'));
-          let {params,query} = obj.from;
-          query.time = new Date().getTime()
-          this.$router.replace({path: obj.from.path,params,query})
-      }else{
-          this.$router.replace({path: `/f/${this.forumInfo.id}`})
+      if (localStorage.getItem('storedata')) {
+        const obj = JSON.parse(localStorage.getItem('storedata'));
+        // TODO: 优化缓存方式
+        // 判断如果缓存论坛ID不一致那么不读取缓存
+        if (this.forumInfo.id !== obj.forumId) {
+          this.$router.replace({path: `/f/${this.forumInfo.id}`});
+          return;
+        }
+        const { params, query } = obj.from;
+        query.time = new Date().getTime()
+        this.$router.replace({path: obj.from.path,params, query});
+      } else {
+        this.$router.replace({path: `/f/${this.forumInfo.id}`});
       }
-        
     },
     doZanComment(v,item){
         if(v==1){
@@ -991,9 +995,9 @@ queryChildren (parent, list) {
     background: #fff;
     box-sizing: border-box;
     overflow-x: hidden;
-    .dialog_main_content{
-      // border: 1px solid #f1f1f1;
-    }
+    // .dialog_main_content{
+    //   // border: 1px solid #f1f1f1;
+    // }
 }
 .dialog_main2{
     // width: 1200px;
