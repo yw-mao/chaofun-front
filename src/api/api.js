@@ -1103,5 +1103,14 @@ export function loginWithWeChatOAuth(params) {
   })
 }
 
+export function getSelfRank(params) {
+  return request({
+    url: '/api/v0/forum/predictions_tournament/getSelfRank',
+    method: 'get',
+    params
+  })
+}
+
+
 /** 活动查询 */
 

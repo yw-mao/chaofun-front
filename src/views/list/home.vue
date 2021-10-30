@@ -285,6 +285,7 @@
         })
         localStorage.removeItem('simple')
       }
+      
     },
     mounted() {
       this.getGameInfo();
@@ -604,27 +605,28 @@
         });
       },
       load() {
-        if (
-          localStorage.getItem("storedata") &&
-          localStorage.getItem("spage") == this.$route.path
-        ) {
-          // var sdata = JSON.parse(localStorage.getItem("storedata"));
-          // this.lists = sdata.list;
-          // this.params.marker = sdata.marker;
-          // this.params.key = sdata.key;
-          // let tagInfo = JSON.parse(localStorage.getItem("tagInfo"));
-          // if (tagInfo && tagInfo.forumId == sdata.forumId) {
-          //   this.params.tagId = tagInfo.tagId;
-          //   localStorage.removeItem("tagInfo");
-          // }
-          // this.getForumTag();
-        } else {
-          if (this.ifcanget) {
-            // this.params.pageNum += 1;
-            // this.params.marker = '';
+        if (this.ifcanget) {
             this.getLists("first");
           }
-        }
+        // if (
+        //   localStorage.getItem("storedata") &&
+        //   localStorage.getItem("spage") == this.$route.path
+        // ) {
+        //   // var sdata = JSON.parse(localStorage.getItem("storedata"));
+        //   // this.lists = sdata.list;
+        //   // this.params.marker = sdata.marker;
+        //   // this.params.key = sdata.key;
+        //   // let tagInfo = JSON.parse(localStorage.getItem("tagInfo"));
+        //   // if (tagInfo && tagInfo.forumId == sdata.forumId) {
+        //   //   this.params.tagId = tagInfo.tagId;
+        //   //   localStorage.removeItem("tagInfo");
+        //   // }
+        //   // this.getForumTag();
+        // } else {
+        //   if (this.ifcanget) {
+        //     this.getLists("first");
+        //   }
+        // }
       },
     },
   };

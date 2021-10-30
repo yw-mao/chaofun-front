@@ -407,21 +407,22 @@ export default {
       });
     },
     load() {
-      if (
-        localStorage.getItem("storedata") &&
-        localStorage.getItem("spage") == this.$route.path
-      ) {
-        var data = JSON.parse(localStorage.getItem("storedata"));
-        this.lists = data.list;
-        this.params.marker = data.marker;
-        this.params.key = data.key;
-      } else {
-        if (this.ifcanget) {
-          // this.params.pageNum += 1;
-          // this.params.marker = '';
+      // if (
+      //   localStorage.getItem("storedata") &&
+      //   localStorage.getItem("spage") == this.$route.path
+      // ) {
+      //   var data = JSON.parse(localStorage.getItem("storedata"));
+      //   this.lists = data.list;
+      //   this.params.marker = data.marker;
+      //   this.params.key = data.key;
+      // } else {
+      //   if (this.ifcanget) {
+      //     this.getLists();
+      //   }
+      // }
+      if (this.ifcanget) {
           this.getLists();
         }
-      }
     },
   },
 };

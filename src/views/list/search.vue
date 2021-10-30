@@ -314,17 +314,21 @@ export default {
       }
     },
     load() {
-      if (localStorage.getItem("storedata")&&localStorage.getItem('spage')==this.$route.path) {
-        // this.lists = JSON.parse(localStorage.getItem("storedata")).list;
-        // this.params.pageNum = JSON.parse(
-        //   localStorage.getItem("storedata")
-        // ).pagenum;
-      } else {
-        if (this.ifcanget) {
+      // if (localStorage.getItem("storedata")&&localStorage.getItem('spage')==this.$route.path) {
+      //   // this.lists = JSON.parse(localStorage.getItem("storedata")).list;
+      //   // this.params.pageNum = JSON.parse(
+      //   //   localStorage.getItem("storedata")
+      //   // ).pagenum;
+      // } else {
+      //   if (this.ifcanget) {
+      //     this.params.pageNum += 1;
+      //     this.getLists();
+      //   }
+      // }
+      if (this.ifcanget) {
           this.params.pageNum += 1;
           this.getLists();
         }
-      }
     },
   },
 };

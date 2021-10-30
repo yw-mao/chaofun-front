@@ -140,13 +140,18 @@ export default {
         //需要执行的代码
       this.getScore()
     })
-    
+    this.getSelfRank();
   },
   created() {
     this.params.forumId = this.$route.params.forumId || this.forumId;
     this.getList();
   },
   methods: {
+    getSelfRank(){
+      api.getSelfRank().then(res=>{
+        
+      })
+    },
     joinConfirm(item, index) {
       this.doLoginStatus().then((res) => {
         if (res) {
