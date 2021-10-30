@@ -7,7 +7,7 @@
       <div :class="['article',{'article_phone': ISPHONE}]">
         <div v-html="filterContent(item.article.replace(/\n/g, ''))" v-if="/<[^>]+>/g.test(item.article)"></div>
         <div v-for="(_item,ins) in item.article.split('\n')" v-else :key="ins">
-          <div v-html="filterContent(_item)"></div>
+          <p v-html="filterContent(_item)"></p>
         </div>
         <div class="show_more">查看全文</div>
       </div>
@@ -23,7 +23,7 @@
 
         <!-- <viewer :trigger="item.article"> -->
         <div v-for="(_item,ins) in item.article.split('\n')" v-else :key="ins">
-          <div v-html="_item"></div>
+          <p v-html="_item"></p>
         </div>
         <!-- </viewer> -->
       </div>
