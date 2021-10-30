@@ -6,8 +6,8 @@
     <div>
       <div v-if="!ISPHONE" style="padding-top: 50px; display: block; background-color: white;">
         <div style="height: 80px; background-color: #3BA8FF"></div>
-        <div class="_3JDs8KEQIXSMn1bTF2ZqJ_" >
-          <div class="QscnL9OySMkHhGudEvEya">
+        <div class="forum_tab" >
+          <div class="forum_desc">
             <div style="width:72px;height:72px;">
               <img v-if="forumInfo.imageName" :src="imgOrigin+forumInfo.imageName + '?x-oss-process=image/resize,h_70'" class="Mh_Wl6YioFfBc9O1SQ4Jp">
             </div>
@@ -719,7 +719,7 @@
       border: 1px solid rgba(255, 147, 0, 0.3);
     }
   }
-  ._3JDs8KEQIXSMn1bTF2ZqJ_ {
+  .forum_tab {
     background-color: var(--newRedditTheme-body);
     display: -ms-flexbox;
     display: flex;
@@ -732,14 +732,10 @@
     padding: 0 16px 0 24px;
   }
 
-  .QscnL9OySMkHhGudEvEya {
-    -ms-flex-align: start;
-    align-items: flex-start;
-    display: -ms-flexbox;
+  .forum_desc {
     display: flex;
     padding-bottom: 16px;
     margin-top: -14px;
-    // background: red;
   }
   ._2OMsln4_sqrfHjufgGCeio, .Mh_Wl6YioFfBc9O1SQ4Jp {
     border-radius: 100%;
