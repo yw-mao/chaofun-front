@@ -5,22 +5,24 @@
         {{item.title}}
       </div> -->
       <div :class="['article',{'article_phone': ISPHONE}]">
-        <div v-for="(_item,ins) in item.article.split('\n')" :key="ins">
+        <div v-html="filterContent(item.article.replace(/\n/g, ''))" v-if="/<[^>]+>/g.test(item.article)"></div>
+        <div v-for="(_item,ins) in item.article.split('\n')" v-else :key="ins">
           <div v-html="filterContent(_item)"></div>
         </div>
         <div class="show_more">查看全文</div>
       </div>
     </div>
     
-    <div v-if="isDetail" class="item_article">
+    <div v-else class="item_article">
       <!-- <div class="title">
         {{item.title}}
       </div> -->
       <div @click.stop="" class="detail_line" id="detail_line" :style="{width: ISPHONE ? clientWidth-24+'px' : '100%'}">
-        <!-- <div v-html="item.article.replace(/\n/g, '')"></div> -->
+
+        <div v-html="item.article.replace(/\n/g, '')" v-if="/<[^>]+>/g.test(item.article)"></div>
 
         <!-- <viewer :trigger="item.article"> -->
-        <div v-for="(_item,ins) in item.article.split('\n')" :key="ins">
+        <div v-for="(_item,ins) in item.article.split('\n')" v-else :key="ins">
           <div v-html="_item"></div>
         </div>
         <!-- </viewer> -->
