@@ -198,7 +198,7 @@
             type: "warning",
             // position: center,
           }).then(() => {
-            let params = {postId: this.item.postId,option: this.vs+1};
+            let params = {postId: this.item.postId,option: vs +1};
               api.markPredictionRight(params).then(r => {
                 api.getPostInfo({postId: this.item.postId}).then(res=>{
                   // this.item = res.data;
