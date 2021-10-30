@@ -186,6 +186,7 @@ export default {
   },
   watch: {
     "$route.query.q"(v) {
+      
       this.lists = [];
       this.keyword = v;
       this.params.keyword = v;
@@ -314,10 +315,10 @@ export default {
     },
     load() {
       if (localStorage.getItem("storedata")&&localStorage.getItem('spage')==this.$route.path) {
-        this.lists = JSON.parse(localStorage.getItem("storedata")).list;
-        this.params.pageNum = JSON.parse(
-          localStorage.getItem("storedata")
-        ).pagenum;
+        // this.lists = JSON.parse(localStorage.getItem("storedata")).list;
+        // this.params.pageNum = JSON.parse(
+        //   localStorage.getItem("storedata")
+        // ).pagenum;
       } else {
         if (this.ifcanget) {
           this.params.pageNum += 1;

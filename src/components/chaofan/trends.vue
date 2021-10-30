@@ -286,6 +286,22 @@ import forwardH5 from '../h5/forward'
    components: {
      forward,forwardH5,videoDialog,itemTopTitle,itemLink,itemImage,itemGif,itemIframeVideo,itemArticle,itemVote,itemForwardTitle,itemVideo
    }, 
+   activated(){
+      console.log('666',this.$route.query)
+      if(this.$route.query.time){
+        this.toPosition();
+      }
+      // if(localStorage.getItem('simple')){
+      //   let data = JSON.parse(localStorage.getItem('simple'));
+
+      //   this.lists.forEach((its,index)=>{
+      //     if(data.postId==its.postId){
+      //       this.lists.splice(index,1,data)
+      //     }
+      //   })
+      //   localStorage.removeItem('simple')
+      // }
+    },
    created() {
     this.top = localStorage.getItem('storedata')?JSON.parse(localStorage.getItem('storedata')).top:0;
     this.lists.forEach(item=>{
@@ -458,7 +474,7 @@ import forwardH5 from '../h5/forward'
          }
          this.canTo = false
          let obj ={
-            list: this.lists
+            // list: this.lists
           };
           let top = this.$('.infinite-list').scrollTop();
           console.log('top',top);

@@ -487,18 +487,23 @@ export default {
   directives: {},
   methods: {
     updateList(index, item) {
-      let data = JSON.parse(localStorage.getItem("storedata"));
-      data.list.forEach((it, i) => {
-        console.log(it);
-        console.log(i);
-        if (item.postId == it.postId) {
-          // it = item;
-          data.list.splice(i, 1, item);
-        }
+      this.$EventBus.$emit("updateItem", {
+        type: 'update',
+        postId: item.postId,
+        item: item,
       });
-      // data.list.splice(this.index,1,item);
-      localStorage.setItem("storedata", JSON.stringify(data));
-      console.log("data", data);
+      // let data = JSON.parse(localStorage.getItem("storedata"));
+      // data.list.forEach((it, i) => {
+      //   console.log(it);
+      //   console.log(i);
+      //   if (item.postId == it.postId) {
+      //     // it = item;
+      //     data.list.splice(i, 1, item);
+      //   }
+      // });
+      // // data.list.splice(this.index,1,item);
+      // localStorage.setItem("storedata", JSON.stringify(data));
+      // console.log("data", data);
       
     },
     doFocued(bool, id) {
@@ -555,13 +560,17 @@ export default {
         api.deletePost({ postId: item.postId }).then((res) => {
           if (res.success) {
             this.$message.success("已删除");
-            var obj = JSON.parse(localStorage.getItem("storedata"));
-            obj.list.forEach((i, ind) => {
-              if (i.postId == item.postId) {
-                obj.list.splice(ind, 1);
-              }
+            this.$EventBus.$emit("updateItem", {
+              type: 'delete',
+              postId: item.postId
             });
-            localStorage.setItem("storedata", JSON.stringify(obj));
+            // var obj = JSON.parse(localStorage.getItem("storedata"));
+            // obj.list.forEach((i, ind) => {
+            //   if (i.postId == item.postId) {
+            //     obj.list.splice(ind, 1);
+            //   }
+            // });
+            // localStorage.setItem("storedata", JSON.stringify(obj));
             this.close();
           }
         });

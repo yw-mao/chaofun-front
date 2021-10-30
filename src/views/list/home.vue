@@ -346,6 +346,16 @@
         //需要执行的代码
         this.lists.splice(params.index,1,params.item)
       });
+      this.$EventBus.$on("updateItem", (params) => {
+        //需要执行的代码
+        if(params.type=='delete'){
+          let index = this.lists.findIndex(i=>i.postId==params.postId);
+          this.lists.splice(index,1);
+        }else if(params.type=='update'){
+          let index = this.lists.findIndex(i=>i.postId==params.postId);
+          this.lists.splice(index,1,params.item);
+        }
+      });
     },
 
     created() {
@@ -598,16 +608,16 @@
           localStorage.getItem("storedata") &&
           localStorage.getItem("spage") == this.$route.path
         ) {
-          var sdata = JSON.parse(localStorage.getItem("storedata"));
-          this.lists = sdata.list;
-          this.params.marker = sdata.marker;
-          this.params.key = sdata.key;
-          let tagInfo = JSON.parse(localStorage.getItem("tagInfo"));
-          if (tagInfo && tagInfo.forumId == sdata.forumId) {
-            this.params.tagId = tagInfo.tagId;
-            localStorage.removeItem("tagInfo");
-          }
-          this.getForumTag();
+          // var sdata = JSON.parse(localStorage.getItem("storedata"));
+          // this.lists = sdata.list;
+          // this.params.marker = sdata.marker;
+          // this.params.key = sdata.key;
+          // let tagInfo = JSON.parse(localStorage.getItem("tagInfo"));
+          // if (tagInfo && tagInfo.forumId == sdata.forumId) {
+          //   this.params.tagId = tagInfo.tagId;
+          //   localStorage.removeItem("tagInfo");
+          // }
+          // this.getForumTag();
         } else {
           if (this.ifcanget) {
             // this.params.pageNum += 1;
