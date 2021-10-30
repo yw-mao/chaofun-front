@@ -9,13 +9,12 @@
         <div class="forum_tab" >
           <div class="forum_desc">
             <div style="width:72px;height:72px;">
-              <img v-if="forumInfo.imageName" :src="imgOrigin+forumInfo.imageName + '?x-oss-process=image/resize,h_70'" class="Mh_Wl6YioFfBc9O1SQ4Jp">
+              <img v-if="forumInfo.imageName" :src="imgOrigin+forumInfo.imageName + '?x-oss-process=image/resize,h_70'" class="forum_info_icon">
             </div>
-            
-            <div class="_3I4Wpl_rl6oTm02aWPZayD ">
-              <div class="_3TG57N4WQtubLLo8SbAXVF">
+            <div class="box_class">
+              <div style="box-sizing: border-box">
                 <div style="box-sizing: border-box; display:flex;align-items:center;">
-                  <h1 class="_2yYPPW47QxD4lFQTKpfpLQ">{{forumInfo.name}}</h1>
+                  <h1 class="forum_info_name">{{forumInfo.name}}</h1>
                   <div style=" padding-left: 20px; ">
                     <button class="notJoin-button" @click="inout(1)" v-if="!forumInfo.joined">
                       加入板块
@@ -25,7 +24,7 @@
                     </button>
                   </div>
                 </div>
-                <h2 class="_33aRtz9JtW0dIrBNKFAl0y">{{forumInfo.desc}}</h2>
+                <h2 class="forum_desc_text">{{forumInfo.desc}}</h2>
               </div>
 
             </div>
@@ -720,8 +719,6 @@
     }
   }
   .forum_tab {
-    background-color: var(--newRedditTheme-body);
-    display: -ms-flexbox;
     display: flex;
     -ms-flex-direction: column;
     flex-direction: column;
@@ -737,7 +734,7 @@
     padding-bottom: 16px;
     margin-top: -14px;
   }
-  ._2OMsln4_sqrfHjufgGCeio, .Mh_Wl6YioFfBc9O1SQ4Jp {
+  .forum_info_icon {
     border-radius: 100%;
     border: 4px solid #fff;
     display: inline-block;
@@ -746,33 +743,21 @@
     background-color: #fff;
     background-size: cover;
   }
-  ._3TG57N4WQtubLLo8SbAXVF, ._3I4Wpl_rl6oTm02aWPZayD {
+  .box_class {
     box-sizing: border-box;
-  }
-  ._3I4Wpl_rl6oTm02aWPZayD {
-    -ms-flex-align: start;
     align-items: flex-start;
-    display: -ms-inline-flexbox;
     display: inline-flex;
-    -ms-flex: 1;
     flex: 1;
     padding-left: 16px;
     margin-top: 24px;
     position: relative;
     width: calc(100% - 80px);
-
   }
-  ._2yYPPW47QxD4lFQTKpfpLQ {
-    /*color: var(--newRedditTheme-bodyText);*/
-    /*-ms-flex: 1;*/
-    /*flex: 1;*/
+  .forum_info_name {
     font-size: 28px;
     font-weight: 700;
-    /*overflow: hidden;*/
-    /*text-overflow: ellipsis;*/
-    /*display: inline-block;*/
   }
-  ._33aRtz9JtW0dIrBNKFAl0y {
+  .forum_desc_text {
     font-size: 14px;
     font-weight: 500;
     line-height: 18px;
@@ -780,71 +765,7 @@
     color: var(--newRedditTheme-metaText);
   }
 
-  ._1Q_zPN5YtTLQVG72WhRuf3 {
-    /*width: 96px;*/
-    /*margin: 0;*/
-    /*padding: 0;*/
-    /*border: 0;*/
-    /*font-size: 100%;*/
-    /*font: inherit;*/
-    /*vertical-align: baseline;*/
-  }
-  ._1cAYKT6f3GM-_aZei--pxM {
-    margin-left: 8px;
-  }
-  div._15Pk_bZ2XZNa9zBvnxq6HX {
-    background: var(--newRedditTheme-body);
-    position: static;
-    margin-left: -16px;
-    margin-top: -4px;
-  }
-  ._1gVVmSnHZpkUgVShsn7-ua {
-    margin: 0 auto;
-    bottom: 0;
-    left: 0;
-    right: 0;
-  }
-  ._1_TJAX-8zAT3vVN1Iz7cys {
-    -ms-flex-align: center;
-    align-items: center;
-    display: -ms-flexbox;
-    display: flex;
-    -ms-flex-direction: row;
-    flex-direction: row;
-    -ms-flex-pack: justify;
-    justify-content: space-between;
-    margin: 0 auto;
-    min-width: 260px;
-  }
 
-
-  div._15Pk_bZ2XZNa9zBvnxq6HX {
-    background: var(--newRedditTheme-body);
-    position: static;
-    margin-left: -16px;
-    margin-top: -4px;
-  }
-  ._1gVVmSnHZpkUgVShsn7-ua {
-    margin: 0 auto;
-    bottom: 0;
-    left: 0;
-    right: 0;
-  }
-  ._1_TJAX-8zAT3vVN1Iz7cys {
-    -ms-flex-align: center;
-    align-items: center;
-    display: -ms-flexbox;
-    display: flex;
-    -ms-flex-direction: row;
-    flex-direction: row;
-    -ms-flex-pack: justify;
-    justify-content: space-between;
-    margin: 0 auto;
-    min-width: 260px;
-  }
-  ._1_TJAX-8zAT3vVN1Iz7cys {
-    padding: 0 16px;
-  }
 
 
 
