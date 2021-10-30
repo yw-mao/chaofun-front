@@ -689,7 +689,7 @@ export default {
           }
           this.canTo = false;
           let obj = {
-            list: this.lists,
+            // list: this.lists,
           };
           let top = this.$(".infinite-list").scrollTop();
           console.log("top", top);

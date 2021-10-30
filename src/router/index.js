@@ -195,7 +195,7 @@ export const constantRoutes = [
         path: '/search',
         name: 'search',
         component: () => import('@/views/list/search'),
-        meta: { title: '',keepAlive: false,},
+        meta: { title: '',keepAlive: true,},
         hidden: true
       },
       {
