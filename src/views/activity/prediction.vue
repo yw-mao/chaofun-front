@@ -21,10 +21,12 @@
               <div class="top_info">
                 <div class="t_left">
                     <div class="b_title">{{GameInfo.name}}</div>
+                    <div v-if="GameInfo.desc" class="b_desc">{{GameInfo.desc}}</div>
                 </div>
                 <div class="t_right">
                   <div @click="joinConfirm" v-if="userData&&!userData.userId" class="btnss">立即参与</div>
                   <div v-if="userData&&userData.userId">我的积分： {{userData.restTokens}}</div>
+                  <div v-if="userData&&userData.userId" style="margin-top:10px">积分排名：{{selfRank}}</div>
                 </div>
               </div>
 
@@ -98,7 +100,8 @@ export default {
       userData: null,
       GameInfo: null,
       ranks: [],
-      predictionsTournamentId: ''
+      predictionsTournamentId: '',
+      selfRank: 0
     };
   },
   components: {
@@ -148,8 +151,10 @@ export default {
   },
   methods: {
     getSelfRank(){
-      api.getSelfRank().then(res=>{
-        
+      api.getSelfRank({predictionsTournamentId: this.predictionsTournamentId}).then(res=>{
+        if(res.data){
+          this.selfRank = res.data;
+        }
       })
     },
     joinConfirm(item, index) {
@@ -210,8 +215,7 @@ export default {
             let params = {
                 predictionsTournamentId: res.data.id,
             }
-            this.getScore();
-            this.getTotalRank();
+            
             api.predictionsTournament(params).then(res=>{
                 if (res.data.marker && res.data.length != 0) {
                     this.ifcanget = true;
@@ -233,6 +237,9 @@ export default {
                 }
                 this.lists.push(...res.data);
             })
+            this.getScore();
+            this.getTotalRank();
+            this.getSelfRank();
           }
           
         })
@@ -253,14 +260,29 @@ export default {
     justify-content: space-between;
     background: url('https://i.chao.fun/biz/0dd39345f731e512a2308a9cf20b8926.png');
     .t_left{
-        flex: 0 0 250px;
+        flex: 0 0 200px;
         .s_title{
             font-size: 16px;
+            
         }
         .b_title{
             font-size: 30px;
             line-height: 36px;
             margin-top: 10px;
+            overflow : hidden;
+
+            text-overflow: ellipsis;
+
+            display: -webkit-box;
+
+            -webkit-line-clamp: 2;
+
+            -webkit-box-orient: vertical;
+            height: 74px;
+        }
+        .b_desc{
+          font-size: 18px;
+          margin-top: 10px;
         }
     }
     .btnss{
