@@ -79,12 +79,45 @@
 
           <div @click.stop="">
             <!-- 视频 -->
+            
             <itemGif
-              @toDetail="toDetail"
-              v-if="item.type == 'gif'"
-              :isDetail="false"
-              :item="item"
+                @toDetail="toDetail"
+                v-if="!ISPHONE&&item.type == 'gif'"
+                :isDetail="false"
+                :item="item"
             ></itemGif>
+            <div v-if="ISPHONE&&item.type == 'gif'" class="inner_videoc">
+              <div v-if="!item.play" class="item_video">
+                <!-- <div @click.stop="toDetail(item)" class="title">
+                  {{ item.title }}
+                </div> -->
+                <div
+                  @click="playVideo(index, item, 0)"
+                  :class="['inner_prev', { inner_prev_phone: ISPHONE }]"
+                >
+                  <img
+                    class="coverss"
+                    :src="
+                      imgOrigin +item.cover
+                    "
+                    alt=""
+                  />
+                  <img
+                    class="inner_play"
+                    src="../../assets/images/bg/play.png"
+                    alt=""
+                  />
+                </div>
+              </div>
+              <!-- v-if="item.type == 'gif'" -->
+              <itemGif
+                @toDetail="toDetail"
+                @toPause="playVideo"
+                v-if="item.play"
+                :isDetail="false"
+                :item="item"
+              ></itemGif>
+            </div>
             <!-- 内部视频 -->
             <div v-if="item.type == 'inner_video'" class="inner_videoc">
               <div v-if="!item.play" class="item_video">
@@ -469,7 +502,7 @@
       v-if="ISPHONE && dialogs.dialogVisible"
       :datas="dialogs"
     ></forward-h5>
-    <videoDialog v-if="shows" :videoData="videoData"></videoDialog>
+    <!-- <videoDialog v-if="shows" :videoData="videoData"></videoDialog> -->
   </div>
 </template>
 
@@ -573,7 +606,7 @@ export default {
       ? JSON.parse(localStorage.getItem("storedata")).top
       : 0;
     this.lists.forEach((item) => {
-      if (item.type == "video") {
+      if (item.type == "video"||item.type == "gif") {
         item.play = false;
       }
     });

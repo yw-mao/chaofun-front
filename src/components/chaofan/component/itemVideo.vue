@@ -12,6 +12,9 @@
           webkit-playsinline="true"
           x5-video-player-type="h5"
           playsinline="true"
+          
+          x5-video-player-fullscreen="true"
+          x5-video-orientation="portraint"
           controls
           :src="imgOrigin + item.video"
           alt=""

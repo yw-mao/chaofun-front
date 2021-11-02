@@ -1,7 +1,13 @@
 <template>
  <div>  
      <div class="covers">
-         <video class="videos" autoplay controls :src="videoData"></video>
+         <video class="videos" muted
+          webkit-playsinline="true"
+          x5-video-player-type="h5"
+          playsinline="true"
+          
+          x5-video-player-fullscreen="true"
+          x5-video-orientation="portraint" autoplay controls :src="videoData"></video>
      </div>
  </div>
 </template>
@@ -16,7 +22,8 @@
          },
          options: [],
          loading: false,
-         targetForumId: ''
+         targetForumId: '',
+         autoplay: false
      }
    },
    props: {
@@ -37,7 +44,7 @@
    created() {
    },
    mounted() {
-    
+    this.autoplay = true;
    },
    methods: {
     
