@@ -79,13 +79,15 @@
 
           <div @click.stop="">
             <!-- 视频 -->
+            <div v-if="!ISPHONE&&item.type == 'gif'">
+              <itemGif
+                  @toDetail="toDetail"
+                  
+                  :isDetail="false"
+                  :item="item"
+              ></itemGif>
+            </div>
             
-            <itemGif
-                @toDetail="toDetail"
-                v-if="!ISPHONE&&item.type == 'gif'"
-                :isDetail="false"
-                :item="item"
-            ></itemGif>
             <div v-if="ISPHONE&&item.type == 'gif'" class="inner_videoc">
               <div v-if="!item.play" class="item_video">
                 <!-- <div @click.stop="toDetail(item)" class="title">
@@ -606,7 +608,7 @@ export default {
       ? JSON.parse(localStorage.getItem("storedata")).top
       : 0;
     this.lists.forEach((item) => {
-      if (item.type == "video"||item.type == "gif") {
+      if (item.type == "video"||(this.ISPHONE&&item.type == "gif")) {
         item.play = false;
       }
     });

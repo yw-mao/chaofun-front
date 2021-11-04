@@ -6,7 +6,7 @@
         </div> -->
         <div :id="'video' + item.postId" class="video">
             <video :class="['compatibleStyle',isDetail?'video2':'']" 
-              style="object-fit:fill"
+              
               webkit-playsinline="true"  
               x-webkit-airplay="true" 
               playsinline="true"  
@@ -16,7 +16,7 @@
               controls
               autoplay
               loop
-              preload="preload"
+              
               :src="imgOrigin+item.imageName" 
               alt="">
             </video>
@@ -53,7 +53,7 @@ import * as api from '@/api/api'
    created() {
    },
    mounted() {
-    if (document.getElementById("container")) {
+    if (this.ISPHONE&&document.getElementById("container")) {
       let self = this;
       document
         .getElementById("container")
