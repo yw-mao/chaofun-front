@@ -260,7 +260,8 @@ export default {
     justify-content: space-between;
     background: url('https://i.chao.fun/biz/0dd39345f731e512a2308a9cf20b8926.png');
     .t_left{
-        flex: 0 0 200px;
+        flex: 0 0 1;
+        margin-right: 30px;
         .s_title{
             font-size: 16px;
             

@@ -73,8 +73,8 @@
          <span v-if="!items.reason">请阅读炒饭和分区发帖规范。</span>
        </div>
      </div>
-   <div v-if="items.type=='text_notice'" class="zan">
-     <div class="item">
+   <div v-if="items.type=='text_notice'" @click="toLinks(items)" class="zan links">
+     <div @click="toLinks(items)" class="item">
        <span>{{items.text}}</span>
      </div>
    </div>
@@ -108,6 +108,11 @@ import moment from 'moment'
      
    },
    methods: {
+       toLinks(item){
+           if(item.link){
+               window.open(item.link,'_blank')
+           }
+       },
        toDetail(item){
             // this.$router.push({name: 'articleDetail',params:{postId: item.post.postId}})
             let routeData = this.$router.resolve({
@@ -169,5 +174,11 @@ import moment from 'moment'
  }
  .tab{
      color: rgb(255, 147, 0);
+ }
+ .links{
+     cursor: pointer;
+     &:hover{
+         color: #1890ff;
+     }
  }
 </style>

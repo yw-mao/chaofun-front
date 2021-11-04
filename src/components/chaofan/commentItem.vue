@@ -79,7 +79,7 @@
                 v-on:focus="inputFocus" @keyup.native="bindInput" 
                 v-on:blur="inputBlur" type="textarea" 
                 v-model="comment" class="textarea" 
-                :placeholder="replayItem?'我对'+replayItem.userInfo.userName+'说：':'发表你的想法'" 
+                :placeholder="replayItem?'我对'+replayItem.userInfo.userName+'说：'+'(Ctrl+V 可粘贴图片)':'发表你的想法'+'(Ctrl+V 可粘贴图片)'" 
                 :autosize="{ minRows: 2, maxRows: 4}">
                 </el-input>
                 <div class="reply_button" v-loading="imagesUploading">
@@ -388,13 +388,21 @@ export default {
             this.$emit('refreshDelete',item)
         },
         deleteComment(item){
-            api.deleteComment({commentId:item.id}).then(res=>{
-                if(res.success){
-                    this.$toast('删除成功');
-                    this.refreshDelete(item);
-                    // this.treeData.splice(index,1);
-                }
-            })
+            this.$confirm('此操作将删除此评论, 是否继续?', '温馨提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                customClass:'messageBox',
+                type: 'warning'
+            }).then(() => {
+                api.deleteComment({commentId:item.id}).then(res=>{
+                    if(res.success){
+                        this.$toast('删除成功');
+                        this.refreshDelete(item);
+                        // this.treeData.splice(index,1);
+                    }
+                })
+            }).catch(() => {});
+            
         },
         toSub(){
             if(this.canSub){
@@ -566,6 +574,8 @@ export default {
             .username{
                 color: #1890ff;
                 cursor: pointer;
+                margin-left: 6px;
+                line-height: 24px;
                 &:hover{
                     text-decoration: underline;
                 }
@@ -743,5 +753,13 @@ export default {
 }
 .time {
     cursor: pointer;
+}
+/deep/ .messageBox{
+    width: auto !important;
+}
+</style>
+<style>
+.messageBox{
+    max-width: 80%;
 }
 </style>
