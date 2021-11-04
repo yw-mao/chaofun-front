@@ -128,7 +128,7 @@ export default {
           value: 'new'
         },
         {
-          label: '热评',
+          label: '新评',
           value: 'comment'
         },
       ],

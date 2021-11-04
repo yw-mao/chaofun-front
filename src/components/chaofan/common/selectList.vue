@@ -64,7 +64,7 @@
             choose: false,
           },
           {
-            label: '热评',
+            label: '新评',
             value: 'comment',
             choose: false,
           },

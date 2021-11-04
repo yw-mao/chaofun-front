@@ -138,7 +138,7 @@ export default {
           value: "hot",
         },
         {
-          label: "热评",
+          label: "新评",
           value: "comment",
         },
         {
