@@ -418,7 +418,7 @@ export default {
           return (
             this.imgOrigin +
             item["video"] +
-            "?x-oss-process=video/snapshot,t_0,m_fast,ar,h_500"
+            "?x-oss-process=video/snapshot,t_0,m_fast,ar_auto,h_500"
           );
           break;
         case "article":

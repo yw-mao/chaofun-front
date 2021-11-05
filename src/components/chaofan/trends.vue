@@ -46,7 +46,7 @@
                           <img
                             class="coverss"
                             :src="
-                              imgOrigin + item.postInfo.video + '?x-oss-process=video/snapshot,t_0,m_fast,ar'
+                              imgOrigin + item.postInfo.video + '?x-oss-process=video/snapshot,t_0,m_fast,ar_auto'
                             "
                             alt=""
                           />

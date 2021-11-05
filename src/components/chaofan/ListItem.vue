@@ -135,7 +135,7 @@
                     :src="
                       imgOrigin +
                       item.video +
-                      '?x-oss-process=video/snapshot,t_0,m_fast,ar'
+                      '?x-oss-process=video/snapshot,t_0,m_fast,ar_auto'
                     "
                     alt=""
                   />
