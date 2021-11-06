@@ -95,7 +95,8 @@ export function uploadImage(params) {
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded'
     },
-    data: params
+    data: params,
+    timeout: 2 * 60 * 1000, // 上传文件最大支持2分钟
   })
 }
 
