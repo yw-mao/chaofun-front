@@ -86,13 +86,26 @@ export default {
       const formdata = new FormData();
       formdata.append('file', file);
       formdata.append('fileName', file.name);
-      const result = await uploadImage(formdata);
-      this.loading = false;
-      if (!result.success) {
-        this.$message.error(res.errorMessage);
-        return;
+      try {
+        const result = await uploadImage(formdata);
+        if (!result) {
+          this.$message.error('网络错误或文件过大，请重试上传！');
+          this.loading = false;
+          return;
+        }
+        if (!result.success) {
+          this.$message.error(result.errorMessage);
+          this.loading = false;
+          return;
+        }
+        this.loading = false;
+        return `${this.imgOrigin}${result.data}`;
+      } catch (error) {
+        console.error(error);
+        this.$message.error('网络错误或文件过大，请重试上传！');
       }
-      return `${this.imgOrigin}${result.data}`;
+      this.loading = false;
+     
     },
     // 创建全屏按钮
     createFullscreenButton() {

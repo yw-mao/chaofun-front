@@ -308,6 +308,9 @@
       this.getForum().then(() => {
         this.getForumCategories();
       });
+      
+      // 自动聚焦标题
+      this.$refs.title.focus();
     },
     beforeDestroy() {
     },
