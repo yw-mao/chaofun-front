@@ -596,7 +596,7 @@
           if (res.data.posts.length === 0) {
             this.loadAll = true;
           }
-          if (params.order == "hot") {
+          if (params.order == "hot"||params.order == "comment") {
             params.key = res.data.key;
           } else {
             delete params.key;
