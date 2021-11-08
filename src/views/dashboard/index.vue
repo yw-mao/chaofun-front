@@ -388,7 +388,7 @@ export default {
         if (res.data.posts.length < this.params.pageSize) {
           this.loadAll = true;
         }
-        if (params.order == "hot") {
+        if (params.order == "hot"||params.order == "comment") {
           params.key = res.data.key;
         } else {
           delete params.key;
