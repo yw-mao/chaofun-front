@@ -119,12 +119,16 @@
           
           <div class="main_center">
             <div v-for="(item,index) in tableList" :key="index" class="table_item">
-              <div @click="toggleTable(item)" class="table_title">{{item.name}} <i :class="item.show?'el-icon-minus':'el-icon-plus'"></i></div>
-              <div @click="toggleTable(item)" class="table_desc">{{item.desc}}</div>
-              <div v-show="item.show" class="table_main">
+              <div class="table_title">
+                <i @click="checkoutTable(1)" :class="['el-icon-caret-left', 'iconsa',tableIndex==0?'disabled':'']"></i>
+                <div class="t_name">{{item.name}}</div>
+                <i @click="checkoutTable(2)" :class="['el-icon-caret-right', 'iconsa',tableIndex==tableList.length-1?'disabled':'']"></i>
+              </div>
+              <!-- <div @click="toggleTable(item)" class="table_desc">{{item.desc}}</div> -->
+              <div v-if="tables.table.length" class="table_main">
                 <el-table
 
-                  :data="item.table"
+                  :data="tables.table"
                   style="width: 100%"
                   :row-class-name="tableRowClassName">
                   <el-table-column width="50" align="center">
@@ -133,7 +137,7 @@
                     </template>
                   </el-table-column>
                   <el-table-column
-                    v-for="(it,inds) in item.header"
+                    v-for="(it,inds) in tables.header"
                     :key="inds"
                     :label="it"
                     >
@@ -248,7 +252,11 @@
         tagList: [],
         tagCountList: [],
         GameInfo: '',
-        tableList: []
+        tableList: [],
+        tables: {
+          table: []
+        },
+        tableIndex: 0,
       };
     },
     components: {
@@ -380,6 +388,22 @@
       this.load();
     },
     methods: {
+      checkoutTable(v){
+        if(v==1){
+          if(this.tableIndex>0){
+            this.tableIndex -= 1;
+            this.toggleTable()
+          }
+        }else{
+          
+          if(this.tableIndex+1<(this.tableList.length)){
+            this.tableIndex += 1;
+            debugger
+            this.toggleTable()
+          }
+        }
+        
+      },
       tableRowClassName({row, rowIndex}) {
         if (rowIndex %2== 1) {
           return 'warning-row success-row';
@@ -388,23 +412,26 @@
         }
         return '';
       },
-      toggleTable(item){
-        item.show = !item.show;
-        if(!item.table.length){
-          api.tableGet({tableId: item.id}).then(res=>{
+      toggleTable(){
+        
+        // if(!item.table.length){
+          api.tableGet({tableId: this.tableList[this.tableIndex].id}).then(res=>{
             let lines = res.data.data.split('\n') // 1️⃣
             let header = lines[0].split(',') // 2️⃣
             let output = lines.slice(1).map(line => {
               let fields = line.split(',') // 3️⃣
               return Object.fromEntries(header.map((h, i) => [h, fields[i]])) // 4️⃣
             })
-            item.header = header;
-            item.table = output;
+            
+            this.tables = {
+              header,
+              table: output
+            };
 
             console.log(output)
             console.log(res);
           })
-        }
+        // }
       },
       getGameInfo(){
         api.predictionsGet({forumId: this.params.forumId}).then(res=>{
@@ -422,6 +449,7 @@
             // item.desc = '41547878'
           })
           this.tableList = res.data;
+          this.toggleTable(this.tableList[0])
         })
       },
       checkoutTab(v){
@@ -778,8 +806,15 @@
     color: var(--newRedditTheme-metaText);
   }
 
-
-
+.iconsa{
+  font-size:28px;
+  line-height:30px;
+  cursor: pointer;
+  
+}
+.disabled{
+  color: #ddd !important;
+}
 
 
   ._2iuoyPiKHN3kfOoeIQalDT {
@@ -829,6 +864,11 @@
     font-weight: bold;
     margin-bottom: 6px;
     line-height: 30px;
+    display: flex;
+    .t_name{
+      flex: 1;
+      text-align: center;
+    }
     i{
       float: right;
       color: #999;
