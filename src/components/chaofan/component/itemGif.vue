@@ -16,7 +16,7 @@
               controls
               autoplay
               loop
-              
+              muted
               :src="imgOrigin+item.imageName" 
               alt="">
             </video>

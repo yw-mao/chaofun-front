@@ -117,7 +117,8 @@ export default {
       count: 5,
       lists: [],
       params: {
-        pageSize: 40,
+        onlyNew: false,
+        pageSize: 30,
         marker: "",
         order:
           localStorage.getItem("chao.fun.timeline.order") == null
@@ -229,7 +230,11 @@ export default {
     if (document.body.clientWidth < 700) {
       this.isPhone = true;
     }
-    
+    if(this.$store.state.user.listMode == 'normal'&&this.params.pageSize!=20){
+      this.params.pageSize = 20
+    }else{
+      this.params.pageSize = 30
+    }
     this.keyword = this.$route.query.q;
     this.toPosition();
     // console.log('scrollHeight',this.scrollHeight)
@@ -256,6 +261,7 @@ export default {
     });
   },
   created() {
+    this.params.onlyNew = localStorage.getItem('onlyNew')=='true'?true:false;
     // 小程序复制链接
     console.log(this.$route.meta);
     if(this.$route.query.code){
@@ -373,6 +379,11 @@ export default {
       this.getLists();
     },
     getLists() {
+      if(this.$store.state.user.listMode == 'normal'&&this.params.pageSize!=20){
+        this.params.pageSize = 20
+      }else{
+        this.params.pageSize = 30
+      }
       let params = this.params;
       this.ifcanget = false;
 

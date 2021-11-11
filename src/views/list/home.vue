@@ -56,7 +56,7 @@
                 :key="index"
                 :class="['tag_item', { tag_item_active: item.id == params.tagId }]"
             >
-              # {{ item.name }} <span v-if="tagCountList.length">{{doTagCount(item)}}</span>
+              # {{ item.name }}<span v-if="tagCountList.length">{{doTagCount(item)}}</span>
             </div>
           </div>
         </div>
@@ -185,8 +185,9 @@
         lists: [],
         forumId: "",
         params: {
+          onlyNew: false,
           forumId: "",
-          pageSize: 40,
+          pageSize: 30,
           order:
             localStorage.getItem("chao.fun.timeline.order") == null
               ? "hot"
@@ -296,6 +297,12 @@
       
     },
     mounted() {
+      if(this.$store.state.user.listMode == 'normal'&&this.params.pageSize!=20){
+        this.params.pageSize = 20
+      }else{
+        this.params.pageSize = 30
+      }
+      
       this.getGameInfo();
       this.getTableList();
       console.log(777)
@@ -368,6 +375,7 @@
     },
 
     created() {
+      this.params.onlyNew = localStorage.getItem('onlyNew')=='true'?true:false;
       console.log(555)
       let id = this.$route.path.split("/")[2];
       if (!isNaN(id)) {
@@ -398,7 +406,7 @@
           
           if(this.tableIndex+1<(this.tableList.length)){
             this.tableIndex += 1;
-            debugger
+            
             this.toggleTable()
           }
         }
@@ -414,7 +422,7 @@
       },
       toggleTable(){
         
-        // if(!item.table.length){
+        if(this.tableList.length){
           api.tableGet({tableId: this.tableList[this.tableIndex].id}).then(res=>{
             let lines = res.data.data.split('\n') // 1️⃣
             let header = lines[0].split(',') // 2️⃣
@@ -431,7 +439,7 @@
             console.log(output)
             console.log(res);
           })
-        // }
+        }
       },
       getGameInfo(){
         api.predictionsGet({forumId: this.params.forumId}).then(res=>{
@@ -597,6 +605,11 @@
         });
       },
       getLists(v) {
+        if(this.$store.state.user.listMode == 'normal'&&this.params.pageSize!=20){
+          this.params.pageSize = 20
+        }else{
+          this.params.pageSize = 30
+        }
         let params = this.params;
         this.ifcanget = false;
         if (v == "first") {
@@ -745,7 +758,7 @@
     font-weight: bold;
     padding-left: 5px;
     span{
-      font-size: 13px;
+      font-size: 12px;
     }
     &:hover {
       border: 1px solid #f1f1f1;

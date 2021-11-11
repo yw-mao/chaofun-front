@@ -503,7 +503,8 @@ ul{
     }
   }
   .c_nav_item_active{
-    background: #ddd;
+    // background: #ddd;
+    font-weight: bold;
     color: #16679f;
     .img2{
       display: inline-block;

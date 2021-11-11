@@ -15,7 +15,14 @@
             <img v-show="index==3" class="img2" src="../../../assets/newicon/up_a.png" alt="">
             {{item.label}}
         </div>
-        <el-select v-if="!ISPHONE&&params.order ==='ups'" v-model="params.range" placeholder="请选择"
+        <div v-if="!ISPHONE&&params.order ==='ups'" class="ups">
+          <div class="curs">{{doRange()}}</div>
+          <div class="curs_list">
+            <div v-for="item in ranges"
+                :key="item.value" class="curs_item" @click="chooseRange(item)">{{item.label}}</div>
+          </div>
+        </div>
+        <!-- <el-select v-if="!ISPHONE&&params.order ==='ups'" v-model="params.range" placeholder="请选择"
                     @change="changes" style="padding: 0px 20px; ">
             <el-option
                 v-for="item in ranges"
@@ -23,24 +30,34 @@
                 :label="item.label"
                 :value="item.value">
             </el-option>
-        </el-select>
+        </el-select> -->
+        
         <div style="flex:1;text-align:right;">
-          <img v-show="$store.state.user.listMode=='normal'" title="缩略视图" @click="checkoutMode('simple')" class="mode_icon" src="../../../assets/images/icon/mode_list.png" alt="">
-          <img v-show="$store.state.user.listMode=='simple'" title="缩略视图" @click="checkoutMode('simple')" class="mode_icon" src="../../../assets/images/icon/mode_list2.png" alt="">
-          <img v-show="$store.state.user.listMode=='simple'" title="扩展视图" @click="checkoutMode('normal')" class="mode_icon" src="../../../assets/images/icon/mode_normal.png" alt="">
-          <img v-show="$store.state.user.listMode=='normal'" title="扩展视图" @click="checkoutMode('normal')" class="mode_icon" src="../../../assets/images/icon/mode_normal2.png" alt="">
+          <div v-if="!ISPHONE" @click="checkoutOk" :class="['c_nav_item_t',params.onlyNew?'oks':'']">
+              没看过
+          </div>
+          <img v-show="$store.state.user.listMode=='normal'" title="扩展视图" @click="checkoutMode('simple')" class="mode_icon" src="../../../assets/images/icon/mode_normal.png" alt="">
+          <!-- <img v-show="$store.state.user.listMode=='simple'" title="缩略视图" @click="checkoutMode('simple')" class="mode_icon" src="../../../assets/images/icon/mode_list2.png" alt=""> -->
+          <img v-show="$store.state.user.listMode=='simple'" title="缩略视图" @click="checkoutMode('normal')" class="mode_icon" src="../../../assets/images/icon/mode_list.png" alt="">
+          <!-- <img v-show="$store.state.user.listMode=='normal'" title="扩展视图" @click="checkoutMode('normal')" class="mode_icon" src="../../../assets/images/icon/mode_normal2.png" alt=""> -->
         </div>
     </div>
-    <div v-if="ISPHONE&&params.order ==='ups'" class="phones">
-      <el-select v-model="params.range" placeholder="请选择"
-                  @change="changes" style="padding: 0px">
-          <el-option
-              v-for="item in ranges"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value">
-          </el-option>
-      </el-select>
+    <div v-if="ISPHONE" style="padding: 0px;display:flex;" class="phones">
+      <div v-if="params.order ==='ups'" style="width:120px">
+        <el-select v-model="params.range" placeholder="请选择"
+                    @change="changes" style="padding: 0px;width:100%;">
+            <el-option
+                
+                v-for="item in ranges"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value">
+            </el-option>
+        </el-select>
+      </div>
+      <div @click="checkoutOk" :class="['c_nav_item_t',params.onlyNew?'oks':'']">
+          没看过
+      </div>
     </div>
         
         
@@ -52,6 +69,9 @@
    name: '',
    data(){
      return {
+         upsData: {
+
+         },
          options: [
           {
             label: '最新',
@@ -115,11 +135,16 @@
 
    },
    created() {
+     
    },
    mounted() {
     
    },
    methods: {
+    doRange(){
+      let range = this.ranges.find(item=>item.value==this.params.range);
+      return range.label;
+    },
     checkoutMode(v){
       this.$store.dispatch('user/SET_listMode',v)
     },
@@ -129,6 +154,27 @@
         delete this.params.marker;
         delete this.params.key;
         this.$emit('updateList',this.params)
+    },
+    chooseRange(item){
+      this.params.range = item.value;
+      localStorage.setItem('chao.fun.timeline.order', this.params.order);
+      localStorage.setItem('chao.fun.timeline.range', this.params.range);
+      delete this.params.marker;
+      delete this.params.key;
+      this.$emit('updateList',this.params)
+    },
+    checkoutOk(){
+      this.doLoginStatus().then((res) => {
+        if (res) {
+          delete this.params.marker;
+          delete this.params.key;
+          this.params.onlyNew = !this.params.onlyNew
+          localStorage.setItem('onlyNew',this.params.onlyNew)
+          console.log(this.params)
+          this.$emit('updateList',this.params)
+        }
+      });
+      
     },
     chooseNav(index,item){
         this.options.forEach(i=>{
@@ -161,6 +207,7 @@
   margin-top: 4px;
   margin-right: 10px;
   cursor: pointer;
+  vertical-align: middle;
 }
 @media (max-width: 374px) {
   .c_top_nav .c_nav_item{
@@ -169,5 +216,63 @@
     background: none;
     // flex: 1;
   }
+}
+.c_nav_item_t{
+  display: inline-block;
+  margin-left: 10px;
+  background: rgba(22, 103, 159,0.3);
+  border-radius: 4px;
+  line-height: 34px;
+  width: 60px;
+  cursor: pointer;
+  text-align: center;
+  vertical-align: middle;
+  margin-right: 10px;
+}
+.oks{
+  background: rgba(22, 103, 159,1);
+  color: #fff;
+}
+.ups{
+  position: relative;
+  margin-left: 10px;
+  .curs{
+    line-height: 34px;
+    width: 100px;
+    text-align: center;
+    border: 1px solid #eee;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  .curs_list{
+    display: none;
+    position: absolute;
+    left: 0px;
+    top: 34px;
+    width: 100px;
+    // height: 180px;
+    background: #fff;
+    z-index: 10;
+    border-radius: 4px;
+    border: 1px solid #f1f1f1;
+    padding: 4px 0;
+    .curs_item{
+      cursor: pointer;
+      line-height: 34px;
+      text-align: center;
+      &:hover{
+        color: #16679f;
+        font-weight: bold;
+      }
+    }
+  }
+  &:hover{
+    .curs_list{
+      display: block;
+    }
+  }
+}
+/deep/ .el-select-dropdown__item{
+  text-align: center;
 }
 </style>
