@@ -220,7 +220,7 @@
 .c_nav_item_t{
   display: inline-block;
   margin-left: 10px;
-  background: rgba(22, 103, 159,0.3);
+  background: #EEEFF1;
   border-radius: 4px;
   line-height: 34px;
   width: 60px;
