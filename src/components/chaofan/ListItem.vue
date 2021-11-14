@@ -46,6 +46,7 @@
           @deletePost="deletePost"
           @doFocued="doFocued"
           :index="index"
+          :order="order"
         ></itemTopTitle>
         <div v-if="item.type != 'link'" :class="[{'title': !item.isPin},{'pin_title': item.isPin}]">
           <!-- <span class="zhiding">置顶</span>  -->
@@ -587,6 +588,10 @@ export default {
         return {};
       },
     },
+    order: {
+      type: String,
+      default: "",
+    }
   },
   components: {
     forward,

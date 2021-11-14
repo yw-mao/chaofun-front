@@ -50,6 +50,7 @@
               :keys="params.key"
               :isindex="true"
               :lists="lists"
+              :order="params.order"
             ></ListItem>
             <SimListItem
               v-else
@@ -57,6 +58,7 @@
               :keys="params.key"
               :isindex="true"
               :lists="lists"
+              :order="params.order"
             ></SimListItem>
             <load-text :ifcanget="ifcanget" :loadAll="loadAll"></load-text>
           </div>

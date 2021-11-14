@@ -86,6 +86,7 @@
                     .humanize(true)
                 }}
               </span>
+              <span class="from" v-if="order == 'comment' && item.gmtComment"  > 新评于 {{moment.duration(moment(item.gmtComment) - moment()).humanize(true)}}</span>
             </div>
             <div v-if="item.showPreview && item.type != 'link'" class="preview">
               <!-- 图片 -->
@@ -424,6 +425,10 @@ export default {
         return {};
       },
     },
+    order: {
+      type: String,
+      default: "",
+    }
   },
   components: {
     forward,

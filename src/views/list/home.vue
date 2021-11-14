@@ -77,6 +77,7 @@
                   :keys="params.key"
                   :isindex="false"
                   :lists="lists"
+                  :order="params.order"
               ></ListItem>
               <SimListItem
                   v-else
@@ -84,6 +85,7 @@
                   :keys="params.key"
                   :isindex="true"
                   :lists="lists"
+                  :order="params.order"
               ></SimListItem>
 
             </keep-alive>
