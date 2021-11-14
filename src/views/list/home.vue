@@ -121,10 +121,10 @@
           
           <div class="main_center">
             <div v-for="(item,index) in tableList" :key="index" class="table_item">
-              <div class="table_title">
-                <i @click="checkoutTable(1)" :class="['el-icon-caret-left', 'iconsa',tableIndex==0?'disabled':'']"></i>
+              <div  class="table_title">
+                <i v-if="tableList && tableList.length > 1" @click="checkoutTable(1)" :class="['el-icon-caret-left', 'iconsa',tableIndex==0?'disabled':'']"></i>
                 <div class="t_name">{{item.name}}</div>
-                <i @click="checkoutTable(2)" :class="['el-icon-caret-right', 'iconsa',tableIndex==tableList.length-1?'disabled':'']"></i>
+                <i v-if="tableList && tableList.length > 1" @click="checkoutTable(2)" :class="['el-icon-caret-right', 'iconsa',tableIndex==tableList.length-1?'disabled':'']"></i>
               </div>
               <!-- <div @click="toggleTable(item)" class="table_desc">{{item.desc}}</div> -->
               <div v-if="tables.table.length" class="table_main">
@@ -875,7 +875,7 @@
   box-sizing: border-box;
   border-radius: 4px;
   .table_title{
-    font-size: 16px;
+    font-size: 24px;
     font-weight: bold;
     margin-bottom: 6px;
     line-height: 30px;
