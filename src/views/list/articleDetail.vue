@@ -831,21 +831,21 @@ queryChildren (parent, list) {
                       this.images = [];
                       this.$toast('评论成功')
                       setTimeout(()=>{
-                          if(this.replayItem){
-                            this.lists.push({
-                              parentId: this.replayItem?this.replayItem.id:0,
-                              text: comment,
-                              type: 'text',
-                              downs: 0,
-                              ups: 0,
-                              userInfo: this.userinfo
-                            })
-                          }else{
-                            this.lists.unshift(res.data)
-                          }
-                          
+                          // 先直接获取，后面评论多了再优化
+                          // if(this.replayItem){
+                          //   this.lists.push({
+                          //     parentId: this.replayItem?this.replayItem.id:0,
+                          //     text: comment,
+                          //     type: 'text',
+                          //     downs: 0,
+                          //     ups: 0,
+                          //     userInfo: this.userinfo
+                          //   })
+                          // }else{
+                          //   this.lists.unshift(res.data)
+                          // }
+                          this.getLists()
                           this.comment = '';
-                          this.treeData = this.transformTree(this.lists);
                           this.canSub = true;
                       },1500)
                   } else {
