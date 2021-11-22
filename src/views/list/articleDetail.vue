@@ -96,6 +96,10 @@
                           <div class="comment_title">
                             <i style="font-size:24px;vertical-align:middle;" class="el-icon-s-comment"></i> 
                             评论
+                            <div @click="checkoutOrder" class="tright">
+                              <img :src="imgOrigin+ 'biz/20712d8583a287b4941d8852af4f15e5.png'" alt="">
+                              {{params.order=='new'?'新评':'热评'}}
+                            </div>
                           </div> 
                           <commentitem :postInfo="{disableComment:pagedata.disableComment,forumAdmin:pagedata.forumAdmin}" @refreshDelete="refreshDelete" @toReplay2="toReplay2" @refreshComment="refreshComment" :treeData="treeData"></commentitem>
                           <div v-if="!lists.length" class="no_comment">
@@ -203,6 +207,7 @@ export default {
   // components: { adminDashboard, editorDashboard },
   data() {
     return {
+      
       hasData: true,
       currentRole: 'adminDashboard',
       count: 5,
@@ -212,7 +217,8 @@ export default {
         postId: '',
         pageNum: 0,
         pageSize: 100,
-        order: localStorage.getItem('chao.fun.timeline.order') == null ? 'hot': localStorage.getItem('chao.fun.timeline.order')
+        order: 'hot'
+        // order: localStorage.getItem('chao.fun.timeline.order') == null ? 'hot': localStorage.getItem('chao.fun.timeline.order')
       },
       options: [
         {
@@ -290,6 +296,14 @@ export default {
     this.inputBlur()
   },
   methods:{
+    checkoutOrder(){
+      if(this.params.order=='new'){
+        this.params.order= 'hot'
+      }else{
+        this.params.order= 'new'
+      }
+      this.getLists()
+    },
     chooseAt(e,it){
       // this.comment = this.comment+it.userName+' ';
       if(this.searchkey){
@@ -1180,12 +1194,17 @@ queryChildren (parent, list) {
 /deep/ .forum_con .fir img{
   margin-right: 20px;
 }
-.forum_desc,.fensi{
-  padding: 20px 0 !important;
+.forum_desc{
+  margin: 10px 0 20px!important;
+  text-align: center;
+}
+.fensi{
+  margin: 10 auto 20px !important;
   text-align: center;
 }
 .forum_desc{
-  margin-bottom: 30px;
+  margin-bottom: 20px;
+  text-align: center;
 }
 .is404{
   display: flex;
@@ -1304,6 +1323,20 @@ queryChildren (parent, list) {
 @media (max-width: 1199px) {
   .content-right-wrapper {
     display: none;
+  }
+}
+.tright{
+  float: right;
+  margin-right: 6px;
+  padding: 2px 4px;
+  cursor: pointer;
+  &:hover{
+    background: #ddd;
+    
+  }
+  img{
+    vertical-align: middle;
+    width: 16px;
   }
 }
 </style>

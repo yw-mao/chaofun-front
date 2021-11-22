@@ -386,17 +386,23 @@ export default {
     right: 0;
     z-index: 10;
     padding: 8px;
-    width: 280px;
+    width: 450px;
     border: 1px solid #ddd;
     border-radius: 4px;
+    flex-flow: wrap;
+    height: 400px;
+    align-items:center;
+    .er_item{
+      flex: 0 0 50%;
+    }
     img{
       width: 120px;
     }
     .er_item{
-      margin: 30px 0 30px;
+      // margin: 30px 0 30px;
     }
     .er_item2{
-      margin-bottom: 20px;
+      // margin-bottom: 20px;
     }
   }
   &:hover{
@@ -407,7 +413,7 @@ export default {
       display: inline-block;
     }
     .erweimabig{
-      display: block;
+      display: flex;
     }
   }
 }
