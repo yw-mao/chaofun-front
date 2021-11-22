@@ -422,10 +422,16 @@ export default {
           );
           break;
         case "article":
-          return (
-            this.imgOrigin +
-            "biz/b64193b7beca6ae243341273adddf494.png?x-oss-process=image/resize,h_150"
-          );
+            if (item.imageName) {
+             return this.imgOrigin +
+              item.imageName +
+              "?x-oss-process=image/resize,h_150"
+            } else {
+              return (
+                  this.imgOrigin +
+                  "biz/b64193b7beca6ae243341273adddf494.png?x-oss-process=image/resize,h_150"
+              );
+            }
           break;
         case "image":
           return (
@@ -746,6 +752,7 @@ queryChildren (parent, list) {
       let params = this.params;
       api.listCommentsV0(params).then(res=>{
         if(res.data.length){
+          this.lists = []
           this.lists.push(...res.data);
           let data = this.lists;
           this.treeData = this.transformTree(data);
