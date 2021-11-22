@@ -93,7 +93,10 @@
                           </div>
                       </div>
                       <div class="comment_list">
-                          <div class="comment_title"><i style="font-size:24px;vertical-align:middle;" class="el-icon-s-comment"></i> 评论</div> 
+                          <div class="comment_title">
+                            <i style="font-size:24px;vertical-align:middle;" class="el-icon-s-comment"></i> 
+                            评论
+                          </div> 
                           <commentitem :postInfo="{disableComment:pagedata.disableComment,forumAdmin:pagedata.forumAdmin}" @refreshDelete="refreshDelete" @toReplay2="toReplay2" @refreshComment="refreshComment" :treeData="treeData"></commentitem>
                           <div v-if="!lists.length" class="no_comment">
                               还没有评论，你的机会来了 ~
