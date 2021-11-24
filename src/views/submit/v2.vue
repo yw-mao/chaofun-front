@@ -1,243 +1,259 @@
 <template>
-  <el-container class="section-submit">
-    <el-main>
-      <el-container class="section-submit-header">
-        <el-col>发帖</el-col>
-        <DraftSelector
-          @setDraftContent="setDraftContent"
-          ref="draft"
-          v-if="type === 'article'"
-          :draftId="draftId"
-        />
-      </el-container>
-
-      <el-container>
-        <div class="section-submit-form">
-          <img class="sicon" :src="imgOrigin+forum.imageName" alt="" v-if="forum.imageName" />
-          <i class="el-icon-search" v-else />
-          <el-select
-            v-model="forum.id"
-            filterable
-            remote
-            reserve-keyword
-            placeholder="请选择板块"
-            popper-class="section-submit-form-select"
-            :popper-append-to-body="false"
-            :remote-method="getForumCategories"
-            :loading="loading"
-            @change="forumSelectOnChange"
-          >
-            <el-option
-              v-for="item in forums"
-              :key="item.link"
-              :label="item.title"
-              :value="item.forumId"
-            >
-              <img class="sicon" :src="imgOrigin+item.icon" alt="" />
-              <span>{{item.title}}</span>
-            </el-option>
-          </el-select>
-        </div>
-      </el-container>
-      <el-form :model="post" ref="form">
-        <div class="postbox">
-          <el-radio-group v-model="type" @change="$refs.form.clearValidate();$refs.title.focus();draftId = null;">
-            <el-radio-button label="image">
-              <i class="el-icon-picture-outline"></i> 图片/视频
-            </el-radio-button>
-            <el-radio-button label="article">
-              <i class="el-icon-tickets"></i> 文章
-            </el-radio-button>
-            <el-radio-button label="link">
-              <i class="el-icon-link"></i> 链接
-            </el-radio-button>
-            <el-radio-button label="vote">
-              <i class="el-icon-receiving"></i> 投票
-            </el-radio-button>
-          </el-radio-group>
-
-          <div class="postbox-fields">
-            <el-row>
-              <el-form-item
-                prop="title"
-                :rules="[
-                  { required: true, message: '请输入标题', trigger: 'blur' },
-                ]"
-              >
-                <el-input
-                  type="textarea"
-                  autosize
-                  placeholder="请输入标题"
-                  v-model="post.title"
-                  maxlength="300"
-                  show-word-limit
-                  :autofocus="true"
-                  ref="title"
-                  class="title"
+<div id="container"
+       class="dashboard-container container"
+       ref="container">
+       <!-- <div style="padding-top: 50px;"></div> -->
+       <el-container class="section-submit">
+            <el-main>
+              <el-container class="section-submit-header">
+                <el-col>发帖</el-col>
+                <DraftSelector
+                  @setDraftContent="setDraftContent"
+                  ref="draft"
+                  v-if="type === 'article'"
+                  :draftId="draftId"
                 />
-              </el-form-item>
-            </el-row>
-            <!-- 暂时隐藏投票描述 -->
-            <el-row v-if="['article'].includes(type)">
-              <el-form-item
-                prop="content"
-              >
-                <editor :content="post.content" ref="editor" />
-              </el-form-item>
-            </el-row>
+              </el-container>
 
-            <el-row class="image-box" v-if="type === 'image'">
-              <Uploader v-model="post.ossNames" action="/api/upload_image" />
-            </el-row>
-            <el-row v-if="type === 'link'">
-              <el-form-item
-                prop="link"
-                :rules="[
-                  { required: true, message: '请输入链接地址', trigger: 'blur' },
-                  { type: 'url', message: '链接地址格式不正确', trigger: 'blur' },
-                ]"
-              >
-                <el-input
-                  type="textarea"
-                  :rows="2"
-                  placeholder="请输入链接地址"
-                  v-model="post.link"
-                  resize="none"
-                  @input="getUrlTitle"
-                >
-                </el-input>
-              </el-form-item>
-            </el-row>
-            
-            <el-row class="vote-box" v-if="type === 'vote'">
-              <div class="vote-control">
-                <draggable
-                  class="vote-sort-list"
-                  ghost-class="ghost"
-                  v-model="post.options"
-                  @start="drag=true"
-                  @end="drag=false"
-                  handle=".el-icon-rank"
-                >
-                  <el-form-item
-                    v-for="(option, index) in post.options"
-                    :key="index"
-                    :prop="`options.${index}.optionName`"
+              <el-container>
+                <div class="section-submit-form">
+                  <img class="sicon" :src="imgOrigin+forum.imageName" alt="" v-if="forum.imageName" />
+                  <i class="el-icon-search" v-else />
+                  <el-select
+                    v-model="forum.id"
+                    filterable
+                    remote
+                    reserve-keyword
+                    placeholder="请选择板块"
+                    popper-class="section-submit-form-select"
+                    :popper-append-to-body="false"
+                    :remote-method="getForumCategories"
+                    :loading="loading"
+                    @change="forumSelectOnChange"
                   >
-                    <el-input class="vote-option" :placeholder="`选项 ${index + 1}`" v-model="option.optionName">
-                      <i class="el-icon-rank" slot="prepend" />
-                      <el-button slot="suffix" type="text" icon="el-icon-delete-solid" v-if="index > 1" @click.prevent="removeOption(index)" />
-                    </el-input>
-                  </el-form-item>
-                </draggable>
-                <div class="option-control">
-                  <el-button
-                    round
-                    @click="addOption"
-                  >
-                    新增选项
-                  </el-button>
-                  <!-- <el-form-item label="投票时长：">
-                    <el-select v-model="post.voteDuration" placeholder="请选择">
-                      <el-option
-                        v-for="day in 7"
-                        :key="day"
-                        :label="`${day}天`"
-                        :value="day"
-                      />
-                    </el-select>
-                  </el-form-item> -->
+                    <el-option
+                      v-for="item in forums"
+                      :key="item.link"
+                      :label="item.title"
+                      :value="item.forumId"
+                    >
+                      <img class="sicon" :src="imgOrigin+item.icon" alt="" />
+                      <span>{{item.title}}</span>
+                    </el-option>
+                  </el-select>
                 </div>
-              </div>
-              <div class="vote-tips">
-                <p><i class="el-icon-warning-outline" /> <span>发起投票建议</span></p>
+              </el-container>
+              <el-form :model="post" ref="form">
+                <div class="postbox">
+                  <el-radio-group v-model="type" @change="$refs.form.clearValidate();$refs.title.focus();draftId = null;">
+                    <el-radio-button label="image">
+                      <i class="el-icon-picture-outline"></i> 图片/视频
+                    </el-radio-button>
+                    <el-radio-button label="article">
+                      <i class="el-icon-tickets"></i> 文章
+                    </el-radio-button>
+                    <el-radio-button label="link">
+                      <i class="el-icon-link"></i> 链接
+                    </el-radio-button>
+                    <el-radio-button label="vote">
+                      <i class="el-icon-receiving"></i> 投票
+                    </el-radio-button>
+                  </el-radio-group>
+
+                  <div class="postbox-fields">
+                    <el-row>
+                      <el-form-item
+                        prop="title"
+                        :rules="[
+                          { required: true, message: '请输入标题', trigger: 'blur' },
+                        ]"
+                      >
+                        <el-input
+                          type="textarea"
+                          autosize
+                          placeholder="请输入标题"
+                          v-model="post.title"
+                          maxlength="300"
+                          show-word-limit
+                          :autofocus="true"
+                          ref="title"
+                          class="title"
+                        />
+                      </el-form-item>
+                    </el-row>
+                    <!-- 暂时隐藏投票描述 -->
+                    <el-row v-if="['article'].includes(type)">
+                      <el-form-item
+                        prop="content"
+                      >
+                        <editor :content="post.content" ref="editor" />
+                      </el-form-item>
+                    </el-row>
+
+                    <el-row class="image-box" v-if="type === 'image'">
+                      <Uploader v-model="post.ossNames" action="/api/upload_image" />
+                    </el-row>
+                    <el-row v-if="type === 'link'">
+                      <el-form-item
+                        prop="link"
+                        :rules="[
+                          { required: true, message: '请输入链接地址', trigger: 'blur' },
+                          { type: 'url', message: '链接地址格式不正确', trigger: 'blur' },
+                        ]"
+                      >
+                        <el-input
+                          type="textarea"
+                          :rows="2"
+                          placeholder="请输入链接地址"
+                          v-model="post.link"
+                          resize="none"
+                          @input="getUrlTitle"
+                        >
+                        </el-input>
+                      </el-form-item>
+                    </el-row>
+                    
+                    <el-row class="vote-box" v-if="type === 'vote'">
+                      <div class="vote-control">
+                        <draggable
+                          class="vote-sort-list"
+                          ghost-class="ghost"
+                          v-model="post.options"
+                          @start="drag=true"
+                          @end="drag=false"
+                          handle=".el-icon-rank"
+                        >
+                          <el-form-item
+                            v-for="(option, index) in post.options"
+                            :key="index"
+                            :prop="`options.${index}.optionName`"
+                          >
+                            <el-input class="vote-option" :placeholder="`选项 ${index + 1}`" v-model="option.optionName">
+                              <i class="el-icon-rank" slot="prepend" />
+                              <el-button slot="suffix" type="text" icon="el-icon-delete-solid" v-if="index > 1" @click.prevent="removeOption(index)" />
+                            </el-input>
+                          </el-form-item>
+                        </draggable>
+                        <div class="option-control">
+                          <el-button
+                            round
+                            @click="addOption"
+                          >
+                            新增选项
+                          </el-button>
+                          <!-- <el-form-item label="投票时长：">
+                            <el-select v-model="post.voteDuration" placeholder="请选择">
+                              <el-option
+                                v-for="day in 7"
+                                :key="day"
+                                :label="`${day}天`"
+                                :value="day"
+                              />
+                            </el-select>
+                          </el-form-item> -->
+                        </div>
+                      </div>
+                      <div class="vote-tips">
+                        <p><i class="el-icon-warning-outline" /> <span>发起投票建议</span></p>
+                        <ol>
+                          <li>投票选项简短明确</li>
+                          <li>投票选项越多越准确</li>
+                          <li>选择合适的投票时间（暂未开放）</li>
+                          <li>创建投票后无法编辑投票</li>
+                        </ol>
+                      </div>
+                    </el-row>
+
+                    <el-row>
+                      <div class="checkbox-group">
+                        <el-checkbox
+                          v-model="post.anonymity"
+                          true-label="true"
+                          false-label="false"
+                          border
+                          size="medium"
+                        >
+                          <i :class="[post.anonymity === 'true' ? 'el-icon-check' : 'el-icon-plus']" />
+                          <span>匿 名</span>
+                        </el-checkbox>
+
+                        <TagSelector ref="tag" v-bind:forumId="post.forumId" v-model="post.tagId" />
+
+                        <CollectionSelector ref="collection" v-model="post.collectionId" />
+
+                      </div>
+                    </el-row>
+                    <el-divider></el-divider>
+                  </div>
+                  <div class="postbox-buttons">
+                    <el-button type="primary" round @click="submit" :loading="loading">发 布</el-button>
+                    <el-button v-if="type === 'article'" @click="saveDraft" round>
+                      {{draftId ? '更新草稿' : '保存草稿箱'}}
+                    </el-button>
+                  </div>
+                  <div class="postbox-rules">
+                    <p><i class="el-icon-warning-outline" /> 严禁发布色情、暴恐、赌博及其他违反网络安全法的内容，或涉嫌隐私或未经授权的私人图片及信息，如违规发布，请自行删除或管理员强制删除。 </p>
+                  </div>
+                </div>
+              </el-form>
+            </el-main>
+            <el-aside width="320px">
+              <el-card class="aside-forum" shadow="never" v-if="forum.id">
+                <div class="forum-header">
+                  <img :src="imgOrigin+forum.imageName" :alt="forum.name" v-if="forum.imageName">
+                  <router-link :to="`/f/${forum.id}`">{{forum.name}}</router-link>
+                </div>
+                <div class="forum-desc">
+                  {{forum.desc}}
+                </div>
+                <div class="forum-statics">
+                  <div class="statics-box">
+                    <em>{{forum.followers}}</em>
+                    <span>粉丝</span>
+                  </div>
+                  <div class="statics-box">
+                    <em>{{forum.posts}}</em>
+                    <span>帖子</span>
+                  </div>
+                </div>
+              </el-card>
+              <el-card class="aside-rule" shadow="never">
+                <p>
+                  <img :src="logo" alt="" />
+                  <span>炒饭发帖规则</span>
+                </p>
                 <ol>
-                  <li>投票选项简短明确</li>
-                  <li>投票选项越多越准确</li>
-                  <li>选择合适的投票时间（暂未开放）</li>
-                  <li>创建投票后无法编辑投票</li>
+                  <li>严禁发布色情、暴恐、赌博及其他违反网络安全法的内容</li>
+                  <li>严禁发布涉嫌隐私或未经授权的私人图片及信息</li>
+                  <li>如违规发布，请自行删除或管理员强制删除</li>
                 </ol>
-              </div>
-            </el-row>
-
-            <el-row>
-              <div class="checkbox-group">
-                <el-checkbox
-                  v-model="post.anonymity"
-                  true-label="true"
-                  false-label="false"
-                  border
-                  size="medium"
-                >
-                  <i :class="[post.anonymity === 'true' ? 'el-icon-check' : 'el-icon-plus']" />
-                  <span>匿 名</span>
-                </el-checkbox>
-
-                <TagSelector ref="tag" v-bind:forumId="post.forumId" v-model="post.tagId" />
-
-                <CollectionSelector ref="collection" v-model="post.collectionId" />
-
-              </div>
-            </el-row>
-            <el-divider></el-divider>
-          </div>
-          <div class="postbox-buttons">
-            <el-button type="primary" round @click="submit" :loading="loading">发 布</el-button>
-            <el-button v-if="type === 'article'" @click="saveDraft" round>
-              {{draftId ? '更新草稿' : '保存草稿箱'}}
-            </el-button>
-          </div>
-          <div class="postbox-rules">
-            <p><i class="el-icon-warning-outline" /> 严禁发布色情、暴恐、赌博及其他违反网络安全法的内容，或涉嫌隐私或未经授权的私人图片及信息，如违规发布，请自行删除或管理员强制删除。 </p>
-          </div>
+              </el-card>
+              <el-card class="aside-help" shadow="never">
+                <el-row :gutter="12">
+                  <el-col :span="12" class="help-item">
+                    <router-link to="/help/forumIntro">帮助文档</router-link>
+                  </el-col>
+                  <el-col :span="12" class="help-item">
+                    <router-link to="/forumRank">24小时板块排名</router-link>
+                    <router-link to="/userRank">24小时用户排名</router-link>
+                  </el-col>
+                </el-row>
+              </el-card>
+              <el-button class="go-to-old-btn" type="primary" round @click="gotoOld">返回旧版</el-button>
+            </el-aside>
+          </el-container>
+       <!-- <div class="main_content">
+        <div v-if="!ISPHONE" class="main_left">
+          
         </div>
-      </el-form>
-    </el-main>
-    <el-aside width="320px">
-      <el-card class="aside-forum" shadow="never" v-if="forum.id">
-        <div class="forum-header">
-          <img :src="imgOrigin+forum.imageName" :alt="forum.name" v-if="forum.imageName">
-          <router-link :to="`/f/${forum.id}`">{{forum.name}}</router-link>
+        <div class="main_center">
+          
         </div>
-        <div class="forum-desc">
-          {{forum.desc}}
+        <div v-if="!ISPHONE" class="main_right">
         </div>
-        <div class="forum-statics">
-          <div class="statics-box">
-            <em>{{forum.followers}}</em>
-            <span>粉丝</span>
-          </div>
-          <div class="statics-box">
-            <em>{{forum.posts}}</em>
-            <span>帖子</span>
-          </div>
-        </div>
-      </el-card>
-      <el-card class="aside-rule" shadow="never">
-        <p>
-          <img :src="logo" alt="" />
-          <span>炒饭发帖规则</span>
-        </p>
-        <ol>
-          <li>严禁发布色情、暴恐、赌博及其他违反网络安全法的内容</li>
-          <li>严禁发布涉嫌隐私或未经授权的私人图片及信息</li>
-          <li>如违规发布，请自行删除或管理员强制删除</li>
-        </ol>
-      </el-card>
-      <el-card class="aside-help" shadow="never">
-        <el-row :gutter="12">
-          <el-col :span="12" class="help-item">
-            <router-link to="/help/forumIntro">帮助文档</router-link>
-          </el-col>
-          <el-col :span="12" class="help-item">
-            <router-link to="/forumRank">24小时板块排名</router-link>
-            <router-link to="/userRank">24小时用户排名</router-link>
-          </el-col>
-        </el-row>
-      </el-card>
-      <el-button class="go-to-old-btn" type="primary" round @click="gotoOld">返回旧版</el-button>
-    </el-aside>
-  </el-container>
+       </div> -->
+</div>
+  
 </template>
 
 <script>

@@ -930,14 +930,14 @@ queryChildren (parent, list) {
   overflow-x: hidden;
 }
 .asa{
-  display: flex;
-  flex-direction: row-reverse;
+  // display: flex;
+  // flex-direction: row-reverse;
     .forum_con{
         padding: 30px 20px;
         border: 1px solid #f1f1f1;
-        width: 100%;
-        min-width: 270px;
-        max-width: 280px;
+        // width: 100%;
+        // min-width: 270px;
+        width: 270px;
         box-sizing: border-box;
     }
 }
@@ -1046,8 +1046,8 @@ queryChildren (parent, list) {
         .forum_con{
             padding: 30px 20px;
             border: 1px solid #f1f1f1;
-            width: 100%;
-            min-width: 244px;
+            // width: 100%;
+            width: 270px;
             box-sizing: border-box;
         }
     }
@@ -1057,6 +1057,9 @@ queryChildren (parent, list) {
 }
 .content-right{
     position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 /deep/ .light{
   cursor: pointer;
@@ -1263,10 +1266,12 @@ queryChildren (parent, list) {
 .dialog_main2 .heji{
   min-height: 180px;
   color: #fff;
-  margin: 10px 0px 10px 14px;
+  margin: 10px 0px 10px 0px;
   padding: 10px 10px;
   border: 1px solid #f1f1f1;
   color: #333;
+  box-sizing: border-box;
+  width: 270px;
   // margin-top: 10px;
   .col_title{
     color: #333;

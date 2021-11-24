@@ -435,7 +435,7 @@
             
             this.tables = {
               header,
-              table: output
+              table: output,
             };
 
             console.log(output)
