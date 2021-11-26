@@ -26,7 +26,7 @@ export default {
   data() {
     return {
       title: '炒饭',
-      logo: 'https://i.chao.fun/biz/9563cdd828d2b674c424b79761ccb4c0.png?x-oss-process=image/resize,h_80'
+      logo: 'https://i.chao.fun/biz/08a2d3a676f4f520cb99910496e48b4e.png?x-oss-process=image/resize,h_80'
     }
   },
   methods: {
