@@ -30,19 +30,23 @@
   <script>
     var _hmt = _hmt || [];
     (function() {
-      var hm = document.createElement("script");
-      hm.src = "https://hm.baidu.com/hm.js?5c729b6c481ec66bfc756ecb6b099f8c";
-      var s = document.getElementsByTagName("script")[0];
-      s.parentNode.insertBefore(hm, s);
+      // var hm = document.createElement("script");
+      // hm.src = "https://hm.baidu.com/hm.js?5c729b6c481ec66bfc756ecb6b099f8c";
+      // var s = document.getElementsByTagName("script")[0];
+      // s.parentNode.insertBefore(hm, s);
 
-      var bp = document.createElement('script');
-      if (window.location.protocol == 'https:'){
-        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+      try{
+        var bp = document.createElement('script');
+        if (window.location.protocol == 'https:'){
+          bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        }
+        else{
+          bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        s.parentNode.insertBefore(bp, s);
+      }catch(e){
+
       }
-      else{
-        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
-      }
-      s.parentNode.insertBefore(bp, s);
       
       document.getElementById('description').innerHTML = document.title;
 

@@ -20,14 +20,18 @@
             >
               <div class="user_info">
                 <div class="avatar">
-                  <img
-                    :src="
-                      imgOrigin +
-                      (userInfo.icon || '37f1ae45279fac24462a42fd7b849edc.jpg') +
-                      '?x-oss-process=image/resize,h_80'
-                    "
-                    alt=""
-                  />
+                  <viewer :images="[imgOrigin +
+                        (userInfo.icon || '37f1ae45279fac24462a42fd7b849edc.jpg')]">
+                    <img
+                      :src="imgOrigin +
+                        (userInfo.icon || '37f1ae45279fac24462a42fd7b849edc.jpg') +
+                        '?x-oss-process=image/resize,h_80'"
+                      :data-source="imgOrigin +
+                        (userInfo.icon || '37f1ae45279fac24462a42fd7b849edc.jpg')"
+                      alt=""
+                    />
+                  </viewer>
+                  
                 </div>
                 <div class="info">
                   <div v-if="userInfo.userName" class="zhuye nick">
@@ -523,8 +527,8 @@ export default {
     height: 50px;
     margin-right: 10px;
     img {
-      width: 100%;
-      height: 100%;
+      width: 50px;
+      height: 50px;
       border-radius: 50%;
     }
   }

@@ -1,9 +1,15 @@
 <template>
-  <div :class="[{'containersRight': opened}]">
-    <div style="height:50px;"></div>
-    <div :class="['container', 'containers',{'phone_container':ISPHONE}]">
-      
-      <el-form :model="baseForm"  ref="baseForm" label-width="100px" class="demo-ruleForm">
+  <div id="container"
+       class="dashboard-container container"
+       ref="container">
+       <div style="padding-top: 80px;"></div>
+       <div class="main_content">
+        <div v-if="!ISPHONE" class="main_left">
+          
+        </div>
+        <div class="main_center">
+          <div>
+            <el-form :model="baseForm"  ref="baseForm" label-width="100px" class="demo-ruleForm">
         <el-form-item label="板块：" prop="forumId" class="demo-forum-selector">
           <el-select
               v-model="baseFormName"
@@ -202,7 +208,17 @@
         ref="preview"
         ></el-image>
     </el-dialog>
+        </div>
+        <div v-if="!ISPHONE" class="main_right">
+        </div>
+       </div>
   </div>
+  <!-- <div :class="[{'containersRight': opened}]">
+    <div style="height:50px;"></div>
+    <div :class="['container', 'containers',{'phone_container':ISPHONE}]">
+      
+      
+  </div> -->
 </template>
 
 <script>

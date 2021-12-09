@@ -49,7 +49,6 @@
                 <span v-if="item.imageNames" class="comImgs">
                     <viewer :images="doImgs(item.imageNames)">
                         <div v-for="(i,k) in item.imageNames.split(',')" :key="k">
-                            
                             <span class="aaa">
                                 【附图】
                                 <img  style="opacity:0;" :src="imgOrigin+i+'?x-oss-process=image/resize,h_60'" :data-source="imgOrigin+i" >
@@ -600,6 +599,7 @@ export default {
             padding: 8px 0;
             line-height: 24px;
             text-align: left;
+            white-space: pre-wrap;
         }
     }
 }

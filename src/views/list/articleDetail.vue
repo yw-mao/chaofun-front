@@ -93,7 +93,14 @@
                           </div>
                       </div>
                       <div class="comment_list">
-                          <div class="comment_title"><i style="font-size:24px;vertical-align:middle;" class="el-icon-s-comment"></i> 评论</div> 
+                          <div class="comment_title">
+                            <i style="font-size:24px;vertical-align:middle;" class="el-icon-s-comment"></i> 
+                            评论
+                            <div @click="checkoutOrder" class="tright">
+                              <img :src="imgOrigin+ 'biz/20712d8583a287b4941d8852af4f15e5.png'" alt="">
+                              {{params.order=='new'?'新评':'热评'}}
+                            </div>
+                          </div> 
                           <commentitem :postInfo="{disableComment:pagedata.disableComment,forumAdmin:pagedata.forumAdmin}" @refreshDelete="refreshDelete" @toReplay2="toReplay2" @refreshComment="refreshComment" :treeData="treeData"></commentitem>
                           <div v-if="!lists.length" class="no_comment">
                               还没有评论，你的机会来了 ~
@@ -200,6 +207,7 @@ export default {
   // components: { adminDashboard, editorDashboard },
   data() {
     return {
+      
       hasData: true,
       currentRole: 'adminDashboard',
       count: 5,
@@ -209,7 +217,8 @@ export default {
         postId: '',
         pageNum: 0,
         pageSize: 100,
-        order: localStorage.getItem('chao.fun.timeline.order') == null ? 'hot': localStorage.getItem('chao.fun.timeline.order')
+        order: 'hot'
+        // order: localStorage.getItem('chao.fun.timeline.order') == null ? 'hot': localStorage.getItem('chao.fun.timeline.order')
       },
       options: [
         {
@@ -287,6 +296,14 @@ export default {
     this.inputBlur()
   },
   methods:{
+    checkoutOrder(){
+      if(this.params.order=='new'){
+        this.params.order= 'hot'
+      }else{
+        this.params.order= 'new'
+      }
+      this.getLists()
+    },
     chooseAt(e,it){
       // this.comment = this.comment+it.userName+' ';
       if(this.searchkey){
@@ -422,10 +439,16 @@ export default {
           );
           break;
         case "article":
-          return (
-            this.imgOrigin +
-            "biz/b64193b7beca6ae243341273adddf494.png?x-oss-process=image/resize,h_150"
-          );
+            if (item.imageName) {
+             return this.imgOrigin +
+              item.imageName +
+              "?x-oss-process=image/resize,h_150"
+            } else {
+              return (
+                  this.imgOrigin +
+                  "biz/b64193b7beca6ae243341273adddf494.png?x-oss-process=image/resize,h_150"
+              );
+            }
           break;
         case "image":
           return (
@@ -746,6 +769,7 @@ queryChildren (parent, list) {
       let params = this.params;
       api.listCommentsV0(params).then(res=>{
         if(res.data.length){
+          this.lists = []
           this.lists.push(...res.data);
           let data = this.lists;
           this.treeData = this.transformTree(data);
@@ -831,21 +855,21 @@ queryChildren (parent, list) {
                       this.images = [];
                       this.$toast('评论成功')
                       setTimeout(()=>{
-                          if(this.replayItem){
-                            this.lists.push({
-                              parentId: this.replayItem?this.replayItem.id:0,
-                              text: comment,
-                              type: 'text',
-                              downs: 0,
-                              ups: 0,
-                              userInfo: this.userinfo
-                            })
-                          }else{
-                            this.lists.unshift(res.data)
-                          }
-                          
+                          // 先直接获取，后面评论多了再优化
+                          // if(this.replayItem){
+                          //   this.lists.push({
+                          //     parentId: this.replayItem?this.replayItem.id:0,
+                          //     text: comment,
+                          //     type: 'text',
+                          //     downs: 0,
+                          //     ups: 0,
+                          //     userInfo: this.userinfo
+                          //   })
+                          // }else{
+                          //   this.lists.unshift(res.data)
+                          // }
+                          this.getLists()
                           this.comment = '';
-                          this.treeData = this.transformTree(this.lists);
                           this.canSub = true;
                       },1500)
                   } else {
@@ -906,14 +930,14 @@ queryChildren (parent, list) {
   overflow-x: hidden;
 }
 .asa{
-  display: flex;
-  flex-direction: row-reverse;
+  // display: flex;
+  // flex-direction: row-reverse;
     .forum_con{
         padding: 30px 20px;
         border: 1px solid #f1f1f1;
-        width: 100%;
-        min-width: 270px;
-        max-width: 280px;
+        // width: 100%;
+        // min-width: 270px;
+        width: 270px;
         box-sizing: border-box;
     }
 }
@@ -1022,8 +1046,8 @@ queryChildren (parent, list) {
         .forum_con{
             padding: 30px 20px;
             border: 1px solid #f1f1f1;
-            width: 100%;
-            min-width: 244px;
+            // width: 100%;
+            width: 270px;
             box-sizing: border-box;
         }
     }
@@ -1033,6 +1057,9 @@ queryChildren (parent, list) {
 }
 .content-right{
     position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 /deep/ .light{
   cursor: pointer;
@@ -1170,12 +1197,17 @@ queryChildren (parent, list) {
 /deep/ .forum_con .fir img{
   margin-right: 20px;
 }
-.forum_desc,.fensi{
-  padding: 20px 0 !important;
+.forum_desc{
+  margin: 10px 0 20px!important;
+  text-align: center;
+}
+.fensi{
+  margin: 10 auto 20px !important;
   text-align: center;
 }
 .forum_desc{
-  margin-bottom: 30px;
+  margin-bottom: 20px;
+  text-align: center;
 }
 .is404{
   display: flex;
@@ -1234,10 +1266,12 @@ queryChildren (parent, list) {
 .dialog_main2 .heji{
   min-height: 180px;
   color: #fff;
-  margin: 10px 0px 10px 14px;
+  margin: 10px 0px 10px 0px;
   padding: 10px 10px;
   border: 1px solid #f1f1f1;
   color: #333;
+  box-sizing: border-box;
+  width: 270px;
   // margin-top: 10px;
   .col_title{
     color: #333;
@@ -1294,6 +1328,20 @@ queryChildren (parent, list) {
 @media (max-width: 1199px) {
   .content-right-wrapper {
     display: none;
+  }
+}
+.tright{
+  float: right;
+  margin-right: 6px;
+  padding: 2px 4px;
+  cursor: pointer;
+  &:hover{
+    background: #ddd;
+    
+  }
+  img{
+    vertical-align: middle;
+    width: 16px;
   }
 }
 </style>
