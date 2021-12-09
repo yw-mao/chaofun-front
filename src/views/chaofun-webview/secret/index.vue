@@ -66,6 +66,7 @@
 // @ is an alias to /src
 // import Header from '@/components/common/Header.vue'
 import * as api from '@/api/api'
+import {delete_secret_image} from "../../../api/api";
 export default {
   name: 'Home',
   components: {
@@ -166,7 +167,7 @@ export default {
     },
     
     getData(){
-      api.generate_secret_image(this.secret.imageUrl?{'imageUrl': this.secret.imageUrl}:{}).then(res=>{
+      api.delete_secret_image(this.secret.imageUrl?{'imageUrl': this.secret.imageUrl}:{}).then(res=>{
         this.secret = res.data;
         this.title = res.data.cnTitle;
         this.chooseId = res.data.submitForum;

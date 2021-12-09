@@ -1039,6 +1039,15 @@ export function pausePrediction(params) {
   })
 }
 
+export function addToRecommend(params) {
+  return request({
+    url: '/api/v0/addRecommend',
+    method: 'get',
+    params
+  })
+}
+
+
 export function markPredictionRight(params) {
   return request({
     url: '/api/v0/forum/predictions_tournament/markRight',

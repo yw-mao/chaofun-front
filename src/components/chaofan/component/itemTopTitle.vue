@@ -211,6 +211,7 @@
             <el-dropdown-item v-if="item.forumAdmin&&item.disableComment" command="开启评论">开启评论</el-dropdown-item>
             <el-dropdown-item v-if="item.forumAdmin&&!item.disableComment" command="关闭评论">关闭评论</el-dropdown-item>
             <el-dropdown-item v-if="item.type==='prediction'&& item.canDeleted &&item.predictionStatus==='live'" command="暂停下注">暂停下注</el-dropdown-item>
+            <el-dropdown-item v-if="item.canAddToRecommend" command="推荐">推荐</el-dropdown-item>
             <el-dropdown-item command="删除">删除帖子</el-dropdown-item>
             <el-dropdown-item command="关闭"> <div ref="cocolse">关闭</div> </el-dropdown-item>
           </el-dropdown-menu>
@@ -427,12 +428,23 @@ export default {
         this.disableComment('open');
       }else if(command == '暂停下注') {
         this.pausePrediction(this.item)
+      }else if (command =='推荐') {
+        this.addToRecommend(this.item)
       }
     },
     pausePrediction(item) {
       api.pausePrediction({postId: this.item.postId}).then(res=>{
         if (res.success) {
           this.$toast('暂停成功');
+        } else {
+          this.$toast(res.errorMessage);
+        }
+      });
+    },
+    addToRecommend(item) {
+      api.addToRecommend({postId: this.item.postId}).then(res=>{
+        if (res.success) {
+          this.$toast('推荐成功');
         } else {
           this.$toast(res.errorMessage);
         }
