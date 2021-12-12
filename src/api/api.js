@@ -401,11 +401,12 @@ export function submitLink(params) {
 /** 图片发帖 */
 export function submitImage(params) {
   return request({
-    url: '/api/v0/submit_image',
+    url: '/api/submit_image',
     method: 'post',
-    params
+    data: qs.stringify(params)
   })
 }
+
 
 /** 用户行为记录 */
 export function postBehavior(params) {
