@@ -65,7 +65,7 @@
       toAdd() {
         if (this.addRule !== '') {
           api.forumAddRule({forumId: this.forumId, rule: this.addRule, orderNumber: this.orderNumber}).then((res) => {
-            this.tagName = '';
+            this.addRule = '';
             this.orderNumber = 0;
             this.displayAdd = false;
             this.getForumRules();
