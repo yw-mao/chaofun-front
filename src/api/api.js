@@ -401,8 +401,8 @@ export function submitLink(params) {
 /** 图片发帖 */
 export function submitImage(params) {
   return request({
-    url: '/api/submit_image',
-    method: 'get',
+    url: '/api/v0/submit_image',
+    method: 'post',
     params
   })
 }
