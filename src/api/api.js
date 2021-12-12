@@ -407,7 +407,6 @@ export function submitImage(params) {
   })
 }
 
-
 /** 用户行为记录 */
 export function postBehavior(params) {
   return request({
