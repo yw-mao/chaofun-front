@@ -216,6 +216,14 @@
                     <span>帖子</span>
                   </div>
                 </div>
+                <div v-if="this.rules && this.rules.length != 0">
+                <p>
+                  <span>板块发帖规则</span>
+                </p>
+                <ol>
+                  <li v-for="item in this.rules">{{item.rule}}</li>
+                </ol>
+                </div>
               </el-card>
               <el-card class="aside-rule" shadow="never">
                 <p>
@@ -274,6 +282,7 @@
     submitVote,
   } from '@/api/api'
   import { logo } from '@/settings'
+  import {getForumRules} from "../../api/api";
 
   export default {
     name: 'submitV2',
@@ -313,6 +322,7 @@
           ossNames: null,
         },
         forums: [],
+        rules: [],
         loading: false,
         filedata: {}, // 文件参数
         loading: false, // 发布中
@@ -323,6 +333,7 @@
       // 加载论坛板块信息
       this.getForum().then(() => {
         this.getForumCategories();
+        this.getForumRules();
       });
       
       // 自动聚焦标题
@@ -333,7 +344,7 @@
     methods: {
       async forumSelectOnChange(forumId) {
         await this.getForum();
-
+        this.getForumRules();
         // 静态替换路由
         history.pushState(
           {},
@@ -352,6 +363,16 @@
           this.post.forumId = this.forum.id;
         }
       },
+
+      async getForumRules() {
+        if (this.forum.id) {
+          const result = await getForumRules({ forumId: this.forum.id });
+          if (result.success) {
+            this.rules = result.data;
+          }
+        }
+      },
+
       async getForumCategories(keyword = '') {
         const result = await searchForum({ keyword });
         this.forums = result.data;
@@ -962,6 +983,7 @@
           color: #5a5e66;
           font-size: 20px;
         }
+
       }
       .forum-desc {
         margin-bottom: 8px;
@@ -969,6 +991,20 @@
         line-height: 21px;
         font-weight: 400;
         color: #606266;
+      }
+
+      ol {
+        font-size: 12px;
+        line-height: 18px;
+        list-style: decimal;
+        list-style-position: inside;
+
+        li {
+          border-bottom: 1px solid #DCDFE6;
+          padding: 10px 6px;
+          list-style: decimal;
+          list-style-position: inside;
+        }
       }
       .forum-statics {
         display: flex;

@@ -50,6 +50,13 @@ routes = [
     hidden: true
   },
   {
+    path: '/webview/forum/rule',
+    component: () => import('@/views/chaofun-webview/forum/rule'),
+    name: 'forumRule',
+    meta: { title: '板块规范设置'},
+    hidden: true
+  },
+  {
     path: '/webview/thx',
     component: () => import('@/views/chaofun-webview/thx/thx'),
     name: 'forumthx',

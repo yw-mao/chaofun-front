@@ -23,6 +23,10 @@
       </div>
 
       <div class="bottom">
+        <div @click="toManageRule" class="btns">板块规范设置</div>
+      </div>
+
+      <div class="bottom">
         <div @click="toManageUserTag" class="btns">用户标签管理</div>
       </div>
 
@@ -137,6 +141,17 @@ export default {
           showHeader: true
         })      } catch (e) {
         window.open(location.origin + '/webview/forum/user_tag?forumId=' + this.forumId);
+      }
+    },
+
+    toManageRule() {
+      try {
+        window.flutter_inappwebview.callHandler('toViewPage', {
+          url: "https://chao.fun/webview/forum/rule" + "?forumId=" + this.forumId,
+          title: '发帖规范管理',
+          showHeader: true
+        })      } catch (e) {
+        window.open(location.origin + '/webview/forum/rule?forumId=' + this.forumId);
       }
     },
 

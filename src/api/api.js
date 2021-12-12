@@ -185,6 +185,15 @@ export function getForumInfo(params) {
 }
 
 /** 获取模块信息 */
+export function getForumRules(params) {
+  return request({
+    url: '/api/v0/forum/listRules',
+    method: 'get',
+    params
+  })
+}
+
+/** 获取模块信息 */
 export function getModInfo(params) {
   return request({
     url: '/api/v0/mod/getInfo',
@@ -902,6 +911,13 @@ export function forumAddTag(params) {
     params
   })
 }
+export function forumAddRule(params) {
+  return request({
+    url: '/api/v0/forum/addRule',
+    method: 'post',
+    data: qs.stringify(params)
+  })
+}
 
 export function forumNotify(params) {
   return request({
@@ -914,6 +930,13 @@ export function forumNotify(params) {
 export function forumRemoveTag(params) {
   return request({
     url: '/api/v0/forum/removeTag',
+    method: 'get',
+    params
+  })
+}
+export function forumRemoveRule(params) {
+  return request({
+    url: '/api/v0/forum/removeRule',
     method: 'get',
     params
   })
