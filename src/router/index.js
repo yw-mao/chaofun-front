@@ -99,6 +99,20 @@ export const constantRoutes = [
     meta: { title: '板块排名'},
     hidden: true
   },
+
+  // === 2021-12-18 潮 by 猫 ===
+  {
+    path: '/chao',
+    component: () => import('@/views/chao/index'),
+    name: 'chao',
+    meta: {
+      title: '潮',
+      keepAlive: true,
+      layout: null,
+    },
+    hidden: true
+  },
+
   {
     path: '/',
     component: Layout,
@@ -297,6 +311,8 @@ export const constantRoutes = [
         meta: { title: '竞猜',keepAlive: true,},
         hidden: true
       },
+
+      
       
       // {
       //   path: '/webview/userRank',

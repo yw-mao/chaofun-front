@@ -73,6 +73,10 @@ if (process.env.NODE_ENV === 'production') {
 import moment from 'moment';
 moment.locale('zh-cn');
 
+// 瀑布流
+import { VueMasonryPlugin } from 'vue-masonry';
+Vue.use(VueMasonryPlugin);
+
 Vue.use(Element, {
   size: Cookies.get('size') || 'medium', // set element-ui default size
   i18n: (key, value) => i18n.t(key, value)
