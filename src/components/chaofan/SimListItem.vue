@@ -547,6 +547,11 @@ export default {
             "?x-oss-process=image/resize,h_150"
           );
           break;
+        case "vote":
+          return (
+            this.imgOrigin + "biz/fea4efce4437040479d1a0452160f2fd.png?x-oss-process=image/resize,h_150"
+          );
+          break;
         case "forward":
           return this.doImageUrl(item.sourcePost);
           break;
