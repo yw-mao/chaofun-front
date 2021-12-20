@@ -12,9 +12,16 @@
         <settings />
       </right-panel> -->
     </div>
-    <div v-if="!ISPHONE" class="beian">
+    <div v-if="!ISPHONE" class="beian" style="text-align: right">
       <div>本站&小程序「炒饭超Fun」已在 Github 开源：<a href="https://github.com/www-chao-fun" target="_blank">www-chao-fun</a></div>
-      Copyright © 2019 - 2021 炒饭 <img style="width:16px" src="../assets/images/bbcc.png" alt=""> <a target="_blank" href="https://beian.miit.gov.cn/">粤ICP备19153164号</a>
+      <div >
+      <img style="width:16px" src="../assets/images/bbcc.png" alt=""> <a target="_blank" href="https://beian.miit.gov.cn/">粤ICP备19153164号</a>
+        </div>
+      <div >
+        <img style="width:16px" src="../assets/images/bbcc.png" alt="">
+      <a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=44010602009793">粤公网安备 44010602009793号</a>
+      </div>
+      Copyright © 2019 - 2021 炒饭
     </div>
     <chat v-if="$store.state.user.showChatBox&&!($route.path.includes('/chatpage'))"></chat>
     <!-- <new-dialog></new-dialog> -->
