@@ -69,7 +69,7 @@
         <img @click="cancelLogin" class="cancel" :src='cancelImg'/>
         <!-- <h1>快速注册</h1> -->
         <div class="tnames">
-          <div class="tts_act">绑定炒饭账号</div>
+          <div class="tts_act">绑定已有的炒饭账号(无账号请先注册)</div>
         </div>
         <div>
           <input type="text" v-model="params.userName" placeholder="用户名"/>
