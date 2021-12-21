@@ -31,7 +31,7 @@
                 <li v-for="(item,index) in listsData" :key="index">{{item.name}}</li>
                 
             </ul>
-            如果想添加新的板块，获赞达100赞以后最新App私聊 cijianzy 即可
+            如果想添加新的板块，获赞达 100 赞以后最新App私聊 cijianzy 即可
         </div>
 
         <a name="d"></a>
