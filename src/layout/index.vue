@@ -13,7 +13,7 @@
       </right-panel> -->
     </div>
     <div v-if="!ISPHONE" class="beian" style="text-align: right">
-      <div>本站&小程序「炒饭超Fun」已在 Github 开源：<a href="https://github.com/www-chao-fun" target="_blank">www-chao-fun</a></div>
+      <div>开源：<a href="https://github.com/www-chao-fun" target="_blank">www-chao-fun</a></div>
       <div >
       <img style="width:16px" src="../assets/images/bbcc.png" alt=""> <a target="_blank" href="https://beian.miit.gov.cn/">粤ICP备19153164号</a>
         </div>
