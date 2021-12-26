@@ -93,6 +93,20 @@ routes = [
     hidden: true
   },
   {
+    path: '/webview/badge',
+    component: () => import('@/views/chaofun-webview/badge/badgeDetail'),
+    name: 'badge',
+    meta: { title: '徽章介绍'},
+    hidden: true
+  },
+  {
+    path: '/webview/fbi',
+    component: () => import('@/views/chaofun-webview/fbi/fbi'),
+    name: 'fbi',
+    meta: { title: 'Fbi'},
+    hidden: true
+  },
+  {
     path: '/webview/buttonGame/rank',
     component: () => import('@/views/chaofun-webview/buttonGame/rank'),
     name: 'rank',

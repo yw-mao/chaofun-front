@@ -11,6 +11,15 @@ export function getHome(params) {
   })
 }
 
+export function getByPath(path, params) {
+  return request({
+    // url: '/api/list_combine',
+    url: path,
+    method: 'get',
+    params
+  })
+}
+
 export function getMenu(params) {
   return request({
     url: '/api/get_menu',
