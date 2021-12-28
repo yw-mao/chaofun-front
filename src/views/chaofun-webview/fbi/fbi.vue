@@ -11,11 +11,11 @@
       FBi 是什么:
     </p>
     <p style="font-size: 14px;">
-      炒饭的消耗品，可以用来兑换积分奖品或者是用来给帖子或者评论加奖励(敬请期待)，目前可以通过徽章或者别人的奖励(敬请期待) 获得。
+      炒饭的消耗品，可以用来兑换炒饭纪念品或者是用来给帖子或者评论加奖励(敬请期待)，目前可以通过徽章或者别人的奖励(敬请期待) 获得。
     </p>
     </div>
     <div style="padding-top: 20px; font-weight: bold; font-size: 20px; color: #FF9300">
-      奖品兑换(请私聊联系@cijianzy)
+      纪念品兑换(请私聊联系@cijianzy)
     </div>
     <div style="width: 100%; ">
       <div style="width: 50%; display: inline-block">
