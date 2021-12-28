@@ -17,7 +17,7 @@
         获得人数：{{this.badgeInfo.userNumber}}
       </p>
       <p style="width: 100%; text-align: center;font-size: 16px;">
-        Fbi: {{this.badgeInfo.integral}}
+        FBi: {{this.badgeInfo.integral}}
       </p>
     </div>
   </div>
