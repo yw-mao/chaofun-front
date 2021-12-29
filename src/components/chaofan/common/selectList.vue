@@ -36,9 +36,9 @@
           <div v-if="!ISPHONE" @click="checkoutOk" :class="['c_nav_item_t',params.onlyNew?'oks':'']">
               没看过
           </div>
-          <img v-show="$store.state.user.listMode=='normal'" title="扩展视图" @click="checkoutMode('simple')" class="mode_icon" src="../../../assets/images/icon/mode_normal.png" alt="">
+          <img v-show="$store.state.user.listMode=='normal'" title="扩展视图" @click="checkoutMode('simple')" class="mode_icon" src="../../../assets/images/icon/mode_2.png" alt="">
           <!-- <img v-show="$store.state.user.listMode=='simple'" title="缩略视图" @click="checkoutMode('simple')" class="mode_icon" src="../../../assets/images/icon/mode_list2.png" alt=""> -->
-          <img v-show="$store.state.user.listMode=='simple'" title="缩略视图" @click="checkoutMode('normal')" class="mode_icon" src="../../../assets/images/icon/mode_list.png" alt="">
+          <img v-show="$store.state.user.listMode=='simple'" title="缩略视图" @click="checkoutMode('normal')" class="mode_icon" src="../../../assets/images/icon/mode_1.png" alt="">
           <!-- <img v-show="$store.state.user.listMode=='normal'" title="扩展视图" @click="checkoutMode('normal')" class="mode_icon" src="../../../assets/images/icon/mode_normal2.png" alt=""> -->
         </div>
     </div>
