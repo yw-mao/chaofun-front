@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="padding-left: 10px; padding-right: 10px">
     <p style="font-weight: bold; font-size: 20px; color: #FF9300">
       你的 FBi:
       <span style="color: orangered">
