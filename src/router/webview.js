@@ -107,6 +107,13 @@ routes = [
     hidden: true
   },
   {
+    path: '/webview/Year2021',
+    component: () => import('@/views/chaofun-webview/year2021/year2021'),
+    name: 'year2021',
+    meta: { title: '我的炒饭2021'},
+    hidden: true
+  },
+  {
     path: '/webview/buttonGame/rank',
     component: () => import('@/views/chaofun-webview/buttonGame/rank'),
     name: 'rank',
