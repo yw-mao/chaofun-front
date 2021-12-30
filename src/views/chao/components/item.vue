@@ -2,14 +2,15 @@
   <div class="chao-item">
     <div class="chao-item-cover">
       <img
-        v-if="item.imageName"
-        :src="imgOrigin+item.imageName+'?x-oss-process=image/resize,w_256'"
+        :src="`${imgOrigin}${item.imageName}?x-oss-process=image/resize,w_236`"
       />
     </div>
     
   </div>
 </template>
 <script>
+import 'lazysizes';
+
 export default {
   props: {
     item: {
@@ -18,6 +19,11 @@ export default {
         return {}
       }
     },
+  },
+  data() {
+    return {
+      dominantColor: '#fff',
+    }
   },
 }
 </script>

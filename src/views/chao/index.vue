@@ -5,7 +5,7 @@
       <div v-masonry transition-duration="0.3s" item-selector=".item" :origin-top="true" :horizontal-order="false">
         <div v-masonry-tile class="item" v-for="item in lists" :key="item.postId">
           <!-- block item markup -->
-          <item :item="item" v-if="item.imageName && !item.imageName.includes('.mp4')" />
+          <item :item="item" v-if="item.type === 'image'" />
         </div>
     </div>
     </el-main>
@@ -24,9 +24,9 @@ export default {
       cateId: '',
       param: {
         pageSize: 30,
-        // order: 'new',
+        order: 'new',
         onlyNew: false,
-        forumId: 65,
+        forumId: 84,
         marker: null,
       },
       ifcanget: false,
