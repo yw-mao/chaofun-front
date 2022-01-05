@@ -705,6 +705,24 @@ export function deleteComment(params) {
   })
 }
 
+// 帖子评论 设为高亮
+export function highlightComment(params) {
+  return request({
+    url: '/api/v0/highlightComment',
+    method: 'get',
+    params
+  })
+}
+
+// 帖子评论 取消高亮
+export function unHighlightComment(params) {
+  return request({
+    url: '/api/v0/unHighlightComment',
+    method: 'get',
+    params
+  })
+}
+
 /** 获取管理云类表 */
 export function modlist(params) {
   return request({

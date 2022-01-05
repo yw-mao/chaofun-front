@@ -31,7 +31,7 @@
             <!-- <img @click.stop="doZanComment(2,item)" src="../../assets/images/icon/down.png" alt=""> -->
         </div>
         <div class="c_content">
-            <div class="user_info">
+            <div :class="item.forumAdminHighlight?'user_info_highlight':'user_info'">
                 <img :src="imgOrigin+item.userInfo.icon+'?x-oss-process=image/resize,h_40'" alt="">
                 <span  @click.stop="toUser(item.userInfo)" class="username">{{item.userInfo.userName}}</span>
                 <span v-if="item.userInfo.userTag" title="用户在板块的标签" style="font-size:14px; background-color: rgb(237, 239, 241); color: rgb(26, 26, 27); margin-left: 5px ">{{item.userInfo.userTag.data}}</span>
@@ -39,11 +39,14 @@
                 <span class="time" v-else @click="changeTimeFormat" title="点击切换时间格式">{{moment(item.gmtCreate).format('YYYY年MM月DD日 HH:mm:ss')}}</span>
 
                 <div class="zan_shu" style="display:inline-block;padding-left:20px;"> <span>{{item.ups - item.downs}}个赞</span></div>
+                <div v-if="item.forumAdminHighlight" class="zan_shu" style="display:inline-block;padding-left:20px;">版主高亮中</div>
                 <div v-if="ISPHONE&&(!postInfo.disableComment||postInfo.forumAdmin)" @click="toReplay2(item)" class="zan_shu" style="display:inline-block;padding-left:20px;">回复</div>
                 <div v-if="!ISPHONE&&(!postInfo.disableComment||postInfo.forumAdmin)" @click="toReplay(item)" class="zan_shu" style="display:inline-block;padding-left:20px;">回复</div>
                 <div v-if="item.canDeleted" @refreshDelete="refreshDelete" @click="deleteComment(item)" class="to_delete">删除</div>
+                <div v-if="item.forumAdmin&&item.forumAdminHighlight"  @click="unHighlightComment(item)" class="to_delete">取消高亮</div>
+                <div v-if="item.forumAdmin&&!item.forumAdminHighlight"  @click="highlightComment(item)" class="to_delete">设为高亮</div>  
             </div> 
-            <div class="content">
+            <div class="content" :style="item.forumAdminHighlight?'background: #b2e8d1;':''">
                 <p v-if="!item.atUsers" v-html="islink(item.text)"></p>
                 <p v-if="item.atUsers" @click="clickComment($event)" v-html="doText(item)"></p>
                 <span v-if="item.imageNames" class="comImgs">
@@ -403,6 +406,36 @@ export default {
             }).catch(() => {});
             
         },
+        highlightComment(item){
+            this.$confirm('此操作将高亮此评论, 是否继续?', '温馨提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                customClass:'messageBox',
+                type: 'warning'
+            }).then(() => {
+                api.highlightComment({commentId:item.id}).then(res=>{
+                    if(res.success){
+                        this.$toast('高亮成功');
+                        item.forumAdminHighlight = true;
+                    }
+                })
+            }).catch(() => {});            
+        },
+        unHighlightComment(item){
+            this.$confirm('此操作将取消高亮此评论, 是否继续?', '温馨提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                customClass:'messageBox',
+                type: 'warning'
+            }).then(() => {
+                api.unHighlightComment({commentId:item.id}).then(res=>{
+                    if(res.success){
+                        this.$toast('取消高亮成功');
+                        item.forumAdminHighlight = false;
+                    }
+                })
+            }).catch(() => {});            
+        },
         toSub(){
             if(this.canSub){
                 this.doLoginStatus().then(res=>{
@@ -594,6 +627,39 @@ export default {
                 }
             }
         }
+        .user_info_highlight{
+            background: #b2e8d1;
+            img{
+                width: 24px;
+                height: 24px;
+                vertical-align: middle;
+                border-radius: 50%;
+                margin-right: 2px;
+            }
+            .username{
+                color: #1890ff;
+                cursor: pointer;
+                margin-left: 6px;
+                line-height: 24px;
+                &:hover{
+                    text-decoration: underline;
+                }
+            }
+            .time{
+                padding-left: 15px;
+                color: #111;
+                font-size: 12px;
+            }
+            .zan_shu{
+                color: #111;
+                cursor: pointer;
+                img{
+                    width: 24px;
+                    height: 24px;
+                    margin-right: 4px;
+                }
+            }
+        }
         .content{
             font-size: 15px;
             padding: 8px 0;
@@ -688,6 +754,7 @@ export default {
      font-size: 13px;
      color: #999;
      cursor: pointer;
+     margin-left: 13px;
  }
  .icons{
   text-align: right;
