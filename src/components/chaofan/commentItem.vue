@@ -15,7 +15,7 @@
                 src="../../assets/images/icon/up_active.png"
                 alt=""
             />
-            <p></p>
+            <p>{{item.ups - item.downs}}</p>
             <img
                 v-if="item.vote != -1"
                 @click.stop="doZanComment(2, item)"
@@ -38,7 +38,7 @@
                 <span class="time" v-if="humanizeTimeFormat" @click="changeTimeFormat" title="点击切换时间格式">{{moment.duration(moment(item.gmtCreate) - moment()).humanize(true)}}</span>
                 <span class="time" v-else @click="changeTimeFormat" title="点击切换时间格式">{{moment(item.gmtCreate).format('YYYY年MM月DD日 HH:mm:ss')}}</span>
 
-                <div class="zan_shu" style="display:inline-block;padding-left:20px;"> <span>{{item.ups - item.downs}}个赞</span></div>
+                <!-- <div class="zan_shu" style="display:inline-block;padding-left:20px;"> <span>{{item.ups - item.downs}}个赞</span></div> -->
                 <div v-if="item.forumAdminHighlight" class="zan_shu" style="display:inline-block;padding-left:20px;">版主高亮中</div>
                 <div v-if="ISPHONE&&(!postInfo.disableComment||postInfo.forumAdmin)" @click="toReplay2(item)" class="zan_shu" style="display:inline-block;padding-left:20px;">回复</div>
                 <div v-if="!ISPHONE&&(!postInfo.disableComment||postInfo.forumAdmin)" @click="toReplay(item)" class="zan_shu" style="display:inline-block;padding-left:20px;">回复</div>
