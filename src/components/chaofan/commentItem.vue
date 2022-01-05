@@ -407,34 +407,20 @@ export default {
             
         },
         highlightComment(item){
-            this.$confirm('此操作将高亮此评论, 是否继续?', '温馨提示', {
-                confirmButtonText: '确定',
-                cancelButtonText: '取消',
-                customClass:'messageBox',
-                type: 'warning'
-            }).then(() => {
-                api.highlightComment({commentId:item.id}).then(res=>{
-                    if(res.success){
-                        this.$toast('高亮成功');
-                        item.forumAdminHighlight = true;
-                    }
-                })
-            }).catch(() => {});            
+            api.highlightComment({commentId:item.id}).then(res=>{
+                if(res.success){
+                    this.$toast('高亮成功');
+                    item.forumAdminHighlight = true;
+                }
+            });
         },
-        unHighlightComment(item){
-            this.$confirm('此操作将取消高亮此评论, 是否继续?', '温馨提示', {
-                confirmButtonText: '确定',
-                cancelButtonText: '取消',
-                customClass:'messageBox',
-                type: 'warning'
-            }).then(() => {
-                api.unHighlightComment({commentId:item.id}).then(res=>{
-                    if(res.success){
-                        this.$toast('取消高亮成功');
-                        item.forumAdminHighlight = false;
-                    }
-                })
-            }).catch(() => {});            
+        unHighlightComment(item){           
+            api.unHighlightComment({commentId:item.id}).then(res=>{
+                if(res.success){
+                    this.$toast('取消高亮成功');
+                    item.forumAdminHighlight = false;
+                }
+            });
         },
         toSub(){
             if(this.canSub){
