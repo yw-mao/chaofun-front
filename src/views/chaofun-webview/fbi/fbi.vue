@@ -24,7 +24,7 @@
           炒饭马克杯
         </p>
         <p style="text-align: center">
-          FBi: 3500
+          FBi: 1500
         </p>
       </div>
       <div style="width: 50%; display: inline-block">
