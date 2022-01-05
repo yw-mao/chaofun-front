@@ -8,6 +8,13 @@ routes = [
     hidden: true
   },
   {
+    path: '/webview/cancelAccount',
+    component: () => import('@/views/chaofun-webview/cancelAccount'),
+    name: 'contact',
+    meta: { title: '注销账号'},
+    hidden: true
+  },
+  {
     path: '/webview/buttonGame',
     component: () => import('@/views/chaofun-webview/buttonGame'),
     name: 'buttonGame',
