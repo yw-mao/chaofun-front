@@ -56,7 +56,7 @@
           </div>
         </div>
       </div>
-      <div>在这里, 你看了TA发布的 {{year2021.most_like_user_shows}} 篇帖子，点赞了TA {{year2021.most_like_user_upvotes}} 次，评论了TA {{year2021.most_like_user_comments}} 次，收藏了TA {{year2021.most_like_user_saves}} 篇帖子 </div>
+      <div>你看了TA发布的 {{year2021.most_like_user_shows}} 篇帖子，点赞了TA {{year2021.most_like_user_upvotes}} 次，评论了TA {{year2021.most_like_user_comments}} 次，收藏了TA {{year2021.most_like_user_saves}} 篇帖子 </div>
       <div class="year_2021_title" style=" font-weight: bold; font-size: 24px; color: #FF9300">
         谁最关注你
       </div>
@@ -68,7 +68,7 @@
           </div>
         </div>
       </div>
-      <div>在这里, TA看了你发布的 {{year2021.most_be_like_user_shows}} 篇帖子, 点赞了你 {{year2021.most_be_like_user_upvotes}} 次，评论了你 {{year2021.most_be_like_user_comments}} 次，收藏了你 {{year2021.most_be_like_user_saves ?  year2021.most_be_like_user_saves : 0}} 篇帖子 </div>
+      <div>TA看了你发布的 {{year2021.most_be_like_user_shows}} 篇帖子, 点赞了你 {{year2021.most_be_like_user_upvotes}} 次，评论了你 {{year2021.most_be_like_user_comments}} 次，收藏了你 {{year2021.most_be_like_user_saves ?  year2021.most_be_like_user_saves : 0}} 篇帖子 </div>
       <div class="year_2021_title" style=" font-weight: bold; font-size: 24px; color: #FF9300">
         你获得的年度徽章
       </div>
