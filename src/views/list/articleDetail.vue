@@ -54,7 +54,7 @@
                           </div>
                           <div v-if="replayItem" @click="cancelReplay" style="padding: 6px 0px;cursor:pointer;float:left;">取消回复</div>
                           <el-input :disabled="pagedata.disableComment&&!pagedata.forumAdmin" style="font-size:14px;" v-on:focus="inputFocus" @keyup.native="bindInput" 
-                          v-on:blur="inputBlur" type="textarea" @focus="doLogin" class="textarea" 
+                          v-on:blur="inputBlur" type="textarea" @focus="doLogin" class="textarea" ref="commentInputMark" 
                           :placeholder="pagedata.disableComment&&!pagedata.forumAdmin?'该帖已关闭评论功能，只有版主能够评论该帖':'评论千万条，友善第一条'+' (Ctrl+V 可粘贴图片)'"
                           :autosize="{ minRows: 2, maxRows: 4}"  v-model="comment">
                           </el-input>
@@ -929,8 +929,11 @@ queryChildren (parent, list) {
           // 发表：快捷键Ctrl+Enter
           this.toSub();
         }else{
-          // 回车评论
-          console.log(e);
+          // 评论获取焦点：快捷键Enter
+          if(!this.$refs['commentInputMark'].focused){
+            this.$refs['commentInputMark'].focus();            
+            e.preventDefault();
+          }
         }        
       }
     },
