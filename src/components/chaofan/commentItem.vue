@@ -99,7 +99,8 @@
                 </div>
             </div>
             <div v-if="item.children&&item.children.length">
-                <commentitem :postInfo="{postOwnerUserId:postInfo.postOwnerUserId}" @rep="rep" @refreshComment="refreshComment" @refreshDelete="refreshDelete" @toReplay2="toReplay2" :showRep="showR" :treeData="item.children"></commentitem>
+                <commentitem :postInfo="{postOwnerUserId:postInfo.postOwnerUserId,isPostOwnerHighlight:postInfo.isPostOwnerHighlight}" 
+                @rep="rep" @refreshComment="refreshComment" @refreshDelete="refreshDelete" @toReplay2="toReplay2" :showRep="showR" :treeData="item.children"></commentitem>
                 <!-- <div  v-for="(item,index) in item.children" :key="index" class="comment_item">
                     <div class="c_left">
                         <img @click.stop="doZanComment(1,item)" src="../../assets/images/icon/up.png" alt="">
@@ -134,7 +135,6 @@ export default {
     data(){
         return {
             
-            isPostOwnerHighlight: true,
             showIcon: false,
             moment: moment,
             replayItem: null,
@@ -201,7 +201,7 @@ export default {
             if(item.forumAdminHighlight){
                 // 版主高亮
                 return 1;
-            }else if(this.isPostOwnerHighlight && this.postInfo.postOwnerUserId == item.userInfo.userId){
+            }else if(this.postInfo.isPostOwnerHighlight && this.postInfo.postOwnerUserId == item.userInfo.userId){
                 // 楼主高亮
                 return 2;                
             }
