@@ -1030,14 +1030,14 @@ queryChildren (parent, list) {
     margin: 0 auto !important;
     overflow-x: hidden;
     &::-webkit-scrollbar {
-      width: 2px;
+      width: 8px;
       // height: 44px;
       background-color: transparent;
     }
     &::-webkit-scrollbar-thumb {
       border-radius: 10px;
       padding: 0;
-      width: 2px;
+      width: 8px;
       height: 44px;
       // background-color: rgba(0, 0, 0, .2);
       background-color: $linkcolor;
