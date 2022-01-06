@@ -84,6 +84,7 @@ export default {
 <style lang="scss" scoped>
 .chao-main {
   margin-top: 60px;
+  padding: 0;
   .chao-grid {
     margin: 0 auto;
   }
