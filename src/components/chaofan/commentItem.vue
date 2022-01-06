@@ -2,33 +2,17 @@
  <div>
      <div v-for="(item,index) in treeData" :key="index" class="comment_item">
         <div :class="['c_left',{'c_left2':ISPHONE}]">
-            <!-- <img @click.stop="doZanComment(1,item)" src="../../assets/images/icon/up.png" alt=""> -->
-            <img
-                v-if="item.vote != 1"
-                @click.stop="doZanComment(1, item)"
-                src="../../assets/images/icon/up.png"
-                alt=""
-            />
-            <img
-                v-if="item.vote == 1"
-                @click.stop="doZanComment(1, item)"
-                src="../../assets/images/icon/up_active.png"
-                alt=""
-            />
-            <p>{{item.ups - item.downs}}</p>
-            <img
-                v-if="item.vote != -1"
-                @click.stop="doZanComment(2, item)"
-                src="../../assets/images/icon/down.png"
-                alt=""
-            />
-            <img
-                v-if="item.vote == -1"
-                @click.stop="doZanComment(2, item)"
-                src="../../assets/images/icon/down_active.png"
-                alt=""
-            />
-            <!-- <img @click.stop="doZanComment(2,item)" src="../../assets/images/icon/down.png" alt=""> -->
+            <div class="lay">
+                <img v-if="item.vote != 1" @click.stop="doZanComment(1, item)" src="../../assets/images/icon/up.png" alt="" />
+                <img v-if="item.vote == 1" @click.stop="doZanComment(1, item)" src="../../assets/images/icon/up_active.png" alt="" />
+            </div>
+            <div class="lay">
+                <p>{{item.ups - item.downs}}</p>
+            </div>
+            <div class="lay">
+                <img v-if="item.vote != -1" @click.stop="doZanComment(2, item)" src="../../assets/images/icon/down.png" alt="" />
+                <img v-if="item.vote == -1" @click.stop="doZanComment(2, item)" src="../../assets/images/icon/down_active.png" alt="" />
+            </div>
         </div>
         <div class="c_content">
             <div :class="item.forumAdminHighlight?'user_info_highlight':'user_info'">
@@ -567,8 +551,13 @@ export default {
     .c_left{
         flex: 0 0 40px;
         text-align: center;
+        .lay{
+            width:40px;
+            height:20px;
+            border:none;
+        }
         img{
-          width: 20px;
+            width: 20px;
         }
         i{
             font-size: 18px;
