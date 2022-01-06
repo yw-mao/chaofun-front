@@ -101,7 +101,7 @@
                               {{params.order=='new'?'新评':'热评'}}
                             </div>
                             <div class="tright" style="margin-right: 20px;">
-                              <el-checkbox v-model="isPostOwnerCommentHighlight">楼主高亮</el-checkbox>
+                              <el-checkbox v-model="isPostOwnerCommentHighlight">高亮楼主评论</el-checkbox>
                             </div>
                           </div> 
                           <commentitem :postInfo="{disableComment:pagedata.disableComment,forumAdmin:pagedata.forumAdmin, 
