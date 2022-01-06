@@ -101,7 +101,7 @@
                               {{params.order=='new'?'新评':'热评'}}
                             </div>
                           </div> 
-                          <commentitem :postInfo="{disableComment:pagedata.disableComment,forumAdmin:pagedata.forumAdmin}" @refreshDelete="refreshDelete" @toReplay2="toReplay2" @refreshComment="refreshComment" :treeData="treeData"></commentitem>
+                          <commentitem :postInfo="{disableComment:pagedata.disableComment,forumAdmin:pagedata.forumAdmin,postOwnerUserId:pagedata.userInfo.userId}" @refreshDelete="refreshDelete" @toReplay2="toReplay2" @refreshComment="refreshComment" :treeData="treeData"></commentitem>
                           <div v-if="!lists.length" class="no_comment">
                               还没有评论，你的机会来了 ~
                           </div> 
