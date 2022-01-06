@@ -491,7 +491,7 @@
 
           this.$message.success('发布成功');
           setTimeout(() => {
-            this.$router.push({ path: `/f/${post.forumId}` })
+            this.$router.push({ path: "/p/"+result.data.postId })
           }, 1500);
         } catch (error) {
           console.error(error);
