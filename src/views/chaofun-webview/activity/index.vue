@@ -49,6 +49,12 @@ export default {
                   title: '秘密花园',
                   showBottom: false,
               },
+              // {
+              //     path: '/webview/year2021',
+              //     title: '炒饭2021年度总结',
+              //     desc: '炒饭的各个板块的活动',
+              //     showBottom: true
+              // },
               {
                   // imgUrl: require('../assets/images/secret.jpg'),
                   path: '/userRank',
@@ -70,6 +76,7 @@ export default {
                   desc: '炒饭板块版主详情，点击查看更多',
                   showBottom: true
               },
+
 
 
           ]
