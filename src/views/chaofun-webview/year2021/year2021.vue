@@ -22,7 +22,7 @@
       <div class="year_2021_title" style=" font-weight: bold; font-size: 24px; color: #FF9300">
         你的 Fun 2021
       </div>
-      <div>2021年，你使用了炒饭 {{year2021.minutes}} 分钟 </div>
+      <div>2021年，你使用了炒饭 {{parseInt(year2021.minutes)}} 分钟 </div>
       <div>2021年，你发布了 {{year2021.posts}} 篇帖子</div>
       <div>2021年，你浏览了 {{year2021.total_upvotes}} 篇帖子</div>
       <div>2021年，你评论了 {{year2021.most_like_forum_comments}} 次</div>
@@ -33,6 +33,7 @@
         你收获的
       </div>
       <div>2021年，你收获了 {{year2021.total_ups}} 个赞, 全站排名第 {{year2021.total_ups_rank}}</div>
+      <div>请再接再厉</div>
       <div class="year_2021_title" style=" font-weight: bold; font-size: 24px; color: #FF9300">
         你最喜欢的版块
       </div>
