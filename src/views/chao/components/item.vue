@@ -35,6 +35,9 @@ export default {
     line-height: 1;
     border-radius: 16px;
     overflow: hidden;
+    img {
+      display: block;
+    }
   }
 }
 </style>
