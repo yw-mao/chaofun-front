@@ -553,7 +553,7 @@ export default {
         text-align: center;
         .lay{
             width:40px;
-            height:20px;
+            height:16px;
             border:none;
         }
         img{
@@ -637,7 +637,7 @@ export default {
         }
         .content{
             font-size: 15px;
-            padding: 8px 0;
+            padding: 4px 0;
             line-height: 24px;
             text-align: left;
             white-space: pre-wrap;
