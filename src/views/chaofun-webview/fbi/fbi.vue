@@ -7,12 +7,21 @@
       </span>
     </p>
     <div style="padding-top: 20px">
-    <p style="font-weight: bold; font-size: 20px; color: #FF9300">
-      FBi 是什么:
-    </p>
-    <p style="font-size: 14px;">
-      炒饭的货币，可以用来兑换炒饭纪念品或者是用来给帖子或者评论加奖励(敬请期待)，目前可以通过徽章或者别人的奖励(敬请期待) 获得。
-    </p>
+      <p style="font-weight: bold; font-size: 20px; color: #FF9300">
+        FBi 是什么:
+      </p>
+      <p style="font-size: 14px;">
+        炒饭的消耗品，目前只支持 App 版本查看
+      </p>
+
+      <p style="font-weight: bold; font-size: 20px; color: #FF9300">FBi 如何获得:</p>
+      <p>  - 目前可以通过获得徽章</p>
+      <p>  - 秘密花园 发帖，每条奖励 5 FBi，请准守板块发帖规范并请勿发无意义的帖子，不然会FBi清零</p>
+      <p>  - 每周五(炒饭爆炸星期五)登录使用炒饭，奖励 50 FBi </p>
+      <p>  - 赠与他人 (敬请期待)</p>
+      <p style="font-weight: bold; font-size: 20px; color: #FF9300">FBi 如何使用:</p>
+      <p>  - 兑换炒饭纪念品 </p>
+      <p>  - 他人赠与 (敬请期待)</p>
     </div>
     <div style="padding-top: 20px; font-weight: bold; font-size: 20px; color: #FF9300">
       纪念品兑换(请私聊联系@cijianzy)
@@ -41,18 +50,18 @@
 </template>
 
 <script>
-import * as api from '@/api/api'
-import {getUserInfo} from "../../../api/api";
-export default {
-  name: "fbi.vue",
+  import * as api from '@/api/api'
+  import {getUserInfo} from "../../../api/api";
+  export default {
+    name: "fbi.vue",
 
-  data() {
-    return {
-      'fbi': 0,
-    }
-  },
-  created() {
-    api.getUserInfo().then(
+    data() {
+      return {
+        'fbi': 0,
+      }
+    },
+    created() {
+      api.getUserInfo().then(
         res => {
           if (res.success) {
             this.fbi = res.data.fbi;
@@ -60,12 +69,12 @@ export default {
             this.$toast(res.errorMessage)
           }
         }
-    )
-  },
-  mounted() {
+      )
+    },
+    mounted() {
 
-  },
-}
+    },
+  }
 </script>
 
 <style scoped>
