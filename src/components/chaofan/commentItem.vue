@@ -15,7 +15,7 @@
             </div>
         </div>
         <div class="c_content">
-            <div :class="item.forumAdminHighlight?'user_info_highlight':'user_info'">
+            <div :class="getCommentUserinfoClazz(item)">
                 <img :src="imgOrigin+item.userInfo.icon+'?x-oss-process=image/resize,h_40'" alt="">
                 <span  @click.stop="toUser(item.userInfo)" class="username">{{item.userInfo.userName}}</span>
                 <span v-if="item.userInfo.userTag" title="用户在板块的标签" style="font-size:14px; background-color: rgb(237, 239, 241); color: rgb(26, 26, 27); margin-left: 5px ">{{item.userInfo.userTag.data}}</span>
@@ -30,7 +30,7 @@
                 <div v-if="item.forumAdmin&&item.forumAdminHighlight"  @click="unHighlightComment(item)" class="to_delete">取消高亮</div>
                 <div v-if="item.forumAdmin&&!item.forumAdminHighlight"  @click="highlightComment(item)" class="to_delete">设为高亮</div>  
             </div> 
-            <div class="content" :style="item.forumAdminHighlight?'background: #b2e8d1;':''">
+            <div class="content" :style="getCommentContentStyle(item)">
                 <p v-if="!item.atUsers" v-html="islink(item.text)"></p>
                 <p v-if="item.atUsers" @click="clickComment($event)" v-html="doText(item)"></p>
                 <span v-if="item.imageNames" class="comImgs">
@@ -99,7 +99,8 @@
                 </div>
             </div>
             <div v-if="item.children&&item.children.length">
-                <commentitem @rep="rep" @refreshComment="refreshComment" @refreshDelete="refreshDelete" @toReplay2="toReplay2" :showRep="showR" :treeData="item.children"></commentitem>
+                <commentitem :postInfo="{postOwnerUserId:postInfo.postOwnerUserId,isPostOwnerHighlight:postInfo.isPostOwnerHighlight}" 
+                @rep="rep" @refreshComment="refreshComment" @refreshDelete="refreshDelete" @toReplay2="toReplay2" :showRep="showR" :treeData="item.children"></commentitem>
                 <!-- <div  v-for="(item,index) in item.children" :key="index" class="comment_item">
                     <div class="c_left">
                         <img @click.stop="doZanComment(1,item)" src="../../assets/images/icon/up.png" alt="">
@@ -195,6 +196,36 @@ export default {
         }
     },
     methods: {
+
+        getHighlightStatus(item){
+            if(item.forumAdminHighlight){
+                // 版主高亮
+                return 1;
+            }else if(this.postInfo.isPostOwnerHighlight && this.postInfo.postOwnerUserId == item.userInfo.userId){
+                // 楼主高亮
+                return 2;                
+            }
+            return 0;
+
+        },
+        getCommentContentStyle(item){
+            let highlightStatus = this.getHighlightStatus(item);           
+            if(highlightStatus == 1){
+                return 'background: #b2e8d1;';
+            }else if(highlightStatus == 2){
+                return 'background: #BFDFFF;';
+            }
+            return '';
+        },
+        getCommentUserinfoClazz(item){
+            let highlightStatus = this.getHighlightStatus(item);
+            if(highlightStatus == 1){
+                return 'user_info_highlight_1';
+            }else if(highlightStatus == 2){
+                return 'user_info_highlight_2';
+            }
+            return 'user_info';
+        },
         clickComment:function (event) {
             
             if(event.target.nodeName === 'SPAN'){
@@ -602,7 +633,7 @@ export default {
                 }
             }
         }
-        .user_info_highlight{
+        .user_info_highlight_1{
             background: #b2e8d1;
             img{
                 width: 24px;
@@ -627,6 +658,39 @@ export default {
             }
             .zan_shu{
                 color: #111;
+                cursor: pointer;
+                img{
+                    width: 24px;
+                    height: 24px;
+                    margin-right: 4px;
+                }
+            }
+        }
+        .user_info_highlight_2{
+            background: #BFDFFF;
+            img{
+                width: 24px;
+                height: 24px;
+                vertical-align: middle;
+                border-radius: 50%;
+                margin-right: 2px;
+            }
+            .username{
+                color: #1890ff;
+                cursor: pointer;
+                margin-left: 6px;
+                line-height: 24px;
+                &:hover{
+                    text-decoration: underline;
+                }
+            }
+            .time{
+                padding-left: 15px;
+                color: #555;
+                font-size: 12px;
+            }
+            .zan_shu{
+                color: #555;
                 cursor: pointer;
                 img{
                     width: 24px;

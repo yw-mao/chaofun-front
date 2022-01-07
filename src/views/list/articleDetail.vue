@@ -100,8 +100,13 @@
                               <img :src="imgOrigin+ 'biz/20712d8583a287b4941d8852af4f15e5.png'" alt="">
                               {{params.order=='new'?'新评':'热评'}}
                             </div>
+                            <div class="tright" style="margin-right: 20px;">
+                              <el-checkbox v-model="isPostOwnerCommentHighlight">高亮楼主评论</el-checkbox>
+                            </div>
                           </div> 
-                          <commentitem :postInfo="{disableComment:pagedata.disableComment,forumAdmin:pagedata.forumAdmin}" @refreshDelete="refreshDelete" @toReplay2="toReplay2" @refreshComment="refreshComment" :treeData="treeData"></commentitem>
+                          <commentitem :postInfo="{disableComment:pagedata.disableComment,forumAdmin:pagedata.forumAdmin, 
+                          postOwnerUserId:pagedata.userInfo.userId,isPostOwnerHighlight:isPostOwnerCommentHighlight}" 
+                          @refreshDelete="refreshDelete" @toReplay2="toReplay2" @refreshComment="refreshComment" :treeData="treeData"></commentitem>
                           <div v-if="!lists.length" class="no_comment">
                               还没有评论，你的机会来了 ~
                           </div> 
@@ -208,6 +213,7 @@ export default {
   data() {
     return {
       
+      isPostOwnerCommentHighlight: false,
       hasData: true,
       currentRole: 'adminDashboard',
       count: 5,
@@ -1355,12 +1361,21 @@ queryChildren (parent, list) {
   padding: 2px 4px;
   cursor: pointer;
   &:hover{
-    background: #ddd;
-    
+    background: #ddd;    
   }
   img{
     vertical-align: middle;
     width: 16px;
   }
 }
+
+/deep/.el-checkbox {
+  .el-checkbox__input{
+    margin-bottom:-2px;
+  }
+  .el-checkbox__label{
+    margin-left:-8px;
+  }
+}
+
 </style>
