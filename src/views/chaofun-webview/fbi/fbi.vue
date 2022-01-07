@@ -18,10 +18,10 @@
       <p>  - 通过徽章附带的 FBi（徽章由炒饭和版主颁发）</p>
       <p>  - 秘密花园 发帖，每条奖励 5 FBi，请准守板块发帖规范并请勿发无意义的帖子，不然会FBi清零</p>
       <p>  - 每周五(炒饭爆炸星期五)登录使用炒饭，奖励 50 FBi </p>
-      <p>  - 赠与他人 (敬请期待)</p>
+      <p>  - 他人赠与 (敬请期待)</p>
       <p style="font-weight: bold; font-size: 20px; color: #FF9300">FBi 如何使用:</p>
       <p>  - 兑换炒饭纪念品 </p>
-      <p>  - 他人赠与 (敬请期待)</p>
+      <p>  - 赠与他人 (敬请期待)</p>
     </div>
     <div style="padding-top: 20px; font-weight: bold; font-size: 20px; color: #FF9300">
       纪念品兑换(请私聊联系@cijianzy)
