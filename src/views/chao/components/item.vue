@@ -1,9 +1,20 @@
 <template>
   <div class="chao-item">
-    <div class="chao-item-cover">
+    <div class="chao-item-cover" @mouseenter="isCover=true" @mouseleave="isCover=false">
       <img
         :src="`${imgOrigin}${item.imageName}?x-oss-process=image/resize,w_236`"
       />
+      <div class="chao-item-cover-mask" v-if="isCover">
+        <div class="cover-mask-wrapper">
+          <div class="cover-mask-bottom">
+            <div class="cover-mask-bottom-wrapper">
+              <el-button class="forum-button">{{item.forum.name}} {{item.tags && item.tags[0] && item.tags[0].name}}</el-button>
+              <el-button icon="el-icon-s-promotion" circle></el-button>
+              <el-button icon="el-icon-more" circle></el-button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
     <div class="author">
       <router-link to="/setting">
@@ -31,7 +42,13 @@ export default {
   },
   data() {
     return {
+      isCover: false,
       dominantColor: '#fff',
+    }
+  },
+  methods: {
+    showCover() {
+      
     }
   },
 }
@@ -44,8 +61,48 @@ export default {
     line-height: 1;
     border-radius: 16px;
     overflow: hidden;
+    position: relative;
     img {
       display: block;
+    }
+    .chao-item-cover-mask {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      top: 0;
+      left: 0;
+      cursor: pointer;
+      .cover-mask-wrapper {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        .cover-mask-bottom {
+          position: absolute;
+          width: 100%;
+          bottom: 10px;
+          left: 0;
+          padding: 0 10px;
+          .cover-mask-bottom-wrapper {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            .forum-button {
+              flex: auto;
+              border: none;
+              background-color: rgba(255, 255, 255, 0.9);
+              border-radius: 18px;
+              height: 32px;
+              max-width: 132px;
+              color: #333;
+              font-weight: 700;
+              &:hover {
+                background-color: #fff;
+              }
+            }
+          }
+        }
+      }
     }
   }
   .author {
