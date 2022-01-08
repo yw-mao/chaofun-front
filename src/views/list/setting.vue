@@ -124,8 +124,8 @@ export default {
     }
   },
   mounted(){
-    this.isStoragePostOwnerCommentHighlight = ("true" == localStorage.getItem("chao.fun.localsetting.isStoragePostOwnerCommentHighlight"));    
-    localStorage.setItem("chao.fun.localsetting.isStoragePostOwnerCommentHighlight",this.isStoragePostOwnerCommentHighlight);
+    this.isStoragePostOwnerCommentHighlight = ("true" == localStorage.getItem("chao.fun.localSetting.isStoragePostOwnerCommentHighlight"));    
+    localStorage.setItem("chao.fun.localSetting.isStoragePostOwnerCommentHighlight",this.isStoragePostOwnerCommentHighlight);
 
     if(document.body.clientWidth<700){
       this.isPhone = true
@@ -144,7 +144,8 @@ export default {
   methods:{
 
     storagePostOwnerCommentHighlightCheckboxChange(val){
-      localStorage.setItem("chao.fun.localsetting.isStoragePostOwnerCommentHighlight",val);
+      localStorage.setItem("chao.fun.localSetting.isStoragePostOwnerCommentHighlight",val);
+      this.$toast("设置成功！");  
     },
 
     toSendCode(){
