@@ -27,7 +27,7 @@
         <p>
         -   邀请链接： https://chao.fun/app?inviter={{this.userInfo.userId}}
         </p>
-        <el-button @click="this.copyInviterLink">点击粘贴链接</el-button>
+        <el-button @click="this.copyInviterLink">点击复制链接</el-button>
       </div>
       <p>  - 他人赠与 (敬请期待)</p>
       <p style="font-weight: bold; font-size: 20px; color: #FF9300;padding-top: 20px">FBi 如何使用:</p>
@@ -90,8 +90,8 @@
 
     methods: {
       copyInviterLink() {
-        navigator.clipboard.writeText('https://chao.fun/app?inviter=' + this.userInfo.id);
-        this.$toast("拷贝邀请地址成功");
+        navigator.clipboard.writeText('https://chao.fun/app?inviter=' + this.userInfo.userId);
+        this.$toast("复制邀请地址成功");
       }
     }
   }
