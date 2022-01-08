@@ -46,7 +46,7 @@
               </div>
               <div class="title">本地设置</div>
               <div>
-                <el-checkbox v-model="isStoragePostOwnerCommentHighlight" @change="storagePostOwnerCommentHighlightCheckboxChange">保持高亮楼主评论设置</el-checkbox>
+                <el-checkbox v-model="isStoragePostOwnerCommentHighlight" @change="storagePostOwnerCommentHighlightCheckboxChange">保持高亮楼主评论状态</el-checkbox>
               </div>
             </div>
             </div>
