@@ -394,7 +394,10 @@ export default {
   }
 }
 
-/deep/.el-checkbox {  
+/deep/.el-checkbox {
+  .el-checkbox__input{
+    z-index: 0;
+  }
   .el-checkbox__label{
     margin-left:-5px;
     font-size: 14px;

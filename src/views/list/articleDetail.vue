@@ -1382,8 +1382,9 @@ queryChildren (parent, list) {
 }
 
 /deep/.el-checkbox {
-  .el-checkbox__input{
+  .el-checkbox__input{    
     margin-bottom:-2px;
+    z-index: 0;
   }
   .el-checkbox__label{
     margin-left:-8px;
