@@ -101,7 +101,7 @@
                               {{params.order=='new'?'新评':'热评'}}
                             </div>
                             <div class="tright" style="margin-right: 20px;">
-                              <el-checkbox v-model="isPostOwnerCommentHighlight" @change="postOwnerCommentHighlightCheckboxChange">高亮楼主评论</el-checkbox>
+                              <el-checkbox v-model="isPostOwnerCommentHighlight" @change="postOwnerCommentHighlightCheckboxChange" title="在“设置”中可设置为默认选中">高亮楼主评论</el-checkbox>
                             </div>
                           </div> 
                           <commentitem :postInfo="{disableComment:pagedata.disableComment,forumAdmin:pagedata.forumAdmin, 
