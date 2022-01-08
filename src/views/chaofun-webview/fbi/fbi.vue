@@ -13,20 +13,28 @@
       <p style="font-size: 14px;">
         炒饭的消耗品，目前只支持 App 查看
       </p>
-
-      <p style="font-weight: bold; font-size: 20px; color: #FF9300">FBi 如何获得:</p>
+      <p style="font-weight: bold; font-size: 20px; color: #FF9300;padding-top: 20px">FBi 如何获得:</p>
       <p>  - 通过徽章附带的 FBi（徽章由炒饭和版主颁发）</p>
       <p>  - 秘密花园 发帖，每条奖励 5 FBi，请准守板块发帖规范并请勿发无意义的帖子，不然会FBi清零</p>
       <p>  - 每周五(炒饭爆炸星期五)登录使用炒饭，奖励 50 FBi </p>
       <p>  - 每发出一条评论(评论自己评论不算), 请勿水评, 奖励 1 FBi</p>
       <p>  - 帖子每得到一条评论(非自己评论), 奖励 1 FBi</p>
       <p>  - 向站长 (cijianzy) 反馈问题, 奖励 100 FBi</p>
+      <p>
+        - 邀请用户注册炒饭，其他用户注册成功后，奖励 100 FBi
+      </p>
+      <div>
+        <p>
+        -   邀请链接： https://chao.fun/app?inviter={{this.userInfo.userId}}
+        </p>
+        <el-button @click="this.copyInviterLink">点击粘贴链接</el-button>
+      </div>
       <p>  - 他人赠与 (敬请期待)</p>
-      <p style="font-weight: bold; font-size: 20px; color: #FF9300">FBi 如何使用:</p>
+      <p style="font-weight: bold; font-size: 20px; color: #FF9300;padding-top: 20px">FBi 如何使用:</p>
       <p>  - 兑换炒饭纪念品 </p>
       <p>  - 赠与他人 (敬请期待)</p>
     </div>
-    <div style="padding-top: 20px; font-weight: bold; font-size: 20px; color: #FF9300">
+    <div style="padding-top: 20px; font-weight: bold; font-size: 20px; color: #FF9300;">
       纪念品兑换(请私聊联系@cijianzy)
     </div>
     <div style="width: 100%; ">
@@ -60,6 +68,7 @@
 
     data() {
       return {
+        'userInfo': {},
         'fbi': 0,
       }
     },
@@ -67,6 +76,7 @@
       api.getUserInfo().then(
         res => {
           if (res.success) {
+            this.userInfo = res.data
             this.fbi = res.data.fbi;
           } else {
             this.$toast(res.errorMessage)
@@ -77,6 +87,13 @@
     mounted() {
 
     },
+
+    methods: {
+      copyInviterLink() {
+        navigator.clipboard.writeText('https://chao.fun/app?inviter=' + this.userInfo.id);
+        this.$toast("拷贝邀请地址成功");
+      }
+    }
   }
 </script>
 

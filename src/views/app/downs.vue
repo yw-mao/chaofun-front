@@ -130,15 +130,17 @@ import * as api from '../../api/api'
         //     // location.href = `opentest://host`;
         // }
 
-       api.getLatestAppVersion({'platform': 'ios'}).then(res => {
+     if (this.$route.query.inviter != null) {
+       navigator.clipboard.writeText(this.link_text);
+       localStorage.setItem("inviter", this.$route.query.inviter);
+     }
+
+     api.getLatestAppVersion({'platform': 'ios'}).then(res => {
            if (res.success && res.data != null) {
                this.iosVersion = res.data.ios;
                this.androidVersion= res.data.android;
            }
-       });
-
-
-     
+     });
    },
    methods: {
        back(){
