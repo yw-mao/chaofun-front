@@ -23,7 +23,7 @@
                   <div class="followers" @click="checkout('listFans')">粉丝：{{ userInfo.followers || "0" }}</div>
                   <div class="followers" @click="checkout('listFocus')">关注：{{ userInfo.focus || "0" }}</div>
                   <div class="ups">获赞：{{ userInfo.ups || "0" }}</div>
-                  <div class="ups">FBi：{{ userInfo.fbi || "0" }}</div>
+                  <div class="followers" @click.stop="$router.push({name: 'myfbi'})">FBi：{{ userInfo.fbi || "0" }}</div>
                 </div>
                 <div class="desc">
                   {{ userInfo.desc || "Ta很懒，还没有签名哦~" }}
