@@ -1,36 +1,53 @@
 <template>
-  <div id="container"
-      class="dashboard-container container infinite-list"
-      ref="container"
-      :style="{ height: scrollHeight + 'px' }">
+  <div id="container" class="dashboard-container container infinite-list" ref="container"
+    :style="{ height: scrollHeight + 'px' }">
     <div>
       <div style="height:50px;"></div>
       <div class="main_content">
-        <div v-if="!ISPHONE" class="main_left">
-          
-        </div>
+        <div v-if="!ISPHONE" class="main_left"></div>
         <div class="main_center">
-          <div class="grid-content"  style="overflow:auto; width: 640px; max-width: 100%;margin:0 auto;">
-              <div class="mynavs">
-                <div @click="checkout('love')" :class="['navItem',{active_nav: whichOne == 'love'}]">点赞</div>
-                <div @click="checkout('pub')" :class="['navItem',{active_nav: whichOne == 'pub'}]">发布</div> 
-                <div @click="checkout('save')" :class="['navItem',{active_nav: whichOne == 'save'}]">我收藏的</div>
-                <div @click="checkout('listFocus')" :class="['navItem',{active_nav: whichOne == 'listFocus'}]">我关注的</div> 
-                <div @click="checkout('listFans')" :class="['navItem',{active_nav: whichOne == 'listFans'}]">关注我的</div>
-              </div> 
-              <ListItem v-if="whichOne=='pub'||whichOne=='love'||whichOne=='save'"  :whichOne="whichOne" :pagenum="params.pageNum" :isMy="true" :datas="{type: whichOne}" :isindex="true" :lists="lists"></ListItem>
-              <attentionItem v-else v-for="(item,index) in usersData" :item="item"  :key="index"></attentionItem>
-             <load-text :hasContent="(lists.length||usersData.length)?true:false" :ifcanget="ifcanget" :loadAll="loadAll"></load-text>
+          <div class="grid-content" style="overflow:auto;width:640px;max-width:100%;margin:0 auto;">
+            <div class="user_info">
+              <div class="avatar">
+                <viewer :images="[imgOrigin +
+                        (userInfo.icon || '37f1ae45279fac24462a42fd7b849edc.jpg')]">
+                  <img :src="imgOrigin +
+                        (userInfo.icon || '37f1ae45279fac24462a42fd7b849edc.jpg') +
+                        '?x-oss-process=image/resize,h_80'" :data-source="imgOrigin +
+                        (userInfo.icon || '37f1ae45279fac24462a42fd7b849edc.jpg')" alt="" />
+                </viewer>
+              </div>
+              <div class="info">
+                <div v-if="userInfo.userName" class="zhuye nick">{{ userInfo.userName }}</div>
+                <div class="followersFocusUps">
+                  <div class="followers" @click="checkout('listFans')">粉丝：{{ userInfo.followers || "0" }}</div>
+                  <div class="followers" @click="checkout('listFocus')">关注：{{ userInfo.focus || "0" }}</div>
+                  <div class="ups">获赞：{{ userInfo.ups || "0" }}</div>
+                  <div class="ups">FBi：{{ userInfo.fbi || "0" }}</div>
+                </div>
+                <div class="desc">
+                  {{ userInfo.desc || "Ta很懒，还没有签名哦~" }}
+                </div>
+              </div>
+            </div>
+            <div class="mynavs">
+              <div @click="checkout('pub')" :class="['navItem',{active_nav: whichOne == 'pub'}]">我发布的</div>
+              <div @click="checkout('love')" :class="['navItem',{active_nav: whichOne == 'love'}]">我赞过的</div>
+              <div @click="checkout('save')" :class="['navItem',{active_nav: whichOne == 'save'}]">我收藏的</div>
+              <div @click="checkout('listFans')" :class="['navItem',{active_nav: whichOne == 'listFans'}]">关注我的</div>
+              <div @click="checkout('listFocus')" :class="['navItem',{active_nav: whichOne == 'listFocus'}]">我关注的</div>
+            </div>
+            <ListItem v-if="whichOne=='pub'||whichOne=='love'||whichOne=='save'" :whichOne="whichOne"
+              :pagenum="params.pageNum" :isMy="true" :datas="{type: whichOne}" :isindex="true" :lists="lists">
+            </ListItem>
+            <attentionItem v-else v-for="(item,index) in usersData" :item="item" :key="index"></attentionItem>
+            <load-text :hasContent="(lists.length||usersData.length)?true:false" :ifcanget="ifcanget"
+              :loadAll="loadAll"></load-text>
           </div>
         </div>
-        <div v-if="!ISPHONE" class="main_right">
-          
-        </div>
-
+        <!-- <div v-if="!ISPHONE" class="main_right"></div> -->
       </div>
     </div>
-    
-    
 
   </div>
 </template>
@@ -77,9 +94,10 @@ export default {
       isPhone: false,
       forumInfo: null,
       ifcanget: true,
-      whichOne: 'love',
+      whichOne: 'pub',
       loadAll: false,
-      usersData: []
+      usersData: [],
+      userInfo: {}
     }
   },
   components: {
@@ -117,6 +135,8 @@ export default {
       this.isPhone = true
     }
     this.toPosition();
+    this.userInfo=this.$store.state.user.userInfo;
+    document.title = "我的主页 - 炒饭";
     let self = this;
     this.$refs.container.addEventListener("scroll", function() {
         let scrollTop = self.$refs.container.scrollTop;
@@ -425,7 +445,7 @@ export default {
   margin-bottom:10px;
 }
 .navItem{
-  padding:10px 8px;
+  padding:10px 10px;
   font-weight:bold;
   font-size:15px;
   cursor: pointer;
@@ -434,6 +454,58 @@ export default {
   color:#1890ff;
 }
 
+.user_info {
+  display: flex;
+  padding: 10px;
+  padding-bottom: 8px;
+  background: #fff;
+  border-bottom: 1px solid #f1f1f1;
+  .avatar {
+    flex: 0 0 50px;
+    height: 50px;
+    margin-right: 10px;
+    img {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+    }
+  }
+  .info {
+    flex: 1;
+  }
+  .desc {
+    font-size: 14px;
+    color: #999;
+  }  
+  .followersFocusUps {
+    display: flex;
+    
+    .followers{
+      font-size: 14px;
+      margin-right: 20px;
+      color: #999;
+       cursor: pointer;
+    }
+    
+    .ups{
+      font-size: 14px;
+      margin-right: 20px;
+      color: #999;
+    }
+  }
+}
+
+.zhuye {
+  flex: 1;
+  line-height: 40px;
+  right: 20px;
+  font-size: 12px;
+  height: 24px;
+  line-height: 24px;
+  padding: 0px;
+  border-radius: 20px;
+  font-size: 16px;
+}
 
 
 </style>

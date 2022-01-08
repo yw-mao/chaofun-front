@@ -1,105 +1,56 @@
 <template>
-  <div id="container"
-      class="dashboard-container container infinite-list"
-      ref="container"
-      :style="{ height: scrollHeight + 'px' }">
-      <div>
-        <div style="height: 50px"></div>
-        <div class="main_content">
-          <div v-if="!ISPHONE" class="main_left">
-          </div>
-          <div class="main_center">
-            <div
-              class="grid-content"
-              style="
-                overflow: hidden;
-                width: 640px;
-                max-width: 100%;
-                margin: 0 auto;
-              "
-            >
-              <div class="user_info">
-                <div class="avatar">
-                  <viewer :images="[imgOrigin +
+  <div id="container" class="dashboard-container container infinite-list" ref="container"
+    :style="{ height: scrollHeight + 'px' }">
+    <div>
+      <div style="height:50px;"></div>
+      <div class="main_content">
+        <div v-if="!ISPHONE" class="main_left"></div>
+        <div class="main_center">
+          <div class="grid-content" style="overflow:auto;width:640px;max-width:100%;margin:0 auto;">
+            <div class="user_info">
+              <div class="avatar">
+                <viewer :images="[imgOrigin +
                         (userInfo.icon || '37f1ae45279fac24462a42fd7b849edc.jpg')]">
-                    <img
-                      :src="imgOrigin +
+                  <img :src="imgOrigin +
                         (userInfo.icon || '37f1ae45279fac24462a42fd7b849edc.jpg') +
-                        '?x-oss-process=image/resize,h_80'"
-                      :data-source="imgOrigin +
-                        (userInfo.icon || '37f1ae45279fac24462a42fd7b849edc.jpg')"
-                      alt=""
-                    />
-                  </viewer>
-                  
-                </div>
-                <div class="info">
-                  <div v-if="userInfo.userName" class="zhuye nick">
-                    {{ userInfo.userName }} 的主页
-                    <div
-                      v-if="userInfo.userId != $store.state.user.userInfo.userId"
-                      @click="toAttention(userInfo.focused, userInfo.userId)"
-                      :class="['attention', { attentioned: userInfo.focused }]"
-                    >
-                      {{ userInfo.focused ? "取消关注" : "+关注" }}
-                    </div>
-                  </div>
-                  <div class="desc">获赞：{{ userInfo.ups || "0" }}</div>
-                  <div class="desc">
-                    {{ userInfo.desc || "Ta很懒，还没有签名哦~" }}
+                        '?x-oss-process=image/resize,h_80'" :data-source="imgOrigin +
+                        (userInfo.icon || '37f1ae45279fac24462a42fd7b849edc.jpg')" alt="" />
+                </viewer>
+              </div>
+              <div class="info">
+                <div v-if="userInfo.userName" class="zhuye nick"> {{ userInfo.userName }}
+                  <div v-if="userInfo.userId != $store.state.user.userInfo.userId"
+                    @click="toAttention(userInfo.focused, userInfo.userId)"
+                    :class="['attention', { attentioned: userInfo.focused }]">
+                    {{ userInfo.focused ? "取消关注" : "+关注" }}
                   </div>
                 </div>
-              </div>
-              <div class="mynavs">
-                <div
-                  @click="checkout('pub')"
-                  :class="['navItem', { active_nav: whichOne == 'pub' }]"
-                >
-                  Ta发布的
+                <div class="followersFocusUps">
+                  <div class="followers" @click="checkout('listFans')">粉丝：{{ userInfo.followers || "0" }}</div>
+                  <div class="followers" @click="checkout('listFocus')">关注：{{ userInfo.focus || "0" }}</div>
+                  <div class="ups">获赞：{{ userInfo.ups || "0" }}</div>
                 </div>
-                <div
-                  @click="checkout('love')"
-                  :class="['navItem', { active_nav: whichOne == 'love' }]"
-                >
-                  Ta赞过的
-                </div>
-                <div
-                  @click="checkout('listFocus')"
-                  :class="['navItem', { active_nav: whichOne == 'listFocus' }]"
-                >
-                  Ta关注的
-                </div>
-                <div
-                  @click="checkout('listFans')"
-                  :class="['navItem', { active_nav: whichOne == 'listFans' }]"
-                >
-                  关注Ta的
+                <div class="desc">
+                  {{ userInfo.desc || "Ta很懒，还没有签名哦~" }}
                 </div>
               </div>
-              <ListItem
-                v-if="whichOne == 'pub' || whichOne == 'love'"
-                :pagenum="params.pageNum"
-                :marker="params.marker"
-                :isMy="true"
-                :datas="{ type: whichOne }"
-                :isindex="true"
-                :lists="lists"
-              ></ListItem>
-              <attentionItem
-                v-for="(item, index) in usersData"
-                :item="item"
-                :key="index"
-              ></attentionItem>
-              <load-text
-                :hasContent="lists.length || usersData.length ? true : false"
-                :ifcanget="ifcanget"
-                :loadAll="loadAll"
-              ></load-text>
             </div>
+            <div class="mynavs">
+              <div @click="checkout('pub')" :class="['navItem', { active_nav: whichOne == 'pub' }]">Ta发布的</div>
+              <div @click="checkout('love')" :class="['navItem', { active_nav: whichOne == 'love' }]">Ta赞过的</div>
+              <div @click="checkout('listFans')" :class="['navItem', { active_nav: whichOne == 'listFans' }]">关注Ta的</div>
+              <div @click="checkout('listFocus')" :class="['navItem', { active_nav: whichOne == 'listFocus' }]">Ta关注的</div>
+            </div>
+            <ListItem v-if="whichOne == 'pub' || whichOne == 'love'" :pagenum="params.pageNum" :marker="params.marker"
+              :isMy="true" :datas="{ type: whichOne }" :isindex="true" :lists="lists"></ListItem>
+            <attentionItem v-for="(item, index) in usersData" :item="item" :key="index"></attentionItem>
+            <load-text :hasContent="lists.length || usersData.length ? true : false" :ifcanget="ifcanget"
+              :loadAll="loadAll"></load-text>
           </div>
-          <!-- <div v-if="!ISPHONE" class="main_right"></div> -->
         </div>
+        <!-- <div v-if="!ISPHONE" class="main_right"></div> -->
       </div>
+    </div>
     <!-- <div
       class="container infinite-list"
       ref="container"
@@ -241,7 +192,7 @@ export default {
       api.userinfo({ userId: this.params.userId }).then((res) => {
         if (res.success) {
           this.userInfo = res.data;
-          document.title = res.data.userName + " - 用户 - 炒饭";
+          document.title = res.data.userName + "的主页 - 炒饭";
 
           if (res.data.desc) {
             document
@@ -510,7 +461,7 @@ export default {
 .navItem {
   padding: 10px 10px;
   font-weight: bold;
-  font-size: 13px;
+  font-size: 15px;
   cursor: pointer;
 }
 .active_nav {
@@ -538,6 +489,22 @@ export default {
   .desc {
     font-size: 14px;
     color: #999;
+  }  
+  .followersFocusUps {
+    display: flex;
+    
+    .followers{
+      font-size: 14px;
+      margin-right: 20px;
+      color: #999;
+       cursor: pointer;
+    }
+    
+    .ups{
+      font-size: 14px;
+      margin-right: 20px;
+      color: #999;
+    }
   }
 }
 .zhuye {
