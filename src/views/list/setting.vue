@@ -44,6 +44,10 @@
                   <span @click="toBindPhone" style="color:#409eff;text-decoration:underline;cursor:pointer;">去绑定</span>
                 </div>
               </div>
+              <div class="title">本地设置</div>
+              <div>
+                <el-checkbox v-model="isStoragePostOwnerCommentHighlight" @change="storagePostOwnerCommentHighlightCheckboxChange">保持高亮楼主评论设置</el-checkbox>
+              </div>
             </div>
             </div>
         </div>
@@ -81,6 +85,8 @@ export default {
   // components: { adminDashboard, editorDashboard },
   data() {
     return {
+
+      isStoragePostOwnerCommentHighlight: false,
       type: '',
       title: '',
       time: '',
@@ -118,6 +124,9 @@ export default {
     }
   },
   mounted(){
+    this.isStoragePostOwnerCommentHighlight = ("true" == localStorage.getItem("chao.fun.localsetting.isStoragePostOwnerCommentHighlight"));    
+    localStorage.setItem("chao.fun.localsetting.isStoragePostOwnerCommentHighlight",this.isStoragePostOwnerCommentHighlight);
+
     if(document.body.clientWidth<700){
       this.isPhone = true
     }
@@ -133,6 +142,11 @@ export default {
     // this.filedata.url = this.imgOrigin+this.$store.state.user.userInfo.icon;
   },
   methods:{
+
+    storagePostOwnerCommentHighlightCheckboxChange(val){
+      localStorage.setItem("chao.fun.localsetting.isStoragePostOwnerCommentHighlight",val);
+    },
+
     toSendCode(){
       
       if(!this.time){
@@ -358,6 +372,13 @@ export default {
         cursor: pointer;
       }
     }
+  }
+}
+
+/deep/.el-checkbox {  
+  .el-checkbox__label{
+    margin-left:-5px;
+    font-size: 14px;
   }
 }
 </style>
