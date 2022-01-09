@@ -1,11 +1,11 @@
 <template>
   <div>
-      <div v-touch:swipe="myMethod" v-if="this.$store.state.user.islogin" class="container">
+      <div v-if="this.$store.state.user.islogin" class="container">
             <div v-if="secret.cnTitle" class="fixed_title">
                 <div class="ts">{{secret.cnTitle}}</div>
                 <div class="tname">--{{secret.author}}</div>
             </div>
-            <div class="content">
+            <div  v-touch:start="startHandler" v-touch:end="endHandler" class="content">
                 <div v-if="secret.imageUrl" class="img">
                     <div v-viewer=""  v-if="!secret.imageUrl.includes('.mp4')">
                     <img class="ims" v-if="!secret.imageUrl.includes('.mp4')" :src="secret.imageUrl + '?x-oss-process=image/resize,h_768'" :data-source="secret.imageUrl">
@@ -68,7 +68,6 @@
 import * as api from '@/api/api'
 import Vue from 'vue'
 import Vue2TouchEvents from 'vue2-touch-events'
-
 Vue.use(Vue2TouchEvents)
 import {delete_secret_image} from "../../../api/api";
 export default {
@@ -84,7 +83,11 @@ export default {
           tags: [],
           chooseId: '',
           title: '',
-          version: ''
+          version: '',
+          touchstartX: 0,
+          touchstartY:0,
+        touchendX:0,
+        touchendY:0,
       }
   },
   created(){
@@ -191,10 +194,18 @@ export default {
                 window.open(location.origin + '/user/'+item.userAO.userId,"_blank");
         }
     },
-    myMethod (direction, param) {
-        if (direction === 'top' || direction === 'left') {
-          this.getData()
-        }
+    startHandler (event) {
+      this.touchstartX = event.changedTouches[0].screenX;
+      this.touchstartY = event.changedTouches[0].screenY;
+    },
+    endHandler (event) {
+      this.touchendX = event.changedTouches[0].screenX;
+      this.touchendY = event.changedTouches[0].screenY;      // if (touchEvent.changedTouches[0].screenX )
+
+      if (this.touchendY < this.touchstartY && this.touchstartY - this.touchendY  > 10) {
+        console.log("offset ", this.touchstartY - this.touchendY)
+        this.getData();
+      }
     }
   },
 }
