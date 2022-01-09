@@ -184,6 +184,13 @@ export const constantRoutes = [
         meta: {keepAlive: true},
         hidden: true
       },
+	  {
+		path: '/my/fbi',
+		name: 'myfbi',
+		component: () =>
+			import ('@/views/list/fbi'),
+		hidden: true
+	  },
       {
         path: '/secret',
         name: 'secret',
