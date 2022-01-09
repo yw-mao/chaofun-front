@@ -195,15 +195,18 @@ export default {
         }
     },
     startHandler (event) {
+      console.log(event)
       this.touchstartX = event.changedTouches[0].screenX;
       this.touchstartY = event.changedTouches[0].screenY;
     },
     endHandler (event) {
+        console.log(event)
       this.touchendX = event.changedTouches[0].screenX;
       this.touchendY = event.changedTouches[0].screenY;      // if (touchEvent.changedTouches[0].screenX )
 
-      if (this.touchendY < this.touchstartY && this.touchstartY - this.touchendY  > 10) {
-        console.log("offset ", this.touchstartY - this.touchendY)
+      if (this.touchendY < this.touchstartY && this.touchstartY - this.touchendY  > 20) {
+        this.getData();
+      } else if (this.touchendX < this.touchstartX && this.touchstartX - this.touchendX  > 20) {
         this.getData();
       }
     }
