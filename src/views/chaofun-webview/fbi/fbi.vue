@@ -11,7 +11,7 @@
         FBi 是什么:
       </p>
       <p style="font-size: 14px;">
-        炒饭的消耗品，目前只支持 App 查看
+        炒饭的消耗品，目前支持 App 和 网页 「我的」 中查看
       </p>
       <p style="font-weight: bold; font-size: 20px; color: #FF9300;padding-top: 20px">FBi 如何获得:</p>
       <p>  - 通过徽章附带的 FBi（徽章由炒饭和版主颁发）</p>
