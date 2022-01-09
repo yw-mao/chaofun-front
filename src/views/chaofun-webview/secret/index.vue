@@ -1,6 +1,6 @@
 <template>
   <div>
-      <div v-if="this.$store.state.user.islogin" class="container">
+      <div v-touch:swipe="myMethod" v-if="this.$store.state.user.islogin" class="container">
             <div v-if="secret.cnTitle" class="fixed_title">
                 <div class="ts">{{secret.cnTitle}}</div>
                 <div class="tname">--{{secret.author}}</div>
@@ -66,12 +66,17 @@
 // @ is an alias to /src
 // import Header from '@/components/common/Header.vue'
 import * as api from '@/api/api'
+import Vue from 'vue'
+import Vue2TouchEvents from 'vue2-touch-events'
+
+Vue.use(Vue2TouchEvents)
 import {delete_secret_image} from "../../../api/api";
 export default {
   name: 'Home',
   components: {
     
   },
+
   data(){
       return {
           secret: {},
@@ -184,6 +189,11 @@ export default {
             window.flutter_inappwebview.callHandler('toAppUser',{userId: item.userAO.userId+''})
         } catch (e) {
                 window.open(location.origin + '/user/'+item.userAO.userId,"_blank");
+        }
+    },
+    myMethod (direction, param) {
+        if (direction === 'top' || direction === 'left') {
+          this.getData()
         }
     }
   },

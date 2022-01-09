@@ -20,12 +20,9 @@
       <p>  - 每发出一条评论(评论自己评论不算), 请勿水评, 奖励 1 FBi</p>
       <p>  - 帖子每得到一条评论(非自己评论), 奖励 1 FBi</p>
       <p>  - 向站长 (cijianzy) 反馈问题, 奖励 100 FBi</p>
-      <p>
-        - 邀请用户注册炒饭，其他用户注册成功后，奖励 100 FBi
-      </p>
       <div>
-        <p>
-        -   邀请链接： https://chao.fun/app?inviter={{this.userInfo.userId}}
+      <p>
+        - 邀请用户注册炒饭，其他用户注册成功后，奖励 100 FBi, 邀请链接： https://chao.fun/app?inviter={{this.userInfo.userId}}
         </p>
         <el-button @click="this.copyInviterLink">点击复制链接</el-button>
       </div>
