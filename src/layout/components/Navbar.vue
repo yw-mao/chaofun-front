@@ -69,7 +69,7 @@
                 <p>未登录</p>
               </div>
         </div>
-        <el-dropdown-menu slot="dropdown">
+        <el-dropdown-menu v-if="islogin" slot="dropdown">
           <router-link v-if="islogin" to="/my">
             <el-dropdown-item>我的</el-dropdown-item>
           </router-link>

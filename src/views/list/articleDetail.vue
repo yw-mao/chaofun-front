@@ -101,7 +101,7 @@
                               {{params.order=='new'?'新评':'热评'}}
                             </div>
                             <div class="tright" style="margin-right: 20px;">
-                              <el-checkbox v-model="isPostOwnerCommentHighlight">高亮楼主评论</el-checkbox>
+                              <el-checkbox v-model="isPostOwnerCommentHighlight" @change="postOwnerCommentHighlightCheckboxChange" title="在“设置”中可设置为默认选中">高亮楼主评论</el-checkbox>
                             </div>
                           </div> 
                           <commentitem :postInfo="{disableComment:pagedata.disableComment,forumAdmin:pagedata.forumAdmin, 
@@ -277,6 +277,11 @@ export default {
     ...mapState(['var'])
   },
   mounted(){
+
+    if("true" == localStorage.getItem("chao.fun.localSetting.isStoragePostOwnerCommentHighlight")){
+        this.isPostOwnerCommentHighlight = ("true" == localStorage.getItem("chao.fun.localSetting.isPostOwnerCommentHighlight"));
+    }
+
     if(document.body.clientWidth<700){
       this.isPhone = true
     }
@@ -304,6 +309,13 @@ export default {
     this.inputBlur()
   },
   methods:{
+
+    postOwnerCommentHighlightCheckboxChange(val){
+      if("true" == localStorage.getItem("chao.fun.localSetting.isStoragePostOwnerCommentHighlight")){
+        localStorage.setItem("chao.fun.localSetting.isPostOwnerCommentHighlight",val);
+      }      
+    },
+
     checkoutOrder(){
       if(this.params.order=='new'){
         this.params.order= 'hot'
@@ -1370,8 +1382,9 @@ queryChildren (parent, list) {
 }
 
 /deep/.el-checkbox {
-  .el-checkbox__input{
+  .el-checkbox__input{    
     margin-bottom:-2px;
+    z-index: 0;
   }
   .el-checkbox__label{
     margin-left:-8px;

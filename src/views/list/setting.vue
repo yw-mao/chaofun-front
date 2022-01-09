@@ -44,6 +44,21 @@
                   <span @click="toBindPhone" style="color:#409eff;text-decoration:underline;cursor:pointer;">去绑定</span>
                 </div>
               </div>
+              <div class="title">本地设置</div>
+              <div style="display: flex;">
+                <div>
+                  <el-checkbox v-model="isStoragePostOwnerCommentHighlight"
+                    @change="storagePostOwnerCommentHighlightCheckboxChange">保持 “高亮楼主评论” 的状态</el-checkbox>
+                </div>
+                <div class="checkboxTooltip">
+                  <el-tooltip placement="right">
+                    <div slot="content">未选中时：<br />不同帖子的 “高亮楼主评论” 的状态是独立的，<br />即每次打开帖子默认为不选中 “高亮楼主评论”<br /><br />
+                      选中时：<br />不同帖子将同步“高亮楼主评论”的状态<br />即：本帖子设置为选中，下次打开其它帖子也为选中</div>
+                    <img :src="imgOrigin+ 'biz/2217ebcccf05a1281f70582c2ad6a191.png?x-oss-process=image/resize,h_20'"
+                      alt="">
+                  </el-tooltip>
+                </div>
+              </div>
             </div>
             </div>
         </div>
@@ -81,6 +96,8 @@ export default {
   // components: { adminDashboard, editorDashboard },
   data() {
     return {
+
+      isStoragePostOwnerCommentHighlight: false,
       type: '',
       title: '',
       time: '',
@@ -118,6 +135,9 @@ export default {
     }
   },
   mounted(){
+    this.isStoragePostOwnerCommentHighlight = ("true" == localStorage.getItem("chao.fun.localSetting.isStoragePostOwnerCommentHighlight"));    
+    localStorage.setItem("chao.fun.localSetting.isStoragePostOwnerCommentHighlight",this.isStoragePostOwnerCommentHighlight);
+
     if(document.body.clientWidth<700){
       this.isPhone = true
     }
@@ -133,6 +153,12 @@ export default {
     // this.filedata.url = this.imgOrigin+this.$store.state.user.userInfo.icon;
   },
   methods:{
+
+    storagePostOwnerCommentHighlightCheckboxChange(val){
+      localStorage.setItem("chao.fun.localSetting.isStoragePostOwnerCommentHighlight",val);
+      this.$toast("设置成功！");  
+    },
+
     toSendCode(){
       
       if(!this.time){
@@ -358,6 +384,23 @@ export default {
         cursor: pointer;
       }
     }
+  }
+}
+.checkboxTooltip{
+  margin-left: 10px;
+  img{
+    width: 20px;
+    height: 20px;
+  }
+}
+
+/deep/.el-checkbox {
+  .el-checkbox__input{
+    z-index: 0;
+  }
+  .el-checkbox__label{
+    margin-left:-5px;
+    font-size: 14px;
   }
 }
 </style>
