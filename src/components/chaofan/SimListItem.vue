@@ -839,7 +839,7 @@ export default {
   width: 40px;
   height: 40px;
   right: 80px;
-  bottom: 65px;
+  bottom: 120px;
   cursor: pointer;
   img {
     width: 100%;
