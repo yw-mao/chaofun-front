@@ -642,6 +642,15 @@ export function setForumDesc(params) {
   })
 }
 
+// 查询用户徽章
+export function getUserBadgeList(params) {
+  return request({
+    url: '/api/v0/badge/list',
+    method: 'get',
+    params
+  })
+}
+
 // 关注用户
 export function toFocus(params) {
   return request({
