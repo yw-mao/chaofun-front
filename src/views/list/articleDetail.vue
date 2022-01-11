@@ -1256,6 +1256,9 @@ queryChildren (parent, list) {
     font-size: 44px;
     
     color: cornflowerblue;
+    img{
+      width: 100%;
+    }
   }
   p{
     text-align: center;
