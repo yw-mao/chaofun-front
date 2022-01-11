@@ -2,11 +2,10 @@
   <div class="container">
     <div class="content">
         <div class="top">
-            <div class="desc">在「炒饭日常」板块发帖反馈问题，或者添加下面微信进群反馈，有红包哦~</div>
+            <div class="desc">请最新版App私聊 cijianzy，或者添加下面微信进群反馈，有红包哦~</div>
             <div class="erweima">
                 <img @click="showImg" src="https://i.chao.fun/biz/10c40905c46e8c9c65d8d95b9fb25bdf.jpg" alt="">
             </div>
-            <div @click="toAdvice" class="tokui">立即反馈</div>
         </div>
     </div>
     
