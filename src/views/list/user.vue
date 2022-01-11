@@ -1,6 +1,6 @@
 <template>
   <div id="container" class="dashboard-container container infinite-list" ref="container"
-    :style="{ height: scrollHeight + 'px' }">
+       :style="{ height: scrollHeight + 'px' }">
     <div>
       <div style="height:50px;"></div>
       <div class="main_content">
@@ -14,14 +14,14 @@
                   <img :src="imgOrigin +
                         (userInfo.icon || '37f1ae45279fac24462a42fd7b849edc.jpg') +
                         '?x-oss-process=image/resize,h_80'" :data-source="imgOrigin +
-                        (userInfo.icon || '37f1ae45279fac24462a42fd7b849edc.jpg')" alt="" />
+                        (userInfo.icon || '37f1ae45279fac24462a42fd7b849edc.jpg')" alt=""/>
                 </viewer>
               </div>
               <div class="info">
                 <div v-if="userInfo.userName" class="zhuye nick"> {{ userInfo.userName }}
                   <div v-if="userInfo.userId != $store.state.user.userInfo.userId"
-                    @click="toAttention(userInfo.focused, userInfo.userId)"
-                    :class="['attention', { attentioned: userInfo.focused }]">
+                       @click="toAttention(userInfo.focused, userInfo.userId)"
+                       :class="['attention', { attentioned: userInfo.focused }]">
                     {{ userInfo.focused ? "取消关注" : "+关注" }}
                   </div>
                 </div>
@@ -35,6 +35,17 @@
                 </div>
               </div>
             </div>
+            <div v-if="badgeList.length" class="badgeList">
+              <div v-for="badgeInfo in badgeList" style="position:relative;margin-left: 20px;margin-right: 20px;">
+                <el-popover placement="bottom" width="300" trigger="hover">
+                  <badgeDetail :badgeInfo0="badgeInfo.badge"/>
+                  <div slot="reference">
+                    <img :src="imgOrigin +  'biz/f30227f819eda710024f0f6c99fa60eb.png?x-oss-process=image/resize,h_42'" style="position:absolute;left: -21px;"/>
+                    <img :src="imgOrigin + badgeInfo.badge.icon +  '?x-oss-process=image/resize,h_24'" style="position:absolute;top:14px;left:-12px;border-radius:50%;" alt=""/>
+                  </div>
+                </el-popover>
+              </div>
+            </div>
             <div class="mynavs">
               <div @click="checkout('pub')" :class="['navItem', { active_nav: whichOne == 'pub' }]">Ta发布的</div>
               <div @click="checkout('love')" :class="['navItem', { active_nav: whichOne == 'love' }]">Ta赞过的</div>
@@ -42,10 +53,10 @@
               <div @click="checkout('listFocus')" :class="['navItem', { active_nav: whichOne == 'listFocus' }]">Ta关注的</div>
             </div>
             <ListItem v-if="whichOne == 'pub' || whichOne == 'love'" :pagenum="params.pageNum" :marker="params.marker"
-              :isMy="true" :datas="{ type: whichOne }" :isindex="true" :lists="lists"></ListItem>
+                      :isMy="true" :datas="{ type: whichOne }" :isindex="true" :lists="lists"></ListItem>
             <attentionItem v-for="(item, index) in usersData" :item="item" :key="index"></attentionItem>
             <load-text :hasContent="lists.length || usersData.length ? true : false" :ifcanget="ifcanget"
-              :loadAll="loadAll"></load-text>
+                       :loadAll="loadAll"></load-text>
           </div>
         </div>
         <!-- <div v-if="!ISPHONE" class="main_right"></div> -->
@@ -68,13 +79,14 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import {mapGetters} from "vuex";
 import * as api from "../../api/api";
 
 import ListItem from "../../components/chaofan/ListItem.vue";
 import attentionItem from "../../components/chaofan/attentionItem.vue";
 import RightCom from "@/components/chaofan/RightCom";
 import loadText from "@/components/chaofan/loadText";
+import badgeDetail from '@/views/chaofun-webview/badge/badgeDetail.vue';
 
 export default {
   name: "user",
@@ -107,12 +119,14 @@ export default {
       loadAll: false,
       userInfo: {},
       usersData: [],
+      badgeList: [],
     };
   },
   components: {
     ListItem,
     loadText,
     attentionItem,
+    badgeDetail,
   },
   watch: {
     "$route.params"(v) {
@@ -123,15 +137,15 @@ export default {
   computed: {
     ...mapGetters(["roles", "islogin"]),
   },
-  activated(){
-    if(this.$route.query.time){
+  activated() {
+    if (this.$route.query.time) {
       this.toPosition();
     }
-    if(localStorage.getItem('simple')){
+    if (localStorage.getItem('simple')) {
       let data = JSON.parse(localStorage.getItem('simple'));
-      this.lists.forEach((its,index)=>{
-        if(data.postId==its.postId){
-          this.lists.splice(index,1,data)
+      this.lists.forEach((its, index) => {
+        if (data.postId == its.postId) {
+          this.lists.splice(index, 1, data)
         }
       })
       localStorage.removeItem('simple')
@@ -163,8 +177,8 @@ export default {
       let scrollHeight = self.$refs.container.scrollHeight - 4;
       //  console.log("距顶部" + scrollTop + "可视区高度" + windowHeight + "滚动条总高度" + scrollHeight);
       if (
-        conTop + conHeight > scrollHeight ||
-        conTop + conHeight == scrollHeight
+          conTop + conHeight > scrollHeight ||
+          conTop + conHeight == scrollHeight
       ) {
         console.log("到底了");
         if (self.ifcanget) {
@@ -182,22 +196,30 @@ export default {
     }
     this.params.userId = this.$route.params.id;
     this.userinfo();
+    this.getUserBadgeList();
     if (localStorage.getItem("whichOne")) {
       this.whichOne = localStorage.getItem("whichOne");
     }
     this.load();
   },
   methods: {
+    getUserBadgeList() {
+      api.getUserBadgeList({userId: this.params.userId}).then((res) => {
+        if (res.success) {
+          this.badgeList = res.data;
+        }
+      });
+    },
     userinfo() {
-      api.userinfo({ userId: this.params.userId }).then((res) => {
+      api.userinfo({userId: this.params.userId}).then((res) => {
         if (res.success) {
           this.userInfo = res.data;
           document.title = res.data.userName + "的主页 - 炒饭";
 
           if (res.data.desc) {
             document
-              .querySelector('meta[name="description"]')
-              .setAttribute("content", res.data.desc);
+                .querySelector('meta[name="description"]')
+                .setAttribute("content", res.data.desc);
           }
         } else {
           this.$router.push("/404");
@@ -206,13 +228,13 @@ export default {
     },
     toAttention(bool, id) {
       if (bool) {
-        api.toUnfocus({ focusId: id }).then((res) => {
+        api.toUnfocus({focusId: id}).then((res) => {
           if (res.success) {
             this.userInfo.focused = !bool;
           }
         });
       } else {
-        api.toFocus({ focusId: id }).then((res) => {
+        api.toFocus({focusId: id}).then((res) => {
           if (res.success) {
             this.userInfo.focused = !bool;
           }
@@ -234,7 +256,7 @@ export default {
       if (this.$store.state.user.islogin) {
         if (v == 1) {
           // 加入
-          api.joinForum({ forumId: this.params.forumId }).then((res) => {
+          api.joinForum({forumId: this.params.forumId}).then((res) => {
             if (res.success) {
               this.$message({
                 message: "加入成功",
@@ -245,7 +267,7 @@ export default {
             }
           });
         } else if (v == 2) {
-          api.leaveForum({ forumId: this.params.forumId }).then((res) => {
+          api.leaveForum({forumId: this.params.forumId}).then((res) => {
             if (res.success) {
               this.$message({
                 message: "退出成功",
@@ -267,7 +289,7 @@ export default {
       this.getLists();
     },
     getForumInfo() {
-      api.getForumInfo({ forumId: this.params.forumId }).then((res) => {
+      api.getForumInfo({forumId: this.params.forumId}).then((res) => {
         this.forumInfo = res.data;
       });
     },
@@ -358,8 +380,8 @@ export default {
       //   }
       // }
       if (this.ifcanget) {
-          this.getLists();
-        }
+        this.getLists();
+      }
     },
   },
 };
@@ -367,26 +389,33 @@ export default {
 <style lang="scss" scoped>
 .el-row {
   margin-bottom: 20px;
+
   &:last-child {
     margin-bottom: 0;
   }
 }
+
 .el-col {
   border-radius: 4px;
 }
+
 .bg-purple-dark {
   background: #99a9bf;
 }
+
 .bg-purple {
   // background: #d3dce6;
 }
+
 .bg-purple-light {
   background: #e5e9f2;
 }
+
 .grid-content {
   border-radius: 4px;
   min-height: 36px;
 }
+
 .row-bg {
   padding: 10px 0;
   background-color: #f9fafc;
@@ -397,6 +426,7 @@ export default {
   margin-bottom: 20px;
   // display: flex;
 }
+
 .forum_con {
   padding: 10px;
   background: #fff;
@@ -408,39 +438,47 @@ export default {
   // min-height: 300px;
   .fir {
     display: flex;
+
     img {
       width: 50px;
       height: 50px;
       // border-radius: 50%;
     }
+
     div {
       flex: 1;
       padding-left: 20px;
       line-height: 50px;
     }
   }
+
   .fensi {
     display: flex;
     line-height: 24px;
     padding: 20px 0;
+
     div {
       font-size: 14px;
       color: #666;
       flex: 1;
       text-align: center;
     }
+
     div:nth-child(1) {
       border-right: 1px solid #ddd;
     }
   }
+
   .forum_desc {
     color: #666;
     font-size: 14px;
     margin-bottom: 30px;
   }
+
   .forum_add {
     margin-bottom: 10px;
   }
+
   .el-button {
     display: block;
     width: 100%;
@@ -452,61 +490,78 @@ export default {
 .el-col {
   // background: #f7f7f7;
 }
+
 .mynavs {
   display: flex;
   width: 100%;
   background: #fff;
   margin-bottom: 10px;
 }
+
 .navItem {
   padding: 10px 10px;
   font-weight: bold;
   font-size: 15px;
   cursor: pointer;
 }
+
 .active_nav {
   color: #1890ff;
 }
+
+.badgeList {
+  display: flex;
+  height: 50px;
+  background: #fff;
+  border-bottom: 1px solid #f1f1f1;
+}
+
 .user_info {
   display: flex;
   padding: 10px;
   padding-bottom: 8px;
   background: #fff;
   border-bottom: 1px solid #f1f1f1;
+
   .avatar {
     flex: 0 0 50px;
     height: 50px;
     margin-right: 10px;
+
     img {
       width: 50px;
       height: 50px;
       border-radius: 50%;
     }
   }
+
   .info {
     flex: 1;
   }
+
   .desc {
     font-size: 14px;
     color: #999;
-  }  
+  }
+
   .followersFocusUps {
     display: flex;
-    
-    .followers{
+
+    .followers {
       font-size: 14px;
       margin-right: 20px;
       color: #999;
-       cursor: pointer;
+      cursor: pointer;
     }
-    
-    .ups{
+
+    .ups {
       font-size: 14px;
       margin-right: 20px;
       color: #999;
     }
   }
 }
+
 .zhuye {
   flex: 1;
   line-height: 40px;
@@ -523,6 +578,7 @@ export default {
   // margin-top: 10px;
   // color: #fff;
 }
+
 .attention {
   background: orangered;
   color: #fff;
@@ -532,6 +588,7 @@ export default {
   font-size: 14px;
   cursor: pointer;
 }
+
 .attentioned {
   background: #ccc;
 }

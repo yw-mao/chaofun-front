@@ -5,19 +5,19 @@
     </div>
     <div style="width: 100%;">
       <p style="width: 100%; align-items: center; text-align: center; font-weight: bold; font-size: 25px;">
-        {{this.badgeInfo.name}}
+        {{ this.badgeInfo.name }}
       </p>
       <p style="width: 100%; text-align: center;">
-        {{this.badgeInfo.desc}}
+        {{ this.badgeInfo.desc }}
       </p>
-      <p  style="padding-top: 20px; width: 100%; text-align: center; font-size: 16px;">
-        板块：{{this.badgeInfo.forumName}}
+      <p style="padding-top: 20px; width: 100%; text-align: center; font-size: 16px;">
+        板块：{{ this.badgeInfo.forumName }}
       </p>
       <p style="width: 100%; text-align: center; font-size: 16px;">
-        获得人数：{{this.badgeInfo.userNumber}}
+        获得人数：{{ this.badgeInfo.userNumber }}
       </p>
       <p style="width: 100%; text-align: center;font-size: 16px;">
-        FBi: {{this.badgeInfo.integral}}
+        FBi: {{ this.badgeInfo.integral }}
       </p>
     </div>
   </div>
@@ -25,6 +25,7 @@
 
 <script>
 import * as api from '@/api/api'
+
 export default {
   name: "badgeDetail.vue",
   data() {
@@ -33,17 +34,29 @@ export default {
       'badgeInfo': {}
     }
   },
+  props: {
+    badgeInfo0: {
+      type: Object,
+      default() {
+        return null;
+      }
+    }
+  },
 
   created() {
-    this.badgeId = this.$route.query.badgeId;
-    this.getBadgeInfo();
+    if (this.badgeInfo0) {
+      this.badgeInfo = this.badgeInfo0;
+    } else {
+      this.badgeId = this.$route.query.badgeId;
+      this.getBadgeInfo();
+    }
   },
 
   mounted() {
 
   },
 
-  methods:{
+  methods: {
     getBadgeInfo() {
       api.getByPath('/api/v0/badge/getBadge', {'badgeId': this.badgeId}).then(
           res => {
