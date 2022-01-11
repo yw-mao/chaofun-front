@@ -36,9 +36,14 @@
               </div>
             </div>
             <div v-if="badgeList.length" class="badgeList">
-              <div v-for="badgeInfo in badgeList" style="position:relative;margin-left: 10px;margin-right: 30px;">
-                <img :src="imgOrigin +  'biz/f30227f819eda710024f0f6c99fa60eb.png?x-oss-process=image/resize,h_42'" style="position:absolute;"/>
-                <img :src="imgOrigin + badgeInfo.badge.icon +  '?x-oss-process=image/resize,h_24'" style="position:absolute;top:14px;left:9px;border-radius:50%;" alt=""/>
+              <div v-for="badgeInfo in badgeList" style="position:relative;margin-left: 20px;margin-right: 20px;">
+                <el-popover placement="bottom" width="300" trigger="hover">
+                  <badgeDetail :badgeInfo0="badgeInfo.badge"/>
+                  <div slot="reference">
+                    <img :src="imgOrigin +  'biz/f30227f819eda710024f0f6c99fa60eb.png?x-oss-process=image/resize,h_42'" style="position:absolute;left: -21px;"/>
+                    <img :src="imgOrigin + badgeInfo.badge.icon +  '?x-oss-process=image/resize,h_24'" style="position:absolute;top:14px;left:-12px;border-radius:50%;" alt=""/>
+                  </div>
+                </el-popover>
               </div>
             </div>
             <div class="mynavs">
@@ -81,6 +86,7 @@ import ListItem from "../../components/chaofan/ListItem.vue";
 import attentionItem from "../../components/chaofan/attentionItem.vue";
 import RightCom from "@/components/chaofan/RightCom";
 import loadText from "@/components/chaofan/loadText";
+import badgeDetail from '@/views/chaofun-webview/badge/badgeDetail.vue'
 
 export default {
   name: "user",
@@ -120,6 +126,7 @@ export default {
     ListItem,
     loadText,
     attentionItem,
+    badgeDetail,
   },
   watch: {
     "$route.params"(v) {
