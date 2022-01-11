@@ -53,7 +53,8 @@
               </div> 
             </div>
             <div v-if="!ISPHONE" class="right_desc">
-              <p>可以 -> 方向键快速跳过图片</p>
+              <p>可以 ⬆️ 方向键直接提交图片</p>
+              <p>可以 ➡️ 方向键快速跳过图片</p>
               <p>点击提交后，图片会从图库中删除，由你的账号发布到炒饭主站。</p>
               <p>图片不会重复出现（图库很大，请放心跳过）</p>
               <p>标题尽量编辑成通顺的话，如果有可能的话，希望做到信达雅：）</p>
@@ -151,6 +152,13 @@
                 console.log(2)
               }
           }
+
+        if(e && e.keyCode==38){//上
+          if(self.keyNext){
+            self.submit()
+            console.log(3)
+          }
+        }
       };
     },
     created() {
