@@ -25,7 +25,7 @@
 
               <div class="title">设置个性签名</div>
               <div style="max-width:600px;margin-top:0px;margin-bottom:10px;">
-                <el-input type="textarea" @blur="toSign" maxlength="56" v-model="desc" style="resize:none;overflow:hidden;" placeholder="个性签名，展示优秀的自我~"></el-input>
+                <el-input type="textarea" @blur="toSign" maxlength="200" v-model="desc" style="resize:none;overflow:hidden;" placeholder="个性签名，展示优秀的自我~"></el-input>
               </div>
               <div class="title">修改用户名</div>
               <div>
