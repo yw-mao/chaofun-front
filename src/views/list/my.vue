@@ -1,6 +1,6 @@
 <template>
   <div id="container" class="dashboard-container container infinite-list" ref="container"
-    :style="{ height: scrollHeight + 'px' }">
+       :style="{ height: scrollHeight + 'px' }">
     <div>
       <div style="height:50px;"></div>
       <div class="main_content">
@@ -14,7 +14,7 @@
                   <img :src="imgOrigin +
                         (userInfo.icon || '37f1ae45279fac24462a42fd7b849edc.jpg') +
                         '?x-oss-process=image/resize,h_80'" :data-source="imgOrigin +
-                        (userInfo.icon || '37f1ae45279fac24462a42fd7b849edc.jpg')" alt="" />
+                        (userInfo.icon || '37f1ae45279fac24462a42fd7b849edc.jpg')" alt=""/>
                 </viewer>
               </div>
               <div class="info">
@@ -30,6 +30,17 @@
                 </div>
               </div>
             </div>
+            <div v-if="badgeList.length" class="badgeList">
+              <div v-for="badgeInfo in badgeList" style="position:relative;margin-left: 20px;margin-right: 20px;">
+                <el-popover placement="bottom" width="300" trigger="hover">
+                  <badgeDetail :badgeInfo0="badgeInfo.badge"/>
+                  <div slot="reference">
+                    <img :src="imgOrigin +  'biz/f30227f819eda710024f0f6c99fa60eb.png?x-oss-process=image/resize,h_42'" style="position:absolute;left: -21px;"/>
+                    <img :src="imgOrigin + badgeInfo.badge.icon +  '?x-oss-process=image/resize,h_24'" style="position:absolute;top:14px;left:-12px;border-radius:50%;" alt=""/>
+                  </div>
+                </el-popover>
+              </div>
+            </div>
             <div class="mynavs">
               <div @click="checkout('pub')" :class="['navItem',{active_nav: whichOne == 'pub'}]">我发布的</div>
               <div @click="checkout('love')" :class="['navItem',{active_nav: whichOne == 'love'}]">我赞过的</div>
@@ -38,11 +49,11 @@
               <div @click="checkout('listFocus')" :class="['navItem',{active_nav: whichOne == 'listFocus'}]">我关注的</div>
             </div>
             <ListItem v-if="whichOne=='pub'||whichOne=='love'||whichOne=='save'" :whichOne="whichOne"
-              :pagenum="params.pageNum" :isMy="true" :datas="{type: whichOne}" :isindex="true" :lists="lists">
+                      :pagenum="params.pageNum" :isMy="true" :datas="{type: whichOne}" :isindex="true" :lists="lists">
             </ListItem>
             <attentionItem v-else v-for="(item,index) in usersData" :item="item" :key="index"></attentionItem>
             <load-text :hasContent="(lists.length||usersData.length)?true:false" :ifcanget="ifcanget"
-              :loadAll="loadAll"></load-text>
+                       :loadAll="loadAll"></load-text>
           </div>
         </div>
         <!-- <div v-if="!ISPHONE" class="main_right"></div> -->
@@ -53,13 +64,14 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import {mapGetters} from 'vuex'
 import * as api from '@/api/api'
 
 import ListItem from '@/components/chaofan/ListItem.vue'
 import attentionItem from '@/components/chaofan/attentionItem.vue'
 import RightCom from '@/components/chaofan/RightCom'
 import loadText from '@/components/chaofan/loadText'
+import badgeDetail from '@/views/chaofun-webview/badge/badgeDetail.vue';
 
 import createLogin from '@/components/chaofan/common/login/login.js'
 
@@ -72,7 +84,7 @@ export default {
       count: 5,
       lists: [],
       forumId: '',
-      params:{
+      params: {
         marker: '',
         pageSize: 40,
         // order: localStorage.getItem('chao.fun.timeline.order') == null ? 'hot': localStorage.getItem('chao.fun.timeline.order')
@@ -97,11 +109,12 @@ export default {
       whichOne: 'pub',
       loadAll: false,
       usersData: [],
-      userInfo: {}
+      userInfo: {},
+      badgeList: [],
     }
   },
   components: {
-    ListItem,loadText,attentionItem
+    ListItem, loadText, attentionItem, badgeDetail,
   },
   watch: {
     // 'params.forumId'(v){
@@ -109,16 +122,16 @@ export default {
     //   this.lists = []
     // }
   },
-  activated(){
-    console.log('666',this.$route.query)
-    if(this.$route.query.time){
+  activated() {
+    console.log('666', this.$route.query)
+    if (this.$route.query.time) {
       this.toPosition();
     }
-    if(localStorage.getItem('simple')){
+    if (localStorage.getItem('simple')) {
       let data = JSON.parse(localStorage.getItem('simple'));
-      this.lists.forEach((its,index)=>{
-        if(data.postId==its.postId){
-          this.lists.splice(index,1,data)
+      this.lists.forEach((its, index) => {
+        if (data.postId == its.postId) {
+          this.lists.splice(index, 1, data)
         }
       })
       localStorage.removeItem('simple')
@@ -130,16 +143,16 @@ export default {
       'islogin'
     ])
   },
-  mounted(){
-    if(document.body.clientWidth<700){
+  mounted() {
+    if (document.body.clientWidth < 700) {
       this.isPhone = true
     }
     this.toPosition();
-    this.userInfo=this.$store.state.user.userInfo;
+    this.userInfo = this.$store.state.user.userInfo;
     document.title = "我的主页 - 炒饭";
     let self = this;
-    this.$refs.container.addEventListener("scroll", function() {
-        let scrollTop = self.$refs.container.scrollTop;
+    this.$refs.container.addEventListener("scroll", function () {
+      let scrollTop = self.$refs.container.scrollTop;
       let conTop = self.$refs.container.scrollTop
       // 变量windowHeight是可视区的高度
       let conHeight = self.$refs.container.clientHeight;
@@ -149,7 +162,7 @@ export default {
       // console.log(conTop,conHeight,scrollHeight)
       if (conTop + conHeight > scrollHeight || conTop + conHeight == scrollHeight) {
         console.log('到底了')
-        if(self.ifcanget){
+        if (self.ifcanget) {
           // self.load()
           self.getLists()
         }
@@ -158,21 +171,28 @@ export default {
   },
   created() {
     let id = this.$route.path.split('/')[2];
-    if(!isNaN(id)){
+    if (!isNaN(id)) {
       this.params.forumId = id
       // this.getLists()
     }
-    if(localStorage.getItem('whichOne')){
+    if (localStorage.getItem('whichOne')) {
       this.whichOne = localStorage.getItem('whichOne')
     }
+    this.getUserBadgeList();
     this.load()
   },
-  methods:{
-    
-    checkout(v){
+  methods: {
+    getUserBadgeList() {
+      api.getUserBadgeList({userId: this.$store.state.user.userInfo.userId}).then((res) => {
+        if (res.success) {
+          this.badgeList = res.data;
+        }
+      });
+    },
+    checkout(v) {
       this.loadAll = false
-      if(this.whichOne!=v){
-        localStorage.setItem('whichOne',v)
+      if (this.whichOne != v) {
+        localStorage.setItem('whichOne', v)
         this.params.marker = ''
         this.whichOne = v;
         this.lists = []
@@ -180,12 +200,12 @@ export default {
         this.getLists()
       }
     },
-    inout(v){
-      if(this.$store.state.user.islogin){
-        if(v==1){
+    inout(v) {
+      if (this.$store.state.user.islogin) {
+        if (v == 1) {
           // 加入
-          api.joinForum({forumId: this.params.forumId}).then(res=>{
-            if(res.success){
+          api.joinForum({forumId: this.params.forumId}).then(res => {
+            if (res.success) {
               this.$message({
                 message: '加入成功',
                 type: 'success',
@@ -194,9 +214,9 @@ export default {
               this.getForumInfo()
             }
           })
-        }else if(v==2){
-          api.leaveForum({forumId: this.params.forumId}).then(res=>{
-            if(res.success){
+        } else if (v == 2) {
+          api.leaveForum({forumId: this.params.forumId}).then(res => {
+            if (res.success) {
               this.$message({
                 message: '退出成功',
                 type: 'success',
@@ -206,141 +226,143 @@ export default {
             }
           })
         }
-      }else{
+      } else {
         this.showLogin('login')
       }
     },
-    gotologin(){
+    gotologin() {
       this.showLogin('login')
     },
-    showLogin(v){
+    showLogin(v) {
       // this.$store.dispatch('user/SET_logStatus',v)
-      this.$login({callBack:()=>{
-        this.$store.dispatch('user/getInfo')
-      }});
+      this.$login({
+        callBack: () => {
+          this.$store.dispatch('user/getInfo')
+        }
+      });
     },
-    gotoSubmit(){// 发帖
-      if(this.$store.state.user.islogin){
+    gotoSubmit() {// 发帖
+      if (this.$store.state.user.islogin) {
 
-      }else{
+      } else {
         this.showLogin('login')
       }
     },
-    changes(){
+    changes() {
       localStorage.setItem('chao.fun.timeline.order', this.params.order);
       this.params.pageNum = 1;
       this.lists = []
       this.getLists();
     },
-    getForumInfo(){
-      api.getForumInfo({forumId: this.params.forumId}).then(res=>{
+    getForumInfo() {
+      api.getForumInfo({forumId: this.params.forumId}).then(res => {
         this.forumInfo = res.data
       })
     },
-    getLists(){
+    getLists() {
       let params = this.params;
       this.ifcanget = false;
-      if(this.whichOne == 'love'){
-        api.getMyLove(params).then(res=>{
-          if(res.data.marker){
+      if (this.whichOne == 'love') {
+        api.getMyLove(params).then(res => {
+          if (res.data.marker) {
             this.params.marker = res.data.marker;
-            if(res.data.length<this.params.pageSize){
+            if (res.data.length < this.params.pageSize) {
               this.ifcanget = false
-            }else{
+            } else {
               this.ifcanget = true
             }
-          }else{
+          } else {
             this.loadAll = true
           }
           this.lists.push(...res.data.posts)
         })
-      }else if(this.whichOne == 'pub'){
-        api.getListPosts(params).then(res=>{
-          
-          if(res.data.marker){
+      } else if (this.whichOne == 'pub') {
+        api.getListPosts(params).then(res => {
+
+          if (res.data.marker) {
             this.params.marker = res.data.marker;
-            if(res.data.length<this.params.pageSize){
+            if (res.data.length < this.params.pageSize) {
               this.ifcanget = false
-            }else{
+            } else {
               this.ifcanget = true
             }
-          }else{
+          } else {
             this.loadAll = true
           }
           this.lists.push(...res.data.posts)
         })
-      }else if(this.whichOne == 'save'){
-        api.listSaved(params).then(res=>{
-          
-          if(res.data.marker){
+      } else if (this.whichOne == 'save') {
+        api.listSaved(params).then(res => {
+
+          if (res.data.marker) {
             this.params.marker = res.data.marker;
-            if(res.data.length<this.params.pageSize){
+            if (res.data.length < this.params.pageSize) {
               this.ifcanget = false
-            }else{
+            } else {
               this.ifcanget = true
             }
-          }else{
+          } else {
             this.loadAll = true
           }
           this.lists.push(...res.data.posts)
         })
-      }else if(this.whichOne == 'listFans'){
+      } else if (this.whichOne == 'listFans') {
         params = {
           marker: this.params.marker,
           pageSize: this.params.pageSize,
           focusId: this.$store.state.user.userInfo.userId
         }
-        api.listFans(params).then(res=>{
+        api.listFans(params).then(res => {
           // var res = {"success":true,"data":{"marker":"16","users":[{"userId":2,"userName":"yzc","icon":"f65dbe1941a8c0547dbb52710f61f957.jpg","ups":431,"followers":null,"focused":false,"gmtCreate":null,"gmtModified":null,"desc":"尘世的繁华掩盖不住心里那一抹伤，满目的浮云带不走隐痛的过往"}],"size":1}};
-          if(res.data.marker){
+          if (res.data.marker) {
             this.params.marker = res.data.marker;
-            if(res.data.length<this.params.pageSize){
+            if (res.data.length < this.params.pageSize) {
               this.ifcanget = false
-            }else{
+            } else {
               this.ifcanget = true
             }
-          }else{
+          } else {
             this.loadAll = true
           }
           this.usersData.push(...res.data.users)
         })
-      }else if(this.whichOne == 'listFocus'){
+      } else if (this.whichOne == 'listFocus') {
         params = {
           marker: this.params.marker,
           pageSize: this.params.pageSize,
           userId: this.$store.state.user.userInfo.userId
         }
-        api.listFocus(params).then(res=>{
-          
-          if(res.data.marker){
+        api.listFocus(params).then(res => {
+
+          if (res.data.marker) {
             this.params.marker = res.data.marker;
-            if(res.data.length<this.params.pageSize){
+            if (res.data.length < this.params.pageSize) {
               this.ifcanget = false
-            }else{
+            } else {
               this.ifcanget = true
             }
-          }else{
+          } else {
             this.loadAll = true
           }
           this.usersData.push(...res.data.users)
         })
       }
-      
+
     },
-    load () {
-        // if(localStorage.getItem('storedata')&&localStorage.getItem('spage')==this.$route.path){
-        //   // this.lists = JSON.parse(localStorage.getItem('storedata')).list;
-        //   // this.params.marker = JSON.parse(localStorage.getItem('storedata')).marker;
-        //   // this.params.key = JSON.parse(localStorage.getItem('storedata')).key;
-        // }else{
-        //   if(this.ifcanget){
-        //     this.getLists()
-        //   }
-          
-        // }
-        if(this.ifcanget){
-            this.getLists()
-          }
+    load() {
+      // if(localStorage.getItem('storedata')&&localStorage.getItem('spage')==this.$route.path){
+      //   // this.lists = JSON.parse(localStorage.getItem('storedata')).list;
+      //   // this.params.marker = JSON.parse(localStorage.getItem('storedata')).marker;
+      //   // this.params.key = JSON.parse(localStorage.getItem('storedata')).key;
+      // }else{
+      //   if(this.ifcanget){
+      //     this.getLists()
+      //   }
+
+      // }
+      if (this.ifcanget) {
+        this.getLists()
+      }
     }
   }
 }
@@ -348,40 +370,47 @@ export default {
 <style lang="scss" scoped>
 
 .el-row {
-    margin-bottom: 20px;
-    &:last-child {
-      margin-bottom: 0;
-    }
-  }
-  .el-col {
-    border-radius: 4px;
-  }
-  .bg-purple-dark {
-    background: #99a9bf;
-  }
-  .bg-purple {
-    // background: #d3dce6;
-  }
-  .bg-purple-light {
-    background: #e5e9f2;
-  }
-  .grid-content {
-    border-radius: 4px;
-    min-height: 36px;
-  }
-  .row-bg {
-    padding: 10px 0;
-    background-color: #f9fafc;
-  }
+  margin-bottom: 20px;
 
-
-
-  .asa{
-    background: #fff;
-    margin-bottom: 20px;
-    // display: flex;
+  &:last-child {
+    margin-bottom: 0;
+  }
 }
-.forum_con{
+
+.el-col {
+  border-radius: 4px;
+}
+
+.bg-purple-dark {
+  background: #99a9bf;
+}
+
+.bg-purple {
+  // background: #d3dce6;
+}
+
+.bg-purple-light {
+  background: #e5e9f2;
+}
+
+.grid-content {
+  border-radius: 4px;
+  min-height: 36px;
+}
+
+.row-bg {
+  padding: 10px 0;
+  background-color: #f9fafc;
+}
+
+
+.asa {
+  background: #fff;
+  margin-bottom: 20px;
+  // display: flex;
+}
+
+.forum_con {
   padding: 10px;
   background: #fff;
   margin-left: 10px;
@@ -390,43 +419,51 @@ export default {
   display: block;
   box-sizing: border-box;
   // min-height: 300px;
-  .fir{
+  .fir {
     display: flex;
-    img{
+
+    img {
       width: 50px;
       height: 50px;
       // border-radius: 50%;
     }
-    div{
+
+    div {
       flex: 1;
       padding-left: 20px;
       line-height: 50px;
     }
   }
-  .fensi{
+
+  .fensi {
     display: flex;
     line-height: 24px;
     padding: 20px 0;
-    div{
+
+    div {
       font-size: 14px;
       color: #666;
       flex: 1;
       text-align: center;
-      
+
     }
-    div:nth-child(1){
+
+    div:nth-child(1) {
       border-right: 1px solid #ddd;
     }
   }
-  .forum_desc{
+
+  .forum_desc {
     color: #666;
     font-size: 14px;
     margin-bottom: 30px;
   }
-  .forum_add{
+
+  .forum_add {
     margin-bottom: 10px;
   }
-  .el-button{
+
+  .el-button {
     display: block;
     width: 100%;
     box-sizing: border-box;
@@ -435,23 +472,33 @@ export default {
 }
 
 
-.el-col{
+.el-col {
   // background: #f7f7f7;
 }
-.mynavs{
+
+.mynavs {
   display: flex;
   width: 100%;
-  background:#fff;
-  margin-bottom:10px;
+  background: #fff;
+  margin-bottom: 10px;
 }
-.navItem{
-  padding:10px 10px;
-  font-weight:bold;
-  font-size:15px;
+
+.navItem {
+  padding: 10px 10px;
+  font-weight: bold;
+  font-size: 15px;
   cursor: pointer;
 }
-.active_nav{
-  color:#1890ff;
+
+.active_nav {
+  color: #1890ff;
+}
+
+.badgeList {
+  display: flex;
+  height: 50px;
+  background: #fff;
+  border-bottom: 1px solid #f1f1f1;
 }
 
 .user_info {
@@ -460,34 +507,39 @@ export default {
   padding-bottom: 8px;
   background: #fff;
   border-bottom: 1px solid #f1f1f1;
+
   .avatar {
     flex: 0 0 50px;
     height: 50px;
     margin-right: 10px;
+
     img {
       width: 50px;
       height: 50px;
       border-radius: 50%;
     }
   }
+
   .info {
     flex: 1;
   }
+
   .desc {
     font-size: 14px;
     color: #999;
-  }  
+  }
+
   .followersFocusUps {
     display: flex;
-    
-    .followers{
+
+    .followers {
       font-size: 14px;
       margin-right: 20px;
       color: #999;
-       cursor: pointer;
+      cursor: pointer;
     }
-    
-    .ups{
+
+    .ups {
       font-size: 14px;
       margin-right: 20px;
       color: #999;

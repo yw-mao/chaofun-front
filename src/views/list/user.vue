@@ -86,7 +86,7 @@ import ListItem from "../../components/chaofan/ListItem.vue";
 import attentionItem from "../../components/chaofan/attentionItem.vue";
 import RightCom from "@/components/chaofan/RightCom";
 import loadText from "@/components/chaofan/loadText";
-import badgeDetail from '@/views/chaofun-webview/badge/badgeDetail.vue'
+import badgeDetail from '@/views/chaofun-webview/badge/badgeDetail.vue';
 
 export default {
   name: "user",
