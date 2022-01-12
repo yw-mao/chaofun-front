@@ -21,14 +21,14 @@
                   <el-input type="textarea" @blur="toSign" maxlength="56" v-model="desc" style="resize:none;height:100px !important;overflow:hidden;" placeholder="请设置板块介绍"></el-input>
                 </div>
               </el-tab-pane>
-              <el-tab-pane label="板块统计">
+              <el-tab-pane label="板块统计" lazy="true">
                 <analytics :forum-id0="forumId"/>
               </el-tab-pane>
-              <el-tab-pane label="板块标签">板块标签</el-tab-pane>
-              <el-tab-pane label="板块规范">板块规范</el-tab-pane>
-              <el-tab-pane label="用户标签">用户标签</el-tab-pane>
-              <el-tab-pane label="发送通知">发送通知</el-tab-pane>
-              <el-tab-pane label="管理版主">管理版主</el-tab-pane>
+              <el-tab-pane label="板块标签" lazy="true">板块标签</el-tab-pane>
+              <el-tab-pane label="板块规范" lazy="true">板块规范</el-tab-pane>
+              <el-tab-pane label="用户标签" lazy="true">用户标签</el-tab-pane>
+              <el-tab-pane label="发送通知" lazy="true">发送通知</el-tab-pane>
+              <el-tab-pane label="管理版主" lazy="true">管理版主</el-tab-pane>
             </el-tabs>
           </div>
         </div>
