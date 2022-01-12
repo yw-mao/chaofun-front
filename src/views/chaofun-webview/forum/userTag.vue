@@ -18,7 +18,7 @@
       <div class="ycontainer">
         <div style="">
           <div>清除用户标签</div>
-          <div style="display: flex; align-items: center">
+          <div style="margin:10px 0px;display: flex; align-items: center">
             <div style="align-content: center">用户名：</div>
             <el-autocomplete
                 v-model="state"
@@ -28,7 +28,7 @@
                 style="z-index: 100000"
             ></el-autocomplete>
           </div>
-          <div style="display: flex;">
+          <div style="margin:20px 0px;display: flex;">
             <el-button @click="removeUserTag" type="success">清除</el-button>
             <el-button @click="cancelClean" type="success">取消</el-button>
           </div>
@@ -39,7 +39,7 @@
       <div class="ycontainer">
         <div style="">
           <div>设置用户标签</div>
-          <div style="display: flex; align-items: center">
+          <div style="margin:10px 0px;display: flex; align-items: center">
             <div style="align-content: center">用户名：</div>
             <el-autocomplete
                 v-model="state"
@@ -48,7 +48,7 @@
                 @select="handleAddSelect"
             ></el-autocomplete>
           </div>
-          <div style="display: flex;">
+          <div style="margin:10px 0px;display: flex;">
             <el-button @click="grantUser" type="success">设置</el-button>
             <el-button @click="cancelSet" type="success">取消</el-button>
           </div>
