@@ -15,19 +15,19 @@
       </div>
 
       <div class="bottom">
-        <div @click="toAnalytics" class="btns">统计信息</div>
+        <div @click="toAnalytics" class="btns">板块统计</div>
       </div>
 
       <div class="bottom">
-        <div @click="toManageTag" class="btns">标签管理</div>
+        <div @click="toManageTag" class="btns">板块标签</div>
       </div>
 
       <div class="bottom">
-        <div @click="toManageRule" class="btns">板块规范设置</div>
+        <div @click="toManageRule" class="btns">板块规范</div>
       </div>
 
       <div class="bottom">
-        <div @click="toManageUserTag" class="btns">用户标签管理</div>
+        <div @click="toManageUserTag" class="btns">用户标签</div>
       </div>
 
       <div class="bottom">
