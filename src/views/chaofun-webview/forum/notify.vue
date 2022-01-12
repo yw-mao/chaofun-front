@@ -77,9 +77,20 @@
         addNotifyLink: ''
       }
     },
+    props: {
+      forumId0: {
+        type: String,
+        default() {
+          return null;
+        }
+      }
+    },
     created() {
-      this.forumId = this.$route.query.forumId;
-
+      if (this.forumId0) {
+        this.forumId = this.forumId0;
+      } else {
+        this.forumId = this.$route.query.forumId;
+      }
       this.getNotifyList();
     },
 

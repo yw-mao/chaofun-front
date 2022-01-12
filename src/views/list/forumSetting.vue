@@ -24,11 +24,21 @@
               <el-tab-pane label="板块统计" lazy="true">
                 <analytics :forum-id0="forumId"/>
               </el-tab-pane>
-              <el-tab-pane label="板块标签" lazy>板块标签</el-tab-pane>
-              <el-tab-pane label="板块规范" lazy>板块规范</el-tab-pane>
-              <el-tab-pane label="用户标签" lazy>用户标签</el-tab-pane>
-              <el-tab-pane label="发送通知" lazy>发送通知</el-tab-pane>
-              <el-tab-pane label="管理版主" lazy>管理版主</el-tab-pane>
+              <el-tab-pane label="板块标签" lazy>
+                <forumTag :forum-id0="forumId"/>
+              </el-tab-pane>
+              <el-tab-pane label="板块规范" lazy>
+                <forumRule :forum-id0="forumId"/>
+              </el-tab-pane>
+              <el-tab-pane label="用户标签" lazy>
+                <userTag :forum-id0="forumId"/>
+              </el-tab-pane>
+              <el-tab-pane label="发送通知" lazy>
+                <notify :forum-id0="forumId"/>
+              </el-tab-pane>
+              <el-tab-pane label="管理版主" lazy>
+                <ModManager :forum-id0="forumId"/>
+              </el-tab-pane>
               <el-tab-pane label="用户封禁" lazy disabled>用户封禁</el-tab-pane>
             </el-tabs>
           </div>
@@ -46,6 +56,12 @@ import ListItem from '../../components/chaofan/ListItem.vue'
 import RightCom from '@/components/chaofan/RightCom'
 import loadText from '@/components/chaofan/loadText'
 import analytics from '@/views/chaofun-webview/forum/analytics.vue';
+import forumTag from '@/views/chaofun-webview/forum/tag.vue';
+import forumRule from '@/views/chaofun-webview/forum/rule.vue';
+import userTag from '@/views/chaofun-webview/forum/userTag.vue';
+import notify from '@/views/chaofun-webview/forum/notify.vue';
+import ModManager from '@/views/chaofun-webview/forum/ModManager.vue';
+
 
 // 板块设置
 export default {
@@ -63,7 +79,7 @@ export default {
     }
   },
   components: {
-    ListItem, loadText, analytics,
+    ListItem, loadText, analytics,forumTag,forumRule,userTag,notify,ModManager,
   },
   watch: {},
   computed: {
