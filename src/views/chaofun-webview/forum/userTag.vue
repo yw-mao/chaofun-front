@@ -61,7 +61,7 @@
     <div class="bottom">
       <div @click="toRemoveUserTag" class="btns">清除用户标签</div>
     </div>
-    <div v-for="(item,lists) in lists" :key="index" class="item">
+    <div v-for="(item,index) in lists" :key="index" class="item">
       <div>{{item.data}}</div>
       <div style="display: flex; justify-content: space-between;width: 20%">
         <div @click="toGrantUser(item)">添加给用户</div>

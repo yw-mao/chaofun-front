@@ -41,7 +41,7 @@
     <div class="bottom">
       <div @click="add" class="btns">添加通知</div>
     </div>
-    <div v-for="(item,lists) in lists" :key="index" class="item">
+    <div v-for="(item,index) in lists" :key="index" class="item">
       <div>
         <div>标题: {{item.title}} </div>
         <div>内容: {{item.content}} </div>

@@ -22,7 +22,7 @@
         </div>
       </div>
     </div>
-    <div v-for="(item,lists) in lists" :key="index" class="item">
+    <div v-for="(item,index) in lists" :key="index" class="item">
       <div>{{item.userName}} </div>
       <div style="display: flex; justify-content: space-between;width: 20%">
         <div @click="toDelete(item, index)">移除</div>

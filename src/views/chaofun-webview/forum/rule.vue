@@ -22,7 +22,7 @@
     <div class="bottom">
       <div @click="add" class="btns">添加发帖规范</div>
     </div>
-    <div v-for="(item,lists) in lists" :key="index" class="item">
+    <div v-for="(item,index) in lists" :key="index" class="item">
       <div>{{item.rule}} (排序值：{{item.orderNumber}}) </div>
       <div style="display: flex; justify-content: space-between;width: 20%">
         <div @click="toModify">修改</div>
