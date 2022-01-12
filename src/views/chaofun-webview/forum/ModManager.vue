@@ -100,6 +100,7 @@
           this.displayAdd = false;
           if (res.success) {
             this.$toast('成功');
+            this.getModList();
           } else {
             this.$toast(res.errorMessage);
           }
