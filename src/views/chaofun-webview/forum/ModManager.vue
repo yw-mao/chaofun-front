@@ -5,7 +5,7 @@
       <div v-if="this.displayAdd" class="ycovers ">
         <div class="ycontainer">
           <div style="">
-            <div style="display: flex; align-items: center">
+            <div style="margin:10px 0px;display: flex; align-items: center">
               <div style="align-content: center">用户名：</div>
               <el-autocomplete
                   v-model="state"
@@ -14,7 +14,7 @@
                   @select="handleSelect"
               ></el-autocomplete>
             </div>
-            <div style="display: flex;">
+            <div style="margin:20px 0px;display: flex;">
               <el-button @click="toAdd" type="success">确认</el-button>
               <el-button @click="cancelAdd" type="success">取消</el-button>
             </div>
@@ -187,7 +187,6 @@
     border: 1px solid #ededed;
     background: #f9f9f9;
     font-size: 15px;
-    margin-top: 10px;
     padding-left: 10px;
     border-radius: 8px;
   }

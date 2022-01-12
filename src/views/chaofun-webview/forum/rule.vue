@@ -3,16 +3,16 @@
     <div v-if="this.displayAdd" class="ycovers ">
       <div class="ycontainer">
         <div style="">
-          <div style="display: flex; align-items: center">
+          <div style="margin:10px 0px;display: flex; align-items: center">
             <div style="align-content: center">发帖规范：</div>
           </div>
-          <textarea class="text" v-model="addRule"  placeholder="请点击输入发帖规范内容"/>
-          <div style="display: flex; align-items: center">
+          <textarea class="text" v-model="addRule" style="background: #f9f9f9;width: 260px;" placeholder="请点击输入发帖规范内容"/>
+          <div style="margin:10px 0px;display: flex; align-items: center">
             <div style="align-content: center">排序值：</div>
             <input type="number" v-model="orderNumber"  placeholder="排序值"/>
           </div>
 
-          <div style="display: flex;">
+          <div style="margin:20px 0px;display: flex;">
             <el-button @click="toAdd" type="success">确认</el-button>
             <el-button @click="cancelAdd" type="success">取消</el-button>
           </div>
@@ -167,7 +167,6 @@
     border: 1px solid #ededed;
     background: #f9f9f9;
     font-size: 15px;
-    margin-top: 10px;
     padding-left: 10px;
     border-radius: 8px;
   }
