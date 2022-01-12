@@ -21,25 +21,25 @@
                   <el-input type="textarea" @blur="toSign" maxlength="56" v-model="desc" style="resize:none;height:100px !important;overflow:hidden;" placeholder="请设置板块介绍"></el-input>
                 </div>
               </el-tab-pane>
-              <el-tab-pane label="板块统计" lazy="true">
+              <el-tab-pane label="板块统计" :lazy=true>
                 <analytics :forum-id0="forumId"/>
               </el-tab-pane>
-              <el-tab-pane label="板块标签" lazy>
+              <el-tab-pane label="板块标签" :lazy=true>
                 <forumTag :forum-id0="forumId"/>
               </el-tab-pane>
-              <el-tab-pane label="板块规范" lazy>
+              <el-tab-pane label="板块规范" :lazy=true>
                 <forumRule :forum-id0="forumId"/>
               </el-tab-pane>
-              <el-tab-pane label="用户标签" lazy>
+              <el-tab-pane label="用户标签" :lazy=true>
                 <userTag :forum-id0="forumId"/>
               </el-tab-pane>
-              <el-tab-pane label="发送通知" lazy>
+              <el-tab-pane label="发送通知" :lazy=true>
                 <notify :forum-id0="forumId"/>
               </el-tab-pane>
-              <el-tab-pane label="管理版主" lazy>
+              <el-tab-pane label="管理版主" :lazy=true>
                 <ModManager :forum-id0="forumId"/>
               </el-tab-pane>
-              <el-tab-pane label="用户封禁" lazy disabled>用户封禁</el-tab-pane>
+              <el-tab-pane label="用户封禁" :lazy=true :disabled=true>用户封禁</el-tab-pane>
             </el-tabs>
           </div>
         </div>
