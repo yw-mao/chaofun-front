@@ -1,50 +1,67 @@
 <template>
-  <div id="container"
-      class="dashboard-container container infinite-list"
-      ref="container"
-      :style="{ height: scrollHeight + 'px' }">
-      <div>
-        <div style="height:50px;"></div>
-        <div>
-          <div class="main_content">
-            <div class="main_center">
-              <div class="title">设置版块 ICON</div>
+  <div id="container" class="dashboard-container container infinite-list" ref="container" :style="{ height: scrollHeight + 'px' }">
+    <div>
+      <div style="height:50px;"></div>
+      <div class="main_content">
+        <div v-if="!ISPHONE" class="main_left"></div>
+        <div class="main_center">
+          <div class="grid-content" style="overflow:auto;width:777px;max-width:100%;margin:0 auto;">
+            <el-tabs type="card">
+              <el-tab-pane label="版块信息">
+                <div class="title">设置版块 ICON</div>
                 <div>
-                    <el-upload
-                    class="avatar-uploader"
-                    action="/api/upload_image"
-                    name="file"
-                    :data="filedata"
-                    :show-file-list="false"
-                    :on-success="handleAvatarSuccess"
-                    :before-upload="beforeAvatarUpload">
-                    <img v-if="forumInfo.imageName" :src="imgOrigin + forumInfo.imageName" class="avatar">
+                  <el-upload class="avatar-uploader" action="/api/upload_image" name="file" :data="filedata" :show-file-list="false" :on-success="handleAvatarSuccess"
+                             :before-upload="beforeAvatarUpload">
+                    <img v-if="imageUrl" :src="imageUrl" class="avatar">
                     <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-                    </el-upload>
+                  </el-upload>
                 </div>
-              <div class="title">设置版块描述</div>
-              <div style="max-width:600px;margin-top:10px;">
+                <div class="title">设置版块描述</div>
+                <div style="max-width:600px;margin-top:10px;">
                   <el-input type="textarea" @blur="toSign" maxlength="56" v-model="desc" style="resize:none;height:100px !important;overflow:hidden;" placeholder="请设置版块介绍"></el-input>
                 </div>
-              <div class="title">累计版主激励: {{modInfo.money}} 元 </div>
-              <div style="margin-top:0;line-height:24px;margin-bottom: 10px" slot="tip">(按照每日版块活跃度分配，每日3点过5分更新，请加微信: wwwchaofun 提取, 多版主版块请协商提取)</div>
-              <div class="title">24小时帖子数: {{modInfo.past24HPosts}} </div>
-              <div class="title">24小时帖子获赞数(不包括楼主自己的赞): {{modInfo.past24HVotes}} </div>
-              <div class="title">24小时全站版块综合排名: {{modInfo.rank}} </div>
-            </div>
+              </el-tab-pane>
+              <el-tab-pane label="版块统计" :lazy=true>
+                <analytics :forum-id0="forumId"/>
+              </el-tab-pane>
+              <el-tab-pane label="版块标签" :lazy=true>
+                <forumTag :forum-id0="forumId"/>
+              </el-tab-pane>
+              <el-tab-pane label="版块规范" :lazy=true>
+                <forumRule :forum-id0="forumId"/>
+              </el-tab-pane>
+              <el-tab-pane label="用户标签" :lazy=true>
+                <userTag :forum-id0="forumId"/>
+              </el-tab-pane>
+              <el-tab-pane label="发送通知" :lazy=true>
+                <notify :forum-id0="forumId"/>
+              </el-tab-pane>
+              <el-tab-pane label="管理版主" :lazy=true>
+                <ModManager :forum-id0="forumId"/>
+              </el-tab-pane>
+              <el-tab-pane label="用户封禁" :lazy=true :disabled=true>用户封禁</el-tab-pane>
+            </el-tabs>
           </div>
         </div>
       </div>
+    </div>
   </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import {mapGetters} from 'vuex'
 import * as api from '../../api/api'
 
 import ListItem from '../../components/chaofan/ListItem.vue'
 import RightCom from '@/components/chaofan/RightCom'
 import loadText from '@/components/chaofan/loadText'
+import analytics from '@/views/chaofun-webview/forum/analytics.vue';
+import forumTag from '@/views/chaofun-webview/forum/tag.vue';
+import forumRule from '@/views/chaofun-webview/forum/rule.vue';
+import userTag from '@/views/chaofun-webview/forum/userTag.vue';
+import notify from '@/views/chaofun-webview/forum/notify.vue';
+import ModManager from '@/views/chaofun-webview/forum/ModManager.vue';
+
 
 // 版块设置
 export default {
@@ -59,29 +76,25 @@ export default {
       filedata: {},
       desc: '',
       forumInfo: '',
-      modInfo: ''
     }
   },
   components: {
-    ListItem,loadText
+    ListItem, loadText, analytics,forumTag,forumRule,userTag,notify,ModManager,
   },
-  watch: {
-  },
+  watch: {},
   computed: {
     ...mapGetters([
       'roles',
       'islogin'
     ])
   },
-  mounted(){
-    if(document.body.clientWidth<700){
+  mounted() {
+    if (document.body.clientWidth < 700) {
       this.isPhone = true
     }
     this.toPosition()
   },
   created() {
-
-
     this.forumId = this.params.forumId;
 
     if (this.forumId === '' || this.forumId === undefined) {
@@ -97,22 +110,19 @@ export default {
     // this.filedata.url = this.imgOrigin+this.$store.state.user.userInfo.icon;
   },
 
-  methods:{
+  methods: {
     getForumInfo() {
       api.getForumInfo({forumId: this.forumId}).then(res => {
         this.forumInfo = res.data;
         this.desc = this.forumInfo.desc;
-      })
-
-      api.getModInfo({forumId: this.forumId}).then(res => {
-        this.modInfo = res.data;
+        this.imageUrl = this.imgOrigin+this.forumInfo.imageName;
       })
     },
 
-    toSign(){
+    toSign() {
 
-      api.setForumDesc({forumId: this.forumId, desc: this.desc}).then(res=>{
-        if(res.data){
+      api.setForumDesc({forumId: this.forumId, desc: this.desc}).then(res => {
+        if (res.data) {
           this.$toast('设置签名成功');
         } else {
           this.$toast('设置签名失败，您还不是管理员?');
@@ -120,69 +130,80 @@ export default {
       })
     },
     handleAvatarSuccess(res, file) {
-        console.log(this.filedata)
-        console.log(res);
-        if(res.success){
-          this.imageUrl = URL.createObjectURL(file.raw);
-          api.setForumIcon({forumId: this.forumId, imageName: res.data}).then(res=>{
-            if(res.data){
-              this.$toast('设置版块 ICON 成功');
-            } else {
-              this.$toast('设置版块 ICON 失败，您还不是管理员?');
-            }
-          })
-        }else if(res.errorCode=='invalid_content'){
-          // this.imageUrl = ''
-          this.$toast(res.errorMessage)
-        }
-        
-      },
-      beforeAvatarUpload(file) {
-        const isLt2M = file.size / 1024 / 1024 < 20;
-        if (!isLt2M) {
-          this.$message.error('上传图片大小不能超过 20MB!');
-          return false
-        }
-        this.filedata.fileName = file.name
-        return true
+      console.log(this.filedata)
+      console.log(res);
+      if (res.success) {
+        this.imageUrl = URL.createObjectURL(file.raw);
+        api.setForumIcon({forumId: this.forumId, imageName: res.data}).then(res => {
+          if (res.data) {
+            this.$toast('设置版块 ICON 成功');
+          } else {
+            this.$toast('设置版块 ICON 失败，您还不是管理员?');
+          }
+        })
+      } else if (res.errorCode == 'invalid_content') {
+        // this.imageUrl = ''
+        this.$toast(res.errorMessage)
       }
+
+    },
+    beforeAvatarUpload(file) {
+      const isLt2M = file.size / 1024 / 1024 < 20;
+      if (!isLt2M) {
+        this.$message.error('上传图片大小不能超过 20MB!');
+        return false
+      }
+      this.filedata.fileName = file.name
+      return true
+    }
   }
 }
 </script>
 <style lang="scss" scoped>
 .avatar-uploader .el-upload {
-    border: 1px dashed #d9d9d9;
-    border-radius: 6px;
-    cursor: pointer;
-    position: relative;
-    overflow: hidden;
+  border: 1px dashed #d9d9d9;
+  border-radius: 6px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+.avatar-uploader .el-upload:hover {
+  border-color: #409EFF;
+}
+
+.avatar-uploader-icon {
+  font-size: 28px;
+  color: #8c939d;
+  width: 178px;
+  height: 178px;
+  line-height: 178px;
+  text-align: center;
+}
+
+.avatar {
+  width: 178px;
+  height: 178px;
+  display: block;
+}
+
+/deep/ .el-upload {
+  border: 1px dashed #999;
+  border-radius: 10px;
+}
+
+.container {
+  background: #fff;
+
+  .title {
+    font-size: 18px;
+    margin-bottom: 12px;
   }
-  .avatar-uploader .el-upload:hover {
-    border-color: #409EFF;
-  }
-  .avatar-uploader-icon {
-    font-size: 28px;
-    color: #8c939d;
-    width: 178px;
-    height: 178px;
-    line-height: 178px;
-    text-align: center;
-  }
-  .avatar {
-    width: 178px;
-    height: 178px;
-    display: block;
-  }
-  /deep/ .el-upload{
-      border: 1px dashed #999;
-      border-radius: 10px;
-  }
-  .container{
-      padding: 40px;
-      background: #fff;
-      .title{
-          font-size: 18px;
-          margin-bottom: 12px;
-      }
-  }
+}
+
+.grid-content {
+  border-radius: 4px;
+  min-height: 36px;
+}
+
 </style>

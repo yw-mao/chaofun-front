@@ -3,11 +3,11 @@
     <div v-if="this.displayAdd" class="ycovers ">
       <div class="ycontainer">
         <div style="">
-          <div style="display: flex; align-items: center">
+          <div style="margin:10px 0px;display: flex; align-items: center">
             <div style="align-content: center">标签名：</div>
             <input type="text" v-model="addTagName"  placeholder="标签名"/>
           </div>
-          <div style="display: flex;">
+          <div style="margin:20px 0px;display: flex;">
             <el-button @click="toAdd" type="success">确认</el-button>
             <el-button @click="cancelAdd" type="success">取消</el-button>
           </div>
@@ -18,7 +18,7 @@
       <div class="ycontainer">
         <div style="">
           <div>清除用户标签</div>
-          <div style="display: flex; align-items: center">
+          <div style="margin:10px 0px;display: flex; align-items: center">
             <div style="align-content: center">用户名：</div>
             <el-autocomplete
                 v-model="state"
@@ -28,7 +28,7 @@
                 style="z-index: 100000"
             ></el-autocomplete>
           </div>
-          <div style="display: flex;">
+          <div style="margin:20px 0px;display: flex;">
             <el-button @click="removeUserTag" type="success">清除</el-button>
             <el-button @click="cancelClean" type="success">取消</el-button>
           </div>
@@ -39,7 +39,7 @@
       <div class="ycontainer">
         <div style="">
           <div>设置用户标签</div>
-          <div style="display: flex; align-items: center">
+          <div style="margin:10px 0px;display: flex; align-items: center">
             <div style="align-content: center">用户名：</div>
             <el-autocomplete
                 v-model="state"
@@ -48,7 +48,7 @@
                 @select="handleAddSelect"
             ></el-autocomplete>
           </div>
-          <div style="display: flex;">
+          <div style="margin:10px 0px;display: flex;">
             <el-button @click="grantUser" type="success">设置</el-button>
             <el-button @click="cancelSet" type="success">取消</el-button>
           </div>
@@ -61,7 +61,7 @@
     <div class="bottom">
       <div @click="toRemoveUserTag" class="btns">清除用户标签</div>
     </div>
-    <div v-for="(item,lists) in lists" :key="index" class="item">
+    <div v-for="(item,index) in lists" :key="index" class="item">
       <div>{{item.data}}</div>
       <div style="display: flex; justify-content: space-between;width: 20%">
         <div @click="toGrantUser(item)">添加给用户</div>
@@ -102,9 +102,20 @@
         }
       }
     },
-
+    props: {
+      forumId0: {
+        type: String,
+        default() {
+          return null;
+        }
+      }
+    },
     created() {
-      this.forumId = this.$route.query.forumId;
+      if (this.forumId0) {
+        this.forumId = this.forumId0;
+      } else {
+        this.forumId = this.$route.query.forumId;
+      }
       this.getTagList()
     },
 
@@ -178,7 +189,7 @@
       getTagList() {
         api.listForumUserTag({ forumId: this.forumId }).then((res) => {
           this.lists = res.data;
-          this.load()
+          // this.load()
         })
       },
       handleRemoveSelect(item) {
@@ -260,7 +271,6 @@
     border: 1px solid #ededed;
     background: #f9f9f9;
     font-size: 15px;
-    margin-top: 10px;
     padding-left: 10px;
     border-radius: 8px;
   }
