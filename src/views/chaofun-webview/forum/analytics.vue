@@ -9,31 +9,42 @@
 </template>
 
 <script>
-  import * as api from '@/api/api'
+import * as api from '@/api/api'
 
-  export default {
-    name: "analytics",
-    // components: { adminDashboard, editorDashboard },
-    data() {
-      return {
-        params: {},
-        forumId: '',
-        modInfo: {
-          money: 0.0,
-          past24HPosts: 0,
-          past24HVotes: 0,
-          rank: 0
-        }
+export default {
+  name: "analytics",
+  // components: { adminDashboard, editorDashboard },
+  data() {
+    return {
+      params: {},
+      forumId: '',
+      modInfo: {
+        money: 0.0,
+        past24HPosts: 0,
+        past24HVotes: 0,
+        rank: 0
       }
-    },
-
-    created() {
-      this.forumId = this.$route.query.forumId;
-      api.getModInfo({forumId: this.forumId}).then(res => {
-        this.modInfo = res.data;
-      })
     }
+  },
+  props: {
+    forumId0: {
+      type: String,
+      default() {
+        return null;
+      }
+    }
+  },
+  created() {
+    if (this.forumId0) {
+      this.forumId = this.forumId0;
+    } else {
+      this.forumId = this.$route.query.forumId;
+    }
+    api.getModInfo({forumId: this.forumId}).then(res => {
+      this.modInfo = res.data;
+    })
   }
+}
 
 </script>
 

@@ -22,11 +22,7 @@
                 </div>
               </el-tab-pane>
               <el-tab-pane label="板块统计">
-                <div class="title">累计版主激励: {{ modInfo.money }} 元</div>
-                <div style="margin-top:0;line-height:24px;margin-bottom: 10px" slot="tip">(按照每日板块活跃度分配，每日3点过5分更新，请加微信: wwwchaofun 提取, 多版主板块请协商提取)</div>
-                <div class="title">24小时帖子数: {{ modInfo.past24HPosts }}</div>
-                <div class="title">24小时帖子获赞数(不包括楼主自己的赞): {{ modInfo.past24HVotes }}</div>
-                <div class="title">24小时全站板块综合排名: {{ modInfo.rank }}</div>
+                <analytics :forum-id0="forumId"/>
               </el-tab-pane>
               <el-tab-pane label="板块标签">板块标签</el-tab-pane>
               <el-tab-pane label="板块规范">板块规范</el-tab-pane>
@@ -48,6 +44,7 @@ import * as api from '../../api/api'
 import ListItem from '../../components/chaofan/ListItem.vue'
 import RightCom from '@/components/chaofan/RightCom'
 import loadText from '@/components/chaofan/loadText'
+import analytics from '@/views/chaofun-webview/forum/analytics.vue';
 
 // 板块设置
 export default {
@@ -62,11 +59,10 @@ export default {
       filedata: {},
       desc: '',
       forumInfo: '',
-      modInfo: ''
     }
   },
   components: {
-    ListItem, loadText
+    ListItem, loadText, analytics,
   },
   watch: {},
   computed: {
@@ -82,8 +78,6 @@ export default {
     this.toPosition()
   },
   created() {
-
-
     this.forumId = this.params.forumId;
 
     if (this.forumId === '' || this.forumId === undefined) {
@@ -104,10 +98,6 @@ export default {
       api.getForumInfo({forumId: this.forumId}).then(res => {
         this.forumInfo = res.data;
         this.desc = this.forumInfo.desc;
-      })
-
-      api.getModInfo({forumId: this.forumId}).then(res => {
-        this.modInfo = res.data;
       })
     },
 
