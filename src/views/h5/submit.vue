@@ -3,9 +3,9 @@
      <div class="container">
          <div style="height:50px;"></div>
         <div class="item">
-            <div class="label">发布板块</div>
+            <div class="label">发布版块</div>
             <div>
-                <input v-model="keyword" :placeholder="chooseItem.title||'搜索板块'" type="text">
+                <input v-model="keyword" :placeholder="chooseItem.title||'搜索版块'" type="text">
                   <div class="lists">
                     <div v-for="(item,index) in options" @click="choose(item,index)" :key="index" :class="[{'active':indexs == index}]">
                       <img :src="imgOrigin+item.icon" alt="">

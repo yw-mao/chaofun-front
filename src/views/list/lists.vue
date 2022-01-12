@@ -30,14 +30,14 @@
                           <div class="right">
                             <div class="followers">关注：{{item.followers}}</div>
                             <div>
-                              <span @click.stop="toAttent(item,index)" :class="['btn', item.joined?'btn1':'']">{{item.joined?'退出板块':'加入板块'}}</span>
+                              <span @click.stop="toAttent(item,index)" :class="['btn', item.joined?'btn1':'']">{{item.joined?'退出版块':'加入版块'}}</span>
                               <span @click.stop="toSubs(item,index)" class="btn btn2">发帖</span>
                             </div>
                           </div>
                         </div>
                     </div>
                     <div v-if="!listsData.length" class="nothing">
-                        <p>暂无板块哦~</p>
+                        <p>暂无版块哦~</p>
                     </div>
                 </div>
             </div>
@@ -75,14 +75,14 @@
                           <div class="right">
                             <div class="followers">关注：{{item.followers}}</div>
                             <div>
-                              <span @click.stop="toAttent(item,index)" :class="['btn', item.joined?'btn1':'']">{{item.joined?'退出板块':'加入板块'}}</span>
+                              <span @click.stop="toAttent(item,index)" :class="['btn', item.joined?'btn1':'']">{{item.joined?'退出版块':'加入版块'}}</span>
                               <span @click.stop="toSubs(item,index)" class="btn btn2">发帖</span>
                             </div>
                           </div>
                         </div>
                     </div>
                     <div v-if="!listsData.length" class="nothing">
-                        <p>暂无板块哦~</p>
+                        <p>暂无版块哦~</p>
                     </div>
                 </div>
             </div>

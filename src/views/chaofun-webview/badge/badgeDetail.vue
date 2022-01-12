@@ -11,7 +11,7 @@
         {{ this.badgeInfo.desc }}
       </p>
       <p style="padding-top: 20px; width: 100%; text-align: center; font-size: 16px;">
-        板块：{{ this.badgeInfo.forumName }}
+        版块：{{ this.badgeInfo.forumName }}
       </p>
       <p style="width: 100%; text-align: center; font-size: 16px;">
         获得人数：{{ this.badgeInfo.userNumber }}

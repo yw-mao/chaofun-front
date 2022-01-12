@@ -6,7 +6,7 @@
         <div class="forum_con">
           <div v-if="forumInfo.admin" @click="manage" style="position: absolute; right: 20px;" class="forummanage">管理</div>
           <div class="admin_header admin_titles" style="font-size: 18px">
-            板块信息
+            版块信息
           </div>
           <div class="fensi">
             <div class="_3XFx6CfPlg-4Usgxm0gK8R">粉丝：{{forumInfo.followers}}</div>
@@ -50,7 +50,7 @@
           <span data-v-265cb265="" style="background: red; color: rgb(255, 255, 255); font-size: 10px; vertical-align: middle; height: 18px; line-height: 18px; padding: 0px 4px; border-radius: 4px;">Hot</span>
         </div>
         <div @click="gotoAddForum" class="body-right">
-          板块创建
+          版块创建
         </div>
         <div v-if="false" class="game">
           <div style="height:20px;background:#f1f1f1;"></div>
@@ -90,7 +90,7 @@
           <div @click="toUrl({path: '/help/forumIntro'})">帮助文档</div>
         </div>
         <div class="help_item">
-          <div @click="goto24HForumRank">24小时板块排名</div>
+          <div @click="goto24HForumRank">24小时版块排名</div>
           <div @click="goto24HUserRank">24小时用户排名</div>
         </div>
       </div>

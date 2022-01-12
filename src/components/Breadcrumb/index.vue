@@ -18,7 +18,7 @@
             filterable
             remote
             reserve-keyword
-            placeholder="板块搜索"
+            placeholder="版块搜索"
             :remote-method="changes"
             @change="toOpen"
             @focus="getForum('')"
@@ -31,10 +31,10 @@
               :value="item.link"><img class="sicon" :src="imgOrigin+item.icon" alt=""> <span>{{item.title}}</span>
             </el-option>
           </el-select>
-          <span @click="toUrl({name: 'lists'})" class="af"> <img src="./all.png" alt=""> <em v-if="!ISPHONE">全部板块</em></span>
+          <span @click="toUrl({name: 'lists'})" class="af"> <img src="./all.png" alt=""> <em v-if="!ISPHONE">全部版块</em></span>
       </div>
       <!-- <div v-else class="block block2">
-          <input  type="text" placeholder="搜索板块">
+          <input  type="text" placeholder="搜索版块">
       </div> -->
   </el-breadcrumb>
 </template>

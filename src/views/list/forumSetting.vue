@@ -7,8 +7,8 @@
         <div class="main_center">
           <div class="grid-content" style="overflow:auto;width:777px;max-width:100%;margin:0 auto;">
             <el-tabs type="card">
-              <el-tab-pane label="板块信息">
-                <div class="title">设置板块 ICON</div>
+              <el-tab-pane label="版块信息">
+                <div class="title">设置版块 ICON</div>
                 <div>
                   <el-upload class="avatar-uploader" action="/api/upload_image" name="file" :data="filedata" :show-file-list="false" :on-success="handleAvatarSuccess"
                              :before-upload="beforeAvatarUpload">
@@ -16,18 +16,18 @@
                     <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                   </el-upload>
                 </div>
-                <div class="title">设置板块描述</div>
+                <div class="title">设置版块描述</div>
                 <div style="max-width:600px;margin-top:10px;">
-                  <el-input type="textarea" @blur="toSign" maxlength="56" v-model="desc" style="resize:none;height:100px !important;overflow:hidden;" placeholder="请设置板块介绍"></el-input>
+                  <el-input type="textarea" @blur="toSign" maxlength="56" v-model="desc" style="resize:none;height:100px !important;overflow:hidden;" placeholder="请设置版块介绍"></el-input>
                 </div>
               </el-tab-pane>
-              <el-tab-pane label="板块统计" :lazy=true>
+              <el-tab-pane label="版块统计" :lazy=true>
                 <analytics :forum-id0="forumId"/>
               </el-tab-pane>
-              <el-tab-pane label="板块标签" :lazy=true>
+              <el-tab-pane label="版块标签" :lazy=true>
                 <forumTag :forum-id0="forumId"/>
               </el-tab-pane>
-              <el-tab-pane label="板块规范" :lazy=true>
+              <el-tab-pane label="版块规范" :lazy=true>
                 <forumRule :forum-id0="forumId"/>
               </el-tab-pane>
               <el-tab-pane label="用户标签" :lazy=true>
@@ -63,7 +63,7 @@ import notify from '@/views/chaofun-webview/forum/notify.vue';
 import ModManager from '@/views/chaofun-webview/forum/ModManager.vue';
 
 
-// 板块设置
+// 版块设置
 export default {
   name: 'user',
   data() {
@@ -136,9 +136,9 @@ export default {
         this.imageUrl = URL.createObjectURL(file.raw);
         api.setForumIcon({forumId: this.forumId, imageName: res.data}).then(res => {
           if (res.data) {
-            this.$toast('设置板块 ICON 成功');
+            this.$toast('设置版块 ICON 成功');
           } else {
-            this.$toast('设置板块 ICON 失败，您还不是管理员?');
+            this.$toast('设置版块 ICON 失败，您还不是管理员?');
           }
         })
       } else if (res.errorCode == 'invalid_content') {

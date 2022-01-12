@@ -4,7 +4,7 @@
     <div v-if="this.displayAdd" class="ycovers ">
       <div class="ycontainer">
         <div style="">
-          <div>注：只有加入该板块的用户才能收到该通知</div>
+          <div>注：只有加入该版块的用户才能收到该通知</div>
           <div style="margin:10px 0px;display: flex; align-items: center">
             <div style="align-content: center">标题：</div>
             <el-input type="textarea" placeholder="通知标题" v-model="addNotifyTitle"></el-input>

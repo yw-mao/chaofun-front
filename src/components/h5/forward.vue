@@ -38,9 +38,9 @@
               <div class="v">
                   
                   <!-- <van-field ref="newinput" v-if="indexs!==''" @click="toClear" v-model="chooseItem.title" disabled placeholder="请输入用户名" /> -->
-                  <!-- <van-field v-model="keyword" :placeholder="chooseItem.title||'搜索板块'" right-icon="search"/> -->
+                  <!-- <van-field v-model="keyword" :placeholder="chooseItem.title||'搜索版块'" right-icon="search"/> -->
                   <div class="newInput">
-                    <input type="text" v-model="keyword" clearable :placeholder="chooseItem.title||'搜索板块'" right-icon="search">
+                    <input type="text" v-model="keyword" clearable :placeholder="chooseItem.title||'搜索版块'" right-icon="search">
                   </div>
                   <div class="lists">
                     

@@ -129,10 +129,10 @@
                                 <div class="forum_add">
 
                                     <el-button @click="inout(1)" v-if="!forumInfo.joined" type="primary" block>
-                                    进入板块
+                                    进入版块
                                     </el-button>
                                     <el-button @click="inout(2)" v-else type="danger" onClick={outForum} block>
-                                    退出板块
+                                    退出版块
                                     </el-button>
                                 
                                 </div> 

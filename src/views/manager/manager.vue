@@ -126,7 +126,7 @@
               <div>标题: {{item.title}} </div>
               <div>内容: {{item.content}} </div>
               <div>链接: {{item.link}} </div>
-              <div>板块id: {{item.forumId}} </div>
+              <div>版块id: {{item.forumId}} </div>
               <div>定时发送:  </div>
             </div>
             <div style="justify-content: space-between;">
@@ -138,11 +138,11 @@
         <div style="display: flex" v-show="nowIndex===4">
           <div v-for="(item,lists) in applyList" :key="index" class="item">
             <div v-if="item.type == 'apply_mod'">
-              <div> 用户 {{item.userId}} 申请板块 {{item.forumId}} 版主 </div>
+              <div> 用户 {{item.userId}} 申请版块 {{item.forumId}} 版主 </div>
               <div> 原因为 {{item.arg1}}</div>
             </div>
             <div v-if="item.type == 'apply_forum'">
-              <div> 用户 {{item.userId}} 申请创建板块 {{item.arg1}} </div>
+              <div> 用户 {{item.userId}} 申请创建版块 {{item.arg1}} </div>
               <div> 原因为 {{item.arg2}}</div>
             </div>
             <div style="justify-content: space-between;">
@@ -168,7 +168,7 @@
     data() {
       return {
         websiteInfo: '1',
-        tabsParam:['基础设置','App设置', '活动设置','通知审批','板块申请','统计信息'],//（这个也可以用对象key，value来实现）
+        tabsParam:['基础设置','App设置', '活动设置','通知审批','版块申请','统计信息'],//（这个也可以用对象key，value来实现）
         notifyList: [],
         nowIndex:0,//默认第一个tab为激活状态
         comments: [],

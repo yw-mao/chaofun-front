@@ -18,10 +18,10 @@
                   <h1 class="forum_info_name">{{forumInfo.name}}</h1>
                   <div style=" padding-left: 20px; ">
                     <button class="notJoin-button" @click="inout(1)" v-if="!forumInfo.joined">
-                      加入板块
+                      加入版块
                     </button>
                     <button class="join-button" @click="inout(2)" v-else type="danger" round>
-                      退出板块
+                      退出版块
                     </button>
                   </div>
                 </div>

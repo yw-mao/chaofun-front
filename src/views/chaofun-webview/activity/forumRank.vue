@@ -4,7 +4,7 @@
     <div class="content">
         <div class="nav">
             <img src="../assets/images/rank.png" alt="">
-            <span>24 小时板块排名</span>
+            <span>24 小时版块排名</span>
         </div>
         <div @click="toUser(item)" v-for="(item,index) in pagedata" :key="index" class="item">
             <div class="left">
