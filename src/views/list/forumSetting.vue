@@ -12,7 +12,7 @@
                 <div>
                   <el-upload class="avatar-uploader" action="/api/upload_image" name="file" :data="filedata" :show-file-list="false" :on-success="handleAvatarSuccess"
                              :before-upload="beforeAvatarUpload">
-                    <img v-if="forumInfo.imageName" :src="imgOrigin + forumInfo.imageName" class="avatar">
+                    <img v-if="imageUrl" :src="imageUrl" class="avatar">
                     <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                   </el-upload>
                 </div>
@@ -115,6 +115,7 @@ export default {
       api.getForumInfo({forumId: this.forumId}).then(res => {
         this.forumInfo = res.data;
         this.desc = this.forumInfo.desc;
+        this.imageUrl = this.imgOrigin+this.forumInfo.imageName;
       })
     },
 
