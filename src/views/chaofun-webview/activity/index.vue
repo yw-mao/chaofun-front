@@ -49,12 +49,12 @@ export default {
                   title: '秘密花园',
                   showBottom: false,
               },
-              {
-                  path: '/webview/year2021',
-                  title: '炒饭2021年度总结',
-                  desc: '你的炒饭2021统计',
-                  showBottom: true
-              },
+              // {
+              //     path: '/webview/year2021',
+              //     title: '炒饭2021年度总结',
+              //     desc: '你的炒饭2021统计',
+              //     showBottom: true
+              // },
               {
                   // imgUrl: require('../assets/images/secret.jpg'),
                   path: '/userRank',
@@ -65,15 +65,15 @@ export default {
               {
                   // imgUrl: require('../assets/images/secret.jpg'),
                   path: '/forumRank',
-                  title: '24小时板块排名',
-                  desc: '根据获赞数统计，来看看你加入的板块排第几吧？',
+                  title: '24小时版块排名',
+                  desc: '根据获赞数统计，来看看你加入的版块排第几吧？',
                   showBottom: true
               },
               {
                   // imgUrl: require('../assets/images/secret.jpg'),
                   path: '/webview/forumIntro',
                   title: '版主介绍',
-                  desc: '炒饭板块版主详情，点击查看更多',
+                  desc: '炒饭版块版主详情，点击查看更多',
                   showBottom: true
               },
 

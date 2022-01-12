@@ -10,13 +10,13 @@
         <div class="main_center">
           <div>
             <el-form :model="baseForm"  ref="baseForm" label-width="100px" class="demo-ruleForm">
-        <el-form-item label="板块：" prop="forumId" class="demo-forum-selector">
+        <el-form-item label="版块：" prop="forumId" class="demo-forum-selector">
           <el-select
               v-model="baseFormName"
               filterable
               remote
               reserve-keyword
-              placeholder="请选择板块"
+              placeholder="请选择版块"
               :remote-method="changes"
               :style="{width: ISPHONE?'168px':''}"
               @change="changes2"
@@ -353,7 +353,7 @@
         loading: false,
         rules: {
           forumId: [
-            { required: true, message: '请选择板块', trigger: 'blur' }
+            { required: true, message: '请选择版块', trigger: 'blur' }
           ],
           title: [
             { required: true, message: '请输入标题', trigger: 'blur' },

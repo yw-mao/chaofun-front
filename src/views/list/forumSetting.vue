@@ -8,7 +8,7 @@
         <div>
           <div class="main_content">
             <div class="main_center">
-              <div class="title">设置板块 ICON</div>
+              <div class="title">设置版块 ICON</div>
                 <div>
                     <el-upload
                     class="avatar-uploader"
@@ -22,15 +22,15 @@
                     <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                     </el-upload>
                 </div>
-              <div class="title">设置板块描述</div>
+              <div class="title">设置版块描述</div>
               <div style="max-width:600px;margin-top:10px;">
-                  <el-input type="textarea" @blur="toSign" maxlength="56" v-model="desc" style="resize:none;height:100px !important;overflow:hidden;" placeholder="请设置板块介绍"></el-input>
+                  <el-input type="textarea" @blur="toSign" maxlength="56" v-model="desc" style="resize:none;height:100px !important;overflow:hidden;" placeholder="请设置版块介绍"></el-input>
                 </div>
               <div class="title">累计版主激励: {{modInfo.money}} 元 </div>
-              <div style="margin-top:0;line-height:24px;margin-bottom: 10px" slot="tip">(按照每日板块活跃度分配，每日3点过5分更新，请加微信: wwwchaofun 提取, 多版主板块请协商提取)</div>
+              <div style="margin-top:0;line-height:24px;margin-bottom: 10px" slot="tip">(按照每日版块活跃度分配，每日3点过5分更新，请加微信: wwwchaofun 提取, 多版主版块请协商提取)</div>
               <div class="title">24小时帖子数: {{modInfo.past24HPosts}} </div>
               <div class="title">24小时帖子获赞数(不包括楼主自己的赞): {{modInfo.past24HVotes}} </div>
-              <div class="title">24小时全站板块综合排名: {{modInfo.rank}} </div>
+              <div class="title">24小时全站版块综合排名: {{modInfo.rank}} </div>
             </div>
           </div>
         </div>
@@ -46,7 +46,7 @@ import ListItem from '../../components/chaofan/ListItem.vue'
 import RightCom from '@/components/chaofan/RightCom'
 import loadText from '@/components/chaofan/loadText'
 
-// 板块设置
+// 版块设置
 export default {
   name: 'user',
   data() {
@@ -126,9 +126,9 @@ export default {
           this.imageUrl = URL.createObjectURL(file.raw);
           api.setForumIcon({forumId: this.forumId, imageName: res.data}).then(res=>{
             if(res.data){
-              this.$toast('设置板块 ICON 成功');
+              this.$toast('设置版块 ICON 成功');
             } else {
-              this.$toast('设置板块 ICON 失败，您还不是管理员?');
+              this.$toast('设置版块 ICON 失败，您还不是管理员?');
             }
           })
         }else if(res.errorCode=='invalid_content'){

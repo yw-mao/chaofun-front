@@ -2,7 +2,7 @@
   <div >
       <el-card  class="aside-rule" v-if="this.rules && this.rules.length != 0">
       <p>
-        <span>{{forumInfo.name}} 板块发帖规则</span>
+        <span>{{forumInfo.name}} 版块发帖规则</span>
       </p>
       <ol>
         <li v-for="item in this.rules">{{item.rule}}</li>

@@ -5,7 +5,7 @@
         
         <div class="t_line"><a href="#a">什么是版主？</a></div>
         <div class="t_line"><a href="#b">如何当上版主？</a></div>
-        <div class="t_line"><a href="#c">炒饭上有我想要的板块？</a></div>
+        <div class="t_line"><a href="#c">炒饭上有我想要的版块？</a></div>
         <div class="t_line"><a href="#d">版主有什么权利？</a></div>
         <div class="t_line"><a href="#e">版主的义务？</a></div>
         <div class="t_line"><a href="#f">版主功能入口？</a></div>
@@ -14,7 +14,7 @@
         <a name="a"></a>
         <div class="c_title"># 什么是版主</div>
         <div class="c_content">
-            一个板块的负责人，负责板块管理和运营的饭友
+            一个版块的负责人，负责版块管理和运营的饭友
         </div>
         
         <a name="b"></a>
@@ -24,14 +24,14 @@
         </div>
 
         <a name="c"></a>
-        <div class="c_title"># 炒饭上有我想要的板块</div>
+        <div class="c_title"># 炒饭上有我想要的版块</div>
         <div class="c_content">
-            目前炒饭已有的板块：
+            目前炒饭已有的版块：
             <ul class="flex_ul">
                 <li v-for="(item,index) in listsData" :key="index">{{item.name}}</li>
                 
             </ul>
-            如果想添加新的板块，获赞达 100 赞以后最新App私聊 cijianzy 即可
+            如果想添加新的版块，获赞达 100 赞以后最新App私聊 cijianzy 即可
         </div>
 
         <a name="d"></a>
@@ -42,8 +42,8 @@
                 <li>版块数据查看</li>
                 <li>管理版块 样式、图标和描述</li>
                 <li>删除版块内帖子</li>
-                <li>炒饭分润: 根据每天板块活跃有少部分资金奖励</li>
-                <li>推送通知：对关注板块的用户发送通知</li>
+                <li>炒饭分润: 根据每天版块活跃有少部分资金奖励</li>
+                <li>推送通知：对关注版块的用户发送通知</li>
                 <li>置顶帖子</li>
                 <li>增加其他版块管理用户</li>
                 <li>封禁用户</li>
@@ -59,7 +59,7 @@
             <ul type="circle" class="common_ul">
                 <li>维持版块活跃</li>
                 <li>维护版块内容的监控，移除不符合版规和炒饭规范的帖子</li>
-                <li>如果有违违背道德或者板块管理不当，可能会被移除。</li>
+                <li>如果有违违背道德或者版块管理不当，可能会被移除。</li>
             </ul>
         </div>
 
@@ -67,11 +67,11 @@
         <div class="c_title"># 版主功能入口</div>
         <div class="c_content">
             
-            <div class="ls">Web端版主功能入库--Web 板块页面右上角</div>
+            <div class="ls">Web端版主功能入库--Web 版块页面右上角</div>
             <div>
                 <img src="https://i.chao.fun/biz/d48b9daf9b762918274afda6ef544cd5.png" alt="">
             </div>
-            <div class="ls">App端版主功能入口--App 板块首页右上角</div>
+            <div class="ls">App端版主功能入口--App 版块首页右上角</div>
             <div>
                 <img style="width:50%;" src="https://i.chao.fun/biz/3ecffcc7d085359d23979f105ff34a08.jpg" alt="">
             </div>

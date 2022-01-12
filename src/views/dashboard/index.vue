@@ -301,7 +301,7 @@ export default {
       this.forumInfo = {
         imageName: "c1aaa496ec1ba20373225d232006ffdc.png",
         name: "全站",
-        desc: "聚集所有板块的最新，最热的帖子",
+        desc: "聚集所有版块的最新，最热的帖子",
       };
     }
 
@@ -318,14 +318,14 @@ export default {
       this.forumInfo = {
         imageName: "c1aaa496ec1ba20373225d232006ffdc.png",
         name: "全站",
-        desc: "聚集所有板块的最新，最热的帖子",
+        desc: "聚集所有版块的最新，最热的帖子",
       };
     } else if (this.$route.path == "/" && this.islogin) {
       this.params.forumId = "home";
       this.forumInfo = {
         imageName: "07453f3b30076cf0e1ab39ff62fcce0f.png",
         name: "首页",
-        desc: "您加入板块的内容聚合",
+        desc: "您加入版块的内容聚合",
       };
     }
     // if(!localStorage.getItem('storedata')){

@@ -8,6 +8,7 @@
       </div>
       <div>你注册于 {{moment(year2021.register_time).format('YYYY年MM月DD日 HH:mm:ss')}}</div>
       <div>成为 {{year2021.total_users}} 名饭友中的一员</div>
+      <div>是炒饭第 {{year2021.register_rank}} 位注册的用户 </div>
       <div>炒饭已经陪伴了你 {{parseInt((moment() - year2021.register_time) / 1000 / 60 / 60 / 24)}} 天</div>
       <div class="year_2021_title" style=" font-weight: bold; font-size: 24px; color: #FF9300">
         你的 Fun 2021
@@ -67,8 +68,8 @@
             </div>
           </div>
         </div>
+        <div>TA看了你发布的 {{year2021.most_be_like_user_shows  != null ? year2021.most_be_like_user_shows : 0}} 篇帖子, 点赞了你 {{year2021.most_be_like_user_upvotes  != null ? year2021.most_be_like_user_upvotes : 0}} 次，评论了你 {{year2021.most_be_like_user_comments  != null ? year2021.most_be_like_user_comments : 0}} 次，收藏了你 {{year2021.most_be_like_user_saves ?  year2021.most_be_like_user_saves : 0}} 篇帖子 </div>
       </div>
-      <div>TA看了你发布的 {{year2021.most_be_like_user_shows  != null ? year2021.most_be_like_user_shows : 0}} 篇帖子, 点赞了你 {{year2021.most_be_like_user_upvotes  != null ? year2021.most_be_like_user_upvotes : 0}} 次，评论了你 {{year2021.most_be_like_user_comments  != null ? year2021.most_be_like_user_comments : 0}} 次，收藏了你 {{year2021.most_be_like_user_saves ?  year2021.most_be_like_user_saves : 0}} 篇帖子 </div>
       <div class="year_2021_title" style=" font-weight: bold; font-size: 24px; color: #FF9300;  width: 100%">
         你获得的年度徽章
         <div v-if="this.year2021.total_ups_rank < 10" @click="toBadge(11)" style="width: 100%;  text-align: center;">
@@ -87,7 +88,7 @@
           <img src="https://i.chao.fun/biz/9cf8273f24cddf5b33bead625f7bcd79.png" style="align-items: center;">
           <div style="color: #6A9191">炒饭2021青铜</div>
         </div>
-        <div v-else>
+        <div v-else style="color: black">
           很遗憾，你未获得徽章，请再接再厉
         </div>
       </div>

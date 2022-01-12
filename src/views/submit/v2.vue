@@ -24,7 +24,7 @@
                     filterable
                     remote
                     reserve-keyword
-                    placeholder="请选择板块"
+                    placeholder="请选择版块"
                     popper-class="section-submit-form-select"
                     :popper-append-to-body="false"
                     :remote-method="getForumCategories"
@@ -218,7 +218,7 @@
                 </div>
                 <div v-if="this.rules && this.rules.length != 0">
                 <p>
-                  <span>板块发帖规则</span>
+                  <span>版块发帖规则</span>
                 </p>
                 <ol>
                   <li v-for="item in this.rules">{{item.rule}}</li>
@@ -242,7 +242,7 @@
                     <router-link to="/help/forumIntro">帮助文档</router-link>
                   </el-col>
                   <el-col :span="12" class="help-item">
-                    <router-link to="/forumRank">24小时板块排名</router-link>
+                    <router-link to="/forumRank">24小时版块排名</router-link>
                     <router-link to="/userRank">24小时用户排名</router-link>
                   </el-col>
                 </el-row>
@@ -330,7 +330,7 @@
       }
     },
     mounted() {
-      // 加载论坛板块信息
+      // 加载论坛版块信息
       this.getForum().then(() => {
         this.getForumCategories();
         this.getForumRules();
@@ -376,7 +376,7 @@
       async getForumCategories(keyword = '') {
         const result = await searchForum({ keyword });
         this.forums = result.data;
-        // 如果没找对应板块，那么插入默认
+        // 如果没找对应版块，那么插入默认
         if (this.forum.id && !this.forums.find(forum => forum.forumId === this.forum.id)) {
           this.forums.push({
             forumId: this.forum.id,
@@ -516,7 +516,7 @@
       },
       // 设置草稿内容
       async setDraftContent(draftArticle) {
-        // 板块
+        // 版块
         if (draftArticle.f) {
           this.forum.id = draftArticle.f
           this.post.forumId = draftArticle.f

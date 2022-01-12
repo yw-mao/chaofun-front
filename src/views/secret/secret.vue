@@ -23,8 +23,8 @@
               </el-input>
               <div class="searchBox">
                 <div class="searchs">
-                  <!-- <input placeholder="搜索板块" type="text"> -->
-                  <div style="font-size:16px;margin:10px 0;">选择发布的板块：</div>
+                  <!-- <input placeholder="搜索版块" type="text"> -->
+                  <div style="font-size:16px;margin:10px 0;">选择发布的版块：</div>
                   <el-input  v-model="keyword" :placeholder="forumsName" style="width:200px;margin-right: 30px;" clearable></el-input>
                   <el-button @click="reset" type="primary" size="mini">恢复默认</el-button>
                 </div>
@@ -58,7 +58,7 @@
               <p>点击提交后，图片会从图库中删除，由你的账号发布到炒饭主站。</p>
               <p>图片不会重复出现（图库很大，请放心跳过）</p>
               <p>标题尽量编辑成通顺的话，如果有可能的话，希望做到信达雅：）</p>
-              <p>请提交时尽量选择合适的板块（重要）</p>
+              <p>请提交时尽量选择合适的版块（重要）</p>
             </div>
           </div>
         </el-col>

@@ -2,13 +2,13 @@
   <div class="dashboard-container">
     <!-- <component :is="currentRole" /> -->
     <div class="container">
-        <div class="title">设置板块 ICON</div>
+        <div class="title">设置版块 ICON</div>
         <div>
             <img v-if="forumInfo.imageName" @click="uploadImage" :src="imgOrigin + forumInfo.imageName" class="avatar">
         </div>
-      <div class="title">设置板块描述</div>
+      <div class="title">设置版块描述</div>
       <div style="max-width:600px;margin-top:10px;">
-          <el-input type="textarea" maxlength="56" v-model="desc" style="resize:none;height:64px !important;overflow:hidden;margin-bottom:20px;" placeholder="请设置板块介绍"></el-input>
+          <el-input type="textarea" maxlength="56" v-model="desc" style="resize:none;height:64px !important;overflow:hidden;margin-bottom:20px;" placeholder="请设置版块介绍"></el-input>
         </div>
       <div class="bottom">
         <div @click="toSave" class="btns">保存ICON和描述</div>
@@ -23,7 +23,7 @@
       </div>
 
       <div class="bottom">
-        <div @click="toManageRule" class="btns">板块规范设置</div>
+        <div @click="toManageRule" class="btns">版块规范设置</div>
       </div>
 
       <div class="bottom">
@@ -159,7 +159,7 @@ export default {
       try {
         window.flutter_inappwebview.callHandler('toViewPage', {
           url: "https://chao.fun/webview/forum/analytics" + "?forumId=" + this.forumId,
-          title: '板块统计',
+          title: '版块统计',
           showHeader: true
         })      } catch (e) {
         window.open(location.origin + '/webview/forum/analytics?forumId=' + this.forumId);

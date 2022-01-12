@@ -48,7 +48,7 @@
                 <img class="ava" :src="imgOrigin+its.userAO.icon" alt="">
                 <div style="flex: 1">
                   <span class="uname">{{its.userAO.userName}}</span>
-                  <span v-if="its.userAO.userTag" title="用户在板块的标签" style="font-size: 14px;background-color: rgb(237, 239, 241); color: rgb(26, 26, 27); padiding: 0, 0;">{{its.userAO.userTag.data}}</span>
+                  <span v-if="its.userAO.userTag" title="用户在版块的标签" style="font-size: 14px;background-color: rgb(237, 239, 241); color: rgb(26, 26, 27); padiding: 0, 0;">{{its.userAO.userTag.data}}</span>
                 </div>
                 <span class="score">{{its.tokens}}</span>
               </div>
