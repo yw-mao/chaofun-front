@@ -88,6 +88,7 @@
       <div :class="['help_con',sticky?'help_con_fixed':'']">
         <div class="help_item">
           <div @click="toUrl({path: '/help/forumIntro'})">帮助文档</div>
+          <div @click="toUrl({path: '/webview/year2021'})">2021年度总结</div>
         </div>
         <div class="help_item">
           <div @click="goto24HForumRank">24小时版块排名</div>
