@@ -38,7 +38,7 @@
             </div>
           </div>
         </div>
-        <div>在这里, 你发布了 {{year2021.most_like_forum_posts != null ? year2021.most_like_forum_posts: 0}} 篇帖子, 浏览了 {{year2021.most_like_forum_shows}} 篇帖子，点赞了 {{year2021.most_like_forum_upvotes}} 次，发出了 {{year2021.most_like_forum_comments}} 条评论，收藏了 {{year2021.most_like_forum_saves}} 篇帖子 </div>
+        <div>在这里, 你发布了 {{year2021.most_like_forum_posts != null ? year2021.most_like_forum_posts: 0}} 篇帖子, 浏览了 {{year2021.most_like_forum_shows  != null ? year2021.most_like_forum_shows : 0}} 篇帖子，点赞了 {{year2021.most_like_forum_upvotes != null ? year2021.most_like_forum_upvotes : 0}} 次，发出了 {{year2021.most_like_forum_comments}} 条评论，收藏了 {{year2021.most_like_forum_saves}} 篇帖子 </div>
       </div>
       <div v-if="this.year2021.most_like_user != null">
 
