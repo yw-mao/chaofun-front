@@ -2,40 +2,38 @@
   <div id="container" class="dashboard-container container infinite-list" ref="container" :style="{ height: scrollHeight + 'px' }">
     <div>
       <div style="height:50px;"></div>
-      <div>
-        <div class="main_content">
-          <div v-if="!ISPHONE" class="main_left"></div>
-          <div class="main_center">
-            <div class="grid-content" style="overflow:auto;width:680px;max-width:100%;margin:0 auto;">
-              <el-tabs type="card">
-                <el-tab-pane label="板块信息">
-                  <div class="title">设置板块 ICON</div>
-                  <div>
-                    <el-upload class="avatar-uploader" action="/api/upload_image" name="file" :data="filedata" :show-file-list="false" :on-success="handleAvatarSuccess"
-                               :before-upload="beforeAvatarUpload">
-                      <img v-if="forumInfo.imageName" :src="imgOrigin + forumInfo.imageName" class="avatar">
-                      <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-                    </el-upload>
-                  </div>
-                  <div class="title">设置板块描述</div>
-                  <div style="max-width:600px;margin-top:10px;">
-                    <el-input type="textarea" @blur="toSign" maxlength="56" v-model="desc" style="resize:none;height:100px !important;overflow:hidden;" placeholder="请设置板块介绍"></el-input>
-                  </div>
-                </el-tab-pane>
-                <el-tab-pane label="板块统计">
-                  <div class="title">累计版主激励: {{ modInfo.money }} 元</div>
-                  <div style="margin-top:0;line-height:24px;margin-bottom: 10px" slot="tip">(按照每日板块活跃度分配，每日3点过5分更新，请加微信: wwwchaofun 提取, 多版主板块请协商提取)</div>
-                  <div class="title">24小时帖子数: {{ modInfo.past24HPosts }}</div>
-                  <div class="title">24小时帖子获赞数(不包括楼主自己的赞): {{ modInfo.past24HVotes }}</div>
-                  <div class="title">24小时全站板块综合排名: {{ modInfo.rank }}</div>
-                </el-tab-pane>
-                <el-tab-pane label="板块标签">板块标签</el-tab-pane>
-                <el-tab-pane label="板块规范">板块规范</el-tab-pane>
-                <el-tab-pane label="用户标签">用户标签</el-tab-pane>
-                <el-tab-pane label="发送通知">发送通知</el-tab-pane>
-                <el-tab-pane label="管理版主">管理版主</el-tab-pane>
-              </el-tabs>
-            </div>
+      <div class="main_content">
+        <div v-if="!ISPHONE" class="main_left"></div>
+        <div class="main_center">
+          <div class="grid-content" style="overflow:auto;width:680px;max-width:100%;margin:0 auto;">
+            <el-tabs type="card">
+              <el-tab-pane label="板块信息">
+                <div class="title">设置板块 ICON</div>
+                <div>
+                  <el-upload class="avatar-uploader" action="/api/upload_image" name="file" :data="filedata" :show-file-list="false" :on-success="handleAvatarSuccess"
+                             :before-upload="beforeAvatarUpload">
+                    <img v-if="forumInfo.imageName" :src="imgOrigin + forumInfo.imageName" class="avatar">
+                    <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                  </el-upload>
+                </div>
+                <div class="title">设置板块描述</div>
+                <div style="max-width:600px;margin-top:10px;">
+                  <el-input type="textarea" @blur="toSign" maxlength="56" v-model="desc" style="resize:none;height:100px !important;overflow:hidden;" placeholder="请设置板块介绍"></el-input>
+                </div>
+              </el-tab-pane>
+              <el-tab-pane label="板块统计">
+                <div class="title">累计版主激励: {{ modInfo.money }} 元</div>
+                <div style="margin-top:0;line-height:24px;margin-bottom: 10px" slot="tip">(按照每日板块活跃度分配，每日3点过5分更新，请加微信: wwwchaofun 提取, 多版主板块请协商提取)</div>
+                <div class="title">24小时帖子数: {{ modInfo.past24HPosts }}</div>
+                <div class="title">24小时帖子获赞数(不包括楼主自己的赞): {{ modInfo.past24HVotes }}</div>
+                <div class="title">24小时全站板块综合排名: {{ modInfo.rank }}</div>
+              </el-tab-pane>
+              <el-tab-pane label="板块标签">板块标签</el-tab-pane>
+              <el-tab-pane label="板块规范">板块规范</el-tab-pane>
+              <el-tab-pane label="用户标签">用户标签</el-tab-pane>
+              <el-tab-pane label="发送通知">发送通知</el-tab-pane>
+              <el-tab-pane label="管理版主">管理版主</el-tab-pane>
+            </el-tabs>
           </div>
         </div>
       </div>
@@ -187,7 +185,6 @@ export default {
 }
 
 .container {
-  padding: 40px;
   background: #fff;
 
   .title {
