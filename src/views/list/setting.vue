@@ -44,7 +44,14 @@
                 <span @click="toBindPhone" style="color:#409eff;text-decoration:underline;cursor:pointer;">去绑定</span>
               </div>
             </div>
-            <div class="title">本地设置</div>
+            <div class="title" style="display: flex;">本地设置
+              <div class="checkboxTooltip">
+                <el-tooltip placement="right">
+                  <div slot="content">该设置仅保存在本地浏览器，<br/>更换设备或浏览器需重新设置该项。</div>
+                  <i class="el-icon-question" style="font-size: 20px; color: #1890ff"></i>
+                </el-tooltip>
+              </div>
+            </div>
             <div class="localSetting" style="display: flex;">
               <div>
                 <el-checkbox v-model="isStoragePostOwnerCommentHighlight"
@@ -56,8 +63,7 @@
                   <div slot="content">未选中时：<br/>不同帖子的 “高亮楼主评论” 的状态是独立的，<br/>即每次打开帖子默认为不选中 “高亮楼主评论”<br/><br/>
                     选中时：<br/>不同帖子将同步“高亮楼主评论”的状态<br/>即：本帖子设置为选中，下次打开其它帖子也为选中
                   </div>
-                  <img :src="imgOrigin+ 'biz/2217ebcccf05a1281f70582c2ad6a191.png?x-oss-process=image/resize,h_20'"
-                       alt="">
+                  <i class="el-icon-question" style="font-size: 20px; color: #1890ff"></i>
                 </el-tooltip>
               </div>
             </div>
@@ -443,7 +449,7 @@ export default {
 }
 
 .localSetting{
-  margin: 5px 10px;
+  margin: 10px 10px;
   display: flex;
 }
 </style>
