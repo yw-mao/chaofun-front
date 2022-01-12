@@ -49,12 +49,12 @@ export default {
                   title: '秘密花园',
                   showBottom: false,
               },
-              // {
-              //     path: '/webview/year2021',
-              //     title: '炒饭2021年度总结',
-              //     desc: '炒饭的各个板块的活动',
-              //     showBottom: true
-              // },
+              {
+                  path: '/webview/year2021',
+                  title: '炒饭2021年度总结',
+                  desc: '你的炒饭2021统计',
+                  showBottom: true
+              },
               {
                   // imgUrl: require('../assets/images/secret.jpg'),
                   path: '/userRank',
