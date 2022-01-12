@@ -5,7 +5,7 @@
       <div class="main_content">
         <div v-if="!ISPHONE" class="main_left"></div>
         <div class="main_center">
-          <div class="grid-content" style="overflow:auto;width:680px;max-width:100%;margin:0 auto;">
+          <div class="grid-content" style="overflow:auto;width:777px;max-width:100%;margin:0 auto;">
             <el-tabs type="card">
               <el-tab-pane label="板块信息">
                 <div class="title">设置板块 ICON</div>
@@ -24,11 +24,12 @@
               <el-tab-pane label="板块统计" lazy="true">
                 <analytics :forum-id0="forumId"/>
               </el-tab-pane>
-              <el-tab-pane label="板块标签" lazy="true">板块标签</el-tab-pane>
-              <el-tab-pane label="板块规范" lazy="true">板块规范</el-tab-pane>
-              <el-tab-pane label="用户标签" lazy="true">用户标签</el-tab-pane>
-              <el-tab-pane label="发送通知" lazy="true">发送通知</el-tab-pane>
-              <el-tab-pane label="管理版主" lazy="true">管理版主</el-tab-pane>
+              <el-tab-pane label="板块标签" lazy>板块标签</el-tab-pane>
+              <el-tab-pane label="板块规范" lazy>板块规范</el-tab-pane>
+              <el-tab-pane label="用户标签" lazy>用户标签</el-tab-pane>
+              <el-tab-pane label="发送通知" lazy>发送通知</el-tab-pane>
+              <el-tab-pane label="管理版主" lazy>管理版主</el-tab-pane>
+              <el-tab-pane label="用户封禁" lazy disabled>用户封禁</el-tab-pane>
             </el-tabs>
           </div>
         </div>
