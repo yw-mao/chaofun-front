@@ -51,8 +51,8 @@ export default {
               },
               {
                   path: '/webview/year2021',
-                  title: '2021年度统计',
-                  desc: '你的炒饭2021年度统计',
+                  title: '2021年度总结',
+                  desc: '你的炒饭2021年度总结',
                   showBottom: true
               },
               {

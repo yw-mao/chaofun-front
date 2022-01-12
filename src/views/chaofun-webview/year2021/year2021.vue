@@ -15,9 +15,9 @@
       </div>
       <div>你使用了炒饭 {{parseInt(year2021.minutes)}} 分钟 </div>
       <div>你发布了 {{year2021.posts != null ? year2021.posts : 0}} 篇帖子</div>
-      <div>你浏览了 {{year2021.total_upvotes != null ? year2021.total_upvotes : 0}} 篇帖子</div>
-      <div>你评论了 {{year2021.most_like_forum_comments != null ? year2021.most_like_forum_comments : 0 }} 次</div>
-      <div>你点赞了 {{year2021.total_ups != null ? year2021.total_ups : 0 }} 次</div>
+      <div>你浏览了 {{year2021.total_shows != null ? year2021.total_shows : 0}} 篇帖子</div>
+      <div>你评论了 {{year2021.comments != null ? year2021.comments : 0 }} 次</div>
+      <div>你点赞了 {{year2021.total_upvotes != null ? year2021.total_upvotes : 0 }} 次</div>
       <div>你收藏了 {{year2021.total_saves != null ? year2021.total_saves : 0 }} 篇帖子</div>
       <div>新的一年，希望炒饭能让你找到更多乐趣，发现更大的世界.</div>
       <div class="year_2021_title" style=" font-weight: bold; font-size: 24px; color: #FF9300">
@@ -38,7 +38,7 @@
             </div>
           </div>
         </div>
-        <div>在这里, 你发布了 {{year2021.most_like_forum_posts != null ? year2021.most_like_forum_posts: 0}} 篇帖子, 浏览了 {{year2021.most_like_forum_shows  != null ? year2021.most_like_forum_shows : 0}} 篇帖子，点赞了 {{year2021.most_like_forum_upvotes != null ? year2021.most_like_forum_upvotes : 0}} 次，发出了 {{year2021.most_like_forum_comments}} 条评论，收藏了 {{year2021.most_like_forum_saves}} 篇帖子 </div>
+        <div>在这里, 你发布了 {{year2021.most_like_forum_posts != null ? year2021.most_like_forum_posts: 0}} 篇帖子, 浏览了 {{year2021.most_like_forum_shows  != null ? year2021.most_like_forum_shows : 0}} 篇帖子，点赞了 {{year2021.most_like_forum_upvotes != null ? year2021.most_like_forum_upvotes : 0}} 次，发出了 {{year2021.most_like_forum_comments  != null ? year2021.most_like_forum_comments : 0}} 条评论，收藏了 {{year2021.most_like_forum_saves  != null ? year2021.most_like_forum_saves : 0}} 篇帖子 </div>
       </div>
       <div v-if="this.year2021.most_like_user != null">
 
@@ -138,9 +138,6 @@
       toBadge(badge) {
         window.open('https://chao.fun/webview/badge?badgeId=' + badge,"_blank");
       },
-
-
-
     }
   }
 </script>
