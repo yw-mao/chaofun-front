@@ -189,7 +189,7 @@
       getTagList() {
         api.listForumUserTag({ forumId: this.forumId }).then((res) => {
           this.lists = res.data;
-          this.load()
+          // this.load()
         })
       },
       handleRemoveSelect(item) {

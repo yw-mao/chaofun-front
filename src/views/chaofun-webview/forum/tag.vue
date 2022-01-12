@@ -105,7 +105,7 @@
       getTagList() {
         api.getlistTag({ forumId: this.forumId }).then((res) => {
           this.lists = res.data;
-          this.load()
+          // this.load()
         })
       }
     }
