@@ -61,6 +61,10 @@
         if (reason === 'crazy_friday') {
           return '星期五登录'
         }
+
+        if (reason === 'inviter') {
+          return '邀请用户'
+        }
         return '';
 
       }
