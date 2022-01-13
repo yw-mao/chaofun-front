@@ -1,11 +1,14 @@
 <template>
   <div style="padding-left: 10px; padding-right: 10px">
-    <p style="font-weight: bold; font-size: 20px; color: #FF9300">
+    <div style="font-weight: bold; font-size: 20px; color: #FF9300">
       你的 FBi:
       <span style="color: orangered">
         {{this.fbi}}
       </span>
-    </p>
+      <el-button @click="history">
+        查看记录
+      </el-button>
+    </div>
     <div style="padding-top: 20px">
       <p style="font-weight: bold; font-size: 20px; color: #FF9300">
         FBi 是什么:
@@ -90,6 +93,10 @@
       copyInviterLink() {
         navigator.clipboard.writeText('https://chao.fun/app?inviter=' + this.userInfo.userId);
         this.$toast("复制邀请地址成功");
+      },
+
+      history() {
+        window.open('https://chao.fun/webview/fbi/history',"_blank");
       }
     }
   }

@@ -114,6 +114,13 @@ routes = [
     hidden: true
   },
   {
+    path: '/webview/fbi/history',
+    component: () => import('@/views/chaofun-webview/fbi/FBiHistory'),
+    name: 'fbi',
+    meta: { title: 'Fbi'},
+    hidden: true
+  },
+  {
     path: '/webview/Year2021',
     component: () => import('@/views/chaofun-webview/year2021/year2021'),
     name: 'year2021',
