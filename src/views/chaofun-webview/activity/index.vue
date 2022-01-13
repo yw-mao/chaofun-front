@@ -76,9 +76,6 @@ export default {
                   desc: 'FBi介绍（邀请用户获高额FBi奖励呀）',
                   showBottom: true
               },
-
-
-
           ]
       }
   },
