@@ -71,9 +71,9 @@ export default {
               },
               {
                   // imgUrl: require('../assets/images/secret.jpg'),
-                  path: '/webview/forumIntro',
-                  title: '版主介绍',
-                  desc: '炒饭版块版主详情，点击查看更多',
+                  path: '/webview/FBi',
+                  title: '饭币（FBi）',
+                  desc: 'FBi介绍（邀请用户获高额FBi奖励呀）',
                   showBottom: true
               },
 
