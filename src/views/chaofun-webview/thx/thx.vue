@@ -1,9 +1,17 @@
 <template>
-  <div>
-    <div>感谢以下给炒饭做过贡献的饭友</div>
-    <div @click="toUser(50777)">感谢 @匿名用户cf Web 帖子评论交互，发帖上做出的贡献</div>
-    <div @click="toUser(53906)">感谢 @猫 在导航栏样式、发帖，评论&工程结构上做的优化</div>
-    <div @click="toUser(56018)">感谢 @阿鲤 在图片处理，水印处理上做的贡献</div>
+  <div style="padding-left: 10px; padding-right: 10px">
+    <div style="font-size: 20px">贡献过代码的饭友</div>
+    <div style="padding-top: 4px;  border-bottom-width: 1px; border-color: black;" @click="toUser(50777)">
+      <p style="font-size: 16px">感谢 @匿名用户cf</p> 在 Web 帖子评论交互，发帖，管理页面上做出的贡献</div>
+    <div style="height: 1px; width: 100%; background-color: black"></div>
+    <div style="padding-top: 4px;" @click="toUser(53906)">
+      <p style="font-size: 16px"> 感谢 @猫</p> 在导航栏样式、发帖，评论&工程结构上做的优化</div>
+    <div style="height: 1px; width: 100%; background-color: black"></div>
+    <div style="padding-top: 4px;" @click="toUser(56018)">
+      <p style="font-size: 16px">感谢 @阿鲤</p>
+      在图片处理，水印处理上做的贡献</div>
+    <div style="height: 1px; width: 100%; background-color: black"></div>
+
   </div>
 </template>
 
