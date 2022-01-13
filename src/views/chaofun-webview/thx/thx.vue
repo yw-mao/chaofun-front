@@ -12,6 +12,10 @@
       在图片处理，水印处理上做的贡献</div>
     <div style="height: 1px; width: 100%; background-color: black"></div>
 
+    <el-button  @click="toGithub()">
+      关注炒饭开源(github)
+    </el-button>
+
   </div>
 </template>
 
@@ -25,6 +29,10 @@
         } catch (e) {
           window.open(location.origin + '/user/'+userId,"_blank");
         }
+      },
+
+      toGithub() {
+        window.open('https://github.com/www-chao-fun/',"_blank");
       }
     }
   }
