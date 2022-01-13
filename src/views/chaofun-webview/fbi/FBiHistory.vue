@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <div style="text-align: center; width: 100%">FBi 历史</div>
+  <div style="padding-left:10px; padding-right: 10px">
+    <div style="text-align: center; width: 100%; font-weight: bold; font-size: 20px; color: #FF9300">FBi 历史</div>
     <div style="text-align: center; width: 100%">近200条记录</div>
     <div>/时间/行为/获得/剩余</div>
     <div v-if="history != null && history.length != 0"  v-for="(item, index) in history">
@@ -55,8 +55,12 @@
         if (reason === 'secret') {
           return '秘密花园'
         }
-
-
+        if (reason === 'badge') {
+          return '徽章'
+        }
+        if (reason === 'crazy_friday') {
+          return '星期五登录'
+        }
         return '';
 
       }
