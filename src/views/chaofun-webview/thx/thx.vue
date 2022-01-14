@@ -15,7 +15,6 @@
     <el-button  @click="toGithub()">
       关注炒饭开源(github)
     </el-button>
-
   </div>
 </template>
 

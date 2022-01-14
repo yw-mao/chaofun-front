@@ -1,5 +1,4 @@
 <template>
-  <div>
     <h1>
       <div>
         <div v-if="item.isPin" style="display: inline-block">
@@ -208,7 +207,7 @@
               command="取消置顶"
               >取消置顶</el-dropdown-item
             >
-<!--            <el-dropdown-item command="trans">转移版块</el-dropdown-item>-->
+            <el-dropdown-item command="trans">转移版块</el-dropdown-item>
             <el-dropdown-item v-if="item.forumAdmin&&item.disableComment" command="开启评论">开启评论</el-dropdown-item>
             <el-dropdown-item v-if="item.forumAdmin&&!item.disableComment" command="关闭评论">关闭评论</el-dropdown-item>
             <el-dropdown-item v-if="item.type==='prediction'&& item.canDeleted &&item.predictionStatus==='live'" command="暂停下注">暂停下注</el-dropdown-item>
@@ -218,12 +217,33 @@
           </el-dropdown-menu>
         </el-dropdown>
       </div>
+      <el-dialog title="转移板块" :visible.sync="this.displayTrans"  width="30%" :append-to-body="true" :before-close="cancelSet">
+        <div class="ycontainer">
+          <div style="">
+<!--            <div>转移板块(评论暂不支持转移)</div>-->
+            <div style="margin:10px 0px;display: flex; align-items: center">
+              <div style="align-content: center">新板块：</div>
+              <el-autocomplete
+                  v-model="state"
+                  :fetch-suggestions="querySearchAsync"
+                  placeholder="搜索板块"
+                  @select="handleAddSelect"
+              ></el-autocomplete>
+            </div>
+            <div style="margin:10px 0px;display: flex;">
+              <el-button @click="transPostRequest" type="success">转移</el-button>
+              <el-button @click="cancelSet" type="success">取消</el-button>
+            </div>
+          </div>
+        </div>
+      </el-dialog>
     </h1>
-    <dialogs :visible="dialogVisible">
-      <template slot="content">
-        <h1>this is slot2</h1>
-      </template>
-    </dialogs>
+<!--    <dialogs :visible="dialogVisible">-->
+<!--      <template slot="content">-->
+<!--        <h1>this is slot2</h1>-->
+<!--      </template>-->
+<!--    </dialogs>-->
+
   </div>
 </template>
 
@@ -235,6 +255,7 @@ import "vant/lib/dialog/style";
 import moment from "moment";
 
 import dialogs from "../common/dialogs.vue";
+import {searchForum} from "../../../api/api";
 export default {
   name: "",
   data() {
@@ -251,6 +272,10 @@ export default {
       tagList: [],
       hasGetTag: false,
       tags: [],
+      displayTrans: false,
+      forumToTrans: null,
+      state:'',
+
     };
   },
   props: {
@@ -480,6 +505,26 @@ export default {
     },
     transPost(item, index) {
       // if (this.)
+      this.displayTrans = true
+    },
+
+    handleAddSelect(item) {
+      this.forumToTrans = item;
+    },
+
+    cancelSet() {
+      this.displayTrans= false;
+    },
+
+    transPostRequest() {
+      api.getByPath('/api/v0/post/transForum', {'postId': this.item.postId, 'forumId': this.forumToTrans.forumId}).then((res) => {
+        if (res.success) {
+          this.displayTrans= false;
+          this.$toast('转移成功')
+        } else {
+          this.$toast(res.errorMessage)
+        }
+      });
     },
     deletePost(item, index) {
       if (this.ISPHONE) {
@@ -543,11 +588,40 @@ export default {
     changeTimeFormat() {
       this.humanizeTimeFormat = !this.humanizeTimeFormat;
     },
+
+    querySearchAsync(queryString, cb) {
+      api.searchForum({'keyword': queryString, 'pageNum': 1}).then((res) => {
+        console.log(res.data);
+
+        let result = res.data.map(value => {
+          value.value = value.title;
+          return value;
+        });
+        clearTimeout(this.timeout);
+        console.log(result);
+        this.timeout = setTimeout(() => {
+          cb(result);
+        }, 3000 * Math.random());
+      });
+    },
   },
 };
 </script>
 
 <style type='text/scss' lang='scss' scoped>
+
+  .ycontainer {
+    background: #fff;
+    padding-left: 20px;
+    max-width: 90%;
+     //height: 350px;
+    //box-sizing: border-box;
+    //padding: 30px;
+    border-radius: 10px;
+    position: relative;
+    //min-height: 200px;
+    //pointer-events: none;
+  }
 h1 {
   font-size: 13px;
   color: #666;

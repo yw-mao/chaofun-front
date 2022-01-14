@@ -81,7 +81,6 @@
 
       querySearchAsync(queryString, cb) {
         api.getSearchUser({'keyword': queryString, 'pageNum': 1}).then((res) => {
-
           let result = res.data.data.map(value => {
             value.value = value.userName
             return value;
