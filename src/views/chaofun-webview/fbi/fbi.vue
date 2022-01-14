@@ -36,7 +36,7 @@
       <p>  - 赠与他人 (敬请期待)</p>
     </div>
     <div style="padding-top: 20px; font-weight: bold; font-size: 20px; color: #FF9300;">
-      纪念品兑换(请私聊联系@cijianzy)
+      纪念品兑换(请私聊联系@cijianzy, 包邮)
     </div>
     <div style="width: 100%; ">
       <div style="width: 50%; display: inline-block">
