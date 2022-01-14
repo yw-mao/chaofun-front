@@ -213,7 +213,6 @@
             <el-dropdown-item v-if="item.type==='prediction'&& item.canDeleted &&item.predictionStatus==='live'" command="暂停下注">暂停下注</el-dropdown-item>
             <el-dropdown-item v-if="item.canAddToRecommend" command="推荐">推荐</el-dropdown-item>
             <el-dropdown-item command="删除">删除帖子</el-dropdown-item>
-            <el-dropdown-item command="关闭"> <div ref="cocolse">关闭</div> </el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
       </div>
