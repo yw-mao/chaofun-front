@@ -204,7 +204,6 @@
 }
 .mode_icon{
   width: 26px;
-  margin-top: 4px;
   margin-right: 10px;
   cursor: pointer;
   vertical-align: middle;

@@ -208,11 +208,13 @@
               command="取消置顶"
               >取消置顶</el-dropdown-item
             >
+<!--            <el-dropdown-item command="trans">转移版块</el-dropdown-item>-->
             <el-dropdown-item v-if="item.forumAdmin&&item.disableComment" command="开启评论">开启评论</el-dropdown-item>
             <el-dropdown-item v-if="item.forumAdmin&&!item.disableComment" command="关闭评论">关闭评论</el-dropdown-item>
             <el-dropdown-item v-if="item.type==='prediction'&& item.canDeleted &&item.predictionStatus==='live'" command="暂停下注">暂停下注</el-dropdown-item>
             <el-dropdown-item v-if="item.canAddToRecommend" command="推荐">推荐</el-dropdown-item>
             <el-dropdown-item command="删除">删除帖子</el-dropdown-item>
+            <el-dropdown-item command="关闭"> <div ref="cocolse">关闭</div> </el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
       </div>
@@ -429,6 +431,8 @@ export default {
         this.pausePrediction(this.item)
       }else if (command =='推荐') {
         this.addToRecommend(this.item)
+      } else if (command == 'trans') {
+        this.transPost(this.item, this.index);
       }
     },
     pausePrediction(item) {
@@ -473,6 +477,9 @@ export default {
       localStorage.removeItem("storedata");
       localStorage.removeItem("spage");
       this.toUrls(item, { url: "/f/" + item.forumId, routeType: 1 });
+    },
+    transPost(item, index) {
+      // if (this.)
     },
     deletePost(item, index) {
       if (this.ISPHONE) {
