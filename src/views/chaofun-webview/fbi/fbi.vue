@@ -39,16 +39,6 @@
       FBi兑换(请私聊联系@cijianzy, 包邮)
     </div>
     <div style="width: 100%; ">
-
-      <div style="width: 50%; display: inline-block">
-        <img style="padding-right: 10px; padding-left: 10px; width: 100%" src="https://i.chao.fun/biz/b5544d7200579fbffee03b3b6ddc248d.png">
-        <p style="text-align: center">
-          5 元话费
-        </p>
-        <p style="text-align: center">
-          FBi: 5000
-        </p>
-      </div>
       <div style="width: 50%; display: inline-block">
         <img style="padding-right: 10px; padding-left: 10px; width: 100%" src="https://i.chao.fun/biz/ed0a03cabd89c638dd0451f14bb20969.png">
         <p style="text-align: center">
@@ -56,6 +46,15 @@
         </p>
         <p style="text-align: center">
           FBi: 1500
+        </p>
+      </div>
+      <div style="width: 50%; display: inline-block">
+        <img style="padding-right: 10px; padding-left: 10px; width: 100%" src="https://i.chao.fun/biz/b5544d7200579fbffee03b3b6ddc248d.png">
+        <p style="text-align: center">
+          30 元话费
+        </p>
+        <p style="text-align: center">
+          FBi: 3000
         </p>
       </div>
       <div style="width: 50%; display: inline-block">
