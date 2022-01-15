@@ -40,6 +40,15 @@
     </div>
     <div style="width: 100%; ">
       <div style="width: 50%; display: inline-block">
+        <img style="padding-right: 10px; padding-left: 10px; width: 100%" src="https://i.chao.fun/biz/fc21232af2fa1849c3f0853b8748224c.png">
+        <p style="text-align: center">
+          10元京东E卡
+        </p>
+        <p style="text-align: center">
+          FBi: 1000
+        </p>
+      </div>
+      <div style="width: 50%; display: inline-block">
         <img style="padding-right: 10px; padding-left: 10px; width: 100%" src="https://i.chao.fun/biz/ed0a03cabd89c638dd0451f14bb20969.png">
         <p style="text-align: center">
           炒饭马克杯
@@ -48,15 +57,7 @@
           FBi: 1500
         </p>
       </div>
-      <div style="width: 50%; display: inline-block">
-        <img style="padding-right: 10px; padding-left: 10px; width: 100%" src="https://i.chao.fun/biz/b5544d7200579fbffee03b3b6ddc248d.png">
-        <p style="text-align: center">
-          30 元话费
-        </p>
-        <p style="text-align: center">
-          FBi: 3000
-        </p>
-      </div>
+
       <div style="width: 50%; display: inline-block">
         <img style="padding-right: 10px; padding-left: 10px; width: 100%" src="https://i.chao.fun/biz/e3e44a77908676ea7047c18601a0297b.png">
         <p style="text-align: center">
