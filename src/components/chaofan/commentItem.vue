@@ -442,7 +442,10 @@ export default {
                 this.doLoginStatus().then(res=>{
                     let comment = this.comment;
                     if(res){
-                    if(!this.comment) return;
+                        if(!this.comment && (!this.images || this.images == 0)) {
+                            this.$toast('内容为空, 请输入内容');
+                            return;
+                        }
                     let reg = new RegExp(/@[^(\s)]+/g);
                     let a = comment.match(reg);
                     console.log(a)

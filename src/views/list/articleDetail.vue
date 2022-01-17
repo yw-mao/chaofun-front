@@ -843,62 +843,69 @@ queryChildren (parent, list) {
       if(this.canSub){
         this.doLoginStatus().then(res=>{
             let comment = this.comment;
-            
-            if(res){
-                if(!this.comment) return;
-                let reg = new RegExp(/@[^(\s)]+/g);
-                let a = comment.match(reg);
-                console.log(a)
-                var ats = [];
-                if(a){
-                  a.forEach((item,index)=>{
-                    if(this.atUserName.includes(item)){
-                      let i = this.atUserName.findIndex(it=>it==item);
-                      ats.push(this.ats[i]);
-                    }
-                  });
-                  console.log('atc',ats)
-                  console.log(this.ats);
-                  console.log(this.atUserName)
+
+          if(res){
+            console.log('comment');
+            console.log(this.comment);
+            console.log('images');
+            console.log(this.images);
+            if(!this.comment && (!this.images || this.images == 0)) {
+              this.$toast('内容为空, 请输入内容');
+              return;
+            }
+            let reg = new RegExp(/@[^(\s)]+/g);
+            let a = comment.match(reg);
+            console.log(a)
+            var ats = [];
+            if(a){
+              a.forEach((item,index)=>{
+                if(this.atUserName.includes(item)){
+                  let i = this.atUserName.findIndex(it=>it==item);
+                  ats.push(this.ats[i]);
                 }
-                
-                let params = {
-                  parentId: this.replayItem&&this.replayItem.id?this.replayItem.id:'',
-                  postId: this.params.postId,
-                  comment: this.comment,
-                  imageNames: this.images.join(','),
-                  ats: ats.join(',')
-                }
-                this.canSub = false;
-                console.log(params)
-                api.addComments(params).then(res=>{
-                  if(res.success){
-                      this.images = [];
-                      this.$toast('评论成功')
-                      setTimeout(()=>{
-                          // 先直接获取，后面评论多了再优化
-                          // if(this.replayItem){
-                          //   this.lists.push({
-                          //     parentId: this.replayItem?this.replayItem.id:0,
-                          //     text: comment,
-                          //     type: 'text',
-                          //     downs: 0,
-                          //     ups: 0,
-                          //     userInfo: this.userinfo
-                          //   })
-                          // }else{
-                          //   this.lists.unshift(res.data)
-                          // }
-                          this.getLists()
-                          this.comment = '';
-                          this.canSub = true;
-                      },1500)
-                  } else {
-                    this.canSub = true;
-                    this.$toast(res.errorMessage);
-                  }
-                })
-            }else{
+              });
+              console.log('atc',ats)
+              console.log(this.ats);
+              console.log(this.atUserName)
+            }
+
+            let params = {
+              parentId: this.replayItem&&this.replayItem.id?this.replayItem.id:'',
+              postId: this.params.postId,
+              comment: this.comment,
+              imageNames: this.images.join(','),
+              ats: ats.join(',')
+            }
+            this.canSub = false;
+            console.log(params)
+            api.addComments(params).then(res=>{
+              if(res.success){
+                this.images = [];
+                this.$toast('评论成功')
+                setTimeout(()=>{
+                  // 先直接获取，后面评论多了再优化
+                  // if(this.replayItem){
+                  //   this.lists.push({
+                  //     parentId: this.replayItem?this.replayItem.id:0,
+                  //     text: comment,
+                  //     type: 'text',
+                  //     downs: 0,
+                  //     ups: 0,
+                  //     userInfo: this.userinfo
+                  //   })
+                  // }else{
+                  //   this.lists.unshift(res.data)
+                  // }
+                  this.getLists()
+                  this.comment = '';
+                  this.canSub = true;
+                },1500)
+              } else {
+                this.canSub = true;
+                this.$toast(res.errorMessage);
+              }
+            })
+          }else{
                 console.log('未登录',res)
             }
         })
