@@ -64,11 +64,9 @@
             <p>1. 注册并且登陆用户参与</p>
             <p>2. 倒计时60秒，到 00:00 结束, 结束后停止在 00:00 </p>
             <p>3. 所有用户共享全局倒计时</p>
-            <p>4. 每位用户有500次机会点击按钮重置全局倒计时（其他用户也会同步更新）到60秒</p>
-            <p>5. 游戏奖励期间，每次在 00:00 点击的用户，获得奖励 0.5 元 (奖励是次要的，大家玩的开心)</p>
-            <p>6. 游戏奖励规则从 4月1日0点开始，4月6日0点结束</p>
-            <p>7. 禁止使用脚本，一经发现，取消奖励</p>
-            <p>8. 4月6日添加 wwwchaofun 微信领取奖励，账号需要提前绑定好手机号</p>
+            <p>4. 每点击按钮一次，消耗 1 FBi, 并重置全局倒计时（其他用户也会同步更新）到60秒</p>
+            <p>5. 游戏奖励期间，每次在 00:00 点击的用户，获得奖励 10 FBi </p>
+            <p>6. 禁止使用脚本，一经发现，FBi清零</p>
             <p>* 致敬 Reddit</p>
         </div>
     </van-dialog>
@@ -162,7 +160,7 @@ export default {
         this.websock.close() //离开路由之后断开websocket连接
     },
   mounted(){
-      document.title = "炒饭愚人节游戏";
+      document.title = "炒饭春节游戏";
       
     var cons = document.getElementById('canvas');
     this.canvas = {
@@ -387,7 +385,7 @@ export default {
         }else if(redata.type=='getPrice'){
             this.$toast("恭喜你，获得奖励了~")
         }else if(redata.type=='gameOver'){
-            this.$toast("愚人节游戏结束，感谢参与，请查看游戏规则领奖，或访问炒饭首页到处逛逛")
+            this.$toast("春节游戏结束，感谢参与，请查看游戏规则领奖，或访问炒饭首页到处逛逛")
         }
         
         

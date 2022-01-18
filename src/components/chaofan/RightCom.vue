@@ -54,7 +54,7 @@
         </div>
         <div v-if="false" class="game">
           <div style="height:20px;background:#f1f1f1;"></div>
-          <div class="title">贪吃蛇 <span class="tab">愚人节有奖活动</span>
+          <div class="title">贪吃蛇 <span class="tab">春节有奖活动</span>
           </div>
           <snake :datas="datas"></snake>
           <div class="rank">

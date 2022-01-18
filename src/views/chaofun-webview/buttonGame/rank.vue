@@ -14,7 +14,7 @@
                 </div>
             </div>
             <div class="right">点击奖励
-                <p>{{item.userGetPriceTimes}} 次</p>
+                <p>{{item.userGetPriceTimes * 10}} FBi</p>
             </div>
         </div>
     </div>
@@ -40,7 +40,7 @@ export default {
   },
   mounted(){
     this.getButtonRank()
-    document.title = "愚人节游戏排行榜";
+    document.title = "春节游戏排行榜";
   },
   methods:{
     getButtonRank(){
@@ -52,7 +52,7 @@ export default {
         try {
             window.flutter_inappwebview.callHandler('toAppUser',{userId: item.userAO.userId+''})
         } catch (e) {
-                window.open(location.origin + '/user/'+item.userAO.userId,"_blank");
+            window.open(location.origin + '/user/'+item.userAO.userId,"_blank");
         }
     }
   },

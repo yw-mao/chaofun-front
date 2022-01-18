@@ -65,7 +65,15 @@
         if (reason === 'inviter') {
           return '邀请用户'
         }
-        return '';
+
+        if (reason === 'button_game_cost') {
+          return '春节小游戏点击'
+        }
+
+        if (reason === 'button_game_get') {
+          return '春节小游戏获奖'
+        }
+        return reason;
 
       }
     }
