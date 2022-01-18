@@ -401,7 +401,7 @@ export default {
         }else if(redata.type=='gameOver'){
             this.$toast("春节游戏结束，感谢参与，请查看游戏规则领奖，或访问炒饭首页到处逛逛")
         }else if(redata.type=='hasNoFBi') {
-
+            this.$toast("您没有FBi, 请查看游戏规则！")
         }
         
       },
