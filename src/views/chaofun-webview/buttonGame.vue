@@ -46,15 +46,12 @@
 
 
             <div class="reset" @click="reset">
-                <span class="btn">PLAY ({{selfInfo.timesLeft||0}})</span>
+                <span class="btn">PLAY</span>
             </div>
             <div v-if="selfInfo.leftFBi" class="reward">剩余FBi：{{selfInfo.leftFBi}} </div>
             <div v-if="selfInfo.alreadClick" class="reward">点击次数：{{selfInfo.alreadClick}} </div>
             <div v-if="selfInfo.getFBi" class="reward">获得奖励：{{selfInfo.getFBi}} FBi</div>
         </div>
-        
-
-        
     </div>
     <div class="fixed_bottom">
         <div @click="toIndex" class="left_b">讨论区</div>
