@@ -74,7 +74,7 @@ export default {
     .item{
         display: flex;
         justify-content: space-between;
-        padding: 16px;
+        padding: 5px;
         border-bottom: 1px solid #f1f1f1;
         // height: 60px;
         // box-sizing: border-box;
