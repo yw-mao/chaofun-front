@@ -33,7 +33,8 @@ export default {
   },
   data(){
       return {
-          pagedata: []
+          pagedata: [],
+        timer: 0
       }
   },
   created(){
@@ -41,6 +42,11 @@ export default {
   mounted(){
     this.getButtonRank()
     document.title = "春节游戏排行榜";
+
+    let _this = this;
+    let timer = setInterval(()=>{
+      _this.getButtonRank()
+    },5000)
   },
   methods:{
     getButtonRank(){
@@ -54,7 +60,7 @@ export default {
         } catch (e) {
             window.open(location.origin + '/user/'+item.userAO.userId,"_blank");
         }
-    }
+    },
   },
 }
 </script>
