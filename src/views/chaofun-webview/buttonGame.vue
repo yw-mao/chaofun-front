@@ -393,13 +393,16 @@ export default {
         }else if(redata.type=='selfInfo'){
             this.selfInfo = redata;
         }else if(redata.type=='needLogin'){
-            this.showLogin = true;
+            this.doLoginStatus().then(res=>{
+                this.initWebSocket();
+            })
         }else if(redata.type=='getPrice'){
             this.$toast("恭喜你，获得奖励了~")
         }else if(redata.type=='gameOver'){
             this.$toast("春节游戏结束，感谢参与，请查看游戏规则领奖，或访问炒饭首页到处逛逛")
+        }else if(redata.type=='hasNoFBi') {
+
         }
-        
         
       },
       websocketsend(Data){//数据发送
