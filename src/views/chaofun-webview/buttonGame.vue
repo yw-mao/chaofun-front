@@ -48,7 +48,7 @@
             <div class="reset" @click="reset">
                 <span class="btn">PLAY ({{selfInfo.timesLeft||0}})</span>
             </div>
-            <div v-if="selfInfo.getPrice" class="reward">获得奖励：{{selfInfo.getPrice.toFixed(1)}} 元</div>
+            <div v-if="selfInfo.getPrice" class="reward">获得奖励：{{selfInfo.getPrice.toFixed(1)}} FBi</div>
         </div>
         
 
