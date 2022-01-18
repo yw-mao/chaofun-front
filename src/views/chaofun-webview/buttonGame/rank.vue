@@ -3,7 +3,7 @@
     <div class="content">
         <div class="nav">
             <img src="../assets/images/rank.png" alt="">
-            <span>Top 100</span>
+            <span>Top 100（隔5秒自动刷新）</span>
         </div>
         <div @click="toUser(item)" v-for="(item,index) in pagedata" :key="index" class="item">
             <div class="left">
