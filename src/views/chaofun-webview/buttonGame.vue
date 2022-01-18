@@ -49,7 +49,7 @@
                 <span class="btn">PLAY</span>
             </div>
             <div v-if="selfInfo.leftFBi" class="reward">剩余FBi：{{selfInfo.leftFBi}} </div>
-            <div v-if="selfInfo.alreadClick" class="reward">点击次数：{{selfInfo.alreadClick}} </div>
+            <div v-if="selfInfo.alreadyClick" class="reward">点击次数：{{selfInfo.alreadyClick}} </div>
             <div v-if="selfInfo.getFBi" class="reward">获得奖励：{{selfInfo.getFBi}} FBi</div>
 
 <!--            <div class="reward">剩余FBi：{{selfInfo.leftFBi}} </div>-->
