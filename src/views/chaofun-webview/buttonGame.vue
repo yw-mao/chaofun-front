@@ -51,6 +51,10 @@
             <div v-if="selfInfo.leftFBi" class="reward">剩余FBi：{{selfInfo.leftFBi}} </div>
             <div v-if="selfInfo.alreadClick" class="reward">点击次数：{{selfInfo.alreadClick}} </div>
             <div v-if="selfInfo.getFBi" class="reward">获得奖励：{{selfInfo.getFBi}} FBi</div>
+
+<!--            <div class="reward">剩余FBi：{{selfInfo.leftFBi}} </div>-->
+<!--            <div class="reward">点击次数：{{selfInfo.alreadClick}} </div>-->
+<!--            <div  class="reward">获得奖励：{{selfInfo.getFBi}} FBi</div>-->
         </div>
     </div>
     <div class="fixed_bottom">
@@ -581,10 +585,10 @@ export default {
 }
 .reward{
     text-align: center;
-    position: absolute;
+    /*position: absolute;*/
     bottom: 0px;
     width: 100%;
-    line-height: 40px;
+    line-height: 10px;
 }
 .lastClickUserName{
     position: absolute;
