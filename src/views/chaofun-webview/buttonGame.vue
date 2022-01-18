@@ -66,6 +66,10 @@
             <p>4. 每点击按钮一次，消耗 1 FBi, 并重置全局倒计时（其他用户也会同步更新）到60秒</p>
             <p>5. 游戏奖励期间，每次在 00:00 点击的用户，获得奖励 10 FBi </p>
             <p>6. 禁止使用脚本，一经发现，FBi清零</p>
+            <div>
+                7.
+                <el-button @click="toFbi">什么是 FBi </el-button>
+            </div>
             <p>* 致敬 Reddit</p>
         </div>
     </van-dialog>
@@ -212,6 +216,11 @@ export default {
           window.open('https://chao.fun/all',"_blank");
       }
   },
+
+      toFbi(){
+          window.open('https://chao.fun/webview/fbi',"_blank");
+
+      },
     confirms(){
       if(this.islogin){
           let params = {
