@@ -15,11 +15,18 @@
             <div @click="showRule" style="margin-top: 40px; padding: 10px 10px;"><img src="./assets/images/rule.png" alt="">游戏规则</div>
         </div>
         <div class="info" style="margin-top: 40px;">
-            <p>当前时间：{{moment(now_timestamp).format("HH:mm:ss")}}</p>
-            <p>获奖时间：{{moment(lastGetPriceTimestamp).format("HH:mm:ss")}}</p>
-            <br />
+<!--            <p>当前时间：{{moment(now_timestamp).format("HH:mm:ss")}}</p>-->
+<!--            <p>获奖时间：{{moment(lastGetPriceTimestamp).format("HH:mm:ss")}}</p>-->
+<!--            <p>距离上次：{{moment(now_timestamp-lastGetPriceTimestamp-28800000).format("HH:mm:ss")}}</p>-->
+<!--            <br />-->
             <p>上次获奖：</p>
             <p>{{lastGetPriceUserName}}</p>
+            <br />
+            <p>获奖时间：</p>
+            <p>{{moment(lastGetPriceTimestamp).format("HH:mm:ss")}}</p>
+            <br />
+            <p>距离上次：</p>
+            <p>{{moment(now_timestamp-lastGetPriceTimestamp-28800000).format("HH:mm:ss")}}</p>
             <br />
             <p>参与人数：</p>
             <p>{{participants_text}}</p>
