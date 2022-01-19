@@ -66,7 +66,7 @@
           return '邀请用户'
         }
 
-        if (reason === 'button_game_cost') {
+        if (reason === 'button_game_pay') {
           return '春节小游戏点击'
         }
 
