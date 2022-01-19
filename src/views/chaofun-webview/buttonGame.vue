@@ -12,7 +12,7 @@
 
         <div style="position: fixed; right: 0; z-index: 2">
             <div @click="toHome" class="fixed_top">炒饭首页</div>
-            <div @click="showRule" style="margin-top: 40px; padding: 10px 10px;cursor: pointer;"><img src="./assets/images/rule.png" alt="">游戏规则</div>
+            <div @click="showRule" style="margin-top: 40px; padding: 10px 10px;cursor: pointer;z-index: 8888;"><img src="./assets/images/rule.png" alt="">游戏规则</div>
         </div>
         <div class="info" style="margin-top: 40px;">
 <!--            <p>当前时间：{{moment(now_timestamp).format("HH:mm:ss")}}</p>-->
@@ -699,6 +699,7 @@ input{
 }
 
 .fixed_bottom{
+    z-index: 8888;
     position: fixed;
     left: 0;
     right: 0;
@@ -708,6 +709,7 @@ input{
     z-index: 4;
     justify-content: space-between;
     .left_b{
+         z-index: 8888;
         border: 1px solid #f1f1f1;
         padding: 10px 20px;
         border-radius: 10px;
@@ -715,6 +717,7 @@ input{
     }
 }
 .lastComment{
+  z-index: 8888;
   position: fixed;
   left: 20px;
   right: 0;
