@@ -215,7 +215,7 @@ export default {
             try {
                 window.flutter_inappwebview.callHandler('toAppUser',{userId: userId+''})
             } catch (e) {
-                    window.open(location.origin + '/user/'+this.userId,"_blank");
+                    window.open(location.origin + '/user/'+ userId,"_blank");
             }
         }
     },
