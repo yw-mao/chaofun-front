@@ -5,14 +5,14 @@
       </div>
     <div class="rank_rule">
         <div class="rank_line">
-            <div @click="toRank" class="rank rank1" style="width: 100px; position: fixed; left: 0; top: 0;  border: 1px solid #f1f1f1; padding: 10px 20px;border-radius: 10px ">
+            <div @click="toRank" class="rank rank1" style="cursor: pointer;width: 100px; position: fixed; left: 0; top: 0;  border: 1px solid #f1f1f1; padding: 10px 20px;border-radius: 10px ">
                 排行榜
             </div>
         </div>
 
         <div style="position: fixed; right: 0; z-index: 2">
             <div @click="toHome" class="fixed_top">炒饭首页</div>
-            <div @click="showRule" style="margin-top: 40px; padding: 10px 10px;"><img src="./assets/images/rule.png" alt="">游戏规则</div>
+            <div @click="showRule" style="margin-top: 40px; padding: 10px 10px;cursor: pointer;"><img src="./assets/images/rule.png" alt="">游戏规则</div>
         </div>
         <div class="info" style="margin-top: 40px;">
 <!--            <p>当前时间：{{moment(now_timestamp).format("HH:mm:ss")}}</p>-->
@@ -37,9 +37,11 @@
             <p>在线人数：</p>
             <p>{{onlineNums}}</p>
             <br />
-            <p>最新讨论: </p>
-            <p>{{newCommentUserName}} 说 ↓</p>
-            <p>{{newCommet}}</p>
+            <div @click="toIndex" style="cursor: pointer;">
+              <p>最新讨论: </p>
+              <p>{{newCommentUserName}} 说 ↓</p>
+              <p>{{newCommet}}</p>
+            </div>
         </div>
     </div>
     <div  class="content">
@@ -683,6 +685,7 @@ input{
     border: 2px solid #f1f1f1;
     padding: 10px 20px;
     border-radius: 10px;
+    cursor: pointer;
 }
 
 .fixed_top_live {
@@ -691,6 +694,7 @@ input{
     border: 2px solid #f1f1f1;
     padding: 10px 20px;
     border-radius: 10px;
+    cursor: pointer;
 }
 .fixed_bottom{
     position: fixed;
@@ -705,6 +709,7 @@ input{
         border: 1px solid #f1f1f1;
         padding: 10px 20px;
         border-radius: 10px;
+        cursor: pointer;
     }
 }
 </style>
