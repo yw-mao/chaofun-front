@@ -20,7 +20,7 @@
 <!--            <p>距离上次：{{moment(now_timestamp-lastGetPriceTimestamp-28800000).format("HH:mm:ss")}}</p>-->
 <!--            <br />-->
             <p>上次获奖：</p>
-            <p>{{lastGetPriceUserName}}</p>
+            <p @click="toUser(lastGetPriceUserId)" style="cursor: pointer;">{{lastGetPriceUserName}}</p>
             <br />
             <p>获奖时间：</p>
             <p>{{moment(lastGetPriceTimestamp).format("HH:mm:ss")}}</p>
@@ -41,7 +41,7 @@
     <div  class="content">
         
         <div class="main">
-            <div @click="toUser" class="lastClickUserName">{{lastClickUserName?(lastClickUserName+'点击了Button'):'未登录用户点击了Button'}}</div>
+            <div @click="toUser(lastClickUserId)" class="lastClickUserName">{{lastClickUserName?(lastClickUserName+'点击了Button'):'未登录用户点击了Button'}}</div>
             <div class="time">
                 <div v-if="canvas.speed<6000" class="time_con">
                     <span v-for="(item,index) in ('000'+(6000-canvas.speed)).slice(-4).split('')" :key="index" class="s">{{item}}</span>
@@ -148,6 +148,7 @@ export default {
           newCommet: '',
           newCommentUserName: '',
           lastClickUserId: '',
+          lastGetPriceUserId: '',
           lastClickUserName: '',
           lastGetPriceUserName: '',
           selfInfo: {},
@@ -209,12 +210,12 @@ export default {
         } 
   },
   methods:{
-    toUser(){
-        if(this.lastClickUserId){
+    toUser(userId){
+        if(userId){
             try {
-                window.flutter_inappwebview.callHandler('toAppUser',{userId: this.lastClickUserId+''})
+                window.flutter_inappwebview.callHandler('toAppUser',{userId: userId+''})
             } catch (e) {
-                    window.open(location.origin + '/user/'+this.lastClickUserId,"_blank");
+                    window.open(location.origin + '/user/'+this.userId,"_blank");
             }
         }
     },
@@ -424,6 +425,7 @@ export default {
             }
             this.lastClickUserName = redata.lastClickUserName;
             this.lastClickUserId = redata.lastClickUserId;
+            this.lastGetPriceUserId = redata.lastGetPriceUserId;
             this.participants_text = redata.participants_text;
             this.onlineNums = redata.onlineNums;
             this.clickTimes = redata.clickTimes;
@@ -648,6 +650,7 @@ export default {
     text-align: center;
     line-height: 20px;
     color: #999;
+    cursor: pointer;
 }
 input{
       height: 34px;
