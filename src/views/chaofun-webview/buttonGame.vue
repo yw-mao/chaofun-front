@@ -15,6 +15,9 @@
             <div @click="showRule" style="margin-top: 40px; padding: 10px 10px;"><img src="./assets/images/rule.png" alt="">游戏规则</div>
         </div>
         <div class="info" style="margin-top: 40px;">
+            <p>当前时间：{{moment(now_timestamp).format("HH:mm:ss")}}</p>
+            <p>获奖时间：{{moment(lastGetPriceTimestamp).format("HH:mm:ss")}}</p>
+            <br />
             <p>上次获奖：</p>
             <p>{{lastGetPriceUserName}}</p>
             <br />
@@ -106,6 +109,7 @@
 import Vue from 'vue';
 import * as api from '@/api/api'
 import { Circle } from 'vant';
+import moment from 'moment';
 import VueClipboard from 'vue-clipboard2'
 Vue.use(VueClipboard);
 
@@ -127,6 +131,10 @@ export default {
   },
   data(){
       return {
+
+          moment: moment,
+          lastGetPriceTimestamp:0,
+          now_timestamp:0,
           islogin: true,
           baseForm:{},
           showLogin: false,
@@ -415,6 +423,9 @@ export default {
             this.lastGetPriceUserName = redata.lastGetPriceUserName;
             this.newCommet = redata.lastComment;
             this.newCommentUserName = redata.lastCommentUserName;
+            this.now_timestamp = redata.now_timestamp;
+            // TODO need fix
+            this.lastGetPriceTimestamp = redata.now_timestamp;
         }else if(redata.type=='selfInfo'){
             this.selfInfo = redata;
         }else if(redata.type=='needLogin'){
