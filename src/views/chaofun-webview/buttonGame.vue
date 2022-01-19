@@ -207,9 +207,9 @@ export default {
     },
     toIndex(){
         try {
-            window.flutter_inappwebview.callHandler('toAppPost',{postId:"711299"});
+            window.flutter_inappwebview.callHandler('toAppPost',{postId:"1081032"});
         } catch (e) {
-            window.open('https://chao.fun/p/711299',"_blank");
+            window.open('https://chao.fun/p/1081032',"_blank");
         }
     },
   toHome(){
