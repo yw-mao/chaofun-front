@@ -1,11 +1,15 @@
 <template>
   <div class="container">
+      <div style="position: fixed; top: 0; z-index: 6">
+          <div @click="toLive" class="fixed_top_live">直播地址</div>
+      </div>
     <div class="rank_rule">
         <div class="rank_line">
             <div @click="toRank" class="rank rank1" style="width: 100px; position: fixed; left: 0; top: 0;  border: 1px solid #f1f1f1; padding: 10px 20px;border-radius: 10px ">
                 排行榜
             </div>
         </div>
+
         <div style="position: fixed; right: 0; z-index: 2">
             <div @click="toHome" class="fixed_top">炒饭首页</div>
             <div @click="showRule" style="margin-top: 40px; padding: 10px 10px;"><img src="./assets/images/rule.png" alt="">游戏规则</div>
@@ -221,6 +225,9 @@ export default {
       }
   },
 
+      toLive(){
+              window.open('https://live.bilibili.com/23919989',"_blank");
+      },
       toFbi(){
           window.open('https://chao.fun/webview/fbi',"_blank");
 
@@ -560,7 +567,6 @@ export default {
     .rank_line{
         display: flex;
         justify-content: space-between;
-        
     }
     .info{
         font-size: 14px;
@@ -632,7 +638,15 @@ input{
     position: fixed;
     right: 0;
     top: 0;
-    border: 1px solid #f1f1f1;
+    border: 2px solid #f1f1f1;
+    padding: 10px 20px;
+    border-radius: 10px;
+}
+
+.fixed_top_live {
+    top: 0;
+    font-size: 16px;
+    border: 2px solid #f1f1f1;
     padding: 10px 20px;
     border-radius: 10px;
 }
