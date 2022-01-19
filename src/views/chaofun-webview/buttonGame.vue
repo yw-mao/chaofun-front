@@ -5,18 +5,28 @@
       </div>
     <div class="rank_rule">
         <div class="rank_line">
-            <div @click="toRank" class="rank rank1" style="width: 100px; position: fixed; left: 0; top: 0;  border: 1px solid #f1f1f1; padding: 10px 20px;border-radius: 10px ">
+            <div @click="toRank" class="rank rank1" style="cursor: pointer;width: 100px; position: fixed; left: 0; top: 0;  border: 1px solid #f1f1f1; padding: 10px 20px;border-radius: 10px ">
                 排行榜
             </div>
         </div>
 
         <div style="position: fixed; right: 0; z-index: 2">
             <div @click="toHome" class="fixed_top">炒饭首页</div>
-            <div @click="showRule" style="margin-top: 40px; padding: 10px 10px;"><img src="./assets/images/rule.png" alt="">游戏规则</div>
+            <div @click="showRule" style="margin-top: 40px; padding: 10px 10px;cursor: pointer;"><img src="./assets/images/rule.png" alt="">游戏规则</div>
         </div>
         <div class="info" style="margin-top: 40px;">
+<!--            <p>当前时间：{{moment(now_timestamp).format("HH:mm:ss")}}</p>-->
+<!--            <p>获奖时间：{{moment(lastGetPriceTimestamp).format("HH:mm:ss")}}</p>-->
+<!--            <p>距离上次：{{moment(now_timestamp-lastGetPriceTimestamp-28800000).format("HH:mm:ss")}}</p>-->
+<!--            <br />-->
             <p>上次获奖：</p>
-            <p>{{lastGetPriceUserName}}</p>
+            <p @click="toUser(lastGetPriceUserId)" style="cursor: pointer;">{{lastGetPriceUserName}}</p>
+            <br />
+            <p>获奖时间：</p>
+            <p>{{moment(lastGetPriceTimestamp).format("HH:mm:ss")}}</p>
+            <br />
+            <p>距离上次：</p>
+            <p>{{moment(now_timestamp-lastGetPriceTimestamp-28800000).format("HH:mm:ss")}}</p>
             <br />
             <p>参与人数：</p>
             <p>{{participants_text}}</p>
@@ -26,16 +36,12 @@
             <br />
             <p>在线人数：</p>
             <p>{{onlineNums}}</p>
-            <br />
-            <p>最新讨论: </p>
-            <p>{{newCommentUserName}} 说 ↓</p>
-            <p>{{newCommet}}</p>
         </div>
     </div>
     <div  class="content">
         
         <div class="main">
-            <div @click="toUser" class="lastClickUserName">{{lastClickUserName?(lastClickUserName+'点击了Button'):'未登录用户点击了Button'}}</div>
+            <div @click="toUser(lastClickUserId)" class="lastClickUserName">{{lastClickUserName?(lastClickUserName+'点击了Button'):'未登录用户点击了Button'}}</div>
             <div class="time">
                 <div v-if="canvas.speed<6000" class="time_con">
                     <span v-for="(item,index) in ('000'+(6000-canvas.speed)).slice(-4).split('')" :key="index" class="s">{{item}}</span>
@@ -61,6 +67,10 @@
 <!--            <div class="reward">点击次数：{{selfInfo.alreadClick}} </div>-->
 <!--            <div  class="reward">获得奖励：{{selfInfo.getFBi}} FBi</div>-->
         </div>
+    </div>
+    <div class="lastComment" @click="toIndex" style="cursor: pointer;">
+      <p>最新讨论: </p>
+      <p>{{newCommentUserName}} 说：{{newCommet}}</p>
     </div>
     <div class="fixed_bottom">
         <div @click="toIndex" class="left_b">讨论区</div>
@@ -106,6 +116,7 @@
 import Vue from 'vue';
 import * as api from '@/api/api'
 import { Circle } from 'vant';
+import moment from 'moment';
 import VueClipboard from 'vue-clipboard2'
 Vue.use(VueClipboard);
 
@@ -127,12 +138,17 @@ export default {
   },
   data(){
       return {
+
+          moment: moment,
+          lastGetPriceTimestamp:0,
+          now_timestamp:0,
           islogin: true,
           baseForm:{},
           showLogin: false,
           newCommet: '',
           newCommentUserName: '',
           lastClickUserId: '',
+          lastGetPriceUserId: '',
           lastClickUserName: '',
           lastGetPriceUserName: '',
           selfInfo: {},
@@ -194,12 +210,12 @@ export default {
         } 
   },
   methods:{
-    toUser(){
-        if(this.lastClickUserId){
+    toUser(userId){
+        if(userId){
             try {
-                window.flutter_inappwebview.callHandler('toAppUser',{userId: this.lastClickUserId+''})
+                window.flutter_inappwebview.callHandler('toAppUser',{userId: userId+''})
             } catch (e) {
-                    window.open(location.origin + '/user/'+this.lastClickUserId,"_blank");
+                    window.open(location.origin + '/user/'+ userId,"_blank");
             }
         }
     },
@@ -409,12 +425,15 @@ export default {
             }
             this.lastClickUserName = redata.lastClickUserName;
             this.lastClickUserId = redata.lastClickUserId;
+            this.lastGetPriceUserId = redata.lastGetPriceUserId;
             this.participants_text = redata.participants_text;
             this.onlineNums = redata.onlineNums;
             this.clickTimes = redata.clickTimes;
             this.lastGetPriceUserName = redata.lastGetPriceUserName;
             this.newCommet = redata.lastComment;
             this.newCommentUserName = redata.lastCommentUserName;
+            this.now_timestamp = redata.now_timestamp;
+            this.lastGetPriceTimestamp = redata.lastGetPriceTime;
         }else if(redata.type=='selfInfo'){
             this.selfInfo = redata;
         }else if(redata.type=='needLogin'){
@@ -454,7 +473,7 @@ export default {
 }
 .content{
     // position: fixed;
-    z-index: 3;
+    z-index: 9999;
     box-sizing: border-box;
     // height: 300px;
     // overflow: scroll;
@@ -497,8 +516,12 @@ export default {
         padding: 10px;
         margin: 0 auto;
         border-radius: 10px;
+        cursor: pointer;
         &:active{
-            box-shadow: 2px 0px 20px rgba(0, 0, 0, 0.2);
+            box-shadow: 3px 0px 20px rgba(0, 0, 0, 0.2);
+        }
+        &:hover{
+          background: #ccc;
         }
         .btn{
             display: block;
@@ -506,6 +529,9 @@ export default {
             background: #fff;
             font-size: 28px;
             font-weight: bolder;
+            &:hover{
+              background: #eee;
+            }
         }
     }
     .time{
@@ -624,6 +650,7 @@ export default {
     text-align: center;
     line-height: 20px;
     color: #999;
+    cursor: pointer;
 }
 input{
       height: 34px;
@@ -659,6 +686,7 @@ input{
     border: 2px solid #f1f1f1;
     padding: 10px 20px;
     border-radius: 10px;
+    cursor: pointer;
 }
 
 .fixed_top_live {
@@ -667,7 +695,9 @@ input{
     border: 2px solid #f1f1f1;
     padding: 10px 20px;
     border-radius: 10px;
+    cursor: pointer;
 }
+
 .fixed_bottom{
     position: fixed;
     left: 0;
@@ -681,6 +711,21 @@ input{
         border: 1px solid #f1f1f1;
         padding: 10px 20px;
         border-radius: 10px;
+        cursor: pointer;
     }
+}
+.lastComment{
+  position: fixed;
+  left: 20px;
+  right: 0;
+  bottom: 45px;
+  width: 100%;
+  max-width: 300px;
+  z-index: 4;
+  justify-content: space-between;
+  p{
+    font-size: 14px;
+    color: #999;
+  }
 }
 </style>
