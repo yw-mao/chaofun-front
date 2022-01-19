@@ -36,12 +36,6 @@
             <br />
             <p>在线人数：</p>
             <p>{{onlineNums}}</p>
-            <br />
-            <div @click="toIndex" style="cursor: pointer;">
-              <p>最新讨论: </p>
-              <p>{{newCommentUserName}} 说 ↓</p>
-              <p>{{newCommet}}</p>
-            </div>
         </div>
     </div>
     <div  class="content">
@@ -73,6 +67,10 @@
 <!--            <div class="reward">点击次数：{{selfInfo.alreadClick}} </div>-->
 <!--            <div  class="reward">获得奖励：{{selfInfo.getFBi}} FBi</div>-->
         </div>
+    </div>
+    <div class="lastComment" @click="toIndex" style="cursor: pointer;">
+      <p>最新讨论: </p>
+      <p>{{newCommentUserName}} 说：{{newCommet}}</p>
     </div>
     <div class="fixed_bottom">
         <div @click="toIndex" class="left_b">讨论区</div>
@@ -696,6 +694,7 @@ input{
     border-radius: 10px;
     cursor: pointer;
 }
+
 .fixed_bottom{
     position: fixed;
     left: 0;
@@ -711,5 +710,19 @@ input{
         border-radius: 10px;
         cursor: pointer;
     }
+}
+.lastComment{
+  position: fixed;
+  left: 20px;
+  right: 0;
+  bottom: 45px;
+  width: 100%;
+  max-width: 300px;
+  z-index: 4;
+  justify-content: space-between;
+  p{
+    font-size: 14px;
+    color: #999;
+  }
 }
 </style>
