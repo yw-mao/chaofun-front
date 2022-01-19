@@ -226,11 +226,28 @@ export default {
   },
 
       toLive(){
+          try {
+              // window.flutter_inappwebview.callHandler('toAppIndex', {})
+              window.flutter_inappwebview.callHandler('toViewPage', {
+                  url: 'https://live.bilibili.com/23919989',
+                  title: 'TheButtonB站直播',
+                  showHeader: true
+              })
+          } catch (e) {
               window.open('https://live.bilibili.com/23919989',"_blank");
+          }
       },
       toFbi(){
-          window.open('https://chao.fun/webview/fbi',"_blank");
-
+          try {
+              // window.flutter_inappwebview.callHandler('toAppIndex', {})
+              window.flutter_inappwebview.callHandler('toViewPage', {
+                  url: 'https://chao.fun/webview/fbi',
+                  title: '饭币 (FBi)',
+                  showHeader: true
+              })
+          } catch (e) {
+              window.open('https://chao.fun/webview/fbi',"_blank");
+          }
       },
     confirms(){
       if(this.islogin){
