@@ -76,7 +76,7 @@
         <div @click="toIndex" class="left_b">讨论区</div>
         <div v-clipboard:copy="'https://chao.fun/webview/buttonGame'" v-clipboard:success="onCopy"  class="left_b">分享游戏</div>
     </div>
-    <van-dialog v-model="showR" confirmButtonText="我知道了">
+    <van-dialog v-model="showR" confirmButtonText="我知道了" style="z-index: 9999">
         <div class="rtitle">游戏规则</div>
         <div class="rs">
             <p>1. 注册并且登陆用户参与</p>
@@ -473,7 +473,7 @@ export default {
 }
 .content{
     // position: fixed;
-    z-index: 9999;
+    z-index: 999;
     box-sizing: border-box;
     // height: 300px;
     // overflow: scroll;
