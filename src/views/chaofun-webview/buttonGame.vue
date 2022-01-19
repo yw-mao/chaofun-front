@@ -424,8 +424,7 @@ export default {
             this.newCommet = redata.lastComment;
             this.newCommentUserName = redata.lastCommentUserName;
             this.now_timestamp = redata.now_timestamp;
-            // TODO need fix
-            this.lastGetPriceTimestamp = redata.now_timestamp;
+            this.lastGetPriceTimestamp = redata.lastGetPriceTime;
         }else if(redata.type=='selfInfo'){
             this.selfInfo = redata;
         }else if(redata.type=='needLogin'){
@@ -508,8 +507,12 @@ export default {
         padding: 10px;
         margin: 0 auto;
         border-radius: 10px;
+        cursor: pointer;
         &:active{
-            box-shadow: 2px 0px 20px rgba(0, 0, 0, 0.2);
+            box-shadow: 3px 0px 20px rgba(0, 0, 0, 0.2);
+        }
+        &:hover{
+          background: #ccc;
         }
         .btn{
             display: block;
@@ -517,6 +520,9 @@ export default {
             background: #fff;
             font-size: 28px;
             font-weight: bolder;
+            &:hover{
+              background: #eee;
+            }
         }
     }
     .time{
