@@ -237,7 +237,7 @@ export default {
         },
         islink(txtContent){
             var check_www='w{3}'+'[^\\s]*';
-            var check_http='(https|http|ftp|rtsp|mms)://'+'[^(\\s|(\\u4E00-\\u9FFF)))]*';
+            var check_http='(https|http|ftp|rtsp|mms)://'+'[^(\\,|\\s|(\\u4E00-\\u9FFF)))]*';
             var strRegex=check_http;
             var httpReg=new RegExp(strRegex,'gi');
             var  formatTxtContent = txtContent.replace(httpReg, function (httpText)

@@ -183,7 +183,7 @@
 
                         <el-checkbox
                             style="margin-left: 5px"
-                            v-if="type === 'vote' && this.predictionsTournament"
+                            v-if="type === 'vote' && this.predictionsTournament && this.forum.admin"
                             v-model="post.prediction"
                             true-label="true"
                             false-label="false"
