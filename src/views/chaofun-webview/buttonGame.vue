@@ -627,11 +627,13 @@ export default {
   left: 0;
   right: 0;
   top: 0;
-  padding: 20px;
+  padding: 20px 5px;
   font-size: 16px;
+  width: 40%;
+  max-width: 150px;
 
   .info {
-    width: 40%;
+    width: 100%;
     max-width: 150px;
     font-size: 14px;
     color: #999;
