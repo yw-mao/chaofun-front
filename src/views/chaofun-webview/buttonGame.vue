@@ -16,29 +16,31 @@
               <img src="./assets/images/rule.png" alt="">游戏规则
             </div>
         </div>
-        <div class="info" style="margin-top: 40px;">
-<!--            <p>当前时间：{{moment(now_timestamp).format("HH:mm:ss")}}</p>-->
-<!--            <p>获奖时间：{{moment(lastGetPriceTimestamp).format("HH:mm:ss")}}</p>-->
-<!--            <p>距离上次：{{moment(now_timestamp-lastGetPriceTimestamp-28800000).format("HH:mm:ss")}}</p>-->
-<!--            <br />-->
-            <p>上次获奖：</p>
-            <p @click="toUser(lastGetPriceUserId)" style="cursor: pointer;">{{lastGetPriceUserName}}</p>
-            <br />
-            <p>获奖时间：</p>
-            <p>{{moment(lastGetPriceTimestamp).format("HH:mm:ss")}}</p>
-            <br />
-            <p>距离上次：</p>
-            <p>{{moment(now_timestamp-lastGetPriceTimestamp-28800000).format("HH:mm:ss")}}</p>
-            <br />
-            <p>参与人数：</p>
-            <p>{{participants_text}}</p>
-            <br />
-            <p>点击次数：</p>
-            <p>{{clickTimes}}</p>
-            <br />
-            <p>在线人数：</p>
-            <p>{{onlineNums}}</p>
-        </div>
+    </div>
+    <div class="infoShow">
+      <div class="info" style="margin-top: 40px;">
+        <!--            <p>当前时间：{{moment(now_timestamp).format("HH:mm:ss")}}</p>-->
+        <!--            <p>获奖时间：{{moment(lastGetPriceTimestamp).format("HH:mm:ss")}}</p>-->
+        <!--            <p>距离上次：{{moment(now_timestamp-lastGetPriceTimestamp-28800000).format("HH:mm:ss")}}</p>-->
+        <!--            <br />-->
+        <p>上次获奖：</p>
+        <p @click="toUser(lastGetPriceUserId)" style="cursor: pointer;">{{ lastGetPriceUserName }}</p>
+        <br/>
+        <p>获奖时间：</p>
+        <p>{{ moment(lastGetPriceTimestamp).format("HH:mm:ss") }}</p>
+        <br/>
+        <p>距离上次：</p>
+        <p>{{ moment(now_timestamp - lastGetPriceTimestamp - 28800000).format("HH:mm:ss") }}</p>
+        <br/>
+        <p>参与人数：</p>
+        <p>{{ participants_text }}</p>
+        <br/>
+        <p>点击次数：</p>
+        <p>{{ clickTimes }}</p>
+        <br/>
+        <p>在线人数：</p>
+        <p>{{ onlineNums }}</p>
+      </div>
     </div>
     <div  class="content" style="z-index: 10;">
         
@@ -613,17 +615,27 @@ export default {
         display: flex;
         justify-content: space-between;
     }
-    .info{
-        width: 40%;
-        max-width: 150px;
-        font-size: 14px;
-        color: #999;
-    }
     img{
         width: 20px;
         // height: 24px;
         vertical-align: middle;
     }
+}
+
+.infoShow {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  padding: 20px;
+  font-size: 16px;
+
+  .info {
+    width: 40%;
+    max-width: 150px;
+    font-size: 14px;
+    color: #999;
+  }
 }
 .rtitle{
         text-align: center;
