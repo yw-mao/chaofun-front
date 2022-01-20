@@ -1,18 +1,20 @@
 <template>
   <div class="container">
-      <div style="position: fixed; top: 0; z-index: 6">
+      <div style="position: fixed; top: 0; z-index: 30;">
           <div @click="toLive" class="fixed_top_live">直播地址</div>
       </div>
-    <div class="rank_rule">
+    <div class="rank_rule" style="z-index: 20;">
         <div class="rank_line">
             <div @click="toRank" class="rank rank1" style="cursor: pointer;width: 100px; position: fixed; left: 0; top: 0;  border: 1px solid #f1f1f1; padding: 10px 20px;border-radius: 10px ">
                 排行榜
             </div>
         </div>
 
-        <div style="position: fixed; right: 0; z-index: 2">
+        <div style="position: fixed; right: 0;">
             <div @click="toHome" class="fixed_top">炒饭首页</div>
-            <div @click="showRule" style="margin-top: 40px; padding: 10px 10px;cursor: pointer;z-index: 8888;"><img src="./assets/images/rule.png" alt="">游戏规则</div>
+            <div @click="showRule" style="margin-top: 40px; padding: 10px 10px;cursor: pointer;">
+              <img src="./assets/images/rule.png" alt="">游戏规则
+            </div>
         </div>
         <div class="info" style="margin-top: 40px;">
 <!--            <p>当前时间：{{moment(now_timestamp).format("HH:mm:ss")}}</p>-->
@@ -38,10 +40,10 @@
             <p>{{onlineNums}}</p>
         </div>
     </div>
-    <div  class="content">
+    <div  class="content" style="z-index: 10;">
         
         <div class="main">
-            <div @click="toUser(lastClickUserId)" class="lastClickUserName">{{lastClickUserName?(lastClickUserName+'点击了Button'):'未登录用户点击了Button'}}</div>
+            <div @click="toUser(lastClickUserId)" class="lastClickUserName" style="z-index: 9;">{{lastClickUserName?(lastClickUserName+'点击了Button'):'未登录用户点击了Button'}}</div>
             <div class="time">
                 <div v-if="canvas.speed<6000" class="time_con">
                     <span v-for="(item,index) in ('000'+(6000-canvas.speed)).slice(-4).split('')" :key="index" class="s">{{item}}</span>
@@ -76,7 +78,7 @@
         <div @click="toIndex" class="left_b">讨论区</div>
         <div v-clipboard:copy="'https://chao.fun/webview/buttonGame'" v-clipboard:success="onCopy"  class="left_b">分享游戏</div>
     </div>
-    <van-dialog v-model="showR" confirmButtonText="我知道了" style="z-index: 9999">
+    <van-dialog v-model="showR" confirmButtonText="我知道了">
         <div class="rtitle">游戏规则</div>
         <div class="rs">
             <p>1. 注册并且登陆用户参与</p>
@@ -473,7 +475,6 @@ export default {
 }
 .content{
     // position: fixed;
-    z-index: 999;
     box-sizing: border-box;
     // height: 300px;
     // overflow: scroll;
@@ -613,6 +614,8 @@ export default {
         justify-content: space-between;
     }
     .info{
+        width: 40%;
+        max-width: 150px;
         font-size: 14px;
         color: #999;
     }
@@ -699,7 +702,6 @@ input{
 }
 
 .fixed_bottom{
-    z-index: 8888;
     position: fixed;
     left: 0;
     right: 0;
@@ -709,7 +711,6 @@ input{
     z-index: 4;
     justify-content: space-between;
     .left_b{
-         z-index: 8888;
         border: 1px solid #f1f1f1;
         padding: 10px 20px;
         border-radius: 10px;
@@ -717,7 +718,6 @@ input{
     }
 }
 .lastComment{
-  z-index: 8888;
   position: fixed;
   left: 20px;
   right: 0;
