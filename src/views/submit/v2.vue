@@ -190,7 +190,7 @@
                             border
                             size="medium"
                         >
-                          <i :class="[!post.prediction ?  'el-icon-plus': 'el-icon-check' ]" />
+                          <i :class="[post.prediction === 'true' ?  'el-icon-check' : 'el-icon-plus' ]" />
                           <span>{{this.predictionsTournament.name}}</span>
                         </el-checkbox>
 
@@ -293,13 +293,13 @@
     submitArticle,
     submitLink,
     submitVote,
-    submitPrecition,
+    submitPrediction,
     getPredictionsTournament,
   } from '@/api/api'
 
 
   import { logo } from '@/settings'
-  import {getForumRules, submitPrediction} from "../../api/api";
+  import {getForumRules} from "../../api/api";
 
   export default {
     name: 'submitV2',
