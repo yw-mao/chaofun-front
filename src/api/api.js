@@ -66,6 +66,15 @@ export function submitVote(params) {
   })
 }
 
+/** 发布预测帖子 */
+export function submitPrediction(params) {
+  return request({
+    url: '/api/v0/submit_prediction',
+    method: 'post',
+    data: qs.stringify(params)
+  })
+}
+
 // 投票
 export function toVote(params) {
   return request({
@@ -616,6 +625,15 @@ export function listTags(params) {
     params
   })
 }
+
+export function getPredictionsTournament(params) {
+  return request({
+    url: '/api/v0/forum/predictions_tournament/get',
+    method: 'get',
+    params
+  })
+}
+
 
 export function listForumsByTag(params) {
   return request({

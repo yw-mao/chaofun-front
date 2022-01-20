@@ -181,6 +181,19 @@
 
                         <CollectionSelector ref="collection" v-model="post.collectionId" />
 
+                        <el-checkbox
+                            style="margin-left: 5px"
+                            v-if="type === 'vote' && this.predictionsTournament"
+                            v-model="post.prediction"
+                            true-label="true"
+                            false-label="false"
+                            border
+                            size="medium"
+                        >
+                          <i :class="[!post.prediction ?  'el-icon-plus': 'el-icon-check' ]" />
+                          <span>{{this.predictionsTournament.name}}</span>
+                        </el-checkbox>
+
                       </div>
                     </el-row>
                     <el-divider></el-divider>
@@ -280,9 +293,13 @@
     submitArticle,
     submitLink,
     submitVote,
+    submitPrecition,
+    getPredictionsTournament,
   } from '@/api/api'
+
+
   import { logo } from '@/settings'
-  import {getForumRules} from "../../api/api";
+  import {getForumRules, submitPrediction} from "../../api/api";
 
   export default {
     name: 'submitV2',
@@ -320,9 +337,11 @@
           tagId: null,
           collectionId: null,
           ossNames: null,
+          prediction: 'false',
         },
         forums: [],
         rules: [],
+        predictionsTournament: {},
         loading: false,
         filedata: {}, // 文件参数
         loading: false, // 发布中
@@ -334,6 +353,8 @@
       this.getForum().then(() => {
         this.getForumCategories();
         this.getForumRules();
+        this.getPredictionsTournament();
+        this.get
       });
       
       // 自动聚焦标题
@@ -345,6 +366,7 @@
       async forumSelectOnChange(forumId) {
         await this.getForum();
         this.getForumRules();
+        this.getPredictionsTournament();
         // 静态替换路由
         history.pushState(
           {},
@@ -369,6 +391,16 @@
           const result = await getForumRules({ forumId: this.forum.id });
           if (result.success) {
             this.rules = result.data;
+          }
+        }
+      },
+
+      async getPredictionsTournament() {
+        this.post.prediction= 'false';
+        if (this.forum.id) {
+          const result = await getPredictionsTournament({ forumId: this.forum.id });
+          if (result.success) {
+            this.predictionsTournament = result.data;
           }
         }
       },
@@ -474,9 +506,13 @@
             result = await submitLink(params);
           } else if (type === 'vote') {
             params.article = post.content;
-            params.articleType = 'richtext';
             params.options = JSON.stringify(post.options);
-            result = await submitVote(params);
+            if (post.prediction == 'true' && this.predictionsTournament.id) {
+              params.predictionsTournamentId= this.predictionsTournament.id;
+              result = await submitPrediction(params);
+            } else {
+              result = await submitVote(params);
+            }
           }
           if (!result || !result.success) {
             this.$message.error(result.errorMessage);
