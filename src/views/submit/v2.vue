@@ -342,7 +342,6 @@
         forums: [],
         rules: [],
         predictionsTournament: {},
-        loading: false,
         filedata: {}, // 文件参数
         loading: false, // 发布中
         draftId: null, // 草稿箱
@@ -382,6 +381,7 @@
           this.forum.followers = result.data.followers;
           this.forum.posts = result.data.posts;
           this.forum.desc = result.data.desc;
+          this.forum.admin = result.data.admin;
           this.post.forumId = this.forum.id;
         }
       },
