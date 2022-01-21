@@ -477,23 +477,13 @@ export default {
           typeStr = 'error';
         }
 
-        if (this.ISPHONE) {
-          this.$notify({
-            title: redata.lastClickUserName,
-            type: typeStr,
-            showClose: false,
-            offset: 80,
-            customClass: 'notification',
-            //duration: 0,
-          });
-        } else {
-          this.$notify({
-            title: redata.lastClickUserName,
-            type: typeStr,
-            showClose: false,
-            offset: 80,
-          });
-        }
+        this.$notify({
+          title: redata.lastClickUserName,
+          type: typeStr,
+          showClose: false,
+          offset: 80,
+          customClass: this.ISPHONE?'notification':null,
+        });
 
       },
 
@@ -782,24 +772,31 @@ input{
 }
 </style>
 
-<style>
+<style lang="scss">
+
 .notification {
   width: 100px;
   padding: 2px 0px;
+
+  .el-notification.right {
+    right: 2px;
+  }
+
+  .el-notification__icon {
+    height: 10px;
+    width: 10px;
+    font-size: 14px;
+  }
+
+  .el-notification__title {
+    font-size: 10px;
+  }
+
+  .el-notification__group {
+    margin-left: 5px;
+    margin-right: 1px;
+  }
+
 }
-.el-notification.right{
-  right: 2px;
-}
-.el-notification__icon{
-  height: 10px;
-  width: 10px;
-  font-size:14px;
-}
-.el-notification__title{
-  font-size: 10px;
-}
-.el-notification__group{
-  margin-left: 5px;
-  margin-right: 3px;
-}
+
 </style>
