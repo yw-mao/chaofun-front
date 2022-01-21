@@ -432,12 +432,15 @@ export default {
             this.lastGetPriceUserId = redata.lastGetPriceUserId;
             this.participants_text = redata.participants_text;
             this.onlineNums = redata.onlineNums;
-            this.clickTimes = redata.clickTimes;
+            // this.clickTimes = redata.clickTimes;
             this.lastGetPriceUserName = redata.lastGetPriceUserName;
             this.newCommet = redata.lastComment;
             this.newCommentUserName = redata.lastCommentUserName;
             this.now_timestamp = redata.now_timestamp;
             this.lastGetPriceTimestamp = redata.lastGetPriceTime;
+
+            this.showNotification(redata);
+            this.clickTimes = redata.clickTimes;
         }else if(redata.type=='selfInfo'){
             this.selfInfo = redata;
         }else if(redata.type=='needLogin'){
@@ -462,6 +465,25 @@ export default {
               this.initWebSocket()
           },1000)
       },
+
+      showNotification(redata) {
+
+        if (this.ISPHONE || !this.clickTimes || this.clickTimes == redata.clickTimes) {
+          return;
+        }
+
+        let typeStr = 'success';
+        if(redata.lastClickSecondsLeft){
+          typeStr = 'error';
+        }
+
+        this.$notify({
+          title: redata.lastClickUserName,
+          type: typeStr,
+        });
+
+      },
+
   },
 }
 </script>
