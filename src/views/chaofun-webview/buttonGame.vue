@@ -468,7 +468,7 @@ export default {
 
       showNotification(redata) {
 
-        if (this.ISPHONE || !this.clickTimes || this.clickTimes == redata.clickTimes) {
+        if (!this.clickTimes || this.clickTimes == redata.clickTimes) {
           return;
         }
 
@@ -477,10 +477,19 @@ export default {
           typeStr = 'error';
         }
 
-        this.$notify({
-          title: redata.lastClickUserName,
-          type: typeStr,
-        });
+        if(this.ISPHONE) {
+          this.$notify({
+            title: redata.lastClickUserName,
+            type: typeStr,
+            customClass:'notification',
+            showClose:false,
+          });
+        }else{
+          this.$notify({
+            title: redata.lastClickUserName,
+            type: typeStr,
+          });
+        }
 
       },
 
@@ -766,5 +775,23 @@ input{
     font-size: 14px;
     color: #999;
   }
+}
+</style>
+
+<style>
+.notification {
+  width: 100px;
+  padding: 2px 0px;
+}
+.el-notification.right{
+  right: 2px;
+}
+.el-notification__icon{
+  height: 10px;
+  width: 6px;
+  font-size:14px;
+}
+.el-notification__title{
+  font-size: 10px;
 }
 </style>
