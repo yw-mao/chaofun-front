@@ -477,17 +477,21 @@ export default {
           typeStr = 'error';
         }
 
-        if(this.ISPHONE) {
+        if (this.ISPHONE) {
           this.$notify({
             title: redata.lastClickUserName,
             type: typeStr,
-            customClass:'notification',
-            showClose:false,
+            showClose: false,
+            offset: 80,
+            customClass: 'notification',
+            //duration: 0,
           });
-        }else{
+        } else {
           this.$notify({
             title: redata.lastClickUserName,
             type: typeStr,
+            showClose: false,
+            offset: 80,
           });
         }
 
@@ -788,10 +792,14 @@ input{
 }
 .el-notification__icon{
   height: 10px;
-  width: 6px;
+  width: 10px;
   font-size:14px;
 }
 .el-notification__title{
   font-size: 10px;
+}
+.el-notification__group{
+  margin-left: 5px;
+  margin-right: 3px;
 }
 </style>
