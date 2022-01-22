@@ -98,7 +98,7 @@
                             评论
                             <div @click="checkoutOrder" class="tright">
                               <img :src="imgOrigin+ 'biz/20712d8583a287b4941d8852af4f15e5.png'" alt="">
-                              {{params.order=='new'?'新评':'热评'}}
+                              {{params.order=='new'?'新评':(params.order=='old')?'时间':'热评'}}
                             </div>
                             <div class="tright" style="margin-right: 20px;">
                               <el-checkbox v-model="isPostOwnerCommentHighlight" @change="postOwnerCommentHighlightCheckboxChange" title="在“设置”中可设置为默认选中">高亮楼主评论</el-checkbox>
@@ -318,10 +318,12 @@ export default {
     },
 
     checkoutOrder(){
-      if(this.params.order=='new'){
-        this.params.order= 'hot'
-      }else{
+      if(this.params.order=='hot'){
         this.params.order= 'new'
+      }else if(this.params.order=='new'){
+        this.params.order= 'old'
+      }else{
+        this.params.order= 'hot'
       }
       this.getLists()
     },
