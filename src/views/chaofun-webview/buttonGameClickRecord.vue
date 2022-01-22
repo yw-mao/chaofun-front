@@ -4,7 +4,7 @@
       <span>显示记录：</span>
       <el-switch v-model="onlyGetPrice" active-color="#13ce66" inactive-color="#1890ff" active-text="仅获奖" inactive-text="全部" @change="onlyGetPriceChange"></el-switch>
     </div>
-    <div ref="scrollDivMark" style="height:90vh;overflow:auto;">
+    <div ref="scrollDivMark" style="height:85vh;overflow:auto;">
       <div v-for="(item,index) in clickRecordArray" :key="index"
            v-if="(!onlyGetPrice)||(onlyGetPrice && ('success'==item.type))"
            @click="toUser(item.userId)"
