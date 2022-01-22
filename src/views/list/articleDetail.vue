@@ -224,7 +224,8 @@ export default {
         pageNum: 0,
         pageSize: 100,
         //order: 'hot'
-        order: ("new" == localStorage.getItem("chao.fun.localSetting.commentOrderType"))?"new":"hot",
+        order: ("new" == localStorage.getItem("chao.fun.localSetting.commentOrderType"))?"new":
+            (("old" == localStorage.getItem("chao.fun.localSetting.commentOrderType"))?"old":"hot"),
         // order: localStorage.getItem('chao.fun.timeline.order') == null ? 'hot': localStorage.getItem('chao.fun.timeline.order')
       },
       options: [
