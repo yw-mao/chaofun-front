@@ -103,14 +103,15 @@
 
     methods: {
       copyInviterLink() {
-        navigator.clipboard
-            .writeText('https://chao.fun/app?inviter=' + this.userInfo.userId)
-            .then(() => {
-              alert("复制成功");
-            })
-            .catch(() => {
-              alert("复制失败");
-            });
+
+        try {
+          window.flutter_inappwebview.callHandler('COPY', 'https://chao.fun/app?inviter=' + this.userInfo.userId).then(function (result) {
+          });
+
+        } catch (error) {
+          navigator.clipboard
+              .writeText('https://chao.fun/app?inviter=' + this.userInfo.userId)
+        };
       },
 
       history() {
