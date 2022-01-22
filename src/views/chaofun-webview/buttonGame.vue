@@ -149,6 +149,7 @@ export default {
   data() {
     return {
 
+      clickRecordArrayMaxLength: 256,
       clickRecordArray: [],
       showClickRecordDrawer: false,
       moment: moment,
@@ -486,12 +487,22 @@ export default {
         typeStr = 'error';
       }
 
-      this.clickRecordArray.push({
+      let item = {
         type: typeStr,
         userName: redata.lastClickUserName,
         timestamp: redata.now_timestamp,
         userId: redata.lastClickUserId,
-      });
+      };
+
+      if(this.clickRecordArray.length < this.clickRecordArrayMaxLength){
+        this.clickRecordArray.push(item);
+      }else{
+        let arr = [...this.clickRecordArray];
+        arr.push(item);
+        arr.splice(0,arr.length-this.clickRecordArrayMaxLength);
+        this.clickRecordArray=arr;
+      }
+
 
       // 显示点击记录时不显示Notification
       if (this.showClickRecordDrawer) {
