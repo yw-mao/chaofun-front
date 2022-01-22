@@ -67,7 +67,7 @@
                 </el-tooltip>
               </div>
             </div>
-            <div class="localSetting" style="display: flex;">
+            <div class="localSetting" style="display: flex;align-items: center;">
               <span>帖子评论排序方式：</span>
               <el-radio-group v-model="commentOrderType" @change="commentOrderTypeChange" size="small">
                 <el-radio-button label="hot">热评</el-radio-button>
