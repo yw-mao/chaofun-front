@@ -67,10 +67,15 @@
                 </el-tooltip>
               </div>
             </div>
-            <div class="localSetting" style="display: flex;">
+            <div class="localSetting" style="display: flex;align-items: center;">
               <span>帖子评论排序方式：</span>
-              <el-switch style="display: block" v-model="commentOrderType" active-color="#13ce66" inactive-color="#1890ff" active-text="新评" inactive-text="热评"
-              @change="commentOrderTypeChange"></el-switch>
+              <el-radio-group v-model="commentOrderType" @change="commentOrderTypeChange" size="small">
+                <el-radio-button label="hot">热评</el-radio-button>
+                <el-radio-button label="new">新评</el-radio-button>
+                <el-radio-button label="old">时间</el-radio-button>
+              </el-radio-group>
+              <!--              <el-switch style="display: block" v-model="commentOrderType" active-color="#13ce66" inactive-color="#1890ff" active-text="新评" inactive-text="热评"-->
+              <!--              @change="commentOrderTypeChange"></el-switch>-->
             </div>
           </div>
         </div>
@@ -110,7 +115,7 @@ export default {
   data() {
     return {
 
-      commentOrderType: false,
+      commentOrderType: 'hot',
       isStoragePostOwnerCommentHighlight: false,
       type: '',
       title: '',
@@ -152,8 +157,9 @@ export default {
     localStorage.setItem("chao.fun.localSetting.isStoragePostOwnerCommentHighlight", this.isStoragePostOwnerCommentHighlight);
 
 
-    this.commentOrderType = ("new" == localStorage.getItem("chao.fun.localSetting.commentOrderType"));
-    localStorage.setItem("chao.fun.localSetting.commentOrderType", this.commentOrderType?"new":"hot");
+    this.commentOrderType = ("new" == localStorage.getItem("chao.fun.localSetting.commentOrderType")) ? "new"
+        : (("old" == localStorage.getItem("chao.fun.localSetting.commentOrderType")) ? "old" : "hot");
+    localStorage.setItem("chao.fun.localSetting.commentOrderType", this.commentOrderType);
 
     if (document.body.clientWidth < 700) {
       this.isPhone = true
@@ -172,7 +178,7 @@ export default {
   methods: {
 
     commentOrderTypeChange(val) {
-      localStorage.setItem("chao.fun.localSetting.commentOrderType", val?"new":"hot");
+      localStorage.setItem("chao.fun.localSetting.commentOrderType", val);
       this.$toast("设置成功！");
     },
 
@@ -448,7 +454,7 @@ export default {
   }
 }
 
-.localSetting{
+.localSetting {
   margin: 10px 10px;
   display: flex;
 }
