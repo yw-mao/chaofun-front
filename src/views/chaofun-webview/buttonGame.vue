@@ -12,10 +12,10 @@
 
       <div style="position: fixed; right: 0;">
         <div @click="toHome" class="fixed_top">炒饭首页</div>
-        <div @click="showRule" style="margin-top: 40px; padding: 10px 10px;cursor: pointer;">
+        <div @click="showRule" style="margin-top: 40px; padding: 0px 10px;cursor: pointer;">
           <img src="./assets/images/rule.png" alt="">游戏规则
         </div>
-        <div @click.stop="showClickRecordDrawer = true" style="margin-top: 5px; padding: 0px 10px;cursor: pointer;">
+        <div @click.stop="showClickRecordDrawer = true" style="margin-top: 10px; padding: 0px 10px;cursor: pointer;">
           <i class="el-icon-s-unfold" style="font-size: 20px;width: 20px;height: 20px;"/>点击记录
         </div>
       </div>
@@ -494,13 +494,13 @@ export default {
         userId: redata.lastClickUserId,
       };
 
-      if(this.clickRecordArray.length < this.clickRecordArrayMaxLength){
+      if (this.clickRecordArray.length < this.clickRecordArrayMaxLength) {
         this.clickRecordArray.push(item);
-      }else{
+      } else {
         let arr = [...this.clickRecordArray];
         arr.push(item);
-        arr.splice(0,arr.length-this.clickRecordArrayMaxLength);
-        this.clickRecordArray=arr;
+        arr.splice(0, arr.length - this.clickRecordArrayMaxLength);
+        this.clickRecordArray = arr;
       }
 
 
@@ -513,7 +513,7 @@ export default {
         title: redata.lastClickUserName,
         type: typeStr,
         showClose: false,
-        offset: 80,
+        offset: 100,
         customClass: this.ISPHONE ? 'notification' : null,
       });
     }
@@ -846,10 +846,6 @@ input {
   width: 100px;
   padding: 2px 0px;
 
-  .el-notification.right {
-    right: 2px;
-  }
-
   .el-notification__icon {
     height: 10px;
     width: 10px;
@@ -865,6 +861,10 @@ input {
     margin-right: 1px;
   }
 
+}
+
+.el-notification.right {
+  right: 5px;
 }
 
 </style>
