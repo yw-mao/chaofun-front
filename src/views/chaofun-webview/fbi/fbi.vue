@@ -103,13 +103,13 @@
 
     methods: {
       copyInviterLink() {
-
         var input = document.createElement('input');
         input.setAttribute('value', 'https://chao.fun/app?inviter=' + this.userInfo.userId);
         document.body.appendChild(input);
         input.select();
         var result = document.execCommand('copy');
         document.body.removeChild(input);
+        this.$toast("复制邀请地址成功");
         return result;
       },
 
