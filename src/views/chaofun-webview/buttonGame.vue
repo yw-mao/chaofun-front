@@ -113,7 +113,8 @@
         <div @click="islogin=true" class="toto">去登陆</div>
       </div>
     </van-dialog>
-    <el-drawer title="近期点击记录" :destroy-on-close=true :visible.sync="showClickRecordDrawer" size='260px'>
+    <el-drawer title="近期点击记录" :destroy-on-close=true :visible.sync="showClickRecordDrawer" size='260px'
+               :append-to-body="true" :modal-append-to-body="false">
       <buttonGameClickRecord :clickRecordArray="clickRecordArray"/>
     </el-drawer>
   </div>
