@@ -15,6 +15,9 @@
         <div @click="showRule" style="margin-top: 40px; padding: 10px 10px;cursor: pointer;">
           <img src="./assets/images/rule.png" alt="">游戏规则
         </div>
+        <div @click.stop="showClickRecordDrawer = true" style="margin-top: 5px; padding: 0px 10px;cursor: pointer;">
+          <i class="el-icon-s-unfold" style="font-size: 20px;width: 20px;height: 20px;"/>点击记录
+        </div>
       </div>
     </div>
     <div class="infoShow">
@@ -110,7 +113,9 @@
         <div @click="islogin=true" class="toto">去登陆</div>
       </div>
     </van-dialog>
-
+    <el-drawer title="近期点击记录" :destroy-on-close=true :visible.sync="showClickRecordDrawer" size='260px'>
+      <buttonGameClickRecord :clickRecordArray="clickRecordArray"/>
+    </el-drawer>
   </div>
 </template>
 
@@ -121,6 +126,7 @@ import Vue from 'vue';
 import * as api from '@/api/api'
 import {Circle} from 'vant';
 import moment from 'moment';
+import buttonGameClickRecord from "@/views/chaofun-webview/buttonGameClickRecord";
 import VueClipboard from 'vue-clipboard2'
 
 Vue.use(VueClipboard);
@@ -138,10 +144,12 @@ CanvasRenderingContext2D.prototype.sector = function (x, y, radius, sAngle, eAng
 };
 export default {
   name: 'Home',
-  components: {},
+  components: {buttonGameClickRecord,},
   data() {
     return {
 
+      clickRecordArray: [],
+      showClickRecordDrawer: false,
       moment: moment,
       lastGetPriceTimestamp: 0,
       now_timestamp: 0,
@@ -439,7 +447,7 @@ export default {
         this.now_timestamp = redata.now_timestamp;
         this.lastGetPriceTimestamp = redata.lastGetPriceTime;
 
-        this.showNotification(redata);
+        this.showNotificationAndRecord(redata);
         this.clickTimes = redata.clickTimes;
       } else if (redata.type == 'selfInfo') {
         this.selfInfo = redata;
@@ -466,7 +474,7 @@ export default {
       }, 1000)
     },
 
-    showNotification(redata) {
+    showNotificationAndRecord(redata) {
 
       if (!this.clickTimes || this.clickTimes == redata.clickTimes) {
         return;
@@ -477,6 +485,18 @@ export default {
         typeStr = 'error';
       }
 
+      this.clickRecordArray.push({
+        type: typeStr,
+        userName: redata.lastClickUserName,
+        timestamp: redata.now_timestamp,
+        userId: redata.lastClickUserId,
+      });
+
+      // 显示点击记录时不显示Notification
+      if (this.showClickRecordDrawer) {
+        return;
+      }
+
       this.$notify({
         title: redata.lastClickUserName,
         type: typeStr,
@@ -484,8 +504,7 @@ export default {
         offset: 80,
         customClass: this.ISPHONE ? 'notification' : null,
       });
-
-    },
+    }
 
   },
 }
