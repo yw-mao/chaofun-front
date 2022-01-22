@@ -548,6 +548,7 @@ export default {
           );
           break;
         case "vote":
+        case "prediction":
           return (
             this.imgOrigin + "biz/fea4efce4437040479d1a0452160f2fd.png?x-oss-process=image/resize,h_150"
           );
