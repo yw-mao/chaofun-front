@@ -81,7 +81,7 @@
     </div>
     <div class="fixed_bottom">
       <div @click="toIndex" class="left_b">讨论区</div>
-      <div v-clipboard:copy="'https://chao.fun/webview/buttonGame'" v-clipboard:success="onCopy" class="left_b">分享游戏</div>
+      <div v-clipboard:copy="'https://chao.fun/webview/buttonGame'" v-clipboard:success="onCopy" class="left_b">复制游戏链接</div>
     </div>
     <van-dialog v-model="showR" confirmButtonText="我知道了">
       <div class="rtitle">游戏规则</div>
@@ -812,7 +812,7 @@ input {
   bottom: 0;
   width: 100%;
   display: flex;
-  z-index: 4;
+  z-index: 30;
   justify-content: space-between;
 
   .left_b {
