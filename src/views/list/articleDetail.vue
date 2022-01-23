@@ -43,11 +43,11 @@
           <div :class="['dialog_main',{'dialog_main2':!ISPHONE}]" ref="dialogMainMark" style="scroll-behavior: smooth;">
             <div v-if="!ISPHONE"
                  style="position: absolute;right: 10px;top:400px;z-index: 9999;width: 30px;caret-color: transparent;background: #f1f1f1;border-radius:20px;">
-              <i class="el-icon-caret-top" title="滚动到顶部" @click.stop="scrollToTop"
+              <i class="el-icon-caret-top" title="滚动到顶部 (F1)" @click.stop="scrollToTop"
                  style="font-size: 30px;color:#5cb6ff;cursor:pointer;"/>
-              <i class="el-icon-s-comment" title="滚动到评论" @click.stop="scrollToComment"
+              <i class="el-icon-s-comment" title="滚动到评论 (F2)" @click.stop="scrollToComment"
                  style="font-size: 30px;color:#5cb6ff;cursor:pointer;"/>
-              <i class="el-icon-caret-bottom" title="滚动到底部" @click.stop="scrollToEnd"
+              <i class="el-icon-caret-bottom" title="滚动到底部 (F3)" @click.stop="scrollToEnd"
                  style="font-size: 30px;color:#5cb6ff;cursor:pointer;"/>
             </div>
             <div class="dialog_main_content">
@@ -985,7 +985,25 @@ queryChildren (parent, list) {
             this.$refs['commentInputMark'].focus();            
             e.preventDefault();
           }
-        }        
+        }
+      } else if (e.keyCode == 112) {
+        if (e.altKey || e.shiftKey || e.ctrlKey) {
+          return;
+        }
+        this.scrollToTop();
+        e.preventDefault();
+      } else if (e.keyCode == 113) {
+        if (e.altKey || e.shiftKey || e.ctrlKey) {
+          return;
+        }
+        this.scrollToComment();
+        e.preventDefault();
+      } else if (e.keyCode == 114) {
+        if (e.altKey || e.shiftKey || e.ctrlKey) {
+          return;
+        }
+        this.scrollToEnd();
+        e.preventDefault();
       }
     },
   }
