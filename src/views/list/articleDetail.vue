@@ -331,7 +331,11 @@ export default {
     },
 
     scrollToComment() {
-      this.$refs.scrollToCommentEmptyDivMark.scrollIntoView();
+      this.$refs.dialogMainMark.scrollTop = this.$refs.scrollToCommentEmptyDivMark.offsetTop + 100;
+
+      // bug：会使整个dialog上移，致使顶部title看不到，然后底部会空白一部分。且该bug仅在部署后出现，本地调试未发现问题。
+      // 未找到该bug的原因，猜想是title的index比空白div高，然后scrollIntoView的原因。
+      // this.$refs.scrollToCommentEmptyDivMark.scrollIntoView();
     },
 
     postOwnerCommentHighlightCheckboxChange(val){
