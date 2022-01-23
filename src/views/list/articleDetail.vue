@@ -42,7 +42,7 @@
           </div>
           <div :class="['dialog_main',{'dialog_main2':!ISPHONE}]" ref="dialogMainMark" style="scroll-behavior: smooth;">
             <div v-if="!ISPHONE"
-                 style="position: absolute;right: 10px;bottom:100px;z-index: 9999;width: 30px;caret-color: transparent;background: #f1f1f1;border-radius:15px;">
+                 style="position: absolute;right: 8px;bottom:100px;z-index: 9999;width: 30px;caret-color: transparent;background: #f1f1f1;border-radius:15px;">
               <i class="el-icon-caret-top" title="滚动到顶部 (F1)" @click.stop="scrollToTop"
                  style="font-size: 30px;color:#5cb6ff;cursor:pointer;"/>
               <i class="el-icon-s-comment" title="滚动到评论 (F2)" @click.stop="scrollToComment"
