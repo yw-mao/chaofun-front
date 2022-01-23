@@ -45,7 +45,8 @@
                  style="position: absolute;right: 10px;top:400px;z-index: 9999;width: 30px;caret-color: transparent;background: #f1f1f1;border-radius:20px;">
               <i class="el-icon-caret-top" title="滚动到顶部" @click.stop="scrollToTop"
                  style="font-size: 30px;color:#5cb6ff;cursor:pointer;"/>
-              <i class="el-icon-s-comment" title="滚动到评论" style="font-size: 30px;color:#5cb6ff;cursor:pointer;"/>
+              <i class="el-icon-s-comment" title="滚动到评论" @click.stop="scrollToComment"
+                 style="font-size: 30px;color:#5cb6ff;cursor:pointer;"/>
               <i class="el-icon-caret-bottom" title="滚动到底部" @click.stop="scrollToEnd"
                  style="font-size: 30px;color:#5cb6ff;cursor:pointer;"/>
             </div>
@@ -54,6 +55,7 @@
                   <el-col :span="ISPHONE?24:17" :offset="isPhone?0:0" :lg="17" :md="24" :sm="24" :xs="24">
                       <div style="height:30px;"></div>
                       <ListItem :isindex="false" :lists="[pagedata]"></ListItem>
+                      <div ref="scrollToCommentEmptyDivMark"/>
                       <div :class="['sub_comment', {'sub_comment_phone':ISPHONE}]">
                           <div v-show="showAt" class="atuser">
                             <div v-for="(it,ins) in atUsers" :key="ins" @click="chooseAt($event,it)" class="at_item">
@@ -326,6 +328,10 @@ export default {
 
     scrollToEnd() {
       this.$refs.dialogMainMark.scrollTop = this.$refs.dialogMainMark.scrollHeight;
+    },
+
+    scrollToComment() {
+      this.$refs.scrollToCommentEmptyDivMark.scrollIntoView();
     },
 
     postOwnerCommentHighlightCheckboxChange(val){
