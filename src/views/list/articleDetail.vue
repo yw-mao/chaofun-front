@@ -40,7 +40,15 @@
               </div>
               <div @click="back" class="right">关闭</div>
           </div>
-          <div :class="['dialog_main',{'dialog_main2':!ISPHONE}]">
+          <div :class="['dialog_main',{'dialog_main2':!ISPHONE}]" ref="dialogMainMark" style="scroll-behavior: smooth;">
+            <div v-if="!ISPHONE"
+                 style="position: absolute;right: 10px;top:400px;z-index: 9999;width: 30px;caret-color: transparent;background: #f1f1f1;border-radius:20px;">
+              <i class="el-icon-caret-top" title="滚动到顶部" @click.stop="scrollToTop"
+                 style="font-size: 30px;color:#5cb6ff;cursor:pointer;"/>
+              <i class="el-icon-s-comment" title="滚动到评论" style="font-size: 30px;color:#5cb6ff;cursor:pointer;"/>
+              <i class="el-icon-caret-bottom" title="滚动到底部" @click.stop="scrollToEnd"
+                 style="font-size: 30px;color:#5cb6ff;cursor:pointer;"/>
+            </div>
             <div class="dialog_main_content">
               <el-row :gutter="20">
                   <el-col :span="ISPHONE?24:17" :offset="isPhone?0:0" :lg="17" :md="24" :sm="24" :xs="24">
@@ -311,6 +319,14 @@ export default {
     this.inputBlur()
   },
   methods:{
+
+    scrollToTop() {
+      this.$refs.dialogMainMark.scrollTop = 0;
+    },
+
+    scrollToEnd() {
+      this.$refs.dialogMainMark.scrollTop = this.$refs.dialogMainMark.scrollHeight;
+    },
 
     postOwnerCommentHighlightCheckboxChange(val){
       if("true" == localStorage.getItem("chao.fun.localSetting.isStoragePostOwnerCommentHighlight")){
