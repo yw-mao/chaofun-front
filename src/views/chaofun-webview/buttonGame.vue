@@ -522,6 +522,16 @@ export default {
 }
 </script>
 <style scoped lang="scss">
+
+* {
+  -webkit-touch-callout:none;
+  -webkit-user-select:none;
+  -khtml-user-select:none;
+  -moz-user-select:none;
+  -ms-user-select:none;
+  user-select:none;
+}
+
 .container {
   // height: ;
   padding-top: 0;
@@ -837,13 +847,6 @@ input {
     font-size: 14px;
     color: #999;
   }
-}
-
-* {
-  -webkit-user-select:none;
-  -moz-user-select:none;
-  -ms-user-select:none;
-  user-select:none;
 }
 </style>
 
