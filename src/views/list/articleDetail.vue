@@ -113,10 +113,13 @@
                             <div class="tright" style="margin-right: 20px;">
                               <el-checkbox v-model="isPostOwnerCommentHighlight" @change="postOwnerCommentHighlightCheckboxChange" title="在“设置”中可设置为默认选中">高亮楼主评论</el-checkbox>
                             </div>
+                            <div class="tright" style="margin-right: 20px;">
+                              <el-checkbox v-model="withoutSubComment">只看一级评论</el-checkbox>
+                            </div>
                           </div> 
                           <commentitem :postInfo="{disableComment:pagedata.disableComment,forumAdmin:pagedata.forumAdmin, 
                           postOwnerUserId:pagedata.userInfo.userId,isPostOwnerHighlight:isPostOwnerCommentHighlight}" 
-                          @refreshDelete="refreshDelete" @toReplay2="toReplay2" @refreshComment="refreshComment" :treeData="treeData"></commentitem>
+                          @refreshDelete="refreshDelete" @toReplay2="toReplay2" @refreshComment="refreshComment" :treeData="treeData" :without-sub-comment="withoutSubComment"></commentitem>
                           <div v-if="!lists.length" class="no_comment">
                               还没有评论，你的机会来了 ~
                           </div> 
@@ -222,7 +225,8 @@ export default {
   // components: { adminDashboard, editorDashboard },
   data() {
     return {
-      
+
+      withoutSubComment:false,
       isPostOwnerCommentHighlight: false,
       hasData: true,
       currentRole: 'adminDashboard',
