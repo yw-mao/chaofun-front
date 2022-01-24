@@ -93,7 +93,7 @@
                             <img style="vertical-align:middle;margin-right:10px;cursor:pointer;" src="../../assets/images/icon/choose.png" alt="">
                             
                             </el-upload>
-                            <div class="icons">
+                            <div class="icons" style="z-index: 1;">
                               <img @click="showIcons" src="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=105646479,4120396531&fm=26&gp=0.jpg" alt="">
                               <div  class="emoji">
                                 <span v-for="(item,index) in icons" @click="chooseEmoji(item)" :key="index">{{item}}</span>
@@ -113,10 +113,13 @@
                             <div class="tright" style="margin-right: 20px;">
                               <el-checkbox v-model="isPostOwnerCommentHighlight" @change="postOwnerCommentHighlightCheckboxChange" title="在“设置”中可设置为默认选中">高亮楼主评论</el-checkbox>
                             </div>
+                            <div class="tright" style="margin-right: 20px;">
+                              <el-checkbox v-model="withoutSubComment">只看一级评论</el-checkbox>
+                            </div>
                           </div> 
                           <commentitem :postInfo="{disableComment:pagedata.disableComment,forumAdmin:pagedata.forumAdmin, 
                           postOwnerUserId:pagedata.userInfo.userId,isPostOwnerHighlight:isPostOwnerCommentHighlight}" 
-                          @refreshDelete="refreshDelete" @toReplay2="toReplay2" @refreshComment="refreshComment" :treeData="treeData"></commentitem>
+                          @refreshDelete="refreshDelete" @toReplay2="toReplay2" @refreshComment="refreshComment" :treeData="treeData" :without-sub-comment="withoutSubComment"></commentitem>
                           <div v-if="!lists.length" class="no_comment">
                               还没有评论，你的机会来了 ~
                           </div> 
@@ -222,7 +225,8 @@ export default {
   // components: { adminDashboard, editorDashboard },
   data() {
     return {
-      
+
+      withoutSubComment:false,
       isPostOwnerCommentHighlight: false,
       hasData: true,
       currentRole: 'adminDashboard',
@@ -1067,7 +1071,7 @@ queryChildren (parent, list) {
 }
 .dialog_top{
     position: absolute;
-    z-index: 1;
+    z-index: 2;
     // width: calc(80% - 20px);
     width: 100%;
     // left: 10%;

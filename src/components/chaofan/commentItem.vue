@@ -98,7 +98,7 @@
                     </div>
                 </div>
             </div>
-            <div v-if="item.children&&item.children.length">
+            <div v-if="!withoutSubComment&&item.children&&item.children.length">
                 <commentitem :postInfo="{postOwnerUserId:postInfo.postOwnerUserId,isPostOwnerHighlight:postInfo.isPostOwnerHighlight}" 
                 @rep="rep" @refreshComment="refreshComment" @refreshDelete="refreshDelete" @toReplay2="toReplay2" :showRep="showR" :treeData="item.children"></commentitem>
                 <!-- <div  v-for="(item,index) in item.children" :key="index" class="comment_item">
@@ -134,7 +134,7 @@ export default {
     name: 'commentitem',
     data(){
         return {
-            
+
             showIcon: false,
             moment: moment,
             replayItem: null,
@@ -178,7 +178,11 @@ export default {
             default(){
                 return {}
             }
-        }
+        },
+        withoutSubComment: {
+          type: Boolean,
+          default: false,
+        },
     },
     components: {
 
