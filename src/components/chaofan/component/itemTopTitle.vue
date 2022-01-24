@@ -217,7 +217,7 @@
           </el-dropdown-menu>
         </el-dropdown>
       </div>
-      <el-dialog title="转移板块" :visible.sync="this.displayTrans"  width="30%" :append-to-body="true" :before-close="cancelSet">
+      <el-dialog title="转移板块(不能保留评论和赞)" :visible.sync="this.displayTrans"  width="30%" :append-to-body="true" :before-close="cancelSet">
         <div class="ycontainer">
           <div style="">
 <!--            <div>转移板块(评论暂不支持转移)</div>-->
