@@ -838,6 +838,13 @@ input {
     color: #999;
   }
 }
+
+* {
+  -webkit-user-select:none;
+  -moz-user-select:none;
+  -ms-user-select:none;
+  user-select:none;
+}
 </style>
 
 <style lang="scss">
