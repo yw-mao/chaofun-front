@@ -40,12 +40,22 @@
               </div>
               <div @click="back" class="right">关闭</div>
           </div>
-          <div :class="['dialog_main',{'dialog_main2':!ISPHONE}]">
+          <div :class="['dialog_main',{'dialog_main2':!ISPHONE}]" ref="dialogMainMark" style="scroll-behavior: smooth;">
+            <div v-if="!ISPHONE"
+                 style="position: absolute;right: 8px;bottom:100px;z-index: 9999;width: 30px;caret-color: transparent;background: #f1f1f1;border-radius:15px;">
+              <i class="el-icon-caret-top" title="滚动到顶部 (F1)" @click.stop="scrollToTop"
+                 style="font-size: 30px;color:#5cb6ff;cursor:pointer;"/>
+              <i class="el-icon-s-comment" title="滚动到评论 (F2)" @click.stop="scrollToComment"
+                 style="font-size: 30px;color:#5cb6ff;cursor:pointer;"/>
+              <i class="el-icon-caret-bottom" title="滚动到底部 (F3)" @click.stop="scrollToEnd"
+                 style="font-size: 30px;color:#5cb6ff;cursor:pointer;"/>
+            </div>
             <div class="dialog_main_content">
               <el-row :gutter="20">
                   <el-col :span="ISPHONE?24:17" :offset="isPhone?0:0" :lg="17" :md="24" :sm="24" :xs="24">
                       <div style="height:30px;"></div>
                       <ListItem :isindex="false" :lists="[pagedata]"></ListItem>
+                      <div ref="scrollToCommentEmptyDivMark"/>
                       <div :class="['sub_comment', {'sub_comment_phone':ISPHONE}]">
                           <div v-show="showAt" class="atuser">
                             <div v-for="(it,ins) in atUsers" :key="ins" @click="chooseAt($event,it)" class="at_item">
@@ -311,6 +321,22 @@ export default {
     this.inputBlur()
   },
   methods:{
+
+    scrollToTop() {
+      this.$refs.dialogMainMark.scrollTop = 0;
+    },
+
+    scrollToEnd() {
+      this.$refs.dialogMainMark.scrollTop = this.$refs.dialogMainMark.scrollHeight;
+    },
+
+    scrollToComment() {
+      this.$refs.dialogMainMark.scrollTop = this.$refs.scrollToCommentEmptyDivMark.offsetTop + 100;
+
+      // bug：会使整个dialog上移，致使顶部title看不到，然后底部会空白一部分。且该bug仅在部署后出现，本地调试未发现问题。
+      // 未找到该bug的原因，猜想是title的index比空白div高，然后scrollIntoView的原因。
+      // this.$refs.scrollToCommentEmptyDivMark.scrollIntoView();
+    },
 
     postOwnerCommentHighlightCheckboxChange(val){
       if("true" == localStorage.getItem("chao.fun.localSetting.isStoragePostOwnerCommentHighlight")){
@@ -963,7 +989,25 @@ queryChildren (parent, list) {
             this.$refs['commentInputMark'].focus();            
             e.preventDefault();
           }
-        }        
+        }
+      } else if (e.keyCode == 112) {
+        if (e.altKey || e.shiftKey || e.ctrlKey) {
+          return;
+        }
+        this.scrollToTop();
+        e.preventDefault();
+      } else if (e.keyCode == 113) {
+        if (e.altKey || e.shiftKey || e.ctrlKey) {
+          return;
+        }
+        this.scrollToComment();
+        e.preventDefault();
+      } else if (e.keyCode == 114) {
+        if (e.altKey || e.shiftKey || e.ctrlKey) {
+          return;
+        }
+        this.scrollToEnd();
+        e.preventDefault();
       }
     },
   }
