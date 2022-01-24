@@ -275,3 +275,9 @@
     border-radius: 8px;
   }
 </style>
+<style lang="scss">
+.el-message-box{
+  width: 90vw;
+  max-width: 400px;
+}
+</style>
