@@ -73,6 +73,19 @@
         if (reason === 'button_game_get') {
           return '春节小游戏获奖'
         }
+
+        if (reason === 'send_red_packet') {
+          return '发送红包';
+        }
+
+        if (reason === 'get_red_packet') {
+          return '领取红包';
+        }
+
+        if (reason === 'red_packet_expire') {
+          return '红包过期退回';
+        }
+
         return reason;
 
       }
