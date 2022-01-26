@@ -72,7 +72,7 @@
                     <div class="subims" v-if="images.length">
                         <a v-for="img in images" :key="img" :href="imgOrigin+img" target="_blank">[附图]</a>
                     </div>
-                    <el-button style="height:36px;" type="primary" v-if="replayItem&&(replayItem.id==item.id)" @click="toSub">发布</el-button>
+                    <el-button style="height:36px;" type="primary" v-if="replayItem&&(replayItem.id==item.id)" @click="toSub" title="快捷键：Ctrl+Enter">回复</el-button>
                     <el-upload
                     class="avatar-uploader"
                     action="/api/upload_image"

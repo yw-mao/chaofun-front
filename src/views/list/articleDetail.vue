@@ -73,7 +73,7 @@
                                 <a v-for="img in images" :key="img" :href="imgOrigin+img" target="_blank">[附图]</a>
                             </div>
                             <div ></div>
-                            <el-button :disabled="pagedata.disableComment&&!pagedata.forumAdmin" style="height:36px;" @click="toSub" type="primary">发表</el-button>
+                            <el-button :disabled="pagedata.disableComment&&!pagedata.forumAdmin" style="height:36px;" @click="toSub" type="primary" title="快捷键：Ctrl+Enter">发表</el-button>
                             <el-upload
                             :disabled="pagedata.disableComment&&!pagedata.forumAdmin"
                             class="avatar-uploader"
