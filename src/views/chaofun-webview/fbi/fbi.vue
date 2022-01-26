@@ -5,8 +5,14 @@
       <span style="color: orangered">
         {{this.fbi}}
       </span>
+
+    </div>
+    <div>
       <el-button @click="history">
         查看记录
+      </el-button>
+      <el-button @click="redPacketGet">
+        口令红包
       </el-button>
     </div>
     <div style="padding-top: 20px">
@@ -115,6 +121,10 @@
 
       history() {
         window.open('https://chao.fun/webview/fbi/history',"_blank");
+      },
+
+      redPacketGet() {
+        window.open('https://chao.fun/webview/fbi/redPacket',"_blank");
       }
     }
   }
