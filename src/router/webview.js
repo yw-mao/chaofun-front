@@ -120,6 +120,21 @@ routes = [
     meta: { title: 'Fbi'},
     hidden: true
   },
+
+  {
+    path: '/webview/fbi/redPacket',
+    component: () => import('@/views/chaofun-webview/fbi/RedPacket'),
+    name: 'FBi 红包',
+    meta: { title: 'FBi 红包'},
+    hidden: true
+  },
+  // {
+  //   path: '/webview/fbi/redPacket/password',
+  //   component: () => import('@/views/chaofun-webview/fbi/RedPacketPassword'),
+  //   name: 'FBi 红包',
+  //   meta: { title: 'FBi 红包'},
+  //   hidden: true
+  // },
   {
     path: '/webview/Year2021',
     component: () => import('@/views/chaofun-webview/year2021/year2021'),
