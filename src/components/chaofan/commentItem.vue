@@ -61,7 +61,7 @@
                     </div>
                 </div>
                 <div v-if="replayItem" @click="cancelReplay" style="padding: 6px 0px;cursor:pointer;float:right;">取消回复</div>
-                <el-input style="font-size:14px;" 
+                <el-input style="font-size:14px;" ref="subCommentInputMark"
                 v-on:focus="inputFocus" @keyup.native="bindInput" 
                 v-on:blur="inputBlur" type="textarea" 
                 v-model="comment" class="textarea" 
