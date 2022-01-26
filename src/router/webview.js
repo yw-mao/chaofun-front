@@ -121,6 +121,13 @@ routes = [
     hidden: true
   },
   {
+    path: '/webview/fbi/RedPacket',
+    component: () => import('@/views/chaofun-webview/fbi/RedPacket'),
+    name: 'FBi 红包',
+    meta: { title: 'FBi 红包'},
+    hidden: true
+  },
+  {
     path: '/webview/Year2021',
     component: () => import('@/views/chaofun-webview/year2021/year2021'),
     name: 'year2021',
