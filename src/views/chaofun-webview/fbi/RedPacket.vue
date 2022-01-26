@@ -1,5 +1,13 @@
 <template>
   <div>
+    <div style="position: fixed; top: 0; right: 0; text-align: right">
+      <div>
+        <el-button @click="create"> 创建口令红包 </el-button>
+      </div>
+      <div>
+        <el-button @click="history" style="right: 0"> 红包历史 </el-button>
+      </div>
+    </div>
     <div v-if="showDetail" style="align-items: center; text-align:center">
       <div v-if="redPacket" style="padding-top: 100px;">
         {{redPacket.sendUser.userName}} 发出的 FBi 红包
@@ -102,7 +110,11 @@ export default {
     },
 
     history() {
-      window.open('https://chao.fun/webview/fbi/history',"_blank");
+      this.$toast("暂不支持");
+    },
+
+    create() {
+      this.$toast("暂不支持");
     }
   }
 }
