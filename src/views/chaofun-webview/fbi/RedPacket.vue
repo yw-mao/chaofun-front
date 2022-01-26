@@ -4,6 +4,9 @@
       <div v-if="redPacket" style="padding-top: 100px;">
         {{redPacket.sendUser.userName}} 发出的 FBi 红包
       </div>
+      <div style="padding-top: 10px; font-size: 20px; font-weight: bold">
+        {{redPacket.blessing}}
+      </div>
       <p v-if="this.redPacket.isOpened">
         你获得 <span style="font-weight: bold; font-size: 20px; color: #C3A16C;">{{this.redPacket.got}} </span> FBi
       </p>
