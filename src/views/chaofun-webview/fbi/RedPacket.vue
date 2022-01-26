@@ -36,7 +36,7 @@
     </div>
     <div v-else style="align-items: center; text-align:center">
       <div style="padding-top: 100px; font-size: 20px;">
-        输入口令领取红包
+        输入口令领取 FBi 红包
       </div>
       <el-input v-model="input" style="margin-top: 10px; padding-left: 20%; padding-right: 20%"></el-input>
       <el-button style="margin-top: 10px" @click="inputEnter">确定</el-button>
