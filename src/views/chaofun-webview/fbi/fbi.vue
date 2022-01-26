@@ -45,6 +45,15 @@
       FBi兑换(请私聊联系@cijianzy, 包邮)
     </div>
     <div style="width: 100%; ">
+      <div style="width: 50%; display: inline-block; text-align: center">
+        <img style="padding-right: 10px; padding-left: 10px; max-width: 100%; max-height: 200px" src="https://i.chao.fun/biz/76b1d8fd9240d15b3520e9085662b415.png">
+        <p style="text-align: center">
+          微信炒饭娘红包封面
+        </p>
+        <p style="text-align: center">
+          FBi: 99
+        </p>
+      </div>
       <div style="width: 50%; display: inline-block">
         <img style="padding-right: 10px; padding-left: 10px; width: 100%" src="https://i.chao.fun/biz/fc21232af2fa1849c3f0853b8748224c.png">
         <p style="text-align: center">
