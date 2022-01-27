@@ -99,7 +99,7 @@
                 </div>
             </div>
             <div v-if="!withoutSubComment&&item.children&&item.children.length">
-                <commentitem :postInfo="{postOwnerUserId:postInfo.postOwnerUserId,isPostOwnerHighlight:postInfo.isPostOwnerHighlight}" 
+                <commentitem ref="subCommentItemMark" :postInfo="{postOwnerUserId:postInfo.postOwnerUserId,isPostOwnerHighlight:postInfo.isPostOwnerHighlight}"
                 @rep="rep" @refreshComment="refreshComment" @refreshDelete="refreshDelete" @toReplay2="toReplay2" :showRep="showR" :treeData="item.children"></commentitem>
                 <!-- <div  v-for="(item,index) in item.children" :key="index" class="comment_item">
                     <div class="c_left">
@@ -200,6 +200,36 @@ export default {
         }
     },
     methods: {
+
+        // 这里需要递归判断
+        getCommentInputFocused() {
+
+          let re = null;
+
+          // 当前评论框焦点情况
+          if (this.$refs.subCommentInputMark) {
+            this.$refs.subCommentInputMark.forEach(element => {
+              if (element && element.focused) {
+                re = element;
+                return;
+              }
+
+            });
+          }
+
+          // 子评论框焦点情况
+          if (this.$refs.subCommentItemMark) {
+            this.$refs.subCommentItemMark.forEach(element => {
+              let re0 = element.getCommentInputFocused();
+              if (re0) {
+                re = re0;
+                return;
+              }
+            });
+          }
+
+          return re;
+        },
 
         getHighlightStatus(item){
             if(item.forumAdminHighlight){

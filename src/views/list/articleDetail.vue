@@ -1001,9 +1001,7 @@ queryChildren (parent, list) {
           return;
         } else {
           // 子评论有焦点时
-          if (this.$refs.commentItemMark && this.$refs.commentItemMark.$refs
-              && this.$refs.commentItemMark.$refs.subCommentInputMark
-              && this.$refs.commentItemMark.$refs.subCommentInputMark[0] && this.$refs.commentItemMark.$refs.subCommentInputMark[0].focused) {
+          if (this.$refs.commentItemMark && this.$refs.commentItemMark.getCommentInputFocused()) {
             return;
           }
           // 评论获取焦点：快捷键Enter
