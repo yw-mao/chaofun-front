@@ -121,20 +121,9 @@ import * as api from '../../api/api'
         this.isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/);
    },
    mounted() {
-        // var u = navigator.userAgent, app = navigator.appVersion;
-        // var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Linux') > -1; //android终端或者uc浏览器
-        // var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
-        // console.log(u);
-        // console.log(this.ISPHONE,isAndroid,this.$route.query.from=='h5',!this.isWeiXin());
-        // if(this.ISPHONE&&!isiOS&&this.$route.query.from=='h5'&&!this.isWeiXin()){
-        //     // location.href = `opentest://host`;
-        // }
-
      if (this.$route.query.inviter != null) {
-       navigator.clipboard.writeText(this.link_text);
        localStorage.setItem("inviter", this.$route.query.inviter);
      }
-
      api.getLatestAppVersion({'platform': 'ios'}).then(res => {
            if (res.success && res.data != null) {
                this.iosVersion = res.data.ios;
@@ -143,7 +132,17 @@ import * as api from '../../api/api'
      });
    },
    methods: {
+
+     copyLink() {
+       var input = document.createElement('input');
+       input.setAttribute('value', window.location.href);
+       document.body.appendChild(input);
+       input.select();
+       var result = document.execCommand('copy');
+       document.body.removeChild(input);
+     },
        back(){
+          this.copyLink()
            this.$router.push({path: '/'})
        },
     isWeiXin(){
@@ -155,6 +154,7 @@ import * as api from '../../api/api'
         }
     },
     sure(type){
+       this.copyLink();
         var u = navigator.userAgent, app = navigator.appVersion;
         var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Linux') > -1; //android终端或者uc浏览器
         var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端

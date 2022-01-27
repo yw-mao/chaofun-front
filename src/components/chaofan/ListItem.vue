@@ -76,14 +76,15 @@
           ></itemLink>
 
           <!-- 图片 -->
-          <itemImage v-if="item.type == 'image'" :item="item"></itemImage>
+          <itemImage
+              @toDetail="toDetail"
+              v-if="item.type == 'image'" :item="item"></itemImage>
 
           <div @click.stop="">
             <!-- 视频 -->
             <div v-if="!ISPHONE&&item.type == 'gif'">
               <itemGif
                   @toDetail="toDetail"
-                  
                   :isDetail="false"
                   :item="item"
               ></itemGif>
@@ -280,8 +281,9 @@
               </div>
               <!-- 图片 -->
               <itemImage
-                v-if="item.sourcePost.type == 'image'"
-                :item="item.sourcePost"
+                  @toDetail="toDetail"
+                  v-if="item.sourcePost.type == 'image'"
+                  :item="item.sourcePost"
               ></itemImage>
               <!-- 视频 -->
               <itemGif

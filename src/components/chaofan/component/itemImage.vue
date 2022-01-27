@@ -2,11 +2,14 @@
   <div>
     <div  v-if="item.type == 'image'" :class="['item_image',{'item_image_de': isDetail}]">
       
-      <div @click.stop="" v-if="item.imageNums==1" class="imgs">
+      <div @click.stop="" v-if="item.imageNums==1" class="imgs" style="  position: relative;   overflow: hidden ">
         <viewer :images="[imgOrigin+item.imageName]">
           <img :data-src="imgOrigin+item.imageName" :data-source="imgOrigin+item.imageName" v-if="isDetail" :style="doImgStyle(item.width,item.height)" :alt="item.title" :title="item.title" class="lazyload">
-          <img :data-src="imgOrigin+item.imageName+ (item.imageName.includes('.gif')? '': '?x-oss-process=image/resize,h_512')" :data-source="imgOrigin+item.imageName" v-if="!isDetail" :style="doImgStyle(item.width,item.height)" :alt="item.title" :title="item.title" class="lazyload">
+          <img :data-src="dealImageUrl(imgOrigin+item.imageName, item)" :data-source="imgOrigin+item.imageName" v-if="!isDetail" :style="doImgStyle(item.width,item.height)" :alt="item.title" :title="item.title" class="lazyload">
         </viewer>
+        <div @click="toPost(item)" v-if="!isDetail && isLongImage(item.width, item.height)"  style="position: absolute;  background-color: rgba(80,85,87,.8); color: white; transform: translateX(-50%); line-height: 32px; font-size: 12px; font-weight: 700; left: 50%; width: 320px; bottom: 16px">
+          查看长图
+        </div>
       </div>
       <div @click.stop="" v-if="item.imageNums!=1" class="imgLists">
         <viewer :images="item.o_imgs">
@@ -35,6 +38,7 @@
     name: '',
     data(){
       return {
+        longImage: null,
       }
     },
     props: {
@@ -69,6 +73,27 @@
     mounted() {
     },
     methods: {
+      isLongImage(w, h) {
+        if (this.longImage === null) {
+          if (h && w && h / w > 2.5) {
+            this.longImage = true;
+          } else {
+            this.longImage = false;
+          }
+        }
+        return this.longImage;
+
+      },
+
+      dealImageUrl(url, item) {
+        if (this.isDetail) {
+          return url;
+        }
+        if (this.isLongImage(item.width, item.height)) {
+          return url + '?x-oss-process=image/crop,h_' + parseInt(512 * item.width / 568)
+        }
+        return url + '?x-oss-process=image/resize,h_512';
+      },
       toUrls(item,params){
         this.postBehavior(item.postId,'jump');
         this.toUrl(params)
@@ -128,8 +153,7 @@
           }
         } else {
           if (this.isDetail) {
-            if (w && h) {
-              if (h / w < 2) {
+              if (!this.isLongImage(w, h)) {
                 return {
                   'maxHeight': '700px',
                 }
@@ -138,7 +162,6 @@
                   width: '350px',
                 }
               }
-            }
           } else {
             if (w < h && h > 512) {
               return {
@@ -149,6 +172,11 @@
             }
           }
         }
+      },
+      toPost(item) {
+        if(!this.isDetail){
+          this.$emit('toDetail',item)
+          }
       },
     }
   }

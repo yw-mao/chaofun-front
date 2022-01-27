@@ -113,9 +113,10 @@
                             <div class="tright" style="margin-right: 20px;">
                               <el-checkbox v-model="isPostOwnerCommentHighlight" @change="postOwnerCommentHighlightCheckboxChange" title="在“设置”中可设置为默认选中">高亮楼主评论</el-checkbox>
                             </div>
-                            <div class="tright" style="margin-right: 20px;">
-                              <el-checkbox v-model="withoutSubComment">只看一级评论</el-checkbox>
-                            </div>
+<!--                            用户有异议，暂时先不展示-->
+<!--                            <div class="tright" style="margin-right: 20px;">-->
+<!--                              <el-checkbox v-model="withoutSubComment">只看一级评论</el-checkbox>-->
+<!--                            </div>-->
                           </div> 
                           <commentitem ref="commentItemMark" :postInfo="{disableComment:pagedata.disableComment,forumAdmin:pagedata.forumAdmin,
                           postOwnerUserId:pagedata.userInfo.userId,isPostOwnerHighlight:isPostOwnerCommentHighlight}" 
