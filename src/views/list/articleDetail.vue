@@ -73,7 +73,7 @@
                                 <a v-for="img in images" :key="img" :href="imgOrigin+img" target="_blank">[附图]</a>
                             </div>
                             <div ></div>
-                            <el-button :disabled="pagedata.disableComment&&!pagedata.forumAdmin" style="height:36px;" @click="toSub" type="primary">发表</el-button>
+                            <el-button :disabled="pagedata.disableComment&&!pagedata.forumAdmin" style="height:36px;" @click="toSub" type="primary" title="快捷键：Ctrl+Enter">发表</el-button>
                             <el-upload
                             :disabled="pagedata.disableComment&&!pagedata.forumAdmin"
                             class="avatar-uploader"
@@ -117,7 +117,7 @@
                               <el-checkbox v-model="withoutSubComment">只看一级评论</el-checkbox>
                             </div>
                           </div> 
-                          <commentitem :postInfo="{disableComment:pagedata.disableComment,forumAdmin:pagedata.forumAdmin, 
+                          <commentitem ref="commentItemMark" :postInfo="{disableComment:pagedata.disableComment,forumAdmin:pagedata.forumAdmin,
                           postOwnerUserId:pagedata.userInfo.userId,isPostOwnerHighlight:isPostOwnerCommentHighlight}" 
                           @refreshDelete="refreshDelete" @toReplay2="toReplay2" @refreshComment="refreshComment" :treeData="treeData" :without-sub-comment="withoutSubComment"></commentitem>
                           <div v-if="!lists.length" class="no_comment">
@@ -979,20 +979,40 @@ queryChildren (parent, list) {
     changeTimeFormat() {
       this.humanizeTimeFormat = !this.humanizeTimeFormat;
     },
-    keyDown(e) { 
+    keyDown(e) {
       if (e.keyCode == 13) {
-        if(e.altKey || e.shiftKey){
+        if (e.altKey || e.shiftKey) {
           return;
         }
-        if(e.ctrlKey){
+        if (e.ctrlKey) {
           // 发表：快捷键Ctrl+Enter
-          this.toSub();
-        }else{
-          // 评论获取焦点：快捷键Enter
-          if(!this.$refs['commentInputMark'].focused){
-            this.$refs['commentInputMark'].focus();            
+          // 仅在输入框有焦点时生效
+          if (this.$refs.commentItemMark && this.$refs.commentItemMark.$refs
+              && this.$refs.commentItemMark.$refs.subCommentInputMark
+              && this.$refs.commentItemMark.$refs.subCommentInputMark[0] && this.$refs.commentItemMark.$refs.subCommentInputMark[0].focused) {
+            this.$refs.commentItemMark.toSub();
             e.preventDefault();
+            return;
+          } else if (this.$refs.commentInputMark && this.$refs.commentInputMark.focused) {
+            this.toSub();
+            e.preventDefault();
+            return;
           }
+          return;
+        } else {
+          // 子评论有焦点时
+          if (this.$refs.commentItemMark && this.$refs.commentItemMark.$refs
+              && this.$refs.commentItemMark.$refs.subCommentInputMark
+              && this.$refs.commentItemMark.$refs.subCommentInputMark[0] && this.$refs.commentItemMark.$refs.subCommentInputMark[0].focused) {
+            return;
+          }
+          // 评论获取焦点：快捷键Enter
+          if (this.$refs.commentInputMark && !this.$refs.commentInputMark.focused) {
+            this.$refs.commentInputMark.focus();
+            e.preventDefault();
+            return;
+          }
+          return;
         }
       } else if (e.keyCode == 112) {
         if (e.altKey || e.shiftKey || e.ctrlKey) {
@@ -1000,18 +1020,21 @@ queryChildren (parent, list) {
         }
         this.scrollToTop();
         e.preventDefault();
+        return;
       } else if (e.keyCode == 113) {
         if (e.altKey || e.shiftKey || e.ctrlKey) {
           return;
         }
         this.scrollToComment();
         e.preventDefault();
+        return;
       } else if (e.keyCode == 114) {
         if (e.altKey || e.shiftKey || e.ctrlKey) {
           return;
         }
         this.scrollToEnd();
         e.preventDefault();
+        return;
       }
     },
   }
