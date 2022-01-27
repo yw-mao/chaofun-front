@@ -86,6 +86,10 @@
           return '红包过期退回';
         }
 
+        if (reason === 'get_fbi_gift') {
+          return 'FBi 兑换礼品';
+        }
+
         return reason;
 
       }
