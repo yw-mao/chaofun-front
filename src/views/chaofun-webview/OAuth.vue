@@ -15,7 +15,7 @@
     created() {
       this.redirectUrl = this.$route.query.redirectUrl;
 
-      if (!this.redirectUrl) {
+      if (this.redirectUrl) {
         this.getUserToken();
       } else {
         window.location.href = 'https://chao.fun';
@@ -26,16 +26,20 @@
     },
 
     methods: {
-      async getUserToken() {
-        const result = await api.getByPath('/api/v0/open/getUserToken', {});
-        if (result.success && result.data) {
-          if (this.redirect.contains('?')) {
-            this.redirectUrl = this.redirectUrl + "&cfToken=" + result.data.token ;
-          } else {
-            this.redirectUrl = this.redirectUrl + "?cfToken=" + result.data.token;
+      getUserToken() {
+        api.getByPath('/api/v0/open/getUserToken', {}).then( (res) => {
+          // this.$toast(res.data.token);
+          if (res.success && res.data) {
+            if (this.redirectUrl.includes('?')) {
+              this.redirectUrl = this.redirectUrl + "&cfToken=" + res.data.token ;
+            } else {
+              this.redirectUrl = this.redirectUrl + "?cfToken=" + res.data.token;
+            }
           }
-        }
-        window.location.href = this.redirectUrl;
+          this.$toast(this.redirectUrl);
+          window.location.href = this.redirectUrl;
+        });
+
       }
     }
   }
