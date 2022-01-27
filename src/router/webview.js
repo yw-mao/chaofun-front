@@ -128,6 +128,13 @@ routes = [
     hidden: true
   },
   {
+    path: '/webview/OAuth',
+    component: () => import('@/views/chaofun-webview/OAuth'),
+    name: 'FBi 红包',
+    meta: { title: 'FBi 红包'},
+    hidden: true
+  },
+  {
     path: '/webview/Year2021',
     component: () => import('@/views/chaofun-webview/year2021/year2021'),
     name: 'year2021',
