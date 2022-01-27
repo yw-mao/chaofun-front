@@ -9,8 +9,9 @@
             <div class="content" :style="{width: ISPHONE?imgMaxWidth+80+'px':'640px'}">
               <div :style="{height: ISPHONE?'auto':'440px', maxWidth: ISPHONE?imgMaxWidth+80+'px':'640px',marginBottom:'20px',overflow:'hidden'}">
                 <div v-viewer="" v-if="!secret.imageUrl.includes('.mp4')" :style="{maxHeight: '100%', maxWidth: '100%', margin: 'auto', display: 'inline'}">
-                  <img v-if="!secret.imageUrl.includes('.gif')" :src="secret.imageUrl + '?x-oss-process=image/resize,h_768'" :data-source="secret.imageUrl" :style="{maxHeight: '100%', maxWidth: '100%', margin: 'auto', display: 'table-cell'}"   >
-                  <img v-if="secret.imageUrl.includes('.gif')" :src="secret.imageUrl" :data-source="secret.imageUrl" :style="{maxHeight: '100%', maxWidth: '100%', margin: 'auto', display: 'table-cell'}"   >
+                  <img v-if="!secret.imageUrl.includes('.gif')" v-bind:src="secret.imageUrl + '?x-oss-process=image/resize,h_768'" :data-source="secret.imageUrl" :style="{maxHeight: '100%', maxWidth: '100%', margin: 'auto', display: 'table-cell'}"   >
+                  <img v-if="gifShow && secret.imageUrl.includes('.gif')" v-bind:src="secret.imageUrl" :data-source="secret.imageUrl" :style="{maxHeight: '100%', maxWidth: '100%', margin: 'auto', display: 'table-cell'}"   >
+                  <img v-if="!gifShow && secret.imageUrl.includes('.gif')" v-bind:src="secret.imageUrl" :data-source="secret.imageUrl" :style="{maxHeight: '100%', maxWidth: '100%', margin: 'auto', display: 'table-cell'}"   >
                 </div>
                 <video  v-if="secret.imageUrl.includes('.mp4')" controls autoplay loop :src="secret.imageUrl" alt="" :style="{maxHeight: '100%', maxWidth: '100%', margin: 'auto'}">
                 </video>
@@ -82,10 +83,14 @@
     // components: { adminDashboard, editorDashboard },
     data() {
       return {
+        gifShow: false,
         keyword: '',
         ossName: '',
         secret: {
           imageUrl: 'xxx.png'
+        },
+        preLoadSecret: {
+
         },
         titleInputFocus: false,
 
@@ -236,6 +241,7 @@
         }
       },
       submit() {
+        this.gifShow = !this.gifShow;
         if (this.secret.cnTitle == undefined || this.secret.cnTitle == '') {
           // this.$notify({
           //   title: '标题为空',
@@ -261,6 +267,7 @@
       },
 
       skip() {
+        this.gifShow = !this.gifShow;
         api.delete_secret_image({'imageUrl': this.secret.imageUrl}).then(res=>{
           this.secret = res.data;
           this.keyword = ''
