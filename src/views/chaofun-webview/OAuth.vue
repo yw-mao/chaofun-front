@@ -36,7 +36,7 @@
               this.redirectUrl = this.redirectUrl + "?cfToken=" + res.data.token;
             }
           }
-          this.$toast(this.redirectUrl);
+          // this.$toast(this.redirectUrl);
           window.location.href = this.redirectUrl;
         });
 
