@@ -45,7 +45,7 @@
       FBi兑换
     </div>
     <div style="padding-top: 10px; padding-bottom: 10px">
-      注:红包封面和京东E卡支持自助兑换，杯子和T恤请私聊联系@cijianzy, 包邮
+      注:红包封面和京东E卡支持点击自助兑换，杯子和T恤请私聊联系@cijianzy, 包邮
     </div>
     <div style="width: 100%; ">
       <div @click="getWechatCover" style="width: 50%; display: inline-block; text-align: center">
