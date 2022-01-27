@@ -121,17 +121,15 @@ import * as api from '../../api/api'
         this.isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/);
    },
    mounted() {
-        // var u = navigator.userAgent, app = navigator.appVersion;
-        // var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Linux') > -1; //android终端或者uc浏览器
-        // var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
-        // console.log(u);
-        // console.log(this.ISPHONE,isAndroid,this.$route.query.from=='h5',!this.isWeiXin());
-        // if(this.ISPHONE&&!isiOS&&this.$route.query.from=='h5'&&!this.isWeiXin()){
-        //     // location.href = `opentest://host`;
-        // }
 
      if (this.$route.query.inviter != null) {
-       navigator.clipboard.writeText(this.link_text);
+       var input = document.createElement('input');
+       input.setAttribute('value', this.link_text);
+       document.body.appendChild(input);
+       input.select();
+       var result = document.execCommand('copy');
+       document.body.removeChild(input);
+
        localStorage.setItem("inviter", this.$route.query.inviter);
      }
 
