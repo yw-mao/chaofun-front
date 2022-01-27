@@ -205,12 +205,13 @@ export default {
         getCommentInputFocused() {
 
           let re = null;
+          let _this = this;
 
           // 当前评论框焦点情况
           if (this.$refs.subCommentInputMark) {
             this.$refs.subCommentInputMark.forEach(element => {
               if (element && element.focused) {
-                re = element;
+                re = _this;
                 return;
               }
 

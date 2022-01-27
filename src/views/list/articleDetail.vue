@@ -987,10 +987,11 @@ queryChildren (parent, list) {
         if (e.ctrlKey) {
           // 发表：快捷键Ctrl+Enter
           // 仅在输入框有焦点时生效
-          if (this.$refs.commentItemMark && this.$refs.commentItemMark.$refs
-              && this.$refs.commentItemMark.$refs.subCommentInputMark
-              && this.$refs.commentItemMark.$refs.subCommentInputMark[0] && this.$refs.commentItemMark.$refs.subCommentInputMark[0].focused) {
-            this.$refs.commentItemMark.toSub();
+          if (this.$refs.commentItemMark && this.$refs.commentItemMark.getCommentInputFocused()) {
+            this.$refs.commentItemMark.getCommentInputFocused().toSub();
+
+            // this.$refs.commentItemMark.getCommentInputFocused().toSub();
+            // this.$refs.commentItemMark.toSub();
             e.preventDefault();
             return;
           } else if (this.$refs.commentInputMark && this.$refs.commentInputMark.focused) {
