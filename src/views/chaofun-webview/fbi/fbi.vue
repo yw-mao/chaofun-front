@@ -64,7 +64,7 @@
         </p>
       </div>
       <div style="width: 50%; display: inline-block">
-        <img style="padding-right: 10px; padding-left: 10px; width: 100%" src="https://i.chao.fun/biz/ed0a03cabd89c638dd0451f14bb20969.png">
+        <img style="padding-right: 10px; padding-left: 10px; width: 100%" src="https://i.chao.fun/biz/0e848c137be852a5d7999f4acd10a640.png">
         <p style="text-align: center">
           炒饭马克杯
         </p>
