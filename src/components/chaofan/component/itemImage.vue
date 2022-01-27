@@ -127,12 +127,26 @@
             return {}
           }
         } else {
-          if(w<h&&h>512){
-            return {
-              height: '512px'
+          if (this.isDetail) {
+            if (w && h) {
+              if (h / w < 2) {
+                return {
+                  'maxHeight': '700px',
+                }
+              } else {
+                return {
+                  width: '350px',
+                }
+              }
             }
-          }else{
-            return {}
+          } else {
+            if (w < h && h > 512) {
+              return {
+                height: '512px'
+              }
+            } else {
+              return {}
+            }
           }
         }
       },
@@ -152,7 +166,7 @@
     .imgs{
       text-align: center;
       // width: 640px;
-      max-height: 512px;
+      //max-height: 512px;
       overflow-y: hidden;
       img{
         max-width: 100%;
@@ -165,7 +179,6 @@
   .item_image_de{
     width: 100%;
     .imgs{
-      max-height: 3500px;
       border-radius: 10px;
     }
   }

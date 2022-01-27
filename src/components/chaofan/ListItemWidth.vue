@@ -718,7 +718,6 @@ export default {
   .item_image {
     width: 100%;
     .imgs {
-      max-height: 2500px;
       border-radius: 10px;
     }
   }
