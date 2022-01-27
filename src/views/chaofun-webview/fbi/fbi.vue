@@ -42,10 +42,13 @@
       <p>  - 赠与他人 (敬请期待)</p>
     </div>
     <div style="padding-top: 20px; font-weight: bold; font-size: 20px; color: #FF9300;">
-      FBi兑换(请私聊联系@cijianzy, 包邮)
+      FBi兑换
+    </div>
+    <div style="padding-top: 10px; padding-bottom: 10px">
+      注:红包封面和京东E卡支持自助兑换，杯子和T恤请私聊联系@cijianzy, 包邮
     </div>
     <div style="width: 100%; ">
-      <div style="width: 50%; display: inline-block; text-align: center">
+      <div @click="getWechatCover" style="width: 50%; display: inline-block; text-align: center">
         <img style="padding-right: 10px; padding-left: 10px; max-width: 100%; max-height: 200px" src="https://i.chao.fun/biz/76b1d8fd9240d15b3520e9085662b415.png">
         <p style="text-align: center">
           微信炒饭娘红包封面
@@ -54,7 +57,7 @@
           FBi: 99
         </p>
       </div>
-      <div style="width: 50%; display: inline-block">
+      <div @click="getJDECard" style="width: 50%; display: inline-block">
         <img style="padding-right: 10px; padding-left: 10px; width: 100%" src="https://i.chao.fun/biz/fc21232af2fa1849c3f0853b8748224c.png">
         <p style="text-align: center">
           10元京东E卡
@@ -91,6 +94,8 @@
 <script>
   import * as api from '@/api/api'
   import {getUserInfo} from "../../../api/api";
+  import { Dialog } from 'vant';
+
   export default {
     name: "fbi.vue",
 
@@ -101,22 +106,25 @@
       }
     },
     created() {
-      api.getUserInfo().then(
-        res => {
-          if (res.success) {
-            this.userInfo = res.data
-            this.fbi = res.data.fbi;
-          } else {
-            this.$toast(res.errorMessage)
-          }
-        }
-      )
+      this.getUserInfo();
     },
     mounted() {
 
     },
 
     methods: {
+      getUserInfo() {
+        api.getUserInfo().then(
+            res => {
+              if (res.success) {
+                this.userInfo = res.data
+                this.fbi = res.data.fbi;
+              } else {
+                this.$toast(res.errorMessage)
+              }
+            }
+        )
+      },
       copyInviterLink() {
         var input = document.createElement('input');
         input.setAttribute('value', 'https://chao.fun/app?inviter=' + this.userInfo.userId);
@@ -134,6 +142,48 @@
 
       redPacketGet() {
         window.open('https://chao.fun/webview/fbi/redPacket',"_blank");
+      },
+
+      getWechatCover() {
+        Dialog.confirm({
+          title: "是否确认兑换",
+          message: `兑换会扣除 99 FBI`,
+          messageAlign: "left",
+        })
+            .then(() => {
+              api.getByPath('/api/v0/gift/getWechatCover', {}).then((res) => {
+                if (res.success) {
+                  this.$message.success("已兑换, 请查看消息");
+                  this.getUserInfo();
+                } else{
+                  this.$message.error(res.errorMessage);
+                }
+              });
+            })
+            .catch(() => {
+              // on cancel
+            });
+      },
+
+      getJDECard() {
+        Dialog.confirm({
+          title: "是否确认兑换",
+          message: `兑换会扣除 1000 FBI`,
+          messageAlign: "left",
+        })
+            .then(() => {
+              api.getByPath('/api/v0/gift/getJDECard', {}).then((res) => {
+                if (res.success) {
+                  this.$message.success("已兑换, 请查看消息");
+                  this.getUserInfo();
+                } else{
+                  this.$message.error(res.errorMessage);
+                }
+              });
+            })
+            .catch(() => {
+              // on cancel
+            });
       }
     }
   }
