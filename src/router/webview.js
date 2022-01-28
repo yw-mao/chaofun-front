@@ -128,6 +128,14 @@ routes = [
     meta: { title: 'FBi 红包'},
     hidden: true
   },
+
+  {
+    path: '/webview/fbi/redPacket/create',
+    component: () => import('@/views/chaofun-webview/fbi/RedPacketCreate'),
+    name: 'FBi 红包创建',
+    meta: { title: 'FBi 红包创建'},
+    hidden: true
+  },
   // {
   //   path: '/webview/fbi/redPacket/password',
   //   component: () => import('@/views/chaofun-webview/fbi/RedPacketPassword'),

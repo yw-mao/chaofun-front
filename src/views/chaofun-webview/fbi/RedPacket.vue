@@ -114,7 +114,7 @@ export default {
     },
 
     create() {
-      this.$toast("暂不支持");
+      window.open('/webview/fbi/redPacket/create', '_blank');
     }
   }
 }
