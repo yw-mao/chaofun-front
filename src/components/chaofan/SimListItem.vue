@@ -537,20 +537,20 @@ export default {
           break;
         case "article":
           return (
-            this.imgOrigin + (item.imageName ? item.imageName : 'biz/b64193b7beca6ae243341273adddf494.png') + '?x-oss-process=image/resize,h_150'
+            this.imgOrigin + (item.imageName ? item.imageName : 'biz/b64193b7beca6ae243341273adddf494.png') + '?x-oss-process=image/resize,h_60'
           );
           break;
         case "image":
           return (
             this.imgOrigin +
             item.imageName +
-            "?x-oss-process=image/resize,h_150"
+            "?x-oss-process=image/resize,h_60"
           );
           break;
         case "vote":
         case "prediction":
           return (
-            this.imgOrigin + "biz/fea4efce4437040479d1a0452160f2fd.png?x-oss-process=image/resize,h_150"
+            this.imgOrigin + "biz/fea4efce4437040479d1a0452160f2fd.png?x-oss-process=image/resize,h_60"
           );
           break;
         case "forward":
@@ -564,13 +564,13 @@ export default {
           return this.imgOrigin + item.cover;
         } else {
           return (
-            this.imgOrigin + item.cover + "?x-oss-process=image/resize,h_150"
+            this.imgOrigin + item.cover + "?x-oss-process=image/resize,h_60"
           );
         }
       } else {
         return (
           this.imgOrigin +
-          "biz/b06148ccba2c8b527d979942131a9fd9.png?x-oss-process=image/resize,h_150"
+          "biz/b06148ccba2c8b527d979942131a9fd9.png?x-oss-process=image/resize,h_60"
         );
       }
     },
