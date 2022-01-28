@@ -147,7 +147,7 @@
       getWechatCover() {
         Dialog.confirm({
           title: "是否确认兑换",
-          message: `兑换会扣除 99 FBI`,
+          message: `兑换会扣除 99 FBi`,
           messageAlign: "left",
         })
             .then(() => {
@@ -168,7 +168,7 @@
       getJDECard() {
         Dialog.confirm({
           title: "是否确认兑换",
-          message: `兑换会扣除 1000 FBI`,
+          message: `兑换会扣除 1000 FBi`,
           messageAlign: "left",
         })
             .then(() => {
