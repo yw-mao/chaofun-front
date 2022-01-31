@@ -1,7 +1,7 @@
 <template>
   <div  style="align-items: center; text-align:center">
     <div v-if="!result" style="padding-top: 100px;">
-      <div> 请输入 FBi 红包数值</div>
+      <div> 请输入 FBi 红包总额</div>
       <el-input-number v-model="fbiTotal" :step=10 :min=10>
       </el-input-number>
 
