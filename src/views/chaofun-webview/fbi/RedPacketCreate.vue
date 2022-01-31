@@ -5,7 +5,7 @@
       <el-input-number v-model="fbiTotal" :step=10 :min=10>
       </el-input-number>
 
-      <div style="padding-top: 20px" > 请输入 FBi 红包数值</div>
+      <div style="padding-top: 20px" > 请输入 FBi 红包个数</div>
       <el-input-number v-model="userTotal" :step=1  :min=1>
       </el-input-number>
 
