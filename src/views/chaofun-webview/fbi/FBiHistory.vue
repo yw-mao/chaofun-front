@@ -90,6 +90,15 @@
           return 'FBi 兑换礼品';
         }
 
+        if (reason === 'be_thx') {
+          return '被感谢';
+        }
+
+        if (reason === 'thx') {
+          return '感谢赠与';
+        }
+
+
         return reason;
 
       }
