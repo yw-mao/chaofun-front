@@ -2,7 +2,8 @@
   <div class="container">
     <div class="content">
         <div class="top">
-            <div class="desc">请最新版App私聊 cijianzy，或者添加下面微信进群反馈，有红包哦~</div>
+          <div class="desc">提示：大多数情况下检查更新升级App可以解决问题</div>
+          <div class="desc">请最新版App私聊 cijianzy，或者添加下面微信进群反馈，有红包哦~</div>
             <div class="erweima">
                 <img @click="showImg" src="https://i.chao.fun/biz/10c40905c46e8c9c65d8d95b9fb25bdf.jpg" alt="">
             </div>
