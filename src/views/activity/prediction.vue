@@ -338,3 +338,9 @@ export default {
     }
   }
 </style>
+<style lang="scss">
+.el-message-box{
+  width: 90vw;
+  max-width: 400px;
+}
+</style>
