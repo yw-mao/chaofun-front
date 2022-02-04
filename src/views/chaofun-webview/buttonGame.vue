@@ -300,6 +300,7 @@ export default {
           userName: this.baseForm.userName,
           password: this.baseForm.password
         };
+
         api.toRegister(params).then(res => {
           if (res.success) {
             this.getUserInfo()

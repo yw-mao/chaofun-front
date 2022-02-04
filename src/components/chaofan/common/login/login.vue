@@ -315,7 +315,8 @@ import { Checkbox } from 'element-ui'
         if(location.href.includes('code=')){
           params.platform = 'wechat';
         }
-        this.params.inviter=localStorage.getItem('inviter')
+        console.log("inviter " + localStorage.getItem('inviter'));
+        params.inviter=localStorage.getItem('inviter')
         api.toRegister(params).then(res=>{
           if(res.success){
             history.replaceState({ page: 3 }, "title 3", location.pathname);
