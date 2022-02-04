@@ -65,7 +65,7 @@
                       <el-form-item
                         prop="title"
                         :rules="[
-                          { required: true, message: '请输入标题', trigger: 'blur' },
+                          { required:  type === 'image'? false : true, message: '请输入标题', trigger: 'blur' },
                         ]"
                       >
                         <el-input
