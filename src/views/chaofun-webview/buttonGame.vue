@@ -277,7 +277,11 @@ export default {
           showHeader: true
         })
       } catch (e) {
-        window.open('https://chao.fun/webview/fbi', "_blank");
+        if (this.ISPHONE) {
+          window.open('https://chao.fun/webview/fbi', "_blank");
+        } else {
+          window.open('https://chao.fun/my/fbi', "_blank");
+        }
       }
     },
     confirms() {
