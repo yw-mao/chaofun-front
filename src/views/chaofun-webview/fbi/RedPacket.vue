@@ -26,13 +26,33 @@
       </p>
     </div>
     <div v-else-if="redPacket" style="align-items: center; text-align:center">
-      <div style="padding-top: 100px;">
-        {{redPacket.sendUser.userName}} 发出的 FBi 红包
+
+      <div>
+        <div style="background:#b64340; width: 300px; min-width: 300px; max-width: 300px;height: 400px; min-height: 400px;max-height: 400px;
+border-radius: 10px; margin: 100px auto 0px auto;">
+          <div style="background: #be4645; width: 300px;height: 150px;   border-radius: 10px; position: relative;"/>
+          <div style="background: #be4645; border-radius: 300px;width: 300px;height: 300px;  position: relative;top:-150px;"/>
+          <div style="background: #e6cea0; border-radius: 300px;width: 60px;height: 60px;  position: relative;top:-175px; left: 120px; font-size: 42px; cursor: pointer;"
+               @click.stop="openRedPacket">開
+          </div>
+        </div>
       </div>
-      <div style="padding-top: 10px; font-size: 20px; font-weight: bold">
-        {{redPacket.blessing}}
+
+      <div style="position: relative;top: -400px;">
+        <div style="border-radius: 60px; width: 60px;height: 60px; margin: 20px auto 10px auto; background: #fff; ">
+          <img :src="imgOrigin +redPacket.sendUser.icon +'?x-oss-process=image/resize,h_60'" alt=""/>
+        </div>
+        <div style="font-size: 20px;color: #fce5b9;cursor: pointer; " @click.stop="toUser(redPacket.sendUser.userId)">{{ redPacket.sendUser.userName }}</div>
+        <div style="font-size: 30px;color: #fff; margin-top: 50px;"> {{ redPacket.blessing }}</div>
       </div>
-      <el-button style="margin-top: 10px" @click="openRedPacket">打开红包</el-button>
+
+<!--      <div style="padding-top: 100px;">-->
+<!--        {{redPacket.sendUser.userName}} 发出的 FBi 红包-->
+<!--      </div>-->
+<!--      <div style="padding-top: 10px; font-size: 20px; font-weight: bold">-->
+<!--        {{redPacket.blessing}}-->
+<!--      </div>-->
+<!--      <el-button style="margin-top: 10px" @click="openRedPacket">打开红包</el-button>-->
     </div>
     <div v-else style="align-items: center; text-align:center">
       <div style="padding-top: 100px; font-size: 20px;">
@@ -68,6 +88,17 @@ export default {
   },
 
   methods: {
+
+    toUser(userId) {
+      if (userId) {
+        try {
+          window.flutter_inappwebview.callHandler('toAppUser', {userId: userId + ''})
+        } catch (e) {
+          window.open(location.origin + '/user/' + userId, "_blank");
+        }
+      }
+    },
+
     getRedPacket() {
       api.getByPath('/api/v0/red_packet/get', {'password': this.password, 'type': 'password'}).then( (res) => {
         if (res.success && res.data !== null) {
