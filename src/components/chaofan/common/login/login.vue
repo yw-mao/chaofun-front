@@ -310,7 +310,6 @@ import { Checkbox } from 'element-ui'
             }
           })
         }
-        
       }else if(v==2&&this.ifNull(v)){
         if(location.href.includes('code=')){
           params.platform = 'wechat';

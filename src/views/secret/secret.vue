@@ -248,7 +248,7 @@
           //   type: 'warn',
           //   duration: 2000
           // });
-          this.secret.cnTitle = '图片分享 -- 来自秘密花园'
+          this.secret.cnTitle = ''
         };
         if(!this.isSend){
           this.isSend=true
