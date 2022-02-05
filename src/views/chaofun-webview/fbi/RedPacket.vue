@@ -35,6 +35,7 @@ border-radius: 10px; margin: 100px auto 0px auto;">
           <div style="background: #e6cea0; border-radius: 300px;width: 60px;height: 60px;  position: relative;top:-175px; left: 120px; font-size: 42px; cursor: pointer;"
                @click.stop="openRedPacket">開
           </div>
+          <div style="font-size: 14px;color: #fce5b9;cursor: pointer;position: relative;top:-140px; " @click.stop="showDetail=true">查看领取详情 ></div>
         </div>
       </div>
 
