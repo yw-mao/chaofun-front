@@ -465,7 +465,7 @@ export default {
       } else if (redata.type == 'getPrice') {
         this.$toast("太强了，你获得奖励了~")
       } else if (redata.type == 'gameOver') {
-        this.$toast("春节游戏结束，感谢参与，请查看游戏规则领奖，或访问炒饭首页到处逛逛")
+        this.$toast("春节游戏结束，感谢参与，可以访问炒饭首页到处逛逛")
       } else if (redata.type == 'hasNoFBi') {
         this.$toast("您没有FBi, 请查看游戏规则！")
       }
