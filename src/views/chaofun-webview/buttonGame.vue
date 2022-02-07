@@ -469,7 +469,6 @@ export default {
       } else if (redata.type == 'hasNoFBi') {
         this.$toast("您没有FBi, 请查看游戏规则！")
       }
-
     },
     websocketsend(Data) {//数据发送
       this.websock.send(Data);

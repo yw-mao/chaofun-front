@@ -53,8 +53,24 @@
                 <el-button type="success" v-on:click="skip" :style="{marginLeft: '20px'}">跳过</el-button>
               </div> 
             </div>
-            <div v-if="!ISPHONE" class="right_desc">
-              <p>可以 ⬆️ 方向键直接提交图片</p>
+            <div @keydown.prevent @keypress.prevent @keyup.prevent  v-if="!ISPHONE" class="right_desc">
+              <div style="font-size: 20px;  color: black ">
+                图片类型选择：
+              </div>
+              <div>
+                <el-radio @change="generate" v-model="imageSource" label="all/">全部图片</el-radio>
+              </div>
+              <div>
+                <el-radio @change="generate" v-model="imageSource" label="pixiv/">二次元</el-radio>
+              </div>
+              <div>
+                <el-radio @change="generate" v-model="imageSource" label="artstation/">艺术</el-radio>
+              </div>
+              <div>
+                <el-radio @change="generate" v-model="imageSource" label="memes/">memes</el-radio>
+              </div>
+
+              <p style="padding-top: 20px" >可以 ⬆️ 方向键直接提交图片</p>
               <p>可以 ➡️ 方向键快速跳过图片</p>
               <p>点击提交后，图片会从图库中删除，由你的账号发布到炒饭主站。</p>
               <p>图片不会重复出现（图库很大，请放心跳过）</p>
@@ -84,6 +100,7 @@
     // components: { adminDashboard, editorDashboard },
     data() {
       return {
+        imageSource: 'all/',
         gifShow: false,
         keyword: '',
         ossName: '',
@@ -168,17 +185,19 @@
       };
     },
     created() {
-      api.generate_secret_image().then(res=>{
-        this.secret = res.data;
-        this.defaultId = res.data.submitForum;
-        this.activeId = res.data.submitForum;
-        this.ossName = res.data.imageName;
-      })
-
+      this.generate();
       this.getDefaultForum()
       // this.getForum('')
     },
     methods:{
+      generate() {
+        api.generate_secret_image({'prefix': this.imageSource}).then(res=>{
+          this.secret = res.data;
+          this.defaultId = res.data.submitForum;
+          this.activeId = res.data.submitForum;
+          this.ossName = res.data.imageName;
+        })
+      },
       reset(){
         this.activeId = this.defaultId;
         this.keyword = ''
@@ -189,7 +208,7 @@
       },
       getDefaultForum(){
         api.list_forums().then(res=>{
-          
+
           res.data.forEach(i=>{
             if(i.id==this.defaultId){
               this.defaultName = i.name
@@ -253,7 +272,7 @@
         };
         if(!this.isSend){
           this.isSend=true
-          api.submit_secret_image({'imageUrl': this.secret.imageUrl, 'title': this.secret.cnTitle, 'forumId': parseInt(this.activeId)}).then(res=>{
+          api.submit_secret_image({'imageUrl': this.secret.imageUrl, 'title': this.secret.cnTitle, 'forumId': parseInt(this.activeId), 'prefix': this.imageSource}).then(res=>{
             this.isSend=false
             this.secret = res.data;
             this.keyword = ''
@@ -269,7 +288,7 @@
 
       skip() {
         this.gifShow = !this.gifShow;
-        api.delete_secret_image({'imageUrl': this.secret.imageUrl}).then(res=>{
+        api.delete_secret_image({'imageUrl': this.secret.imageUrl, 'prefix': this.imageSource}).then(res=>{
           this.secret = res.data;
           this.keyword = ''
           this.defaultId = res.data.submitForum;
