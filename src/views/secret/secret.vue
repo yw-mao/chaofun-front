@@ -55,10 +55,10 @@
             </div>
             <div @keydown.prevent @keypress.prevent @keyup.prevent  v-if="!ISPHONE" class="right_desc">
               <div style="font-size: 20px;  color: black ">
-                图片类型选择：
+                类型选择：
               </div>
               <div>
-                <el-radio @change="generate" v-model="imageSource" label="all/">全部图片</el-radio>
+                <el-radio @change="generate" v-model="imageSource" label="all/">全部</el-radio>
               </div>
               <div>
                 <el-radio @change="generate" v-model="imageSource" label="pixiv/">二次元</el-radio>
@@ -190,12 +190,34 @@
       // this.getForum('')
     },
     methods:{
+      dealResponse(res) {
+        if (res.data.imageName == null) {
+          this.$toast('没有该类型的内容了，请选择其他类型');
+          return;
+        }
+        this.secret = res.data;
+        this.defaultId = res.data.submitForum;
+        this.activeId = res.data.submitForum;
+        this.ossName = res.data.imageName;
+        this.getForumById(this.secret.submitForum)
+      },
+      getForumById(forumId) {
+        api.getForumInfo({'forumId': forumId}).then(res => {
+              var isAdd =true;
+              this.forums.forEach(i=>{
+                if(i.id==res.data.id){
+                  isAdd = false;
+                }
+              })
+              if (isAdd) {
+                this.forums.unshift(res.data);
+              }
+        })
+      },
       generate() {
         api.generate_secret_image({'prefix': this.imageSource}).then(res=>{
-          this.secret = res.data;
-          this.defaultId = res.data.submitForum;
-          this.activeId = res.data.submitForum;
-          this.ossName = res.data.imageName;
+
+            this.dealResponse(res)
         })
       },
       reset(){
@@ -274,10 +296,7 @@
           this.isSend=true
           api.submit_secret_image({'imageUrl': this.secret.imageUrl, 'title': this.secret.cnTitle, 'forumId': parseInt(this.activeId), 'prefix': this.imageSource}).then(res=>{
             this.isSend=false
-            this.secret = res.data;
-            this.keyword = ''
-            this.defaultId = res.data.submitForum;
-            this.activeId = res.data.submitForum;
+            this.dealResponse(res)
             this.$toast('发布成功');
           }).catch(e=>{
             this.isSend=false
@@ -289,10 +308,7 @@
       skip() {
         this.gifShow = !this.gifShow;
         api.delete_secret_image({'imageUrl': this.secret.imageUrl, 'prefix': this.imageSource}).then(res=>{
-          this.secret = res.data;
-          this.keyword = ''
-          this.defaultId = res.data.submitForum;
-          this.activeId = res.data.submitForum;
+          this.dealResponse(res)
         })
       }
     }
