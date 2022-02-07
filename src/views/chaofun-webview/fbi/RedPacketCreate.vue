@@ -5,16 +5,19 @@
       <el-input-number v-model="fbiTotal" :step=5 :min=5>
       </el-input-number>
 
-      <div style="padding-top: 20px" > 请输入 FBi 红包个数</div>
-      <el-input-number v-model="userTotal" :step=1  :min=1>
+      <div style="padding-top: 20px"> 请输入 FBi 红包个数</div>
+      <el-input-number v-model="userTotal" :step=1 :min=1>
       </el-input-number>
 
-      <div style="padding-top: 20px" > 请输入寄语</div>
-      <el-input v-model="blessing" placeholder="可选" style="padding-left: 15%; padding-right: 15%">
-      </el-input>
-      <el-button @click="create">
-        确认
-      </el-button>
+      <div style="padding-top: 20px"> 请输入寄语</div>
+      <div>
+        <el-input v-model="blessing" placeholder="可选" :maxlength=14 style="width: 200px;"/>
+      </div>
+      <div style="margin-top: 10px">
+        <el-button @click="create">
+          确认
+        </el-button>
+      </div>
     </div>
     <div v-if="result" style="padding-top: 100px;">
       {{this.password}}
