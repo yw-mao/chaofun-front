@@ -22,7 +22,13 @@
     <div v-if="result" style="padding-top: 100px;">
       {{this.password}}
       <div style="margin-top: 20px" >
-        <el-button  @click="paste">
+        <el-button  @click="pastePasswordAndUrl">
+          复制口令和链接
+        </el-button>
+      </div>
+
+      <div style="margin-top: 20px" >
+        <el-button  @click="pastePassword">
           复制口令
         </el-button>
       </div>
@@ -98,16 +104,25 @@ export default {
       window.open("about:blank", "_top").close()
     },
 
-    paste() {
+    pastePassword() {
+      this.copy(this.password);
+    },
+    pastePasswordAndUrl() {
+      let str = "红包口令：" + this.password + "    " + "红包链接：https://chao.fun/webview/fbi/redPacket?password=" + this.password;
+      this.copy(str);
+    },
+
+    copy(content){
       var input = document.createElement('input');
-      input.setAttribute('value', this.password);
+      input.setAttribute('value', content);
       document.body.appendChild(input);
       input.select();
       var result = document.execCommand('copy');
       document.body.removeChild(input);
-      this.$toast("复制邀请地址成功");
+      this.$toast("复制成功");
       return result;
-    }
+    },
+
   }
 }
 
