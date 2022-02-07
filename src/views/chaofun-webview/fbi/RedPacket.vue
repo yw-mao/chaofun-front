@@ -46,7 +46,7 @@
               <img :src="imgOrigin +redPacket.sendUser.icon +'?x-oss-process=image/resize,h_40'" alt="" style="width: 40px;height: 40px; border-radius: 60px;"/>
             </div>
             <div style="font-size: 20px;color: #fce5b9;cursor: pointer; " @click.stop="toUser(redPacket.sendUser.userId)">{{ redPacket.sendUser.userName }}</div>
-            <div style="font-size: 30px;color: #fff; margin-top: 30px;"> {{ redPacket.blessing }}</div>
+            <div style="font-size: 30px;color: #fff; margin-top: 30px;margin-left: 10px;margin-right: 10px;"> {{ redPacket.blessing }}</div>
           </div>
         </div>
 
@@ -56,7 +56,7 @@
         </div>
 
         <!-- 动态信息 -->
-        <div v-if="redPacket.isOpened" style="width: 300px; font-weight: lighter; font-size: 40px; color: #fce5b9; position: absolute;top: 150px;">{{ redPacket.got }} Fbi</div>
+        <div v-if="redPacket.isOpened" style="width: 300px; font-weight: bold; font-size: 40px; color: #fce5b9; position: absolute;top: 150px;">{{ redPacket.got }} Fbi</div>
         <div v-else-if="redPacket.isEnd" style="width: 300px; font-weight: lighter; font-size: 28px; color: #fce5b9; position: absolute;top: 180px;">来晚一步，领完啦~</div>
         <div v-else style="width: 300px;height: 80px; position: absolute;top:180px;">
           <div style="width: 80px;height: 80px;background: #e6cea0; border-radius: 300px;  position: relative; left: 110px; font-size: 58px; cursor: pointer;"
