@@ -11,7 +11,7 @@
 
       <div style="padding-top: 20px"> 请输入寄语</div>
       <div>
-        <el-input v-model="blessing" placeholder="可选" :maxlength=14 style="width: 200px;"/>
+        <el-input v-model="blessing" placeholder="可选" :maxlength=14 style="width: 240px;"/>
       </div>
       <div style="margin-top: 10px">
         <el-button @click="create">
@@ -36,6 +36,12 @@
       <div style="margin-top: 20px" >
         <el-button @click="close">
           关闭页面
+        </el-button>
+      </div>
+
+      <div style="margin-top: 20px" >
+        <el-button @click="reloadPage">
+          再发一个
         </el-button>
       </div>
 
@@ -122,6 +128,9 @@ export default {
       this.$toast("复制成功");
       return result;
     },
+    reloadPage(){
+      this.$router.go(0);
+    }
 
   }
 }
