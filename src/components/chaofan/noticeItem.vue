@@ -117,6 +117,18 @@ import moment from 'moment'
            if(item.link){
                window.open(item.link,'_blank')
            }
+           // 复制FBi红包口令
+           // 接口未返回链接，这里先做特殊判断，祈祷站长别打我...
+           else if("text_notice" == item.type && "FBi红包创建成功" == item.title){
+             let text = item.text;
+             let regex = /密钥为 (\w*?) 的 \d*? FBi 红包/;
+             let found = text.match(regex);
+             if (!found || !found[0] || !found[1]) {
+               return;
+             }
+             let password = found[1];
+             this.pastePasswordAndUrl(password);
+           }
        },
        toDetail(item){
             // this.$router.push({name: 'articleDetail',params:{postId: item.post.postId}})
@@ -126,6 +138,21 @@ import moment from 'moment'
             });
             window.open(routeData.href, '_blank');
         },
+       pastePasswordAndUrl(password) {
+         let str = "红包口令：" + password + "    " + "红包链接：https://chao.fun/webview/fbi/redPacket?password=" + password;
+         this.copy(str);
+       },
+
+       copy(content){
+         var input = document.createElement('input');
+         input.setAttribute('value', content);
+         document.body.appendChild(input);
+         input.select();
+         var result = document.execCommand('copy');
+         document.body.removeChild(input);
+         this.$toast("复制成功");
+         return result;
+       },
    }
  }
 </script>
