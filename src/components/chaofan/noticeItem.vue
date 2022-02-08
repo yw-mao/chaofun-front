@@ -1,11 +1,16 @@
 <template>
  <div>
+     <div style="text-align: right;float:right;color: #bbb;height: 0px;cursor: pointer;position: relative;top: 15px;right: 5px;" @click="humanizeTimeFormat=!humanizeTimeFormat"
+          title="点击切换时间格式">
+       <span v-if="humanizeTimeFormat">{{ moment.duration(moment(items.gmtCreate) - moment()).humanize(true) }}</span>
+       <span v-else>{{ moment(items.gmtCreate).format('YYYY年MM月DD日 HH:mm:ss') }}</span>
+     </div>
+
      <div v-if="items.type=='upvote_post'" class="zan">
          <div class="item">
              <!-- <span class="tab">&lt;点赞&gt;</span> -->
             <span v-if="items.sender" @click.stop="toUser(items.sender)" class="username user_name">【{{items.sender.userName}}】</span>
             <span v-if="!items.sender">未登录访客</span>
-            <span>{{moment.duration(moment(items.gmtCreate) - moment()).humanize(true)}}</span>
             <span>点赞了你的</span>
             <span @click="toDetail(items)" class="tiezi_title">【{{items.post.title.length>15?items.post.title.slice(0,15)+'...':items.post.title}}】</span>
         </div>
@@ -14,7 +19,6 @@
          <div class="item">
             <span v-if="items.sender" @click.stop="toUser(items.sender)" class="username user_name">【{{items.sender.userName}}】</span>
             <span v-if="!items.sender">未登录访客</span>
-            <span>{{moment.duration(moment(items.gmtCreate) - moment()).humanize(true)}}</span>
             <span>点赞了你在</span>
             <span @click="toDetail(items)" class="tiezi_title">【{{items.post.title.length>15?items.post.title.slice(0,15)+'...':items.post.title}}】</span>
             <span>下的评论</span>
@@ -25,7 +29,6 @@
          <div class="item">
             <span v-if="items.sender" @click.stop="toUser(items.sender)" class="username user_name">【{{items.sender.userName}}】</span>
             <span v-if="!items.sender">未登录访客</span>
-            <span>{{moment.duration(moment(items.gmtCreate) - moment()).humanize(true)}}</span>
             <span>评论了你的</span>
             <span @click="toDetail(items)" class="tiezi_title">【{{items.post.title.length>15?items.post.title.slice(0,15)+'...':items.post.title}}】</span>
          </div>
@@ -38,7 +41,6 @@
          <div class="item">
             <span v-if="items.sender" @click.stop="toUser(items.sender)" class="username user_name">【{{items.sender.userName}}】</span>
             <span v-if="!items.sender">未登录访客</span>
-            <span>{{moment.duration(moment(items.gmtCreate) - moment()).humanize(true)}}</span>
             <span>在</span>
             <span @click="toDetail(items)" class="tiezi_title">【{{items.post.title.length>15?items.post.title.slice(0,15)+'...':items.post.title}}】</span>
          </div>
@@ -54,7 +56,6 @@
          <div class="item">
             <span v-if="items.sender" @click.stop="toUser(items.sender)" class="username user_name">【{{items.sender.userName}}】</span>
             <span v-if="!items.sender">未登录访客</span>
-            <span>{{moment.duration(moment(items.gmtCreate) - moment()).humanize(true)}}</span>
             在
             <span @click="toDetail(items)" class="tiezi_title">【{{items.post.title.length>15?items.post.title.slice(0,15)+'...':items.post.title}}】</span>
             <span>在评论区：</span>
@@ -65,30 +66,22 @@
          </div>
      </div>
      <div v-if="items.type=='delete_post'" class="zan">
-       <div style="text-align: right;float:right;color: #bbb;height: 0px;cursor: pointer;" @click="humanizeTimeFormat=!humanizeTimeFormat" title="点击切换时间格式">
-         <span v-if="humanizeTimeFormat">{{ moment.duration(moment(items.gmtCreate) - moment()).humanize(true) }}</span>
-         <span v-else>{{ moment(items.gmtCreate).format('YYYY年MM月DD日 HH:mm:ss') }}</span>
-       </div>
        <div class="item">
          <span>你的帖子 </span>
-         <span @click="toDetail(items)" class="tiezi_title">【{{items.post.title.length>15?items.post.title.slice(0,15)+'...':items.post.title}}】</span>
+         <span @click="toDetail(items)" class="tiezi_title">【{{ items.post.title.length > 15 ? items.post.title.slice(0, 15) + '...' : items.post.title }}】</span>
          <span>已被删除,</span>
          <span v-if="items.reason">删除原因为：</span>
          <span v-if="!items.reason">请阅读炒饭和分区发帖规范。</span>
        </div>
      </div>
-   <div v-if="items.type=='text_notice'" class="zan">
-     <div style="text-align: right;float:right;color: #bbb;height: 0px;cursor: pointer;" @click="humanizeTimeFormat=!humanizeTimeFormat" title="点击切换时间格式">
-       <span v-if="humanizeTimeFormat">{{ moment.duration(moment(items.gmtCreate) - moment()).humanize(true) }}</span>
-       <span v-else>{{ moment(items.gmtCreate).format('YYYY年MM月DD日 HH:mm:ss') }}</span>
+     <div v-if="items.type=='text_notice'" class="zan">
+       <div>
+         {{ items.title }}
+       </div>
+       <div @click="toLinks(items)" class="item links" style="margin-top: 5px;">
+         <span style="font-weight: bold;">{{ items.text }}</span>
+       </div>
      </div>
-     <div>
-       {{ items.title }}
-     </div>
-     <div @click="toLinks(items)" class="item links" style="margin-top: 5px;">
-       <span style="font-weight: bold;">{{ items.text }}</span>
-     </div>
-   </div>
  </div>
 </template>
 
