@@ -52,7 +52,7 @@
             <ListItem v-if="whichOne=='pub'||whichOne=='love'||whichOne=='save'" :whichOne="whichOne"
                       :pagenum="params.pageNum" :isMy="true" :datas="{type: whichOne}" :isindex="true" :lists="lists">
             </ListItem>
-            <listComment v-if="whichOne=='comment'" :lists="lists">
+            <listComment v-else-if="whichOne=='comment'" :lists="lists">
             </listComment>
             <attentionItem v-else v-for="(item,index) in usersData" :item="item" :key="index"></attentionItem>
             <load-text :hasContent="(lists.length||usersData.length)?true:false" :ifcanget="ifcanget"

@@ -470,6 +470,15 @@ export function getUserUpvotes(params) {
   })
 }
 
+/** 获取某用户评论的帖子 */
+export function getUserComments(params) {
+  return request({
+    url: '/api/v0/user/listComments',
+    method: 'get',
+    params
+  })
+}
+
 /** 设置头像 */
 export function setIcon(params) {
   return request({
