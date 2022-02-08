@@ -208,6 +208,7 @@
               >取消置顶</el-dropdown-item
             >
             <el-dropdown-item command="trans">转移版块</el-dropdown-item>
+            <el-dropdown-item v-if="item.type === 'gif'" command="download_gif">下载GIF</el-dropdown-item>
             <el-dropdown-item v-if="item.forumAdmin&&item.disableComment" command="开启评论">开启评论</el-dropdown-item>
             <el-dropdown-item v-if="item.forumAdmin&&!item.disableComment" command="关闭评论">关闭评论</el-dropdown-item>
             <el-dropdown-item v-if="item.type==='prediction'&& item.canDeleted &&item.predictionStatus==='live'" command="暂停下注">暂停下注</el-dropdown-item>
@@ -458,6 +459,8 @@ export default {
         this.addToRecommend(this.item)
       } else if (command == 'trans') {
         this.transPost(this.item, this.index);
+      } else if (command == 'download_gif') {
+        window.open(this.imgOrigin + this.item.imageName.replace('.mp4', '.gif'))
       }
     },
     pausePrediction(item) {
