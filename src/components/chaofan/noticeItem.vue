@@ -1,6 +1,6 @@
 <template>
  <div>
-     <div style="text-align: right;float:right;color: #bbb;height: 0px;cursor: pointer;position: relative;top: 15px;right: 5px;" @click="humanizeTimeFormat=!humanizeTimeFormat"
+     <div style="text-align: right;float:right;color: #bbb;height: 0px;cursor: pointer;position: relative;top: 15px;right: 5px;" @click="humanizeTimeFormatSwitch"
           title="点击切换时间格式">
        <span v-if="humanizeTimeFormat">{{ moment.duration(moment(items.gmtCreate) - moment()).humanize(true) }}</span>
        <span v-else>{{ moment(items.gmtCreate).format('YYYY年MM月DD日 HH:mm:ss') }}</span>
@@ -93,7 +93,6 @@ import moment from 'moment'
    data(){
      return {
          moment: moment,
-         humanizeTimeFormat: true,
      }
    },
    props: {
@@ -102,7 +101,13 @@ import moment from 'moment'
            default(){
                return {}
            }
-       }
+       },
+       humanizeTimeFormat: {
+         type: Boolean,
+         default() {
+           return true;
+         }
+       },
    },
    components: {
 
@@ -113,6 +118,11 @@ import moment from 'moment'
      
    },
    methods: {
+
+       humanizeTimeFormatSwitch(){
+         this.$emit("call-father-humanizeTimeFormatSwitch");
+       },
+
        toLinks(item){
            if(item.link){
                window.open(item.link,'_blank')

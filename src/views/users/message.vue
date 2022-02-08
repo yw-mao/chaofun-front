@@ -35,6 +35,8 @@
                   v-for="(item, index) in message"
                   :key="index"
                   :items="item"
+                  :humanizeTimeFormat="humanizeTimeFormat"
+                  @call-father-humanizeTimeFormatSwitch="humanizeTimeFormatSwitch"
                 ></noticeItem>
                 <load-text
                   :ifcanget="ifcanget"
@@ -62,6 +64,7 @@ export default {
   name: "",
   data() {
     return {
+      humanizeTimeFormat: true,
       msgNavs: [
         {
           label: '全部',
@@ -126,6 +129,11 @@ export default {
     });
   },
   methods: {
+
+    humanizeTimeFormatSwitch(){
+      this.humanizeTimeFormat = !this.humanizeTimeFormat;
+    },
+
     checkTab(item){
       this.params.type = item.value;
       this.ifcanget = true;
