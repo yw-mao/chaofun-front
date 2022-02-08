@@ -36,10 +36,11 @@
         </p>
         <el-button @click="this.copyInviterLink">点击复制链接</el-button>
       </div>
-      <p>  - 他人赠与 (敬请期待)</p>
+      <p>  - 他人赠与</p>
+      <p>  - 为炒饭贡献代码</p>
       <p style="font-weight: bold; font-size: 20px; color: #FF9300;padding-top: 20px">FBi 如何使用:</p>
       <p>  - 兑换炒饭纪念品 </p>
-      <p>  - 赠与他人 (敬请期待)</p>
+      <p>  - 评论赠与他人: +xxxfbi</p>
     </div>
     <div style="padding-top: 20px; font-weight: bold; font-size: 20px; color: #FF9300;">
       FBi兑换
