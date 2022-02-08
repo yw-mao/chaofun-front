@@ -2,7 +2,7 @@
   <div>
     <div v-for="(item, index) in lists" :key="index" style="margin-bottom: 20px;padding-bottom:15px;
     border: #e0e0e0 solid 3px;border-radius: 10px; background: #f1f1f1">
-      <ListItem :is-show-to-top-button="false" :lists="[item.post]"></ListItem>
+      <ListItem :is-show-to-top-button="false" :lists="[item.post]" :isindex="true"></ListItem>
       <commentItem :treeData="[item]" style="margin-right: 10px;"></commentItem>
     </div>
     <div :class="[ISPHONE ? 'scroll_to_top_phone' : 'scroll_to_top']" @click="toTop">
