@@ -2,7 +2,7 @@
   <div>
     <div v-for="(item, index) in lists" :key="index" style="margin-bottom: 20px;padding-bottom:15px;
     border: #e0e0e0 solid 3px;border-radius: 10px; background: #f1f1f1">
-      <ListItem :lists="[item.post]"></ListItem>
+      <ListItem :lists="[item.post]" :is-show-to-top-button="false"></ListItem>
       <commentItem :treeData="[item]" style="margin-right: 10px;"></commentItem>
     </div>
   </div>

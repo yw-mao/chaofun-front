@@ -493,7 +493,7 @@
         </div>
       </div>
     </div>
-    <div
+    <div v-if="isShowToTopButton"
       @click="toTop"
       :class="[ISPHONE ? 'scroll_to_top_phone' : 'scroll_to_top']"
     >
@@ -550,6 +550,12 @@ export default {
     };
   },
   props: {
+
+    isShowToTopButton: {
+      type: Boolean,
+      default: true
+    },
+
     isPredictionPage: {
       type: Boolean,
       default: false
