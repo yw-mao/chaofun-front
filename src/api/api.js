@@ -247,6 +247,15 @@ export function getMyLove(params) {
   })
 }
 
+/** 获取我评论的 */
+export function getComments(params) {
+  return request({
+    url: '/api/v0/me/listComments',
+    method: 'get',
+    params
+  })
+}
+
 /** 获取我发布的 */
 export function getListPosts(params) {
   return request({
