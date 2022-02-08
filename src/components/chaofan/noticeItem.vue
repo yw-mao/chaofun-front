@@ -73,9 +73,15 @@
          <span v-if="!items.reason">请阅读炒饭和分区发帖规范。</span>
        </div>
      </div>
-   <div v-if="items.type=='text_notice'" @click="toLinks(items)" class="zan links">
-     <div @click="toLinks(items)" class="item">
-       <span>{{items.text}}</span>
+   <div v-if="items.type=='text_notice'" class="zan">
+     <div style="text-align: right;float:right;color: #bbb;height: 0px;">
+       {{ moment.duration(moment(items.gmtCreate) - moment()).humanize(true) }}
+     </div>
+     <div>
+       {{ items.title }}
+     </div>
+     <div @click="toLinks(items)" class="item links" style="margin-top: 5px;">
+       <span style="font-weight: bold;">{{ items.text }}</span>
      </div>
    </div>
  </div>
