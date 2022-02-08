@@ -46,7 +46,7 @@
               <i class="el-icon-caret-top" title="滚动到顶部 (F1)" @click.stop="scrollToTop"
                  style="font-size: 30px;color:#5cb6ff;cursor:pointer;"/>
               <i class="el-icon-s-comment" title="滚动到评论 (F2)" @click.stop="scrollToComment"
-                 style="font-size: 30px;color:#5cb6ff;cursor:pointer;"/>
+                 style="font-size: 24px;color:#5cb6ff;cursor:pointer;margin-left: 3px; margin-right: 3px;"/>
               <i class="el-icon-caret-bottom" title="滚动到底部 (F3)" @click.stop="scrollToEnd"
                  style="font-size: 30px;color:#5cb6ff;cursor:pointer;"/>
             </div>
