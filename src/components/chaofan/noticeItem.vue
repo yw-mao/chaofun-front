@@ -65,8 +65,9 @@
          </div>
      </div>
      <div v-if="items.type=='delete_post'" class="zan">
-       <div style="text-align: right;float:right;color: #bbb;height: 0px;">
-         {{ moment.duration(moment(items.gmtCreate) - moment()).humanize(true) }}
+       <div style="text-align: right;float:right;color: #bbb;height: 0px;cursor: pointer;" @click="humanizeTimeFormat=!humanizeTimeFormat" title="点击切换时间格式">
+         <span v-if="humanizeTimeFormat">{{ moment.duration(moment(items.gmtCreate) - moment()).humanize(true) }}</span>
+         <span v-else>{{ moment(items.gmtCreate).format('YYYY年MM月DD日 HH:mm:ss') }}</span>
        </div>
        <div class="item">
          <span>你的帖子 </span>
@@ -77,8 +78,9 @@
        </div>
      </div>
    <div v-if="items.type=='text_notice'" class="zan">
-     <div style="text-align: right;float:right;color: #bbb;height: 0px;">
-       {{ moment.duration(moment(items.gmtCreate) - moment()).humanize(true) }}
+     <div style="text-align: right;float:right;color: #bbb;height: 0px;cursor: pointer;" @click="humanizeTimeFormat=!humanizeTimeFormat" title="点击切换时间格式">
+       <span v-if="humanizeTimeFormat">{{ moment.duration(moment(items.gmtCreate) - moment()).humanize(true) }}</span>
+       <span v-else>{{ moment(items.gmtCreate).format('YYYY年MM月DD日 HH:mm:ss') }}</span>
      </div>
      <div>
        {{ items.title }}
@@ -98,6 +100,7 @@ import moment from 'moment'
    data(){
      return {
          moment: moment,
+         humanizeTimeFormat: true,
      }
    },
    props: {
