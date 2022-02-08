@@ -99,6 +99,11 @@ export default {
   },
   mounted() {
 
+    if(!this.$store.state.user.islogin) {
+      this.showLogin();
+      return;
+    };
+
     let passwd = this.$route.query.password;
     if (!passwd) {
       return;
@@ -189,6 +194,10 @@ export default {
     },
 
     inputEnter() {
+      if(!this.$store.state.user.islogin) {
+        this.showLogin();
+        return;
+      };
       this.getRedPacket();
     },
 
