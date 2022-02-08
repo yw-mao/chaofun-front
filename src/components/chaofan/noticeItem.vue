@@ -65,6 +65,9 @@
          </div>
      </div>
      <div v-if="items.type=='delete_post'" class="zan">
+       <div style="text-align: right;float:right;color: #bbb;height: 0px;">
+         {{ moment.duration(moment(items.gmtCreate) - moment()).humanize(true) }}
+       </div>
        <div class="item">
          <span>你的帖子 </span>
          <span @click="toDetail(items)" class="tiezi_title">【{{items.post.title.length>15?items.post.title.slice(0,15)+'...':items.post.title}}】</span>
