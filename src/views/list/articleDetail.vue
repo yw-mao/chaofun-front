@@ -1035,6 +1035,13 @@ queryChildren (parent, list) {
         this.scrollToEnd();
         e.preventDefault();
         return;
+      } else if (e.keyCode == 115) {
+        if (e.altKey || e.shiftKey || e.ctrlKey) {
+          return;
+        }
+        this.getLists();
+        e.preventDefault();
+        return;
       }
     },
   }
