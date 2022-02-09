@@ -48,12 +48,15 @@
             </div>
             <div class="mynavs">
               <div @click="checkout('pub')" :class="['navItem', { active_nav: whichOne == 'pub' }]">Ta发布的</div>
+              <div @click="checkout('comment')" :class="['navItem', { active_nav: whichOne == 'comment' }]">Ta评论的</div>
               <div @click="checkout('love')" :class="['navItem', { active_nav: whichOne == 'love' }]">Ta赞过的</div>
               <div @click="checkout('listFans')" :class="['navItem', { active_nav: whichOne == 'listFans' }]">关注Ta的</div>
               <div @click="checkout('listFocus')" :class="['navItem', { active_nav: whichOne == 'listFocus' }]">Ta关注的</div>
             </div>
             <ListItem v-if="whichOne == 'pub' || whichOne == 'love'" :pagenum="params.pageNum" :marker="params.marker"
                       :isMy="true" :datas="{ type: whichOne }" :isindex="true" :lists="lists"></ListItem>
+            <listComment v-else-if="whichOne=='comment'" :lists="lists">
+            </listComment>
             <attentionItem v-for="(item, index) in usersData" :item="item" :key="index"></attentionItem>
             <load-text :hasContent="lists.length || usersData.length ? true : false" :ifcanget="ifcanget"
                        :loadAll="loadAll"></load-text>
@@ -82,11 +85,13 @@
 import {mapGetters} from "vuex";
 import * as api from "../../api/api";
 
+import listComment from "@/views/list/ListComment";
 import ListItem from "../../components/chaofan/ListItem.vue";
 import attentionItem from "../../components/chaofan/attentionItem.vue";
 import RightCom from "@/components/chaofan/RightCom";
 import loadText from "@/components/chaofan/loadText";
 import badgeDetail from '@/views/chaofun-webview/badge/badgeDetail.vue';
+import {getUserComments} from "../../api/api";
 
 export default {
   name: "user",
@@ -127,6 +132,7 @@ export default {
     loadText,
     attentionItem,
     badgeDetail,
+    listComment,
   },
   watch: {
     "$route.params"(v) {
@@ -310,6 +316,20 @@ export default {
           }
           this.lists.push(...res.data.posts);
         });
+      } else if (this.whichOne == 'comment') {
+        api.getUserComments(params).then(res => {
+          if (res.data.marker) {
+            this.params.marker = res.data.marker;
+            if (res.data.length < this.params.pageSize) {
+              this.ifcanget = false
+            } else {
+              this.ifcanget = true
+            }
+          } else {
+            this.loadAll = true
+          }
+          this.lists.push(...res.data.comments)
+        })
       } else if (this.whichOne == "pub") {
         api.getUserPosts(params).then((res) => {
           if (res.data.marker) {

@@ -247,6 +247,15 @@ export function getMyLove(params) {
   })
 }
 
+/** 获取我评论的 */
+export function getComments(params) {
+  return request({
+    url: '/api/v0/me/listComments',
+    method: 'get',
+    params
+  })
+}
+
 /** 获取我发布的 */
 export function getListPosts(params) {
   return request({
@@ -456,6 +465,15 @@ export function getUserPosts(params) {
 export function getUserUpvotes(params) {
   return request({
     url: '/api/v0/user/list_upvotes',
+    method: 'get',
+    params
+  })
+}
+
+/** 获取某用户评论的帖子 */
+export function getUserComments(params) {
+  return request({
+    url: '/api/v0/user/listComments',
     method: 'get',
     params
   })

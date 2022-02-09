@@ -43,6 +43,7 @@
             </div>
             <div class="mynavs">
               <div @click="checkout('pub')" :class="['navItem',{active_nav: whichOne == 'pub'}]">我发布的</div>
+              <div @click="checkout('comment')" :class="['navItem',{active_nav: whichOne == 'comment'}]">我评论的</div>
               <div @click="checkout('love')" :class="['navItem',{active_nav: whichOne == 'love'}]">我赞过的</div>
               <div @click="checkout('save')" :class="['navItem',{active_nav: whichOne == 'save'}]">我收藏的</div>
               <div @click="checkout('listFans')" :class="['navItem',{active_nav: whichOne == 'listFans'}]">关注我的</div>
@@ -51,6 +52,8 @@
             <ListItem v-if="whichOne=='pub'||whichOne=='love'||whichOne=='save'" :whichOne="whichOne"
                       :pagenum="params.pageNum" :isMy="true" :datas="{type: whichOne}" :isindex="true" :lists="lists">
             </ListItem>
+            <listComment v-else-if="whichOne=='comment'" :lists="lists">
+            </listComment>
             <attentionItem v-else v-for="(item,index) in usersData" :item="item" :key="index"></attentionItem>
             <load-text :hasContent="(lists.length||usersData.length)?true:false" :ifcanget="ifcanget"
                        :loadAll="loadAll"></load-text>
@@ -68,12 +71,14 @@ import {mapGetters} from 'vuex'
 import * as api from '@/api/api'
 
 import ListItem from '@/components/chaofan/ListItem.vue'
+import listComment from "@/views/list/ListComment";
 import attentionItem from '@/components/chaofan/attentionItem.vue'
 import RightCom from '@/components/chaofan/RightCom'
 import loadText from '@/components/chaofan/loadText'
 import badgeDetail from '@/views/chaofun-webview/badge/badgeDetail.vue';
 
 import createLogin from '@/components/chaofan/common/login/login.js'
+import {getComments} from "@/api/api";
 
 export default {
   name: 'Dashboard',
@@ -114,7 +119,7 @@ export default {
     }
   },
   components: {
-    ListItem, loadText, attentionItem, badgeDetail,
+    ListItem, loadText, attentionItem, badgeDetail,listComment,
   },
   watch: {
     // 'params.forumId'(v){
@@ -275,6 +280,20 @@ export default {
             this.loadAll = true
           }
           this.lists.push(...res.data.posts)
+        })
+      } else if (this.whichOne == 'comment') {
+        api.getComments(params).then(res => {
+          if (res.data.marker) {
+            this.params.marker = res.data.marker;
+            if (res.data.length < this.params.pageSize) {
+              this.ifcanget = false
+            } else {
+              this.ifcanget = true
+            }
+          } else {
+            this.loadAll = true
+          }
+          this.lists.push(...res.data.comments)
         })
       } else if (this.whichOne == 'pub') {
         api.getListPosts(params).then(res => {
