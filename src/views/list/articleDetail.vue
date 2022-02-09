@@ -47,7 +47,7 @@
                  style="font-size: 30px;color:#5cb6ff;cursor:pointer;"/>
               <i class="el-icon-s-comment" title="滚动到评论 (F2)" @click.stop="scrollToComment"
                  style="font-size: 24px;color:#5cb6ff;cursor:pointer;margin-left: 3px; margin-right: 3px;margin-top: 2px;"/>
-              <i class="el-icon-refresh-right" title="刷新评论 (F4)" @click.stop="getLists"
+              <i class="el-icon-refresh-right" title="刷新评论 (F4)" @click.stop="getNewLists"
                  style="font-size: 24px;color:#5cb6ff;cursor:pointer;margin-left: 3px; margin-right: 3px;margin-top: 2px;"/>
               <i class="el-icon-caret-bottom" title="滚动到底部 (F3)" @click.stop="scrollToEnd"
                  style="font-size: 30px;color:#5cb6ff;cursor:pointer;margin-top: 2px;"/>
@@ -822,6 +822,11 @@ queryChildren (parent, list) {
         
       })
     },
+
+    async getNewLists() {
+      await this.getLists();
+      this.$toast('评论已刷新');
+    },
     getLists(){
       let params = this.params;
       api.listCommentsV0(params).then(res=>{
@@ -831,7 +836,6 @@ queryChildren (parent, list) {
           let data = this.lists;
           this.treeData = this.transformTree(data);
         }
-        
       })
     },
     
