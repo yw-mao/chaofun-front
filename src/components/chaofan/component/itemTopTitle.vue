@@ -122,7 +122,7 @@
         <span class="time" v-if="order == 'comment' && item.gmtComment"  >新评于 {{moment.duration(moment(item.gmtComment) - moment()).humanize(true)}}</span>
       </div>
       <!-- <div v-if="isMy&&datas.type=='pub'" @click.stop="deletePost(item,index)" class="delete">删除</div> -->
-      <div @click.stop="" class="delete" v-if="item.canDeleted">
+      <div @click.stop="" class="delete">
         <!-- @click.stop="deletePost(item,index)" -->
         <!-- <i class="el-icon-delete"></i> 删除 -->
         <el-dropdown trigger="click" @command="handleCommand">
@@ -131,7 +131,7 @@
             <i class="el-icon-more" style="font-size: 24px"></i>
           </span>
           <el-dropdown-menu style="width:150px;" slot="dropdown">
-            <el-dropdown-item command="添加标签">
+            <el-dropdown-item v-if="item.canDeleted" command="添加标签">
               <div @click.stop="toadd" class="addTag">添加标签 ></div>
             </el-dropdown-item>
             <div v-if="showTag" class="showTags">
@@ -207,13 +207,13 @@
               command="取消置顶"
               >取消置顶</el-dropdown-item
             >
-            <el-dropdown-item command="trans">转移版块</el-dropdown-item>
+            <el-dropdown-item v-if="item.forumAdmin" command="trans">转移版块</el-dropdown-item>
             <el-dropdown-item v-if="item.type === 'gif'" command="download_gif">下载GIF</el-dropdown-item>
             <el-dropdown-item v-if="item.forumAdmin&&item.disableComment" command="开启评论">开启评论</el-dropdown-item>
             <el-dropdown-item v-if="item.forumAdmin&&!item.disableComment" command="关闭评论">关闭评论</el-dropdown-item>
             <el-dropdown-item v-if="item.type==='prediction'&& item.canDeleted &&item.predictionStatus==='live'" command="暂停下注">暂停下注</el-dropdown-item>
             <el-dropdown-item v-if="item.canAddToRecommend" command="推荐">推荐</el-dropdown-item>
-            <el-dropdown-item command="删除">删除帖子</el-dropdown-item>
+            <el-dropdown-item v-if="item.canDeleted"  command="删除">删除帖子</el-dropdown-item>
             <el-dropdown-item command="关闭"> <div ref="cocolse">关闭</div> </el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
