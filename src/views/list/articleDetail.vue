@@ -19,7 +19,7 @@
         </el-col>
       </el-row>
     </div>
-    
+
     <el-dialog
     :visible.sync="centerDialogVisible"
     opacity="1"
@@ -35,7 +35,7 @@
                   <i @click.stop="doZan(1,pagedata)" class="el-icon-top"></i>
                   <span style="padding: 0 10px;">{{pagedata.ups-pagedata.downs}}</span>
                   <i @click.stop="doZan(2,pagedata)" class="el-icon-bottom"></i>
-                  
+
                   <span class="title">{{pagedata.title}}</span>
               </div>
               <div @click="back" class="right">关闭</div>
@@ -65,8 +65,8 @@
                             </div>
                           </div>
                           <div v-if="replayItem" @click="cancelReplay" style="padding: 6px 0px;cursor:pointer;float:left;">取消回复</div>
-                          <el-input :disabled="pagedata.disableComment&&!pagedata.forumAdmin" style="font-size:14px;" v-on:focus="inputFocus" @keyup.native="bindInput" 
-                          v-on:blur="inputBlur" type="textarea" @focus="doLogin" class="textarea" ref="commentInputMark" 
+                          <el-input :disabled="pagedata.disableComment&&!pagedata.forumAdmin" style="font-size:14px;" v-on:focus="inputFocus" @keyup.native="bindInput"
+                          v-on:blur="inputBlur" type="textarea" @focus="doLogin" class="textarea" ref="commentInputMark"
                           :placeholder="pagedata.disableComment&&!pagedata.forumAdmin?'该帖已关闭评论功能，只有版主能够评论该帖':'评论千万条，友善第一条'+' (Ctrl+V 可粘贴图片)'"
                           :autosize="{ minRows: 2, maxRows: 4}"  v-model="comment">
                           </el-input>
@@ -93,7 +93,7 @@
                             ref="imageUpload"
                             >
                             <img style="vertical-align:middle;margin-right:10px;cursor:pointer;" src="../../assets/images/icon/choose.png" alt="">
-                            
+
                             </el-upload>
                             <div class="icons" style="z-index: 1;">
                               <img @click="showIcons" src="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=105646479,4120396531&fm=26&gp=0.jpg" alt="">
@@ -101,12 +101,12 @@
                                 <span v-for="(item,index) in icons" @click="chooseEmoji(item)" :key="index">{{item}}</span>
                               </div>
                             </div>
-                            
+
                           </div>
                       </div>
                       <div class="comment_list">
                           <div class="comment_title">
-                            <i style="font-size:24px;vertical-align:middle;" class="el-icon-s-comment"></i> 
+                            <i style="font-size:24px;vertical-align:middle;" class="el-icon-s-comment"></i>
                             评论
                             <div @click="checkoutOrder" class="tright">
                               <img :src="imgOrigin+ 'biz/20712d8583a287b4941d8852af4f15e5.png'" alt="">
@@ -119,13 +119,13 @@
 <!--                            <div class="tright" style="margin-right: 20px;">-->
 <!--                              <el-checkbox v-model="withoutSubComment">只看一级评论</el-checkbox>-->
 <!--                            </div>-->
-                          </div> 
+                          </div>
                           <commentitem ref="commentItemMark" :postInfo="{disableComment:pagedata.disableComment,forumAdmin:pagedata.forumAdmin,
-                          postOwnerUserId:pagedata.userInfo.userId,isPostOwnerHighlight:isPostOwnerCommentHighlight}" 
+                          postOwnerUserId:pagedata.userInfo.userId,isPostOwnerHighlight:isPostOwnerCommentHighlight}"
                           @refreshDelete="refreshDelete" @toReplay2="toReplay2" @refreshComment="refreshComment" :treeData="treeData" :without-sub-comment="withoutSubComment"></commentitem>
                           <div v-if="!lists.length" class="no_comment">
                               还没有评论，你的机会来了 ~
-                          </div> 
+                          </div>
                       </div>
                   </el-col>
                   <el-col :span="7" :offset="0" class="content-right-wrapper">
@@ -140,8 +140,8 @@
                                 <div class="fensi">
                                     <div>粉丝：{{forumInfo.followers}}</div>
                                     <div>帖子：{{forumInfo.posts}}</div>
-                                </div> 
-                                <div class="forum_desc">{{forumInfo.desc}}</div> 
+                                </div>
+                                <div class="forum_desc">{{forumInfo.desc}}</div>
                                 <div class="forum_add">
 
                                     <el-button @click="inout(1)" v-if="!forumInfo.joined" type="primary" block>
@@ -150,8 +150,8 @@
                                     <el-button @click="inout(2)" v-else type="danger" onClick={outForum} block>
                                     退出版块
                                     </el-button>
-                                
-                                </div> 
+
+                                </div>
                                 <div class="forum_add">
                                 <el-button @click="gotoSubmit" type="primary" block>
                                     发帖
@@ -162,7 +162,7 @@
                                     加入版聊
                                   </el-button>
                                 </div>
-                            </div> 
+                            </div>
                           </div>
                           <div v-if="pagedata.collection" class="heji">
                             <div class="col_title">合集：《{{pagedata.collection.name}}》</div>
@@ -192,9 +192,9 @@
                       </div>
                   </el-col>
               </el-row>
-            </div> 
-              
-          </div>  
+            </div>
+
+          </div>
         </div>
         <div v-if="!hasData" class="is404">
           <div>
@@ -203,16 +203,16 @@
             </div>
             <p>帖子已被删除或不存在 <span @click="back" class="lookother">看看其他 ></span></p>
           </div>
-          
+
         </div>
     </el-dialog>
 
 
 
   </div>
-  
+
 </div>
-  
+
 </template>
 
 <script>
@@ -348,7 +348,7 @@ export default {
     postOwnerCommentHighlightCheckboxChange(val){
       if("true" == localStorage.getItem("chao.fun.localSetting.isStoragePostOwnerCommentHighlight")){
         localStorage.setItem("chao.fun.localSetting.isPostOwnerCommentHighlight",val);
-      }      
+      }
     },
 
     checkoutOrder(){
@@ -390,7 +390,7 @@ export default {
       if(this.comment.includes('@')){
         this.curInput = e.target;
         let s = this.comment.slice(0,index);
-        
+
         let i = s.lastIndexOf('@');
         // if(index==i){return false}
         let str = this.comment.slice(i+1,index);
@@ -405,7 +405,7 @@ export default {
             this.canSearch = false;
             api.searchUserForAt(params).then(res=>{
               if(res.success&&res.data.length){
-                
+
                 this.canSearch = true;
                 this.showAt = true;
                 this.atUsers = res.data;
@@ -418,7 +418,7 @@ export default {
               this.canSearch = true;
             })
           }
-          
+
         }
         if(e.code=='Backspace'&&this.atUserName.length){
           this.atUserName.forEach((item,ins)=>{
@@ -431,7 +431,7 @@ export default {
         }
         console.log(str)
       }
-      
+
     },
     doType(item) {
       var t = item.type;
@@ -478,7 +478,7 @@ export default {
       }
       api.listPosts(params).then(res=>{
         this.collectList = res.data;
-      })  
+      })
     },
     doImageUrl(item) {
       var t = item.type;
@@ -593,7 +593,7 @@ export default {
 
       this.doLoginStatus().then(res=>{
           if(res){
-              
+
           }else{
               console.log('未登录',res)
           }
@@ -607,7 +607,7 @@ export default {
         this.comment += item;
         this.showIcon = false
       }
-      
+
     },
     manage() {
       this.$router.push({path:'/f/' + this.forumInfo.id + '/setting'})
@@ -756,20 +756,20 @@ export default {
           result.push(currentElement);
         }
       }
-    
+
       return result;
     },
     transformTree (list) {
       const tree = []
-        
+
       for (let i = 0, len = list.length; i < len; i++) {
         if (!list[i].parentId) {
         const item = this.queryChildren(list[i], list)
-          
+
         tree.push(item)
         }
       }
-        
+
       return tree
     },
     gotoChat(){
@@ -787,28 +787,28 @@ export default {
         }
       })
     },
- 
+
 queryChildren (parent, list) {
  const children = []
-  
+
  for (let i = 0, len = list.length; i < len; i++) {
   if (list[i].parentId === parent.id) {
    const item = this.queryChildren(list[i], list)
- 
+
    children.push(item)
   }
  }
-  
+
  if (children.length) {
   parent.children = children
  }
-  
+
  return parent
 },
     getDetail(){
       api.getPostInfo({postId: this.params.postId}).then(res=>{
         if(res.success){
-          
+
           let data = res.data;
           this.pagedata = data;
           this.forumInfo = res.data.forum;
@@ -819,7 +819,7 @@ queryChildren (parent, list) {
           this.hasData = false;
           this.$store.commit('var/SET_PATH',this.$route.fullPath)
         }
-        
+
       })
     },
 
@@ -838,7 +838,7 @@ queryChildren (parent, list) {
         }
       })
     },
-    
+
     back() {
       if(this.forumInfo&&this.forumInfo.id){
         this.centerDialogVisible = false;
@@ -953,7 +953,7 @@ queryChildren (parent, list) {
         this.$toast('正在提交评论...');
         return;
       }
-        
+
     },
     toPaste(e){
       var cbd = e.clipboardData;
@@ -1045,7 +1045,7 @@ queryChildren (parent, list) {
         if (e.altKey || e.shiftKey || e.ctrlKey) {
           return;
         }
-        this.getLists();
+        this.getNewLists();
         e.preventDefault();
         return;
       }
@@ -1077,7 +1077,7 @@ queryChildren (parent, list) {
   padding-right: 0;
 }
 .el-dialog{
-    
+
     height:100vh;
     overflow-x: hidden;
     div{
@@ -1134,7 +1134,7 @@ queryChildren (parent, list) {
       white-space: nowrap;
       .title{
         padding-left: 20px;
-        
+
       }
     }
     .right{
@@ -1223,7 +1223,7 @@ queryChildren (parent, list) {
           color: #ff9300;
           background: #eee;
         }
-      } 
+      }
       // display: flex;
     }
     .textarea{
@@ -1349,7 +1349,7 @@ queryChildren (parent, list) {
   height: 100vh;
   .s404{
     font-size: 44px;
-    
+
     color: cornflowerblue;
     img{
       width: 100%;
@@ -1413,7 +1413,7 @@ queryChildren (parent, list) {
     font-size: 16px;
     line-height: 40px;
     overflow: hidden;
-    text-overflow:ellipsis; 
+    text-overflow:ellipsis;
     white-space: nowrap;
   }
   .col_item{
@@ -1450,9 +1450,9 @@ queryChildren (parent, list) {
     }
     .cc_title{
       // padding: 4px 0;
-      display: -webkit-box; 
-      -webkit-box-orient: vertical; 
-      -webkit-line-clamp: 2; 
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
       overflow: hidden;
     }
     &:hover{
@@ -1471,7 +1471,7 @@ queryChildren (parent, list) {
   padding: 2px 4px;
   cursor: pointer;
   &:hover{
-    background: #ddd;    
+    background: #ddd;
   }
   img{
     vertical-align: middle;
@@ -1480,7 +1480,7 @@ queryChildren (parent, list) {
 }
 
 /deep/.el-checkbox {
-  .el-checkbox__input{    
+  .el-checkbox__input{
     margin-bottom:-2px;
     z-index: 0;
   }
