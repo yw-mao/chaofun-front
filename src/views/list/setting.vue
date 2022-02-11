@@ -283,6 +283,13 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+
+@media screen and (max-width: 1079px) {
+  .main_content{
+    width: 800px;
+  }
+}
+
 .avatar-uploader .el-upload {
   border: 1px dashed #d9d9d9;
   border-radius: 6px;
