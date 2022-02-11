@@ -34,13 +34,12 @@
                 <p v-if="!item.atUsers" v-html="islink(item.text)"></p>
                 <p v-if="item.atUsers" @click="clickComment($event)" v-html="doText(item)"></p>
                 <span v-if="item.imageNames" class="comImgs">
-                    <viewer :images="doImgs(item.imageNames)" ref="viewer" >
+                    <viewer :images="doImgs(item.imageNames)" ref="viewer" style="line-height: 0px" >
                         <div v-for="(i,k) in item.imageNames.split(',')" :key="k">
                             <span class="aaa">
 <!--                                【附图】-->
-                                <img  style="opacity:0;" :src="imgOrigin+i+'?x-oss-process=image/resize,h_120'" :data-source="imgOrigin+i" >
-<!--                                <img  class="futu" :src="imgOrigin+i+'?x-oss-process=image/resize,h_150'" >-->
-                               <div :src="imgOrigin+i+'?x-oss-process=image/resize,h_120'" :data-source="imgOrigin+i" :style="{'background-image':'url('+imgOrigin+i+')','background-size':'cover',width:'120px',height:'120px'}" ></div>
+                              <img  style="opacity:0;width:60px;height:60px" :src="imgOrigin+i+'?x-oss-process=image/resize,h_60'" :data-source="imgOrigin+i" >
+                              <div :src="imgOrigin+i+'?x-oss-process=image/resize,h_60'" :data-source="imgOrigin+i" :style="{'background-image':'url('+imgOrigin+i+')','background-size':'cover',width:'60px',height:'60px'}" ></div>
                             </span>
                         </div>
                     </viewer>
@@ -872,6 +871,7 @@ export default {
     }
 }
 .aaa{
+
     position: relative;
     //width: 50px;
     //height: 30px;
@@ -879,7 +879,10 @@ export default {
     display: inline-block;
     overflow: hidden;
     color: #1890ff;
-    &:hover{
+    padding-right: 4px;
+  padding-top: 2px;
+
+  &:hover{
         color: red;
         .futu{
             opacity: 1;
@@ -893,10 +896,10 @@ export default {
         position: absolute;
         width: initial;
         height: initial;
-        right: 0;
+        right: 10px;
         top: 0;
         bottom: 0;
-        left: 0;
+        left: 10px;
         opacity: 0;
         z-index: 10;
     }
