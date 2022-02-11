@@ -28,24 +28,25 @@
                 <div v-if="!ISPHONE&&(!postInfo.disableComment||postInfo.forumAdmin)" @click="toReplay(item)" class="zan_shu" style="display:inline-block;padding-left:20px;">回复</div>
                 <div v-if="item.canDeleted" @refreshDelete="refreshDelete" @click="deleteComment(item)" class="to_delete">删除</div>
                 <div v-if="item.forumAdmin&&item.forumAdminHighlight"  @click="unHighlightComment(item)" class="to_delete">取消高亮</div>
-                <div v-if="item.forumAdmin&&!item.forumAdminHighlight"  @click="highlightComment(item)" class="to_delete">设为高亮</div>  
-            </div> 
+                <div v-if="item.forumAdmin&&!item.forumAdminHighlight"  @click="highlightComment(item)" class="to_delete">设为高亮</div>
+            </div>
             <div class="content" :style="getCommentContentStyle(item)">
                 <p v-if="!item.atUsers" v-html="islink(item.text)"></p>
                 <p v-if="item.atUsers" @click="clickComment($event)" v-html="doText(item)"></p>
                 <span v-if="item.imageNames" class="comImgs">
-                    <viewer :images="doImgs(item.imageNames)">
+                    <viewer :images="doImgs(item.imageNames)" ref="viewer" >
                         <div v-for="(i,k) in item.imageNames.split(',')" :key="k">
                             <span class="aaa">
-                                【附图】
+<!--                                【附图】-->
                                 <img  style="opacity:0;" :src="imgOrigin+i+'?x-oss-process=image/resize,h_120'" :data-source="imgOrigin+i" >
-                                <img  class="futu" :src="imgOrigin+i+'?x-oss-process=image/resize,h_150'" >
+<!--                                <img  class="futu" :src="imgOrigin+i+'?x-oss-process=image/resize,h_150'" >-->
+                               <div :src="imgOrigin+i+'?x-oss-process=image/resize,h_120'" :data-source="imgOrigin+i" :style="{'background-image':'url('+imgOrigin+i+')','background-size':'cover',width:'120px',height:'120px'}" ></div>
                             </span>
                         </div>
                     </viewer>
                     <!-- <a v-for="(i,k) in item.imageNames.split(',')" :key="k" :href="imgOrigin+i" target="_blank">【附图】</a> -->
                 </span>
-                
+
             </div>
             <!-- <div v-if="item.type=='media'" class="comImgs">
                 <img v-for="(i,k) in item.imageNames.split(',')" :key="k" :src="imgOrigin+i+''" alt="">
@@ -62,10 +63,10 @@
                 </div>
                 <div v-if="replayItem" @click="cancelReplay" style="padding: 6px 0px;cursor:pointer;float:right;">取消回复</div>
                 <el-input style="font-size:14px;" ref="subCommentInputMark"
-                v-on:focus="inputFocus" @keyup.native="bindInput" 
-                v-on:blur="inputBlur" type="textarea" 
-                v-model="comment" class="textarea" 
-                :placeholder="replayItem?'我对'+replayItem.userInfo.userName+'说：'+'(Ctrl+V 可粘贴图片)':'发表你的想法'+'(Ctrl+V 可粘贴图片)'" 
+                v-on:focus="inputFocus" @keyup.native="bindInput"
+                v-on:blur="inputBlur" type="textarea"
+                v-model="comment" class="textarea"
+                :placeholder="replayItem?'我对'+replayItem.userInfo.userName+'说：'+'(Ctrl+V 可粘贴图片)':'发表你的想法'+'(Ctrl+V 可粘贴图片)'"
                 :autosize="{ minRows: 2, maxRows: 4}">
                 </el-input>
                 <div class="reply_button" v-loading="imagesUploading">
@@ -114,14 +115,14 @@
                             <span class="time">{{moment.duration(moment(item.gmtCreate) - moment()).humanize(true)}}</span>
                             <div class="zan_shu" style="display:inline-block;padding-left:20px;"> <span>{{item.ups - item.downs}}个赞</span></div>
                             <div @click="toReplay(item)" class="zan_shu" style="display:inline-block;padding-left:20px;">回复</div>
-                        </div> 
+                        </div>
                         <div class="content">
                             {{item.text}}
                         </div>
                     </div>
                 </div> -->
             </div>
-            
+
         </div>
     </div>
  </div>
@@ -159,7 +160,8 @@ export default {
             pointIndex: '',
             atIndex: '',
             searchkey: '',
-            atUserName: []
+            atUserName: [],
+            __viewer:null,
         }
     },
     props: {
@@ -190,7 +192,7 @@ export default {
     created() {
     },
     mounted() {
-        
+
     },
     watch: {
         showRep: function(val) {
@@ -238,13 +240,13 @@ export default {
                 return 1;
             }else if(this.postInfo.isPostOwnerHighlight && this.postInfo.postOwnerUserId == item.userInfo.userId){
                 // 楼主高亮
-                return 2;                
+                return 2;
             }
             return 0;
 
         },
         getCommentContentStyle(item){
-            let highlightStatus = this.getHighlightStatus(item);           
+            let highlightStatus = this.getHighlightStatus(item);
             if(highlightStatus == 1){
                 return 'background: #b2e8d1;';
             }else if(highlightStatus == 2){
@@ -262,7 +264,7 @@ export default {
             return 'user_info';
         },
         clickComment:function (event) {
-            
+
             if(event.target.nodeName === 'SPAN'){
             // 获取触发事件对象的属性
                 let key = event.target.getAttribute('key');
@@ -291,14 +293,14 @@ export default {
         doText(item){
             var m = this.islink(item.text);
             if(item.atUsers&&item.atUsers.length){
-                
+
                 item.atUsers.forEach((it,ins)=>{
                     let b = it.userName;
                     if(m.includes(it.userName)){
                         m = m.replace('@'+b, '<span key="'+ it.userId +'" class="light" style="color:rgba(24, 144, 255,0.8);font-size:14px;">@'+b+'</span>')
                     }
                 })
-                
+
             }
             return m;
         },
@@ -331,7 +333,7 @@ export default {
       if(this.comment.includes('@')){
         this.curInput = e.target;
         let s = this.comment.slice(0,index);
-        
+
         let i = s.lastIndexOf('@');
         // if(index==i){return false}
         let str = this.comment.slice(i+1,index);
@@ -346,7 +348,7 @@ export default {
             this.canSearch = false;
             api.searchUserForAt(params).then(res=>{
               if(res.success&&res.data.length){
-                
+
                 this.canSearch = true;
                 this.showAt = true;
                 this.atUsers = res.data;
@@ -371,7 +373,7 @@ export default {
         }
         console.log(str)
       }
-      
+
     },
         doImgs(item){
             var a = item.split(',');
@@ -454,7 +456,7 @@ export default {
                     }
                 })
             }).catch(() => {});
-            
+
         },
         highlightComment(item){
             api.highlightComment({commentId:item.id}).then(res=>{
@@ -464,7 +466,7 @@ export default {
                 }
             });
         },
-        unHighlightComment(item){           
+        unHighlightComment(item){
             api.unHighlightComment({commentId:item.id}).then(res=>{
                 if(res.success){
                     this.$toast('取消高亮成功');
@@ -564,7 +566,7 @@ export default {
                     item.ups += 1;
                 }
                 api.downvoteComment({commentId:item.id}).then(res=>{
-                    
+
                 })
             }
         },
@@ -824,7 +826,7 @@ export default {
           color: #ff9300;
           background: #eee;
         }
-      } 
+      }
     }
  .to_delete{
      float: right;
@@ -871,9 +873,11 @@ export default {
 }
 .aaa{
     position: relative;
-    width: 50px;
-    height: 30px;
+    //width: 50px;
+    //height: 30px;
     // background: #ddd;
+    display: inline-block;
+    overflow: hidden;
     color: #1890ff;
     &:hover{
         color: red;
@@ -887,10 +891,12 @@ export default {
     }
     img{
         position: absolute;
-        width: 100%;
-        height: 100%;
-        left: 0;
+        width: initial;
+        height: initial;
+        right: 0;
         top: 0;
+        bottom: 0;
+        left: 0;
         opacity: 0;
         z-index: 10;
     }
