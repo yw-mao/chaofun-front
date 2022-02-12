@@ -207,7 +207,7 @@
               command="取消置顶"
               >取消置顶</el-dropdown-item
             >
-            <el-dropdown-item v-if="item.forumAdmin" command="trans">转移版块</el-dropdown-item>
+            <el-dropdown-item v-if="item.canDeleted" command="trans">转移版块</el-dropdown-item>
             <el-dropdown-item v-if="item.type === 'gif'" command="download_gif">下载GIF</el-dropdown-item>
             <el-dropdown-item v-if="item.forumAdmin&&item.disableComment" command="开启评论">开启评论</el-dropdown-item>
             <el-dropdown-item v-if="item.forumAdmin&&!item.disableComment" command="关闭评论">关闭评论</el-dropdown-item>
