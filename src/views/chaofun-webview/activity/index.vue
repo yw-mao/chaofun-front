@@ -49,12 +49,12 @@ export default {
                   title: '秘密花园',
                   showBottom: false,
               },
-              {
-                  path: '/webview/buttonGame',
-                  title: '炒饭春节小游戏（TheButton）',
-                  desc: '春节 FBi 回收计划',
-                  showBottom: true
-              },
+              // {
+              //     path: '/webview/buttonGame',
+              //     title: '炒饭春节小游戏（TheButton）',
+              //     desc: '春节 FBi 回收计划',
+              //     showBottom: true
+              // },
               {
                   path: '/webview/year2021',
                   title: '2021年度总结',
