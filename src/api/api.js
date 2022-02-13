@@ -976,9 +976,9 @@ export function setForumUserTag(params) {
   })
 }
 
-export function forumAddTag(params) {
+export function forumSaveTag(params) {
   return request({
-    url: '/api/v0/forum/addTag',
+    url: '/api/v0/forum/saveTag',
     method: 'get',
     params
   })

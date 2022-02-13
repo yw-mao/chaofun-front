@@ -11,7 +11,11 @@
             <div style="align-content: center">排序值：</div>
             <input type="number" v-model="orderNumber"  placeholder="排序值"/>
           </div>
-
+          <div style="margin:10px 0px;display: flex; align-items: center">
+            <div style="align-content: center">颜色(可选)：</div>
+            <el-color-picker v-model="backgroundColor"></el-color-picker>
+          </div>
+          <div></div>
           <div style="margin:20px 0px;display: flex;">
             <el-button @click="toAdd" type="success">确认</el-button>
             <el-button @click="cancelAdd" type="success">取消</el-button>
@@ -19,13 +23,14 @@
         </div>
       </div>
     </div>
+
     <div class="bottom">
       <div @click="add" class="btns">添加标签</div>
     </div>
     <div v-for="(item,index) in lists" :key="index" class="item">
-      <div>{{item.name}} (排序值：{{item.orderNumber}}) </div>
+      <div>{{item.name}} (排序值：{{item.orderNumber}} 颜色：{{item.backgroundColor}}) </div>
       <div style="display: flex; justify-content: space-between;width: 20%">
-        <div @click="toModify">修改</div>
+        <div @click="toModify(item)">修改</div>
         <div @click="toDelete(item, index)">删除</div>
       </div>
     </div>
@@ -41,6 +46,9 @@
     data() {
       return {
         displayAdd: false,
+        displayModify: false,
+        backgroundColor: null ,
+        tagId: null,
         params: {},
         forumId: '',
         lists:[],
@@ -74,22 +82,34 @@
     methods: {
       toAdd() {
         if (this.addTagName !== '') {
-          api.forumAddTag({forumId: this.forumId, tagName: this.addTagName, orderNumber: this.orderNumber}).then((res) => {
-            this.tagName = '';
+          api.forumSaveTag({id: this.tagId, forumId: this.forumId, name: this.addTagName, orderNumber: this.orderNumber, backgroundColor: this.backgroundColor }).then((res) => {
+            this.addTagName = '';
             this.orderNumber = 0;
             this.displayAdd = false;
+            this.backgroundColor = null;
+            this.tagId = null;
             this.getTagList();
           })
         }
       },
+
       cancelAdd() {
+        this.addTagName = '';
+        this.orderNumber = 0;
+        this.displayAdd = false;
+        this.backgroundColor = null;
+        this.tagId = null;
         this.displayAdd = false;
       },
       add() {
         this.displayAdd = true;
       },
-      toModify() {
-        this.$toast('暂不支持');
+      toModify(item) {
+        this.tagId = item.id;
+        this.addTagName = item.name;
+        this.orderNumber = item.orderNumber;
+        this.backgroundColor = item.backgroundColor;
+        this.displayAdd = true;
       },
       toDelete(item, index) {
         this.$confirm(`是否确定删除标签 【${item.name}】？`, "提示", {
