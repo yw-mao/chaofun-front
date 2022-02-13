@@ -134,7 +134,7 @@ export default {
       submit() {
         
         console.log(this.secret)
-        api.submit_secret_image({'imageUrl': this.secret.imageUrl, 'title': this.title||'图片分享 -- 来自秘密花园', 'forumId': this.chooseId*1}).then(res=>{
+        api.submit_secret_image({'imageUrl': this.secret.imageUrl, 'title': this.title, 'forumId': this.chooseId*1}).then(res=>{
           this.show = false;
           if(res.success){
             this.$toast('发布成功');
