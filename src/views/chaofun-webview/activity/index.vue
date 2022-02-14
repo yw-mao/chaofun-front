@@ -50,7 +50,7 @@ export default {
                   showBottom: false,
               },
               {
-                  path: '/webview/oauth?redirectUrl=https%3A%2F%2Fspringchen.cn/Wenda/?mirror=1065',
+                  path: '/webview/oauth?redirectUrl=https%3A%2F%2Fspringchen.cn/Dengmi/?mirror=1065',
                   title: '元宵猜灯谜活动',
                   desc: '一起来猜灯谜吧，有FBi奖励哦！！！',
                   showBottom: true
