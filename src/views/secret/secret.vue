@@ -195,6 +195,7 @@
           this.$toast('没有该类型的内容了，请选择其他类型');
           return;
         }
+        this.keyword = '';
         this.secret = res.data;
         this.defaultId = res.data.submitForum;
         this.activeId = res.data.submitForum;
