@@ -107,7 +107,7 @@
                   <el-input type="textarea"  maxlength="56" v-model="activity.title" style="resize:none;overflow:hidden;" placeholder="请设置活动标题"></el-input>
                 </div>
                 <div style="max-width:600px;margin-top:10px;">
-                  <el-input type="textarea"  maxlength="56" v-model="activity.url" style="resize:none;overflow:hidden;" placeholder="请设置活动链接（必填）"></el-input>
+                  <el-input type="textarea"  maxlength="1000" v-model="activity.url" style="resize:none;overflow:hidden;" placeholder="请设置活动链接（必填）"></el-input>
                 </div>
                 <div style="max-width:600px;margin-top:10px;">
                   <el-input type="textarea"  maxlength="56" v-model="activity.imageName" style="resize:none;overflow:hidden;" placeholder="请设置活动图片"></el-input>
