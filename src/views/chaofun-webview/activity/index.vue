@@ -49,12 +49,12 @@ export default {
                   title: '秘密花园',
                   showBottom: false,
               },
-              {
-                  path: '/webview/oauth?redirectUrl=https%3A%2F%2Fspringchen.cn/Dengmi/?mirror=1065',
-                  title: '元宵猜灯谜活动',
-                  desc: '一起来猜灯谜吧，有FBi奖励哦！！！',
-                  showBottom: true
-              },
+              // {
+              //     path: '/webview/oauth?redirectUrl=https%3A%2F%2Fspringchen.cn/Dengmi/?mirror=1065',
+              //     title: '元宵猜灯谜活动',
+              //     desc: '一起来猜灯谜吧，有FBi奖励哦！！！',
+              //     showBottom: true
+              // },
               {
                   path: '/webview/year2021',
                   title: '2021年度总结',
