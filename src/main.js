@@ -20,6 +20,10 @@ if (process.env.NODE_ENV === 'development') {
   new VConsole();
 }
 
+// 图片开启懒加载
+import VueLazyload from 'vue-lazyload'
+Vue.use(VueLazyload)
+
 import Viewer from 'v-viewer'
 import './assets/css/viewer.css'
 Vue.use(Viewer)
