@@ -7,7 +7,7 @@
         </div>
         <div @click="toUser(item)" v-for="(item,index) in pagedata" :key="index" class="item">
             <div class="left">
-                <img :src="imgOrigin+item.userAO.icon + '?x-oss-process=image/resize,h_80'" alt="">
+                <img :src="imgOrigin+item.userAO.icon + '?x-oss-process=image/format,webp/quality,q_75/resize,h_80'" alt="">
                 <div class="info">
                   <div>
                     <span style="padding-right: 2px">{{item.userAO.userName}}</span>

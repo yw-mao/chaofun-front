@@ -5,7 +5,7 @@
       <div v-if="forumInfo" class="asa">
         <div class="forum_con">
           <div class="fir">
-            <img :src="imgOrigin+forumInfo.imageName+'?x-oss-process=image/resize,h_80'" />
+            <img :src="imgOrigin+forumInfo.imageName+'?x-oss-process=image/format,webp/quality,q_75/resize,h_80'" />
             <div>{{forumInfo.name}}</div>
           </div>
           <div class="forum_desc">{{forumInfo.desc}}</div>
@@ -51,7 +51,7 @@
       <!--        <div class="game">-->
       <!--          <div @click="toUrl({url: '/webview/buttonGame', routeType: 1})" class="title">The Button<span class="tab">第二届春节有奖活动</span></div>-->
       <!--          <div @click="toUrl({url: '/webview/buttonGame', routeType: 1})" class="advertise">-->
-      <!--            <img src="https://i.chao.fun/biz/84c0bae9c0f3a4b828a9847b736eb4b8.png?x-oss-process=image/resize,h_512" alt="">-->
+      <!--            <img src="https://i.chao.fun/biz/84c0bae9c0f3a4b828a9847b736eb4b8.png?x-oss-process=image/format,webp/quality,q_75/resize,h_512" alt="">-->
       <!--          </div>-->
       <!--        </div>-->
 

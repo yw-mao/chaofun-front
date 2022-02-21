@@ -1,7 +1,7 @@
 <template>
  <div class="item">
     <div class="img">
-        <img :src="imgOrigin+item.icon+'?x-oss-process=image/resize,h_80'" alt="">
+        <img :src="imgOrigin+item.icon+'?x-oss-process=image/format,webp/quality,q_75/resize,h_80'" alt="">
     </div>
     <div class="center">
         <div class="name">

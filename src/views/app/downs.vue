@@ -6,7 +6,7 @@
         </div>
         <div class="logo_con">
             <div style="height: 140px;">
-                <img src="https://i.chao.fun/biz/08a2d3a676f4f520cb99910496e48b4e.png?x-oss-process=image/resize,h_80" alt="">
+                <img src="https://i.chao.fun/biz/08a2d3a676f4f520cb99910496e48b4e.png?x-oss-process=image/format,webp/quality,q_75/resize,h_80" alt="">
             </div>
             
             <div class="app_name">

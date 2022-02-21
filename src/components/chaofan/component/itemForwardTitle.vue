@@ -2,7 +2,7 @@
  <div>  
     <div class="title">
         <div class="title_source"> 
-            <img  class="source_icon" :src="imgOrigin+item.sourcePost.forum.imageName+'?x-oss-process=image/resize,h_80'" alt=""> 
+            <img  class="source_icon" :src="imgOrigin+item.sourcePost.forum.imageName+'?x-oss-process=image/format,webp/quality,q_75/resize,h_80'" alt="">
             <span class="span_username">{{item.sourcePost.forum.name}}</span>
             来自 
             <span>{{item.sourcePost.userInfo?item.sourcePost.userInfo.userName:'测试账号'}}</span>

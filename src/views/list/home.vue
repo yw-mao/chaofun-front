@@ -10,7 +10,7 @@
         <div class="forum_tab" >
           <div class="forum_desc">
             <div style="width:72px;height:72px;">
-              <img v-if="forumInfo.imageName" :src="imgOrigin+forumInfo.imageName + '?x-oss-process=image/resize,h_70'" class="forum_info_icon">
+              <img v-if="forumInfo.imageName" :src="imgOrigin+forumInfo.imageName + '?x-oss-process=image/format,webp/quality,q_75/resize,h_70'" class="forum_info_icon">
             </div>
             <div class="box_class">
               <div style="box-sizing: border-box">

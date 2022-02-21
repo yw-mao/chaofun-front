@@ -6,7 +6,7 @@
             class="icon icon2"
             :src="
               imgOrigin +
-              'biz/daa54c993451a77d3e723405afbcd15c.png?x-oss-process=image/resize,h_80'
+              'biz/daa54c993451a77d3e723405afbcd15c.png?x-oss-process=image/format,webp/quality,q_75/resize,h_80'
             "
             alt=""
           />
@@ -19,7 +19,7 @@
           :src="
             imgOrigin +
             item.forum.imageName +
-            '?x-oss-process=image/resize,h_80'
+            '?x-oss-process=image/format,webp/quality,q_75/resize,h_80'
           "
           alt=""
         />
@@ -33,7 +33,7 @@
                 :src="
                   imgOrigin +
                   item.forum.imageName +
-                  '?x-oss-process=image/resize,h_80'
+                  '?x-oss-process=image/format,webp/quality,q_75/resize,h_80'
                 "
                 alt=""
               />
@@ -80,7 +80,7 @@
                 :src="
                   imgOrigin +
                   item.userInfo.icon +
-                  '?x-oss-process=image/resize,h_80'
+                  '?x-oss-process=image/format,webp/quality,q_75/resize,h_80'
                 "
                 alt=""
               />

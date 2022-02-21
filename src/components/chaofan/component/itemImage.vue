@@ -19,7 +19,7 @@
             <img
               style="opacity:0;width:100%;height:100%;"
               :data-source="imgOrigin+item2"
-              :data-src="imgOrigin+item2+(item2.includes('.gif')? '': '?x-oss-process=image/resize,h_512')"
+              :data-src="imgOrigin+item2+(item2.includes('.gif')? '': '?x-oss-process=image/format,webp/quality,q_75/resize,h_512')"
               :key="item2" :alt="item.title.includes('/')?'':item.title" 
               :title="item.title.includes('/')?'':item.title"
               class="lazyload"
@@ -64,7 +64,7 @@
       if(this.item.imageNums>1){
         this.item.images.forEach(item=>{
           if(!item.includes('.gif')){
-            o_imgs.push(this.imgOrigin+item+ '?x-oss-process=image/resize,h_512')
+            o_imgs.push(this.imgOrigin+item+ '?x-oss-process=image/format,webp/quality,q_75/resize,h_512')
           }
         })
       }
@@ -92,7 +92,7 @@
         if (this.isLongImage(item.width, item.height)) {
           return url + '?x-oss-process=image/crop,h_' + parseInt(512 * item.width / 568)
         }
-        return url + '?x-oss-process=image/resize,h_512';
+        return url + '?x-oss-process=image/format,webp/quality,q_75/resize,h_512';
       },
       toUrls(item,params){
         this.postBehavior(item.postId,'jump');
@@ -109,8 +109,8 @@
         return {
           // 'width':
           'height':parseInt((this.ISPHONE?(231*item.height/(item.width*2)):(231*item.height/item.width)))+'px',
-          'background-image':`url(${this.imgOrigin+item2+(item2.includes('.gif')? '': ('?x-oss-process=image/resize,h_'+(item.imageNums==2?750:400)))})`,//parseInt((this.ISPHONE?(231*item.height/(item.width)):(231*item.height/item.width)))
-          //imgOrigin+item2+ (item2.includes('.gif')? '': ('?x-oss-process=image/resize,h_' + getImageHeight(item.width, item.height)))
+          'background-image':`url(${this.imgOrigin+item2+(item2.includes('.gif')? '': ('?x-oss-process=image/format,webp/quality,q_75/resize,h_'+(item.imageNums==2?750:400)))})`,//parseInt((this.ISPHONE?(231*item.height/(item.width)):(231*item.height/item.width)))
+          //imgOrigin+item2+ (item2.includes('.gif')? '': ('?x-oss-process=image/format,webp/quality,q_75/resize,h_' + getImageHeight(item.width, item.height)))
         }
       },
       getImageHeight(w,h){
