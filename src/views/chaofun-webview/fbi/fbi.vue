@@ -96,6 +96,15 @@
           FBi: 7500
         </p>
       </div>
+      <div style="width: 50%; display: inline-block">
+        <img style="padding-right: 10px; padding-left: 10px; width: 100%" src="https://i.chao.fun/biz/da67f9c40bc0f80db68e40de94b9a3f5.png">
+        <p style="text-align: center">
+          西兰公国 Lord (勋爵)
+        </p>
+        <p style="text-align: center">
+          FBi: 35000
+        </p>
+      </div>
     </div>
 
 
