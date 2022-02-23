@@ -202,6 +202,7 @@ export const constantRoutes = [
         path: '/search',
         name: 'search',
         component: () => import('@/views/list/search'),
+        props: route => ({ q: route.query.q }),
         meta: { title: '',keepAlive: true,},
         hidden: true
       },

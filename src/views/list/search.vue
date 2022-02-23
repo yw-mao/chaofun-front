@@ -146,6 +146,7 @@ import attentionItem from "@/components/chaofan/attentionItem.vue";
 export default {
   name: "Dashboard",
   // components: { adminDashboard, editorDashboard },
+  props:['q'],
   data() {
     return {
       hasContent: true,
@@ -185,8 +186,8 @@ export default {
     attentionItem,
   },
   watch: {
-    "$route.query.q"(v) {
-      
+    q(v) {
+      this.scrollTop = 0;
       this.lists = [];
       this.keyword = v;
       this.params.keyword = v;
@@ -330,6 +331,10 @@ export default {
           this.getLists();
         }
     },
+  },
+  activated() {
+    // 重设滚动条位置
+    this.toPosition();
   },
 };
 </script>
