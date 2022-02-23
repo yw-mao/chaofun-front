@@ -76,7 +76,6 @@
           FBi: 1500
         </p>
       </div>
-
       <div @click="getBilibili1Month" style="width: 50%; display: inline-block">
         <img style="padding-right: 10px; padding-left: 10px; width: 100%" src="https://i.chao.fun/biz/9683983f7ae6a723a76fc00dd7f9a103.png">
         <p style="text-align: center">
@@ -86,9 +85,6 @@
           FBi: 2500
         </p>
       </div>
-
-
-
       <div style="width: 50%; display: inline-block">
         <img style="padding-right: 10px; padding-left: 10px; width: 100%" src="https://i.chao.fun/biz/e3e44a77908676ea7047c18601a0297b.png">
         <p style="text-align: center">
@@ -98,8 +94,6 @@
           FBi: 7500
         </p>
       </div>
-
-
       <div @click="getBilibili1Year" style="width: 50%; display: inline-block">
         <img style="padding-right: 10px; padding-left: 10px; width: 100%" src="https://i.chao.fun/biz/9683983f7ae6a723a76fc00dd7f9a103.png">
         <p style="text-align: center">
@@ -109,7 +103,6 @@
           FBi: 16800
         </p>
       </div>
-
       <div style="width: 50%; display: inline-block">
         <img style="padding-right: 10px; padding-left: 10px; width: 100%" src="https://i.chao.fun/biz/da67f9c40bc0f80db68e40de94b9a3f5.png">
         <p style="text-align: center">

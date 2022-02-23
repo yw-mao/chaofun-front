@@ -19,7 +19,7 @@
     <div style="height: 1px; width: 100%; background-color: black"></div>
 
     <el-button  @click="toGithub()">
-      关注炒饭开源(github)
+      关注炒饭Github(需网络优化才能访问)
     </el-button>
   </div>
 </template>
