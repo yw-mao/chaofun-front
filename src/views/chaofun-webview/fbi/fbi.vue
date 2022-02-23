@@ -87,7 +87,7 @@
         </p>
       </div>
 
-      <div @click="getBilibili1Month" style="width: 50%; display: inline-block">
+      <div @click="getBilibili1Year" style="width: 50%; display: inline-block">
         <img style="padding-right: 10px; padding-left: 10px; width: 100%" src="https://i.chao.fun/biz/9683983f7ae6a723a76fc00dd7f9a103.png">
         <p style="text-align: center">
           Bilibili年度大会员
