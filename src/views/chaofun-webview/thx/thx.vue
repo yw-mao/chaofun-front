@@ -1,7 +1,7 @@
 <template>
   <div style="padding-left: 10px; padding-right: 10px">
     <div style="font-size: 20px">贡献过代码的饭友</div>
-    <div style="padding-top: 4px;  border-bottom-width: 1px; border-color: black;" @click="toUser(50777)">
+    <div style="padding-top: 4px;  border-bottom-width: 1px; border-color: black;" @click="toUser(59155)">
       <p style="font-size: 16px">感谢 @aolihui</p> 在网页搜索上做出的贡献</div>
     <div style="height: 1px; width: 100%; background-color: black"></div>
     <div style="padding-top: 4px;  border-bottom-width: 1px; border-color: black;" @click="toUser(53573)">
