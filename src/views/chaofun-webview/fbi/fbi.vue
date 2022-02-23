@@ -87,6 +87,17 @@
         </p>
       </div>
 
+      <div @click="getBilibili1Month" style="width: 50%; display: inline-block">
+        <img style="padding-right: 10px; padding-left: 10px; width: 100%" src="https://i.chao.fun/biz/9683983f7ae6a723a76fc00dd7f9a103.png">
+        <p style="text-align: center">
+          Bilibili年度大会员
+        </p>
+        <p style="text-align: center">
+          FBi: 16800
+        </p>
+      </div>
+
+
       <div style="width: 50%; display: inline-block">
         <img style="padding-right: 10px; padding-left: 10px; width: 100%" src="https://i.chao.fun/biz/e3e44a77908676ea7047c18601a0297b.png">
         <p style="text-align: center">
@@ -225,6 +236,26 @@
             .catch(() => {
               // on cancel
             });
+      },
+      getBilibili1Year() {
+        Dialog.confirm({
+          title: "是否确认兑换",
+          message: `兑换会扣除 16800 FBi`,
+          messageAlign: "left",
+        })
+          .then(() => {
+            api.getByPath('/api/v0/gift/getBilibili1Year', {}).then((res) => {
+              if (res.success) {
+                this.$message.success("已兑换, 请查看消息");
+                this.getUserInfo();
+              } else{
+                this.$message.error(res.errorMessage);
+              }
+            });
+          })
+          .catch(() => {
+            // on cancel
+          });
       }
     }
   }
