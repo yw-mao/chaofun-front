@@ -58,6 +58,17 @@
       <div @click="checkoutOk" :class="['c_nav_item_t',params.onlyNew?'oks':'']">
           没看过
       </div>
+      <div class="search_icon">
+        <i class="el-icon-search"></i>
+        <el-input
+          class="search_input"
+          placeholder="搜索"
+          prefix-icon="el-icon-search"
+          @change="toSearch(keyword)"
+          v-model="keyword"
+        >
+        </el-input>
+      </div>
     </div>
         
         
@@ -120,6 +131,7 @@
             value: 'all'
           },
         ],
+        keyword: ''
      }
    },
    
@@ -138,7 +150,7 @@
      
    },
    mounted() {
-    
+    this.keyword = this.$route.query.q;
    },
    methods: {
     doRange(){
@@ -200,7 +212,23 @@
 .phones{
   height: 34px;
   text-align: left;
-  // margin-bottom: ;
+  margin: 10px;
+  .search_icon {
+    flex: auto;
+    font-size: 24px;
+    // margin-right: 10px;
+    position: relative;
+    z-index: 1;
+    width: 100px;
+    /*margin-left: 40px;*/
+
+    .search_input {
+      position: absolute;
+      top: 0;
+      width: 100%;
+      right: 0;
+    }
+  }
 }
 .mode_icon{
   width: 26px;
