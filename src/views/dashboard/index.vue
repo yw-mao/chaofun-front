@@ -27,17 +27,6 @@
             >
               <i class="el-icon-refresh"></i>
             </div>
-            <div v-if="ISPHONE" class="search_icon">
-              <i class="el-icon-search"></i>
-              <el-input
-                class="search_input"
-                placeholder="搜索"
-                prefix-icon="el-icon-search"
-                @change="toSearch(keyword)"
-                v-model="keyword"
-              >
-              </el-input>
-            </div>
           </div>
           <div
             class="grid-content"
@@ -178,7 +167,6 @@ export default {
       isPhone: false,
       ifcanget: true,
       loadAll: false,
-      keyword: "",
       isRecommend: false,
       forumInfo: null,
     };
@@ -237,7 +225,6 @@ export default {
     }else{
       this.params.pageSize = 30
     }
-    this.keyword = this.$route.query.q;
     this.toPosition();
     // console.log('scrollHeight',this.scrollHeight)
     let self = this;
@@ -521,23 +508,6 @@ export default {
     &:hover {
       color: $linkcolor;
     }
-  }
-}
-
-.search_icon {
-  line-height: 56px;
-  font-size: 24px;
-  margin-right: 10px;
-  position: relative;
-  z-index: 1;
-  width: 100px;
-  /*margin-left: 40px;*/
-
-  .search_input {
-    position: absolute;
-    top: 0;
-    width: 100%;
-    right: 0;
   }
 }
 
