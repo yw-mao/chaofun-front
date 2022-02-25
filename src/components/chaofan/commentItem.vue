@@ -16,7 +16,7 @@
         </div>
         <div class="c_content">
             <div :class="getCommentUserinfoClazz(item)">
-                <img :src="imgOrigin+item.userInfo.icon+'?x-oss-process=image/format,webp/quality,q_75/resize,h_40'" alt="">
+                <img :src="imgOrigin+item.userInfo.icon+'?x-oss-process=image/resize,h_40/format,webp/quality,q_75'" alt="">
                 <span  @click.stop="toUser(item.userInfo)" class="username">{{item.userInfo.userName}}</span>
                 <span v-if="item.userInfo.userTag" title="用户在版块的标签" style="font-size:14px; background-color: rgb(237, 239, 241); color: rgb(26, 26, 27); margin-left: 5px ">{{item.userInfo.userTag.data}}</span>
                 <span class="time" v-if="humanizeTimeFormat" @click="changeTimeFormat" title="点击切换时间格式">{{moment.duration(moment(item.gmtCreate) - moment()).humanize(true)}}</span>
@@ -38,8 +38,8 @@
                         <div v-for="(i,k) in item.imageNames.split(',')" :key="k">
                             <span class="aaa">
 <!--                                【附图】-->
-                              <img  style="opacity:0;width:60px;height:60px" :src="imgOrigin+i+'?x-oss-process=image/format,webp/quality,q_75/resize,h_60'" :data-source="imgOrigin+i" >
-                              <div :src="imgOrigin+i+'?x-oss-process=image/format,webp/quality,q_75/resize,h_60'" :data-source="imgOrigin+i" :style="{'background-image':'url('+imgOrigin+i+')','background-size':'cover',width:'60px',height:'60px'}" ></div>
+                              <img  style="opacity:0;width:60px;height:60px" :src="imgOrigin+i+'?x-oss-process=image/resize,h_60/format,webp/quality,q_75'" :data-source="imgOrigin+i" >
+                              <div :src="imgOrigin+i+'?x-oss-process=image/resize,h_60/format,webp/quality,q_75'" :data-source="imgOrigin+i" :style="{'background-image':'url('+imgOrigin+i+')','background-size':'cover',width:'60px',height:'60px'}" ></div>
                             </span>
                         </div>
                     </viewer>

@@ -8,7 +8,7 @@
             <div  v-touch:start="startHandler" v-touch:end="endHandler" class="content">
                 <div v-if="secret.imageUrl" class="img">
                     <div v-viewer=""  v-if="!secret.imageUrl.includes('.mp4')">
-                    <img class="ims" v-if="!secret.imageUrl.includes('.mp4')" :src="secret.imageUrl + '?x-oss-process=/resize,h_768,image/format,webp/quality,q_75'" :data-source="secret.imageUrl">
+                    <img class="ims" v-if="!secret.imageUrl.includes('.mp4')" :src="secret.imageUrl + '?x-oss-process=image/resize,h_768/format,webp/quality,q_75'" :data-source="secret.imageUrl">
                     </div>
                     <video class="ims video" v-if="secret.imageUrl.includes('.mp4')" controls autoplay loop :src="secret.imageUrl" alt="">
                     </video>
