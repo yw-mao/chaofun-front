@@ -109,7 +109,7 @@
         return {
           // 'width':
           'height':parseInt((this.ISPHONE?(231*item.height/(item.width*2)):(231*item.height/item.width)))+'px',
-          'background-image':`url(${this.imgOrigin+item2+(item2.includes('.gif')? '': ('?x-oss-process=image/resize,h_'+(item.imageNums==2?750:400)))}) + '/format,webp/quality,q_75' `,//parseInt((this.ISPHONE?(231*item.height/(item.width)):(231*item.height/item.width)))
+          'background-image':`url(${this.imgOrigin+item2+(item2.includes('.gif')? '': ('?x-oss-process=image/resize,h_'+(item.imageNums==2?750:400))  + '/format,webp/quality,q_75' )}) `,//parseInt((this.ISPHONE?(231*item.height/(item.width)):(231*item.height/item.width)))
         }
       },
       getImageHeight(w,h){
