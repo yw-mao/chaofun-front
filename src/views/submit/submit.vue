@@ -68,7 +68,7 @@
                 <el-progress v-if="progressFlag" :percentage="loadProgress"></el-progress>
                 <div class="imgList">
                   <div v-for="(item,index) in fileLists" :key="index" class="li">
-                    <img v-if="!item.endsWith('.mp4') && !item.endsWith('.mkv')" :src="imgOrigin+item + '?x-oss-process=image/format,webp/quality,q_75/resize,h_150'" alt="">
+                    <img v-if="!item.endsWith('.mp4') && !item.endsWith('.mkv')" :src="imgOrigin+item + '?x-oss-process=image/resize,h_150/format,webp/quality,q_75'" alt="">
                     <img v-if="item.endsWith('.mp4') || item.endsWith('.mkv')" :src="imgOrigin+item + '?x-oss-process=video/snapshot,t_1,h_150'" alt="">
                     <span class="del" @click="deleteImg(index)">删除</span>
                   </div>
@@ -333,12 +333,12 @@
         baseFormName: '',
         fileList: [],
         fileLists: [
-          // 'biz/563a9785150700000c41340852d39afa.jpg?x-oss-process=image/format,webp/quality,q_75/resize,h_512',
-          // 'biz/563a9785150700000c41340852d39afa.jpg?x-oss-process=image/format,webp/quality,q_75/resize,h_512',
-          // 'https://i.chao.fun/biz/563a9785150700000c41340852d39afa.jpg?x-oss-process=image/format,webp/quality,q_75/resize,h_512',
-          // 'https://i.chao.fun/biz/563a9785150700000c41340852d39afa.jpg?x-oss-process=image/format,webp/quality,q_75/resize,h_512',
-          // 'https://i.chao.fun/biz/563a9785150700000c41340852d39afa.jpg?x-oss-process=image/format,webp/quality,q_75/resize,h_512',
-          // 'https://i.chao.fun/biz/563a9785150700000c41340852d39afa.jpg?x-oss-process=image/format,webp/quality,q_75/resize,h_512'
+          // 'biz/563a9785150700000c41340852d39afa.jpg?x-oss-process=image/resize,h_512/format,webp/quality,q_75',
+          // 'biz/563a9785150700000c41340852d39afa.jpg?x-oss-process=image/resize,h_512/format,webp/quality,q_75',
+          // 'https://i.chao.fun/biz/563a9785150700000c41340852d39afa.jpg?x-oss-process=image/resize,h_512/format,webp/quality,q_75',
+          // 'https://i.chao.fun/biz/563a9785150700000c41340852d39afa.jpg?x-oss-process=image/resize,h_512/format,webp/quality,q_75',
+          // 'https://i.chao.fun/biz/563a9785150700000c41340852d39afa.jpg?x-oss-process=image/resize,h_512/format,webp/quality,q_75',
+          // 'https://i.chao.fun/biz/563a9785150700000c41340852d39afa.jpg?x-oss-process=image/resize,h_512/format,webp/quality,q_75'
         ],
         filedata: {},
         activeName: 'first',

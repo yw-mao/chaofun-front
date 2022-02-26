@@ -7,7 +7,7 @@
         </div>
         <div :class="['left_img',{'left_img_display': item.cover}]">
           <i v-if="!item.cover" class="el-icon-link"></i>
-          <img v-if="item.cover" :src="imgOrigin+item.cover+(item.cover.includes('.ico')?'':'?x-oss-process=image/format,webp/quality,q_75/resize,h_100')" alt="">
+          <img v-if="item.cover" :src="imgOrigin+item.cover+(item.cover.includes('.ico')?'':'?x-oss-process=image/resize,h_100/format,webp/quality,q_75')" alt="">
         </div>
     </div>
  </div>

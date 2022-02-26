@@ -44,7 +44,7 @@
                         <h1>我要分享到</h1>
                         <div class="forum_items">
                             <div @click="choose(item)" v-for="(item,index) in tags" :key="index" :class="['forum_item',{'forum_item_active':chooseId==item.id}]">
-                                <img class="f_img" :src="imgOrigin+item.imageName+'?x-oss-process=image/format,webp/quality,q_75/resize,h_80'" alt="">
+                                <img class="f_img" :src="imgOrigin+item.imageName+'?x-oss-process=image/resize,h_80/format,webp/quality,q_75'" alt="">
                                 <span>{{item.name}}</span>
                             </div>
                         </div>

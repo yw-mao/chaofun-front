@@ -13,7 +13,7 @@
                         (userInfo.icon || '37f1ae45279fac24462a42fd7b849edc.jpg')]">
                   <img :src="imgOrigin +
                         (userInfo.icon || '37f1ae45279fac24462a42fd7b849edc.jpg') +
-                        '?x-oss-process=image/format,webp/quality,q_75/resize,h_80'" :data-source="imgOrigin +
+                        '?x-oss-process=image/resize,h_80/format,webp/quality,q_75'" :data-source="imgOrigin +
                         (userInfo.icon || '37f1ae45279fac24462a42fd7b849edc.jpg')" alt=""/>
                 </viewer>
               </div>
@@ -35,8 +35,8 @@
                 <el-popover placement="bottom" width="300" trigger="hover">
                   <badgeDetail :badgeInfo0="badgeInfo.badge"/>
                   <div slot="reference">
-                    <img :src="imgOrigin +  'biz/f30227f819eda710024f0f6c99fa60eb.png?x-oss-process=image/format,webp/quality,q_75/resize,h_42'" style="position:absolute;left: -21px;"/>
-                    <img :src="imgOrigin + badgeInfo.badge.icon +  '?x-oss-process=image/format,webp/quality,q_75/resize,h_24'" style="position:absolute;top:14px;left:-12px;border-radius:50%;" alt=""/>
+                    <img :src="imgOrigin +  'biz/f30227f819eda710024f0f6c99fa60eb.png?x-oss-process=image/resize,h_42/format,webp/quality,q_75'" style="position:absolute;left: -21px;"/>
+                    <img :src="imgOrigin + badgeInfo.badge.icon +  '?x-oss-process=image/resize,h_24/format,webp/quality,q_75'" style="position:absolute;top:14px;left:-12px;border-radius:50%;" alt=""/>
                   </div>
                 </el-popover>
               </div>

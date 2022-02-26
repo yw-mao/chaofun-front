@@ -110,7 +110,7 @@ export default {
       try {
         if (content.indexOf('data:image') === -1 && content.indexOf('.gif') === -1 ) {
           content = content.replace(/<img src="([^"]*?)">/g,
-            '<img class="lazyload" data-src="$1?x-oss-process=image/format,webp/quality,q_75/resize,h_512">'
+            '<img class="lazyload" data-src="$1?x-oss-process=image/resize,h_512/format,webp/quality,q_75">'
           );
         }
       } catch (error) {

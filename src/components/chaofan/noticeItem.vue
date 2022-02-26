@@ -33,7 +33,7 @@
             <span @click="toDetail(items)" class="tiezi_title">【{{items.post.title.length>15?items.post.title.slice(0,15)+'...':items.post.title}}】</span>
          </div>
          <div class="comment">
-             <!-- <img :src="imgOrigin+items.sender.icon+'?x-oss-process=image/format,webp/quality,q_75/resize,h_80'" alt=""> -->
+             <!-- <img :src="imgOrigin+items.sender.icon+'?x-oss-process=image/resize,h_80/format,webp/quality,q_75'" alt=""> -->
              <span></span>评论说： {{items.comment.text}}<span></span>
          </div>
      </div>
@@ -61,7 +61,7 @@
             <span>在评论区：</span>
          </div>
          <div class="comment">
-             <!-- <img :src="imgOrigin+items.sender.icon+'?x-oss-process=image/format,webp/quality,q_75/resize,h_80'" alt=""> -->
+             <!-- <img :src="imgOrigin+items.sender.icon+'?x-oss-process=image/resize,h_80/format,webp/quality,q_75'" alt=""> -->
              <span></span>@你说： {{items.comment.text}}<span></span>
          </div>
      </div>

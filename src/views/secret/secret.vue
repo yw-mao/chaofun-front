@@ -9,7 +9,7 @@
             <div class="content" :style="{width: ISPHONE?imgMaxWidth+80+'px':'640px'}">
               <div :style="{height: ISPHONE?'auto':'440px', maxWidth: ISPHONE?imgMaxWidth+80+'px':'640px',marginBottom:'20px',overflow:'hidden'}">
                 <div v-viewer="" v-if="!secret.imageUrl.includes('.mp4')" :style="{maxHeight: '100%', maxWidth: '100%', margin: 'auto', display: 'inline'}">
-                  <img v-if="!secret.imageUrl.includes('.gif')" v-bind:src="secret.imageUrl + '?x-oss-process=image/format,webp/quality,q_75/resize,h_768'" :data-source="secret.imageUrl" :style="{maxHeight: '100%', maxWidth: '100%', margin: 'auto', display: 'table-cell'}"   >
+                  <img v-if="!secret.imageUrl.includes('.gif')" v-bind:src="secret.imageUrl + '?x-oss-process=image/resize,h_768/format,webp/quality,q_75'" :data-source="secret.imageUrl" :style="{maxHeight: '100%', maxWidth: '100%', margin: 'auto', display: 'table-cell'}"   >
                   <img v-if="gifShow && secret.imageUrl.includes('.gif')" v-bind:src="secret.imageUrl" :data-source="secret.imageUrl" :style="{maxHeight: '100%', maxWidth: '100%', margin: 'auto', display: 'table-cell'}"   >
                   <img v-if="!gifShow && secret.imageUrl.includes('.gif')" v-bind:src="secret.imageUrl" :data-source="secret.imageUrl" :style="{maxHeight: '100%', maxWidth: '100%', margin: 'auto', display: 'table-cell'}"   >
                 </div>

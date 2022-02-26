@@ -92,7 +92,7 @@ const actions = {
                 hide: false,
                 // component: () => import(`@/views/${doRoute(item2)}`),
                 meta: {
-                  title: item2.title,icon: 'https://i.chao.fun/'+item2.icon + '?x-oss-process=image/format,webp/quality,q_75/resize,h_80',
+                  title: item2.title,icon: 'https://i.chao.fun/'+item2.icon + '?x-oss-process=image/resize,h_80/format,webp/quality,q_75',
                   forumId:item2.forumId,
                   forumName: item2.title,
                   keepAlive: true,
