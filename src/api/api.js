@@ -777,6 +777,16 @@ export function modlist(params) {
   })
 }
 
+/** 获取管理云类表 */
+export function banlist(params) {
+  return request({
+    url: '/api/v0/forum/listBanUsers',
+    method: 'get',
+    params
+  })
+}
+
+
 /** 获取url */
 export function getUrlTitle(params) {
   return request({
@@ -1025,6 +1035,22 @@ export function forumRemoveMod(params) {
 export function forumAddMod(params) {
   return request({
     url: '/api/v0/mod/add',
+    method: 'get',
+    params
+  })
+}
+
+export function forumAddBan(params) {
+  return request({
+    url: '/api/v0/forum/banUser',
+    method: 'get',
+    params
+  })
+}
+
+export function forumRemoveBan(params) {
+  return request({
+    url: '/api/v0/forum/unbanUser',
     method: 'get',
     params
   })

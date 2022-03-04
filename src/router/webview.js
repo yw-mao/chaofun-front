@@ -36,6 +36,13 @@ routes = [
     hidden: true
   },
   {
+    path: '/webview/forum/ban_manager',
+    component: () => import('@/views/chaofun-webview/forum/BanManager'),
+    name: 'ban_manager',
+    meta: { title: '用户封禁'},
+    hidden: true
+  },
+  {
     path: '/webview/forum/analytics',
     component: () => import('@/views/chaofun-webview/forum/analytics'),
     name: 'forumanalytics',

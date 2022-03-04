@@ -39,7 +39,7 @@
       </div>
 
       <div class="bottom">
-        <div @click="toBeContinue" class="btns">用户封禁</div>
+        <div @click="toBan" class="btns">用户封禁</div>
       </div>
 
     </div>
@@ -108,6 +108,19 @@ export default {
     toBeContinue() {
       this.$toast('尽情期待：）');
     },
+
+    toBan() {
+      try {
+        window.flutter_inappwebview.callHandler('toViewPage', {
+          url: "https://chao.fun/webview/forum/ban_manager" + "?forumId=" + this.forumId,
+          title: '用户封禁',
+          showHeader: true
+        })
+      } catch (e) {
+        window.open(location.origin + '/webview/forum/ban_manager?forumId=' + this.forumId);
+      }
+    },
+
     toSave(){
         this.toSign();
     },
