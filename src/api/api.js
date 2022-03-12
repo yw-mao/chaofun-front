@@ -53,7 +53,8 @@ export function submitArticle(params) {
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded'
     },
-    data: qs.stringify(params)
+    data: qs.stringify(params),
+    timeout: 10 * 60 * 1000, // 上传文件最大支持2分钟
   })
 }
 
