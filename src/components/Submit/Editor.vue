@@ -14,7 +14,7 @@
       ref="editor"
     />
     <el-button class="switch-mode" @click="switchMode" round>
-      {{editType === 'wysiwyg' ? 'Markdown模式' : '切换传统编辑器'}}
+      {{editType === 'wysiwyg' ? '切换至Markdown模式' : '切换至传统编辑器'}}
     </el-button>
   </div>
 </template>
