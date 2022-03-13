@@ -181,7 +181,6 @@ export default {
   top: 0px;
   left: 0px;
   background-color: white;
-  
   .switch-mode {
     z-index: 99999;
   }
