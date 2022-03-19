@@ -10,6 +10,18 @@
       <div style="max-width:600px;margin-top:10px;">
           <el-input type="textarea" maxlength="56" v-model="desc" style="resize:none;height:64px !important;overflow:hidden;margin-bottom:20px;" placeholder="请设置版块介绍"></el-input>
         </div>
+
+
+      <div class="bottom">
+        是否允许匿名发帖
+        <el-switch
+            v-model="anonymity"
+            @change="setAnonymity"
+            active-color="#13ce66"
+            inactive-color="#ff4949">
+        </el-switch>
+      </div>
+
       <div class="bottom">
         <div @click="toSave" class="btns">保存ICON和描述</div>
       </div>
@@ -42,6 +54,7 @@
         <div @click="toBan" class="btns">用户封禁</div>
       </div>
 
+
     </div>
   </div>
 </template>
@@ -53,12 +66,14 @@ import * as api from '@/api/api'
 import ListItem from '@/components/chaofan/ListItem.vue'
 import RightCom from '@/components/chaofan/RightCom'
 import loadText from '@/components/chaofan/loadText'
+import {getByPath} from "../../../api/api";
 
 export default {
   name: 'user',
   // components: { adminDashboard, editorDashboard },
   data() {
     return {
+      anonymity: true,
       params: {
         forumId: '',
       },
@@ -97,11 +112,8 @@ export default {
     this.toPosition()
   },
   created() {
-
-
     this.forumId = this.$route.query.forumId;
     this.getForumInfo();
-    
   },
 
   methods:{
@@ -207,6 +219,17 @@ export default {
 
       api.getModInfo({forumId: this.forumId}).then(res => {
         this.modInfo = res.data;
+      })
+
+      api.getByPath('/api/v0/forum/getAnonymity',{forumId: this.forumId}).then( res => {
+        this.anonymity = res.data
+      })
+    },
+
+    setAnonymity(value) {
+      console.log(value);
+      api.getByPath('/api/v0/forum/setAnonymity',{forumId: this.forumId, anonymity: value}).then( res => {
+        this.getForumInfo();
       })
     },
 
