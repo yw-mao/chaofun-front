@@ -43,7 +43,7 @@ export default {
   },
   mounted(){
     this.getForumTopUps()
-    document.title = "24 小时用户排名";
+    document.title = "24 小时板块排名";
   },
   methods:{
     getForumTopUps(){
