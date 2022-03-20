@@ -32,21 +32,15 @@
                     统计信息
                   </div>
                   <div>秘密花园队列: {{this.websiteInfo.secretDelay}}</div>
-                  <div>24小时注册用户数: {{this.websiteInfo.past24HRegisters}}</div>
-                  <div>24小时帖子数: {{this.websiteInfo.past24HPosts}}</div>
-                  <div>24小时评论数: {{this.websiteInfo.past24HComments}}</div>
-                  <div>24小时登录点赞数: {{this.websiteInfo.past24HLoginVoteCount}}</div>
-                  <div>24小时原创帖子数: {{this.websiteInfo.past24HOriginPosts}}</div>
-                  <div>总注册用户: {{this.websiteInfo.totalRegisters}}</div>
                   <div>百度收录数: {{this.websiteInfo.baiduIncluded}}</div>
                 </div>
               </div>
-              <div style="font-weight: bold; margin-top: 20px">
-                版主激励
-              </div>
-              <div style="max-width:600px;margin-top:10px;">
-                <el-input type="textarea"  maxlength="56" v-model="params.title" style="resize:none;overflow:hidden;" placeholder="请设置推送标题"></el-input>
-              </div>
+<!--              <div style="font-weight: bold; margin-top: 20px">-->
+<!--                版主激励-->
+<!--              </div>-->
+<!--              <div style="max-width:600px;margin-top:10px;">-->
+<!--                <el-input type="textarea"  maxlength="56" v-model="params.title" style="resize:none;overflow:hidden;" placeholder="请设置推送标题"></el-input>-->
+<!--              </div>-->
             </div>
 
             <div style="margin-left: 30px; max-width: 500px;">
@@ -274,7 +268,6 @@
         }).then(() => {
           api.approveApply({'applyId': applyId}).then(res => {
             if (res.success) {
-              location.reload();
               this.listApplys();
             } else {
               this.$toast(res.errorMessage)
@@ -297,7 +290,6 @@
 
         api.refuseApply({'applyId': applyId, 'reason': this.form.reason}).then(res => {
           if (res.success) {
-            print('123');
             this.listApplys();
             this.$toast('拒绝成功')
           } else {
@@ -334,7 +326,7 @@
           }).then(() => {
             api.refuseNotify({'notifyId': notifyId}).then(res => {
               if (res.success) {
-                location.reload();
+                this.listApplys();
               } else {
                 this.$toast(res.errorMessage)
               }
