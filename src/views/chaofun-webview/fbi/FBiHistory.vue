@@ -98,7 +98,9 @@
           return '感谢赠与';
         }
 
-
+        if (reason.startsWith('punish')) {
+          return '处罚';
+        }
         return reason;
 
       }
