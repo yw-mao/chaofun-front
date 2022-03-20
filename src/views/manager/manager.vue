@@ -244,16 +244,18 @@
         }
       });
 
-      api.listAllNotify({status: 0}).then(res => {
-        if (res.success && res.data != null) {
-          this.notifyList = res.data;
-        }
-      });
-
+      this.listNotify();
       this.listApplys();
     },
 
     methods: {
+      listNotify() {
+        api.listAllNotify({status: 0}).then(res => {
+          if (res.success && res.data != null) {
+            this.notifyList = res.data;
+          }
+        });
+      },
       listApplys() {
         api.listAllApply({status: 0}).then(res => {
           if (res.success && res.data != null) {
@@ -326,7 +328,7 @@
           }).then(() => {
             api.refuseNotify({'notifyId': notifyId}).then(res => {
               if (res.success) {
-                this.listApplys();
+                this.listNotify();
               } else {
                 this.$toast(res.errorMessage)
               }
