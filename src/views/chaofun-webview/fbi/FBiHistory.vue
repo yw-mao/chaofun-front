@@ -98,6 +98,15 @@
           return '感谢赠与';
         }
 
+        if (reason.startsWith('punish_politic')) {
+          return '处罚：政治';
+        }
+
+        if (reason.startsWith('punish_not_friendly')) {
+          return '处罚：不友善';
+        }
+
+
         if (reason.startsWith('punish')) {
           return '处罚';
         }
