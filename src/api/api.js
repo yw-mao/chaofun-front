@@ -781,7 +781,7 @@ export function modlist(params) {
 /** 获取管理云类表 */
 export function banlist(params) {
   return request({
-    url: '/api/v0/forum/listBanUsers',
+    url: '/api/v0/forum/listBanUsersV1',
     method: 'get',
     params
   })
