@@ -23,7 +23,10 @@
       </div>
     </div>
     <div v-for="(item,index) in lists" :key="index" class="item">
-      <div>{{item.userName}} </div>
+      <div>
+        <div>用户名：{{item.userAO.userName}}  </div>
+        <div>封禁时间 {{ moment(item.time).format('YY/MM/DD HH:mm') }} </div>
+      </div>
       <div style="display: flex; justify-content: space-between;width: 20%">
         <div @click="toDelete(item, index)">移除</div>
       </div>
@@ -32,6 +35,8 @@
 </template>
 
 <script>
+  import moment from "moment";
+
   import * as api from '@/api/api'
   import {banlist, forumAddBan} from "../../../api/api";
 
@@ -40,6 +45,7 @@
     // components: { adminDashboard, editorDashboard },
     data() {
       return {
+        moment: moment,
         displayAdd: false,
         keyword: '',
         restaurants: [],
@@ -106,11 +112,11 @@
         });
       },
       toDelete(item, index) {
-        this.$confirm(`是否确定封禁用户 【${item.userName}】？`, "提示", {
+        this.$confirm(`是否确定封禁用户 【${item.userAO.userName}】？`, "提示", {
           type: "warning",
           // position: center,
         }).then(() => {
-          api.forumRemoveBan({forumId: this.forumId, userId: item.userId}).then((res) => {
+          api.forumRemoveBan({forumId: this.forumId, userId: item.userAO.userId}).then((res) => {
             if (res.success) {
               this.$toast('成功');
             } else {
