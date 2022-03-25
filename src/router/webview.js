@@ -43,6 +43,13 @@ routes = [
     hidden: true
   },
   {
+    path: '/webview/forum/sensitive_word_manager',
+    component: () => import('@/views/chaofun-webview/forum/SensitiveWord'),
+    name: 'sensitive_word_manager',
+    meta: { title: '敏感词管理'},
+    hidden: true
+  },
+  {
     path: '/webview/forum/analytics',
     component: () => import('@/views/chaofun-webview/forum/analytics'),
     name: 'forumanalytics',

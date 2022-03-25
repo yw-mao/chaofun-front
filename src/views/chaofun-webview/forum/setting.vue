@@ -54,6 +54,9 @@
         <div @click="toBan" class="btns">用户封禁</div>
       </div>
 
+      <div class="bottom">
+        <div @click="toSensitiveWord" class="btns">敏感词管理</div>
+      </div>
 
     </div>
   </div>
@@ -130,6 +133,18 @@ export default {
         })
       } catch (e) {
         window.open(location.origin + '/webview/forum/ban_manager?forumId=' + this.forumId);
+      }
+    },
+
+    toSensitiveWord() {
+      try {
+        window.flutter_inappwebview.callHandler('toViewPage', {
+          url: "https://chao.fun/webview/forum/sensitive_word_manager" + "?forumId=" + this.forumId,
+          title: '用户封禁',
+          showHeader: true
+        })
+      } catch (e) {
+        window.open(location.origin + '/webview/forum/sensitive_word_manager?forumId=' + this.forumId);
       }
     },
 
