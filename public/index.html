@@ -13,6 +13,7 @@
     <meta http-equiv="Cache-control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <link rel="shortcut icon" type="image/x-icon" href="https://i.chao.fun/biz/08a2d3a676f4f520cb99910496e48b4e.png?x-oss-process=image/resize,h_80/format,webp/quality,q_75">
+    <link rel="manifest" href="/manifest.json">
     <title>炒饭 - 世界那么大</title>
     <script>
       var _hmt = _hmt || [];
@@ -28,6 +29,21 @@
     
   </body>
   <script>
+    if ('serviceWorker' in navigator) {
+            // load 事件完成之后才注册 service worker
+            window.addEventListener('load', function () {
+                // 注册 sw.js
+                navigator.serviceWorker.register('/sw.js')
+                    .then(function (registration) {
+                        // 注册成功
+                        console.log('sw.js 注册成功', registration.scope);
+                    })
+                    .catch(function (err) {
+                        // 注册失败:(
+                        console.log('sw.js 注册失败 ', err);
+                    });
+            });
+        }
     var _hmt = _hmt || [];
     (function() {
       // var hm = document.createElement("script");
