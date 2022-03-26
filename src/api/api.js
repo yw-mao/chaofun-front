@@ -20,6 +20,15 @@ export function getByPath(path, params) {
   })
 }
 
+/** 发布预测帖子 */
+export function postByPath(path, params) {
+  return request({
+    url: path,
+    method: 'post',
+    data: qs.stringify(params)
+  })
+}
+
 export function getMenu(params) {
   return request({
     url: '/api/get_menu',

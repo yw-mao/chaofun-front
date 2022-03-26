@@ -50,6 +50,13 @@ routes = [
     hidden: true
   },
   {
+    path: '/webview/forum/table_manager',
+    component: () => import('@/views/chaofun-webview/forum/TableManager'),
+    name: 'TableManager',
+    meta: { title: '表格管理'},
+    hidden: true
+  },
+  {
     path: '/webview/forum/analytics',
     component: () => import('@/views/chaofun-webview/forum/analytics'),
     name: 'forumanalytics',

@@ -58,6 +58,10 @@
         <div @click="toSensitiveWord" class="btns">敏感词管理</div>
       </div>
 
+      <div class="bottom">
+        <div @click="toTableManager" class="btns">表格管理</div>
+      </div>
+
     </div>
   </div>
 </template>
@@ -145,6 +149,18 @@ export default {
         })
       } catch (e) {
         window.open(location.origin + '/webview/forum/sensitive_word_manager?forumId=' + this.forumId);
+      }
+    },
+
+    toTableManager() {
+      try {
+        window.flutter_inappwebview.callHandler('toViewPage', {
+          url: "https://chao.fun/webview/forum/table_manager" + "?forumId=" + this.forumId,
+          title: '用户封禁',
+          showHeader: true
+        })
+      } catch (e) {
+        window.open(location.origin + '/webview/forum/table_manager?forumId=' + this.forumId);
       }
     },
 
