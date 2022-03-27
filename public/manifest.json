@@ -1,15 +1,14 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
-  "icons": [
-    {
-      "src": "chaofan.png",
-      "sizes": "64x64 32x32 24x24 16x16",
-      "type": "image/x-icon"
-    }
-  ],
+  "name": "炒饭",
   "start_url": ".",
   "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "background_color": "#ffffff",
+  "description": "炒饭-世界那么大",
+  "icons": [
+      {
+          "src": "logo.png",
+          "sizes": "80x80",
+          "type": "image/png"
+      }
+  ]
 }
