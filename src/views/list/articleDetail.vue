@@ -318,6 +318,9 @@ export default {
     // 创建键盘监听事件
     addEventListener('keydown', this.keyDown);
   },
+  destroyed() {
+    removeEventListener('keydown', this.keyDown);
+  },
   created() {
     let params = this.$route.params;
     this.params.postId = params.postId;
