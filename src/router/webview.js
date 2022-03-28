@@ -135,6 +135,13 @@ routes = [
     hidden: true
   },
   {
+    path: '/webview/fbi/order',
+    component: () => import('@/views/chaofun-webview/fbi/order'),
+    name: 'order',
+    meta: { title: '下单'},
+    hidden: true
+  },
+  {
     path: '/webview/fbi/history',
     component: () => import('@/views/chaofun-webview/fbi/FBiHistory'),
     name: 'fbi',

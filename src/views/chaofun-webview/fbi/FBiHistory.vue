@@ -88,6 +88,15 @@
 
         if (reason === 'get_fbi_gift') {
           return 'FBi 兑换礼品';
+
+        }
+
+        if (reason === 'convertCup') {
+          return 'FBi 兑换杯子';
+        }
+
+        if (reason === 'convertTshirt') {
+          return 'FBi 兑换T恤';
         }
 
         if (reason === 'be_thx') {

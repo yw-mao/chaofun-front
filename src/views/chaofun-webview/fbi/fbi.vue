@@ -49,7 +49,7 @@
       FBi兑换
     </div>
     <div style="padding-top: 10px; padding-bottom: 10px">
-      注: 红包封面/京东E卡/B站会员 支持点击自助兑换，杯子和T恤请私聊联系@cijianzy, 包邮
+      注: 除勋爵外其余都支持点击自助兑换（包邮），谢谢！
     </div>
     <div style="width: 100%; ">
       <div @click="getWechatCover" style="width: 50%; display: inline-block; text-align: center">
@@ -70,7 +70,7 @@
           FBi: 1000
         </p>
       </div>
-      <div style="width: 50%; display: inline-block">
+      <div @click="orderCup('cup')" style="width: 50%; display: inline-block">
         <img style="padding-right: 10px; padding-left: 10px; width: 100%" src="https://i.chao.fun/biz/0e848c137be852a5d7999f4acd10a640.png">
         <p style="text-align: center">
           炒饭马克杯
@@ -88,7 +88,7 @@
           FBi: 2500
         </p>
       </div>
-      <div style="width: 50%; display: inline-block">
+      <div @click="orderCup('tshirt')" style="width: 50%; display: inline-block">
         <img style="padding-right: 10px; padding-left: 10px; width: 100%" src="https://i.chao.fun/biz/e3e44a77908676ea7047c18601a0297b.png">
         <p style="text-align: center">
           炒饭 T-shirt
@@ -194,6 +194,20 @@
               // on cancel
             });
       },
+
+      orderCup(type) {
+
+          try {
+            window.flutter_inappwebview.callHandler('toViewPage', {
+              url: "https://chao.fun/webview/fbi/order?type=" + type,
+              title: '下单',
+              showHeader: true
+            })
+          } catch (e) {
+            window.open(location.origin + '/webview/fbi/order?type=' + type);
+          }
+      },
+
 
       getJDECard() {
         Dialog.confirm({
