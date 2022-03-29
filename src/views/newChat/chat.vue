@@ -21,7 +21,7 @@
                 calcMessageTime(channel.lastMessageTime)
               }}</span>
             <span style="position: absolute;left:10px;top:35px;font-size: 14px; color: #777;cursor:default;">{{
-                calcLastMessageContent(channel.type, channel.lastMessageType, channel.lastMessageContent, channel.lastMessageSender != null ?  channel.lastMessageSender.userName : "")
+                calcLastMessageContent(channel.type, channel.lastMessageType, channel.lastMessageContent, channel.lastMessageSender)
               }}</span>
           </div>
         </div>
@@ -385,15 +385,15 @@ export default {
     },
 
     // 处理最新消息内容
-    calcLastMessageContent(type, lastMessageType, lastMessageContent, userName) {
+    calcLastMessageContent(type, lastMessageType, lastMessageContent, lastMessageSender) {
       if (!lastMessageContent) {
         lastMessageContent = "";
       }
-      if (!userName) {
-        userName = "";
-      }
 
-      let returnStr = ("group" === type) ? (userName + ":") : "";
+      let returnStr = "";
+      if ("group" === type && lastMessageSender) {
+        returnStr = lastMessageSender.userName + ":";
+      }
 
       if ("image" === lastMessageType) {
         returnStr += "[图片]";
