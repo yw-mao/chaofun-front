@@ -25,6 +25,11 @@
               }}</span>
           </div>
         </div>
+
+        <!--  无可用channel时  -->
+        <div style="width: 240px;height: 60px;margin: 10px;border-radius:4px;text-align: center;color: #999;" v-if="chatHistoryMap.size===0">
+          暂无聊天，请先加入
+        </div>
       </div>
 
       <!--  right  -->
