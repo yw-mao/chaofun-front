@@ -350,9 +350,10 @@ export default {
 
     // 滚动到底部
     chatMessageDivScrollToEnd() {
+      // TODO 滚动效果不好，有bug，偶尔能复现
       setTimeout(() => {
-        this.$refs.chatMessageDiv.scrollTop = this.$refs.chatMessageDiv.scrollHeight;
-      }, 150);
+        this.$refs.chatMessageDiv.scrollTop = 9999999;
+      }, 300);
     },
 
     // 发送图片
