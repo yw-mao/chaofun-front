@@ -123,7 +123,7 @@
 
         <!--  bottom  -->
         <div style="position: absolute;width: 550px;height: 150px;top:450px;background: #fff;">
-          <!--  发送图片、视频  -->
+          <!--  发送图片  -->
           <div
               style="position: absolute;width: 550px;height: 23px;padding-left: 10px;margin-top:5px; background: #fff;">
             <el-upload
@@ -620,7 +620,6 @@ export default {
 
   &::-webkit-scrollbar-thumb {
     width: 0;
-    //color: #ddd;
   }
 }
 
@@ -658,8 +657,9 @@ export default {
   padding: 10px 15px;
   margin: 0;
 
-  #span {
-    top: 20px;
+  span {
+    position: relative;
+    top: -2px;
   }
 }
 
