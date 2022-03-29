@@ -59,6 +59,12 @@
 
               <!--  他人  -->
               <div v-if="$store.state.user.userInfo.userId !== chatMessage.sender.userId" style="width: 530px;">
+
+                <!--  聊天框角  -->
+                <div style="position: relative;height: 0;width: 0;left: 20px;top:15px;">
+                  <img alt="" src="../../assets/chat/chatBoxCorner1.png" style="width: 20px;height: 10px;">
+                </div>
+
                 <!--  头像、昵称、时间  -->
                 <div style="width: 530px;height:28px;">
                   <img
@@ -74,7 +80,7 @@
                 </div>
                 <!--  图片/文字  -->
                 <div
-                    style="background: #e5e5e5;border-radius: 5px; padding: 7px 10px;display:inline-block;width:auto;height:auto;margin-left: 10px;">
+                    style="background: #e5e5e5;border-radius: 4px; padding: 7px 10px;display:inline-block;width:auto;height:auto;margin-left: 20px;">
                   <viewer v-if="'image'===chatMessage.type" :images="[imgOrigin+chatMessage.content]">
                     <img :data-source="imgOrigin +chatMessage.content"
                          :src="imgOrigin+chatMessage.content+ '?x-oss-process=image/resize,h_150/format,webp/quality,q_75'"
@@ -90,6 +96,11 @@
               <!--  自己  -->
               <div v-else style="text-align: right;width: 530px;">
 
+                <!--  聊天框角  -->
+                <div style="position: relative;height: 0;width: 0;left: 488px;top:16px;">
+                  <img alt="" src="../../assets/chat/chatBoxCorner2.png" style="width: 20px;height: 10px;">
+                </div>
+
                 <!--  头像、昵称、时间  -->
                 <div style="width: 530px;height:28px;">
                    <span style="color: #aaa;margin-right:5px;bottom: 6px;position: relative;">{{
@@ -101,7 +112,7 @@
                 </div>
                 <!--  图片/文字  -->
                 <div
-                    style="background: #12b7f5;border-radius: 5px; padding: 7px 10px;display:inline-block;width:auto;height:auto;margin-right: 10px;">
+                    style="background: #12b7f5;border-radius: 4px; padding: 7px 10px;display:inline-block;width:auto;height:auto;margin-right: 20px;">
                   <viewer v-if="'image'===chatMessage.type" :images="[imgOrigin+chatMessage.content]">
                     <img :data-source="imgOrigin +chatMessage.content"
                          :src="imgOrigin+chatMessage.content+ '?x-oss-process=image/resize,h_150/format,webp/quality,q_75'"
