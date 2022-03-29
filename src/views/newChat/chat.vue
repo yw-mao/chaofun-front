@@ -65,10 +65,10 @@
                       :src="imgOrigin+chatMessage.sender.icon + '?x-oss-process=image/resize,w_24,h_24/format,webp/quality,q_75'"
                       alt="" style="width: 24px;height: 24px;border-radius: 100%;"/>
                   <span v-if="'group'===chatHistoryMap.get(currentChannelId).type"
-                        style="color: #999;margin-left: 5px;margin-right:5px;bottom: 6px;position: relative;">{{
+                        style="color: #999;margin-left: 5px;bottom: 6px;position: relative;">{{
                       chatMessage.sender.userName
                     }}</span>
-                  <span style="color: #aaa;margin-left: 5px;margin-right:5px;bottom: 6px;position: relative;">{{
+                  <span style="color: #aaa;margin-left: 5px;bottom: 6px;position: relative;">{{
                       calcMessageTime(chatMessage.time)
                     }}</span>
                 </div>
@@ -92,7 +92,7 @@
 
                 <!--  头像、昵称、时间  -->
                 <div style="width: 530px;height:28px;">
-                   <span style="color: #aaa;margin-left: 5px;margin-right:5px;bottom: 6px;position: relative;">{{
+                   <span style="color: #aaa;margin-right:5px;bottom: 6px;position: relative;">{{
                        calcMessageTime(chatMessage.time)
                      }}</span>
                   <img
