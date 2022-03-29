@@ -21,7 +21,7 @@
                 calcMessageTime(channel.lastMessageTime)
               }}</span>
             <span style="position: absolute;left:10px;top:35px;font-size: 14px; color: #777;cursor:default;">{{
-                calcLastMessageContent(channel.type, channel.lastMessageType, channel.lastMessageContent, channel.lastMessageSender.userName)
+                calcLastMessageContent(channel.type, channel.lastMessageType, channel.lastMessageContent, channel.lastMessageSender != null ?  channel.lastMessageSender.userName : "")
               }}</span>
           </div>
         </div>
