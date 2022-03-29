@@ -25,11 +25,12 @@
         <div v-else class="down_btn" style="text-align:center;">
             <img style="height:100%;height:210px;" src="../../assets/images/app.png" alt="">
             <p style="margin:10px 0;">扫一扫下载app</p>
+
         </div>
        <div class="home_btn">
          <div @click="back" class="btn_green">访问炒饭</div>
        </div>
-        <div v-if="ISPHONE&&!isiOS" @click="sure(2)" style="text-align:center;color:#999;margin-top:10px;" class="">直接下载 ></div>
+        <div v-if="!isiOS" @click="sure(2)" style="text-align:center;color:#551A8B;margin-top:10px;" class="">直接下载Apk ></div>
      </div>
      
     <div class="detail">
@@ -172,8 +173,9 @@ import * as api from '../../api/api'
             //     location.href = 'https://apps.apple.com/cn/app/%E7%82%92%E9%A5%AD%E8%B6%85fun/id1526950194'
             // }
             if (/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)) {
-                location.href = 'https://apps.apple.com/cn/app/%E7%82%92%E9%A5%AD%E8%B6%85fun/id1526950194'
-            } else if (/(Android)/i.test(navigator.userAgent)) {
+              location.href = 'https://apps.apple.com/cn/app/%E7%82%92%E9%A5%AD%E8%B6%85fun/id1526950194'
+              // } else if (/(Android)/i.test(navigator.userAgent)) {
+            } else {
                 // location.href = 'vivoMarket://details?id=com.chao.app'
                 if(type==2) {window.open('https://chao.fun/chaofan.apk',"_blank"); return;}
                 //跳转到安卓商城地址
