@@ -27,7 +27,8 @@
         </div>
 
         <!--  无可用channel时  -->
-        <div style="width: 240px;height: 60px;margin: 10px;border-radius:4px;text-align: center;color: #999;" v-if="chatHistoryMap.size===0">
+        <div v-if="chatHistoryMap.size===0"
+             style="width: 240px;height: 60px;margin: 10px;border-radius:4px;text-align: center;color: #999;">
           暂无聊天，请先加入
         </div>
       </div>
@@ -272,8 +273,8 @@ export default {
         this.imageUrl = URL.createObjectURL(file.raw);
         // this.images.push(res.data);
 
-        // 直接发送图片，暂不加确认
-        this.sendImage(this.currentChannelId, res.data);
+        // 发送图片
+        this.onSendImage(res.data);
 
       } else if (res.errorCode == 'invalid_content') {
         // this.imageUrl = ''
@@ -352,10 +353,23 @@ export default {
       }, 150);
     },
 
+    // 发送图片
+    onSendImage(imageUrl) {
+      if (!this.currentChannelId || this.currentChannelId === 0) {
+        Message.info("暂无聊天，请先加入");
+        return;
+      }
+
+      // 直接发送图片，暂不加确认
+      this.sendImage(this.currentChannelId, imageUrl);
+
+    },
+
     // 点击发送按钮
     onClickSendButton() {
 
       if (!this.currentChannelId || this.currentChannelId === 0) {
+        Message.info("暂无聊天，请先加入");
         return;
       }
 
