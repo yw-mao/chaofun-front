@@ -186,6 +186,8 @@ export default {
   },
   created() {
 
+    document.title = "炒饭 - 聊天";
+
     Date.prototype.format = function (fmt) {
       const o = {
         "M+": this.getMonth() + 1,                 //月
