@@ -52,10 +52,10 @@
         <!--  middle  聊天记录 -->
         <div ref="chatMessageDiv"
              class="scrollbar_4"
-             style="position: absolute;width: 550px;height: 400px;top:50px;background: #f6f6f6;overflow: auto;scroll-behavior: smooth;padding: 0 10px 30px 10px;">
+             style="position: absolute;width: 550px;height: 400px;top:50px;background: #f6f6f6;overflow: auto;scroll-behavior: smooth;padding: 10px 10px 67px 10px;">
           <div v-if="chatHistoryMap.get(currentChannelId)">
             <div v-for="(chatMessage,index) in chatHistoryMap.get(currentChannelId).chatMessagesArr" :key="index"
-                 style="margin: 20px 0;min-height: 62px;">
+                 style="margin-bottom: 15px;min-height: 62px;">
 
               <!--  他人  -->
               <div v-if="$store.state.user.userInfo.userId !== chatMessage.sender.userId" style="width: 530px;">
