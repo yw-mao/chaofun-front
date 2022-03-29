@@ -123,6 +123,7 @@
                 ref="imageUpload"
                 :before-upload="beforeImageUpload"
                 :data="fileData"
+                :disabled="imagesUploading"
                 :limit="imagesLimit"
                 :on-exceed="handleImageUploadExceed"
                 :on-success="handleImageUploadSuccess"
@@ -132,16 +133,18 @@
                 multiple
                 name="file"
             >
-              <i class="el-icon-picture-outline" style="font-size: 20px;background: #fff;color: #000;"/>
+              <i class="el-icon-picture-outline" style="font-size: 20px;background: #fff;color: #000;"
+                 title="可直接粘贴图片（Ctrl+V）并发送"/>
             </el-upload>
           </div>
           <!--  文字输入框  -->
-          <div style="position: absolute;width: 550px;height: 120px; top:24px;" v-loading="imagesUploading">
+          <div v-loading="imagesUploading" style="position: absolute;width: 550px;height: 120px; top:24px;">
             <el-input ref="textInputMark" v-model="inputText" placeholder="请输入内容" resize="none"
                       rows="4" style="height: 120px;width: 100%;border: 0;" type="textarea"></el-input>
           </div>
           <!--  发送按钮  -->
-          <div style="position: absolute;width: 65px;height: 35px;bottom: 0;right: 0;" title="快捷键：Enter">
+          <div style="position: absolute;width: 65px;height: 35px;bottom: 0;right: 0;" title="Shift+Enter：换行
+            Enter：发送">
             <el-button @click.stop="onClickSendButton">发送</el-button>
           </div>
         </div>
@@ -171,7 +174,7 @@ export default {
       imagesNum: 0,
       imagesLimit: 9,
       imagesUploading: false,
-      images: [],
+      // images: [],
     }
   },
   created() {
@@ -261,7 +264,11 @@ export default {
     handleImageUploadSuccess(res, file) {
       if (res.success) {
         this.imageUrl = URL.createObjectURL(file.raw);
-        this.images.push(res.data);
+        // this.images.push(res.data);
+
+        // 直接发送图片，暂不加确认
+        this.sendImage(this.currentChannelId, res.data);
+
       } else if (res.errorCode == 'invalid_content') {
         // this.imageUrl = ''
         this.$toast(res.errorMessage)
@@ -269,6 +276,7 @@ export default {
       this.imagesNum--
       if (!this.imagesNum) {
         this.imagesUploading = false
+        this.$refs.imageUpload.clearFiles()
       }
     },
     beforeImageUpload(file) {
