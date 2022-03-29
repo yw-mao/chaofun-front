@@ -221,7 +221,7 @@
 <style lang="scss" scoped>
   .ycovers {
     position: fixed;
-    z-index: 10;
+    z-index: 1;
     top: 0;
     left: 0;
     right: 0;

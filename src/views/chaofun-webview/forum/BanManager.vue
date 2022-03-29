@@ -1,7 +1,7 @@
 <template>
   <div >
     <div class="bottom">
-      <div @click="add" class="btns">添加版主</div>
+      <div @click="add" class="btns">封禁用户</div>
       <div v-if="this.displayAdd" class="ycovers ">
         <div class="ycontainer">
           <div style="">
@@ -23,7 +23,10 @@
       </div>
     </div>
     <div v-for="(item,index) in lists" :key="index" class="item">
-      <div>{{item.userName}} </div>
+      <div>
+        <div>用户名：{{item.userAO.userName}}  </div>
+        <div>封禁时间 {{ moment(item.time).format('YY/MM/DD HH:mm') }} </div>
+      </div>
       <div style="display: flex; justify-content: space-between;width: 20%">
         <div @click="toDelete(item, index)">移除</div>
       </div>
@@ -32,20 +35,24 @@
 </template>
 
 <script>
+  import moment from "moment";
+
   import * as api from '@/api/api'
+  import {banlist, forumAddBan} from "../../../api/api";
 
   export default {
     name: "mod_manager",
     // components: { adminDashboard, editorDashboard },
     data() {
       return {
+        moment: moment,
         displayAdd: false,
         keyword: '',
         restaurants: [],
         state: '',
         params: {},
         forumId: '',
-        userIdToAdd: null,
+        userIdToBan: null,
         lists:[],
         timeout:  null
       }
@@ -64,7 +71,7 @@
       } else {
         this.forumId = this.$route.query.forumId;
       }
-      this.getModList()
+      this.getBanList()
     },
 
     mounted() {
@@ -75,7 +82,7 @@
         this.displayAdd = true;
       },
       handleSelect(item) {
-        this.userIdToAdd= item.userId;
+        this.userIdToBan= item.userId;
         console.log(item);
       },
 
@@ -86,7 +93,6 @@
             return value;
           });
 
-
           clearTimeout(this.timeout);
           this.timeout = setTimeout(() => {
             cb(result);
@@ -95,28 +101,28 @@
       },
 
       toAdd() {
-        api.forumAddMod({'forumId': this.forumId, 'userId': this.userIdToAdd}).then((res) => {
+        api.forumAddBan({'forumId': this.forumId, 'userId': this.userIdToBan}).then((res) => {
           this.displayAdd = false;
           if (res.success) {
             this.$toast('成功');
-            this.getModList();
+            this.getBanList();
           } else {
             this.$toast(res.errorMessage);
           }
         });
       },
       toDelete(item, index) {
-        this.$confirm(`是否确定移除版主 【${item.userName}】？`, "提示", {
+        this.$confirm(`是否确定解开用户封禁 【${item.userAO.userName}】？`, "提示", {
           type: "warning",
           // position: center,
         }).then(() => {
-          api.forumRemoveMod({forumId: this.forumId, userId: item.userId}).then((res) => {
+          api.forumRemoveBan({forumId: this.forumId, userId: item.userAO.userId}).then((res) => {
             if (res.success) {
               this.$toast('成功');
             } else {
               this.$toast(res.errorMessage);
             }
-            this.getModList();
+            this.getBanList();
           })
 
         })
@@ -124,8 +130,8 @@
       cancelAdd() {
         this.displayAdd = false;
       },
-      getModList() {
-        api.modlist({ forumId: this.forumId }).then((res) => {
+      getBanList() {
+        api.banlist({ forumId: this.forumId }).then((res) => {
           this.lists = res.data;
         })
       }

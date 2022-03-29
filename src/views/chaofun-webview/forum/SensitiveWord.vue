@@ -1,18 +1,13 @@
 <template>
   <div >
     <div class="bottom">
-      <div @click="add" class="btns">添加版主</div>
-      <div v-if="this.displayAdd" class="ycovers ">
+      <div @click="add" class="btns">敏感词管理</div>
+      <div v-if="this.displayAdd" class="ycovers">
         <div class="ycontainer">
           <div style="">
             <div style="margin:10px 0px;display: flex; align-items: center">
-              <div style="align-content: center">用户名：</div>
-              <el-autocomplete
-                  v-model="state"
-                  :fetch-suggestions="querySearchAsync"
-                  placeholder="搜索用户名"
-                  @select="handleSelect"
-              ></el-autocomplete>
+              <div style="align-content: center">敏感词：</div>
+              <el-input v-model="keyword" placeholder="请输入敏感词"></el-input>
             </div>
             <div style="margin:20px 0px;display: flex;">
               <el-button @click="toAdd" type="success">确认</el-button>
@@ -22,8 +17,9 @@
         </div>
       </div>
     </div>
+    <div style="width: 100%; text-align: center">*注意: 敏感词对帖子标题和正文以及评论文本生效，添加敏感词以后所有用户在本版块都无法使用该词，谨慎添加</div>
     <div v-for="(item,index) in lists" :key="index" class="item">
-      <div>{{item.userName}} </div>
+      <div>{{item.sensitiveWord}} </div>
       <div style="display: flex; justify-content: space-between;width: 20%">
         <div @click="toDelete(item, index)">移除</div>
       </div>
@@ -33,6 +29,7 @@
 
 <script>
   import * as api from '@/api/api'
+  import {banlist, forumAddBan} from "../../../api/api";
 
   export default {
     name: "mod_manager",
@@ -45,7 +42,7 @@
         state: '',
         params: {},
         forumId: '',
-        userIdToAdd: null,
+        userIdToBan: null,
         lists:[],
         timeout:  null
       }
@@ -64,7 +61,7 @@
       } else {
         this.forumId = this.$route.query.forumId;
       }
-      this.getModList()
+      this.getBanList()
     },
 
     mounted() {
@@ -74,58 +71,41 @@
       add() {
         this.displayAdd = true;
       },
-      handleSelect(item) {
-        this.userIdToAdd= item.userId;
-        console.log(item);
-      },
-
-      querySearchAsync(queryString, cb) {
-        api.getSearchUser({'keyword': queryString, 'pageNum': 1}).then((res) => {
-          let result = res.data.data.map(value => {
-            value.value = value.userName
-            return value;
-          });
-
-
-          clearTimeout(this.timeout);
-          this.timeout = setTimeout(() => {
-            cb(result);
-          }, 3000 * Math.random());
-        });
-      },
 
       toAdd() {
-        api.forumAddMod({'forumId': this.forumId, 'userId': this.userIdToAdd}).then((res) => {
-          this.displayAdd = false;
-          if (res.success) {
-            this.$toast('成功');
-            this.getModList();
-          } else {
-            this.$toast(res.errorMessage);
-          }
-        });
-      },
-      toDelete(item, index) {
-        this.$confirm(`是否确定移除版主 【${item.userName}】？`, "提示", {
-          type: "warning",
-          // position: center,
-        }).then(() => {
-          api.forumRemoveMod({forumId: this.forumId, userId: item.userId}).then((res) => {
+
+        if (this.keyword == null || this.keyword === '') {
+          this.$toast('敏感词不能为空')
+        } else {
+          api.getByPath('/api/v0/forum/addSensitiveWord', {
+            'forumId': this.forumId,
+            'sensitiveWord': this.keyword
+          }).then((res) => {
+            this.displayAdd = false;
             if (res.success) {
               this.$toast('成功');
+              this.getBanList();
             } else {
               this.$toast(res.errorMessage);
             }
-            this.getModList();
+          });
+        }
+      },
+      toDelete(item, index) {
+          api.getByPath('/api/v0/forum/removeSensitiveWord', {forumId: this.forumId, sensitiveWord: item.sensitiveWord}).then((res) => {
+            if (res.success) {
+              this.$toast('移除成功');
+            } else {
+              this.$toast(res.errorMessage);
+            }
+            this.getBanList();
           })
-
-        })
       },
       cancelAdd() {
         this.displayAdd = false;
       },
-      getModList() {
-        api.modlist({ forumId: this.forumId }).then((res) => {
+      getBanList() {
+        api.getByPath('/api/v0/forum/getSensitiveWord', { forumId: this.forumId }).then((res) => {
           this.lists = res.data;
         })
       }

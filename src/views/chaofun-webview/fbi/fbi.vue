@@ -24,7 +24,6 @@
       </p>
       <p style="font-weight: bold; font-size: 20px; color: #FF9300;padding-top: 20px">FBi 如何获得:</p>
       <p>  - 通过徽章附带的 FBi（徽章由炒饭和版主颁发）</p>
-      <p>  - 秘密花园 发帖，每条奖励 2 FBi，24 小时内封顶 40 FBi，请遵守版块发帖规范并请勿发无意义的帖子。</p>
       <p>  - 每周五(炒饭爆炸星期五)登录使用炒饭，奖励 50 FBi </p>
       <p>  - 你的帖子每得到一条评论 (非自己评论), 奖励 1 FBi</p>
       <p>  - 每发出一条评论 (评论自己的帖子不算), 奖励 1 FBi</p>
@@ -38,6 +37,10 @@
       </div>
       <p>  - 他人赠与</p>
       <p>  - 为炒饭贡献代码</p>
+      <p style="font-weight: bold; font-size: 20px; color: #FF9300;padding-top: 20px">FBi 处罚扣除情况:</p>
+      <p>  - 刷fbi </p>
+      <p>  - 不规范言论</p>
+
       <p style="font-weight: bold; font-size: 20px; color: #FF9300;padding-top: 20px">FBi 如何使用:</p>
       <p>  - 兑换炒饭纪念品 </p>
       <p>  - 评论赠与他人: +xxxfbi</p>
@@ -46,7 +49,7 @@
       FBi兑换
     </div>
     <div style="padding-top: 10px; padding-bottom: 10px">
-      注: 红包封面/京东E卡/B站会员 支持点击自助兑换，杯子和T恤请私聊联系@cijianzy, 包邮
+      注: 除勋爵外其余都支持点击自助兑换（包邮），谢谢！
     </div>
     <div style="width: 100%; ">
       <div @click="getWechatCover" style="width: 50%; display: inline-block; text-align: center">
@@ -67,7 +70,7 @@
           FBi: 1000
         </p>
       </div>
-      <div style="width: 50%; display: inline-block">
+      <div @click="orderCup('cup')" style="width: 50%; display: inline-block">
         <img style="padding-right: 10px; padding-left: 10px; width: 100%" src="https://i.chao.fun/biz/0e848c137be852a5d7999f4acd10a640.png">
         <p style="text-align: center">
           炒饭马克杯
@@ -85,7 +88,7 @@
           FBi: 2500
         </p>
       </div>
-      <div style="width: 50%; display: inline-block">
+      <div @click="orderCup('tshirt')" style="width: 50%; display: inline-block">
         <img style="padding-right: 10px; padding-left: 10px; width: 100%" src="https://i.chao.fun/biz/e3e44a77908676ea7047c18601a0297b.png">
         <p style="text-align: center">
           炒饭 T-shirt
@@ -191,6 +194,20 @@
               // on cancel
             });
       },
+
+      orderCup(type) {
+
+          try {
+            window.flutter_inappwebview.callHandler('toViewPage', {
+              url: "https://chao.fun/webview/fbi/order?type=" + type,
+              title: '下单',
+              showHeader: true
+            })
+          } catch (e) {
+            window.open(location.origin + '/webview/fbi/order?type=' + type);
+          }
+      },
+
 
       getJDECard() {
         Dialog.confirm({

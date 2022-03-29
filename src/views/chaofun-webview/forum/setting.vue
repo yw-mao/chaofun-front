@@ -10,6 +10,18 @@
       <div style="max-width:600px;margin-top:10px;">
           <el-input type="textarea" maxlength="56" v-model="desc" style="resize:none;height:64px !important;overflow:hidden;margin-bottom:20px;" placeholder="请设置版块介绍"></el-input>
         </div>
+
+
+      <div class="bottom">
+        是否允许匿名发帖
+        <el-switch
+            v-model="anonymity"
+            @change="setAnonymity"
+            active-color="#13ce66"
+            inactive-color="#ff4949">
+        </el-switch>
+      </div>
+
       <div class="bottom">
         <div @click="toSave" class="btns">保存ICON和描述</div>
       </div>
@@ -39,7 +51,15 @@
       </div>
 
       <div class="bottom">
-        <div @click="toBeContinue" class="btns">用户封禁</div>
+        <div @click="toBan" class="btns">用户封禁</div>
+      </div>
+
+      <div class="bottom">
+        <div @click="toSensitiveWord" class="btns">敏感词管理</div>
+      </div>
+
+      <div class="bottom">
+        <div @click="toTableManager" class="btns">表格管理</div>
       </div>
 
     </div>
@@ -53,12 +73,14 @@ import * as api from '@/api/api'
 import ListItem from '@/components/chaofan/ListItem.vue'
 import RightCom from '@/components/chaofan/RightCom'
 import loadText from '@/components/chaofan/loadText'
+import {getByPath} from "../../../api/api";
 
 export default {
   name: 'user',
   // components: { adminDashboard, editorDashboard },
   data() {
     return {
+      anonymity: true,
       params: {
         forumId: '',
       },
@@ -97,17 +119,51 @@ export default {
     this.toPosition()
   },
   created() {
-
-
     this.forumId = this.$route.query.forumId;
     this.getForumInfo();
-    
   },
 
   methods:{
     toBeContinue() {
       this.$toast('尽情期待：）');
     },
+
+    toBan() {
+      try {
+        window.flutter_inappwebview.callHandler('toViewPage', {
+          url: "https://chao.fun/webview/forum/ban_manager" + "?forumId=" + this.forumId,
+          title: '用户封禁',
+          showHeader: true
+        })
+      } catch (e) {
+        window.open(location.origin + '/webview/forum/ban_manager?forumId=' + this.forumId);
+      }
+    },
+
+    toSensitiveWord() {
+      try {
+        window.flutter_inappwebview.callHandler('toViewPage', {
+          url: "https://chao.fun/webview/forum/sensitive_word_manager" + "?forumId=" + this.forumId,
+          title: '用户封禁',
+          showHeader: true
+        })
+      } catch (e) {
+        window.open(location.origin + '/webview/forum/sensitive_word_manager?forumId=' + this.forumId);
+      }
+    },
+
+    toTableManager() {
+      try {
+        window.flutter_inappwebview.callHandler('toViewPage', {
+          url: "https://chao.fun/webview/forum/table_manager" + "?forumId=" + this.forumId,
+          title: '用户封禁',
+          showHeader: true
+        })
+      } catch (e) {
+        window.open(location.origin + '/webview/forum/table_manager?forumId=' + this.forumId);
+      }
+    },
+
     toSave(){
         this.toSign();
     },
@@ -194,6 +250,17 @@ export default {
 
       api.getModInfo({forumId: this.forumId}).then(res => {
         this.modInfo = res.data;
+      })
+
+      api.getByPath('/api/v0/forum/getAnonymity',{forumId: this.forumId}).then( res => {
+        this.anonymity = res.data
+      })
+    },
+
+    setAnonymity(value) {
+      console.log(value);
+      api.getByPath('/api/v0/forum/setAnonymity',{forumId: this.forumId, anonymity: value}).then( res => {
+        this.getForumInfo();
       })
     },
 

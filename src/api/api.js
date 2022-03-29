@@ -20,6 +20,15 @@ export function getByPath(path, params) {
   })
 }
 
+/** 发布预测帖子 */
+export function postByPath(path, params) {
+  return request({
+    url: path,
+    method: 'post',
+    data: qs.stringify(params)
+  })
+}
+
 export function getMenu(params) {
   return request({
     url: '/api/get_menu',
@@ -53,7 +62,8 @@ export function submitArticle(params) {
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded'
     },
-    data: qs.stringify(params)
+    data: qs.stringify(params),
+    timeout: 10 * 60 * 1000, // 上传文件最大支持2分钟
   })
 }
 
@@ -114,7 +124,7 @@ export function uploadImage(params) {
       'Content-Type': 'application/x-www-form-urlencoded'
     },
     data: params,
-    timeout: 2 * 60 * 1000, // 上传文件最大支持2分钟
+    timeout: 10 * 60 * 1000, // 上传文件最大支持2分钟
   })
 }
 
@@ -777,6 +787,16 @@ export function modlist(params) {
   })
 }
 
+/** 获取管理云类表 */
+export function banlist(params) {
+  return request({
+    url: '/api/v0/forum/listBanUsersV1',
+    method: 'get',
+    params
+  })
+}
+
+
 /** 获取url */
 export function getUrlTitle(params) {
   return request({
@@ -1025,6 +1045,22 @@ export function forumRemoveMod(params) {
 export function forumAddMod(params) {
   return request({
     url: '/api/v0/mod/add',
+    method: 'get',
+    params
+  })
+}
+
+export function forumAddBan(params) {
+  return request({
+    url: '/api/v0/forum/banUser',
+    method: 'get',
+    params
+  })
+}
+
+export function forumRemoveBan(params) {
+  return request({
+    url: '/api/v0/forum/unbanUser',
     method: 'get',
     params
   })

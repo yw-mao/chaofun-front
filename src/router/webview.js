@@ -36,6 +36,27 @@ routes = [
     hidden: true
   },
   {
+    path: '/webview/forum/ban_manager',
+    component: () => import('@/views/chaofun-webview/forum/BanManager'),
+    name: 'ban_manager',
+    meta: { title: '用户封禁'},
+    hidden: true
+  },
+  {
+    path: '/webview/forum/sensitive_word_manager',
+    component: () => import('@/views/chaofun-webview/forum/SensitiveWord'),
+    name: 'sensitive_word_manager',
+    meta: { title: '敏感词管理'},
+    hidden: true
+  },
+  {
+    path: '/webview/forum/table_manager',
+    component: () => import('@/views/chaofun-webview/forum/TableManager'),
+    name: 'TableManager',
+    meta: { title: '表格管理'},
+    hidden: true
+  },
+  {
     path: '/webview/forum/analytics',
     component: () => import('@/views/chaofun-webview/forum/analytics'),
     name: 'forumanalytics',
@@ -111,6 +132,13 @@ routes = [
     component: () => import('@/views/chaofun-webview/fbi/fbi'),
     name: 'fbi',
     meta: { title: 'Fbi'},
+    hidden: true
+  },
+  {
+    path: '/webview/fbi/order',
+    component: () => import('@/views/chaofun-webview/fbi/order'),
+    name: 'order',
+    meta: { title: '下单'},
     hidden: true
   },
   {

@@ -1,7 +1,7 @@
 <template>
  <div class="container">
     <div class="logo_con">
-        <img src="https://i.chao.fun/biz/08a2d3a676f4f520cb99910496e48b4e.png?x-oss-process=image/format,webp/quality,q_75/resize,h_80" alt="">
+        <img src="https://i.chao.fun/biz/08a2d3a676f4f520cb99910496e48b4e.png?x-oss-process=image/resize,h_80/format,webp/quality,q_75" alt="">
         <div>Andorid版下载</div>
     </div>
     <div class="a">

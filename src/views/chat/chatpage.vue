@@ -31,7 +31,7 @@
             class="others"
             >
             <div class="ava">
-                <img :src="imgOrigin + (item.sender.icon?item.sender.icon+'?x-oss-process=image/format,webp/quality,q_75/resize,h_80':'biz/f7cce56159ee5705a66f1cf8c03c4bea.png?x-oss-process=image/format,webp/quality,q_75/resize,h_80')" alt="" />
+                <img :src="imgOrigin + (item.sender.icon?item.sender.icon+'?x-oss-process=image/resize,h_80/format,webp/quality,q_75':'biz/f7cce56159ee5705a66f1cf8c03c4bea.png?x-oss-process=image/resize,h_80/format,webp/quality,q_75')" alt="" />
             </div>
             <div class="ads">
                 <div class="contents">
@@ -44,7 +44,7 @@
                     v-html="item.content"
                 ></div>
                 <div v-if="item.type == 'image'" class="msg_img">
-                    <!-- <img class="item_image" :src="imgOrigin+item.content+'?x-oss-process=image/format,webp/quality,q_75/resize,h_300'" alt=""> -->
+                    <!-- <img class="item_image" :src="imgOrigin+item.content+'?x-oss-process=image/resize,h_300/format,webp/quality,q_75'" alt=""> -->
                     <viewer :images="[imgOrigin + item.content]">
                     <img
                         class="item_image"
@@ -52,7 +52,7 @@
                         :src="
                         imgOrigin +
                         item.content +
-                        '?x-oss-process=image/format,webp/quality,q_75/resize,h_300'
+                        '?x-oss-process=image/resize,h_300/format,webp/quality,q_75'
                         "
                         alt=""
                     />
@@ -85,7 +85,7 @@
                         :src="
                         imgOrigin +
                         item.content +
-                        '?x-oss-process=image/format,webp/quality,q_75/resize,h_300'
+                        '?x-oss-process=image/resize,h_300/format,webp/quality,q_75'
                         "
                         alt=""
                     />
@@ -97,7 +97,7 @@
                 </div>
             </div>
             <div v-if="item.sender" class="ava">
-                <img :src="imgOrigin + (item.sender.icon?item.sender.icon+'?x-oss-process=image/format,webp/quality,q_75/resize,h_80':'biz/f7cce56159ee5705a66f1cf8c03c4bea.png?x-oss-process=image/format,webp/quality,q_75/resize,h_80')" alt="" />
+                <img :src="imgOrigin + (item.sender.icon?item.sender.icon+'?x-oss-process=image/resize,h_80/format,webp/quality,q_75':'biz/f7cce56159ee5705a66f1cf8c03c4bea.png?x-oss-process=image/resize,h_80/format,webp/quality,q_75')" alt="" />
             </div>
             </div>
         </div>
@@ -652,7 +652,7 @@ export default {
                                 lang:'zh-CN',
                                 requireInteraction: false,
                                 tag: id,//实例化的notification的id
-                                icon:data.type=='image'?(self.imgOrigin+data.content):('https://i.chao.fun/biz/08a2d3a676f4f520cb99910496e48b4e.png?x-oss-process=image/format,webp/quality,q_75/resize,h_80'),//通知的缩略图,//icon 支持ico、png、jpg、jpeg格式
+                                icon:data.type=='image'?(self.imgOrigin+data.content):('https://i.chao.fun/biz/08a2d3a676f4f520cb99910496e48b4e.png?x-oss-process=image/resize,h_80/format,webp/quality,q_75'),//通知的缩略图,//icon 支持ico、png、jpg、jpeg格式
                                 body: data.type=='text'? (data.sender.userName+'说：'+data.content):(data.type=='image'?data.sender.userName+'【发来一张图片】':data.sender.userName+'-发来未知类型消息') //通知的具体内容
                         });
                         notify.onclick=function(val){

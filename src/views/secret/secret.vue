@@ -6,14 +6,13 @@
       <el-row :gutter="24">
         <el-col :span="24" :offset="0">
           <div style="display:flex;width:840px;margin:0 auto;">
-            <div class="content" :style="{width: ISPHONE?imgMaxWidth+80+'px':'640px'}">
+            <div  class="content" :style="{width: ISPHONE?imgMaxWidth+80+'px':'640px'}">
               <div :style="{height: ISPHONE?'auto':'440px', maxWidth: ISPHONE?imgMaxWidth+80+'px':'640px',marginBottom:'20px',overflow:'hidden'}">
-                <div v-viewer="" v-if="!secret.imageUrl.includes('.mp4')" :style="{maxHeight: '100%', maxWidth: '100%', margin: 'auto', display: 'inline'}">
-                  <img v-if="!secret.imageUrl.includes('.gif')" v-bind:src="secret.imageUrl + '?x-oss-process=image/format,webp/quality,q_75/resize,h_768'" :data-source="secret.imageUrl" :style="{maxHeight: '100%', maxWidth: '100%', margin: 'auto', display: 'table-cell'}"   >
-                  <img v-if="gifShow && secret.imageUrl.includes('.gif')" v-bind:src="secret.imageUrl" :data-source="secret.imageUrl" :style="{maxHeight: '100%', maxWidth: '100%', margin: 'auto', display: 'table-cell'}"   >
-                  <img v-if="!gifShow && secret.imageUrl.includes('.gif')" v-bind:src="secret.imageUrl" :data-source="secret.imageUrl" :style="{maxHeight: '100%', maxWidth: '100%', margin: 'auto', display: 'table-cell'}"   >
+                <div  v-viewer="" v-if="secret && secret.imageUrl !== null &&!secret.imageUrl.includes('.mp4')" :style="{maxHeight: '100%', maxWidth: '100%', margin: 'auto', display: 'inline'}">
+                  <img v-if="!secret.imageUrl.includes('.gif')" v-bind:src="secret.imageUrl + '?x-oss-process=image/resize,h_768/format,webp/quality,q_75'" :data-source="secret.imageUrl" :style="{maxHeight: '100%', maxWidth: '100%', margin: 'auto', display: 'table-cell'}"   >
+                  <img v-if="secret.imageUrl.includes('.gif')" v-bind:src="secret.imageUrl" :data-source="secret.imageUrl" :style="{maxHeight: '100%', maxWidth: '100%', margin: 'auto', display: 'table-cell'}"   >
                 </div>
-                <video  v-if="secret.imageUrl.includes('.mp4')" controls autoplay loop :src="secret.imageUrl" alt="" :style="{maxHeight: '100%', maxWidth: '100%', margin: 'auto'}">
+                <video  v-if="secret && secret.imageUrl !== null && secret.imageUrl.includes('.mp4')" controls autoplay loop :src="secret.imageUrl" alt="" :style="{maxHeight: '100%', maxWidth: '100%', margin: 'auto'}">
                 </video>
               </div>
   <!--            <el-input v-model="secret.subReddit" @focus="doFocus(1)" @blur="doFocus(2)" :style="{width: '100%'}" :disabled="true">-->
@@ -217,7 +216,7 @@
       },
       generate() {
         api.generate_secret_image({'prefix': this.imageSource}).then(res=>{
-
+            this.secret = null;
             this.dealResponse(res)
         })
       },
@@ -296,6 +295,7 @@
         if(!this.isSend){
           this.isSend=true
           api.submit_secret_image({'imageUrl': this.secret.imageUrl, 'title': this.secret.cnTitle, 'forumId': parseInt(this.activeId), 'prefix': this.imageSource}).then(res=>{
+            this.secret.imageUrl = null ;
             this.isSend=false
             this.dealResponse(res)
             this.$toast('发布成功');
@@ -307,8 +307,8 @@
       },
 
       skip() {
-        this.gifShow = !this.gifShow;
         api.delete_secret_image({'imageUrl': this.secret.imageUrl, 'prefix': this.imageSource}).then(res=>{
+          this.secret.imageUrl = null ;
           this.dealResponse(res)
         })
       }

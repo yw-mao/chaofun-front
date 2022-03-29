@@ -134,7 +134,7 @@
                             <div class="forum_con">
                               <div v-if="forumInfo.admin" @click="manage" style="position: absolute; right: 20px; width: 40px; color: blue;">管理</div>
                                 <div class="fir">
-                                <img :src="imgOrigin+forumInfo.imageName+'?x-oss-process=image/format,webp/quality,q_75/resize,h_80'" />
+                                <img :src="imgOrigin+forumInfo.imageName+'?x-oss-process=image/resize,h_80/format,webp/quality,q_75'" />
                                 <div>{{forumInfo.name}}</div>
                                 </div>
                                 <div class="fensi">
@@ -318,6 +318,9 @@ export default {
     // 创建键盘监听事件
     addEventListener('keydown', this.keyDown);
   },
+  destroyed() {
+    removeEventListener('keydown', this.keyDown);
+  },
   created() {
     let params = this.$route.params;
     this.params.postId = params.postId;
@@ -499,11 +502,11 @@ export default {
             if (item.imageName) {
              return this.imgOrigin +
               item.imageName +
-              "?x-oss-process=image/format,webp/quality,q_75/resize,h_150"
+              "?x-oss-process=image/resize,h_150/format,webp/quality,q_75"
             } else {
               return (
                   this.imgOrigin +
-                  "biz/b64193b7beca6ae243341273adddf494.png?x-oss-process=image/format,webp/quality,q_75/resize,h_150"
+                  "biz/b64193b7beca6ae243341273adddf494.png?x-oss-process=image/resize,h_150/format,webp/quality,q_75"
               );
             }
           break;
@@ -511,7 +514,7 @@ export default {
           return (
             this.imgOrigin +
             item.imageName +
-            "?x-oss-process=image/format,webp/quality,q_75/resize,h_150"
+            "?x-oss-process=image/resize,h_150/format,webp/quality,q_75"
           );
           break;
         case "forward":
@@ -525,13 +528,13 @@ export default {
           return this.imgOrigin + item.cover;
         } else {
           return (
-            this.imgOrigin + item.cover + "?x-oss-process=image/format,webp/quality,q_75/resize,h_150"
+            this.imgOrigin + item.cover + "?x-oss-process=image/resize,h_150/format,webp/quality,q_75"
           );
         }
       } else {
         return (
           this.imgOrigin +
-          "biz/b06148ccba2c8b527d979942131a9fd9.png?x-oss-process=image/format,webp/quality,q_75/resize,h_150"
+          "biz/b06148ccba2c8b527d979942131a9fd9.png?x-oss-process=image/resize,h_150/format,webp/quality,q_75"
         );
       }
     },

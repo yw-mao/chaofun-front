@@ -4,6 +4,17 @@
        ref="container"
        :style="{ height: scrollHeight + 'px' }">
     <div>
+      <el-dialog title="拒绝原因" :visible.sync="showRefuseApply" :append-to-body="true" :before-close="hide">
+        <el-form :model="form">
+<!--          <el-form-item label="版块名称:">-->
+            <el-input v-model="form.reason" autocomplete="off"></el-input>
+<!--          </el-form-item>-->
+        </el-form>
+        <div slot="footer" class="dialog-footer">
+          <el-button @click="hide()">取 消</el-button>
+          <el-button type="primary" @click="refuseApply()">确 定</el-button>
+        </div>
+      </el-dialog>
       <div style="height:50px;"></div>
       <div class="main_content">
         <div class="main_center">
@@ -21,21 +32,15 @@
                     统计信息
                   </div>
                   <div>秘密花园队列: {{this.websiteInfo.secretDelay}}</div>
-                  <div>24小时注册用户数: {{this.websiteInfo.past24HRegisters}}</div>
-                  <div>24小时帖子数: {{this.websiteInfo.past24HPosts}}</div>
-                  <div>24小时评论数: {{this.websiteInfo.past24HComments}}</div>
-                  <div>24小时登录点赞数: {{this.websiteInfo.past24HLoginVoteCount}}</div>
-                  <div>24小时原创帖子数: {{this.websiteInfo.past24HOriginPosts}}</div>
-                  <div>总注册用户: {{this.websiteInfo.totalRegisters}}</div>
                   <div>百度收录数: {{this.websiteInfo.baiduIncluded}}</div>
                 </div>
               </div>
-              <div style="font-weight: bold; margin-top: 20px">
-                版主激励
-              </div>
-              <div style="max-width:600px;margin-top:10px;">
-                <el-input type="textarea"  maxlength="56" v-model="params.title" style="resize:none;overflow:hidden;" placeholder="请设置推送标题"></el-input>
-              </div>
+<!--              <div style="font-weight: bold; margin-top: 20px">-->
+<!--                版主激励-->
+<!--              </div>-->
+<!--              <div style="max-width:600px;margin-top:10px;">-->
+<!--                <el-input type="textarea"  maxlength="56" v-model="params.title" style="resize:none;overflow:hidden;" placeholder="请设置推送标题"></el-input>-->
+<!--              </div>-->
             </div>
 
             <div style="margin-left: 30px; max-width: 500px;">
@@ -121,7 +126,7 @@
           </div>
         </div>
         <div style="display: flex; width: 100%" v-show="nowIndex===3">
-          <div v-for="(item,lists) in notifyList" :key="index" class="item">
+          <div v-for="(item,lists) in notifyList"  class="item">
             <div>
               <div>标题: {{item.title}} </div>
               <div>内容: {{item.content}} </div>
@@ -135,19 +140,19 @@
             </div>
           </div>
         </div>
-        <div style="display: flex" v-show="nowIndex===4">
-          <div v-for="(item,lists) in applyList" :key="index" class="item">
+        <div  v-show="nowIndex===4">
+          <div v-for="(item,lists) in applyList"  style="width: 100%; padding-top: 10px">
             <div v-if="item.type == 'apply_mod'">
-              <div> 用户 {{item.userId}} 申请版块 {{item.forumId}} 版主 </div>
+              <div> 用户 <a :href="'https://chao.fun/user/' + item.applyUserInfo.userId" >{{item.applyUserInfo.userName}} (赞: {{item.applyUserInfo.ups}})</a> 申请版块 <a :href="'https://chao.fun/f/' + item.forumInfo.id">{{item.forumInfo.name}}</a> 版主 </div>
               <div> 原因为 {{item.arg1}}</div>
             </div>
             <div v-if="item.type == 'apply_forum'">
-              <div> 用户 {{item.userId}} 申请创建版块 {{item.arg1}} </div>
+              <div> 用户 <a :href="'https://chao.fun/user/' + item.applyUserInfo.userId" >{{item.applyUserInfo.userName}} (赞: {{item.applyUserInfo.ups}})</a>  申请创建版块 {{item.arg1}} </div>
               <div> 原因为 {{item.arg2}}</div>
             </div>
-            <div style="justify-content: space-between;">
+            <div>
               <el-button @click="approveApply(item.id)" style="margin-top: 10px">通过</el-button>
-              <el-button @click="refuseApply(item.id)" style="margin-top: 10px">拒绝</el-button>
+              <el-button @click="confirmRefuseApply(item.id)" style="margin-top: 10px">拒绝</el-button>
             </div>
           </div>
         </div>
@@ -171,6 +176,7 @@
         tabsParam:['基础设置','App设置', '活动设置','通知审批','版块申请','统计信息'],//（这个也可以用对象key，value来实现）
         notifyList: [],
         nowIndex:0,//默认第一个tab为激活状态
+
         comments: [],
         applyList: [],
         params: {
@@ -201,6 +207,11 @@
           force: false,
           action: 'check',
           platform: 'android',
+        },
+        refuseApplyId: null,
+        showRefuseApply: false,
+        form: {
+          reason: '',
         }
 
       }
@@ -233,28 +244,33 @@
         }
       });
 
-      api.listAllNotify({status: 0}).then(res => {
-        if (res.success && res.data != null) {
-          this.notifyList = res.data;
-        }
-      });
-
-      api.listAllApply({status: 0}).then(res => {
-        if (res.success && res.data != null) {
-          this.applyList = res.data;
-        }
-      });
+      this.listNotify();
+      this.listApplys();
     },
 
     methods: {
+      listNotify() {
+        api.listAllNotify({status: 0}).then(res => {
+          if (res.success && res.data != null) {
+            this.notifyList = res.data;
+          }
+        });
+      },
+      listApplys() {
+        api.listAllApply({status: 0}).then(res => {
+          if (res.success && res.data != null) {
+            this.applyList = res.data;
+          }
+        });
+      },
       approveApply(applyId) {
         Dialog.confirm({
           title: '通过申请',
           messageAlign: 'left'
         }).then(() => {
-          api.approveApply({'applyId': applyId}).then()(res => {
+          api.approveApply({'applyId': applyId}).then(res => {
             if (res.success) {
-              location.reload();
+              this.listApplys();
             } else {
               this.$toast(res.errorMessage)
             }
@@ -263,21 +279,30 @@
           // on cancel
         });
       },
-      refuseApply(applyId) {
-        Dialog.confirm({
-          title: '确认拒绝',
-          messageAlign: 'left'
-        }).then(() => {
-          api.refuseApply({'applyId': applyId}).then()(res => {
-            if (res.success) {
-              location.reload();
-            } else {
-              this.$toast(res.errorMessage)
-            }
-          });
-        }).catch(() => {
-          // on cancel
-        });
+      confirmRefuseApply(applyId) {
+        this.showRefuseApply = true;
+        this.refuseApplyId = applyId;
+        this.form.reason = '';
+      },
+
+      refuseApply() {
+        this.showRefuseApply = false;
+        var applyId = this.refuseApplyId;
+        this.refuseApplyId = null;
+
+        api.refuseApply({'applyId': applyId, 'reason': this.form.reason}).then(res => {
+          if (res.success) {
+            this.listApplys();
+            this.$toast('拒绝成功')
+          } else {
+            this.$toast(res.errorMessage)
+          }
+        }).bind(this);
+      },
+
+      hide() {
+        this.refuseApplyId = null;
+        this.showRefuseApply = false;
       },
 
       approveNotify(notifyId) {
@@ -285,7 +310,7 @@
           title: '确认通知',
           messageAlign: 'left'
         }).then(() => {
-          api.approveNotify({'notifyId': notifyId}).then()(res => {
+          api.approveNotify({'notifyId': notifyId}).then(res => {
             if (res.success) {
               location.reload();
             } else {
@@ -301,9 +326,9 @@
             title: '确认拒绝',
             messageAlign: 'left'
           }).then(() => {
-            api.refuseNotify({'notifyId': notifyId}).then()(res => {
+            api.refuseNotify({'notifyId': notifyId}).then(res => {
               if (res.success) {
-                location.reload();
+                this.listNotify();
               } else {
                 this.$toast(res.errorMessage)
               }
@@ -321,7 +346,7 @@
           message: `是否确定推送 \n标题: ${this.params.title}\n内容: ${this.params.body}\n 平台：${this.params.platform} `,
           messageAlign: 'left'
         }).then(() => {
-          api.push(this.params).then()(res => {
+          api.push(this.params).then(res => {
             if (res.success) {
               location.reload();
             } else {
@@ -334,18 +359,18 @@
       },
 
       updateiOSVersion() {
-        api.setVersion(this.iosVersion).then()(res => {
+        api.setVersion(this.iosVersion).then(res => {
 
         });
       },
 
       updateAndroidVersion() {
-        api.setVersion(this.androidVersion).then()(res => {
+        api.setVersion(this.androidVersion).then(res => {
 
         });
       },
       save_active() {
-        api.save_activity(this.activity).then()(res => {
+        api.save_activity(this.activity).then(res => {
           if (res.success) {
             location.reload();
           } else {

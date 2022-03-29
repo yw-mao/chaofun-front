@@ -8,7 +8,7 @@
             <div  v-touch:start="startHandler" v-touch:end="endHandler" class="content">
                 <div v-if="secret.imageUrl" class="img">
                     <div v-viewer=""  v-if="!secret.imageUrl.includes('.mp4')">
-                    <img class="ims" v-if="!secret.imageUrl.includes('.mp4')" :src="secret.imageUrl + '?x-oss-process=image/format,webp/quality,q_75/resize,h_768'" :data-source="secret.imageUrl">
+                    <img class="ims" v-if="!secret.imageUrl.includes('.mp4')" :src="secret.imageUrl + '?x-oss-process=image/resize,h_768/format,webp/quality,q_75'" :data-source="secret.imageUrl">
                     </div>
                     <video class="ims video" v-if="secret.imageUrl.includes('.mp4')" controls autoplay loop :src="secret.imageUrl" alt="">
                     </video>
@@ -44,7 +44,7 @@
                         <h1>我要分享到</h1>
                         <div class="forum_items">
                             <div @click="choose(item)" v-for="(item,index) in tags" :key="index" :class="['forum_item',{'forum_item_active':chooseId==item.id}]">
-                                <img class="f_img" :src="imgOrigin+item.imageName+'?x-oss-process=image/format,webp/quality,q_75/resize,h_80'" alt="">
+                                <img class="f_img" :src="imgOrigin+item.imageName+'?x-oss-process=image/resize,h_80/format,webp/quality,q_75'" alt="">
                                 <span>{{item.name}}</span>
                             </div>
                         </div>
