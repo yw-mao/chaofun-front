@@ -52,10 +52,10 @@
         <!--  middle  聊天记录 -->
         <div ref="chatMessageDiv"
              class="scrollbar_4"
-             style="position: absolute;width: 550px;height: 400px;top:50px;background: #f6f6f6;overflow: auto;scroll-behavior: smooth;padding: 10px 10px 67px 10px;">
+             style="position: absolute;width: 550px;height: 400px;top:50px;background: #f6f6f6;overflow: auto;scroll-behavior: smooth;padding: 10px 10px 62px 10px;">
           <div v-if="chatHistoryMap.get(currentChannelId)">
             <div v-for="(chatMessage,index) in chatHistoryMap.get(currentChannelId).chatMessagesArr" :key="index"
-                 style="margin-bottom: 15px;min-height: 62px;">
+                 style="margin-bottom: 10px;min-height: 62px;">
 
               <!--  他人  -->
               <div v-if="$store.state.user.userInfo.userId !== chatMessage.sender.userId" style="width: 530px;">
@@ -74,7 +74,7 @@
                 </div>
                 <!--  图片/文字  -->
                 <div
-                    style="background: #e5e5e5;border-radius: 5px; padding: 7px 10px;display:inline-block;width:auto;height:auto;">
+                    style="background: #e5e5e5;border-radius: 5px; padding: 7px 10px;display:inline-block;width:auto;height:auto;margin-left: 10px;">
                   <viewer v-if="'image'===chatMessage.type" :images="[imgOrigin+chatMessage.content]">
                     <img :data-source="imgOrigin +chatMessage.content"
                          :src="imgOrigin+chatMessage.content+ '?x-oss-process=image/resize,h_150/format,webp/quality,q_75'"
@@ -101,7 +101,7 @@
                 </div>
                 <!--  图片/文字  -->
                 <div
-                    style="background: #12b7f5;border-radius: 5px; padding: 7px 10px;display:inline-block;width:auto;height:auto;">
+                    style="background: #12b7f5;border-radius: 5px; padding: 7px 10px;display:inline-block;width:auto;height:auto;margin-right: 10px;">
                   <viewer v-if="'image'===chatMessage.type" :images="[imgOrigin+chatMessage.content]">
                     <img :data-source="imgOrigin +chatMessage.content"
                          :src="imgOrigin+chatMessage.content+ '?x-oss-process=image/resize,h_150/format,webp/quality,q_75'"
