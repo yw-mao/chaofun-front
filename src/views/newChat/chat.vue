@@ -52,7 +52,7 @@
         <!--  middle  聊天记录 -->
         <div ref="chatMessageDiv"
              class="scrollbar_4"
-             style="position: absolute;width: 550px;height: 400px;top:50px;background: #f6f6f6;overflow: auto;scroll-behavior: smooth;padding: 10px 10px 62px 10px;">
+             style="position: absolute;width: 550px;height: 400px;top:50px;background: #f6f6f6;overflow: auto;scroll-behavior: smooth;padding: 10px 10px 65px 10px;">
           <div v-if="chatHistoryMap.get(currentChannelId)">
             <div v-for="(chatMessage,index) in chatHistoryMap.get(currentChannelId).chatMessagesArr" :key="index"
                  style="margin-bottom: 10px;min-height: 62px;">
