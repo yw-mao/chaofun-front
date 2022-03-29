@@ -78,6 +78,9 @@
                     {{message.unreadMessage}}
               </span>
             </el-dropdown-item>
+          <router-link v-if="islogin" to="/chat">
+            <el-dropdown-item>聊天</el-dropdown-item>
+          </router-link>
           <router-link v-if="islogin" to="/setting">
             <el-dropdown-item>设置</el-dropdown-item>
           </router-link>
