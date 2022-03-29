@@ -163,6 +163,14 @@ module.exports = {
         pathRewrite: {
           '^/api': ''
         }
+      },
+      '/ws': {
+        target: `wss://chao.fun/ws`,
+        ws: true,
+        changeOrigin: true,
+        pathRewrite: {
+          '^/ws': ''
+        }
       }
     },
   }

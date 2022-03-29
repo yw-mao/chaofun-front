@@ -1252,6 +1252,13 @@ export function getSelfRank(params) {
   })
 }
 
+export function getJoinedChatList() {
+  return request({
+    url: '/api/v0/chat/listJoined',
+    method: 'get'
+  })
+}
+
 
 /** 活动查询 */
 

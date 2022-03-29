@@ -100,6 +100,12 @@ export const constantRoutes = [
     hidden: true
   },
   {
+    path: '/chat',
+    component: () => import('@/views/newChat/chat.vue'),
+    meta: { title: '聊天'},
+    hidden: true
+  },
+  {
     path: '/',
     component: Layout,
     redirect: '',
