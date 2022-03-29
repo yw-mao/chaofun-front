@@ -293,7 +293,7 @@ export default {
     toPaste(e) {
       const cbd = e.clipboardData;
       const ua = window.navigator.userAgent;
-      console.log(this.$refs.imageUpload)
+      // console.log(this.$refs.imageUpload)
       if (!(e.clipboardData && e.clipboardData.items)) {
         return;
       }
