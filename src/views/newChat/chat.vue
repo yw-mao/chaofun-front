@@ -165,7 +165,7 @@ export default {
   data() {
     return {
       chatHistoryMap: new Map(),
-      currentChannelId: 1,
+      currentChannelId: 0,
       inputText: "",
 
       url: `${location.protocol === 'https:' ? 'wss' : 'ws'}://${location.host}/ws/v0/all`,
@@ -349,6 +349,11 @@ export default {
 
     // 点击发送按钮
     onClickSendButton() {
+
+      if (!this.currentChannelId || this.currentChannelId === 0) {
+        return;
+      }
+
       let text = this.inputText.trim();
       if (!text) {
         return;
