@@ -58,7 +58,7 @@
                  style="margin: 20px 0;min-height: 62px;">
 
               <!--  他人  -->
-              <div v-if="$store.state.user.userInfo.userId !== chatMessage.sender.userId">
+              <div v-if="$store.state.user.userInfo.userId !== chatMessage.sender.userId" style="width: 530px;">
                 <!--  头像、昵称、时间  -->
                 <div style="width: 530px;height:28px;">
                   <img
@@ -88,7 +88,7 @@
               </div>
 
               <!--  自己  -->
-              <div v-else style="text-align: right;">
+              <div v-else style="text-align: right;width: 530px;">
 
                 <!--  头像、昵称、时间  -->
                 <div style="width: 530px;height:28px;">
