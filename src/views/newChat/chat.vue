@@ -116,9 +116,10 @@
         </div>
 
         <!--  bottom  -->
-        <div style="position: absolute;width: 550px;height: 150px;top:450px;">
+        <div style="position: absolute;width: 550px;height: 150px;top:450px;background: #fff;">
           <!--  发送图片、视频  -->
-          <div style="position: absolute;width: 550px;height: 23px;padding-left: 10px;margin-top:5px; ">
+          <div
+              style="position: absolute;width: 550px;height: 23px;padding-left: 10px;margin-top:5px; background: #fff;">
             <el-upload
                 ref="imageUpload"
                 :before-upload="beforeImageUpload"
