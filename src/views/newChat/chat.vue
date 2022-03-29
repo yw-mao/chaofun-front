@@ -542,7 +542,7 @@ export default {
       channelData.lastMessageSender = chatMessage.sender;
 
       // 强制渲染
-      this.$forceUpdate();
+      this.viewForceUpdate();
 
       // 滚动到最新消息
       if (this.currentChannelId === chatMessage.channelId) {
@@ -552,14 +552,23 @@ export default {
 
     // 处理接受的历史聊天记录
     handleLoadResult(channelId, chatMessages) {
-      let channelData = this.chatHistoryMap.get(channelId);
-      channelData.chatMessagesArr.push(...chatMessages.reverse());
+      // 保存聊天记录到 chatHistoryMap[channelId].chatMessagesArr
+      this.chatHistoryMap.get(channelId).chatMessagesArr.push(...chatMessages.reverse());
 
-      // 强制渲染
+      //
+      if (this.currentChannelId === channelId) {
+        // 强制渲染
+        this.viewForceUpdate();
+
+        // 滚动到最新消息
+        this.chatMessageDivScrollToEnd();
+      }
+    },
+
+    // 强制页面渲染
+    viewForceUpdate() {
+      console.log("viewForceUpdate...");
       this.$forceUpdate();
-
-      // 滚动到最新消息
-      this.chatMessageDivScrollToEnd();
     },
 
 
