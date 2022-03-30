@@ -277,6 +277,9 @@ export default {
     // 移除监听事件
     removeEventListener('keydown', this.keyDown);
     removeEventListener('paste', this.toPaste);
+
+    // 关闭ws连接
+    this.ws.close();
   },
   methods: {
 
