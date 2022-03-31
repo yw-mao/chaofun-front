@@ -3,6 +3,7 @@
     <div style="font-size: 32px; padding-left: 10px">兑换 {{getType()}}</div>
     <div class="bottom">
       <div>请输入收件信息(详细地址+电话号码)</div>
+      <div>(下单后请关注菜鸟裹裹信息)</div>
       <el-input type="textarea" v-model="address" placeholder="请输入收件信息(详细地址+电话号码)"></el-input>
       <div @click="order" class="btns">下单</div>
     </div>
