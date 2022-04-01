@@ -34,23 +34,6 @@ export default {
   },
   mounted() {
 
-    if(!this.$store.state.user.islogin) {
-      this.showLogin();
-      return;
-    };
-
-    let passwd = this.$route.query.password;
-    if (!passwd) {
-      return;
-    }
-    if (passwd.length > 20) {
-      passwd = passwd.substr(0, 20);
-    }
-    this.password = passwd;
-    if (this.password) {
-      this.getRedPacket()
-    }
-
   },
 
   methods: {
