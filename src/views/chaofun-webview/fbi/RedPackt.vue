@@ -18,7 +18,7 @@
 import * as api from '@/api/api'
 
 export default {
-  name: "RedPacket",
+  name: "RedPackt",
   components: {},
 
   data() {
