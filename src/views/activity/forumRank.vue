@@ -4,7 +4,7 @@
     <div class="content">
         <div class="nav">
             <img src="./rank.png" alt="">
-            <span>24 小时版块排名</span>
+            <span>24 小时版块排名(24小内帖子获赞)</span>
         </div>
         <div @click="toUser(item)" v-for="(item,index) in pagedata" :key="index" class="item">
             <div class="left">
