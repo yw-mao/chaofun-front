@@ -8,7 +8,7 @@
         </div>
         <div @click="toUser(item)" v-for="(item,index) in pagedata" :key="index" class="item">
             <div class="left">
-                <img :src="imgOrigin+item.icon + '?x-oss-process=image/resize,h_80/format,webp/quality,q_75'" alt="">
+                <img style="object-fit: cover;" :src="imgOrigin+item.icon + '?x-oss-process=image/resize,h_80/format,webp/quality,q_75'" alt="">
                 <div class="info">
                     <div class="title">{{item.userName}}</div>
                     <p v-if="item.desc" class="desc">{{item.desc}}</p>
