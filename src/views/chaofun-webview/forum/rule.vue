@@ -93,7 +93,7 @@
         this.$toast('暂不支持');
       },
       toDelete(item, index) {
-        this.$confirm(`是否确定删除标签 【${item.rule}】？`, "提示", {
+        this.$confirm(`是否确定删除该规范吗？`, "提示", {
           type: "warning",
           // position: center,
         }).then(() => {
