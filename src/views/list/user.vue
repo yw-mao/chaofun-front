@@ -546,11 +546,13 @@ export default {
   .avatar {
     flex: 0 0 50px;
     height: 50px;
+    width: 50px;
     margin-right: 10px;
 
     img {
       width: 50px;
       height: 50px;
+      object-fit: cover;
       border-radius: 50%;
     }
   }

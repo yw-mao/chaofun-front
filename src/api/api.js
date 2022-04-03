@@ -384,8 +384,8 @@ export function joinPredictionsTournament(params) {
 export function addComments(params) {
   return request({
     url: '/api/comment',
-    method: 'get',
-    params
+    method: 'post',
+    data:qs.stringify(params)
   })
 }
 

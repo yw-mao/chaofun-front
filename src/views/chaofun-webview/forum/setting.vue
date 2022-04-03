@@ -144,7 +144,7 @@ export default {
       try {
         window.flutter_inappwebview.callHandler('toViewPage', {
           url: "https://chao.fun/webview/forum/sensitive_word_manager" + "?forumId=" + this.forumId,
-          title: '用户封禁',
+          title: '敏感词',
           showHeader: true
         })
       } catch (e) {
@@ -156,7 +156,7 @@ export default {
       try {
         window.flutter_inappwebview.callHandler('toViewPage', {
           url: "https://chao.fun/webview/forum/table_manager" + "?forumId=" + this.forumId,
-          title: '用户封禁',
+          title: '表格管理',
           showHeader: true
         })
       } catch (e) {
