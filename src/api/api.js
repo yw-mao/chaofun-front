@@ -1259,6 +1259,18 @@ export function getJoinedChatList() {
   })
 }
 
+/**
+ * 修改帖子内容
+ * @returns {*}
+ */
+export function modifyArticle(params) {
+    return request({
+        url: '/api/v0/modifyArticle',
+        method: 'post',
+        params
+    })
+}
+
 
 /** 活动查询 */
 

@@ -176,6 +176,13 @@ export const constantRoutes = [
         component: () => import('@/views/submit/v2'),
         hidden: true
       },
+      // 修改帖子内容
+      {
+        path: '/modifyArticle/:postId',
+        name: 'modifyArticle',
+        component: () => import('@/views/submit/modifyArticle'),
+        hidden: true
+      },
       {
         path: '/f/:id/setting',
         component: () => import('@/views/list/forumSetting'),
