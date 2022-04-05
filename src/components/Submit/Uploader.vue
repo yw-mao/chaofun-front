@@ -180,6 +180,23 @@ export default {
     // }
   },
   methods: {
+
+    // TODO:这里可能有更简单的处理办法，先这样处理
+    setFileList(imgOrigin, fileList) {
+      this.fileList = fileList;
+      fileList.forEach((item, index) => {
+        let file = {};
+        file.uid = index;
+        file.url = imgOrigin + item;
+        file.status = "success";
+        file.percentage = 100;
+        file.response = {};
+        file.response.data = item;
+        file.response.success = true;
+        this.files.push(file);
+      });
+    },
+
     // === Drag ===
     onDragover() {
       if (!this.disabled) {
