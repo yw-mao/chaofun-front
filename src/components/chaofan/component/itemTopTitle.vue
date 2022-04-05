@@ -214,6 +214,8 @@
             <el-dropdown-item v-if="item.forumAdmin&&!item.disableComment" command="关闭评论">关闭评论</el-dropdown-item>
             <el-dropdown-item v-if="item.type==='prediction'&& item.canDeleted &&item.predictionStatus==='live'" command="暂停下注">暂停下注</el-dropdown-item>
             <el-dropdown-item v-if="item.canAddToRecommend" command="推荐">推荐</el-dropdown-item>
+            <el-dropdown-item v-if="item.userInfo.userId === this.$store.state.user.userInfo.userId" command="编辑">编辑帖子
+            </el-dropdown-item>
             <el-dropdown-item v-if="item.canDeleted"  command="删除">删除帖子</el-dropdown-item>
             <el-dropdown-item command="关闭"> <div ref="cocolse">关闭</div> </el-dropdown-item>
           </el-dropdown-menu>
@@ -448,6 +450,8 @@ export default {
             this.$toast(res.message);
           }
         });
+      } else if (command == "编辑") {
+        this.modifyArticle(this.item, this.index);
       } else if (command == "删除") {
         this.deletePost(this.item, this.index);
       } else if(command == "关闭评论") {
@@ -530,6 +534,11 @@ export default {
         }
       });
     },
+
+    modifyArticle(item, index) {
+      this.$router.push({ path: "/modifyArticle/"+item.postId });
+    },
+
     deletePost(item, index) {
       if (this.ISPHONE) {
         Dialog.confirm({
