@@ -1,4 +1,5 @@
 <template>
+  <div>
     <h1>
       <div>
         <div v-if="item.isPin" style="display: inline-block">
