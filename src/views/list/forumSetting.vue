@@ -20,6 +20,17 @@
                 <div style="max-width:600px;margin-top:10px;">
                   <el-input type="textarea" @blur="toSign" maxlength="56" v-model="desc" style="resize:none;height:100px !important;overflow:hidden;" placeholder="请设置版块介绍"></el-input>
                 </div>
+                <div class="title">匿名发帖</div>
+                <div style="max-width:600px;margin-top:10px;">
+                  <el-switch
+                      v-model="anonymity"
+                      @change="setAnonymity"
+                      active-color="#13ce66"
+                      inactive-color="#ccc"
+                      active-text="允许"
+                      inactive-text="不允许">
+                  </el-switch>
+                </div>
               </el-tab-pane>
               <el-tab-pane label="版块统计" :lazy=true>
                 <analytics :forum-id0="forumId"/>
@@ -87,6 +98,7 @@ export default {
       filedata: {},
       desc: '',
       forumInfo: '',
+      anonymity: true,
     }
   },
   components: {
@@ -127,6 +139,17 @@ export default {
         this.forumInfo = res.data;
         this.desc = this.forumInfo.desc;
         this.imageUrl = this.imgOrigin+this.forumInfo.imageName;
+      })
+
+      //匿名发帖
+      api.getByPath('/api/v0/forum/getAnonymity',{forumId: this.forumId}).then( res => {
+        this.anonymity = res.data
+      })
+    },
+
+    setAnonymity(value) {
+      api.getByPath('/api/v0/forum/setAnonymity',{forumId: this.forumId, anonymity: value}).then( res => {
+        this.getForumInfo();
       })
     },
 
