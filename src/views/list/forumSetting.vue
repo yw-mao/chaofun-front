@@ -39,7 +39,15 @@
               <el-tab-pane label="管理版主" :lazy=true>
                 <ModManager :forum-id0="forumId"/>
               </el-tab-pane>
-              <el-tab-pane label="用户封禁" :lazy=true :disabled=true>用户封禁</el-tab-pane>
+              <el-tab-pane label="用户封禁" :lazy=true>
+                <ban-manager :forum-id0="forumId"/>
+              </el-tab-pane>
+              <el-tab-pane label="敏感词管理" :lazy=true>
+                <sensitive-word :forum-id0="forumId"/>
+              </el-tab-pane>
+              <el-tab-pane label="表格管理" :lazy=true>
+                <table-manager :forum-id0="forumId"/>
+              </el-tab-pane>
             </el-tabs>
           </div>
         </div>
@@ -61,6 +69,9 @@ import forumRule from '@/views/chaofun-webview/forum/rule.vue';
 import userTag from '@/views/chaofun-webview/forum/userTag.vue';
 import notify from '@/views/chaofun-webview/forum/notify.vue';
 import ModManager from '@/views/chaofun-webview/forum/ModManager.vue';
+import BanManager from '@/views/chaofun-webview/forum/BanManager';
+import SensitiveWord from '@/views/chaofun-webview/forum/SensitiveWord';
+import TableManager from '@/views/chaofun-webview/forum/TableManager';
 
 
 // 版块设置
@@ -79,7 +90,7 @@ export default {
     }
   },
   components: {
-    ListItem, loadText, analytics,forumTag,forumRule,userTag,notify,ModManager,
+    ListItem, loadText, analytics,forumTag,forumRule,userTag,notify,ModManager,BanManager,SensitiveWord,TableManager
   },
   watch: {},
   computed: {
