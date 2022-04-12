@@ -18,7 +18,7 @@
             <div :class="getCommentUserinfoClazz(item)">
                 <img style="object-fit: cover;" :src="imgOrigin+item.userInfo.icon+'?x-oss-process=image/resize,h_40/format,webp/quality,q_75'" alt="">
                 <span  @click.stop="toUser(item.userInfo)" class="username">{{item.userInfo.userName}}</span>
-                <span v-if="item.userInfo.userTag" title="用户在版块的标签" style="font-size:14px; background-color: rgb(237, 239, 241); color: rgb(26, 26, 27); margin-left: 5px ">{{item.userInfo.userTag.data}}</span>
+                <span v-if="item.userInfo.userTag" title="用户在版块的标签" class="tag">{{item.userInfo.userTag.data}}</span>
                 <span class="time" v-if="humanizeTimeFormat" @click="changeTimeFormat" title="点击切换时间格式">{{moment.duration(moment(item.gmtCreate) - moment()).humanize(true)}}</span>
                 <span class="time" v-else @click="changeTimeFormat" title="点击切换时间格式">{{moment(item.gmtCreate).format('YYYY年MM月DD日 HH:mm:ss')}}</span>
 
@@ -130,6 +130,7 @@
 <script>
 import * as api from '../../api/api'
 import moment from 'moment'
+
 export default {
     name: 'commentitem',
     data(){
@@ -681,6 +682,15 @@ export default {
                     margin-right: 4px;
                 }
             }
+
+            .tag {
+              font-size: 12px;
+              background-color: #eee;
+              color: #555;
+              margin-left: 5px;
+              padding: 2px 3px;
+              border-radius: 2px;
+            }
         }
         .user_info_highlight_1{
             background: #b2e8d1;
@@ -713,6 +723,15 @@ export default {
                     height: 24px;
                     margin-right: 4px;
                 }
+            }
+
+            .tag {
+              font-size: 12px;
+              background-color: #DDFFEE;
+              color: #555;
+              margin-left: 5px;
+              padding: 2px 3px;
+              border-radius: 2px;
             }
         }
         .user_info_highlight_2{
@@ -747,6 +766,15 @@ export default {
                     margin-right: 4px;
                 }
             }
+
+            .tag {
+              font-size: 12px;
+              background-color: #CCEEFF;
+              color: #555;
+              margin-left: 5px;
+              padding: 2px 3px;
+              border-radius: 2px;
+            }
         }
         .user_info_highlight_3{
           background: #FFE1F1;
@@ -779,6 +807,15 @@ export default {
               height: 24px;
               margin-right: 4px;
             }
+          }
+
+          .tag {
+            font-size: 12px;
+            background-color: #fff1ff;
+            color: #555;
+            margin-left: 5px;
+            padding: 2px 3px;
+            border-radius: 2px;
           }
         }
         .content{
