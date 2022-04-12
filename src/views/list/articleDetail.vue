@@ -56,7 +56,7 @@
               <el-row :gutter="20">
                   <el-col :span="ISPHONE?24:17" :offset="isPhone?0:0" :lg="17" :md="24" :sm="24" :xs="24">
                       <div style="height:30px;"></div>
-                      <ListItem :isindex="false" :lists="[pagedata]"></ListItem>
+                      <ListItem :isindex="false" :is-article-detail="true" :lists="[pagedata]"></ListItem>
                       <div ref="scrollToCommentEmptyDivMark"/>
                       <div :class="['sub_comment', {'sub_comment_phone':ISPHONE}]">
                           <div v-show="showAt" class="atuser">

@@ -217,6 +217,7 @@
             <el-dropdown-item v-if="item.userInfo.userId === this.$store.state.user.userInfo.userId" command="编辑">编辑帖子
             </el-dropdown-item>
             <el-dropdown-item v-if="item.canDeleted"  command="删除">删除帖子</el-dropdown-item>
+            <el-dropdown-item v-if="isArticleDetail"  command="操作评论">{{this.isShowCopyCommentLink?'隐藏更多操作':'显示更多操作'}}</el-dropdown-item>
             <el-dropdown-item command="关闭"> <div ref="cocolse">关闭</div> </el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
@@ -253,13 +254,13 @@
 
 <script>
 import * as api from "@/api/api";
-import { Dialog } from "vant";
+import {Dialog} from "vant";
 import "vant/lib/dialog/style";
 // import "moment/locale/zh-cn";
 import moment from "moment";
 
 import dialogs from "../common/dialogs.vue";
-import {searchForum} from "../../../api/api";
+
 export default {
   name: "",
   data() {
@@ -279,6 +280,7 @@ export default {
       displayTrans: false,
       forumToTrans: null,
       state:'',
+      isShowCopyCommentLink: false,
 
     };
   },
@@ -300,7 +302,11 @@ export default {
     order: {
       type: String,
       default: "",
-    }
+    },
+    isArticleDetail: {
+      type: Boolean,
+      default: false,
+    },
   },
   components: {
     dialogs
@@ -454,6 +460,14 @@ export default {
         this.modifyArticle(this.item, this.index);
       } else if (command == "删除") {
         this.deletePost(this.item, this.index);
+      } else if (command == "操作评论") {
+        this.isShowCopyCommentLink = !this.isShowCopyCommentLink;
+        this.$EventBus.$emit("isShowCopyCommentLink", this.isShowCopyCommentLink);
+        if(this.isShowCopyCommentLink){
+          this.$toast('更多操作已在下方评论区显示，可在评论区选择并继续！');
+        }else{
+          this.$toast('隐藏更多操作成功！');
+        }
       } else if(command == "关闭评论") {
         this.disableComment('close');
       }else if(command == "开启评论") {
