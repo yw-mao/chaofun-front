@@ -29,7 +29,7 @@
                 <div v-if="item.canDeleted" @refreshDelete="refreshDelete" @click="deleteComment(item)" class="to_delete">删除</div>
                 <div v-if="item.forumAdmin&&item.forumAdminHighlight"  @click="unHighlightComment(item)" class="to_delete">取消高亮</div>
                 <div v-if="item.forumAdmin&&!item.forumAdminHighlight"  @click="highlightComment(item)" class="to_delete">设为高亮</div>
-                <div v-if="isShowCopyCommentLink"  @click="copyCommentLink(item)" class="to_delete">复制链接</div>
+                <div v-if="isShowCopyCommentLinkTmp"  @click="copyCommentLink(item)" class="to_delete">复制链接</div>
             </div>
             <div class="content" :style="getCommentContentStyle(item)">
                 <p v-if="!item.atUsers" v-html="islink(item.text)"></p>
@@ -101,7 +101,7 @@
             </div>
             <div v-if="!withoutSubComment&&item.children&&item.children.length">
                 <commentitem ref="subCommentItemMark" :postInfo="{postOwnerUserId:postInfo.postOwnerUserId,isPostOwnerHighlight:postInfo.isPostOwnerHighlight}"
-                             :is-show-copy-comment-link="isShowCopyCommentLink"
+                             :is-show-copy-comment-link="isShowCopyCommentLinkTmp"
                 @rep="rep" @refreshComment="refreshComment" @refreshDelete="refreshDelete" @toReplay2="toReplay2" :showRep="showR" :treeData="item.children"></commentitem>
                 <!-- <div  v-for="(item,index) in item.children" :key="index" class="comment_item">
                     <div class="c_left">
@@ -164,6 +164,7 @@ export default {
             searchkey: '',
             atUserName: [],
             __viewer:null,
+            isShowCopyCommentLinkTmp:this.isShowCopyCommentLink,
         }
     },
     props: {
@@ -201,7 +202,7 @@ export default {
 
       // 监听是否显示操作事件
       this.$EventBus.$on("isShowCopyCommentLink", (data) => {
-        this.isShowCopyCommentLink = data;
+        this.isShowCopyCommentLinkTmp = data;
       });
 
     },
