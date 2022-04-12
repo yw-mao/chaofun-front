@@ -473,72 +473,75 @@ export default {
                 }
             });
         },
-        toSub(){
-            if(this.canSub){
-                this.doLoginStatus().then(res=>{
-                    let comment = this.comment;
-                    if(res){
-                        if(!this.comment && (!this.images || this.images == 0)) {
-                            this.$toast('内容为空, 请输入内容');
-                            return;
-                        }
-                    let reg = new RegExp(/@[^(\s)]+/g);
-                    let a = comment.match(reg);
-                    console.log(a)
-                    var ats = [];
-                    if(a){
-                        a.forEach((item,index)=>{
-                            if(this.atUserName.includes(item)){
-                            let i = this.atUserName.findIndex(it=>it==item);
-                            ats.push(this.ats[i]);
-                            }
-                        });
-                        console.log('atc',ats)
-                        console.log(this.ats);
-                        console.log(this.atUserName)
-                    }
-                    let params = {
-                        parentId: this.replayItem&&this.replayItem.id?this.replayItem.id:'',
-                        postId: this.replayItem.postId,
-                        comment: this.comment,
-                        imageNames: this.images.join(','),
-                        ats: ats.join(',')
-                    }
-                    console.log(this.comment);
-                    this.canSub = false;
-                    api.addComments(params).then(res=>{
-                        if(res.success){
-                            this.$toast('评论成功');
-                            this.images = [];
-                            setTimeout(()=>{
-                                let obj = {
-                                    parentId: this.replayItem?this.replayItem.id:0,
-                                    text: this.comment,
-                                    type: 'text',
-                                    downs: 0,
-                                    ups: 0,
-                                    userInfo: this.userinfo
-                                };
-                                this.$emit('refreshComment',res.data)
-                                this.replayItem = null
-                                this.comment = ''
-                                this.canSub = true;
-                            },1500)
-                        } else {
-                            this.$toast(res.errorMessage);
-                            this.canSub = true;
-                        }
-                    })
-
-                    }else{
-                        console.log('未登录',res)
-                    }
-                })
-            }else{
-                this.$toast('正在提交评论...');
+      toSub(){
+        if(this.canSub){
+          this.doLoginStatus().then(res=>{
+            let comment = this.comment;
+            if(res){
+              if(!this.comment && (!this.images || this.images == 0)) {
+                this.$toast('内容为空, 请输入内容');
                 return;
+              }
+              let reg = new RegExp(/@[^(\s)]+/g);
+              let a = comment.match(reg);
+              console.log(a)
+              var ats = [];
+              if(a){
+                a.forEach((item,index)=>{
+                  if(this.atUserName.includes(item)){
+                    let i = this.atUserName.findIndex(it=>it==item);
+                    ats.push(this.ats[i]);
+                  }
+                });
+                console.log('atc',ats)
+                console.log(this.ats);
+                console.log(this.atUserName)
+              }
+              let params = {
+                parentId: this.replayItem&&this.replayItem.id?this.replayItem.id:'',
+                postId: this.replayItem.postId,
+                comment: this.comment,
+                imageNames: this.images.join(','),
+                ats: ats.join(',')
+              }
+              console.log(this.comment);
+              this.canSub = false;
+              api.addComments(params).then(res=>{
+                if(res.success){
+                  this.$toast('评论成功');
+                  this.images = [];
+                  setTimeout(()=>{
+                    let obj = {
+                      parentId: this.replayItem?this.replayItem.id:0,
+                      text: this.comment,
+                      type: 'text',
+                      downs: 0,
+                      ups: 0,
+                      userInfo: this.userinfo
+                    };
+                    this.$emit('refreshComment',res.data)
+                    this.replayItem = null
+                    this.comment = ''
+                    this.canSub = true;
+                  },1500)
+                } else {
+                  this.$toast(res.errorMessage);
+                  this.canSub = true;
+                }
+              }).catch(err => {
+                this.canSub = true;
+                this.$toast('未知错误');
+              })
+
+            }else{
+              console.log('未登录',res)
             }
-        },
+          })
+        }else{
+          this.$toast('正在提交评论...');
+          return;
+        }
+      },
         doZanComment(v,item){
             if(v==1){
                 if(item.vote==0){

@@ -921,11 +921,13 @@ queryChildren (parent, list) {
             }
             this.canSub = false;
             console.log(params)
-            api.addComments(params).then(res=>{
-              if(res.success){
+            api.addComments(params).then(res=> {
+              this.canSub = true;
+              if (res.success) {
                 this.images = [];
                 this.$toast('评论成功')
-                setTimeout(()=>{
+                this.comment = '';
+                setTimeout(() => {
                   // 先直接获取，后面评论多了再优化
                   // if(this.replayItem){
                   //   this.lists.push({
@@ -940,14 +942,16 @@ queryChildren (parent, list) {
                   //   this.lists.unshift(res.data)
                   // }
                   this.getLists()
-                  this.comment = '';
-                  this.canSub = true;
-                },1500)
+                }, 1500)
               } else {
-                this.canSub = true;
                 this.$toast(res.errorMessage);
               }
+            }).catch(err => {
+              this.canSub = true;
+              this.$toast('未知错误');
             })
+            // }).error(res => {
+            // })
           }else{
                 console.log('未登录',res)
             }
