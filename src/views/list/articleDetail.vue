@@ -216,13 +216,14 @@
 </template>
 
 <script>
-import { mapGetters,mapState } from "vuex";
+import {mapGetters, mapState} from "vuex";
 import * as api from "../../api/api";
 import ListItem from "../../components/chaofan/ListItemWidth.vue";
 import RightCom from "@/components/chaofan/RightCom";
 // import "moment/locale/zh-cn";
 import moment from "moment";
 import commentitem from "@/components/chaofan/commentItem";
+
 export default {
   name: 'Dashboard',
   // components: { adminDashboard, editorDashboard },
@@ -283,7 +284,8 @@ export default {
       pointIndex: '',
       atIndex: '',
       searchkey: '',
-      atUserName: []
+      atUserName: [],
+      jumpCommentId:0,
     }
   },
   components: {
@@ -317,11 +319,23 @@ export default {
     })
     // 创建键盘监听事件
     addEventListener('keydown', this.keyDown);
+
+    // 如有指定的commentId，跳转到
+    if (this.jumpCommentId) {
+      setTimeout(() => {
+        this.jumpCommentById(this.jumpCommentId);
+      }, 1000);
+    }
+
   },
   destroyed() {
     removeEventListener('keydown', this.keyDown);
   },
   created() {
+    if(this.$route.query.commentId){
+      this.jumpCommentId = this.$route.query.commentId;
+    }
+
     let params = this.$route.params;
     this.params.postId = params.postId;
     this.getDetail();
@@ -331,6 +345,13 @@ export default {
     this.inputBlur()
   },
   methods:{
+
+    jumpCommentById(commentId) {
+      const elementById = document.getElementById("commentItem_" + commentId);
+      if (elementById && elementById.offsetTop) {
+        this.$refs.dialogMainMark.scrollTop = elementById.offsetTop - 40;
+      }
+    },
 
     scrollToTop() {
       this.$refs.dialogMainMark.scrollTop = 0;
@@ -768,7 +789,6 @@ export default {
       for (let i = 0, len = list.length; i < len; i++) {
         if (!list[i].parentId) {
         const item = this.queryChildren(list[i], list)
-
         tree.push(item)
         }
       }
@@ -835,6 +855,16 @@ queryChildren (parent, list) {
       api.listCommentsV0(params).then(res=>{
         if(res.data.length){
           this.lists = []
+
+          // 跳转高亮
+          if (this.jumpCommentId) {
+            res.data.forEach((item) => {
+              if (item.id == this.jumpCommentId) {
+                item.isJumpHighlight = true;
+              }
+            });
+          }
+
           this.lists.push(...res.data);
           let data = this.lists;
           this.treeData = this.transformTree(data);

@@ -1,6 +1,6 @@
 <template>
  <div>
-     <div v-for="(item,index) in treeData" :key="index" class="comment_item">
+     <div v-for="(item,index) in treeData" :key="index" :id="'commentItem_'+item.id" class="comment_item">
         <div :class="['c_left',{'c_left2':ISPHONE}]">
             <div class="lay">
                 <img v-if="item.vote != 1" @click.stop="doZanComment(1, item)" src="../../assets/images/icon/up.png" alt="" />
@@ -234,7 +234,10 @@ export default {
         },
 
         getHighlightStatus(item){
-            if(item.forumAdminHighlight){
+            if(item.isJumpHighlight){
+              // 跳转高亮
+              return 3;
+            }else if(item.forumAdminHighlight){
                 // 版主高亮
                 return 1;
             }else if(this.postInfo.isPostOwnerHighlight && this.postInfo.postOwnerUserId == item.userInfo.userId){
@@ -246,7 +249,9 @@ export default {
         },
         getCommentContentStyle(item){
             let highlightStatus = this.getHighlightStatus(item);
-            if(highlightStatus == 1){
+            if(highlightStatus == 3){
+              return 'background: #FFE1F1;';
+            }else if(highlightStatus == 1){
                 return 'background: #b2e8d1;';
             }else if(highlightStatus == 2){
                 return 'background: #BFDFFF;';
@@ -255,7 +260,9 @@ export default {
         },
         getCommentUserinfoClazz(item){
             let highlightStatus = this.getHighlightStatus(item);
-            if(highlightStatus == 1){
+            if(highlightStatus == 3){
+                return 'user_info_highlight_3';
+            }else if(highlightStatus == 1){
                 return 'user_info_highlight_1';
             }else if(highlightStatus == 2){
                 return 'user_info_highlight_2';
@@ -737,6 +744,39 @@ export default {
                     margin-right: 4px;
                 }
             }
+        }
+        .user_info_highlight_3{
+          background: #FFE1F1;
+          img{
+            width: 24px;
+            height: 24px;
+            vertical-align: middle;
+            border-radius: 50%;
+            margin-right: 2px;
+          }
+          .username{
+            color: #1890ff;
+            cursor: pointer;
+            margin-left: 6px;
+            line-height: 24px;
+            &:hover{
+              text-decoration: underline;
+            }
+          }
+          .time{
+            padding-left: 15px;
+            color: #555;
+            font-size: 12px;
+          }
+          .zan_shu{
+            color: #555;
+            cursor: pointer;
+            img{
+              width: 24px;
+              height: 24px;
+              margin-right: 4px;
+            }
+          }
         }
         .content{
             font-size: 15px;
