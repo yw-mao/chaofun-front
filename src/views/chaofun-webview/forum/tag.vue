@@ -28,7 +28,11 @@
       <div @click="add" class="btns">添加标签</div>
     </div>
     <div v-for="(item,index) in lists" :key="index" class="item">
-      <div>{{item.name}} (排序值：{{item.orderNumber}} 颜色：{{item.backgroundColor}}) </div>
+      <div><span
+          :style="{ background: item.backgroundColor?item.backgroundColor:'#ff9300'}"
+          style="padding: 5px 10px;margin-right: 5px;border-radius: 5px;">{{ item.name }}</span>
+        (排序值：{{ item.orderNumber }} 颜色：{{ item.backgroundColor }})
+      </div>
       <div style="display: flex; justify-content: space-between;width: 20%">
         <div @click="toModify(item)">修改</div>
         <div @click="toDelete(item, index)">删除</div>
