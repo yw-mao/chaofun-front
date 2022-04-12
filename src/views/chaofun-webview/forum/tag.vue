@@ -5,7 +5,7 @@
         <div style="">
           <div style="margin:10px 0px;display: flex; align-items: center">
             <div style="align-content: center">标签名：</div>
-            <input type="text" v-model="addTagName"  placeholder="标签名"/>
+            <input type="text" v-model="addTagName"  placeholder="标签名" style="color: #fff;text-align: center;"  :style="{ background: backgroundColor?backgroundColor:'#ff9300'}"/>
           </div>
           <div style="margin:10px 0px;display: flex; align-items: center">
             <div style="align-content: center">排序值：</div>
