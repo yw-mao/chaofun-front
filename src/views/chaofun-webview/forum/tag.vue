@@ -30,7 +30,7 @@
     <div v-for="(item,index) in lists" :key="index" class="item">
       <div style="max-width: 80vw;"><span
           :style="{ background: item.backgroundColor?item.backgroundColor:'#ff9300'}"
-          style="padding: 5px 10px;margin-right: 5px;border-radius: 5px;">{{ item.name }}</span>
+          style="padding: 5px 10px;margin-right: 5px;border-radius: 5px;color:#fff;">{{ item.name }}</span>
         (排序值：{{ item.orderNumber }} 颜色：{{ item.backgroundColor }})
       </div>
       <div style="display: flex; justify-content: space-between;width: 90px;">
