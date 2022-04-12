@@ -35,7 +35,7 @@
                   v-for="(item, index) in message"
                   :key="index"
                   :items="item"
-                  :humanizeTimeFormat="humanizeTimeFormat"
+                  :humanizeTimeFormat0="humanizeTimeFormat"
                   @call-father-humanizeTimeFormatSwitch="humanizeTimeFormatSwitch"
                 ></noticeItem>
                 <load-text
