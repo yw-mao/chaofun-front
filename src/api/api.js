@@ -1271,6 +1271,18 @@ export function modifyArticle(params) {
     })
 }
 
+/**
+ * 举报
+ * @returns {*}
+ */
+export function reportPostComment(params) {
+  return request({
+    url: '/api/v0/report',
+    method: 'get',
+    params
+  })
+}
+
 
 /** 活动查询 */
 
