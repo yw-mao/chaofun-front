@@ -27,12 +27,23 @@ export default {
     }
   },
   created() {
-    if (this.imageNames) {
-      const imageArray = this.imageNames.split(",");
-      imageArray.forEach(image => {
-        this.imageArray.push(this.imgOrigin + image);
-      });
+    this.init();
+  },
+  watch: {
+    imageNames() {
+      this.init();
     }
+  },
+  methods: {
+    init() {
+      this.imageArray = [];
+      if (this.imageNames) {
+        const imageArray = this.imageNames.split(",");
+        imageArray.forEach(image => {
+          this.imageArray.push(this.imgOrigin + image);
+        });
+      }
+    },
   }
 }
 </script>
