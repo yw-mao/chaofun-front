@@ -216,7 +216,17 @@
             <el-dropdown-item v-if="item.canAddToRecommend" command="推荐">推荐</el-dropdown-item>
             <el-dropdown-item v-if="item.userInfo.userId === this.$store.state.user.userInfo.userId" command="编辑">编辑帖子
             </el-dropdown-item>
-            <el-dropdown-item v-if="item.canDeleted"  command="删除">删除帖子</el-dropdown-item>
+            <el-dropdown-item v-if="item.canDeleted" command="删除">删除帖子</el-dropdown-item>
+            <el-dropdown-item v-if="isArticleDetail"  command="操作评论">{{this.isShowCopyCommentLink?'隐藏更多操作':'显示更多操作'}}</el-dropdown-item>
+
+            <el-dropdown-item v-if="this.$store.state.user.islogin&&isArticleDetail">
+              <div class="addTag" @click.stop="switchShowReportList">举报 {{ this.isShowReportList ? "∨" : ">" }}</div>
+            </el-dropdown-item>
+            <div v-if="isShowReportList">
+              <div class="report" @click="onReportPostClick">举报帖子</div>
+              <div class="report" @click="onReportCommentClick">举报评论</div>
+            </div>
+
             <el-dropdown-item command="关闭"> <div ref="cocolse">关闭</div> </el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
@@ -248,18 +258,20 @@
 <!--      </template>-->
 <!--    </dialogs>-->
 
+    <report-dialog v-if="isArticleDetail"/>
   </div>
 </template>
 
 <script>
 import * as api from "@/api/api";
-import { Dialog } from "vant";
+import {Dialog} from "vant";
 import "vant/lib/dialog/style";
 // import "moment/locale/zh-cn";
 import moment from "moment";
 
 import dialogs from "../common/dialogs.vue";
-import {searchForum} from "../../../api/api";
+import reportDialog from '@/components/report/report.vue';
+
 export default {
   name: "",
   data() {
@@ -279,6 +291,8 @@ export default {
       displayTrans: false,
       forumToTrans: null,
       state:'',
+      isShowCopyCommentLink: false,
+      isShowReportList:false,
 
     };
   },
@@ -300,10 +314,14 @@ export default {
     order: {
       type: String,
       default: "",
-    }
+    },
+    isArticleDetail: {
+      type: Boolean,
+      default: false,
+    },
   },
   components: {
-    dialogs
+    dialogs, reportDialog,
   },
   created() {
     if (this.item.tags.length) {
@@ -407,6 +425,39 @@ export default {
         this.getForumTag();
       }
     },
+
+    onShowCopyCommentLinkClick() {
+      this.isShowCopyCommentLink = !this.isShowCopyCommentLink;
+      this.$EventBus.$emit("isShowCopyCommentLink", this.isShowCopyCommentLink);
+      this.$EventBus.$emit("isShowReportComment", this.isShowCopyCommentLink);
+      if (this.isShowCopyCommentLink) {
+        this.$toast('更多操作已在下方评论区显示，可在评论区选择并继续！');
+      } else {
+        this.$toast('隐藏更多操作成功！');
+      }
+    },
+
+    switchShowReportList() {
+      this.isShowReportList = !this.isShowReportList;
+    },
+
+    onReportPostClick() {
+      this.$refs.cocolse.click();
+      this.$EventBus.$emit("reportDialog_data", {
+        dialogVisible: true,
+        type: 'post',
+        reportData: this.item
+      });
+    },
+
+    onReportCommentClick() {
+      this.$refs.cocolse.click();
+      this.isShowCopyCommentLink = true;
+      this.$EventBus.$emit("isShowCopyCommentLink", true);
+      this.$EventBus.$emit("isShowReportComment", true);
+      this.$toast('举报评论操作已在下方评论区显示，可在评论区选择并继续！');
+    },
+
     toCollect(){
       if(this.item.collection){
         this.collectId = JSON.parse(JSON.stringify(this.item)).collection.id;
@@ -454,6 +505,8 @@ export default {
         this.modifyArticle(this.item, this.index);
       } else if (command == "删除") {
         this.deletePost(this.item, this.index);
+      } else if (command == "操作评论") {
+        this.onShowCopyCommentLinkClick();
       } else if(command == "关闭评论") {
         this.disableComment('close');
       }else if(command == "开启评论") {
@@ -760,6 +813,24 @@ h1 {
 
   user-select: none;
 }
+
+  .report {
+    color: #606266;
+    -moz-user-select: none; /*火狐*/
+    -webkit-user-select: none; /*webkit浏览器*/
+    -ms-user-select: none; /*IE10*/
+    -khtml-user-select: none; /*早期浏览器*/
+    user-select: none;
+
+    padding: 5px 0px 5px 30px;
+    margin: 2px 0px;
+    cursor: pointer;
+
+    &:hover {
+      background: #E8F4FF;
+    }
+  }
+
 .showTags {
   padding: 10px 10px;
   background: #f7f7f7;

@@ -42,6 +42,7 @@
           @doFocued="doFocued"
           :item="item"
           :isindex="true"
+          :is-article-detail="isArticleDetail"
         ></itemTopTitle>
 
         <div v-if="item.type != 'link'" class="title">
@@ -450,6 +451,10 @@ export default {
       },
     },
     isindex: {
+      type: Boolean,
+      default: false,
+    },
+    isArticleDetail: {
       type: Boolean,
       default: false,
     },
