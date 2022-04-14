@@ -4,8 +4,14 @@
       
       <div @click.stop="" v-if="item.imageNums==1" class="imgs" style="  position: relative;   overflow: hidden ">
         <viewer :images="[imgOrigin+item.imageName]">
-          <img :data-src="imgOrigin+item.imageName" :data-source="imgOrigin+item.imageName" v-if="isDetail" :style="doImgStyle(item.width,item.height)" :alt="item.title" :title="item.title" class="lazyload">
-          <img :data-src="dealImageUrl(imgOrigin+item.imageName, item)" :data-source="imgOrigin+item.imageName" v-if="!isDetail" :style="doImgStyle(item.width,item.height)" :alt="item.title" :title="item.title" class="lazyload">
+          <img v-if="isDetail" :alt="item.title" :data-source="imgOrigin+item.imageName"
+               :data-src="imgOrigin+item.imageName" :src="imgOrigin+item.imageName"
+               :style="doImgStyle(item.width,item.height)" :title="item.title" class="lazyload">
+          <img v-if="!isDetail" :alt="item.title"
+               :data-source="imgOrigin+item.imageName" :data-src="dealImageUrl(imgOrigin+item.imageName, item)"
+               :src="dealImageUrl(imgOrigin+item.imageName, item)" :style="doImgStyle(item.width,item.height)"
+               :title="item.title"
+               class="lazyload">
         </viewer>
         <div @click="toPost(item)" v-if="!isDetail && isLongImage(item.width, item.height)"  style="position: absolute;  background-color: rgba(80,85,87,.8); color: white; transform: translateX(-50%); line-height: 32px; font-size: 12px; font-weight: 700; left: 50%; width: 320px; bottom: 16px">
           查看长图
@@ -32,9 +38,9 @@
 </template>
 
 <script>
-  import 'lazysizes';
-  import * as api from '@/api/api'
-  export default {
+import 'lazysizes';
+
+export default {
     name: '',
     data(){
       return {
