@@ -1092,13 +1092,8 @@ export default {
 }
 
 /deep/ .messageBox {
-  width: 400px;
-  max-width: 80vw;
+  width: 400px !important;
+  max-width: 80vw !important;
   //width: auto !important;
-}
-</style>
-<style>
-.messageBox {
-  max-width: 80%;
 }
 </style>
