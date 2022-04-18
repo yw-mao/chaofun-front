@@ -8,7 +8,7 @@
 
       <el-table :data="history" :highlight-current-row="true" :stripe="true"
                 height="100%" style="width: 100%;max-width: 600px;margin: auto;">
-        <el-table-column align="center" label="时间" prop="dateStr" width="95"></el-table-column>
+        <el-table-column align="center" label="时间" prop="dateStr" width="110"></el-table-column>
         <el-table-column align="center" label="行为" prop="reasonStr"></el-table-column>
         <el-table-column align="center" label="收支">
           <template slot-scope="item">
