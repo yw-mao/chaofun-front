@@ -131,12 +131,12 @@ export default {
           type: "warning",
           position: "top",
         }).then(() => {
-          api.getByPath('/api/v0/report/solve', {'id': id, 'aciton': action}).then(res => {
+          api.getByPath('/api/v0/report/solve', {'id': id, 'action': action}).then(res => {
             this.init();
           })
         })
       } else {
-        api.getByPath('/api/v0/report/solve', {'id': id, 'aciton': action}).then(res => {
+        api.getByPath('/api/v0/report/solve', {'id': id, 'action': action}).then(res => {
           this.init();
         })
       }
