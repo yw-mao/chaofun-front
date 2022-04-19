@@ -588,10 +588,10 @@ export default {
       console.log("wsOnOpen");
       // console.log(e);
 
-      // 每60秒发送一次心跳
+      // 每3秒发送一次心跳
       setInterval(() => {
         this.sendHeartBeat();
-      }, 60000);
+      }, 3000);
 
       // 加载聊天记录
       for (const channelId of this.chatHistoryMap.keys()) {
