@@ -18,7 +18,12 @@
                 </viewer>
               </div>
               <div class="info">
-                <div v-if="userInfo.userName" class="zhuye nick">{{ userInfo.userName }}</div>
+
+                <div v-if="userInfo.userName" class="zhuye nick">
+                  {{ userInfo.userName }}
+                  <span style="margin-left: 10px;font-size: 12px;color: #ccc;" @click.stop="$router.push({path: 'user/'+userInfo.userId})">UID:{{userInfo.userId}}</span>
+                </div>
+
                 <div class="followersFocusUps">
                   <div class="followers" @click="checkout('listFans')">粉丝：{{ userInfo.followers || "0" }}</div>
                   <div class="followers" @click="checkout('listFocus')">关注：{{ userInfo.focus || "0" }}</div>

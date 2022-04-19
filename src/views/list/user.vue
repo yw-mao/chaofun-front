@@ -19,6 +19,7 @@
               </div>
               <div class="info">
                 <div v-if="userInfo.userName" class="zhuye nick"> {{ userInfo.userName }}
+                  <span style="margin-left: 10px;font-size: 12px;color: #ccc;">UID:{{userInfo.userId}}</span>
                   <div v-if="userInfo.userId != $store.state.user.userInfo.userId"
                        @click="toAttention(userInfo.focused, userInfo.userId)"
                        :class="['attention', { attentioned: userInfo.focused }]">
