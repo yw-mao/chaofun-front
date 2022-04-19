@@ -132,6 +132,18 @@ export default {
         return 'FBi 兑换T恤';
       }
 
+      if (reason === 'report') {
+        return '有效举报';
+      }
+
+      if (reason === 'report_ignore') {
+        return '过滤举报';
+      }
+
+      if (reason === 'report_solve') {
+        return '举报处理';
+      }
+
       if (reason === 'be_thx') {
         return '被感谢';
       }
@@ -153,6 +165,7 @@ export default {
         return '处罚';
       }
       return reason;
+
     }
   }
 
