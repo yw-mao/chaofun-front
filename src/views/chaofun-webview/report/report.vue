@@ -79,8 +79,8 @@ export default {
     doCommentType(item) {
       var t = item.type;
       switch (t) {
-        case "link":
-          return "有图";
+        case "media":
+          return "有图(请点击查看详情)";
           break;
         default:
           return ""
