@@ -153,7 +153,6 @@ export default {
         return '处罚';
       }
       return reason;
-
     }
   }
 

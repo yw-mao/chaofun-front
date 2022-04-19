@@ -1,46 +1,52 @@
 <template>
-  <div >
-    <div v-for="(item,index) in lists" >
-      <div style="border-bottom: 1px solid #f1f1f1;" v-if="item.type === 'post'" >
-        <div @click="toPost(item.postInfo.postId)" style="font-size: 20px; font-weight: bold">
-          帖子: {{doType(item.postInfo)}}
+  <div>
+    <div v-if="lists != null && lists.length > 0">
+      <div  v-for="(item,index) in lists" >
+        <div style="border-bottom: 1px solid #f1f1f1;" v-if="item.type === 'post'" >
+          <div @click="toPost(item.postInfo.postId)" style="font-size: 20px; font-weight: bold">
+            帖子: {{doType(item.postInfo)}}
+          </div>
+          <div @click="toPost(item.postInfo.postId)" style="font-size: 16px">
+            标题：{{item.postInfo.title}}
+          </div>
+          <div @click="toPost(item.postInfo.postId)" style="font-size: 16px">
+            用户：{{item.postInfo.userInfo.userName}}
+          </div>
+          <div @click="toPost(item.postInfo.postId)" style="font-size: 16px">
+            举报原因：{{item.reason}}
+          </div>
+          <div>
+            <el-button @click="dealReport(item.id, 'ignore')">不处理</el-button>
+            <el-button @click="dealReport(item.id, 'delete')">删除</el-button>
+          </div>
         </div>
-        <div @click="toPost(item.postInfo.postId)" style="font-size: 16px">
-          标题：{{item.postInfo.title}}
-        </div>
-        <div @click="toPost(item.postInfo.postId)" style="font-size: 16px">
-          用户：{{item.postInfo.userInfo.userName}}
-        </div>
-        <div @click="toPost(item.postInfo.postId)" style="font-size: 16px">
-          举报原因：{{item.reason}}
-        </div>
-        <div>
-          <el-button @click="dealReport(item.id, 'ignore')">不处理</el-button>
-          <el-button @click="dealReport(item.id, 'delete')">删除</el-button>
-        </div>
-      </div>
 
 
-      <div style="border-bottom: 1px solid #f1f1f1;" v-if="item.type === 'comment'" >
-        <div @click="toPost(item.postInfo.postId)" style="font-size: 20px; font-weight: bold">
-          评论 {{doCommentType(item.commentInfo)}}
-        </div>
-        <div @click="toPost(item.postInfo.postId)" style="font-size: 16px">
-          内容：{{item.commentInfo.text}}
-        </div>
-        <div @click="toPost(item.postInfo.postId)" style="font-size: 16px">
-          用户：{{item.commentInfo.userInfo.userName}}
-        </div>
-        <div @click="toPost(item.postInfo.postId)" style="font-size: 16px">
-          举报原因：{{item.reason}}
-        </div>
-        <div>
-          <el-button @click="dealReport(item.id, 'ignore')">不处理</el-button>
-          <el-button @click="dealReport(item.id, 'delete')">删除</el-button>
+        <div style="border-bottom: 1px solid #f1f1f1;" v-if="item.type === 'comment'" >
+          <div @click="toPost(item.postInfo.postId)" style="font-size: 20px; font-weight: bold">
+            评论 {{doCommentType(item.commentInfo)}}
+          </div>
+          <div @click="toPost(item.postInfo.postId)" style="font-size: 16px">
+            内容：{{item.commentInfo.text}}
+          </div>
+          <div @click="toPost(item.postInfo.postId)" style="font-size: 16px">
+            用户：{{item.commentInfo.userInfo.userName}}
+          </div>
+          <div @click="toPost(item.postInfo.postId)" style="font-size: 16px">
+            举报原因：{{item.reason}}
+          </div>
+          <div>
+            <el-button @click="dealReport(item.id, 'ignore')">不处理</el-button>
+            <el-button @click="dealReport(item.id, 'delete')">删除</el-button>
+          </div>
         </div>
       </div>
     </div>
+    <div v-else>
+      暂无举报
+    </div>
   </div>
+
 
 
 </template>
