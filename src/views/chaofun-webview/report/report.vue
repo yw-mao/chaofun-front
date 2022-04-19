@@ -17,7 +17,7 @@
           </div>
           <div>
             <el-button @click="dealReport(item.id, 'ignore')">不处理</el-button>
-            <el-button @click="dealReport(item.id, 'delete')">删除</el-button>
+            <el-button @click="dealReport(item.id, 'delete')">删除内容</el-button>
           </div>
         </div>
 
@@ -37,7 +37,7 @@
           </div>
           <div>
             <el-button @click="dealReport(item.id, 'ignore')">不处理</el-button>
-            <el-button @click="dealReport(item.id, 'delete')">删除</el-button>
+            <el-button @click="dealReport(item.id, 'delete')">删除内容</el-button>
           </div>
         </div>
       </div>
