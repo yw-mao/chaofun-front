@@ -126,10 +126,11 @@ export default {
       }
     },
     dealReport(id, action) {
+
+
       if (action === 'delete') {
         this.$confirm(`是否确定删除内容？`, "提示", {
           type: "warning",
-          position: "top",
         }).then(() => {
           api.getByPath('/api/v0/report/solve', {'id': id, 'action': action}).then(res => {
             this.init();
@@ -149,4 +150,11 @@ export default {
 
 <style scoped>
 
+</style>
+
+<style lang="scss">
+.el-message-box{
+  width: 90vw;
+  max-width: 400px;
+}
 </style>
