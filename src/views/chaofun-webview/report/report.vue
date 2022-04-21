@@ -18,6 +18,7 @@
           <div>
             <el-button @click="dealReport(item.id, 'ignore')">不处理</el-button>
             <el-button @click="dealReport(item.id, 'delete')">删除内容</el-button>
+            <el-button @click="dealReport(item.id, 'malicious')">恶意举报</el-button>
           </div>
         </div>
 
@@ -38,6 +39,7 @@
           <div>
             <el-button @click="dealReport(item.id, 'ignore')">不处理</el-button>
             <el-button @click="dealReport(item.id, 'delete')">删除内容</el-button>
+            <el-button @click="dealReport(item.id, 'malicious')">恶意举报</el-button>
           </div>
         </div>
       </div>
@@ -130,6 +132,14 @@ export default {
 
       if (action === 'delete') {
         this.$confirm(`是否确定删除内容？`, "提示", {
+          type: "warning",
+        }).then(() => {
+          api.getByPath('/api/v0/report/solve', {'id': id, 'action': action}).then(res => {
+            this.init();
+          })
+        })
+      } else if (action === 'malicious') {
+        this.$confirm(`是否判定为恶意举报？`, "提示", {
           type: "warning",
         }).then(() => {
           api.getByPath('/api/v0/report/solve', {'id': id, 'action': action}).then(res => {
