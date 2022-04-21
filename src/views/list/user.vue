@@ -56,8 +56,10 @@
             </div>
             <ListItem v-if="whichOne == 'pub' || whichOne == 'love'" :pagenum="params.pageNum" :marker="params.marker"
                       :isMy="true" :datas="{ type: whichOne }" :isindex="true" :lists="lists"></ListItem>
-            <listComment v-else-if="whichOne=='comment'" :lists="lists">
+
+            <listComment v-else-if="whichOne=='comment'" :lists="commentLists">
             </listComment>
+
             <attentionItem v-for="(item, index) in usersData" :item="item" :key="index"></attentionItem>
             <load-text :hasContent="lists.length || usersData.length ? true : false" :ifcanget="ifcanget"
                        :loadAll="loadAll"></load-text>
@@ -102,6 +104,7 @@ export default {
       currentRole: "adminDashboard",
       count: 5,
       lists: [],
+      commentLists: [],
       forumId: "",
       params: {
         marker: "",
@@ -255,6 +258,7 @@ export default {
         this.params.marker = "";
         this.whichOne = v;
         this.lists = [];
+        this.commentLists = [];
         this.usersData = [];
         this.getLists();
       }
@@ -293,6 +297,7 @@ export default {
       localStorage.setItem("chao.fun.timeline.order", this.params.order);
       this.params.pageNum = 1;
       this.lists = [];
+      this.commentLists = [];
       this.getLists();
     },
     getForumInfo() {
@@ -329,7 +334,7 @@ export default {
           } else {
             this.loadAll = true
           }
-          this.lists.push(...res.data.comments)
+          this.commentLists.push(...res.data.comments)
         })
       } else if (this.whichOne == "pub") {
         api.getUserPosts(params).then((res) => {

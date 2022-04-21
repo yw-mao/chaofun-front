@@ -183,6 +183,9 @@
         }
       };
     },
+    destroyed() {
+      document.onkeydown = undefined;
+    },
     created() {
       this.generate();
       this.getDefaultForum()
