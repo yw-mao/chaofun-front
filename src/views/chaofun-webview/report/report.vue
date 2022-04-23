@@ -6,6 +6,9 @@
           <div @click="toPost(item.postInfo.postId)" style="font-size: 20px; font-weight: bold">
             帖子: {{doType(item.postInfo)}}
           </div>
+          <div @click="toPost(item.postInfo.postId)" style="font-size: 16px; font-weight: bold">
+            版块: {{item.postInfo.forum.name}}
+          </div>
           <div @click="toPost(item.postInfo.postId)" style="font-size: 16px">
             标题：{{item.postInfo.title}}
           </div>
@@ -24,8 +27,12 @@
 
 
         <div style="border-bottom: 1px solid #f1f1f1;" v-if="item.type === 'comment'" >
+
           <div @click="toPost(item.postInfo.postId)" style="font-size: 20px; font-weight: bold">
             评论 {{doCommentType(item.commentInfo)}}
+          </div>
+          <div @click="toPost(item.postInfo.postId)" style="font-size: 16px; font-weight: bold">
+            版块: {{item.postInfo.forum.name}}
           </div>
           <div @click="toPost(item.postInfo.postId)" style="font-size: 16px">
             内容：{{item.commentInfo.text}}
