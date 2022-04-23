@@ -23,6 +23,16 @@
       </div>
 
       <div class="bottom">
+        是否允许众筹
+        <el-switch
+            v-model="donate"
+            @change="setDonate"
+            active-color="#13ce66"
+            inactive-color="#ff4949">
+        </el-switch>
+      </div>
+
+      <div class="bottom">
         <div @click="toSave" class="btns">保存ICON和描述</div>
       </div>
 
@@ -81,6 +91,7 @@ export default {
   data() {
     return {
       anonymity: true,
+      donate: false,
       params: {
         forumId: '',
       },
@@ -255,11 +266,22 @@ export default {
       api.getByPath('/api/v0/forum/getAnonymity',{forumId: this.forumId}).then( res => {
         this.anonymity = res.data
       })
+
+      api.getByPath('/api/v0/donate/isOpen',{forumId: this.forumId}).then( res => {
+        this.donate = res.data
+      })
     },
 
     setAnonymity(value) {
       console.log(value);
       api.getByPath('/api/v0/forum/setAnonymity',{forumId: this.forumId, anonymity: value}).then( res => {
+        this.getForumInfo();
+      })
+    },
+
+    setDonate(value) {
+      console.log(value);
+      api.getByPath('/api/v0/donate/set',{forumId: this.forumId, donate: value}).then( res => {
         this.getForumInfo();
       })
     },

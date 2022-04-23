@@ -142,6 +142,13 @@ routes = [
     hidden: true
   },
   {
+    path: '/webview/donate',
+    component: () => import('@/views/chaofun-webview/donate/donate'),
+    name: 'donate',
+    meta: { title: '众筹'},
+    hidden: true
+  },
+  {
     path: '/webview/fbi/order',
     component: () => import('@/views/chaofun-webview/fbi/order'),
     name: 'order',
