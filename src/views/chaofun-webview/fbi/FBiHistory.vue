@@ -152,6 +152,10 @@ export default {
         return '感谢赠与';
       }
 
+      if (reason === 'donate_fbi') {
+        return '版块众筹';
+      }
+
       if (reason.startsWith('punish_politic')) {
         return '处罚：政治';
       }
