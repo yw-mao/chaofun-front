@@ -52,7 +52,7 @@ export default {
               {
                 path: '/p/1137991',
                 title: '炒饭社区公约',
-                desc: '大家一加油吧！！！',
+                desc: '大家一起加油吧！！！',
                 showBottom: true
               },
               // {
