@@ -2,7 +2,7 @@
   <div style="background: #FFF;">
 
     <div
-        style="position: absolute;width: 800px;height: 600px;left: 50%;top: 50%;margin-left: -400px;margin-top:-300px; box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.3); border-radius:5px;">
+      style="position: absolute;width: 800px;height: 600px;left: 50%;top: 50%;margin-left: -400px;margin-top:-300px; box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.3); border-radius:5px;">
 
       <!--  left  -->
       <div class="scrollbar_0"
@@ -12,7 +12,7 @@
              style="width: 240px;height: 60px;margin: 5px;border-radius:4px;"
              @click="switchChannel(channel.id)">
           <img :src="imgOrigin+channel.avatar + '?x-oss-process=image/resize,w_40,h_40/format,webp/quality,q_75'"
-               alt="" style="position: absolute;width: 40px;height: 40px;border-radius: 100%;margin:10px 5px;"/>
+               alt="" style="position: absolute;width: 40px;height: 40px;border-radius: 100%;margin:10px 5px;" />
           <div style="position:absolute;width: 195px;height: 60px;left: 50px;">
             <span style="position: absolute;left:10px;top:10px;font-size: 16px;font-weight: bold;cursor:default;">{{
                 channel.name
@@ -38,14 +38,16 @@
 
         <!--  top 聊天对象 -->
         <div
-            style="width: 550px;height: 50px;background: #F5F5F5;border-width: 0 0 1px 0;border-style: solid;border-color: #e0e0e0;padding-top: 5px;">
-          <div style="margin-left: 190px;height: 40px;width: 40px;float:left;">
-            <img v-if="chatHistoryMap.get(currentChannelId)"
-                 :src="imgOrigin+chatHistoryMap.get(currentChannelId).avatar + '?x-oss-process=image/resize,w_40,h_40/format,webp/quality,q_75'"
-                 alt="" style="width: 40px;height: 40px;border-radius: 100%;"/>
-          </div>
-          <div style="font-size: 20px;font-weight: bold;float:left;margin-left: 5px;margin-top: 5px;">
-            <span v-if="chatHistoryMap.get(currentChannelId)">{{ chatHistoryMap.get(currentChannelId).name }}</span>
+          style="width: 550px;height: 50px;background: #F5F5F5;border-width: 0 0 1px 0;border-style: solid;border-color: #e0e0e0;padding-top: 5px;">
+          <div style="cursor: pointer;" @click.stop="toForumOrUser(chatHistoryMap.get(currentChannelId))">
+            <div style="margin-left: 190px;height: 40px;width: 40px;float:left;">
+              <img v-if="chatHistoryMap.get(currentChannelId)"
+                   :src="imgOrigin+chatHistoryMap.get(currentChannelId).avatar + '?x-oss-process=image/resize,w_40,h_40/format,webp/quality,q_75'"
+                   alt="" style="width: 40px;height: 40px;border-radius: 100%;" />
+            </div>
+            <div style="font-size: 20px;font-weight: bold;float:left;margin-left: 5px;margin-top: 5px;">
+              <span v-if="chatHistoryMap.get(currentChannelId)">{{ chatHistoryMap.get(currentChannelId).name }}</span>
+            </div>
           </div>
         </div>
 
@@ -68,8 +70,8 @@
                 <!--  头像、昵称、时间  -->
                 <div style="width: 530px;height:28px;">
                   <img
-                      :src="imgOrigin+chatMessage.sender.icon + '?x-oss-process=image/resize,w_24,h_24/format,webp/quality,q_75'"
-                      alt="" style="width: 24px;height: 24px;border-radius: 100%;"/>
+                    :src="imgOrigin+chatMessage.sender.icon + '?x-oss-process=image/resize,w_24,h_24/format,webp/quality,q_75'"
+                    alt="" style="width: 24px;height: 24px;border-radius: 100%;" />
                   <span v-if="'group'===chatHistoryMap.get(currentChannelId).type"
                         style="color: #999;margin-left: 5px;bottom: 6px;position: relative;">{{
                       chatMessage.sender.userName
@@ -80,12 +82,12 @@
                 </div>
                 <!--  图片/文字  -->
                 <div
-                    style="background: #e5e5e5;border-radius: 4px; padding: 7px 10px;display:inline-block;width:auto;height:auto;margin-left: 20px;">
+                  style="background: #e5e5e5;border-radius: 4px; padding: 7px 10px;display:inline-block;width:auto;height:auto;margin-left: 20px;">
                   <viewer v-if="'image'===chatMessage.type" :images="[imgOrigin+chatMessage.content]">
                     <img :data-source="imgOrigin +chatMessage.content"
                          :src="imgOrigin+chatMessage.content+ '?x-oss-process=image/resize,h_150/format,webp/quality,q_75'"
                          alt=""
-                         style="max-width:410px;"/>
+                         style="max-width:410px;" />
                   </viewer>
                   <pre v-else style="max-width: 410px;white-space: pre-wrap;word-wrap: break-word;font-size: 14px;">{{
                       chatMessage.content
@@ -107,17 +109,17 @@
                        calcMessageTime(chatMessage.time)
                      }}</span>
                   <img
-                      :src="imgOrigin+chatMessage.sender.icon + '?x-oss-process=image/resize,w_24,h_24/format,webp/quality,q_75'"
-                      alt="" style="width: 24px;height: 24px;border-radius: 100%;"/>
+                    :src="imgOrigin+chatMessage.sender.icon + '?x-oss-process=image/resize,w_24,h_24/format,webp/quality,q_75'"
+                    alt="" style="width: 24px;height: 24px;border-radius: 100%;" />
                 </div>
                 <!--  图片/文字  -->
                 <div
-                    style="background: #12b7f5;border-radius: 4px; padding: 7px 10px;display:inline-block;width:auto;height:auto;margin-right: 20px;">
+                  style="background: #12b7f5;border-radius: 4px; padding: 7px 10px;display:inline-block;width:auto;height:auto;margin-right: 20px;">
                   <viewer v-if="'image'===chatMessage.type" :images="[imgOrigin+chatMessage.content]">
                     <img :data-source="imgOrigin +chatMessage.content"
                          :src="imgOrigin+chatMessage.content+ '?x-oss-process=image/resize,h_150/format,webp/quality,q_75'"
                          alt=""
-                         style="max-width:410px;"/>
+                         style="max-width:410px;" />
                   </viewer>
                   <pre v-else
                        style="max-width: 410px;white-space: pre-wrap;word-wrap: break-word;font-size: 14px;color: #fff;text-align: left;">{{
@@ -136,23 +138,23 @@
         <div style="position: absolute;width: 550px;height: 150px;top:450px;background: #fff;">
           <!--  发送图片  -->
           <div
-              style="position: absolute;width: 550px;height: 23px;padding-left: 10px;margin-top:5px; background: #fff;">
+            style="position: absolute;width: 550px;height: 23px;padding-left: 10px;margin-top:5px; background: #fff;">
             <el-upload
-                ref="imageUpload"
-                :before-upload="beforeImageUpload"
-                :data="fileData"
-                :disabled="imagesUploading"
-                :limit="imagesLimit"
-                :on-exceed="handleImageUploadExceed"
-                :on-success="handleImageUploadSuccess"
-                :show-file-list="false"
-                accept="image/*"
-                action="/api/upload_image"
-                multiple
-                name="file"
+              ref="imageUpload"
+              :before-upload="beforeImageUpload"
+              :data="fileData"
+              :disabled="imagesUploading"
+              :limit="imagesLimit"
+              :on-exceed="handleImageUploadExceed"
+              :on-success="handleImageUploadSuccess"
+              :show-file-list="false"
+              accept="image/*"
+              action="/api/upload_image"
+              multiple
+              name="file"
             >
               <i class="el-icon-picture-outline" style="font-size: 20px;background: #fff;color: #000;"
-                 title="可直接粘贴图片（Ctrl+V）并发送"/>
+                 title="可直接粘贴图片（Ctrl+V）并发送" />
             </el-upload>
           </div>
           <!--  文字输入框  -->
@@ -174,8 +176,8 @@
 </template>
 
 <script lang="js">
-import {getJoinedChatList} from "@/api/api";
-import {Message} from "element-ui";
+import { getJoinedChatList } from "@/api/api";
+import { Message } from "element-ui";
 
 export default {
   name: "chat",
@@ -185,27 +187,27 @@ export default {
       currentChannelId: 0,
       inputText: "",
 
-      url: `${location.protocol === 'https:' ? 'wss' : 'ws'}://${location.host}/ws/v0/all`,
+      url: `${location.protocol === "https:" ? "wss" : "ws"}://${location.host}/ws/v0/all`,
       ws: null,
 
       fileData: {},
       imagesNum: 0,
       imagesLimit: 9,
-      imagesUploading: false,
+      imagesUploading: false
       // images: [],
-    }
+    };
   },
   created() {
 
     document.title = "炒饭 - 聊天";
 
-    Date.prototype.format = function (fmt) {
+    Date.prototype.format = function(fmt) {
       const o = {
         "M+": this.getMonth() + 1,                 //月
         "d+": this.getDate(),                    //日
         "h+": this.getHours(),                   //时
         "m+": this.getMinutes(),                 //分
-        "s+": this.getSeconds(),                 //秒
+        "s+": this.getSeconds()                 //秒
       };
       if (/(y+)/.test(fmt)) {
         fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
@@ -216,7 +218,7 @@ export default {
         }
       }
       return fmt;
-    }
+    };
 
     // 判断登录状态
     if (!this.$store.state.user.islogin) {
@@ -225,7 +227,7 @@ export default {
     }
 
     //
-    getJoinedChatList().then(({data, success}) => {
+    getJoinedChatList().then(({ data, success }) => {
 
       if (success) {
         if (data) {
@@ -266,8 +268,8 @@ export default {
   },
   mounted() {
     // 添加监听事件
-    addEventListener('keydown', this.keyDown);
-    addEventListener('paste', this.toPaste);
+    addEventListener("keydown", this.keyDown);
+    addEventListener("paste", this.toPaste);
 
 
     // 输入框获取焦点
@@ -275,13 +277,30 @@ export default {
   },
   destroyed() {
     // 移除监听事件
-    removeEventListener('keydown', this.keyDown);
-    removeEventListener('paste', this.toPaste);
+    removeEventListener("keydown", this.keyDown);
+    removeEventListener("paste", this.toPaste);
 
     // 关闭ws连接
     this.ws.close();
   },
   methods: {
+
+    //
+    toForumOrUser(item) {
+      if (!item.userId1 || !item.userId2) {
+        return;
+      }
+      if (this.$store.state.user.userInfo.userId != item.userId1.userId) {
+        this.toUser(item.userId1.userId);
+      } else if (this.$store.state.user.userInfo.userId != item.userId2.userId) {
+        this.toUser(item.userId2.userId);
+      }
+    },
+
+    //
+    toUser(userid) {
+      window.open(location.origin + "/user/" + userid, "_blank");
+    },
 
     // 上传图片处理
     handleImageUploadSuccess(res, file) {
@@ -292,26 +311,26 @@ export default {
         // 发送图片
         this.onSendImage(res.data);
 
-      } else if (res.errorCode == 'invalid_content') {
+      } else if (res.errorCode == "invalid_content") {
         // this.imageUrl = ''
-        this.$toast(res.errorMessage)
+        this.$toast(res.errorMessage);
       }
-      this.imagesNum--
+      this.imagesNum--;
       if (!this.imagesNum) {
-        this.imagesUploading = false
-        this.$refs.imageUpload.clearFiles()
+        this.imagesUploading = false;
+        this.$refs.imageUpload.clearFiles();
       }
     },
     beforeImageUpload(file) {
       const isLt2M = file.size / 1024 / 1024 < 20;
       if (!isLt2M) {
-        this.$message.error('上传图片大小不能超过 20MB!');
-        return false
+        this.$message.error("上传图片大小不能超过 20MB!");
+        return false;
       }
-      this.imagesNum++
-      this.imagesUploading = true
-      this.fileData.fileName = file.name
-      return true
+      this.imagesNum++;
+      this.imagesUploading = true;
+      this.fileData.fileName = file.name;
+      return true;
     },
     handleImageUploadExceed(files, fileList) {
       this.$message.warning({
@@ -337,7 +356,7 @@ export default {
         if (blob.size === 0) {
           return;
         }
-        this.$refs.imageUpload.$children[0].uploadFiles([blob])
+        this.$refs.imageUpload.$children[0].uploadFiles([blob]);
       }
     },
 
@@ -470,17 +489,17 @@ export default {
 
     // 发送文字
     sendText(channelId, text) {
-      this.wsSend("{\"scope\": \"chat\", \"data\": {\"type\": \"text\", \"channelId\": " + channelId + ", \"content\": \"" + text + "\"}}")
+      this.wsSend("{\"scope\": \"chat\", \"data\": {\"type\": \"text\", \"channelId\": " + channelId + ", \"content\": \"" + text + "\"}}");
     },
 
     // 发送图片
     sendImage(channelId, imageUrl) {
-      this.wsSend("{\"scope\": \"chat\", \"data\": {\"type\": \"image\", \"channelId\": " + channelId + ", \"content\": \"" + imageUrl + "\"}}")
+      this.wsSend("{\"scope\": \"chat\", \"data\": {\"type\": \"image\", \"channelId\": " + channelId + ", \"content\": \"" + imageUrl + "\"}}");
     },
 
     // 发送：加载聊天记录
     sendLoadChatHistory(channelId) {
-      this.wsSend("{\"scope\": \"chat\", \"data\": {\"type\": \"load\", \"channelId\":" + channelId + "}}")
+      this.wsSend("{\"scope\": \"chat\", \"data\": {\"type\": \"load\", \"channelId\":" + channelId + "}}");
     },
 
     // 发送权限验证信息
@@ -498,14 +517,14 @@ export default {
     },
 
     // 接收数据
-    handleReceiveMessage: function (data) {
+    handleReceiveMessage: function(data) {
       if ("chat" !== data.scope) {
         return;
       }
 
       const dataType = data.data.type.toString();
       if ("load_result" === dataType) {
-        const {channelId, chatMessages} = data.data.data;
+        const { channelId, chatMessages } = data.data.data;
         this.handleLoadResult(channelId, chatMessages);
       } else if ("message" === dataType) {
         this.handleNewMessage(data.data.data);
@@ -521,7 +540,7 @@ export default {
     handleNeedLogin() {
       this.$login({
         callBack: () => {
-          this.$store.dispatch('user/getInfo')
+          this.$store.dispatch("user/getInfo");
         }
       });
     },
@@ -628,10 +647,10 @@ export default {
       this.ws.onmessage = this.wsOnMessage;
       this.ws.onerror = this.wsOnError;
       this.ws.onclose = this.wsOnClose;
-    },
+    }
 
   }
-}
+};
 </script>
 
 <style lang="scss" scoped>
