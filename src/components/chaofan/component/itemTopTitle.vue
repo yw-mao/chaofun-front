@@ -737,9 +737,10 @@ h1 {
         display: -webkit-box;
         -webkit-box-orient: vertical;
         -webkit-line-clamp: 2;
-        height: 54px;
+        //height: 54px;
+        max-height: 54px;
         overflow: hidden;
-        margin-bottom: 4px;
+        //margin-bottom: 4px;
       }
     }
     .hovercon2 {
@@ -756,7 +757,7 @@ h1 {
     z-index: 10;
     border: 1px solid #f1f1f1;
     width: 210px;
-    height: 150px;
+    //height: 150px;
     padding: 12px !important;
     left: 0;
     top: 24px;
