@@ -41,7 +41,7 @@
          </div>
          <div class="comment" @click="toDetailComment(items.post.postId,items.comment.id)">
              <!-- <img :src="imgOrigin+items.sender.icon+'?x-oss-process=image/resize,h_80/format,webp/quality,q_75'" alt=""> -->
-             <span></span>他评论说： {{items.comment.text}} <noticeItemImages :imageNames="items.comment.imageNames" /><span></span>
+             <span></span>TA评论说： {{items.comment.text}} <noticeItemImages :imageNames="items.comment.imageNames" /><span></span>
          </div>
      </div>
 
