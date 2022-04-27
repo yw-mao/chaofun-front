@@ -23,7 +23,13 @@
                   <div v-if="userInfo.userId != $store.state.user.userInfo.userId"
                        @click="toAttention(userInfo.focused, userInfo.userId)"
                        :class="['attention', { attentioned: userInfo.focused }]">
-                    {{ userInfo.focused ? "取消关注" : "+关注" }}
+                    {{ userInfo.focused ? "取消关注" : "+ 关注" }}
+                  </div>
+
+                  <div v-if="userInfo.userId != $store.state.user.userInfo.userId" class="attention"
+                       style="margin-right: 10px;background: orange;" @click="$toast('功能待开放')">
+                    <i class="el-icon-chat-dot-round" style="font-size: 14px;"></i>
+                    <span style="margin-left: 3px;font-size: 14px;">聊天</span>
                   </div>
                 </div>
                 <div class="followersFocusUps">
@@ -85,16 +91,14 @@
 </template>
 
 <script>
-import {mapGetters} from "vuex";
+import { mapGetters } from "vuex";
 import * as api from "../../api/api";
 
 import listComment from "@/views/list/ListComment";
 import ListItem from "../../components/chaofan/ListItem.vue";
 import attentionItem from "../../components/chaofan/attentionItem.vue";
-import RightCom from "@/components/chaofan/RightCom";
 import loadText from "@/components/chaofan/loadText";
-import badgeDetail from '@/views/chaofun-webview/badge/badgeDetail.vue';
-import {getUserComments} from "../../api/api";
+import badgeDetail from "@/views/chaofun-webview/badge/badgeDetail.vue";
 
 export default {
   name: "user",
