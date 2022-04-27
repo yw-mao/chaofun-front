@@ -59,7 +59,7 @@
          </div>
          <div class="comment" style="margin-left: 20px;" @click="toDetailComment(items.post.postId,items.comment.id)">
              <span>
-                 他回复说：{{items.comment.text}} <noticeItemImages :imageNames="items.comment.imageNames" />
+                 TA回复说：{{items.comment.text}} <noticeItemImages :imageNames="items.comment.imageNames" />
              </span>
          </div>
      </div>
