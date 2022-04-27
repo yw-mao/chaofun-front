@@ -4,7 +4,7 @@
     <div style="text-align: center; width: 100%">近200条记录</div>
 
     <div :style="{height: scrollerHeight}"
-         style="margin-top: 10px;text-align: center;">
+         style="margin-top: 10px;text-align: center;" class="selectDisable">
 
       <el-table :data="history" :highlight-current-row="true" :stripe="true"
                 height="100%" style="width: 100%;max-width: 600px;margin: auto;">
@@ -27,7 +27,7 @@
 
 import moment from "moment";
 
-import * as api from '@/api/api'
+import * as api from "@/api/api";
 
 export default {
   name: "FBiHistory",
@@ -152,8 +152,9 @@ export default {
         return '感谢赠与';
       }
 
-      if (reason === 'donate_fbi') {
-        return '版块众筹';
+      // 兼容
+      if (reason === "donate_fbi" || reason === "donate fbi for forum") {
+        return "版块众筹";
       }
 
       if (reason.startsWith('punish_politic')) {
@@ -177,5 +178,14 @@ export default {
 </script>
 
 <style scoped>
+
+.selectDisable{
+  -webkit-touch-callout:none;
+  -webkit-user-select:none;
+  -khtml-user-select:none;
+  -moz-user-select:none;
+  -ms-user-select:none;
+  user-select:none;
+}
 
 </style>
