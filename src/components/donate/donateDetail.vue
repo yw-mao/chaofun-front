@@ -253,6 +253,7 @@ export default {
   position: absolute;
   transform: perspective(150px) rotateY(0deg);
   backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
   transition: all 800ms ease;
 }
 
@@ -261,6 +262,7 @@ export default {
   position: absolute;
   transform: rotateY(150deg);
   backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
   transition: all 800ms ease;
 }
 
