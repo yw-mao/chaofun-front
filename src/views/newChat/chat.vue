@@ -2,11 +2,11 @@
   <div style="background: #FFF;">
 
     <div
-      style="position: absolute;width: 800px;height: 800px;left: 50%;top: 50%;margin-left: -400px;margin-top:-400px; box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.3); border-radius:5px;">
+      style="position: absolute;width: 800px;height: 600px;left: 50%;top: 50%;margin-left: -400px;margin-top:-300px; box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.3); border-radius:5px;">
 
       <!--  left  -->
       <div class="scrollbar_0"
-           style="position: absolute;width: 250px;height: 100%;background: #EFEFEF;padding-top: 10px;overflow: auto;scroll-behavior: smooth;">
+           style="position: absolute;width: 250px;height: 600px;background: #EFEFEF;padding-top: 10px;overflow: auto;scroll-behavior: smooth;">
         <div v-for="channel in chatHistoryMap.values()" :key="channel.id"
              :style="{ background: channel.id === currentChannelId ? '#C6C6C6' : '' }" class="channelItem"
              style="width: 240px;height: 60px;margin: 5px;border-radius:4px;"
@@ -34,11 +34,11 @@
       </div>
 
       <!--  right  -->
-      <div style="position: absolute;width: 550px;height: 100%;left: 250px;">
+      <div style="position: absolute;width: 550px;height: 600px;left: 250px;">
 
         <!--  top 聊天对象 -->
         <div
-          style="width: 100%;height: 50px;background: #F5F5F5;border-width: 0 0 1px 0;border-style: solid;border-color: #e0e0e0;padding-top: 5px;">
+          style="width: 550px;height: 50px;background: #F5F5F5;border-width: 0 0 1px 0;border-style: solid;border-color: #e0e0e0;padding-top: 5px;">
           <div style="cursor: pointer;" @click.stop="toForumOrUser(chatHistoryMap.get(currentChannelId))">
             <div style="margin-left: 190px;height: 40px;width: 40px;float:left;">
               <img v-if="chatHistoryMap.get(currentChannelId)"
@@ -54,7 +54,7 @@
         <!--  middle  聊天记录 -->
         <div ref="chatMessageDiv"
              class="scrollbar_4"
-             style="width: 100%;height: 600px;top:50px;background: #f6f6f6;overflow: auto;scroll-behavior: smooth;padding: 10px 10px 65px 10px;">
+             style="position: absolute;width: 550px;height: 400px;top:50px;background: #f6f6f6;overflow: auto;scroll-behavior: smooth;padding: 10px 10px 65px 10px;">
           <div v-if="chatHistoryMap.get(currentChannelId)">
             <div v-for="(chatMessage,index) in chatHistoryMap.get(currentChannelId).chatMessagesArr" :key="index"
                  style="margin-bottom: 10px;min-height: 62px;">
@@ -135,10 +135,10 @@
         </div>
 
         <!--  bottom  -->
-        <div style="width: 100%;height: 150px;background: #fff;">
+        <div style="position: absolute;width: 550px;height: 150px;top:450px;background: #fff;">
           <!--  发送图片  -->
-          <div class="selectDisable"
-               style="width: 100%;height: 23px;padding-left: 10px;background: #fff;">
+          <div
+            style="position: absolute;width: 550px;height: 23px;padding-left: 10px;margin-top:5px; background: #fff;">
             <el-upload
               ref="imageUpload"
               :before-upload="beforeImageUpload"
@@ -153,12 +153,12 @@
               multiple
               name="file"
             >
-              <i class="el-icon-picture-outline" style="font-size: 20px;background: #fff;color: #000;margin-top: 5px;"
+              <i class="el-icon-picture-outline" style="font-size: 20px;background: #fff;color: #000;"
                  title="可直接粘贴图片（Ctrl+V）并发送" />
             </el-upload>
           </div>
           <!--  文字输入框  -->
-          <div v-loading="imagesUploading" style="width: 100%;height: 120px;">
+          <div v-loading="imagesUploading" style="position: absolute;width: 550px;height: 120px; top:24px;">
             <el-input ref="textInputMark" v-model="inputText" placeholder="请输入内容" resize="none"
                       rows="4" style="height: 120px;width: 100%;border: 0;" type="textarea"></el-input>
           </div>
@@ -654,15 +654,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
-.selectDisable {
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  -khtml-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-}
 
 .scrollbar_0 {
   &::-webkit-scrollbar {
