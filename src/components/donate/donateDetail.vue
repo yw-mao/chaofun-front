@@ -6,11 +6,11 @@
       <el-button type="warning" @click="donateDialogVisible=true;">捐赠</el-button>
     </div>
 
-    <div class="selectDisable" style="position: relative;width: 100%;height: 0;">
+    <div class="selectDisable" style="position: relative;width: 100%;height: 0;top:12px;left: 15px;">
       <div style=" width: 0;height: 0; margin: 0 auto;">
         <img
-          :src="imgOrigin + 'biz/d37d0435971142b9905e9ed5b355b61d.png'"
-          alt="" style="width: 60px;height: 60px;position: relative; left: -95px;" />
+          :src="imgOrigin + 'biz/a7a11ce394ec3bad0f25f4aead7855ec.png'"
+          alt="" style="width: 40px;height: 40px;position: relative; left: -95px;" />
       </div>
     </div>
 
