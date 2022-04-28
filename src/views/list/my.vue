@@ -28,7 +28,18 @@
                   <div class="followers" @click="checkout('listFans')">粉丝：{{ userInfo.followers || "0" }}</div>
                   <div class="followers" @click="checkout('listFocus')">关注：{{ userInfo.focus || "0" }}</div>
                   <div class="ups">获赞：{{ userInfo.ups || "0" }}</div>
-                  <div class="followers" @click.stop="$router.push({name: 'myfbi'})">FBi：{{ userInfo.fbi || "0" }}</div>
+<!--                  <div class="followers" @click.stop="$router.push({name: 'myfbi'})">FBi：{{ userInfo.fbi || "0" }}</div>-->
+
+                  <div class="followers" style="display: flex;margin-left: 10px;"
+                       @click.stop="$router.push({name: 'myfbi'})">
+                    <img
+                      :src="imgOrigin + 'biz/a7a11ce394ec3bad0f25f4aead7855ec.png'"
+                      alt="FBi" style="width: 20px;height: 20px;border-radius: 100%;" />
+                    <span style="margin-left: 5px;color: orangered;font-weight: bold;">
+                      {{ userInfo.fbi || "0" }}
+                    </span>
+                  </div>
+
                 </div>
                 <div class="desc">
                   {{ userInfo.desc || "Ta很懒，还没有签名哦~" }}

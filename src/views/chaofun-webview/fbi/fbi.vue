@@ -1,12 +1,17 @@
 <template>
   <div style="padding-left: 10px; padding-right: 10px">
-    <div style="font-weight: bold; font-size: 20px; color: #FF9300">
-      你的 FBi:
-      <span style="color: orangered">
-        {{this.fbi}}
+
+    <div style="display: flex;margin:10px 0 20px 0;">
+
+      <img
+        :src="imgOrigin + 'biz/a7a11ce394ec3bad0f25f4aead7855ec.png'"
+        alt="FBi" style="width: 36px;height: 36px;border-radius: 100%;" />
+      <span style="margin: auto 5px;color: orangered;font-weight: bold; font-size: 20px;">
+        {{ this.fbi }}
       </span>
 
     </div>
+
     <div>
       <el-button @click="history">
         查看记录
@@ -122,11 +127,10 @@
 </template>
 
 <script>
-  import * as api from '@/api/api'
-  import {getUserInfo} from "../../../api/api";
-  import { Dialog } from 'vant';
+import * as api from "@/api/api";
+import { Dialog } from "vant";
 
-  export default {
+export default {
     name: "fbi.vue",
 
     data() {
