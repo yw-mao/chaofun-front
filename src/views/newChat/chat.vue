@@ -237,6 +237,7 @@ export default {
 
         if (newSingleChatChannel && newSingleChatChannel.id && !this.chatHistoryMap.has(newSingleChatChannel.id)) {
           // 添加到第一个
+          newSingleChatChannel.chatMessagesArr = [];
           this.chatHistoryMap.set(newSingleChatChannel.id, newSingleChatChannel);
         }
 

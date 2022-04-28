@@ -8,8 +8,7 @@ export function startSingle(userId) {
     if (res) {
       if (res.data) {
         localStorage.setItem("chao.fun.chat.newSingleChatChannel", JSON.stringify(res.data));
-        // window.open('/chat?id='+res.data.id, '_blank');
-        window.open("/chat?id=" + res.data.id);
+        window.open('/chat?id='+res.data.id, '_blank');
       } else {
         Vue.prototype.$toast(res.errorMessage);
       }
