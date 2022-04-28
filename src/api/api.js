@@ -1,5 +1,5 @@
-import request from '@/utils/request'
-import qs from 'qs'
+import request from "@/utils/request";
+import qs from "qs";
 
 
 export function getHome(params) {
@@ -1260,6 +1260,19 @@ export function getJoinedChatList() {
 }
 
 /**
+ * 创建一个单聊
+ * @param params targetUserId
+ * @returns {*}
+ */
+export function startSingleChat(params) {
+  return request({
+    url: '/api/v0/chat/single_chat/start',
+    method: 'get',
+    params
+  })
+}
+
+/**
  * 修改帖子内容
  * @returns {*}
  */
@@ -1286,3 +1299,68 @@ export function reportPostComment(params) {
 
 /** 活动查询 */
 
+/**
+ * 用户给某个板块捐赠FBI
+ * @param params forumId,fbi,reason
+ * @returns {*}
+ */
+export function donateFbi(params) {
+  return request({
+    url: '/api/v0/donate/donateFbi',
+    method: 'get',
+    params
+  })
+}
+
+/**
+ * 获取某个板块的剩余总FBI
+ * @param params forumId
+ * @returns {*}
+ */
+export function getDonateFbi(params) {
+  return request({
+    url: '/api/v0/donate/getFbi',
+    method: 'get',
+    params
+  })
+}
+
+/**
+ * 板块用户捐赠FBI排名
+ * @param params forumId
+ * @returns {*}
+ */
+export function getDonateOrder(params) {
+  return request({
+    url: "/api/v0/donate/getOrder",
+    method: "get",
+    params
+  });
+}
+
+/**
+ * 设置某个板块是否可以众筹FBI
+ * @param params forumId,donate
+ * @returns {*}
+ */
+export function setDonateFbi(params) {
+  return request({
+    url: "/api/v0/donate/set",
+    method: "get",
+    params
+  });
+}
+
+
+/**
+ * 获取板块是否开启众筹
+ * @param params forumId
+ * @returns {*}
+ */
+export function isDonateOpen(params) {
+  return request({
+    url: "/api/v0/donate/isOpen",
+    method: "get",
+    params
+  });
+}
