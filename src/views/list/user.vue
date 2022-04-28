@@ -26,11 +26,12 @@
                     {{ userInfo.focused ? "取消关注" : "+ 关注" }}
                   </div>
 
-                  <div v-if="userInfo.userId != $store.state.user.userInfo.userId" class="attention"
-                       style="margin-right: 10px;background: orange;" @click="$toast('功能待开放')">
+                  <div v-if="islogin&&userInfo.userId != $store.state.user.userInfo.userId" class="attention"
+                       style="margin-right: 10px;background: orange;" @click="startChat">
                     <i class="el-icon-chat-dot-round" style="font-size: 14px;"></i>
                     <span style="margin-left: 3px;font-size: 14px;">聊天</span>
                   </div>
+
                 </div>
                 <div class="followersFocusUps">
                   <div class="followers" @click="checkout('listFans')">粉丝：{{ userInfo.followers || "0" }}</div>
@@ -99,6 +100,7 @@ import ListItem from "../../components/chaofan/ListItem.vue";
 import attentionItem from "../../components/chaofan/attentionItem.vue";
 import loadText from "@/components/chaofan/loadText";
 import badgeDetail from "@/views/chaofun-webview/badge/badgeDetail.vue";
+import { startSingle } from "@/utils/chatJoin";
 
 export default {
   name: "user",
@@ -217,6 +219,12 @@ export default {
     this.load();
   },
   methods: {
+
+    // 单聊
+    startChat() {
+      startSingle(this.params.userId);
+    },
+
     getUserBadgeList() {
       api.getUserBadgeList({userId: this.params.userId}).then((res) => {
         if (res.success) {

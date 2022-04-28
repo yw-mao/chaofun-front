@@ -1260,6 +1260,19 @@ export function getJoinedChatList() {
 }
 
 /**
+ * 创建一个单聊
+ * @param params targetUserId
+ * @returns {*}
+ */
+export function startSingleChat(params) {
+  return request({
+    url: '/api/v0/chat/single_chat/start',
+    method: 'get',
+    params
+  })
+}
+
+/**
  * 修改帖子内容
  * @returns {*}
  */
