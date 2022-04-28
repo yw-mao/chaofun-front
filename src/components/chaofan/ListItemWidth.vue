@@ -282,9 +282,14 @@
           "
           class="item_article"
         >
-          <div class="title">
-            {{ item.title }}
+<!--          <div class="title">-->
+<!--            {{ item.title }}-->
+<!--          </div>-->
+          <div
+            style="text-align: center;border: 1px solid #f0f0f0;border-radius: 3px;padding: 15px;background: #fafafa;margin:0 10px 25px 10px;cursor: default;">
+            <span style="color: #999;">不支持的类型</span>
           </div>
+
         </div>
 
         <div
