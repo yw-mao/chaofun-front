@@ -230,6 +230,17 @@ export default {
     getJoinedChatList().then(({ data, success }) => {
 
       if (success) {
+
+        // 新建的聊天
+        let newSingleChatChannelStr = localStorage.getItem("chao.fun.chat.newSingleChatChannel");
+        let newSingleChatChannel = JSON.parse(newSingleChatChannelStr);
+
+        if (newSingleChatChannel && newSingleChatChannel.id && !this.chatHistoryMap.has(newSingleChatChannel.id)) {
+          // 添加到第一个
+          newSingleChatChannel.chatMessagesArr = [];
+          this.chatHistoryMap.set(newSingleChatChannel.id, newSingleChatChannel);
+        }
+
         if (data) {
           for (let i = 0; i < data.length; ++i) {
             let item = data[i];
