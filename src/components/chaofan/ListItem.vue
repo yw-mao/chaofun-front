@@ -229,6 +229,7 @@
           </div>
           <!-- 富文本 -->
           <itemArticle v-if="item.type == 'article'" :item="item"></itemArticle>
+          <itemAudio v-if="item.type == 'audio'" :item="item"></itemAudio>
 
           <!-- 投票 -->
           <itemVote
@@ -399,6 +400,7 @@
               item.type != 'article' &&
               item.type != 'forward' &&
               item.type != 'vote' &&
+              item.type != 'audio' &&
               item.type != 'inner_video' &&
               item.type != 'prediction'
             "
@@ -538,6 +540,7 @@ import itemPrediction from "./component/itemPrediction";
 import itemForwardTitle from "./component/itemForwardTitle";
 
 import forwardH5 from "../h5/forward";
+import itemAudio from "./component/itemAudio";
 export default {
   name: "list-item",
   data() {
@@ -620,6 +623,7 @@ export default {
     itemPrediction,
     itemForwardTitle,
     itemVideo,
+    itemAudio,
   },
   created() {
     this.top = localStorage.getItem("storedata")

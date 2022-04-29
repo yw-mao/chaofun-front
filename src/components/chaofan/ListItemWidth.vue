@@ -131,6 +131,13 @@
           :item="item"
         ></itemArticle>
 
+        <!-- 富文本 -->
+        <itemAudio
+            v-if="item.type === 'audio'"
+            :isDetail="true"
+            :item="item"
+        ></itemAudio>
+
         <!-- 投票 -->
         <itemVote
           v-if="item.type == 'vote'"
@@ -278,6 +285,7 @@
             item.type != 'forward' &&
             item.type != 'vote' &&
             item.type != 'inner_video' &&
+            item.type != 'audio' &&
             item.type != 'prediction'
           "
           class="item_article"
@@ -417,6 +425,7 @@ import itemImage from "./component/itemImage";
 import itemGif from "./component/itemGif";
 import itemVideo from "./component/itemVideo";
 import itemArticle from "./component/itemArticle";
+import itemAudio from "./component/itemAudio";
 import itemVote from "./component/itemVote";
 import itemForwardTitle from "./component/itemForwardTitle";
 import itemPrediction from "./component/itemPrediction";
@@ -476,6 +485,7 @@ export default {
     itemForwardTitle,
     itemVideo,
     itemPrediction,
+    itemAudio,
   },
   created() {},
   mounted() {
