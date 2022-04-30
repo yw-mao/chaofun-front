@@ -219,6 +219,10 @@
             <el-dropdown-item v-if="item.canDeleted" command="删除">删除帖子</el-dropdown-item>
             <el-dropdown-item v-if="isArticleDetail"  command="操作评论">{{this.isShowCopyCommentLink?'隐藏更多操作':'显示更多操作'}}</el-dropdown-item>
 
+            <el-dropdown-item v-if="this.$store.state.user.islogin&&!isArticleDetail" command="举报帖子">
+              举报帖子
+            </el-dropdown-item>
+
             <el-dropdown-item v-if="this.$store.state.user.islogin&&isArticleDetail">
               <div class="addTag" @click.stop="switchShowReportList">举报 {{ this.isShowReportList ? "∨" : ">" }}</div>
             </el-dropdown-item>
@@ -258,7 +262,7 @@
 <!--      </template>-->
 <!--    </dialogs>-->
 
-    <report-dialog v-if="isArticleDetail"/>
+    <report-dialog ref="reportDialogMark" />
   </div>
 </template>
 
@@ -443,7 +447,7 @@ export default {
 
     onReportPostClick() {
       this.$refs.cocolse.click();
-      this.$EventBus.$emit("reportDialog_data", {
+      this.$refs.reportDialogMark.init({
         dialogVisible: true,
         type: 'post',
         reportData: this.item
@@ -517,6 +521,8 @@ export default {
         this.addToRecommend(this.item)
       } else if (command == 'trans') {
         this.transPost(this.item, this.index);
+      } else if (command == "举报帖子") {
+        this.onReportPostClick();
       } else if (command == 'download_gif') {
         window.open(this.imgOrigin + this.item.imageName.replace('.mp4', '.gif'))
       }

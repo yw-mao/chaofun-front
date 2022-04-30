@@ -133,12 +133,16 @@
       </div>
 
     </div>
+
+    <report-dialog ref="reportDialogMark" v-if="isShowReportCommentTmp" />
+
   </div>
 </template>
 
 <script>
 import * as api from '../../api/api'
 import moment from 'moment'
+import reportDialog from '@/components/report/report.vue';
 
 export default {
   name: 'commentitem',
@@ -206,6 +210,7 @@ export default {
     },
   },
   components: {
+    reportDialog,
   },
   created() {
   },
@@ -507,7 +512,12 @@ export default {
     },
 
     showReportDialog(item) {
-      this.$EventBus.$emit("reportDialog_data", {
+      // this.$EventBus.$emit("reportDialog_data", {
+      //   dialogVisible: true,
+      //   type: 'comment',
+      //   reportData: item
+      // });
+      this.$refs.reportDialogMark.init({
         dialogVisible: true,
         type: 'comment',
         reportData: item

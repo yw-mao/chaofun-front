@@ -111,8 +111,8 @@ export default {
       }).then(res => {
         if (res.success) {
           this.$toast('举报已提交！');
-          this.dialogVisible = false;
         }
+        this.dialogVisible = false;
       });
 
     },
