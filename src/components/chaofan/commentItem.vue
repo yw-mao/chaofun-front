@@ -50,7 +50,7 @@
             <!-- <a v-for="(i,k) in item.imageNames.split(',')" :key="k" :href="imgOrigin+i" target="_blank">【附图】</a> -->
                 </span>
               <div v-if="item.audio" >
-                语音消息支持中
+                [语音评论支持中]
                 <!-- <a v-for="(i,k) in item.imageNames.split(',')" :key="k" :href="imgOrigin+i" target="_blank">【附图】</a> -->
               </div>
         </div>
