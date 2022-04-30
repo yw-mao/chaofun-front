@@ -102,7 +102,7 @@
           type: "warning",
           // position: center,
         }).then(() => {
-          api.getByPath('/api/v0/forum/removeResponseWord', {forumId: this.forumId, ruleId: item.id}).then((res) => {
+          api.getByPath('/api/v0/forum/removeResponseWord', {forumId: this.forumId, id: item.id}).then((res) => {
             this.getForumRules();
           })
         })
