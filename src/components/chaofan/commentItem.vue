@@ -49,7 +49,10 @@
                     </viewer>
             <!-- <a v-for="(i,k) in item.imageNames.split(',')" :key="k" :href="imgOrigin+i" target="_blank">【附图】</a> -->
                 </span>
-
+              <div v-if="item.audio" >
+                语音消息支持中
+                <!-- <a v-for="(i,k) in item.imageNames.split(',')" :key="k" :href="imgOrigin+i" target="_blank">【附图】</a> -->
+              </div>
         </div>
         <!-- <div v-if="item.type=='media'" class="comImgs">
             <img v-for="(i,k) in item.imageNames.split(',')" :key="k" :src="imgOrigin+i+''" alt="">
