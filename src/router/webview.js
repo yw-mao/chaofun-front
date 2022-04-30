@@ -85,7 +85,7 @@ routes = [
     hidden: true
   },
   {
-    path: '/webview/forum/autoReplay',
+    path: '/webview/forum/rule',
     component: () => import('@/views/chaofun-webview/forum/rule'),
     name: 'forumRule',
     meta: { title: '板块规范设置'},
