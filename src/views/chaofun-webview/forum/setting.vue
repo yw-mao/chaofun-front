@@ -69,6 +69,10 @@
       </div>
 
       <div class="bottom">
+        <div @click="toAutoReplaySetting" class="btns">自动回复规则管理</div>
+      </div>
+
+      <div class="bottom">
         <div @click="toTableManager" class="btns">表格管理</div>
       </div>
 
@@ -139,6 +143,17 @@ export default {
       this.$toast('尽情期待：）');
     },
 
+    toAutoReplaySetting() {
+      try {
+        window.flutter_inappwebview.callHandler('toViewPage', {
+          url: "https://chao.fun/webview/forum/auto_replay" + "?forumId=" + this.forumId,
+          title: '自动回复管理',
+          showHeader: true
+        })
+      } catch (e) {
+        window.open(location.origin + '/webview/forum/auto_replay?forumId=' + this.forumId);
+      }
+    },
     toBan() {
       try {
         window.flutter_inappwebview.callHandler('toViewPage', {

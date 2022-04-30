@@ -78,13 +78,19 @@ routes = [
     hidden: true
   },
   {
-    path: '/webview/forum/rule',
+    path: '/webview/forum/auto_replay',
+    component: () => import('@/views/chaofun-webview/forum/AutoReply'),
+    name: 'auto_replay',
+    meta: { title: '自动回复设置'},
+    hidden: true
+  },
+  {
+    path: '/webview/forum/autoReplay',
     component: () => import('@/views/chaofun-webview/forum/rule'),
     name: 'forumRule',
     meta: { title: '板块规范设置'},
     hidden: true
   },
-
   {
     path: '/webview/forum/show_rule',
     component: () => import('@/views/chaofun-webview/forum/showRule'),
