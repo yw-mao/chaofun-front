@@ -46,48 +46,12 @@ import * as api from '@/api/api'
    created() {
    },
    mounted() {
-    if (this.ISPHONE&&document.getElementById("container")) {
-      let self = this;
-      document
-        .getElementById("container")
-        .addEventListener("scroll", self.handlerScroll);
-    }
+
   },
   destroyed() {
-    let self = this;
-    if (document.getElementById("container")) {
-      document
-        .getElementById("container")
-        .removeEventListener("scroll", self.handlerScroll, false);
-    }
+
   },
    methods: {
-    handlerScroll(e) {
-      let that= this;
-      var el = document.getElementById("video" + this.item.postId);
-      if (el) {
-        var top = el.getBoundingClientRect().top;
-        
-        if (top < -50) {
-          if (!this.isDetail) {
-            this.$emit("toPause", "", this.item, 0);
-            // that.showCover = true;
-            // this.showCover = true;
-          }
-        }
-      } else {
-        console.log("取消滚动监听------------------");
-        let self = this;
-        document
-          .getElementById("container")
-          .removeEventListener("scroll", self.handlerScroll, false);
-      }
-    },
-    unloadHandler(e) {},
-    toUrls(item,params){
-       this.postBehavior(item.postId,'jump');
-       this.toUrl(params)
-    },
     toDetail(){
       if(!this.isDetail){
         this.$emit('toDetail',this.item)
