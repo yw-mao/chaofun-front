@@ -18,7 +18,7 @@
       <div class="box" style="height: 60px; padding-top: 5px; width: 85px;margin: 0 auto;">
         <div class="front" style="width: 100%;">
           <div style="width: 100%;color: #e85827;font-size: 24px;">{{ totalFbi }}</div>
-          <div style="width: 100%;font-size: 12px;color: #999;">剩余捐赠</div>
+          <div style="width: 100%;font-size: 12px;color: #999;">剩余FBi</div>
         </div>
         <div class="back_info" style="width: 100%;">
           <div style="width: 100%;color: #ffba00;font-size: 24px;">{{ remainFbi }}</div>
@@ -69,7 +69,7 @@
         </el-table-column>
 
         <!-- totalDonate -->
-        <el-table-column align="right" header-align="right" label="贡献" prop="totalDonate"
+        <el-table-column align="right" header-align="right" label="FBi" prop="totalDonate"
                          width="80"></el-table-column>
 
         <!-- empty -->
