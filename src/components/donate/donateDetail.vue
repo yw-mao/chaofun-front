@@ -201,8 +201,12 @@ export default {
 
     },
 
-    toUser(userid) {
-      window.open(location.origin + "/user/" + userid, "_blank");
+    toUser(userId) {
+      try {
+        window.flutter_inappwebview.callHandler('toAppUser', {userId: userId + ''})
+      } catch (e) {
+        window.open(location.origin + '/user/' + userId, "_blank");
+      }
     },
 
     tableRowClassName({ row, rowIndex }) {
