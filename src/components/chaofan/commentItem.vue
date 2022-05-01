@@ -50,7 +50,17 @@
             <!-- <a v-for="(i,k) in item.imageNames.split(',')" :key="k" :href="imgOrigin+i" target="_blank">【附图】</a> -->
                 </span>
               <div v-if="item.audio" >
-                [语音评论支持中]
+                <audio
+                       webkit-playsinline="true"
+                       x-webkit-airplay="true"
+                       playsinline="true"
+                       x5-video-player-type="h5"
+                       x5-video-orientation="h5"
+                       x5-video-player-fullscreen="true"
+                       controls
+                       :src="imgOrigin+item.audio"
+                       alt="">
+                </audio>
                 <!-- <a v-for="(i,k) in item.imageNames.split(',')" :key="k" :href="imgOrigin+i" target="_blank">【附图】</a> -->
               </div>
         </div>
