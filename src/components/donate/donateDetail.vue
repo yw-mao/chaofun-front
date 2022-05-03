@@ -88,9 +88,45 @@
           <div style="font-weight: bold;width: 100%;">赠言</div>
           <el-input v-model="reason" autocomplete="off" style="width: 200px;"></el-input>
         </div>
+
         <div style="margin-top: 20px">
           <el-button type="primary" @click="donateFbi">捐赠</el-button>
+
+          <!--  助力卷王！  -->
+          <el-button @click="isShowDonateAssist=!isShowDonateAssist" style="position: absolute;right: 5px;">小助手</el-button>
         </div>
+
+        <div v-if="isShowDonateAssist">
+          <hr style="margin-top: 20px;background-color:#ccc;height:1px;border:none;">
+
+          <div style="margin-top: 20px;text-align: center;">
+
+            <div style="font-weight: lighter;width: 100%;">我的捐赠</div>
+            <table style="margin: 5px auto 0 auto;text-align: right;">
+              <tr>
+                <td>已捐赠：</td>
+                <td>{{ myDonate ? myDonate.totalDonate : 0 }}</td>
+              </tr>
+              <tr>
+                <td>当前排名：</td>
+                <td style="text-align: center;">{{ myDonate ? myDonate.rank : "无" }}</td>
+              </tr>
+            </table>
+
+            <div style="margin-top: 20px;font-weight: lighter;width: 100%;">捐赠预估</div>
+            <table style="margin: 5px auto 0 auto;text-align: right;">
+              <tr>
+                <td>捐赠后总额：</td>
+                <td>{{ (myDonate ? myDonate.totalDonate : 0) + fbi }}</td>
+              </tr>
+              <tr>
+                <td>捐赠后排名：</td>
+                <td style="text-align: center;">{{ rankAfterDonate }}</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+
       </div>
     </el-dialog>
 
@@ -117,11 +153,27 @@ export default {
       totalFbi: 0,
       remainFbi: 0,
 
-      donateFbiList: []
+      donateFbiList: [],
+
+      isShowDonateAssist: false,
+      myUserId: null,
+      myDonate: null,
+      rankAfterDonate: 0
     };
+  },
+  watch: {
+    fbi(newValue) {
+      this.assistCalcRank(newValue);
+    },
+    donateDialogVisible() {
+      this.fbi = 100;
+      this.reason = "";
+      this.assistCalcRank( this.fbi);
+    }
   },
   components: {},
   created() {
+    this.myUserId = this.$store.state.user.userInfo.userId;
   },
   mounted() {
     this.init();
@@ -147,10 +199,11 @@ export default {
         // 数据处理
         if (res && res.success && res.data) {
 
-          // 排名
           let currentRank = 0;
           let currentTotalDonate = -1;
           res.data.forEach((row, index) => {
+
+            // 排名
             if (row.totalDonate === currentTotalDonate) {
               row.rank = currentRank;
             } else {
@@ -158,6 +211,11 @@ export default {
             }
             currentTotalDonate = row.totalDonate;
             currentRank = row.rank;
+
+            // 我的
+            if (this.myUserId && row.userInfo.userId == this.myUserId) {
+              this.myDonate = row;
+            }
 
             // 图片
             if (row.rank === 1 || row.rank === 2 || row.rank === 3) {
@@ -173,6 +231,7 @@ export default {
                 row.rankImg = this.imgOrigin + image + "?x-oss-process=image/resize,h_40/format,webp/quality,q_75";
               }
             }
+
           });
 
           this.donateFbiList = res.data;
@@ -180,6 +239,18 @@ export default {
 
       });
 
+    },
+
+    assistCalcRank(newValue) {
+      let fbiAfterDonate = (this.myDonate ? this.myDonate.totalDonate : 0) + newValue;
+
+      let rankAfterDonateTemp = 0;
+      this.donateFbiList.forEach((row, index) => {
+        if (!rankAfterDonateTemp && fbiAfterDonate >= row.totalDonate) {
+          rankAfterDonateTemp = row.rank;
+        }
+      });
+      this.rankAfterDonate = rankAfterDonateTemp;
     },
 
     donateFbi() {
@@ -203,9 +274,9 @@ export default {
 
     toUser(userId) {
       try {
-        window.flutter_inappwebview.callHandler('toAppUser', {userId: userId + ''})
+        window.flutter_inappwebview.callHandler("toAppUser", { userId: userId + "" });
       } catch (e) {
-        window.open(location.origin + '/user/' + userId, "_blank");
+        window.open(location.origin + "/user/" + userId, "_blank");
       }
     },
 
@@ -289,7 +360,7 @@ export default {
 }
 
 /deep/ .el-dialog__body {
-  padding: 10px;
+  padding: 10px 10px 30px 10px;
 }
 
 /deep/ .el-table .rank1Style {
