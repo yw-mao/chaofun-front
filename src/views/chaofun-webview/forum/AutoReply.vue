@@ -44,8 +44,8 @@
       <div style="max-width: 75%;">
       <div > 关键词：{{item.checkWord}} </div>
       <div v-if="item.containType === 'equal'"> 匹配模式：完全匹配</div>
-        <div v-if="item.containType === 'contain_or'">匹配模式：多关键词同时匹配</div>
-        <div v-if="item.containType === 'contain_and'">匹配模式：多关键词只要有一个匹配</div>
+        <div v-if="item.containType === 'contain_and'">匹配模式：多关键词同时匹配</div>
+        <div v-if="item.containType === 'contain_or'">匹配模式：多关键词只要有一个匹配</div>
       <div> 自动回复: {{item.responseText}} </div>
       </div>
       <div style="display: flex; justify-content: space-between;width: 20%">
