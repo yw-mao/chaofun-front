@@ -242,15 +242,19 @@ export default {
     },
 
     assistCalcRank(newValue) {
-      let fbiAfterDonate = (this.myDonate ? this.myDonate.totalDonate : 0) + newValue;
+      if (this.donateFbiList && this.donateFbiList.length) {
+        let fbiAfterDonate = (this.myDonate ? this.myDonate.totalDonate : 0) + newValue;
 
-      let rankAfterDonateTemp = 0;
-      this.donateFbiList.forEach((row, index) => {
-        if (!rankAfterDonateTemp && fbiAfterDonate >= row.totalDonate) {
-          rankAfterDonateTemp = row.rank;
-        }
-      });
-      this.rankAfterDonate = rankAfterDonateTemp;
+        let rankAfterDonateTemp = 0;
+        this.donateFbiList.forEach((row, index) => {
+          if (!rankAfterDonateTemp && fbiAfterDonate >= row.totalDonate) {
+            rankAfterDonateTemp = row.rank;
+          }
+        });
+        this.rankAfterDonate = rankAfterDonateTemp;
+      }else{
+        this.rankAfterDonate = 1;
+      }
     },
 
     donateFbi() {
