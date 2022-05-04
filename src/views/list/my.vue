@@ -52,7 +52,10 @@
                   <badgeDetail :badgeInfo0="badgeInfo.badge"/>
                   <div slot="reference">
                     <img :src="imgOrigin +  'biz/f30227f819eda710024f0f6c99fa60eb.png?x-oss-process=image/resize,h_42/format,webp/quality,q_75'" style="position:absolute;left: -21px;"/>
-                    <img :src="imgOrigin + badgeInfo.badge.icon +  '?x-oss-process=image/resize,h_24/format,webp/quality,q_75'" style="position:absolute;top:14px;left:-12px;border-radius:50%;" alt=""/>
+                    <img
+                      :src="imgOrigin + badgeInfo.badge.icon +  '?x-oss-process=image/resize,h_24/format,webp/quality,q_75'"
+                      alt=""
+                      style="position:absolute;top:14px;left:-12px;border-radius:50%;height: 24px;width: 24px;" />
                   </div>
                 </el-popover>
               </div>
@@ -85,18 +88,14 @@
 </template>
 
 <script>
-import {mapGetters} from 'vuex'
-import * as api from '@/api/api'
+import { mapGetters } from "vuex";
+import * as api from "@/api/api";
 
-import ListItem from '@/components/chaofan/ListItem.vue'
+import ListItem from "@/components/chaofan/ListItem.vue";
 import listComment from "@/views/list/ListComment";
-import attentionItem from '@/components/chaofan/attentionItem.vue'
-import RightCom from '@/components/chaofan/RightCom'
-import loadText from '@/components/chaofan/loadText'
-import badgeDetail from '@/views/chaofun-webview/badge/badgeDetail.vue';
-
-import createLogin from '@/components/chaofan/common/login/login.js'
-import {getComments} from "@/api/api";
+import attentionItem from "@/components/chaofan/attentionItem.vue";
+import loadText from "@/components/chaofan/loadText";
+import badgeDetail from "@/views/chaofun-webview/badge/badgeDetail.vue";
 
 export default {
   name: 'Dashboard',
