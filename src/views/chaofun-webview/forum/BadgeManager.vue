@@ -204,4 +204,11 @@ input{
   width: 90vw;
   max-width: 400px;
 }
+.avatar {
+  margin-bottom: 30px;
+  width: 100px;
+  height: 100px;
+  display: block;
+  border-radius: 50%;
+}
 </style>
