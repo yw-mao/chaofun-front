@@ -45,15 +45,15 @@
             </div>
             <div v-if="badgeList.length" class="badgeList">
               <div v-for="badgeInfo in badgeList" style="position:relative;margin-left: 20px;margin-right: 20px;">
-                <el-popover placement="bottom" width="300" trigger="hover">
-                  <badgeDetail :badgeInfo0="badgeInfo.badge"/>
-                  <div slot="reference">
-                    <img :src="imgOrigin +  'biz/f30227f819eda710024f0f6c99fa60eb.png?x-oss-process=image/resize,h_42/format,webp/quality,q_75'" style="position:absolute;left: -21px;"/>
-                    <img
-                      :src="imgOrigin + badgeInfo.badge.icon +  '?x-oss-process=image/resize,h_24/format,webp/quality,q_75'"
-                      alt=""
-                      style="position:absolute;top:14px;left:-12px;border-radius:50%;height: 24px;width: 24px;" />
-                  </div>
+                <img
+                  :src="imgOrigin +  'biz/f30227f819eda710024f0f6c99fa60eb.png?x-oss-process=image/resize,h_42/format,webp/quality,q_75'"
+                  style="position:absolute;left: -21px;" />
+                <el-popover placement="bottom" trigger="hover" width="300">
+                  <badgeDetail :badgeInfo0="badgeInfo.badge" />
+                  <img slot="reference"
+                       :src="imgOrigin + badgeInfo.badge.icon +  '?x-oss-process=image/resize,h_24/format,webp/quality,q_75'"
+                       alt=""
+                       style="position:absolute;top:14px;left:-12px;border-radius:50%;height: 24px;width: 24px;" />
                 </el-popover>
               </div>
             </div>
