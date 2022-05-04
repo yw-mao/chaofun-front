@@ -53,6 +53,10 @@
       </div>
 
       <div class="bottom">
+        <div @click="toManagerBadge" class="btns">用户标签</div>
+      </div>
+
+      <div class="bottom">
         <div @click="toNotify" class="btns">发送通知</div>
       </div>
 
@@ -175,6 +179,18 @@ export default {
         })
       } catch (e) {
         window.open(location.origin + '/webview/forum/sensitive_word_manager?forumId=' + this.forumId);
+      }
+    },
+
+    toManagerBadge() {
+      try {
+        window.flutter_inappwebview.callHandler('toViewPage', {
+          url: "https://chao.fun/webview/forum/badge" + "?forumId=" + this.forumId,
+          title: '徽章管理',
+          showHeader: true
+        })
+      } catch (e) {
+        window.open(location.origin + '/webview/forum/badge?forumId=' + this.forumId);
       }
     },
 
