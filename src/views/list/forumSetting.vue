@@ -1,5 +1,6 @@
 <template>
-  <div id="container" class="dashboard-container container infinite-list" ref="container" :style="{ height: scrollHeight + 'px' }">
+  <div id="container" ref="container" :style="{ height: scrollHeight + 'px' }"
+       class="dashboard-container container infinite-list">
     <div>
       <div style="height:50px;"></div>
       <div class="main_content">
@@ -10,67 +11,78 @@
               <el-tab-pane label="版块信息">
                 <div class="title">设置版块 ICON</div>
                 <div>
-                  <el-upload class="avatar-uploader" action="/api/upload_image" name="file" :data="filedata" :show-file-list="false" :on-success="handleAvatarSuccess"
-                             :before-upload="beforeAvatarUpload">
+                  <el-upload :before-upload="beforeAvatarUpload" :data="filedata" :on-success="handleAvatarSuccess"
+                             :show-file-list="false"
+                             action="/api/upload_image" class="avatar-uploader"
+                             name="file">
                     <img v-if="imageUrl" :src="imageUrl" class="avatar">
                     <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                   </el-upload>
                 </div>
                 <div class="title">设置版块描述</div>
                 <div style="max-width:600px;margin-top:10px;">
-                  <el-input type="textarea" @blur="toSign" maxlength="56" v-model="desc" style="resize:none;height:100px !important;overflow:hidden;" placeholder="请设置版块介绍"></el-input>
+                  <el-input v-model="desc" maxlength="56" placeholder="请设置版块介绍"
+                            style="resize:none;height:100px !important;overflow:hidden;"
+                            type="textarea"
+                            @blur="toSign"></el-input>
                 </div>
                 <div class="title">匿名发帖</div>
                 <div style="max-width:600px;margin-top:10px;">
                   <el-switch
-                      v-model="anonymity"
-                      @change="setAnonymity"
-                      active-color="#13ce66"
-                      inactive-color="#ccc"
-                      active-text="允许"
-                      inactive-text="不允许">
+                    v-model="anonymity"
+                    active-color="#13ce66"
+                    active-text="允许"
+                    inactive-color="#ccc"
+                    inactive-text="不允许"
+                    @change="setAnonymity">
                   </el-switch>
                 </div>
 
                 <div class="title" style="margin-top: 20px;">众筹</div>
                 <div style="max-width:600px;margin-top:10px;">
                   <el-switch
-                      v-model="isOpenDonate"
-                      active-color="#13ce66"
-                      active-text="开启"
-                      inactive-color="#ccc"
-                      inactive-text="关闭"
-                      @change="setDonateOpen">
+                    v-model="isOpenDonate"
+                    active-color="#13ce66"
+                    active-text="开启"
+                    inactive-color="#ccc"
+                    inactive-text="关闭"
+                    @change="setDonateOpen">
                   </el-switch>
                 </div>
 
               </el-tab-pane>
-              <el-tab-pane label="版块统计" :lazy=true>
-                <analytics :forum-id0="forumId"/>
+              <el-tab-pane :lazy=true label="版块统计">
+                <analytics :forum-id0="forumId" />
               </el-tab-pane>
-              <el-tab-pane label="版块标签" :lazy=true>
-                <forumTag :forum-id0="forumId"/>
+              <el-tab-pane :lazy=true label="版块标签">
+                <forumTag :forum-id0="forumId" />
               </el-tab-pane>
-              <el-tab-pane label="版块规范" :lazy=true>
-                <forumRule :forum-id0="forumId"/>
+              <el-tab-pane :lazy=true label="版块规范">
+                <forumRule :forum-id0="forumId" />
               </el-tab-pane>
-              <el-tab-pane label="用户标签" :lazy=true>
-                <userTag :forum-id0="forumId"/>
+              <el-tab-pane :lazy=true label="用户标签">
+                <userTag :forum-id0="forumId" />
               </el-tab-pane>
-              <el-tab-pane label="发送通知" :lazy=true>
-                <notify :forum-id0="forumId"/>
+              <el-tab-pane :lazy=true label="徽章管理">
+                <badge-manager :forum-id0="forumId" />
               </el-tab-pane>
-              <el-tab-pane label="管理版主" :lazy=true>
-                <ModManager :forum-id0="forumId"/>
+              <el-tab-pane :lazy=true label="发送通知">
+                <notify :forum-id0="forumId" />
               </el-tab-pane>
-              <el-tab-pane label="用户封禁" :lazy=true>
-                <ban-manager :forum-id0="forumId"/>
+              <el-tab-pane :lazy=true label="管理版主">
+                <ModManager :forum-id0="forumId" />
               </el-tab-pane>
-              <el-tab-pane label="敏感词管理" :lazy=true>
-                <sensitive-word :forum-id0="forumId"/>
+              <el-tab-pane :lazy=true label="用户封禁">
+                <ban-manager :forum-id0="forumId" />
               </el-tab-pane>
-              <el-tab-pane label="表格管理" :lazy=true>
-                <table-manager :forum-id0="forumId"/>
+              <el-tab-pane :lazy=true label="敏感词管理">
+                <sensitive-word :forum-id0="forumId" />
+              </el-tab-pane>
+              <el-tab-pane :lazy=true label="自动回复">
+                <auto-reply :forum-id0="forumId" />
+              </el-tab-pane>
+              <el-tab-pane :lazy=true label="表格管理">
+                <table-manager :forum-id0="forumId" />
               </el-tab-pane>
             </el-tabs>
           </div>
@@ -95,46 +107,60 @@ import ModManager from "@/views/chaofun-webview/forum/ModManager.vue";
 import BanManager from "@/views/chaofun-webview/forum/BanManager";
 import SensitiveWord from "@/views/chaofun-webview/forum/SensitiveWord";
 import TableManager from "@/views/chaofun-webview/forum/TableManager";
+import AutoReply from "@/views/chaofun-webview/forum/AutoReply";
+import badgeManager from "@/views/chaofun-webview/forum/BadgeManager";
 
 
 // 版块设置
 export default {
-  name: 'user',
+  name: "user",
   data() {
     return {
       params: {
-        forumId: '',
+        forumId: ""
       },
-      forumId: '',
-      imageUrl: '',
+      forumId: "",
+      imageUrl: "",
       filedata: {},
-      desc: '',
-      forumInfo: '',
+      desc: "",
+      forumInfo: "",
       anonymity: true,
-      isOpenDonate: false,
-    }
+      isOpenDonate: false
+    };
   },
   components: {
-    ListItem, loadText, analytics,forumTag,forumRule,userTag,notify,ModManager,BanManager,SensitiveWord,TableManager
+    ListItem,
+    loadText,
+    analytics,
+    forumTag,
+    forumRule,
+    userTag,
+    notify,
+    ModManager,
+    BanManager,
+    SensitiveWord,
+    TableManager,
+    AutoReply,
+    badgeManager
   },
   watch: {},
   computed: {
     ...mapGetters([
-      'roles',
-      'islogin'
+      "roles",
+      "islogin"
     ])
   },
   mounted() {
     if (document.body.clientWidth < 700) {
-      this.isPhone = true
+      this.isPhone = true;
     }
-    this.toPosition()
+    this.toPosition();
   },
   created() {
     this.forumId = this.params.forumId;
 
-    if (this.forumId === '' || this.forumId === undefined) {
-      this.forumId = this.$route.path.split('/')[2];
+    if (this.forumId === "" || this.forumId === undefined) {
+      this.forumId = this.$route.path.split("/")[2];
     }
     this.getForumInfo();
     // console.log('a',this.$store.state.user.userInfo)
@@ -148,25 +174,25 @@ export default {
 
   methods: {
     getForumInfo() {
-      api.getForumInfo({forumId: this.forumId}).then(res => {
+      api.getForumInfo({ forumId: this.forumId }).then(res => {
         this.forumInfo = res.data;
         this.desc = this.forumInfo.desc;
-        this.imageUrl = this.imgOrigin+this.forumInfo.imageName;
-      })
+        this.imageUrl = this.imgOrigin + this.forumInfo.imageName;
+      });
 
       //匿名发帖
-      api.getByPath('/api/v0/forum/getAnonymity',{forumId: this.forumId}).then( res => {
-        this.anonymity = res.data
-      })
+      api.getByPath("/api/v0/forum/getAnonymity", { forumId: this.forumId }).then(res => {
+        this.anonymity = res.data;
+      });
 
       // 众筹开启
       this.getDonateOpen();
     },
 
     setAnonymity(value) {
-      api.getByPath('/api/v0/forum/setAnonymity',{forumId: this.forumId, anonymity: value}).then( res => {
+      api.getByPath("/api/v0/forum/setAnonymity", { forumId: this.forumId, anonymity: value }).then(res => {
         this.getForumInfo();
-      })
+      });
     },
 
     getDonateOpen() {
@@ -188,43 +214,43 @@ export default {
 
     toSign() {
 
-      api.setForumDesc({forumId: this.forumId, desc: this.desc}).then(res => {
+      api.setForumDesc({ forumId: this.forumId, desc: this.desc }).then(res => {
         if (res.data) {
-          this.$toast('设置签名成功');
+          this.$toast("设置签名成功");
         } else {
-          this.$toast('设置签名失败，您还不是管理员?');
+          this.$toast("设置签名失败，您还不是管理员?");
         }
-      })
+      });
     },
     handleAvatarSuccess(res, file) {
-      console.log(this.filedata)
+      console.log(this.filedata);
       console.log(res);
       if (res.success) {
         this.imageUrl = URL.createObjectURL(file.raw);
-        api.setForumIcon({forumId: this.forumId, imageName: res.data}).then(res => {
+        api.setForumIcon({ forumId: this.forumId, imageName: res.data }).then(res => {
           if (res.data) {
-            this.$toast('设置版块 ICON 成功');
+            this.$toast("设置版块 ICON 成功");
           } else {
-            this.$toast('设置版块 ICON 失败，您还不是管理员?');
+            this.$toast("设置版块 ICON 失败，您还不是管理员?");
           }
-        })
-      } else if (res.errorCode == 'invalid_content') {
+        });
+      } else if (res.errorCode == "invalid_content") {
         // this.imageUrl = ''
-        this.$toast(res.errorMessage)
+        this.$toast(res.errorMessage);
       }
 
     },
     beforeAvatarUpload(file) {
       const isLt2M = file.size / 1024 / 1024 < 20;
       if (!isLt2M) {
-        this.$message.error('上传图片大小不能超过 20MB!');
-        return false
+        this.$message.error("上传图片大小不能超过 20MB!");
+        return false;
       }
-      this.filedata.fileName = file.name
-      return true
+      this.filedata.fileName = file.name;
+      return true;
     }
   }
-}
+};
 </script>
 <style lang="scss" scoped>
 .avatar-uploader .el-upload {
