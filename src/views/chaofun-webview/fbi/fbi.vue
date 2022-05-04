@@ -30,9 +30,7 @@
       <p style="font-weight: bold; font-size: 20px; color: #FF9300;padding-top: 20px">FBi 如何获得:</p>
       <p>  - 通过徽章附带的 FBi（徽章由炒饭和版主颁发）</p>
       <p>  - 每周五(炒饭爆炸星期五)登录使用炒饭，奖励 10 FBi </p>
-      <p>  - 你的帖子每得到一条评论 (非自己评论), 奖励 1 FBi</p>
       <p>  - 每发出一条评论 (评论自己的帖子不算), 奖励 1 FBi</p>
-      <p>  - 你的评论每得到一条子评论 (非自己评论), 奖励 1 FBi</p>
       <p>  - 向站长 (cijianzy) 反馈问题, 奖励 100 FBi</p>
       <div>
       <p>
