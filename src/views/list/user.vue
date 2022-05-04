@@ -555,6 +555,18 @@ export default {
   height: 50px;
   background: #fff;
   border-bottom: 1px solid #f1f1f1;
+
+  overflow-y: hidden;
+  overflow-x: auto;
+
+  &::-webkit-scrollbar {
+    height: 5px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    height: 5px;
+    background: #fafafa;
+  }
 }
 
 .user_info {
