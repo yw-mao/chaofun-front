@@ -85,6 +85,13 @@ routes = [
     hidden: true
   },
   {
+    path: '/webview/forum/badge',
+    component: () => import('@/views/chaofun-webview/forum/BadgeManager'),
+    name: 'badge',
+    meta: { title: '徽章管理'},
+    hidden: true
+  },
+  {
     path: '/webview/forum/rule',
     component: () => import('@/views/chaofun-webview/forum/rule'),
     name: 'forumRule',

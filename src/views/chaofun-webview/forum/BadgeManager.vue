@@ -3,31 +3,31 @@
     <div v-if="this.displayAdd" class="ycovers ">
       <div class="ycontainer">
         <div style="">
+          <div style="margin:10px 0px;display: flex; align-items: center">
+            <div style="align-content: center">徽章名称：</div>
+          </div>
+          <div style="margin:10px 0px;display: flex; align-items: center">
+            <input style="width: 100%" v-model="name"  placeholder="多关键词使用逗号分割"/>
+          </div>
+
+          <div class="title">设置徽章ICON</div>
+          <div>
+            <img v-if="imageName" @click="uploadImage" :src="imgOrigin + imageName" class="avatar">
+            <el-button v-if="!imageName">上传</el-button>
+          </div>
+
           <div style="margin:10px 0px; align-items: center">
-            <div style="align-content: center">匹配模式：</div>
-            <div>
-              <el-radio-group v-model="containType">
-                <div style="padding-top: 10px">
-                  <el-radio label="equal">完全匹配</el-radio>
-                </div>
-                <div style="padding-top: 10px">
-                  <el-radio label="contain_and">多关键词同时匹配</el-radio>
-                </div>
-                <div style="padding-top: 10px">
-                  <el-radio label="contain_or">多关键词只要有一个匹配</el-radio>
-                </div>
-              </el-radio-group>
-            </div>
-
-          </div>
-          <div style="margin:10px 0px;display: flex; align-items: center">
-            <div style="align-content: center">匹配词：</div>
-          </div>
-          <div style="margin:10px 0px;display: flex; align-items: center">
-            <input style="width: 100%" v-model="checkWord"  placeholder="多关键词使用逗号分割"/>
+            <div style="align-content: center">徽章描述：</div>
           </div>
 
-          <textarea class="text" v-model="responseText" style="background: #f9f9f9;width: 260px;" placeholder="请输入自动回复内容"/>
+          <textarea class="text" v-model="desc" style="background: #f9f9f9;width: 260px;" placeholder="请输入徽章描述/获得条件"/>
+
+          <div style="margin:10px 0px; align-items: center">
+            <div style="align-content: center">FBi 奖励：</div>
+          </div>
+          <div style="">
+            <el-input-number v-model="fbi" :min=5 :step=5 />
+          </div>
 
           <div style="margin:20px 0px;display: flex;">
             <el-button @click="toAdd" type="success">确认</el-button>
@@ -38,18 +38,11 @@
     </div>
 
     <div class="bottom">
-      <div @click="add" class="btns">添加自动回复规则</div>
+      <div @click="add" class="btns">添加徽章</div>
     </div>
     <div v-for="(item,index) in lists" :key="index" class="item">
-      <div style="max-width: 75%;">
-      <div > 关键词：{{item.checkWord}} </div>
-      <div v-if="item.containType === 'equal'"> 匹配模式：完全匹配</div>
-        <div v-if="item.containType === 'contain_and'">匹配模式：多关键词同时匹配</div>
-        <div v-if="item.containType === 'contain_or'">匹配模式：多关键词只要有一个匹配</div>
-      <div> 自动回复: {{item.responseText}} </div>
-      </div>
-      <div style="display: flex; justify-content: space-between;width: 20%">
-        <div @click="toDelete(item, index)">删除</div>
+      <div>
+        <div > 徽章名字：{{item.name}} </div>
       </div>
     </div>
   </div>
@@ -64,14 +57,18 @@ export default {
   // components: { adminDashboard, editorDashboard },
   data() {
     return {
+      imageName: '',
       displayAdd: false,
       params: {},
       forumId: '',
       lists:[],
+      name: '',
+      desc: '',
       checkWord: '',
       responseText: '',
       containType: 'equal',
       orderNumber: 0,
+      fbi: 5,
       modInfo: {
         money: 0.0,
         past24HPosts: 0,
@@ -88,28 +85,37 @@ export default {
       }
     }
   },
+  mounted() {
+    try{
+      let self = this;
+      window.setUploadImage = function (message) {
+        self.$toast('ICON更新成功，点击保存生效');
+        self.imageName = message;
+      }
+    }catch{
+
+    }
+  },
   created() {
     if (this.forumId0) {
       this.forumId = this.forumId0;
     } else {
       this.forumId = this.$route.query.forumId;
     }
-    this.getForumRules();
+    this.getForumBadges();
   },
 
   methods: {
     toAdd() {
-      if (this.checkWord !== '') {
-        api.postByPath('/api/v0/forum/addResponseWord', {forumId: this.forumId, containType: this.containType, checkWord: this.checkWord, responseText: this.responseText}).then((res) => {
-          if (res.success) {
-            this.$toast('添加成功')
-            this.displayAdd = false;
-            this.getForumRules();
-          } else {
-            this.$toast(res.errorMessage)
-          }
-        })
-      }
+      api.getByPath('/api/v0/badge/create', {forumId: this.forumId, name: this.name, desc: this.desc, icon: this.imageName, integral: this.fbi}).then((res) => {
+        if (res.success) {
+          this.$toast('添加成功')
+          this.displayAdd = false;
+          this.getForumBadges();
+        } else {
+          this.$toast(res.errorMessage)
+        }
+      })
     },
     cancelAdd() {
       this.displayAdd = false;
@@ -120,18 +126,13 @@ export default {
     toModify() {
       this.$toast('暂不支持');
     },
-    toDelete(item, index) {
-      this.$confirm(`是否确定删除该规范吗？`, "提示", {
-        type: "warning",
-        // position: center,
-      }).then(() => {
-        api.getByPath('/api/v0/forum/removeResponseWord', {forumId: this.forumId, id: item.id}).then((res) => {
-          this.getForumRules();
-        })
-      })
+
+    uploadImage(){
+      window.flutter_inappwebview.callHandler('uploadImage').then(function(result) {
+      });
     },
-    getForumRules() {
-      api.getByPath('/api/v0/forum/listResponseWords', { forumId: this.forumId }).then((res) => {
+    getForumBadges() {
+      api.getByPath('/api/v0/badge/listForumBadges', { forumId: this.forumId }).then((res) => {
         this.lists = res.data;
         // this.load()
       })
