@@ -53,7 +53,7 @@
       </div>
 
       <div class="bottom">
-        <div @click="toManagerBadge" class="btns">用户标签</div>
+        <div @click="toManagerBadge" class="btns">徽章管理</div>
       </div>
 
       <div class="bottom">
