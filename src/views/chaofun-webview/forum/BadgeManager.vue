@@ -7,13 +7,13 @@
             <div style="align-content: center">徽章名称：</div>
           </div>
           <div style="margin:10px 0px;display: flex; align-items: center">
-            <input style="width: 100%" v-model="name"  placeholder="多关键词使用逗号分割"/>
+            <input style="width: 100%" v-model="name"  placeholder=""/>
           </div>
 
           <div class="title">设置徽章ICON</div>
           <div>
             <img v-if="imageName" @click="uploadImage" :src="imgOrigin + imageName" class="avatar">
-            <el-button v-if="!imageName">上传</el-button>
+            <el-button v-if="!imageName" @click="uploadImage">上传</el-button>
           </div>
 
           <div style="margin:10px 0px; align-items: center">
@@ -89,7 +89,7 @@ export default {
     try{
       let self = this;
       window.setUploadImage = function (message) {
-        self.$toast('ICON更新成功，点击保存生效');
+        self.$toast('ICON 上传成功');
         self.imageName = message;
       }
     }catch{
