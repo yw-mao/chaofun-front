@@ -107,15 +107,26 @@ export default {
 
   methods: {
     toAdd() {
-      api.getByPath('/api/v0/badge/create', {forumId: this.forumId, name: this.name, desc: this.desc, icon: this.imageName, integral: this.fbi}).then((res) => {
-        if (res.success) {
-          this.$toast('添加成功')
-          this.displayAdd = false;
-          this.getForumBadges();
-        } else {
-          this.$toast(res.errorMessage)
-        }
-      })
+      this.$confirm(`是否确定添加徽章？`, "提示", {
+        type: "warning",
+        // position: center,
+      }).then(() => {
+        api.getByPath('/api/v0/badge/create', {
+          forumId: this.forumId,
+          name: this.name,
+          desc: this.desc,
+          icon: this.imageName,
+          integral: this.fbi
+        }).then((res) => {
+          if (res.success) {
+            this.$toast('添加成功')
+            this.displayAdd = false;
+            this.getForumBadges();
+          } else {
+            this.$toast(res.errorMessage)
+          }
+        })
+      });
     },
     cancelAdd() {
       this.displayAdd = false;
@@ -209,5 +220,12 @@ input{
   width: 100px;
   height: 100px;
   display: block;
+}
+</style>
+
+<style lang="scss">
+.el-message-box{
+  width: 90vw;
+  max-width: 400px;
 }
 </style>
