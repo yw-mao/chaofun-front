@@ -209,6 +209,5 @@ input{
   width: 100px;
   height: 100px;
   display: block;
-  border-radius: 50%;
 }
 </style>
