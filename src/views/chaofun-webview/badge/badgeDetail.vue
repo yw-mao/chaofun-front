@@ -1,7 +1,7 @@
 <template>
   <div>
     <div style="padding: 20px;">
-      <img style="display: inline-block; height: 100%; width: 100%" :src="imgOrigin + this.badgeInfo.icon + '?x-oss-process=image/resize,h_256/format,webp/quality,q_75'">
+      <img style="display: inline-block; height: 100%; width: 100%" :src="imgOrigin + this.badgeInfo.icon + '?x-oss-process=image/resize,h_1024'">
     </div>
     <div style="width: 100%;">
       <p style="width: 100%; align-items: center; text-align: center; font-weight: bold; font-size: 25px;">
