@@ -13,14 +13,14 @@
         </span>
       </div>
       <div v-else style="max-width: 80vw;cursor: pointer;">
-        <el-popover placement="bottom" trigger="hover" width="300">
+        <el-popover placement="right" trigger="hover" width="300">
           <badgeDetail :badgeInfo0="item.badge" />
           <span slot="reference" style="display: flex;">
             <img
               :src="imgOrigin + item.badge.icon +  '?x-oss-process=image/resize,h_24/format,webp/quality,q_75'"
               alt=""
               style="border-radius:100%;height: 24px;width: 24px;" />
-            <span style="margin: auto 5px;">
+            <span style="margin: auto 5px;min-width: 100px;">
             {{ item.badge.name }}
             </span>
           </span>
