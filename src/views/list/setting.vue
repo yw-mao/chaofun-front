@@ -1,82 +1,99 @@
 <template>
   <div id="container"
-       class="dashboard-container container infinite-list"
        ref="container"
-       :style="{ height: scrollHeight + 'px' }">
+       :style="{ height: scrollHeight + 'px' }"
+       class="dashboard-container container infinite-list">
     <div>
       <div style="height:50px;"></div>
       <div>
         <div class="main_content">
           <div class="main_center">
-            <div class="title">设置头像</div>
-            <div>
-              <el-upload
-                  class="avatar-uploader"
-                  action="/api/upload_image"
-                  name="file"
-                  :data="filedata"
-                  :show-file-list="false"
-                  :on-success="handleAvatarSuccess"
-                  :before-upload="beforeAvatarUpload">
-                <img v-if="imageUrl" :src="imageUrl" class="avatar">
-                <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-              </el-upload>
-            </div>
 
-            <div class="title">设置个性签名</div>
-            <div style="max-width:600px;margin-top:0px;margin-bottom:10px;">
-              <el-input type="textarea" @blur="toSign" maxlength="200" v-model="desc" style="resize:none;overflow:hidden;" placeholder="个性签名，展示优秀的自我~"></el-input>
-            </div>
-            <div class="title">修改用户名</div>
-            <div>
-              <el-input style="width:210px;" maxlength="20" v-model="userInfo.userName"></el-input>
-              <el-button
-                  style="margin-left:10px;"
-                  :type="userInfo.phone?'primary':'info'"
-                  icon="el-icon-edit"
-                  @click="handleUserName"
-                  :disabled="userInfo.phone?false:true"
-                  size="small">
-                确定修改
-              </el-button>
-              <div v-if="!userInfo.phone" style="display:inline-block;padding-left:10px;">
-                <span style="color:red;">未绑定手机号？</span>
-                <span @click="toBindPhone" style="color:#409eff;text-decoration:underline;cursor:pointer;">去绑定</span>
-              </div>
-            </div>
-            <div class="title" style="display: flex;">本地设置
-              <div class="checkboxTooltip">
-                <el-tooltip placement="right">
-                  <div slot="content">该设置仅保存在本地浏览器，<br/>更换设备或浏览器需重新设置该项。</div>
-                  <i class="el-icon-question" style="font-size: 20px; color: #1890ff"></i>
-                </el-tooltip>
-              </div>
-            </div>
-            <div class="localSetting" style="display: flex;">
-              <div>
-                <el-checkbox v-model="isStoragePostOwnerCommentHighlight"
-                             @change="storagePostOwnerCommentHighlightCheckboxChange">保持 “高亮楼主评论” 的状态
-                </el-checkbox>
-              </div>
-              <div class="checkboxTooltip">
-                <el-tooltip placement="right">
-                  <div slot="content">未选中时：<br/>不同帖子的 “高亮楼主评论” 的状态是独立的，<br/>即每次打开帖子默认为不选中 “高亮楼主评论”<br/><br/>
-                    选中时：<br/>不同帖子将同步“高亮楼主评论”的状态<br/>即：本帖子设置为选中，下次打开其它帖子也为选中
+            <el-tabs v-model="tabActiveName" type="card">
+
+              <el-tab-pane label="个人资料" name="baseInfo">
+                <div class="title">设置头像</div>
+                <div>
+                  <el-upload
+                    :before-upload="beforeAvatarUpload"
+                    :data="filedata"
+                    :on-success="handleAvatarSuccess"
+                    :show-file-list="false"
+                    action="/api/upload_image"
+                    class="avatar-uploader"
+                    name="file">
+                    <img v-if="imageUrl" :src="imageUrl" class="avatar">
+                    <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                  </el-upload>
+                </div>
+
+                <div class="title">设置个性签名</div>
+                <div style="max-width:600px;margin-top:0px;margin-bottom:10px;">
+                  <el-input v-model="desc" maxlength="200" placeholder="个性签名，展示优秀的自我~"
+                            style="resize:none;overflow:hidden;"
+                            type="textarea" @blur="toSign"></el-input>
+                </div>
+                <div class="title">修改用户名</div>
+                <div>
+                  <el-input v-model="userInfo.userName" maxlength="20" style="width:210px;"></el-input>
+                  <el-button
+                    :disabled="userInfo.phone?false:true"
+                    :type="userInfo.phone?'primary':'info'"
+                    icon="el-icon-edit"
+                    size="small"
+                    style="margin-left:10px;"
+                    @click="handleUserName">
+                    确定修改
+                  </el-button>
+                  <div v-if="!userInfo.phone" style="display:inline-block;padding-left:10px;">
+                    <span style="color:red;">未绑定手机号？</span>
+                    <span style="color:#409eff;text-decoration:underline;cursor:pointer;"
+                          @click="toBindPhone">去绑定</span>
                   </div>
-                  <i class="el-icon-question" style="font-size: 20px; color: #1890ff"></i>
-                </el-tooltip>
-              </div>
-            </div>
-            <div class="localSetting" style="display: flex;align-items: center;">
-              <span>帖子评论排序方式：</span>
-              <el-radio-group v-model="commentOrderType" @change="commentOrderTypeChange" size="small">
-                <el-radio-button label="hot">热评</el-radio-button>
-                <el-radio-button label="new">新评</el-radio-button>
-                <el-radio-button label="old">时间</el-radio-button>
-              </el-radio-group>
-              <!--              <el-switch style="display: block" v-model="commentOrderType" active-color="#13ce66" inactive-color="#1890ff" active-text="新评" inactive-text="热评"-->
-              <!--              @change="commentOrderTypeChange"></el-switch>-->
-            </div>
+                </div>
+              </el-tab-pane>
+
+              <el-tab-pane :lazy=true label="本地设置" name="localSetting">
+                <div class="title" style="display: flex;">本地设置
+                  <div class="checkboxTooltip">
+                    <el-tooltip placement="right">
+                      <div slot="content">该设置仅保存在本地浏览器，<br />更换设备或浏览器需重新设置该项。</div>
+                      <i class="el-icon-question" style="font-size: 20px; color: #1890ff"></i>
+                    </el-tooltip>
+                  </div>
+                </div>
+                <div class="localSetting" style="display: flex;">
+                  <div>
+                    <el-checkbox v-model="isStoragePostOwnerCommentHighlight"
+                                 @change="storagePostOwnerCommentHighlightCheckboxChange">保持 “高亮楼主评论” 的状态
+                    </el-checkbox>
+                  </div>
+                  <div class="checkboxTooltip">
+                    <el-tooltip placement="right">
+                      <div slot="content">未选中时：<br />不同帖子的 “高亮楼主评论” 的状态是独立的，<br />即每次打开帖子默认为不选中 “高亮楼主评论”<br /><br />
+                        选中时：<br />不同帖子将同步“高亮楼主评论”的状态<br />即：本帖子设置为选中，下次打开其它帖子也为选中
+                      </div>
+                      <i class="el-icon-question" style="font-size: 20px; color: #1890ff"></i>
+                    </el-tooltip>
+                  </div>
+                </div>
+                <div class="localSetting" style="display: flex;align-items: center;">
+                  <span>帖子评论排序方式：</span>
+                  <el-radio-group v-model="commentOrderType" size="small" @change="commentOrderTypeChange">
+                    <el-radio-button label="hot">热评</el-radio-button>
+                    <el-radio-button label="new">新评</el-radio-button>
+                    <el-radio-button label="old">时间</el-radio-button>
+                  </el-radio-group>
+                  <!--              <el-switch style="display: block" v-model="commentOrderType" active-color="#13ce66" inactive-color="#1890ff" active-text="新评" inactive-text="热评"-->
+                  <!--              @change="commentOrderTypeChange"></el-switch>-->
+                </div>
+              </el-tab-pane>
+
+              <el-tab-pane :lazy=true label="徽章管理" name="badge">
+                <badge-setting :showType=1 />
+              </el-tab-pane>
+
+            </el-tabs>
           </div>
         </div>
       </div>
@@ -84,13 +101,14 @@
 
     <div v-if="logStatus" class="ycovers ">
       <div class="ycontainer">
-        <img @click="logStatus = false" class="cancel" src='../../assets/images/icon/cancel1.png'/>
+        <img class="cancel" src="../../assets/images/icon/cancel1.png" @click="logStatus = false" />
         <h1>{{ title }}</h1>
         <div style="">
-          <input type="text" :disabled="type=='edit'?true:false" v-model="params.phone" onkeyup="value=value.replace(/[^\d]/g,'')" maxlength="11" placeholder="手机号"/>
+          <input v-model="params.phone" :disabled="type=='edit'?true:false" maxlength="11"
+                 onkeyup="value=value.replace(/[^\d]/g,'')" placeholder="手机号" type="text" />
           <div class="code_con">
-            <input class="code" v-model="params.code" type="text">
-            <span @click="toSendCode">{{ time ? time + 's' : '发送验证码' }}</span>
+            <input v-model="params.code" class="code" type="text">
+            <span @click="toSendCode">{{ time ? time + "s" : "发送验证码" }}</span>
           </div>
         </div>
         <div class="remPassword">
@@ -98,48 +116,50 @@
         <div :class="['ylogin',{'disabled': sss}]" @click="toBind(1)">确定</div>
       </div>
     </div>
+
   </div>
 </template>
 
 <script>
-import {mapGetters} from 'vuex'
-import * as api from '../../api/api'
+import { mapGetters } from "vuex";
+import * as api from "../../api/api";
 
-import ListItem from '../../components/chaofan/ListItem.vue'
-import RightCom from '@/components/chaofan/RightCom'
-import loadText from '@/components/chaofan/loadText'
+import ListItem from "../../components/chaofan/ListItem.vue";
+import loadText from "@/components/chaofan/loadText";
+import badgeSetting from "@/views/chaofun-webview/badge/BadgeSetting";
 
 export default {
-  name: 'user',
+  name: "user",
   // components: { adminDashboard, editorDashboard },
   data() {
     return {
+      tabActiveName: "baseInfo",
 
-      commentOrderType: 'hot',
+      commentOrderType: "hot",
       isStoragePostOwnerCommentHighlight: false,
-      type: '',
-      title: '',
-      time: '',
+      type: "",
+      title: "",
+      time: "",
       timer: null,
       params: {
-        phone: '',
-        code: ''
+        phone: "",
+        code: ""
       },
       logStatus: false,
-      imageUrl: '',
+      imageUrl: "",
       filedata: {},
-      desc: '',
+      desc: "",
       userInfo: {}
-    }
+    };
   },
   components: {
-    ListItem, loadText
+    ListItem, loadText, badgeSetting
   },
   watch: {},
   computed: {
     ...mapGetters([
-      'roles',
-      'islogin'
+      "roles",
+      "islogin"
     ]),
     sss() {
       // if((/^1[3456789]\d{9}$/.test(this.params.phone))){
@@ -158,16 +178,22 @@ export default {
 
 
     this.commentOrderType = ("new" == localStorage.getItem("chao.fun.localSetting.commentOrderType")) ? "new"
-        : (("old" == localStorage.getItem("chao.fun.localSetting.commentOrderType")) ? "old" : "hot");
+      : (("old" == localStorage.getItem("chao.fun.localSetting.commentOrderType")) ? "old" : "hot");
     localStorage.setItem("chao.fun.localSetting.commentOrderType", this.commentOrderType);
 
     if (document.body.clientWidth < 700) {
-      this.isPhone = true
+      this.isPhone = true;
     }
-    this.toPosition()
+    this.toPosition();
   },
   created() {
-    console.log('a', this.$store.state.user.userInfo)
+
+    let tab = this.$route.query.tab;
+    if (tab) {
+      this.tabActiveName = tab;
+    }
+
+    console.log("a", this.$store.state.user.userInfo);
     this.userInfo = this.$store.state.user.userInfo;
     this.desc = this.$store.state.user.userInfo.desc;
     this.imageUrl = this.imgOrigin + this.$store.state.user.userInfo.icon;
@@ -194,7 +220,7 @@ export default {
           this.$toast("手机号码有误，请重填");
           return false;
         } else {
-          api.getCode({phone: this.params.phone}).then(res => {
+          api.getCode({ phone: this.params.phone }).then(res => {
             if (res.success) {
               this.time = 60;
               this.timer = setInterval(() => {
@@ -206,9 +232,9 @@ export default {
                   this.timer = null;
                 }
 
-              }, 1000)
+              }, 1000);
             }
-          })
+          });
 
         }
 
@@ -223,69 +249,69 @@ export default {
             this.logStatus = false;
             this.userInfo.phone = this.params.phone;
           }
-        })
+        });
       }
     },
     toBindPhone() {
       // this.params.phone = this.userInfo.phone.splice(3,7,'xxxx');
-      this.title = '';
-      this.type = 'bind';
+      this.title = "";
+      this.type = "bind";
       this.logStatus = true;
     },
     handleUserName() {
-      console.log('123')
+      console.log("123");
       // this.title = '验证手机号';
       // this.type = 'edit';
       // this.params.phone = (this.userInfo.phone.slice(0,3)+'****'+this.userInfo.phone.slice(7));
       // this.logStatus = true;
       if (this.userInfo.userName && this.userInfo.phone) {
-        api.changeUserName({userName: this.userInfo.userName}).then(res => {
+        api.changeUserName({ userName: this.userInfo.userName }).then(res => {
           if (res.success) {
             this.$toast("用户名修改成功");
-            this.$store.dispatch('user/SET_userInfo', this.userInfo)
+            this.$store.dispatch("user/SET_userInfo", this.userInfo);
           }
-        })
+        });
       }
 
     },
     toSign() {
-      api.setDesc({desc: this.desc}).then(res => {
+      api.setDesc({ desc: this.desc }).then(res => {
         if (res.success) {
-          this.$toast('设置签名成功')
+          this.$toast("设置签名成功");
         }
-      })
+      });
     },
     handleAvatarSuccess(res, file) {
 
-      console.log(this.filedata)
+      console.log(this.filedata);
       console.log(res);
       if (res.success) {
         this.imageUrl = URL.createObjectURL(file.raw);
-        api.setIcon({imageName: res.data}).then(res => {
+        api.setIcon({ imageName: res.data }).then(res => {
 
-        })
-      } else if (res.errorCode == 'invalid_content') {
+        });
+      } else if (res.errorCode == "invalid_content") {
         // this.imageUrl = ''
-        this.$toast(res.errorMessage)
+        this.$toast(res.errorMessage);
       }
 
     },
     beforeAvatarUpload(file) {
       const isLt2M = file.size / 1024 / 1024 < 20;
       if (!isLt2M) {
-        this.$message.error('上传图片大小不能超过 20MB!');
-        return false
+        this.$message.error("上传图片大小不能超过 20MB!");
+        return false;
       }
-      this.filedata.fileName = file.name
-      return true
+      this.filedata.fileName = file.name;
+      return true;
     }
   }
-}
+};
 </script>
 <style lang="scss" scoped>
 
 @media screen and (max-width: 1079px) {
-  .main_content{
+  .main_content {
     width: 800px;
   }
 }
@@ -315,6 +341,7 @@ export default {
   width: 178px;
   height: 178px;
   display: block;
+  margin-bottom: 0;
 }
 
 /deep/ .el-upload {

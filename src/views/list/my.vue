@@ -59,6 +59,7 @@
                        style="position:absolute;top:14px;left:-12px;border-radius:50%;height: 24px;width: 24px;" />
                 </el-popover>
               </div>
+              <i class="el-icon-setting badgeSetting" @click="onBadgeSettingClick"></i>
             </div>
             <div class="mynavs">
               <div @click="checkout('pub')" :class="['navItem',{active_nav: whichOne == 'pub'}]">我发布的</div>
@@ -205,6 +206,11 @@ export default {
     this.load()
   },
   methods: {
+
+    onBadgeSettingClick() {
+      window.open("/setting?tab=badge", "_blank");
+    },
+
     getUserBadgeList() {
       api.getUserBadgeList({userId: this.$store.state.user.userInfo.userId}).then((res) => {
         if (res.success) {
@@ -610,5 +616,14 @@ export default {
   font-size: 16px;
 }
 
+.badgeSetting {
+  font-size: 18px;
+  margin: auto 3px;
+  cursor: pointer;
+  opacity:0.15;
+  &:hover {
+    opacity:1;
+  }
+}
 
 </style>
