@@ -51,10 +51,18 @@ export default {
               },
               {
                 path: '/p/1137991',
-                title: '炒饭社区公约',
+                title: '炒饭社区内容公约',
                 desc: '大家一起加油吧！！！',
                 showBottom: true
               },
+
+            {
+              path: '/p/1152948',
+              title: '炒饭社区使用指南',
+              desc: '来学习更多骚操作',
+              showBottom: true
+            },
+
               // {
               //     path: '/webview/oauth?redirectUrl=https%3A%2F%2Fspringchen.cn/Dengmi/?mirror=1065',
               //     title: '元宵猜灯谜活动',
