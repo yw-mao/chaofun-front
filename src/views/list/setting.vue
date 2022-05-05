@@ -90,7 +90,7 @@
               </el-tab-pane>
 
               <el-tab-pane :lazy=true label="徽章管理" name="badge">
-                <badge-setting :showType=1 />
+                <badge-setting />
               </el-tab-pane>
 
             </el-tabs>

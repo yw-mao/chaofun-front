@@ -1,18 +1,7 @@
 <template>
   <div>
     <div v-for="(item,index) in lists" :key="index" class="item">
-      <div v-if="showType===0" style="max-width: 80vw;cursor: pointer;" @click="toDetail(item)">
-        <span style="display: flex;">
-          <img
-            :src="imgOrigin + item.badge.icon +  '?x-oss-process=image/resize,h_24/format,webp/quality,q_75'"
-            alt=""
-            style="border-radius:100%;height: 24px;width: 24px;" />
-          <span style="margin: auto 5px;">
-          {{ item.badge.name }}
-          </span>
-        </span>
-      </div>
-      <div v-else style="max-width: 80vw;cursor: pointer;">
+      <div style="max-width: 80vw;cursor: pointer;">
         <el-popover placement="right" trigger="hover" width="300">
           <badgeDetail :badgeInfo0="item.badge" />
           <span slot="reference" style="display: flex;">
@@ -26,9 +15,11 @@
           </span>
         </el-popover>
       </div>
+
       <div style="display: flex; justify-content: space-between;width: 90px;">
         <el-switch v-model="item.show" class="drawer-switch" @change="switchBadgeShow($event, item)" />
       </div>
+
     </div>
   </div>
 </template>
@@ -53,10 +44,6 @@ export default {
         return null;
       }
     },
-    showType: {
-      type: Number,
-      default: 0
-    }
   },
   components: { badgeDetail },
   created() {
