@@ -141,6 +141,13 @@ routes = [
     hidden: true
   },
   {
+    path: '/webview/badge/setting',
+    component: () => import('@/views/chaofun-webview/badge/BadgeSetting'),
+    name: 'badge_setting',
+    meta: { title: '徽章显示设置'},
+    hidden: true
+  },
+  {
     path: '/webview/fbi',
     component: () => import('@/views/chaofun-webview/fbi/fbi'),
     name: 'fbi',
