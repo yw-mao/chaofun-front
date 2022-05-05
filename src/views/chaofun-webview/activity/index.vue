@@ -61,12 +61,12 @@ export default {
               //     desc: '一起来猜灯谜吧，有FBi奖励哦！！！',
               //     showBottom: true
               // },
-              {
-                  path: '/webview/year2021',
-                  title: '2021年度总结',
-                  desc: '你的炒饭2021年度总结',
-                  showBottom: true
-              },
+              // {
+              //     path: '/webview/year2021',
+              //     title: '2021年度总结',
+              //     desc: '你的炒饭2021年度总结',
+              //     showBottom: true
+              // },
               {
                   // imgUrl: require('../assets/images/secret.jpg'),
                   path: '/userRank',
