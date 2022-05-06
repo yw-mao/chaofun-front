@@ -128,7 +128,7 @@ export function uploadImage(params) {
   })
 }
 
-/** 申请板块 */
+/** 申请版块 */
 export function applyForum(query) {
   return request({
     url: '/api/v0/apply_forum',
@@ -137,7 +137,7 @@ export function applyForum(query) {
   })
 }
 
-/** 申请板块 */
+/** 申请版块 */
 export function applyMod(query) {
   return request({
     url: '/api/v0/apply_mod',
@@ -229,7 +229,7 @@ export function getModInfo(params) {
     params
   })
 }
-/** 加入板块 */
+/** 加入版块 */
 export function joinForum(params) {
   return request({
     url: '/api/join_forum',
@@ -238,7 +238,7 @@ export function joinForum(params) {
   })
 }
 
-/** 退出板块 */
+/** 退出版块 */
 export function leaveForum(params) {
   return request({
     url: '/api/leave_forum',
@@ -426,7 +426,7 @@ export function downvoteComment(params) {
   })
 }
 
-/** 板块搜索 */
+/** 版块搜索 */
 export function searchForum(params) {
   return request({
     url: '/api/search_forum',
@@ -498,7 +498,7 @@ export function setIcon(params) {
   })
 }
 
-/** 设置板块 ICON */
+/** 设置版块 ICON */
 export function setForumIcon(params) {
   return request({
     url: '/api/v0/setForumIcon',
@@ -679,7 +679,7 @@ export function setDesc(params) {
   })
 }
 
-/** 设置板块描述 */
+/** 设置版块描述 */
 export function setForumDesc(params) {
   return request({
     url: '/api/v0/setForumDesc',
@@ -1304,7 +1304,7 @@ export function reportPostComment(params) {
 /** 活动查询 */
 
 /**
- * 用户给某个板块捐赠FBI
+ * 用户给某个版块捐赠FBI
  * @param params forumId,fbi,reason
  * @returns {*}
  */
@@ -1317,7 +1317,7 @@ export function donateFbi(params) {
 }
 
 /**
- * 获取某个板块的剩余总FBI
+ * 获取某个版块的剩余总FBI
  * @param params forumId
  * @returns {*}
  */
@@ -1330,7 +1330,7 @@ export function getDonateFbi(params) {
 }
 
 /**
- * 板块用户捐赠FBI排名
+ * 版块用户捐赠FBI排名
  * @param params forumId
  * @returns {*}
  */
@@ -1343,7 +1343,7 @@ export function getDonateOrder(params) {
 }
 
 /**
- * 设置某个板块是否可以众筹FBI
+ * 设置某个版块是否可以众筹FBI
  * @param params forumId,donate
  * @returns {*}
  */
@@ -1357,7 +1357,7 @@ export function setDonateFbi(params) {
 
 
 /**
- * 获取板块是否开启众筹
+ * 获取版块是否开启众筹
  * @param params forumId
  * @returns {*}
  */

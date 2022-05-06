@@ -235,16 +235,16 @@
           </el-dropdown-menu>
         </el-dropdown>
       </div>
-      <el-dialog title="转移板块(不能保留评论和赞)" :visible.sync="this.displayTrans"  width="30%" :append-to-body="true" :before-close="cancelSet">
+      <el-dialog title="转移版块(不能保留评论和赞)" :visible.sync="this.displayTrans"  width="30%" :append-to-body="true" :before-close="cancelSet">
         <div class="ycontainer">
           <div style="">
-<!--            <div>转移板块(评论暂不支持转移)</div>-->
+<!--            <div>转移版块(评论暂不支持转移)</div>-->
             <div style="margin:10px 0px;display: flex; align-items: center">
-              <div style="align-content: center">新板块：</div>
+              <div style="align-content: center">新版块：</div>
               <el-autocomplete
                   v-model="state"
                   :fetch-suggestions="querySearchAsync"
-                  placeholder="搜索板块"
+                  placeholder="搜索版块"
                   @select="handleAddSelect"
               ></el-autocomplete>
             </div>
