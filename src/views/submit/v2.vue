@@ -231,7 +231,7 @@
                 </div>
                 <div v-if="this.rules && this.rules.length != 0">
                 <p>
-                  <span>版块发帖规则</span>
+                  <span>版块规范</span>
                 </p>
                 <ol>
                   <li v-for="item in this.rules">{{item.rule}}</li>

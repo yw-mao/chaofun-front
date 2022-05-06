@@ -155,7 +155,7 @@
       <!--  右侧边栏  -->
       <el-aside width="320px">
 
-        <!--  版块发帖规则  -->
+        <!--  版块规范  -->
         <el-card v-if="forum.id" class="aside-forum" shadow="never">
           <div class="forum-header">
             <img v-if="forum.imageName" :alt="forum.name" :src="imgOrigin+forum.imageName">
@@ -176,7 +176,7 @@
           </div>
           <div v-if="this.rules && this.rules.length !== 0">
             <p>
-              <span>版块发帖规则</span>
+              <span>版块规范</span>
             </p>
             <ol>
               <li v-for="item in this.rules">{{ item.rule }}</li>
