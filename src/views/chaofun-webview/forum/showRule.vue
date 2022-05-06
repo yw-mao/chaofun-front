@@ -10,7 +10,7 @@
       </el-card>
       <el-card class="aside-rule" shadow="never">
       <p>
-        <span>炒饭发帖规则</span>
+        <span>炒饭发帖规范</span>
       </p>
       <ol>
         <li>严禁发布色情、暴恐、赌博及其他违反网络安全法的内容</li>
