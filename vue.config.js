@@ -27,6 +27,9 @@ module.exports = {
   indexPath: "index.html", // 指定生成的 index.html 输入路径，默认outputDir
   pages: undefined, // 构建多页
   productionSourceMap: false, // 开启 生产环境的 source map
+  // css:  config => {
+  //   config.extract.chunkFilename = `[name].33${Timestamp}.css`;
+  // },
   configureWebpack: config => {
     config.performance = {
       hints: false
@@ -133,8 +136,12 @@ module.exports = {
     }
   },
   css: {
+    extract: {
+      filename: `[name].33${Timestamp}.css`,
+      chunkFilename: `[name].33${Timestamp}.css`,
+    },
     requireModuleExtension: true, // 启用 CSS modules
-    extract: true, // 是否使用css分离插件
+    // extract: true, // 是否使用css分离插件
     sourceMap: false, // 开启 CSS source maps?
     // css预设器配置项
     loaderOptions: {
