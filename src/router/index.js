@@ -89,14 +89,14 @@ export const constantRoutes = [
     path: '/forumRank',
     component: () => import('@/views/activity/forumRank'),
     // name: 'webViewForumRank',
-    meta: { title: '板块排名'},
+    meta: { title: '版块排名'},
     hidden: true
   },
   {
     path: '/chatpage/:id',
     component: () => import('@/views/chat/chatpage'),
     // name: 'webViewForumRank',
-    meta: { title: '板块排名'},
+    meta: { title: '版块排名'},
     hidden: true
   },
   {
@@ -113,14 +113,14 @@ export const constantRoutes = [
       {
         path: '/help',
         component: () => import('@/views/activity/help'),
-        meta: { title: '板块排名'},
+        meta: { title: '版块排名'},
         redirect: '/help/forumIntro',
         children: [
           {
             path: 'forumIntro',
             component: () => import('@/views/activity/help/forumIntro'),
             // name: 'webViewForumRank',
-            meta: { title: '板块排名',keepAlive: false},
+            meta: { title: '版块排名',keepAlive: false},
             hidden: true
           },
         ],
@@ -187,7 +187,7 @@ export const constantRoutes = [
         path: '/f/:id/setting',
         component: () => import('@/views/list/forumSetting'),
         name: 'forumSetting',
-        meta: { title: '板块设置',keepAlive: false},
+        meta: { title: '版块设置',keepAlive: false},
         hidden: true
       },
       {
@@ -287,7 +287,7 @@ export const constantRoutes = [
         path: '/lists',
         component: () => import('@/views/list/lists'),
         name: 'lists',
-        meta: { title: '全部板块',keepAlive: false},
+        meta: { title: '全部版块',keepAlive: false},
         hidden: true
       },
       {
@@ -330,7 +330,7 @@ export const constantRoutes = [
       //   path: '/webview/forumRank',
       //   component: () => import('@/views/chaofun-webview/activity/forumRank'),
       //   name: 'webViewForumRank',
-      //   meta: { title: '板块排名'},
+      //   meta: { title: '版块排名'},
       //   hidden: true
       // },
       { path: '*', redirect: '/404', hidden: true }

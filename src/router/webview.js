@@ -95,14 +95,14 @@ routes = [
     path: '/webview/forum/rule',
     component: () => import('@/views/chaofun-webview/forum/rule'),
     name: 'forumRule',
-    meta: { title: '板块规范设置'},
+    meta: { title: '版块规范设置'},
     hidden: true
   },
   {
     path: '/webview/forum/show_rule',
     component: () => import('@/views/chaofun-webview/forum/showRule'),
     name: 'forumRule',
-    meta: { title: '板块规范设置'},
+    meta: { title: '版块规范设置'},
     hidden: true
   },
   {

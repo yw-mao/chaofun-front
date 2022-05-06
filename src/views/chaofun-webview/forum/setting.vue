@@ -246,7 +246,7 @@ export default {
       try {
         window.flutter_inappwebview.callHandler('toViewPage', {
           url: "https://chao.fun/webview/forum/rule" + "?forumId=" + this.forumId,
-          title: '发帖规范管理',
+          title: '版块规范管理',
           showHeader: true
         })      } catch (e) {
         window.open(location.origin + '/webview/forum/rule?forumId=' + this.forumId);

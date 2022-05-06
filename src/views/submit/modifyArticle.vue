@@ -155,7 +155,7 @@
       <!--  右侧边栏  -->
       <el-aside width="320px">
 
-        <!--  版块发帖规则  -->
+        <!--  版块规范  -->
         <el-card v-if="forum.id" class="aside-forum" shadow="never">
           <div class="forum-header">
             <img v-if="forum.imageName" :alt="forum.name" :src="imgOrigin+forum.imageName">
@@ -176,7 +176,7 @@
           </div>
           <div v-if="this.rules && this.rules.length !== 0">
             <p>
-              <span>版块发帖规则</span>
+              <span>版块规范</span>
             </p>
             <ol>
               <li v-for="item in this.rules">{{ item.rule }}</li>
@@ -184,11 +184,11 @@
           </div>
         </el-card>
 
-        <!--  炒饭发帖规则  -->
+        <!--  炒饭发帖规范  -->
         <el-card class="aside-rule" shadow="never">
           <p>
             <img :src="logo" alt=""/>
-            <span>炒饭发帖规则</span>
+            <span>炒饭发帖规范</span>
           </p>
           <ol>
             <li>严禁发布色情、暴恐、赌博及其他违反网络安全法的内容</li>
