@@ -545,7 +545,7 @@ export default {
           break;
         case "audio":
           return (
-              this.imgOrigin + 'biz/bc5c86c96e84a798930542444ceffcc5.webp?x-oss-process=image/resize,h_120/format,webp/quality,q_75'
+              this.imgOrigin + 'biz/bc5c86c96e84a798930542444ceffcc5.webp?x-oss-process=image/resize,h_125/format,webp/quality,q_75'
           );
           break;
         case "image":
