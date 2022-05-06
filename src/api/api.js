@@ -697,6 +697,19 @@ export function getUserBadgeList(params) {
   })
 }
 
+/**
+ * 查询版块徽章
+ * @param params forumId
+ * @returns {*}
+ */
+export function listForumBadges(params) {
+  return request({
+    url: '/api/v0/badge/listForumBadges',
+    method: 'get',
+    params
+  })
+}
+
 // 关注用户
 export function toFocus(params) {
   return request({
