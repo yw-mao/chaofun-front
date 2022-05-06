@@ -33,7 +33,9 @@
 
             </div>
           </div>
-          <div v-if="GameInfo||tableList.length||isOpenDonate" class="navTab">
+
+<!--          <div v-if="GameInfo||tableList.length||isOpenDonate" class="navTab">-->
+          <div class="navTab">
             <div :class="[tab=='post'?'tab_item_act':'tab_item']" @click="checkoutTab('post')">帖子</div>
             <div v-if="GameInfo" :class="[tab=='predictions'?'tab_item_act':'tab_item']"
                  @click="checkoutTab('predictions')">竞猜
@@ -43,6 +45,9 @@
             </div>
             <div v-if="isOpenDonate" :class="[tab=='donate'?'tab_item_act':'tab_item']" @click="checkoutTab('donate')">
               众筹
+            </div>
+            <div :class="[tab=='more'?'tab_item_act':'tab_item']" @click="checkoutTab('more')">
+              更多
             </div>
           </div>
         </div>
@@ -175,6 +180,12 @@
         </div>
       </div>
 
+      <div v-if="tab=='more'" style="width: 100%;">
+        <div :style="{width:isPhone?'95vw':'640px'}" style="max-width: 640px; margin: 0 auto;">
+          <forumMore :forum-id="params.forumId"></forumMore>
+        </div>
+      </div>
+
     </div>
     <fixedBottom></fixedBottom>
   </div>
@@ -194,6 +205,7 @@ import selectList from "@/components/chaofan/common/selectList";
 
 import prediction from "@/views/activity/prediction";
 import donateDetail from "_c/donate/donateDetail";
+import forumMore from "_c/forum/ForumMore";
 
 export default {
   name: "Dashboard",
@@ -293,6 +305,7 @@ export default {
     SimListItem,
     prediction,
     donateDetail,
+    forumMore,
   },
   watch: {
     // 'params.forumId'(v){
