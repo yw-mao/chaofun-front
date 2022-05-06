@@ -481,6 +481,9 @@ export default {
         case "forward":
           return "转发";
           break;
+        case "audio":
+          return "语音";
+          break;
         default:
           return "其他";
       }
