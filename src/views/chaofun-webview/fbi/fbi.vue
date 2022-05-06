@@ -67,7 +67,7 @@
       <div @click="getJDECard" style="width: 50%; display: inline-block">
         <img style="padding-right: 10px; padding-left: 10px; width: 100%" src="https://i.chao.fun/biz/fc21232af2fa1849c3f0853b8748224c.png">
         <p style="text-align: center">
-          10元京东E卡(京东缺货中)
+          10元京东E卡
         </p>
         <p style="text-align: center">
           FBi: 1000
