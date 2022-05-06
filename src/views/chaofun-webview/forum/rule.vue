@@ -4,9 +4,9 @@
       <div class="ycontainer">
         <div style="">
           <div style="margin:10px 0px;display: flex; align-items: center">
-            <div style="align-content: center">发帖规范：</div>
+            <div style="align-content: center">版块规范：</div>
           </div>
-          <textarea class="text" v-model="addRule" style="background: #f9f9f9;width: 260px;" placeholder="请点击输入发帖规范内容"/>
+          <textarea class="text" v-model="addRule" style="background: #f9f9f9;width: 260px;" placeholder="请点击输入版块规范内容"/>
           <div style="margin:10px 0px;display: flex; align-items: center">
             <div style="align-content: center">排序值：</div>
             <input type="number" v-model="orderNumber"  placeholder="排序值"/>
@@ -20,7 +20,7 @@
       </div>
     </div>
     <div class="bottom">
-      <div @click="add" class="btns">添加发帖规范</div>
+      <div @click="add" class="btns">添加版块规范</div>
     </div>
     <div v-for="(item,index) in lists" :key="index" class="item">
       <div style="max-width: 75%;">{{item.rule}} <br>(排序值：{{item.orderNumber}}) </div>

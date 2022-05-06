@@ -86,7 +86,7 @@
         <span @click="toDetail(items)" class="tiezi_title">【{{ items.post.title.length > 15 ? items.post.title.slice(0, 15) + '...' : items.post.title }}】</span>
         <span>已被删除,</span>
         <span v-if="items.reason">删除原因为：</span>
-        <span v-if="!items.reason">请阅读炒饭和分区发帖规范。</span>
+        <span v-if="!items.reason">请阅读炒饭发帖规范和版块规范。</span>
       </div>
     </div>
 
@@ -99,7 +99,7 @@
         <span @click="toDetail(items)" class="tiezi_title"> 的评论【{{ items.comment.text.length > 15 ? items.comment.text.slice(0, 15) + '...' :  items.comment.text }}】</span>
         <span>已被删除,</span>
         <span v-if="items.reason">删除原因为：</span>
-        <span v-if="!items.reason">请阅读炒饭和分区发帖规范。</span>
+        <span v-if="!items.reason">请阅读炒饭发帖规范和版块规范。</span>
       </div>
     </div>
 
