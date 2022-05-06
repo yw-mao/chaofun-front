@@ -49,7 +49,7 @@
               </div>
               <div style="display: flex; justify-content: space-around">
                 <div>粉丝</div>
-                <div>贴子</div>
+                <div>帖子</div>
               </div>
             </div>
             <div style="text-align: center">
