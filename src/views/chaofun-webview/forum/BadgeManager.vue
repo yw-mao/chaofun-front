@@ -52,12 +52,6 @@
 
           <textarea class="text" v-model="desc" style="background: #f9f9f9;width: 260px;" placeholder="请输入徽章描述/获得条件"/>
 
-          <div style="margin:10px 0px; align-items: center">
-            <div style="align-content: center">FBi 奖励：</div>
-          </div>
-          <div style="">
-            <el-input-number v-model="fbi" :min=5 :step=5 />
-          </div>
 
           <div style="margin:20px 0px;display: flex;">
             <el-button @click="confirmModify" type="success">确认</el-button>
