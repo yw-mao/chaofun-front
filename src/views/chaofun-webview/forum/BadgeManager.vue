@@ -37,6 +37,36 @@
       </div>
     </div>
 
+    <div v-if="this.displayModify" class="ycovers ">
+      <div class="ycontainer">
+        <div style="">
+          <div class="title">更新徽章ICON</div>
+          <div>
+            <img v-if="imageName" @click="uploadImage" :src="imgOrigin + imageName" class="avatar">
+            <el-button v-if="!imageName" @click="uploadImage">上传</el-button>
+          </div>
+
+          <div style="margin:10px 0px; align-items: center">
+            <div style="align-content: center">更新描述：</div>
+          </div>
+
+          <textarea class="text" v-model="desc" style="background: #f9f9f9;width: 260px;" placeholder="请输入徽章描述/获得条件"/>
+
+          <div style="margin:10px 0px; align-items: center">
+            <div style="align-content: center">FBi 奖励：</div>
+          </div>
+          <div style="">
+            <el-input-number v-model="fbi" :min=5 :step=5 />
+          </div>
+
+          <div style="margin:20px 0px;display: flex;">
+            <el-button @click="confirmModify" type="success">确认</el-button>
+            <el-button @click="cancelModify" type="success">取消</el-button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div class="bottom">
       <div @click="add" class="btns">添加徽章</div>
     </div>
@@ -44,6 +74,7 @@
       <div>
         <div > 徽章名字：{{item.name}} </div>
       </div>
+      <div @click="toModify(item)">修改</div>
     </div>
   </div>
 </template>
@@ -57,8 +88,10 @@ export default {
   // components: { adminDashboard, editorDashboard },
   data() {
     return {
+      id: null,
       imageName: '',
       displayAdd: false,
+      displayModify: false,
       params: {},
       forumId: '',
       lists:[],
@@ -128,14 +161,50 @@ export default {
         })
       });
     },
+    confirmModify() {
+      this.$confirm(`是否确定修改徽章？`, "提示", {
+        type: "warning",
+        // position: center,
+      }).then(() => {
+        api.getByPath('/api/v0/badge/update', {
+          forumId: this.forumId,
+          name: this.name,
+          desc: this.desc,
+          icon: this.imageName,
+          id: this.id,
+        }).then((res) => {
+          if (res.success) {
+            this.$toast('修改成功')
+            this.displayModify = false;
+            this.desc = '';
+            this.name = '';
+            this.badgeId = null;
+            this.getForumBadges();
+          } else {
+            this.$toast(res.errorMessage)
+          }
+        })
+      });
+    },
+
+    cancelModify() {
+      this.desc = '';
+      this.name = '';
+      this.badgeId = null;
+      this.displayModify = false;
+    },
+
     cancelAdd() {
       this.displayAdd = false;
     },
     add() {
       this.displayAdd = true;
     },
-    toModify() {
-      this.$toast('暂不支持');
+    toModify(item) {
+      this.displayModify = true;
+      this.imageName = item.icon;
+      this.desc = item.desc;
+      this.id = item.id;
     },
 
     uploadImage(){
