@@ -543,6 +543,11 @@ export default {
             this.imgOrigin + (item.imageName ? item.imageName : 'biz/b64193b7beca6ae243341273adddf494.png') + '?x-oss-process=image/resize,h_120/format,webp/quality,q_75'
           );
           break;
+        case "audio":
+          return (
+              this.imgOrigin + 'biz/bc5c86c96e84a798930542444ceffcc5.webp?x-oss-process=image/resize,h_120/format,webp/quality,q_75'
+          );
+          break;
         case "image":
           return (
             this.imgOrigin +
