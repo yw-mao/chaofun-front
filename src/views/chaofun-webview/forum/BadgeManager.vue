@@ -83,17 +83,26 @@
       <div @click="add" class="btns">添加徽章</div>
     </div>
     <div v-for="(item,index) in lists" :key="index" class="item">
-      <div>
-        <div > 徽章名字：{{item.name}} </div>
-      </div>
+      <el-popover placement="right" trigger="hover" width="300">
+        <badgeDetail :badgeInfo0="item" />
+        <div slot="reference" style="display: inline-flex;">
+          <img
+            :src="imgOrigin + item.icon +  '?x-oss-process=image/resize,h_30/format,webp/quality,q_75'"
+            alt=""
+            style="border-radius:100%;height: 30px;width: 30px;" />
+          <span style="margin: auto 5px;min-width: 150px;">
+          {{ item.name }}
+          </span>
+        </div>
+      </el-popover>
       <div @click="toModify(item)">修改</div>
     </div>
   </div>
 </template>
 
 <script>
-import * as api from '@/api/api'
-import {forumRemoveRule} from "../../../api/api";
+import * as api from "@/api/api";
+import badgeDetail from "@/views/chaofun-webview/badge/badgeDetail.vue";
 
 export default {
   name: "tag",
@@ -136,6 +145,7 @@ export default {
       }
     }
   },
+  components:{badgeDetail},
   mounted() {
     try{
       let self = this;

@@ -13,8 +13,7 @@
     <div v-for="(item,index) in badgeList" :key="index" style="cursor: pointer;margin: 8px 0;">
       <el-popover placement="right" trigger="hover" width="300">
         <badgeDetail :badgeInfo0="item" />
-        <div slot="reference" style="display: inline-block;">
-          <div style="display: flex;">
+        <div slot="reference" style="display: inline-flex;">
           <img
             :src="imgOrigin + item.icon +  '?x-oss-process=image/resize,h_30/format,webp/quality,q_75'"
             alt=""
@@ -22,7 +21,6 @@
           <span style="margin: auto 5px;min-width: 150px;">
           {{ item.name }}
           </span>
-          </div>
         </div>
       </el-popover>
     </div>
