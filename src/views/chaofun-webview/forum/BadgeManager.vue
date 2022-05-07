@@ -1,5 +1,23 @@
 <template>
   <div >
+
+    <el-upload
+      ref="imageUpload"
+      :before-upload="beforeImageUpload"
+      :data="fileData"
+      :disabled="imagesUploading"
+      :limit="imagesLimit"
+      :on-exceed="handleImageUploadExceed"
+      :on-success="handleImageUploadSuccess"
+      :show-file-list="false"
+      accept="image/*"
+      action="/api/upload_image"
+      multiple
+      name="file"
+      style="width: 0;height: 0;"
+    >
+    </el-upload>
+
     <div v-if="this.displayAdd" class="ycovers ">
       <div class="ycontainer">
         <div style="">
@@ -82,6 +100,12 @@ export default {
   // components: { adminDashboard, editorDashboard },
   data() {
     return {
+
+      fileData: {},
+      imagesNum: 0,
+      imagesLimit: 1,
+      imagesUploading: false,
+
       id: null,
       imageName: '',
       displayAdd: false,
@@ -133,6 +157,39 @@ export default {
   },
 
   methods: {
+
+    // 上传图片处理
+    handleImageUploadSuccess(res, file) {
+      if (res.success) {
+        this.imageName = res.data;
+      } else if (res.errorCode == "invalid_content") {
+        // this.imageUrl = ''
+        this.$toast(res.errorMessage);
+      }
+      this.imagesNum--;
+      if (!this.imagesNum) {
+        this.imagesUploading = false;
+        this.$refs.imageUpload.clearFiles();
+      }
+    },
+    beforeImageUpload(file) {
+      const isLt2M = file.size / 1024 / 1024 < 20;
+      if (!isLt2M) {
+        this.$message.error("上传图片大小不能超过 20MB!");
+        return false;
+      }
+      this.imagesNum++;
+      this.imagesUploading = true;
+      this.fileData.fileName = file.name;
+      return true;
+    },
+    handleImageUploadExceed(files, fileList) {
+      this.$message.warning({
+        message: `当前限制选择 ${this.imagesLimit} 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`,
+        duration: 2500
+      });
+    },
+
     toAdd() {
       this.$confirm(`是否确定添加徽章？`, "提示", {
         type: "warning",
@@ -202,8 +259,12 @@ export default {
     },
 
     uploadImage(){
-      window.flutter_inappwebview.callHandler('uploadImage').then(function(result) {
-      });
+      try {
+        window.flutter_inappwebview.callHandler('uploadImage').then(function(result) {
+        });
+      }catch (e){
+        this.$refs.imageUpload.$children[0].$refs.input.click()
+      }
     },
     getForumBadges() {
       api.getByPath('/api/v0/badge/listForumBadges', { forumId: this.forumId }).then((res) => {
