@@ -38,6 +38,8 @@ export default {
 
         if (isMobile) {
           store.dispatch('app/closeSideBar', { withoutAnimation: true })
+        }else if("1" == localStorage.getItem("chao.fun.localSetting.expandSidebar")){
+          store.dispatch('app/expandSideBar', { withoutAnimation: true })
         }
       }
     }

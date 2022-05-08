@@ -87,6 +87,15 @@
                   <!--              <el-switch style="display: block" v-model="commentOrderType" active-color="#13ce66" inactive-color="#1890ff" active-text="新评" inactive-text="热评"-->
                   <!--              @change="commentOrderTypeChange"></el-switch>-->
                 </div>
+
+                <div class="localSetting" style="display: flex;align-items: center;">
+                  <span>侧边栏：</span>
+                  <el-radio-group v-model="expandSidebar" size="small" @change="expandSidebarChange">
+                    <el-radio-button label="">自动折叠</el-radio-button>
+                    <el-radio-button label="1">尽可能展开</el-radio-button>
+                  </el-radio-group>
+                </div>
+
               </el-tab-pane>
 
               <el-tab-pane :lazy=true label="徽章管理" name="badge">
@@ -134,7 +143,7 @@ export default {
   data() {
     return {
       tabActiveName: "baseInfo",
-
+      expandSidebar:"",
       commentOrderType: "hot",
       isStoragePostOwnerCommentHighlight: false,
       type: "",
@@ -173,6 +182,9 @@ export default {
     }
   },
   mounted() {
+    this.expandSidebar = ("1" == localStorage.getItem("chao.fun.localSetting.expandSidebar"))?"1":"";
+    localStorage.setItem("chao.fun.localSetting.expandSidebar", this.expandSidebar);
+
     this.isStoragePostOwnerCommentHighlight = ("true" == localStorage.getItem("chao.fun.localSetting.isStoragePostOwnerCommentHighlight"));
     localStorage.setItem("chao.fun.localSetting.isStoragePostOwnerCommentHighlight", this.isStoragePostOwnerCommentHighlight);
 
@@ -202,6 +214,11 @@ export default {
     // this.filedata.url = this.imgOrigin+this.$store.state.user.userInfo.icon;
   },
   methods: {
+
+    expandSidebarChange(val) {
+      localStorage.setItem("chao.fun.localSetting.expandSidebar", val);
+      this.$toast("设置成功！");
+    },
 
     commentOrderTypeChange(val) {
       localStorage.setItem("chao.fun.localSetting.commentOrderType", val);
