@@ -11,6 +11,7 @@
       initialEditType="wysiwyg"
       :options="editorOptions"
       @change="onEditorChange"
+      height="auto"
       ref="editor"
     />
     <el-button class="switch-mode" @click="switchMode" round>
@@ -174,6 +175,7 @@ export default {
   margin: 14px 4px;
 }
 .fullscreen {
+  overflow: auto;
   height: 100vh !important;
   width: 100vw;
   position: fixed;
@@ -195,5 +197,47 @@ export default {
   i {
     font-size: 20px;
   }
+}
+.ProseMirror, .toastui-editor-contents{
+  font-size: 16px;
+  font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", Arial, sans-serif;
+
+  h1 {
+    font-size: 24px;
+    line-height: 24px;
+    margin: 20px 0 16px;
+    border: none;
+  }
+
+  h2 {
+    font-size: 22px;
+    line-height: 22px;
+    margin: 18px 0 14px;
+    border: none;
+  }
+
+  h3 {
+    line-height: 20px;
+    font-size: 20px;
+    margin: 16px 0 12px;
+  }
+
+  h4 {
+    line-height: 18px;
+    font-size: 18px;
+    margin: 14px 0 10px;
+  }
+
+  h5 {
+    line-height: 16px;
+    font-size: 16px;
+    margin: 12px 0 9px;
+  }
+  h6 {
+    line-height: 14px;
+    font-size: 14px;
+    margin: 10px 0 8px;
+  }
+
 }
 </style>

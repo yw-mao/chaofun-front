@@ -582,8 +582,8 @@
 
 <style type='text/scss' lang='scss' scoped>
 .section-submit {
-  max-width: 1248px;
-  padding: 60px 55px;
+  //max-width: 1248px;
+  padding: 60px 15px 60px 215px;
   margin: 0 auto;
   
   .section-submit-header {
