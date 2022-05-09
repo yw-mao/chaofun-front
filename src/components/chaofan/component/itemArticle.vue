@@ -183,49 +183,37 @@ export default {
 .item_article {
   h1 {
     font-size: 24px;
-    line-height: 28px;
-    border-bottom: 3px double #999;
-    margin: 52px 0 15px;
-    padding-bottom: 7px;
-  }
-  > div:first-of-type h1,
-  > h1:first-of-type {
-    margin-top: 14px;
+    line-height: 24px;
+    margin: 20px 0 16px;
   }
 
   h2 {
-    min-height: 23px;
     font-size: 22px;
-    line-height: 23px;
-    border-bottom: 1px solid #dbdbdb;
-    margin: 20px 0 13px;
-    padding-bottom: 7px;
+    line-height: 22px;
+    margin: 18px 0 14px;
   }
 
   h3 {
+    line-height: 20px;
     font-size: 20px;
-    margin: 18px 0 2px;
+    margin: 16px 0 12px;
   }
 
-  h4 {
-    font-size: 18px;
-    margin: 10px 0 2px;
-  }
-
-  h3,
   h4 {
     line-height: 18px;
+    font-size: 18px;
+    margin: 14px 0 10px;
   }
+
   h5 {
+    line-height: 16px;
     font-size: 16px;
+    margin: 12px 0 9px;
   }
   h6 {
+    line-height: 14px;
     font-size: 14px;
-  }
-  h5,
-  h6 {
-    line-height: 17px;
-    margin: 9px 0 -4px;
+    margin: 10px 0 8px;
   }
 
   del {
