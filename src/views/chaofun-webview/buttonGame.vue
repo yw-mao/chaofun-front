@@ -240,7 +240,7 @@ export default {
       try {
         window.flutter_inappwebview.callHandler('toAppPost', {postId: "1081032"});
       } catch (e) {
-        window.open('https://chao.fun/p/1081032', "_blank");
+        window.open('/p/1081032', "_blank");
       }
     },
     toHome() {
@@ -252,7 +252,7 @@ export default {
           showHeader: true
         })
       } catch (e) {
-        window.open('https://chao.fun/all', "_blank");
+        window.open('/all', "_blank");
       }
     },
 
@@ -278,9 +278,9 @@ export default {
         })
       } catch (e) {
         if (this.ISPHONE) {
-          window.open('https://chao.fun/webview/fbi', "_blank");
+          window.open('/webview/fbi', "_blank");
         } else {
-          window.open('https://chao.fun/my/fbi', "_blank");
+          window.open('/my/fbi', "_blank");
         }
       }
     },

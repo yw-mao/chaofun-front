@@ -68,7 +68,7 @@ export default {
     },
 
     history() {
-      window.open('https://chao.fun/webview/fbi/history',"_blank");
+      window.open('/webview/fbi/history',"_blank");
     }
   }
 }

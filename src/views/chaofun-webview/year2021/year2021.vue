@@ -136,7 +136,7 @@
 
     methods: {
       toBadge(badge) {
-        window.open('https://chao.fun/webview/badge?badgeId=' + badge,"_blank");
+        window.open('/webview/badge?badgeId=' + badge,"_blank");
       },
     }
   }

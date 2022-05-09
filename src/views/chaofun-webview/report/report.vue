@@ -134,7 +134,7 @@ export default {
       try {
         window.flutter_inappwebview.callHandler('toAppPost', {postId: id.toString()});
       } catch (e) {
-        window.open('https://chao.fun/p/' + id.toString(), "_blank");
+        window.open('/p/' + id.toString(), "_blank");
       }
     },
     dealReport(id, action) {

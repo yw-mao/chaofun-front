@@ -169,11 +169,11 @@ export default {
       },
 
       history() {
-        window.open('https://chao.fun/webview/fbi/history',"_blank");
+        window.open('/webview/fbi/history',"_blank");
       },
 
       redPacketGet() {
-        window.open('https://chao.fun/webview/fbi/redPacket',"_blank");
+        window.open('/webview/fbi/redPacket',"_blank");
       },
 
       getWechatCover() {
