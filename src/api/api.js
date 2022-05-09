@@ -1381,3 +1381,15 @@ export function isDonateOpen(params) {
     params
   });
 }
+
+/**
+ * 我管理的版块列表
+ * @returns {*}
+ */
+export function listManageForums() {
+  return request({
+    url: "/api/v0/user/listManageForums",
+    method: "get",
+  });
+}
+
