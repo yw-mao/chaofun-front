@@ -157,6 +157,18 @@ export default {
         return "版块众筹";
       }
 
+      if (reason === 'lottery') {
+        return '抽奖';
+      }
+
+      if (reason === 'win_lottery') {
+        return '抽奖奖励';
+      }
+
+      if (reason === 'manager') {
+        return '版块奖励';
+      }
+
       if (reason.startsWith('punish_politic')) {
         return '处罚：政治';
       }
