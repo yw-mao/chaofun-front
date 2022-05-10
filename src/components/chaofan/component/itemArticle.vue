@@ -169,8 +169,8 @@ export default {
     font-size: 16px;
   }
   /deep/ .detail_line p{
-    line-height: 1.8em;
-    margin-bottom: 8px;
+    line-height: 1.5em;
+    margin: 0.25em 0 0.15em;
     // margin: 1.4em 0;
   }
   /deep/ .detail_line img{
