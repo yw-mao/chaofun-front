@@ -239,5 +239,18 @@ export default {
     margin: 10px 0 8px;
   }
 
+  p{
+    line-height: 1.5em;
+    margin: 0.25em 0 0.15em;
+  }
+
 }
+
+.toastui-editor-ww-container .toastui-editor-contents{
+  p{
+    line-height: 1.5em;
+    margin: 0.25em 0 0.15em;
+  }
+}
+
 </style>
