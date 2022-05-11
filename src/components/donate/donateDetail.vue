@@ -1,9 +1,10 @@
 <template>
   <div style="margin: 5px 10px;text-align: center;">
 
-    <div style="position: relative;float: right; right: 10px;top: 5px;">
-      <el-button type="primary" @click="historyDialogVisible=true;">流水记录</el-button>
-      <el-button type="warning" @click="donateDialogVisible=true;">捐赠</el-button>
+    <div style="position: relative;float: right; right: 10px;top: 0px;width: 100px;">
+      <el-button style="display: block;float: right;" type="warning" @click="donateDialogVisible=true;">我要捐赠</el-button>
+      <el-button style="display: block;float: right;margin-top: 5px;" type="primary" @click="historyDialogVisible=true;">流水记录
+      </el-button>
     </div>
 
     <div class="selectDisable" style="position: relative;width: 100%;height: 0;">
@@ -28,7 +29,7 @@
     </div>
 
 
-    <div class="selectDisable" style="margin: 10px 0 20px 0;">
+    <div class="selectDisable" style="margin: 15px 0 20px 0;">
 
       <el-table :data="donateFbiList" :highlight-current-row="true" :row-class-name="tableRowClassName"
                 style="width: 100%;max-width: 600px;margin: 0 auto;">
