@@ -2,7 +2,7 @@
   <div style="margin: 5px 10px;text-align: center;">
 
     <div style="position: relative;float: right; right: 10px;top: 5px;">
-      <!--      <el-button type="primary" @click="">捐赠记录</el-button>-->
+      <el-button type="primary" @click="historyDialogVisible=true;">流水记录</el-button>
       <el-button type="warning" @click="donateDialogVisible=true;">捐赠</el-button>
     </div>
 
@@ -78,7 +78,18 @@
       </el-table>
     </div>
 
-    <el-dialog :append-to-body="true" :visible.sync="donateDialogVisible" title="捐赠">
+
+    <!-- 流水记录 -->
+    <el-dialog v-if="historyDialogVisible" :append-to-body="true"
+               :visible.sync="historyDialogVisible" custom-class="el-dialog-history" title="流水记录"
+    >
+      <donate-history :forum-id="forumId"></donate-history>
+    </el-dialog>
+
+    <!-- 捐赠 -->
+    <el-dialog v-if="donateDialogVisible" :append-to-body="true" :visible.sync="donateDialogVisible"
+               custom-class="el-dialog-donate"
+               title="捐赠">
       <div style="text-align: center;">
         <div style="font-weight: bold;width: 100%;">金额</div>
         <div style="">
@@ -93,7 +104,8 @@
           <el-button type="primary" @click="donateFbi">捐赠</el-button>
 
           <!--  助力卷王！  -->
-          <el-button @click="isShowDonateAssist=!isShowDonateAssist" style="position: absolute;right: 5px;">小助手</el-button>
+          <el-button style="position: absolute;right: 5px;" @click="isShowDonateAssist=!isShowDonateAssist">小助手
+          </el-button>
         </div>
 
         <div v-if="isShowDonateAssist">
@@ -136,6 +148,7 @@
 <script>
 
 import * as api from "@/api/api";
+import donateHistory from "_c/donate/donateHistory";
 
 export default {
   props: {
@@ -146,6 +159,7 @@ export default {
   },
   data() {
     return {
+      historyDialogVisible: false,
       donateDialogVisible: false,
       fbi: 100,
       reason: "",
@@ -168,10 +182,10 @@ export default {
     donateDialogVisible() {
       this.fbi = 100;
       this.reason = "";
-      this.assistCalcRank( this.fbi);
+      this.assistCalcRank(this.fbi);
     }
   },
-  components: {},
+  components: { donateHistory },
   created() {
     this.myUserId = this.$store.state.user.userInfo.userId;
   },
@@ -252,7 +266,7 @@ export default {
           }
         });
         this.rankAfterDonate = rankAfterDonateTemp;
-      }else{
+      } else {
         this.rankAfterDonate = 1;
       }
     },
@@ -312,7 +326,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 
 .selectDisable {
   -webkit-touch-callout: none;
@@ -357,14 +371,60 @@ export default {
   padding: 8px 10px;
 }
 
-/deep/ .el-dialog {
+/deep/ .el-dialog-donate {
   width: 350px !important;
   max-width: 95vw !important;
   border-radius: 5px;
+
+  .el-dialog__header {
+    background-color: #f0f0f0;
+    padding: 10px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    text-align: center;
+  }
+
+  .el-dialog__body {
+    padding: 10px 10px 30px 10px;
+  }
 }
 
-/deep/ .el-dialog__body {
-  padding: 10px 10px 30px 10px;
+/deep/ .el-dialog-history {
+  width: 98vw !important;
+  max-width: 640px !important;
+
+  height: 90vh !important;
+  margin-top: 5vh !important;
+
+  border-radius: 5px;
+
+  .el-dialog__header {
+    background-color: #f0f0f0;
+    padding: 10px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    text-align: center;
+  }
+
+  .el-dialog__body {
+    padding: 5px 2px 10px 10px;
+  }
+
+
+  .el-table__body-wrapper {
+
+    &::-webkit-scrollbar {
+      width: 6px !important;
+      height: 6px !important;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      width: 6px !important;
+      height: 6px !important;
+    }
+
+  }
+
 }
 
 /deep/ .el-table .rank1Style {
