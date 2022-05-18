@@ -5,7 +5,7 @@
         {{item.title}}
       </div> -->
       <div :class="['article',{'article_phone': ISPHONE}]">
-        <div v-html="filterContent(item.article.replace(/\n/g, ''))" v-if="/<[^>]+>/g.test(item.article)"></div>
+        <div v-html="filterContent(item.article)" v-if="/<[^>]+>/g.test(item.article)"></div>
         <div v-for="(_item,ins) in item.article.split('\n')" v-else :key="ins">
           <p v-html="filterContent(_item)"></p>
         </div>
@@ -19,7 +19,7 @@
       </div> -->
       <div @click.stop="" class="detail_line" id="detail_line" :style="{width: ISPHONE ? clientWidth-24+'px' : '100%'}">
 
-        <div v-html="item.article.replace(/\n/g, '')" v-if="/<[^>]+>/g.test(item.article)"></div>
+        <div v-html="item.article" v-if="/<[^>]+>/g.test(item.article)"></div>
 
         <!-- <viewer :trigger="item.article"> -->
         <div v-for="(_item,ins) in item.article.split('\n')" v-else :key="ins">
