@@ -48,7 +48,7 @@
           :index="index"
           :order="order"
         ></itemTopTitle>
-        <div :class="[{'title': !item.isPin},{'pin_title': item.isPin}]">
+        <div v-if="item.type != 'link'" :class="[{'title': !item.isPin},{'pin_title': item.isPin}]">
           <!-- <span class="zhiding">置顶</span>  -->
           <div v-if="item.tags.length" class="tags">
             <div  v-for="(it, ins) in item.tags" :key="ins">
