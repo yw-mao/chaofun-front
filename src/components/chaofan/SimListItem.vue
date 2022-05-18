@@ -168,24 +168,9 @@
                     alt=""
                   />
                   <iframe
-                    v-if="!ISPHONE && item.play"
-                    style="width: 100%; min-height: 370px"
-                    :src="
-                      item.video +
-                      (item.link.includes('www.acfun.cn') ? '?' : '') +
-                      '&autoplay=true'
-                    "
-                    allow="autoplay"
-                    id="ACPlayer-re"
-                    scrolling="no"
-                    border="0"
-                    frameborder="no"
-                    framespacing="0"
-                    allowfullscreen="true"
-                  ></iframe>
-                  <iframe
-                    v-if="ISPHONE && item.play"
+                    v-if="item.play"
                     style="width: 100%; height: 230px"
+                    :class="(!ISPHONE)?'video-iframe':''"
                     :src="
                       item.video +
                       (item.link.includes('www.acfun.cn') ? '?' : '') +
@@ -1001,5 +986,9 @@ export default {
     font-size: 13px;
     color: #fff;
   }
+}
+
+.video-iframe{
+  min-height: 370px
 }
 </style>
