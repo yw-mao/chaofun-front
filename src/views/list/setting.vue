@@ -384,7 +384,7 @@ export default {
 
 .ycovers {
   position: fixed;
-  z-index: 2012;
+  z-index: 20;
   top: 0;
   left: 0;
   right: 0;
