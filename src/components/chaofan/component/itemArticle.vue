@@ -35,6 +35,7 @@
         :src="src"
         :id="'k'+index"
         :key="index"
+        alt=""
       />
     </viewer>
  </div>
@@ -76,7 +77,7 @@ export default {
         const element = imgs[index];
         this.imgsArr.push(element.src);
 
-        element.addEventListener('click', function(e) {
+        element.addEventListener('click', function() {
           document.getElementById('k' + index).click();
         });
       }
@@ -110,7 +111,7 @@ export default {
       try {
         if (content.indexOf('data:image') === -1 && content.indexOf('.gif') === -1 ) {
           content = content.replace(/<img src="([^"]*?)">/g,
-            '<img class="lazyload" data-src="$1?x-oss-process=image/resize,h_512/format,webp/quality,q_75">'
+            '<img class="lazyload" data-src="$1?x-oss-process=image/resize,h_512/format,webp/quality,q_75" alt="">'
           );
         }
       } catch (error) {
@@ -164,7 +165,7 @@ export default {
   .detail_line{
     width: 100% !important;
     overflow: hidden;
-    word-break:break-all; /*支持IE，chrome，FF不支持*/
+    word-break:normal; /*支持IE，chrome，FF不支持*/
     word-wrap:break-word;/*支持IE，chrome，FF*/
     font-size: 16px;
   }
