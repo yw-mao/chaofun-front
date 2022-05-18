@@ -201,7 +201,7 @@ export default {
   .el-input {
     padding: 0 16px;
     margin-bottom: 16px;
-    /deep/ .el-input__prefix {
+    ::v-deep .el-input__prefix {
       left: 21px;
     }
   }
@@ -209,7 +209,7 @@ export default {
     width: 100%;
     overflow: auto;
     height: 200px;
-    /deep/ .el-radio__input {
+    ::v-deep .el-radio__input {
       &.is-checked .el-radio__inner {
         border-color: #16679f;
         background: #16679f;

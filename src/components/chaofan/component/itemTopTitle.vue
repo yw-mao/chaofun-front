@@ -914,7 +914,7 @@ h1 {
     cursor: pointer;
   }
 }
-/deep/ .el-input__inner{
+::v-deep .el-input__inner{
   padding: 0 4px;
   height: 30px;
 }

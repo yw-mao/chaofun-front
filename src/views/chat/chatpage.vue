@@ -940,7 +940,7 @@ export default {
     text-align: center;
     margin: 8px 0;
   }
-  /deep/ .link{
+  ::v-deep .link{
     cursor: pointer;
     color: $linkcolor;
     &:hover{

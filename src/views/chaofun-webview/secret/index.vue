@@ -390,7 +390,7 @@ export default {
     padding: 2px 6px;
     border-radius: 14px;
 }
-/deep/ .clearsss{
+::v-deep .clearsss{
     z-index: 3 !important;
 }
 </style>

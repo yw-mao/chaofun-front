@@ -966,7 +966,7 @@ export default {
     min-height: auto;
   }
 }
-/deep/ .item {
+::v-deep .item {
   &:hover {
     .icon2 {
       display: none;

@@ -146,12 +146,12 @@
   }
 
 
-  /deep/ .article p{
+  ::v-deep .article p{
     letter-spacing: 1px;
     line-height: 24px;
     margin: 4px 0;
   }
-  /deep/ .article img{
+  ::v-deep .article img{
     max-width: 100%;
   }
   .username{

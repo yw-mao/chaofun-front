@@ -967,11 +967,11 @@ export default {
   margin-top: 14px;
 }
 
-/deep/ .el-table .warning-row {
+::v-deep .el-table .warning-row {
   background: oldlace;
 }
 
-/deep/ .el-table .success-row {
+::v-deep .el-table .success-row {
   background: #f0f9eb;
 }
 </style>

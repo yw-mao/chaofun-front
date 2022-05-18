@@ -161,7 +161,7 @@ export default ({
     padding: 1px 3px;
   }
 }
-/deep/ .draft-modal {
+::v-deep .draft-modal {
   border-radius: 4px;
   max-height: 70vh;
   min-height: 400px;
@@ -231,7 +231,7 @@ ul {
     }
     .draft-content {
       flex: 1;
-      /deep/ h2 {
+      ::v-deep h2 {
         font-size: 14px;
         word-wrap: break-word;
         hyphens: auto;
@@ -242,7 +242,7 @@ ul {
           font-weight: 700;
         }
       }
-      /deep/ .draft-desc {
+      ::v-deep .draft-desc {
         font-size: 12px;
         line-height: 18px;
         color: #7c7c7c;
@@ -262,7 +262,7 @@ ul {
       display: flex;
       align-items: center;
       padding: 12px;
-      /deep/ .el-button {
+      ::v-deep .el-button {
         margin: 0;
         padding: 0;
         border: none;

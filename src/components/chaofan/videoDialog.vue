@@ -77,7 +77,7 @@
         margin-top: 24%;
     }
 }
-/deep/ .el-form-item{
+::v-deep .el-form-item{
     margin-bottom: 20px !important;
 }
 </style>

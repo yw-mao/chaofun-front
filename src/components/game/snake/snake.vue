@@ -153,12 +153,12 @@
     background: #fff;
 }
   *{ margin:0; padding:0; font-family:微软雅黑; font-size:12px;}
-   /deep/ table#map { width:auto; height:auto; margin:0 auto; border-collapse:collapse; border-spacing:0; background-color:#EAEAEA; clear:both;border:1px solid black;}
-  /deep/ td { width:25px !important; height:10px !important; border:1px solid black !important;}
-   /deep/ .shead { background-color: orangered;}
-   /deep/ .sbody { background-color: black;}
-   /deep/ .sfood{ background-color: orangered;}
-   /deep/ .info { width:400px; margin:0 auto; padding:3em 0;}
-   /deep/ .info li{ float:left; height:30px; margin-right:2em; line-height:30px;}
+   ::v-deep table#map { width:auto; height:auto; margin:0 auto; border-collapse:collapse; border-spacing:0; background-color:#EAEAEA; clear:both;border:1px solid black;}
+  ::v-deep td { width:25px !important; height:10px !important; border:1px solid black !important;}
+   ::v-deep .shead { background-color: orangered;}
+   ::v-deep .sbody { background-color: black;}
+   ::v-deep .sfood{ background-color: orangered;}
+   ::v-deep .info { width:400px; margin:0 auto; padding:3em 0;}
+   ::v-deep .info li{ float:left; height:30px; margin-right:2em; line-height:30px;}
  
 </style>

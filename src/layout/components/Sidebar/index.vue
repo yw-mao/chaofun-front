@@ -131,10 +131,10 @@ export default {
   cursor: pointer;
   
 }
-/deep/ .nest-menu:hover{
+::v-deep .nest-menu:hover{
   background: #fff;
 }
-/deep/ .el-scrollbar ::-webkit-scrollbar-thumb{
+::v-deep .el-scrollbar ::-webkit-scrollbar-thumb{
   border-radius: 10px;
   padding: 0;
   width: 4px;
@@ -145,14 +145,14 @@ export default {
 .scrollbar-wrapper{
   background: #000;
 }
-/deep/ .is-vertical{
+::v-deep .is-vertical{
   padding: 2px 2px;
   width: auto !important;
   box-sizing: content-box;
   background: #fff;
   border: 1px solid #ddd;
 }
-/deep/ .el-scrollbar__bar.is-vertical > div{
+::v-deep .el-scrollbar__bar.is-vertical > div{
   width: 4px;
 }
 ::-webkit-scrollbar

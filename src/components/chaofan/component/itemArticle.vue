@@ -168,12 +168,12 @@ export default {
     word-wrap:break-word;/*支持IE，chrome，FF*/
     font-size: 16px;
   }
-  /deep/ .detail_line p{
+  ::v-deep .detail_line p{
     line-height: 1.5em;
     margin: 0.25em 0 0.15em;
     // margin: 1.4em 0;
   }
-  /deep/ .detail_line img{
+  ::v-deep .detail_line img{
     max-width: 100%;
     vertical-align: middle;
     margin: 10px 0;

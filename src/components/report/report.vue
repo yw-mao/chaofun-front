@@ -125,22 +125,22 @@ export default {
 
 <style scoped>
 
-/deep/ .el-dialog {
+::v-deep .el-dialog {
   width: 90vw;
   max-width: 550px;
 }
 
-/deep/ .el-dialog__headerbtn {
+::v-deep .el-dialog__headerbtn {
   top: 12px;
 }
 
-/deep/ .el-dialog__header {
+::v-deep .el-dialog__header {
   padding: 10px;
   background: #eee;
   text-align: center;
 }
 
-/deep/ .el-dialog__body {
+::v-deep .el-dialog__body {
   padding: 0;
 }
 

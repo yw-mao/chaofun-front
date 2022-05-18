@@ -696,7 +696,7 @@ export default {
   }
 }
 
-/deep/ .el-textarea__inner {
+::v-deep .el-textarea__inner {
   border: none;
   font-size: 16px;
   padding-left: 10px;
@@ -712,7 +712,7 @@ export default {
   }
 }
 
-/deep/ .el-button {
+::v-deep .el-button {
   border: none;
   background: #eee;
   height: 30px;

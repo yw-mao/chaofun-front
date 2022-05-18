@@ -179,27 +179,27 @@ import * as api from '../../api/api'
 </script>
 
 <style type='text/scss' lang='scss' scoped>
-/deep/ .el-dialog{
+::v-deep .el-dialog{
     z-index: 2002;
     height: 400px !important;
     margin-top: -10% !important;
 }
-/deep/ .el-dialog .el-dialog__body .el-form-item{
+::v-deep .el-dialog .el-dialog__body .el-form-item{
     margin-bottom: 20px;
 }
-/deep/ .el-dialog__wrapper{
+::v-deep .el-dialog__wrapper{
     // height: 300px;
     display: flex;
     justify-content: space-around;
     align-items: center;
 }
-/deep/ .el-dialog__header{
+::v-deep .el-dialog__header{
     padding: 20px 20px 10px !important;
 }
-/deep/ .el-dialog__body{
+::v-deep .el-dialog__body{
     padding: 30px 20px !important;
 }
-/deep/ .el-dialog__footer{
+::v-deep .el-dialog__footer{
     padding: 10px 20px 40px !important;
     text-align: right;
 }
@@ -237,7 +237,7 @@ import * as api from '../../api/api'
         margin-top: 24%;
     }
 }
-/deep/ .el-form-item{
+::v-deep .el-form-item{
     margin-bottom: 20px !important;
 }
 </style>

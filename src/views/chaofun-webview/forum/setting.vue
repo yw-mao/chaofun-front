@@ -354,7 +354,7 @@ export default {
     display: block;
     border-radius: 50%;
   }
-  /deep/ .el-upload{
+  ::v-deep .el-upload{
       border: 1px dashed #999;
       border-radius: 10px;
   }

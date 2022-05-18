@@ -322,10 +322,10 @@ export default {
   background: transparent;
   
 }
-/deep/ .el-input--medium .el-input__inner{
+::v-deep .el-input--medium .el-input__inner{
     background: transparent;
   }
-/deep/ .el-input__prefix{
+::v-deep .el-input__prefix{
   left: 314px;
 }
 .nav_con{

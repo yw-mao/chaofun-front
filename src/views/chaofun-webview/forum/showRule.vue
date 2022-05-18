@@ -129,7 +129,7 @@
     border-radius: 8px;
   }
   .aside-rule {
-    /deep/ .el-card__body {
+    ::v-deep .el-card__body {
       padding: 12px 12px;
       p {
         display: flex;

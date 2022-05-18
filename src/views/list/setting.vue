@@ -366,7 +366,7 @@ export default {
   margin-bottom: 0;
 }
 
-/deep/ .el-upload {
+::v-deep .el-upload {
   border: 1px dashed #999;
   border-radius: 10px;
 }
@@ -499,7 +499,7 @@ export default {
   }
 }
 
-/deep/ .el-checkbox {
+::v-deep .el-checkbox {
   .el-checkbox__input {
     z-index: 0;
   }

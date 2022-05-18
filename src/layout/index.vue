@@ -188,7 +188,7 @@ export default {
     }
   }
 }
-/deep/ .el-checkbox__label{
+::v-deep .el-checkbox__label{
   font-size: 12px;
 }
 .beian{

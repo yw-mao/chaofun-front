@@ -299,7 +299,7 @@
     }
   }
 }
-/deep/ .el-select-dropdown__item{
+::v-deep .el-select-dropdown__item{
   text-align: center;
 }
 </style>

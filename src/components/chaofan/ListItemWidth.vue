@@ -788,7 +788,7 @@ export default {
   padding: 10px 0 20px;
   max-height: none;
 }
-/deep/ .item .item_article .article img {
+::v-deep .item .item_article .article img {
   // max-width: 100%;
 }
 .item .item_article .article_phone {
@@ -799,10 +799,10 @@ export default {
   position: relative;
   // left: -50px;
 }
-/deep/ .van-field__control {
+::v-deep .van-field__control {
   padding: 10px 0;
 }
-/deep/ .bankuai {
+::v-deep .bankuai {
   display: flex;
   .label {
     flex: 0 0 78px;
@@ -811,10 +811,10 @@ export default {
     margin-right: 8px;
   }
 }
-/deep/ .van-field__label {
+::v-deep .van-field__label {
   line-height: 44px;
 }
-/deep/ .van-image-preview__overlay,
+::v-deep .van-image-preview__overlay,
 .van-overlay {
   background-color: rgba(0, 0, 0, 1);
 }
@@ -837,10 +837,10 @@ export default {
   z-index: 10000;
   background: #000;
 }
-/deep/ .viewer-backdrop {
+::v-deep .viewer-backdrop {
   background-color: rgba(0, 0, 0, 1) !important;
 }
-/deep/ .v-modal {
+::v-deep .v-modal {
   opacity: 1;
 }
 .tags {

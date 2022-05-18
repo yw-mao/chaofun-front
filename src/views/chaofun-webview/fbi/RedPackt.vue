@@ -134,7 +134,7 @@ export default {
 
 <style lang="scss" scoped>
 
-/deep/ .el-dialog-custom {
+::v-deep .el-dialog-custom {
   box-shadow: unset;
   border: none;
 

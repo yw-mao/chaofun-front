@@ -183,7 +183,7 @@ Vue.use(vant);
 </script>
 
 <style type='text/scss' lang='scss' scoped>
-/deep/ .van-radio--horizontal{
+::v-deep .van-radio--horizontal{
     margin-right: 30px;
 }
 .container{

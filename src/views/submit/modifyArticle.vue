@@ -524,7 +524,7 @@ export default {
       label {
         flex: 1;
 
-        /deep/ .el-radio-button__inner {
+        ::v-deep .el-radio-button__inner {
           display: flex;
           flex: 1;
           width: 100%;
@@ -557,19 +557,19 @@ export default {
         &:hover {
           background-color: rgba(0, 121, 211, 0.05);
 
-          /deep/ .el-radio-button__inner {
+          ::v-deep .el-radio-button__inner {
             color: #606266;
           }
         }
 
         &:last-child {
-          /deep/ .el-radio-button__inner {
+          ::v-deep .el-radio-button__inner {
             border-width: 0 0 1px 0;
           }
         }
 
         &.is-active {
-          /deep/ .el-radio-button__inner {
+          ::v-deep .el-radio-button__inner {
             color: #16679f;
             background-color: rgba(0, 121, 211, 0.05);
 
@@ -598,14 +598,14 @@ export default {
     }
 
     .title {
-      /deep/ textarea {
+      ::v-deep textarea {
         padding: 12px 8px;
         resize: none;
         box-sizing: border-box;
         overflow: hidden;
       }
 
-      /deep/ .el-input__count {
+      ::v-deep .el-input__count {
         font-size: 10px;
         font-weight: 700;
         letter-spacing: .5px;
@@ -627,7 +627,7 @@ export default {
       margin-bottom: 20px;
     }
 
-    /deep/ .el-checkbox {
+    ::v-deep .el-checkbox {
       position: relative;
       padding: 4px 16px;
       border: 1px solid;
@@ -691,7 +691,7 @@ export default {
         width: 100%;
 
         .vote-sort-list {
-          /deep/ .el-form-item {
+          ::v-deep .el-form-item {
             margin-bottom: 0;
           }
         }
@@ -704,11 +704,11 @@ export default {
           position: relative;
           transition: opacity .2s, left .2s;
 
-          /deep/ .el-form-item__error {
+          ::v-deep .el-form-item__error {
             display: none;
           }
 
-          /deep/ .el-input-group__prepend {
+          ::v-deep .el-input-group__prepend {
             display: flex;
             fill: #5a5e66;
             height: 20px;
@@ -724,7 +724,7 @@ export default {
             }
           }
 
-          /deep/ .el-input__suffix {
+          ::v-deep .el-input__suffix {
             i {
               font-size: 20px;
               color: #606266;
@@ -756,7 +756,7 @@ export default {
             font-weight: bold;
           }
 
-          /deep/ .el-form-item {
+          ::v-deep .el-form-item {
             display: flex;
             align-items: center;
             -ms-flex-direction: row;
@@ -880,7 +880,7 @@ export default {
     }
 
     .aside-forum {
-      /deep/ .el-card__body {
+      ::v-deep .el-card__body {
         padding: 12px 12px;
       }
 
@@ -964,7 +964,7 @@ export default {
     }
 
     .aside-rule {
-      /deep/ .el-card__body {
+      ::v-deep .el-card__body {
         padding: 12px 12px;
 
         p {
@@ -1002,7 +1002,7 @@ export default {
     }
 
     .aside-help {
-      /deep/ .el-card__body {
+      ::v-deep .el-card__body {
         padding: 12px 12px;
 
         .help-item {

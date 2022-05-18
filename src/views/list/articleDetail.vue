@@ -1103,7 +1103,7 @@ queryChildren (parent, list) {
     background: #fff;
     margin-bottom: 20px;
 }
-/deep/ .el-dialog__wrapper{
+::v-deep .el-dialog__wrapper{
   overflow-x: hidden;
 }
 .asa{
@@ -1118,7 +1118,7 @@ queryChildren (parent, list) {
         box-sizing: border-box;
     }
 }
-/deep/ .item .rights{
+::v-deep .item .rights{
   padding-right: 0;
 }
 .el-dialog{
@@ -1131,19 +1131,19 @@ queryChildren (parent, list) {
         text-align: left;
     }
 }
-/deep/ .el-dialog--center .el-dialog__body{
+::v-deep .el-dialog--center .el-dialog__body{
   padding: 0;
 }
-/deep/ .el-loading-spinner{
+::v-deep .el-loading-spinner{
     top: 10%;
 }
-/deep/ .el-dialog__header{
+::v-deep .el-dialog__header{
   padding: 0;
 }
-/deep/ .el-dialog{
+::v-deep .el-dialog{
   margin-top:0 !important;
 }
-/deep/ .pc_dialog{
+::v-deep .pc_dialog{
   height: 100vh;
   overflow-y: hidden;
   .el-dialog{
@@ -1229,7 +1229,7 @@ queryChildren (parent, list) {
         }
     }
 }
-/deep/ .item{
+::v-deep .item{
     padding: 20px 0 !important;
 }
 .content-right{
@@ -1238,7 +1238,7 @@ queryChildren (parent, list) {
     flex-direction: column;
     align-items: center;
 }
-/deep/ .light{
+::v-deep .light{
   cursor: pointer;
   &:hover{
     text-decoration: underline;
@@ -1371,7 +1371,7 @@ queryChildren (parent, list) {
         }
     }
 }
-/deep/ .forum_con .fir img{
+::v-deep .forum_con .fir img{
   margin-right: 20px;
 }
 .forum_desc{
@@ -1436,7 +1436,7 @@ queryChildren (parent, list) {
     cursor: pointer;
   }
 }
-/deep/ .item .item_image .imgs img{
+::v-deep .item .item_image .imgs img{
   height: auto !important;
   // max-height: calc(100vh - 150px);
 }
@@ -1524,7 +1524,7 @@ queryChildren (parent, list) {
   }
 }
 
-/deep/.el-checkbox {
+::v-deep.el-checkbox {
   .el-checkbox__input{
     margin-bottom:-2px;
     z-index: 0;

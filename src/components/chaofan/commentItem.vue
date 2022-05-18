@@ -685,7 +685,7 @@ export default {
 </script>
 
 <style lang='scss' scoped type='text/scss'>
-/deep/ .el-loading-spinner {
+::v-deep .el-loading-spinner {
   top: 10%;
 }
 
@@ -1114,7 +1114,7 @@ export default {
   cursor: pointer;
 }
 
-/deep/ .messageBox {
+::v-deep .messageBox {
   width: 400px !important;
   max-width: 80vw !important;
   //width: auto !important;

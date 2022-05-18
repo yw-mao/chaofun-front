@@ -368,11 +368,11 @@ export default {
   transform: perspective(150px) rotateY(0deg);
 }
 
-/deep/ .el-button {
+::v-deep .el-button {
   padding: 8px 10px;
 }
 
-/deep/ .el-dialog-donate {
+::v-deep .el-dialog-donate {
   width: 350px !important;
   max-width: 95vw !important;
   border-radius: 5px;
@@ -390,7 +390,7 @@ export default {
   }
 }
 
-/deep/ .el-dialog-history {
+::v-deep .el-dialog-history {
   width: 98vw !important;
   max-width: 640px !important;
 
@@ -428,23 +428,23 @@ export default {
 
 }
 
-/deep/ .el-table .rank1Style {
+::v-deep .el-table .rank1Style {
   background: #edf1fd;
 }
 
-/deep/ .el-table .rank2Style {
+::v-deep .el-table .rank2Style {
   background: #fff;
 }
 
-/deep/ .el-table .rank3Style {
+::v-deep .el-table .rank3Style {
   background: #edf1fd;
 }
 
-/deep/ .el-table .noRankStyle1 {
+::v-deep .el-table .noRankStyle1 {
   background: #fff;
 }
 
-/deep/ .el-table .noRankStyle2 {
+::v-deep .el-table .noRankStyle2 {
   background: #f6f6f6;
 }
 

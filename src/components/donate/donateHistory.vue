@@ -193,7 +193,7 @@ export default {
   user-select: none;
 }
 
-/deep/ .el-table .cell {
+::v-deep .el-table .cell {
   padding: 0 !important;
 }
 

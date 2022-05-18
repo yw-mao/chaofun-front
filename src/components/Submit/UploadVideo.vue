@@ -93,7 +93,7 @@ export default {
     bottom: 0;
     padding: 10px;
     z-index: 1;
-    /deep/ .el-progress-bar__outer {
+    ::v-deep .el-progress-bar__outer {
       background-color: rgba(255, 255, 255, 0.2);
     }
   }
@@ -104,7 +104,7 @@ export default {
   padding: 10px 5px;
   .el-button {
     padding: 6px;
-    /deep/ .el-icon-delete {
+    ::v-deep .el-icon-delete {
       font-size: 20px;
     }
     border: none;

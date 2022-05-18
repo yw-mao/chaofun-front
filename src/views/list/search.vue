@@ -424,7 +424,7 @@ export default {
   }
 }
 
-/deep/ .el-input--medium .el-input__inner {
+::v-deep .el-input--medium .el-input__inner {
   height: auto;
   line-height: normal;
   padding-top: 8px;

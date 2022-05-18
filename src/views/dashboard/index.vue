@@ -511,14 +511,14 @@ export default {
   }
 }
 
-/deep/ .el-input--medium .el-input__inner {
+::v-deep .el-input--medium .el-input__inner {
   height: auto;
   line-height: normal;
   padding-top: 8px;
   padding-bottom: 8px;
 }
 
-/deep/ .el-scrollbar {
+::v-deep .el-scrollbar {
   > .el-scrollbar__bar {
     opacity: 1 !important;
   }
