@@ -1,7 +1,12 @@
 <template>
  <div>  
     <div @click.stop="openLink(item)" class="item_link">
-        
+      <div v-if="item.tags.length" class="tags">
+        <div v-for="(it, ins) in item.tags" :key="ins">
+                  <span :style="{'backgroundColor': (it.backgroundColor||'#ff9300'),'color': it.fontColor||'#fff'}"
+                  ># {{ it.name }}</span>
+        </div>
+      </div>
         <div class="right_content">
         {{item.title}}
         </div>
@@ -14,7 +19,6 @@
 </template>
 
 <script>
-import * as api from '@/api/api'
  export default {
    name: '',
    data(){
@@ -55,6 +59,8 @@ import * as api from '@/api/api'
   padding: 10px;
 }
 .item_link{
+      position: relative;
+      min-height: 80px;
       // padding-right: 10px;
       &:hover{
         color: $linkcolor;
@@ -118,4 +124,19 @@ import * as api from '@/api/api'
         }
     }
   }
+.tags {
+  display: inline-block;
+  position: absolute;
+  top:2px;
+  left: 2px;
+  span {
+    display: inline-block;
+    vertical-align: middle;
+    padding: 2px 6px;
+    background: #ff9300;
+    border-radius: 4px;
+    font-size: 13px;
+    color: #fff;
+  }
+}
 </style>
