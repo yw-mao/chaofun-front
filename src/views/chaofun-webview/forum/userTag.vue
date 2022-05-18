@@ -179,6 +179,7 @@
       toDelete(item, index) {
         this.$confirm(`是否确定删除标签 【${item.data}】？`, "提示", {
           type: "warning",
+          customClass:'el-message-scroll',
           // position: center,
         }).then(() => {
           api.removeForumUserTag({tagId: item.id}).then((res) => {
@@ -279,5 +280,9 @@
 .el-message-box{
   width: 90vw;
   max-width: 400px;
+}
+.el-message-scroll{
+  max-height: 90vh;
+  overflow-y: auto;
 }
 </style>
