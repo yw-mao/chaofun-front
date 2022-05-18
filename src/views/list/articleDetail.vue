@@ -1379,7 +1379,7 @@ queryChildren (parent, list) {
   text-align: center;
 }
 .fensi{
-  margin: 10 auto 20px !important;
+  margin: 10px auto 20px !important;
   text-align: center;
 }
 .forum_desc{

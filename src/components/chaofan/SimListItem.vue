@@ -74,7 +74,7 @@
               <span class="sim_forum">
                 {{ item.forum.name }}
               </span>
-              <span class="from" style="padding-">
+              <span class="from" style="">
                 来自·{{ item.userInfo ? item.userInfo.userName : "测试账号" }}
               </span>
               <span v-if="item.userInfo.userTag" title="该版块用户的标签" style="font-size: 12px;background-color: rgb(237, 239, 241); color: rgb(26, 26, 27); padding-left: 1px;">{{item.userInfo.userTag.data}}</span>

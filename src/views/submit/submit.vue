@@ -417,8 +417,8 @@
     created(){
       this.getForum('')
     },
-    beforeCreate() {
-    },
+    // beforeCreate() {
+    // },
     beforeMount(){
       this.editorOption = {
         modules: {

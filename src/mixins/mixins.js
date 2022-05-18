@@ -108,9 +108,9 @@ export default {
         this.$router.push({ name: 'search', query: { q: this.keyword } })
       }
     },
-    doSpan(t) {
-      // 1024
-    },
+    // doSpan(t) {
+    //   // 1024
+    // },
     toPosition() {
       if (this.$route.query.time) {
         this.$('.infinite-list').animate({ scrollTop: localStorage.getItem('storedata') ? JSON.parse(localStorage.getItem('storedata')).top : 0 }, 0);

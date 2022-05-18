@@ -219,9 +219,9 @@
           this.gameRank = res.data
         })
       },
-      gotologin(){
-        this.showLogin('login')
-      },
+      // gotologin(){
+      //   this.showLogin('login')
+      // },
       showLogin(v){
         this.$login({callBack:()=>{
           this.$store.dispatch('user/getInfo')

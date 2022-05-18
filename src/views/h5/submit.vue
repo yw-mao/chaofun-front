@@ -61,7 +61,7 @@ Vue.use(vant);
      return {
          radio: '1',
          username: '',
-         options: [],
+         // options: [],
         loading: false,
         targetForumId: '',
         keyword: '',

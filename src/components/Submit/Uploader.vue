@@ -64,6 +64,8 @@ export default {
     document.addEventListener('dragleave', () => {
       this.isDrag = false;
     });
+    // 监听粘贴上传
+    document.addEventListener('paste', this.toPaste);
   },
   props: {
     action: {
@@ -159,10 +161,10 @@ export default {
       reqs: {},
     };
   },
-  mounted() {
-    // 监听粘贴上传
-    document.addEventListener('paste', this.toPaste);
-  },
+  // mounted() {
+  //   // 监听粘贴上传
+  //   document.addEventListener('paste', this.toPaste);
+  // },
   beforeDestroy() {
     // 移除监听上传
     document.removeEventListener('paste', this.toPaste);    

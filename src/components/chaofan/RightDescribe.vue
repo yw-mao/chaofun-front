@@ -202,9 +202,9 @@
       reload(){
         location.reload()
       },
-      gotologin(){
-        this.showLogin('login')
-      },
+      // gotologin(){
+      //   this.showLogin('login')
+      // },
       gotoSecret(){
         this.doLoginStatus().then(res=>{
           if(res){

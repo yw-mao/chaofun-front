@@ -16,7 +16,7 @@
             /> -->
             <div class="newInput">
               <span class="label">源标题</span>
-              <textarea autosize maxlength="50" disabled v-model="datas.data.sourceTitle" placeholder="源标题" name="" id="" cols="30" rows="10"></textarea>
+              <textarea autosize maxlength="50" disabled v-model="datas.data.sourceTitle" placeholder="源标题" name=""  cols="30" rows="10"></textarea>
             </div>
             <div class="newInput">
               <span class="label">新标题</span>
@@ -94,7 +94,7 @@ Vue.use(Form).use(Field).use(Button);
       addForm: {
           targetForumId: ''
       },
-      options: [],
+      // options: [],
       loading: false,
       targetForumId: '',
       keyword: '',
