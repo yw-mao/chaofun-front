@@ -132,7 +132,11 @@
                       <div v-if="!ISPHONE" class="grid-content bg-purple content-right">
                           <div v-if="forumInfo" class="asa">
                             <div class="forum_con">
-                              <div v-if="forumInfo.admin" @click="manage" style="position: absolute; right: 20px; width: 40px; color: blue;">管理</div>
+                              <div v-if="forumInfo.admin" style="width: 45px;height:25px;line-height:25px;border-radius:5px;position: absolute; top:3px;right: 3px;
+                              color: #fff;background-color: #f99;text-align: center;cursor: pointer;"
+                                   @click="manage">
+                                管理
+                              </div>
                                 <div class="fir">
                                 <img :src="imgOrigin+forumInfo.imageName+'?x-oss-process=image/resize,h_80/format,webp/quality,q_75'" />
                                 <div>{{forumInfo.name}}</div>
@@ -1221,7 +1225,8 @@ queryChildren (parent, list) {
     }
     .asa{
         .forum_con{
-            padding: 30px 20px;
+            position: relative;
+            padding: 10px 20px;
             border: 1px solid #f1f1f1;
             // width: 100%;
             width: 270px;
