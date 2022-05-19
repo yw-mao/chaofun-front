@@ -1,144 +1,170 @@
 <template>
-  <div style="background: #FFF;">
+  <div style="background: #FFF;padding: 20px;min-width: 650px;min-height: 650px;">
 
     <div
-      style="position: absolute;width: 800px;height: 800px;left: 50%;top: 50%;margin-left: -400px;margin-top:-400px; box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.3); border-radius:5px;">
+      style="width: 800px;height: 800px;margin: 0 auto;box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.3); border-radius:5px;overflow: hidden;resize: both;
+      min-width: 600px;min-height: 600px;
+      max-width: calc(100vw - 50px);max-height: calc(100vh - 50px)">
 
-      <!--  left  -->
-      <div class="scrollbar_0"
-           style="position: absolute;width: 250px;height: 100%;background: #EFEFEF;padding-top: 10px;overflow: auto;scroll-behavior: smooth;">
-        <div v-for="channel in chatHistoryMap.values()" :key="channel.id"
-             :style="{ background: channel.id === currentChannelId ? '#C6C6C6' : '' }" class="channelItem"
-             style="width: 240px;height: 60px;margin: 5px;border-radius:4px;"
-             @click="switchChannel(channel.id)">
-          <img :src="imgOrigin+channel.avatar + '?x-oss-process=image/resize,w_40,h_40/format,webp/quality,q_75'"
-               alt="" style="position: absolute;width: 40px;height: 40px;border-radius: 100%;margin:10px 5px;" />
-          <div style="position:absolute;width: 195px;height: 60px;left: 50px;">
-            <span style="position: absolute;left:10px;top:10px;font-size: 16px;font-weight: bold;cursor:default;">{{
-                channel.name
-              }}</span>
-            <span style="position: absolute;right:10px;top:10px;font-size: 12px;color: #999;cursor:default;">{{
-                calcMessageTime(channel.lastMessageTime)
-              }}</span>
-            <span style="position: absolute;left:10px;top:35px;font-size: 14px; color: #777;cursor:default;">{{
-                calcLastMessageContent(channel.type, channel.lastMessageType, channel.lastMessageContent, channel.lastMessageSender)
-              }}</span>
+      <!--  left 聊天列表、操作  -->
+      <div class="selectDisable" style="float: left;width: 250px;height: 100%;background: #EFEFEF;">
+
+        <!--  聊天列表  -->
+        <div class="scrollbar_4_1" style="height: calc(100% - 40px);overflow-x: hidden;overflow-y:scroll;">
+
+          <div v-for="channel in chatHistoryMap.values()" :key="channel.id"
+               :style="{ background: channel.id === currentChannelId ? '#C6C6C6' : '' }" class="chatListItem"
+               style="height: 60px;margin: 5px; padding: 10px 5px;border-radius:4px;cursor:default;"
+               @click="switchChannel(channel.id)">
+
+            <!-- 头像 -->
+            <img :src="imgOrigin+channel.avatar + '?x-oss-process=image/resize,w_40,h_40/format,webp/quality,q_75'"
+                 alt="" style="float: left;width: 40px;height: 40px;border-radius: 100%;" />
+
+            <!-- 信息 -->
+            <div style="position: relative;float:left;width: 180px; margin-left:5px;height: 100%;">
+
+              <!-- 最后发言时间 -->
+              <span style="position: absolute; right: 0;font-size: 12px;line-height:20px;color: #999;">{{
+                  calcMessageTime(channel.lastMessageTime)
+                }}</span>
+
+              <!-- 昵称 -->
+              <div style="height: 26px;font-size: 16px;line-height:20px;font-weight: bold;white-space: nowrap;">
+                {{ channel.name }}
+              </div>
+
+              <!-- 最后发言内容 -->
+              <div
+                style="height: 14px; font-size: 14px;line-height:14px;color: #777;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">
+                {{
+                  calcLastMessageContent(channel.type, channel.lastMessageType, channel.lastMessageContent, channel.lastMessageSender)
+                }}
+              </div>
+
+            </div>
+
+          </div>
+
+          <!--  无可用channel时  -->
+          <div v-if="chatHistoryMap.size===0"
+               style="text-align: center;color: #999;margin-top: 20px;">
+            暂无聊天，请先加入
           </div>
         </div>
 
-        <!--  无可用channel时  -->
-        <div v-if="chatHistoryMap.size===0"
-             style="width: 240px;height: 60px;margin: 10px;border-radius:4px;text-align: center;color: #999;">
-          暂无聊天，请先加入
+        <!-- 操作  -->
+        <div class="selectDisable" style="height: 40px;background: #e9e9e9;">
+          <i class="el-icon-setting" style="line-height:40px;font-size: 20px;margin-left: 15px;cursor: pointer;" @click="onClickSetting"></i>
         </div>
+
       </div>
 
-      <!--  right  -->
-      <div style="position: absolute;width: 550px;height: 100%;left: 250px;">
+      <!--  right 当前聊天  -->
+      <div style="float: left;width: calc(100% - 250px);height: 100%;">
 
-        <!--  top 聊天对象 -->
+        <!--  聊天对象  -->
         <div
-          style="width: 100%;height: 50px;background: #F5F5F5;border-width: 0 0 1px 0;border-style: solid;border-color: #e0e0e0;padding-top: 5px;">
-          <div style="cursor: pointer;" @click.stop="toForumOrUser(chatHistoryMap.get(currentChannelId))">
-            <div style="margin-left: 190px;height: 40px;width: 40px;float:left;">
-              <img v-if="chatHistoryMap.get(currentChannelId)"
-                   :src="imgOrigin+chatHistoryMap.get(currentChannelId).avatar + '?x-oss-process=image/resize,w_40,h_40/format,webp/quality,q_75'"
-                   alt="" style="width: 40px;height: 40px;border-radius: 100%;" />
-            </div>
-            <div style="font-size: 20px;font-weight: bold;float:left;margin-left: 5px;margin-top: 5px;">
-              <span v-if="chatHistoryMap.get(currentChannelId)">{{ chatHistoryMap.get(currentChannelId).name }}</span>
-            </div>
-          </div>
+          class="selectDisable"
+          style="height: 50px;background: #F5F5F5;border-width: 0 0 1px 0;border-style: solid;border-color: #e0e0e0;text-align: center;padding-top: 4px;">
+          <span v-if="chatHistoryMap.get(currentChannelId)"
+                style="cursor: pointer;"
+                @click.stop="toForumOrUser(chatHistoryMap.get(currentChannelId))">
+            <img
+              :src="imgOrigin+chatHistoryMap.get(currentChannelId).avatar + '?x-oss-process=image/resize,w_40,h_40/format,webp/quality,q_75'"
+              alt="" style="width: 40px;height: 40px;border-radius: 100%;vertical-align: middle;">
+            <span
+              style="font-size: 20px;font-weight: bold;margin-left: 5px;vertical-align: middle;">{{ chatHistoryMap.get(currentChannelId).name
+              }}</span>
+          </span>
         </div>
 
-        <!--  middle  聊天记录 -->
-        <div ref="chatMessageDiv"
-             class="scrollbar_4"
-             style="width: 100%;height: 600px;top:50px;background: #f6f6f6;overflow: auto;scroll-behavior: smooth;padding: 10px 10px 65px 10px;">
-          <div v-if="chatHistoryMap.get(currentChannelId)">
+        <!--  聊天记录  -->
+        <div style="height: calc(100% - 200px);background: #f6f6f6;">
+          <div v-if="chatHistoryMap.get(currentChannelId)" ref="chatMessageDiv"
+               class="scrollbar_4_2"
+               style="height: 100%;overflow-x: hidden;overflow-y:scroll;scroll-behavior: smooth;padding: 5px 5px 67px 5px;">
             <div v-for="(chatMessage,index) in chatHistoryMap.get(currentChannelId).chatMessagesArr" :key="index"
-                 style="margin-bottom: 10px;min-height: 62px;">
+                 style="margin-bottom: 10px;">
 
               <!--  他人  -->
-              <div v-if="$store.state.user.userInfo.userId !== chatMessage.sender.userId" style="width: 530px;">
-
-                <!--  聊天框角  -->
-                <div style="position: relative;height: 0;width: 0;left: 20px;top:15px;">
-                  <img alt="" src="../../assets/chat/chatBoxCorner1.png" style="width: 20px;height: 10px;">
-                </div>
+              <div v-if="$store.state.user.userInfo.userId !== chatMessage.sender.userId">
 
                 <!--  头像、昵称、时间  -->
-                <div style="width: 530px;height:28px;">
+                <div style="height:28px;">
                   <img
                     :src="imgOrigin+chatMessage.sender.icon + '?x-oss-process=image/resize,w_24,h_24/format,webp/quality,q_75'"
-                    alt="" style="width: 24px;height: 24px;border-radius: 100%;" />
+                    alt="" style="width: 24px;height: 24px;border-radius: 100%;vertical-align: middle;" />
                   <span v-if="'group'===chatHistoryMap.get(currentChannelId).type"
-                        style="color: #999;margin-left: 5px;bottom: 6px;position: relative;">{{
+                        style="color: #999;margin-left: 5px;vertical-align: middle;">{{
                       chatMessage.sender.userName
                     }}</span>
-                  <span style="color: #aaa;margin-left: 5px;bottom: 6px;position: relative;">{{
+                  <span style="color: #aaa;margin-left: 5px;vertical-align: middle;">{{
                       calcMessageTime(chatMessage.time)
                     }}</span>
                 </div>
+
                 <!--  图片/文字  -->
                 <div
-                  style="background: #e5e5e5;border-radius: 4px; padding: 7px 10px;display:inline-block;width:auto;height:auto;margin-left: 20px;">
+                  style="background: #e5e5e5;border-radius: 4px; padding: 7px 10px;margin-left: 20px;margin-right: 100px;display: inline-block;word-wrap: break-word;word-break: break-all;position: relative;">
+
+                  <!--  聊天框角  -->
+                  <div class="triangle_left" style="position: absolute;left: 5px;top:-8px;" />
+
                   <viewer v-if="'image'===chatMessage.type" :images="[imgOrigin+chatMessage.content]">
                     <img :data-source="imgOrigin +chatMessage.content"
-                         :src="imgOrigin+chatMessage.content+ '?x-oss-process=image/resize,h_150/format,webp/quality,q_75'"
+                         :src="imgOrigin+chatMessage.content+ '?x-oss-process=image/resize,w_190/format,webp/quality,q_75'"
                          alt=""
-                         style="max-width:410px;" />
+                         style="vertical-align: middle;max-height: 200px;" />
                   </viewer>
-                  <pre v-else style="max-width: 410px;white-space: pre-wrap;word-wrap: break-word;font-size: 14px;">{{
+                  <pre v-else style="white-space: pre-wrap;word-wrap: break-word;font-size: 14px;">{{
                       chatMessage.content
                     }}</pre>
                 </div>
               </div>
 
               <!--  自己  -->
-              <div v-else style="text-align: right;width: 530px;">
-
-                <!--  聊天框角  -->
-                <div style="position: relative;height: 0;width: 0;left: 488px;top:16px;">
-                  <img alt="" src="../../assets/chat/chatBoxCorner2.png" style="width: 20px;height: 10px;">
-                </div>
+              <div v-else style="text-align: right;">
 
                 <!--  头像、昵称、时间  -->
-                <div style="width: 530px;height:28px;">
-                   <span style="color: #aaa;margin-right:5px;bottom: 6px;position: relative;">{{
+                <div style="height:28px;">
+                   <span style="color: #aaa;margin-right:5px;vertical-align: middle;">{{
                        calcMessageTime(chatMessage.time)
                      }}</span>
                   <img
                     :src="imgOrigin+chatMessage.sender.icon + '?x-oss-process=image/resize,w_24,h_24/format,webp/quality,q_75'"
-                    alt="" style="width: 24px;height: 24px;border-radius: 100%;" />
+                    alt="" style="width: 24px;height: 24px;border-radius: 100%;vertical-align: middle;" />
                 </div>
                 <!--  图片/文字  -->
                 <div
-                  style="background: #12b7f5;border-radius: 4px; padding: 7px 10px;display:inline-block;width:auto;height:auto;margin-right: 20px;">
+                  style="background: #12b7f5;border-radius: 4px; padding: 7px 10px;margin-right: 20px;margin-left: 100px;display:inline-block;word-wrap: break-word;word-break: break-all;position: relative;">
+
+                  <!--  聊天框角  -->
+                  <div class="triangle_right" style="position: absolute;right: 5px;top:-8px;" />
+
                   <viewer v-if="'image'===chatMessage.type" :images="[imgOrigin+chatMessage.content]">
                     <img :data-source="imgOrigin +chatMessage.content"
-                         :src="imgOrigin+chatMessage.content+ '?x-oss-process=image/resize,h_150/format,webp/quality,q_75'"
+                         :src="imgOrigin+chatMessage.content+ '?x-oss-process=image/resize,w_190/format,webp/quality,q_75'"
                          alt=""
-                         style="max-width:410px;" />
+                         style="vertical-align: middle;max-height: 200px;" />
                   </viewer>
                   <pre v-else
-                       style="max-width: 410px;white-space: pre-wrap;word-wrap: break-word;font-size: 14px;color: #fff;text-align: left;">{{
+                       style="white-space: pre-wrap;word-wrap: break-word;font-size: 14px;color: #fff;text-align: left;">{{
                       chatMessage.content
                     }}</pre>
                 </div>
 
               </div>
 
-
             </div>
           </div>
         </div>
 
-        <!--  bottom  -->
-        <div style="width: 100%;height: 150px;background: #fff;">
+        <!--  输入框  -->
+        <div class="selectDisable" style="height: 150px;padding:5px 0;position: relative;">
+
           <!--  发送图片  -->
-          <div class="selectDisable"
-               style="width: 100%;height: 23px;padding-left: 10px;background: #fff;">
+          <div style="height: 26px;padding: 2px 10px;">
             <el-upload
               ref="imageUpload"
               :before-upload="beforeImageUpload"
@@ -153,20 +179,23 @@
               multiple
               name="file"
             >
-              <i class="el-icon-picture-outline" style="font-size: 20px;background: #fff;color: #000;margin-top: 5px;"
+              <i class="el-icon-picture-outline" style="font-size: 20px;background: #fff;color: #000;"
                  title="可直接粘贴图片（Ctrl+V）并发送" />
             </el-upload>
           </div>
+
           <!--  文字输入框  -->
-          <div v-loading="imagesUploading" style="width: 100%;height: 120px;">
+          <div v-loading="imagesUploading" style="width: 100%;height: 114px;">
             <el-input ref="textInputMark" v-model="inputText" placeholder="请输入内容" resize="none"
-                      rows="4" style="height: 120px;width: 100%;border: 0;" type="textarea"></el-input>
+                      rows="4" style="width: 100%;height: 114px;border: 0;" type="textarea"></el-input>
           </div>
+
           <!--  发送按钮  -->
           <div style="position: absolute;width: 65px;height: 35px;bottom: 0;right: 0;" title="Shift+Enter：换行
             Enter：发送">
             <el-button @click.stop="onClickSendButton">发送</el-button>
           </div>
+
         </div>
 
       </div>
@@ -281,7 +310,6 @@ export default {
     // 添加监听事件
     addEventListener("keydown", this.keyDown);
     addEventListener("paste", this.toPaste);
-
 
     // 输入框获取焦点
     this.$refs.textInputMark.focus();
@@ -400,6 +428,10 @@ export default {
       }, 300);
     },
 
+    onClickSetting(){
+      Message.info("暂未开放");
+    },
+
     // 发送图片
     onSendImage(imageUrl) {
       if (!this.currentChannelId || this.currentChannelId === 0) {
@@ -447,9 +479,10 @@ export default {
         returnStr += "";
       }
 
-      if (returnStr.length > 11) {
-        returnStr = returnStr.substring(0, 11) + "...";
-      }
+      // if (returnStr.length > 11) {
+      //   returnStr = returnStr.substring(0, 11) + "...";
+      // }
+
       return returnStr;
     },
 
@@ -491,7 +524,6 @@ export default {
     showMessageError() {
       Message.error("未知错误！");
     },
-
 
     // 发送心跳
     sendHeartBeat() {
@@ -556,7 +588,6 @@ export default {
       });
     },
 
-
     // 处理接收的新消息
     handleNewMessage(chatMessage) {
       let channelData = this.chatHistoryMap.get(chatMessage.channelId);
@@ -603,7 +634,6 @@ export default {
       console.log("viewForceUpdate...");
       this.$forceUpdate();
     },
-
 
     //
     wsOnMessage(e) {
@@ -675,17 +705,24 @@ export default {
   user-select: none;
 }
 
-.scrollbar_0 {
+.scrollbar_4_1 {
+
+  scrollbar-width: none;
+
   &::-webkit-scrollbar {
-    width: 0;
+    width: 4px;
   }
 
   &::-webkit-scrollbar-thumb {
-    width: 0;
+    width: 4px;
+    background: #e0e0e0;
   }
 }
 
-.scrollbar_4 {
+.scrollbar_4_2 {
+
+  scrollbar-width: none;
+
   &::-webkit-scrollbar {
     width: 4px;
   }
@@ -701,6 +738,8 @@ export default {
   font-size: 16px;
   padding-left: 10px;
   padding-right: 10px;
+
+  scrollbar-width: none;
 
   &::-webkit-scrollbar {
     width: 4px;
@@ -725,11 +764,29 @@ export default {
   }
 }
 
-
-.channelItem {
+.chatListItem {
   &:hover {
     background: #e1e1e1;
   }
 }
 
+.triangle_left {
+  width: 0;
+  height: 0;
+  line-height: 0;
+  font-size: 0;
+  border: 5px solid transparent;
+  border-left-color: #e5e5e5;
+  border-bottom-color: #e5e5e5;
+}
+
+.triangle_right {
+  width: 0;
+  height: 0;
+  line-height: 0;
+  font-size: 0;
+  border: 5px solid transparent;
+  border-right-color: #12b7f5;
+  border-bottom-color: #12b7f5;
+}
 </style>
