@@ -55,7 +55,8 @@
 
         <!-- 操作  -->
         <div class="selectDisable" style="height: 40px;background: #e9e9e9;">
-          <i class="el-icon-setting" style="line-height:40px;font-size: 20px;margin-left: 15px;cursor: pointer;" @click="onClickSetting"></i>
+          <i class="el-icon-setting" style="line-height:40px;font-size: 20px;margin-left: 15px;cursor: pointer;"
+             @click="onClickSetting"></i>
         </div>
 
       </div>
@@ -161,10 +162,15 @@
         </div>
 
         <!--  输入框  -->
-        <div class="selectDisable" style="height: 150px;padding:5px 0;position: relative;">
+        <div class="selectDisable" style="height: 150px;position: relative;">
 
           <!--  发送图片  -->
-          <div style="height: 26px;padding: 2px 10px;">
+          <div style="height: 30px;">
+            <emoji-select ref="emojiSelect" :callback="emojiSelectCallback">
+              <img
+                :src="imgOrigin+'biz/bf4754f99db4f735f42f3dd29e7cafd1.png?x-oss-process=image/resize,h_40/format,webp/quality,q_75'"
+                alt="" class="button-bar" style="width: 26px;height: 26px;margin: 2px 5px;padding: 3px;">
+            </emoji-select>
             <el-upload
               ref="imageUpload"
               :before-upload="beforeImageUpload"
@@ -178,16 +184,19 @@
               action="/api/upload_image"
               multiple
               name="file"
+              style="display: inline-block;height: 100%;"
             >
-              <i class="el-icon-picture-outline" style="font-size: 20px;background: #fff;color: #000;"
-                 title="可直接粘贴图片（Ctrl+V）并发送" />
+              <img
+                :src="imgOrigin+'biz/f175d230978ba6393a53c8919afb8a09.png?x-oss-process=image/resize,h_40/format,webp/quality,q_75'"
+                alt="" class="button-bar" style="width: 26px;height: 26px;margin: 2px 5px;padding: 3px;"
+                title="可直接粘贴图片（Ctrl+V）并发送">
             </el-upload>
           </div>
 
           <!--  文字输入框  -->
-          <div v-loading="imagesUploading" style="width: 100%;height: 114px;">
+          <div v-loading="imagesUploading" style="width: 100%;height: 115px;">
             <el-input ref="textInputMark" v-model="inputText" placeholder="请输入内容" resize="none"
-                      rows="4" style="width: 100%;height: 114px;border: 0;" type="textarea"></el-input>
+                      rows="4" style="width: 100%;height: 115px;border: 0;" type="textarea"></el-input>
           </div>
 
           <!--  发送按钮  -->
@@ -207,6 +216,7 @@
 <script lang="js">
 import { getJoinedChatList } from "@/api/api";
 import { Message } from "element-ui";
+import emojiSelect from "@/views/newChat/emojiSelect.vue";
 
 export default {
   name: "chat",
@@ -226,6 +236,7 @@ export default {
       // images: [],
     };
   },
+  components: { emojiSelect },
   created() {
 
     document.title = "炒饭 - 聊天";
@@ -324,6 +335,10 @@ export default {
   },
   methods: {
 
+    //
+    emojiSelectCallback(emoji) {
+      this.inputText += emoji;
+    },
     //
     toForumOrUser(item) {
       if (!item.userId1 || !item.userId2) {
@@ -428,7 +443,7 @@ export default {
       }, 300);
     },
 
-    onClickSetting(){
+    onClickSetting() {
       Message.info("暂未开放");
     },
 
@@ -446,6 +461,9 @@ export default {
 
     // 点击发送按钮
     onClickSendButton() {
+
+      // 关闭表情选择框
+      this.$refs.emojiSelect.closePopover();
 
       if (!this.currentChannelId || this.currentChannelId === 0) {
         Message.info("暂无聊天，请先加入");
@@ -788,5 +806,15 @@ export default {
   border: 5px solid transparent;
   border-right-color: #12b7f5;
   border-bottom-color: #12b7f5;
+}
+
+.button-bar {
+  background: #fff;
+  cursor: pointer;
+
+  &:hover {
+    border-radius: 5px;
+    background-color: #f1f1f1;
+  }
 }
 </style>
