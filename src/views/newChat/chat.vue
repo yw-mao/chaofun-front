@@ -463,7 +463,9 @@ export default {
     onClickSendButton() {
 
       // 关闭表情选择框
-      this.$refs.emojiSelect.closePopover();
+      if (this.$refs.emojiSelect) {
+        this.$refs.emojiSelect.closePopover();
+      }
 
       if (!this.currentChannelId || this.currentChannelId === 0) {
         Message.info("暂无聊天，请先加入");
