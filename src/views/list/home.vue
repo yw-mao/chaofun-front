@@ -34,7 +34,7 @@
             </div>
           </div>
 
-<!--          <div v-if="GameInfo||tableList.length||isOpenDonate" class="navTab">-->
+          <!--          <div v-if="GameInfo||tableList.length||isOpenDonate" class="navTab">-->
           <div class="navTab">
             <div :class="[tab=='post'?'tab_item_act':'tab_item']" @click="checkoutTab('post')">帖子</div>
             <div v-if="GameInfo" :class="[tab=='predictions'?'tab_item_act':'tab_item']"
@@ -57,6 +57,7 @@
         <div v-if="!ISPHONE" class="main_left">
           <div
             v-if="tagList.length"
+            :class="forumInfo.bannerImageName?'fixed-tag-height-banner':'fixed-tag-height-no-banner'"
             class="fixed_tag"
           >
             <div
@@ -138,10 +139,12 @@
           <div class="main_center">
             <div v-for="(item,index) in tableList" :key="index" class="table_item">
               <div class="table_title">
-                <i v-if="tableList && tableList.length > 1" :class="['el-icon-caret-left', 'iconsa',tableIndex==0?'disabled':'']"
+                <i v-if="tableList && tableList.length > 1"
+                   :class="['el-icon-caret-left', 'iconsa',tableIndex==0?'disabled':'']"
                    @click="checkoutTable(1)"></i>
                 <div class="t_name">{{ item.name }}</div>
-                <i v-if="tableList && tableList.length > 1" :class="['el-icon-caret-right', 'iconsa',tableIndex==tableList.length-1?'disabled':'']"
+                <i v-if="tableList && tableList.length > 1"
+                   :class="['el-icon-caret-right', 'iconsa',tableIndex==tableList.length-1?'disabled':'']"
                    @click="checkoutTable(2)"></i>
               </div>
               <!-- <div @click="toggleTable(item)" class="table_desc">{{item.desc}}</div> -->
@@ -305,7 +308,7 @@ export default {
     SimListItem,
     prediction,
     donateDetail,
-    forumMore,
+    forumMore
   },
   watch: {
     // 'params.forumId'(v){
@@ -801,6 +804,27 @@ export default {
   padding: 4px;
   // background: red;
   // left: 220px;
+
+  scrollbar-width: thin;
+
+  &::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    width: 4px;
+    background: #ccc;
+  }
+}
+
+.fixed-tag-height-no-banner {
+  //max-height: calc(100vh - 270px);
+  max-height: calc(100vh - 60px);
+}
+
+.fixed-tag-height-banner {
+  //max-height: calc(100vh - 360px);
+  max-height: calc(100vh - 60px);
 }
 
 .tag_item {
