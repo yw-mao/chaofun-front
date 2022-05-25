@@ -520,9 +520,9 @@
             return;
           }
           this.loading = false;
-          if (this.draftId) {
-            this.$refs.draft.removeDraft(this.draftId)
-          }
+          // if (this.draftId) {
+          //   this.$refs.draft.removeDraft(this.draftId)
+          // }
           this.draftId = null; // 清空草稿箱
 
           this.$message.success('发布成功');
