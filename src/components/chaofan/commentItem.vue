@@ -225,7 +225,6 @@ export default {
   created() {
   },
   mounted() {
-
     // 监听是否显示操作事件
     this.$EventBus.$on("isShowCopyCommentLink", (data) => {
       this.isShowCopyCommentLinkTmp = data;
@@ -618,7 +617,8 @@ export default {
     },
     doZanComment(v, item) {
       if (v == 1) {
-        if (item.vote == 0) {
+        // 在我评论的列表里item.vote传的是null
+        if (!item.vote || item.vote == 0) {
           item.vote = 1;
           item.ups += 1;
         } else if (item.vote == -1) {
@@ -631,7 +631,8 @@ export default {
         api.upvoteComment({commentId: item.id}).then(res => {
         })
       } else {
-        if (item.vote == 0) {
+        // 在我评论的列表里item.vote传的是null
+        if (!item.vote || item.vote == 0) {
           item.vote = -1;
           item.ups -= 1;
         } else if (item.vote == 1) {
