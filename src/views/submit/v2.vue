@@ -167,6 +167,18 @@
                     <el-row>
                       <div class="checkbox-group">
                         <el-checkbox
+                            v-if="type==='image'"
+                            v-model="post.watermark"
+                            true-label="true"
+                            false-label="false"
+                            border
+                            size="medium"
+                        >
+                          <i :class="[post.watermark=== 'true' ? 'el-icon-check' : 'el-icon-plus']" />
+                          <span>水印</span>
+                        </el-checkbox>
+
+                        <el-checkbox
                           v-model="post.anonymity"
                           true-label="true"
                           false-label="false"
@@ -334,6 +346,7 @@
           ],
           voteDuration: 3,
           anonymity: 'false',
+          watermark: 'true',
           tagId: null,
           collectionId: null,
           ossNames: null,
@@ -481,6 +494,7 @@
           forumId: post.forumId,
           title: post.title,
           anonymity: post.anonymity,
+          watermark: post.watermark,
         }
         if (post.tagId) {
           params.tagId = post.tagId;
