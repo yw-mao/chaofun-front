@@ -4,8 +4,8 @@
     <div style="display: flex;margin:10px 0 20px 0;">
 
       <img
-        :src="imgOrigin + 'biz/a7a11ce394ec3bad0f25f4aead7855ec.png'"
-        alt="FBi" style="width: 36px;height: 36px;border-radius: 100%;" />
+          :src="imgOrigin + 'biz/a7a11ce394ec3bad0f25f4aead7855ec.png'"
+          alt="FBi" style="width: 36px;height: 36px;border-radius: 100%;" />
       <span style="margin: auto 5px;color: orangered;font-weight: bold; font-size: 20px;">
         {{ this.fbi }}
       </span>
@@ -33,8 +33,8 @@
       <p>  - 每发出一条评论 (评论自己的帖子不算), 奖励 1 FBi</p>
       <p>  - 向站长 (cijianzy) 反馈问题, 奖励 100 FBi</p>
       <div>
-      <p>
-        - 邀请用户注册炒饭，其他用户注册成功后，奖励 100 FBi, 邀请链接： https://chao.fun/app?inviter={{this.userInfo.userId}}
+        <p>
+          - 邀请用户注册炒饭，其他用户注册成功后，奖励 100 FBi, 邀请链接： https://chao.fun/app?inviter={{this.userInfo.userId}}
         </p>
         <el-button @click="this.copyInviterLink">点击复制链接</el-button>
       </div>
@@ -73,7 +73,7 @@
           FBi: 1000
         </p>
       </div>
-      <div @click="orderCup('cup')" style="width: 50%; display: inline-block">
+      <div @click="orderCup('cup')" style="padding-top: 20px; width: 50%; display: inline-block">
         <img style="padding-right: 10px; padding-left: 10px; width: 100%" src="https://i.chao.fun/biz/0e848c137be852a5d7999f4acd10a640.png">
         <p style="text-align: center">
           炒饭马克杯
@@ -82,7 +82,18 @@
           FBi: 1500
         </p>
       </div>
-      <div @click="getBilibili1Month" style="width: 50%; display: inline-block">
+
+      <div @click="orderCup('pillow')" style="padding-top: 20px; width: 50%; display: inline-block">
+        <img style="padding-right: 10px; padding-left: 10px; width: 100%" src="https://i.chao.fun/biz/8ac76ef85cc8096adf30863e45a27374.jpg">
+        <p style="text-align: center">
+          炒饭 抱枕 一个
+        </p>
+        <p style="text-align: center">
+          FBi: 2000
+        </p>
+      </div>
+
+      <div @click="getBilibili1Month" style="padding-top: 20px; width: 50%; display: inline-block">
         <img style="padding-right: 10px; padding-left: 10px; width: 100%" src="https://i.chao.fun/biz/9683983f7ae6a723a76fc00dd7f9a103.png">
         <p style="text-align: center">
           Bilibili月度大会员
@@ -91,16 +102,17 @@
           FBi: 2500
         </p>
       </div>
-<!--      <div @click="orderCup('tshirt')" style="width: 50%; display: inline-block">-->
-<!--        <img style="padding-right: 10px; padding-left: 10px; width: 100%" src="https://i.chao.fun/biz/e3e44a77908676ea7047c18601a0297b.png">-->
-<!--        <p style="text-align: center">-->
-<!--          炒饭 T-shirt-->
-<!--        </p>-->
-<!--        <p style="text-align: center">-->
-<!--          FBi: 7500-->
-<!--        </p>-->
-<!--      </div>-->
-      <div @click="getBilibili1Year" style="width: 50%; display: inline-block">
+      <!--      <div @click="orderCup('tshirt')" style="width: 50%; display: inline-block">-->
+      <!--        <img style="padding-right: 10px; padding-left: 10px; width: 100%" src="https://i.chao.fun/biz/e3e44a77908676ea7047c18601a0297b.png">-->
+      <!--        <p style="text-align: center">-->
+      <!--          炒饭 T-shirt-->
+      <!--        </p>-->
+      <!--        <p style="text-align: center">-->
+      <!--          FBi: 7500-->
+      <!--        </p>-->
+      <!--      </div>-->
+
+      <div @click="getBilibili1Year" style="padding-top: 20px; width: 50%; display: inline-block">
         <img style="padding-right: 10px; padding-left: 10px; width: 100%" src="https://i.chao.fun/biz/9683983f7ae6a723a76fc00dd7f9a103.png">
         <p style="text-align: center">
           Bilibili年度大会员
@@ -109,7 +121,7 @@
           FBi: 16800
         </p>
       </div>
-      <div style="width: 50%; display: inline-block">
+      <div style="padding-top: 20px; width: 50%; display: inline-block">
         <img style="padding-right: 10px; padding-left: 10px; width: 100%" src="https://i.chao.fun/biz/da67f9c40bc0f80db68e40de94b9a3f5.png">
         <p style="text-align: center">
           西兰公国 Lord (勋爵)
@@ -129,135 +141,135 @@ import * as api from "@/api/api";
 import { Dialog } from "vant";
 
 export default {
-    name: "fbi.vue",
+  name: "fbi.vue",
 
-    data() {
-      return {
-        'userInfo': {},
-        'fbi': 0,
+  data() {
+    return {
+      'userInfo': {},
+      'fbi': 0,
+    }
+  },
+  created() {
+    this.getUserInfo();
+  },
+  mounted() {
+
+  },
+
+  methods: {
+    getUserInfo() {
+      api.getUserInfo().then(
+          res => {
+            if (res.success) {
+              this.userInfo = res.data
+              this.fbi = res.data.fbi;
+            } else {
+              this.$toast(res.errorMessage)
+            }
+          }
+      )
+    },
+    copyInviterLink() {
+      var input = document.createElement('input');
+      input.setAttribute('value', 'https://chao.fun/app?inviter=' + this.userInfo.userId);
+      document.body.appendChild(input);
+      input.select();
+      var result = document.execCommand('copy');
+      document.body.removeChild(input);
+      this.$toast("复制邀请地址成功");
+      return result;
+    },
+
+    history() {
+      window.open('/webview/fbi/history',"_blank");
+    },
+
+    redPacketGet() {
+      window.open('/webview/fbi/redPacket',"_blank");
+    },
+
+    getWechatCover() {
+      Dialog.confirm({
+        title: "是否确认兑换",
+        message: `兑换会扣除 99 FBi`,
+        messageAlign: "left",
+      })
+          .then(() => {
+            api.getByPath('/api/v0/gift/getWechatCover', {}).then((res) => {
+              if (res.success) {
+                this.$message.success("已兑换, 请查看消息");
+                this.getUserInfo();
+              } else{
+                this.$message.error(res.errorMessage);
+              }
+            });
+          })
+          .catch(() => {
+            // on cancel
+          });
+    },
+
+    orderCup(type) {
+
+      try {
+        window.flutter_inappwebview.callHandler('toViewPage', {
+          url: "https://chao.fun/webview/fbi/order?type=" + type,
+          title: '下单',
+          showHeader: true
+        })
+      } catch (e) {
+        window.open(location.origin + '/webview/fbi/order?type=' + type);
       }
     },
-    created() {
-      this.getUserInfo();
-    },
-    mounted() {
 
-    },
 
-    methods: {
-      getUserInfo() {
-        api.getUserInfo().then(
-            res => {
+    getJDECard() {
+      Dialog.confirm({
+        title: "是否确认兑换",
+        message: `兑换会扣除 1000 FBi`,
+        messageAlign: "left",
+      })
+          .then(() => {
+            api.getByPath('/api/v0/gift/getJDECard', {}).then((res) => {
               if (res.success) {
-                this.userInfo = res.data
-                this.fbi = res.data.fbi;
-              } else {
-                this.$toast(res.errorMessage)
+                this.$message.success("已兑换, 请查看消息");
+                this.getUserInfo();
+              } else{
+                this.$message.error(res.errorMessage);
               }
-            }
-        )
-      },
-      copyInviterLink() {
-        var input = document.createElement('input');
-        input.setAttribute('value', 'https://chao.fun/app?inviter=' + this.userInfo.userId);
-        document.body.appendChild(input);
-        input.select();
-        var result = document.execCommand('copy');
-        document.body.removeChild(input);
-        this.$toast("复制邀请地址成功");
-        return result;
-      },
-
-      history() {
-        window.open('/webview/fbi/history',"_blank");
-      },
-
-      redPacketGet() {
-        window.open('/webview/fbi/redPacket',"_blank");
-      },
-
-      getWechatCover() {
-        Dialog.confirm({
-          title: "是否确认兑换",
-          message: `兑换会扣除 99 FBi`,
-          messageAlign: "left",
-        })
-            .then(() => {
-              api.getByPath('/api/v0/gift/getWechatCover', {}).then((res) => {
-                if (res.success) {
-                  this.$message.success("已兑换, 请查看消息");
-                  this.getUserInfo();
-                } else{
-                  this.$message.error(res.errorMessage);
-                }
-              });
-            })
-            .catch(() => {
-              // on cancel
             });
-      },
+          })
+          .catch(() => {
+            // on cancel
+          });
+    },
 
-      orderCup(type) {
-
-          try {
-            window.flutter_inappwebview.callHandler('toViewPage', {
-              url: "https://chao.fun/webview/fbi/order?type=" + type,
-              title: '下单',
-              showHeader: true
-            })
-          } catch (e) {
-            window.open(location.origin + '/webview/fbi/order?type=' + type);
-          }
-      },
-
-
-      getJDECard() {
-        Dialog.confirm({
-          title: "是否确认兑换",
-          message: `兑换会扣除 1000 FBi`,
-          messageAlign: "left",
-        })
-            .then(() => {
-              api.getByPath('/api/v0/gift/getJDECard', {}).then((res) => {
-                if (res.success) {
-                  this.$message.success("已兑换, 请查看消息");
-                  this.getUserInfo();
-                } else{
-                  this.$message.error(res.errorMessage);
-                }
-              });
-            })
-            .catch(() => {
-              // on cancel
+    getBilibili1Month() {
+      Dialog.confirm({
+        title: "是否确认兑换",
+        message: `兑换会扣除 2500 FBi`,
+        messageAlign: "left",
+      })
+          .then(() => {
+            api.getByPath('/api/v0/gift/getBilibili1Month', {}).then((res) => {
+              if (res.success) {
+                this.$message.success("已兑换, 请查看消息");
+                this.getUserInfo();
+              } else{
+                this.$message.error(res.errorMessage);
+              }
             });
-      },
-
-      getBilibili1Month() {
-        Dialog.confirm({
-          title: "是否确认兑换",
-          message: `兑换会扣除 2500 FBi`,
-          messageAlign: "left",
-        })
-            .then(() => {
-              api.getByPath('/api/v0/gift/getBilibili1Month', {}).then((res) => {
-                if (res.success) {
-                  this.$message.success("已兑换, 请查看消息");
-                  this.getUserInfo();
-                } else{
-                  this.$message.error(res.errorMessage);
-                }
-              });
-            })
-            .catch(() => {
-              // on cancel
-            });
-      },
-      getBilibili1Year() {
-        Dialog.confirm({
-          title: "是否确认兑换",
-          message: `兑换会扣除 16800 FBi`,
-          messageAlign: "left",
-        })
+          })
+          .catch(() => {
+            // on cancel
+          });
+    },
+    getBilibili1Year() {
+      Dialog.confirm({
+        title: "是否确认兑换",
+        message: `兑换会扣除 16800 FBi`,
+        messageAlign: "left",
+      })
           .then(() => {
             api.getByPath('/api/v0/gift/getBilibili1Year', {}).then((res) => {
               if (res.success) {
@@ -271,9 +283,9 @@ export default {
           .catch(() => {
             // on cancel
           });
-      }
     }
   }
+}
 </script>
 
 <style scoped>
