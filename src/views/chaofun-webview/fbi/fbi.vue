@@ -67,7 +67,7 @@
       <div @click="getMusicPackage" style="padding-top: 20px;width: 50%; display: inline-block; text-align: center">
         <img style="padding-right: 10px; padding-left: 10px; max-width: 100%; max-height: 200px" src="https://i.chao.fun/biz/1653662548745_fe793a4930f64d31a6acc0129adfc4d6.png">
         <p style="text-align: center">
-          网易云音乐包月卡
+          网易云音乐 音乐包月卡
         </p>
         <p style="text-align: center">
           FBi: 800
