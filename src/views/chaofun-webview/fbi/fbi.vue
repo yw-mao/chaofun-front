@@ -102,15 +102,15 @@
           FBi: 2500
         </p>
       </div>
-      <!--      <div @click="orderCup('tshirt')" style="width: 50%; display: inline-block">-->
-      <!--        <img style="padding-right: 10px; padding-left: 10px; width: 100%" src="https://i.chao.fun/biz/e3e44a77908676ea7047c18601a0297b.png">-->
-      <!--        <p style="text-align: center">-->
-      <!--          炒饭 T-shirt-->
-      <!--        </p>-->
-      <!--        <p style="text-align: center">-->
-      <!--          FBi: 7500-->
-      <!--        </p>-->
-      <!--      </div>-->
+            <div @click="orderCup('tshirt')" style="width: 50%; display: inline-block">
+              <img style="padding-right: 10px; padding-left: 10px; width: 100%" src="https://i.chao.fun/biz/e3e44a77908676ea7047c18601a0297b.png">
+              <p style="text-align: center">
+                炒饭 T-shirt (无L码)
+              </p>
+              <p style="text-align: center">
+                FBi: 7500
+              </p>
+            </div>
 
       <div @click="getBilibili1Year" style="padding-top: 20px; width: 50%; display: inline-block">
         <img style="padding-right: 10px; padding-left: 10px; width: 100%" src="https://i.chao.fun/biz/9683983f7ae6a723a76fc00dd7f9a103.png">
