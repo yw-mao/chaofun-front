@@ -83,6 +83,15 @@
           FBi: 1000
         </p>
       </div>
+      <div @click="getQQMusicPackage" style="padding-top: 20px; width: 50%; display: inline-block">
+        <img style="padding-right: 10px; padding-left: 10px; width: 100%" src="https://i.chao.fun/biz/1653664313972_86702ab2d35c487ca376ec939e4110d1.png">
+        <p style="text-align: center">
+          QQ音乐 绿钻1个月
+        </p>
+        <p style="text-align: center">
+          FBi: 1500
+        </p>
+      </div>
       <div @click="orderCup('cup')" style="padding-top: 20px; width: 50%; display: inline-block">
         <img style="padding-right: 10px; padding-left: 10px; width: 100%" src="https://i.chao.fun/biz/0e848c137be852a5d7999f4acd10a640.png">
         <p style="text-align: center">
@@ -232,10 +241,31 @@ export default {
       }
     },
 
+    getQQMusicPackage() {
+      Dialog.confirm({
+        title: "是否确认兑换QQ音乐1个月绿钻",
+        message: `兑换会扣除 1500 FBi`,
+        messageAlign: "left",
+      })
+          .then(() => {
+            api.getByPath('/api/v0/gift/getQQMusic', {}).then((res) => {
+              if (res.success) {
+                this.$message.success("已兑换, 请查看消息");
+                this.getUserInfo();
+              } else{
+                this.$message.error(res.errorMessage);
+              }
+            });
+          })
+          .catch(() => {
+            // on cancel
+          });
+    },
+
     getMusicPackage() {
       Dialog.confirm({
         title: "是否确认兑换网易云音乐1个月音乐包",
-        message: `兑换会扣除 1000 FBi`,
+        message: `兑换会扣除 800 FBi`,
         messageAlign: "left",
       })
           .then(() => {
