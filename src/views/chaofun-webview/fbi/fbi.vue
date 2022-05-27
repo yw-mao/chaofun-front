@@ -55,7 +55,7 @@
       注: 除勋爵外其余都支持点击自助兑换（包邮），谢谢！
     </div>
     <div style="width: 100%; ">
-      <div @click="getWechatCover" style="width: 50%; display: inline-block; text-align: center">
+      <div @click="getWechatCover" style="padding-top: 20px;width: 50%; display: inline-block; text-align: center">
         <img style="padding-right: 10px; padding-left: 10px; max-width: 100%; max-height: 200px" src="https://i.chao.fun/biz/76b1d8fd9240d15b3520e9085662b415.png">
         <p style="text-align: center">
           微信炒饭娘红包封面
@@ -64,6 +64,16 @@
           FBi: 99
         </p>
       </div>
+      <div @click="getMusicPackage" style="padding-top: 20px;width: 50%; display: inline-block; text-align: center">
+        <img style="padding-right: 10px; padding-left: 10px; max-width: 100%; max-height: 200px" src="https://i.chao.fun/biz/1653662548745_fe793a4930f64d31a6acc0129adfc4d6.png">
+        <p style="text-align: center">
+          网易云音乐包月卡
+        </p>
+        <p style="text-align: center">
+          FBi: 800
+        </p>
+      </div>
+
       <div @click="getJDECard" style="width: 50%; display: inline-block">
         <img style="padding-right: 10px; padding-left: 10px; width: 100%" src="https://i.chao.fun/biz/fc21232af2fa1849c3f0853b8748224c.png">
         <p style="text-align: center">
@@ -102,15 +112,15 @@
           FBi: 2500
         </p>
       </div>
-            <div @click="orderCup('tshirt')" style="width: 50%; display: inline-block">
-              <img style="padding-right: 10px; padding-left: 10px; width: 100%" src="https://i.chao.fun/biz/e3e44a77908676ea7047c18601a0297b.png">
-              <p style="text-align: center">
-                炒饭 T-shirt (无L码)
-              </p>
-              <p style="text-align: center">
-                FBi: 7500
-              </p>
-            </div>
+      <div @click="orderCup('tshirt')" style="padding-top: 20px;width: 50%; display: inline-block">
+        <img style="padding-right: 10px; padding-left: 10px; width: 100%" src="https://i.chao.fun/biz/e3e44a77908676ea7047c18601a0297b.png">
+        <p style="text-align: center">
+          炒饭 T-shirt (无L码)
+        </p>
+        <p style="text-align: center">
+          FBi: 7500
+        </p>
+      </div>
 
       <div @click="getBilibili1Year" style="padding-top: 20px; width: 50%; display: inline-block">
         <img style="padding-right: 10px; padding-left: 10px; width: 100%" src="https://i.chao.fun/biz/9683983f7ae6a723a76fc00dd7f9a103.png">
@@ -222,6 +232,26 @@ export default {
       }
     },
 
+    getMusicPackage() {
+      Dialog.confirm({
+        title: "是否确认兑换网易云音乐1个月音乐包",
+        message: `兑换会扣除 1000 FBi`,
+        messageAlign: "left",
+      })
+          .then(() => {
+            api.getByPath('/api/v0/gift/getMusic', {}).then((res) => {
+              if (res.success) {
+                this.$message.success("已兑换, 请查看消息");
+                this.getUserInfo();
+              } else{
+                this.$message.error(res.errorMessage);
+              }
+            });
+          })
+          .catch(() => {
+            // on cancel
+          });
+    },
 
     getJDECard() {
       Dialog.confirm({
