@@ -166,6 +166,10 @@
       //   console.log(res)
       // })
       let self = this;
+      if (this.$route.query.type != null) {
+        this.imageSource = this.$route.query.type;
+      }
+
       document.onkeydown=function(event){
           var e = event || window.event || arguments.callee.caller.arguments[0];
           if(e && e.keyCode==39){//右
