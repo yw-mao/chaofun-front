@@ -422,7 +422,7 @@
  .right_desc{
    padding-left:20px;
    color:#999;
-   padding-top: 39px;
+   padding-top: 40px;
    line-height: 24px;
  }
 </style>
