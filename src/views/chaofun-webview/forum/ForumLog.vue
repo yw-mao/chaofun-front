@@ -17,9 +17,9 @@
           <span>删除了</span>
           <span v-if="item.targetUser" @click.stop="toUser(item.targetUser)" class="username user_name">【{{item.targetUser.userName}}】</span>
           <span>在的帖子</span>
-          <span @click="toDetail(item.comment.post)" class="tiezi_title">【{{item.comment.post.title.length>15?item.comment.post.title.slice(0,15)+'...':item.comment.post.title}}】</span>
+          <span @click="toDetail(item.post)" class="tiezi_title">【{{item.post.title.length>15?item.post.title.slice(0,15)+'...':item.post.title}}】</span>
           <span>下的评论</span>
-          <span @click="toDetail(item.comment.post)" class="tiezi_title">【{{item.comment.text.length>15?item.comment.text.length.slice(0,15)+'...':item.comment.text.length}}】</span>
+          <span @click="toDetail(item.post)" class="tiezi_title">【{{item.comment.text.length>15?item.comment.text.length.slice(0,15)+'...':item.comment.text.length}}】</span>
         </div>
       </div>
     </div>
@@ -54,6 +54,14 @@ export default {
         console.log('123');
         this.list = res.data;
       })
+    },
+    toDetail(item){
+      // this.$router.push({name: 'articleDetail',params:{postId: item.post.postId}})
+      let routeData = this.$router.resolve({
+        name: "articleDetail",
+        params: {postId: item.post.postId},
+      });
+      window.open(routeData.href, '_blank');
     },
   }
 }
