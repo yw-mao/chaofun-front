@@ -52,7 +52,7 @@ export default {
     forumLogList() {
       api.getByPath('/api/v0/forum/listLogs', { 'forumId': this.forumId, 'pageSize': 100 }).then((res) => {
         console.log('123');
-        this.list = res;
+        this.list = res.data;
       })
     },
   }
