@@ -41,6 +41,10 @@
       </div>
 
       <div class="bottom">
+        <div @click="toForumLog" class="btns">版块日志</div>
+      </div>
+
+      <div class="bottom">
         <div @click="toManageTag" class="btns">版块标签</div>
       </div>
 
@@ -261,6 +265,17 @@ export default {
           showHeader: true
         })      } catch (e) {
         window.open(location.origin + '/webview/forum/analytics?forumId=' + this.forumId);
+      }
+    },
+
+    toForumLog() {
+      try {
+        window.flutter_inappwebview.callHandler('toViewPage', {
+          url: "https://chao.fun/webview/forum/log" + "?forumId=" + this.forumId,
+          title: '版块统计',
+          showHeader: true
+        })      } catch (e) {
+        window.open(location.origin + '/webview/forum/log?forumId=' + this.forumId);
       }
     },
 

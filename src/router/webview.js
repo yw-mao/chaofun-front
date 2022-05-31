@@ -64,6 +64,13 @@ routes = [
     hidden: true
   },
   {
+    path: '/webview/forum/log',
+    component: () => import('@/views/chaofun-webview/forum/ForumLog'),
+    name: 'ForumLog',
+    meta: { title: '版块日志'},
+    hidden: true
+  },
+  {
     path: '/webview/forum/tag',
     component: () => import('@/views/chaofun-webview/forum/tag'),
     name: 'forumtag',
