@@ -19,7 +19,7 @@
           <span>在的帖子</span>
           <span @click="toDetail(item.post)" class="tiezi_title">【{{item.post.title.length>15?item.post.title.slice(0,15)+'...':item.post.title}}】</span>
           <span>下的评论</span>
-          <span @click="toDetail(item.post)" class="tiezi_title">【{{item.comment.text.length>15?item.comment.text.length.slice(0,15)+'...':item.comment.text.length}}】</span>
+          <span @click="toDetail(item.post)" class="tiezi_title">【{{item.comment.text.length>15?item.comment.text.length.slice(0,15)+'...':item.comment.text}}】</span>
         </div>
       </div>
     </div>
