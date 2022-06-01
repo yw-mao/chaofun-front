@@ -271,10 +271,11 @@ export default {
     toForumLog() {
       try {
         window.flutter_inappwebview.callHandler('toViewPage', {
-          url: "https://chao.fun/webview/forum/log" + "?forumId=" + this.forumId,
-          title: '版块统计',
+          url: "https://chao.fun/webview/forum/log?forumId=" + this.forumId,
+          title: '版块日志',
           showHeader: true
-        })      } catch (e) {
+        })
+      } catch (e) {
         window.open(location.origin + '/webview/forum/log?forumId=' + this.forumId);
       }
     },
