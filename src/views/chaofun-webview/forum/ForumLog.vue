@@ -7,7 +7,7 @@
           <span>删除了</span>
           <span v-if="item.targetUser" @click.stop="toUser(item.targetUser)" class="username user_name">【{{item.targetUser.userName}}】</span>
           <span>的帖子</span>
-          <span @click="toDetail(item.post)" class="tiezi_title">【{{item.post.title.length>15?item.post.title.slice(0,15)+'...':item.post.title}}】</span>
+          <span v-if="item.post.title"  @click="toDetail(item.post)" class="tiezi_title">【{{item.post.title.length>15?item.post.title.slice(0,15)+'...':item.post.title}}】</span>
         </div>
       </div>
 
@@ -19,7 +19,7 @@
           <span>在的帖子</span>
           <span @click="toDetail(item.post)" class="tiezi_title">【{{item.post.title.length>15?item.post.title.slice(0,15)+'...':item.post.title}}】</span>
           <span>下的评论</span>
-          <span @click="toDetail(item.post)" class="tiezi_title">【{{item.comment.text.length>15?item.comment.text.length.slice(0,15)+'...':item.comment.text}}】</span>
+          <span v-if="item.comment.text" @click="toDetail(item.post)" class="tiezi_title">【{{item.comment.text.length>15?item.comment.text.slice(0,50)+'...':item.comment.text}}】</span>
         </div>
       </div>
     </div>
