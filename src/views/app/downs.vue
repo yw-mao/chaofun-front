@@ -202,12 +202,7 @@ import * as api from '../../api/api'
                     hreff = "market://details?id=com.chao.app"; // 官网下载地址  也可以跳到应用宝
                 }
                 try{
-                    if(isHuawei){
-                        window.open('https://chao.fun/chaofan.apk',"_blank");
-                    }else{
-                        window.location.href = hreff;
-                    }
-                    // window.open(hreff,"_blank");
+                    window.location.href = hreff;
                 }catch(e){
                     window.open('https://chao.fun/chaofan.apk',"_blank");
                 }

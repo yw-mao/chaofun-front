@@ -239,7 +239,6 @@ export default {
     },
 
     orderCup(type) {
-
       try {
         window.flutter_inappwebview.callHandler('toViewPage', {
           url: "https://chao.fun/webview/fbi/order?type=" + type,
