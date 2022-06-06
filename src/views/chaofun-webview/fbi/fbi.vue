@@ -112,6 +112,16 @@
         </p>
       </div>
 
+      <div @click="orderCup('mask')" style="padding-top: 20px;width: 50%; display: inline-block">
+        <img style="padding-right: 10px; padding-left: 10px; width: 100%" src="https://i.chao.fun/biz/1654480598414_3451e4cf70784419a54c1476224101f0.png">
+        <p style="text-align: center">
+          炒饭口罩 30 个（独立包装）
+        </p>
+        <p style="text-align: center">
+          FBi: 2500
+        </p>
+      </div>
+
       <div @click="getBilibili1Month" style="padding-top: 20px; width: 50%; display: inline-block">
         <img style="padding-right: 10px; padding-left: 10px; width: 100%" src="https://i.chao.fun/biz/9683983f7ae6a723a76fc00dd7f9a103.png">
         <p style="text-align: center">
