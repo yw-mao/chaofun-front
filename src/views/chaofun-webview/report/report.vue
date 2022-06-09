@@ -10,7 +10,29 @@
             版块: {{item.postInfo.forum.name}}
           </div>
           <div @click="toPost(item.postInfo.postId)" style="font-size: 16px">
-            标题：{{item.postInfo.title}}
+            标题&内容：{{item.postInfo.title}}
+          </div>
+          <div v-if="item.postInfo.type == 'image'">
+            <div  v-if="item.postInfo.images" class="comImgs">
+              <viewer :images="images" ref="viewer" style="line-height: 0px" >
+                <div v-for="(i,k) in item.postInfo.images" :key="k">
+                      <span class="aaa">
+                        <img  style="opacity:0;width:60px;height:60px" :src="imgOrigin+i+'?x-oss-process=image/resize,h_60/format,webp/quality,q_75'" :data-source="imgOrigin+i" >
+                        <div :src="imgOrigin+i+'?x-oss-process=image/resize,h_60/format,webp/quality,q_75'" :data-source="imgOrigin+i" :style="{'background-image':'url('+imgOrigin+i+')','background-size':'cover',width:'60px',height:'60px'}" ></div>
+                      </span>
+                </div>
+              </viewer>
+            </div>
+            <div v-else>
+              <viewer :images="doImgs(item.postInfo.imageName)" ref="viewer" style="line-height: 0px" >
+                <div v-for="(i,k) in item.postInfo.imageName.split(',')" :key="k">
+                            <span class="aaa">
+                              <img  style="opacity:0;width:60px;height:60px" :src="imgOrigin+i+'?x-oss-process=image/resize,h_60/format,webp/quality,q_75'" :data-source="imgOrigin+i" >
+                              <div :src="imgOrigin+i+'?x-oss-process=image/resize,h_60/format,webp/quality,q_75'" :data-source="imgOrigin+i" :style="{'background-image':'url('+imgOrigin+i+')','background-size':'cover',width:'60px',height:'60px'}" ></div>
+                            </span>
+                </div>
+              </viewer>
+            </div>
           </div>
           <div @click="toPost(item.postInfo.postId)" style="font-size: 16px">
             用户：{{item.postInfo.userInfo.userName}}
@@ -18,6 +40,7 @@
           <div @click="toPost(item.postInfo.postId)" style="font-size: 16px">
             举报原因：{{item.reason}}
           </div>
+
           <div>
             <el-button @click="dealReport(item.id, 'ignore')">不处理</el-button>
             <el-button @click="dealReport(item.id, 'delete')">删除内容</el-button>
@@ -27,7 +50,6 @@
 
 
         <div style="border-bottom: 1px solid #f1f1f1;" v-if="item.type === 'comment'" >
-
           <div @click="toPost(item.postInfo.postId)" style="font-size: 20px; font-weight: bold">
             评论 {{doCommentType(item.commentInfo)}}
           </div>
@@ -36,6 +58,21 @@
           </div>
           <div @click="toPost(item.postInfo.postId)" style="font-size: 16px">
             内容：{{item.commentInfo.text}}
+          </div>
+          <span v-if="item.commentInfo.imageNames" class="comImgs">
+                    <viewer :images="doImgs(item.commentInfo.imageNames)" ref="viewer" style="line-height: 0px" >
+                        <div v-for="(i,k) in item.commentInfo.imageNames.split(',')" :key="k">
+                            <span class="aaa">
+<!--                                【附图】-->
+                              <img  style="opacity:0;width:60px;height:60px" :src="imgOrigin+i+'?x-oss-process=image/resize,h_60/format,webp/quality,q_75'" :data-source="imgOrigin+i" >
+                              <div :src="imgOrigin+i+'?x-oss-process=image/resize,h_60/format,webp/quality,q_75'" :data-source="imgOrigin+i" :style="{'background-image':'url('+imgOrigin+i+')','background-size':'cover',width:'60px',height:'60px'}" ></div>
+                            </span>
+                        </div>
+                    </viewer>
+            <!-- <a v-for="(i,k) in item.imageNames.split(',')" :key="k" :href="imgOrigin+i" target="_blank">【附图】</a> -->
+                </span>
+          <div @click="toPost(item.postInfo.postId)" style="font-size: 16px">
+            原帖标题: {{item.postInfo.title}}
           </div>
           <div @click="toPost(item.postInfo.postId)" style="font-size: 16px">
             用户：{{item.commentInfo.userInfo.userName}}
@@ -89,12 +126,22 @@ export default {
       var t = item.type;
       switch (t) {
         case "media":
-          return "有图(请点击查看详情)";
+          return "有图";
+          break;
+        case "audio":
+          return "音频";
           break;
         default:
           return ""
       }
 
+    },
+    doImgs(item) {
+      var a = item.split(',');
+      a.forEach(it => {
+        it = this.imgOrigin + it;
+      })
+      this.is = a;
     },
     doType(item) {
       var t = item.type;
@@ -137,6 +184,7 @@ export default {
         window.open('/p/' + id.toString(), "_blank");
       }
     },
+
     dealReport(id, action) {
 
 
@@ -177,4 +225,66 @@ export default {
   width: 90vw;
   max-width: 400px;
 }
+.subims{
+  position: absolute;
+  left: 0;
+  top: 20px;
+  a {
+    + a {
+      margin-left: 6px;
+    }
+  }
+}
+
+.aaa {
+
+  position: relative;
+  //width: 50px;
+  //height: 30px;
+  // background: #ddd;
+  display: inline-block;
+  overflow: hidden;
+  color: #1890ff;
+  padding-right: 4px;
+  padding-top: 2px;
+
+  &:hover {
+    color: red;
+
+    .futu {
+      opacity: 1;
+      width: 150px;
+      height: auto;
+      left: 60px;
+      top: 0;
+    }
+  }
+
+  img {
+    position: absolute;
+    width: initial;
+    height: initial;
+    right: 10px;
+    top: 0;
+    bottom: 0;
+    left: 10px;
+    opacity: 0;
+    z-index: 10;
+  }
+}
+.comImgs {
+  padding-bottom: 10px !important;
+
+  img {
+    width: 100px;
+    height: 100px;
+    border-radius: 4px;
+    margin-right: 6px;
+  }
+
+  div {
+    display: inline-block;
+  }
+}
+
 </style>

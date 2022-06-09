@@ -1,40 +1,40 @@
 <template>
   <div>
-     <div v-for="(item,index) in treeData" :key="index" :id="'commentItem_'+item.id" class="comment_item">
+    <div v-for="(item,index) in treeData" :key="index" :id="'commentItem_'+item.id" class="comment_item">
       <div :class="['c_left',{'c_left2':ISPHONE}]">
         <div class="lay">
-                <img v-if="item.vote != 1" @click.stop="doZanComment(1, item)" src="../../assets/images/icon/up.png" alt="" />
-                <img v-if="item.vote == 1" @click.stop="doZanComment(1, item)" src="../../assets/images/icon/up_active.png" alt="" />
+          <img v-if="item.vote != 1" @click.stop="doZanComment(1, item)" src="../../assets/images/icon/up.png" alt="" />
+          <img v-if="item.vote == 1" @click.stop="doZanComment(1, item)" src="../../assets/images/icon/up_active.png" alt="" />
         </div>
         <div class="lay">
           <p>{{ item.ups - item.downs }}</p>
         </div>
         <div class="lay">
-                <img v-if="item.vote != -1" @click.stop="doZanComment(2, item)" src="../../assets/images/icon/down.png" alt="" />
-                <img v-if="item.vote == -1" @click.stop="doZanComment(2, item)" src="../../assets/images/icon/down_active.png" alt="" />
+          <img v-if="item.vote != -1" @click.stop="doZanComment(2, item)" src="../../assets/images/icon/down.png" alt="" />
+          <img v-if="item.vote == -1" @click.stop="doZanComment(2, item)" src="../../assets/images/icon/down_active.png" alt="" />
         </div>
       </div>
       <div class="c_content">
         <div :class="getCommentUserinfoClazz(item)">
-                <img style="object-fit: cover;" :src="imgOrigin+item.userInfo.icon+'?x-oss-process=image/resize,h_40/format,webp/quality,q_75'" alt="">
-                <span  @click.stop="toUser(item.userInfo)" class="username">{{item.userInfo.userName}}</span>
-                <span v-if="item.userInfo.userTag" title="用户在版块的标签" class="tag">{{item.userInfo.userTag.data}}</span>
-                <span class="time" v-if="humanizeTimeFormat" @click="changeTimeFormat" title="点击切换时间格式">{{moment.duration(moment(item.gmtCreate) - moment()).humanize(true)}}</span>
-                <span class="time" v-else @click="changeTimeFormat" title="点击切换时间格式">{{moment(item.gmtCreate).format('YYYY年MM月DD日 HH:mm:ss')}}</span>
+          <img style="object-fit: cover;" :src="imgOrigin+item.userInfo.icon+'?x-oss-process=image/resize,h_40/format,webp/quality,q_75'" alt="">
+          <span  @click.stop="toUser(item.userInfo)" class="username">{{item.userInfo.userName}}</span>
+          <span v-if="item.userInfo.userTag" title="用户在版块的标签" class="tag">{{item.userInfo.userTag.data}}</span>
+          <span class="time" v-if="humanizeTimeFormat" @click="changeTimeFormat" title="点击切换时间格式">{{moment.duration(moment(item.gmtCreate) - moment()).humanize(true)}}</span>
+          <span class="time" v-else @click="changeTimeFormat" title="点击切换时间格式">{{moment(item.gmtCreate).format('YYYY年MM月DD日 HH:mm:ss')}}</span>
 
           <!-- <div class="zan_shu" style="display:inline-block;padding-left:20px;"> <span>{{item.ups - item.downs}}个赞</span></div> -->
-                <div v-if="item.forumAdminHighlight" class="zan_shu" style="display:inline-block;padding-left:20px;">版主高亮中</div>
-                <div v-if="ISPHONE&&(!postInfo.disableComment||postInfo.forumAdmin)" @click="toReplay2(item)" class="zan_shu" style="display:inline-block;padding-left:20px;">回复</div>
-                <div v-if="!ISPHONE&&(!postInfo.disableComment||postInfo.forumAdmin)" @click="toReplay(item)" class="zan_shu" style="display:inline-block;padding-left:20px;">回复</div>
-                <div v-if="item.canDeleted" @refreshDelete="refreshDelete" @click="deleteComment(item)" class="to_delete">删除</div>
-                <div v-if="item.forumAdmin&&item.forumAdminHighlight"  @click="unHighlightComment(item)" class="to_delete">取消高亮</div>
-                <div v-if="item.forumAdmin&&!item.forumAdminHighlight"  @click="highlightComment(item)" class="to_delete">设为高亮</div>
-                <div v-if="isShowCopyCommentLinkTmp" class="to_delete" @click="copyCommentLink(item)">复制链接</div>
-                <div v-if="$store.state.user.islogin&&isShowReportCommentTmp&&userinfo.userId!=item.userInfo.userId" class="to_delete" @click="showReportDialog(item)">
-                  <i class="el-icon-warning-outline" style="margin-right: 3px;color:red;"/><span style="color: red;">举报</span>
-                </div>
+          <div v-if="item.forumAdminHighlight" class="zan_shu" style="display:inline-block;padding-left:20px;">版主高亮中</div>
+          <div v-if="ISPHONE&&(!postInfo.disableComment||postInfo.forumAdmin)" @click="toReplay2(item)" class="zan_shu" style="display:inline-block;padding-left:20px;">回复</div>
+          <div v-if="!ISPHONE&&(!postInfo.disableComment||postInfo.forumAdmin)" @click="toReplay(item)" class="zan_shu" style="display:inline-block;padding-left:20px;">回复</div>
+          <div v-if="item.canDeleted" @refreshDelete="refreshDelete" @click="deleteComment(item)" class="to_delete">删除</div>
+          <div v-if="item.forumAdmin&&item.forumAdminHighlight"  @click="unHighlightComment(item)" class="to_delete">取消高亮</div>
+          <div v-if="item.forumAdmin&&!item.forumAdminHighlight"  @click="highlightComment(item)" class="to_delete">设为高亮</div>
+          <div v-if="isShowCopyCommentLinkTmp" class="to_delete" @click="copyCommentLink(item)">复制链接</div>
+          <div v-if="$store.state.user.islogin&&isShowReportCommentTmp&&userinfo.userId!=item.userInfo.userId" class="to_delete" @click="showReportDialog(item)">
+            <i class="el-icon-warning-outline" style="margin-right: 3px;color:red;"/><span style="color: red;">举报</span>
           </div>
-            <div class="content" :style="getCommentContentStyle(item)">
+        </div>
+        <div class="content" :style="getCommentContentStyle(item)">
           <p v-if="!item.atUsers" v-html="islink(item.text)"></p>
           <p v-if="item.atUsers" @click="clickComment($event)" v-html="doText(item)"></p>
           <span v-if="item.imageNames" class="comImgs">
@@ -49,20 +49,20 @@
                     </viewer>
             <!-- <a v-for="(i,k) in item.imageNames.split(',')" :key="k" :href="imgOrigin+i" target="_blank">【附图】</a> -->
                 </span>
-              <div v-if="item.audio" >
-                <audio
-                       webkit-playsinline="true"
-                       x-webkit-airplay="true"
-                       playsinline="true"
-                       x5-video-player-type="h5"
-                       x5-video-orientation="h5"
-                       x5-video-player-fullscreen="true"
-                       controls
-                       :src="imgOrigin+item.audio"
-                       alt="">
-                </audio>
-                <!-- <a v-for="(i,k) in item.imageNames.split(',')" :key="k" :href="imgOrigin+i" target="_blank">【附图】</a> -->
-              </div>
+          <div v-if="item.audio" >
+            <audio
+                webkit-playsinline="true"
+                x-webkit-airplay="true"
+                playsinline="true"
+                x5-video-player-type="h5"
+                x5-video-orientation="h5"
+                x5-video-player-fullscreen="true"
+                controls
+                :src="imgOrigin+item.audio"
+                alt="">
+            </audio>
+            <!-- <a v-for="(i,k) in item.imageNames.split(',')" :key="k" :href="imgOrigin+i" target="_blank">【附图】</a> -->
+          </div>
         </div>
         <!-- <div v-if="item.type=='media'" class="comImgs">
             <img v-for="(i,k) in item.imageNames.split(',')" :key="k" :src="imgOrigin+i+''" alt="">
@@ -73,52 +73,52 @@
         <!-- {{replayItem}}{{item.id}} -->
         <div v-if="replayItem&&(replayItem.id==item.id)" class="replayInput">
           <div v-show="showAt" class="atuser">
-                    <div v-for="(it,ins) in atUsers" :key="ins" @click="chooseAt($event,it)" class="at_item">
+            <div v-for="(it,ins) in atUsers" :key="ins" @click="chooseAt($event,it)" class="at_item">
               {{ it.userName }}
             </div>
           </div>
-                <div v-if="replayItem" @click="cancelReplay" style="padding: 6px 0px;cursor:pointer;float:right;">取消回复</div>
-                <el-input style="font-size:14px;" ref="subCommentInputMark"
-                v-on:focus="inputFocus" @keyup.native="bindInput"
-                v-on:blur="inputBlur" type="textarea"
-                v-model="comment" class="textarea"
-                :placeholder="replayItem?'我对'+replayItem.userInfo.userName+'说：'+'(Ctrl+V 可粘贴图片)':'发表你的想法'+'(Ctrl+V 可粘贴图片)'"
-                :autosize="{ minRows: 2, maxRows: 4}">
+          <div v-if="replayItem" @click="cancelReplay" style="padding: 6px 0px;cursor:pointer;float:right;">取消回复</div>
+          <el-input style="font-size:14px;" ref="subCommentInputMark"
+                    v-on:focus="inputFocus" @keyup.native="bindInput"
+                    v-on:blur="inputBlur" type="textarea"
+                    v-model="comment" class="textarea"
+                    :placeholder="replayItem?'我对'+replayItem.userInfo.userName+'说：'+'(Ctrl+V 可粘贴图片)':'发表你的想法'+'(Ctrl+V 可粘贴图片)'"
+                    :autosize="{ minRows: 2, maxRows: 4}">
           </el-input>
-                <div class="reply_button" v-loading="imagesUploading">
-                    <div class="subims" v-if="images.length">
+          <div class="reply_button" v-loading="imagesUploading">
+            <div class="subims" v-if="images.length">
               <a v-for="img in images" :key="img" :href="imgOrigin+img" target="_blank">[附图]</a>
             </div>
-                    <el-button style="height:36px;" type="primary" v-if="replayItem&&(replayItem.id==item.id)" @click="toSub" title="快捷键：Ctrl+Enter">回复</el-button>
+            <el-button style="height:36px;" type="primary" v-if="replayItem&&(replayItem.id==item.id)" @click="toSub" title="快捷键：Ctrl+Enter">回复</el-button>
             <el-upload
-                    class="avatar-uploader"
-                    action="/api/upload_image"
-                    name="file"
+                class="avatar-uploader"
+                action="/api/upload_image"
+                name="file"
                 :data="filedata"
-                    :show-file-list="false"
-                    :on-success="handleAvatarSuccess"
-                    :before-upload="beforeAvatarUpload"
-                    :on-exceed="handleAvatarExceed"
+                :show-file-list="false"
+                :on-success="handleAvatarSuccess"
+                :before-upload="beforeAvatarUpload"
+                :on-exceed="handleAvatarExceed"
                 :limit="imagesLimit"
                 multiple
-                    accept="image/*"
+                accept="image/*"
                 style="display:inline-block;"
-                    ref="replyImageUpload"
+                ref="replyImageUpload"
             >
-                        <img style="vertical-align:middle;margin-right:10px;cursor:pointer;" src="../../assets/images/icon/choose.png" alt="">
+              <img style="vertical-align:middle;margin-right:10px;cursor:pointer;" src="../../assets/images/icon/choose.png" alt="">
             </el-upload>
             <div class="icons">
-                        <img @click="showIcons" src="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=105646479,4120396531&fm=26&gp=0.jpg" alt="">
+              <img @click="showIcons" src="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=105646479,4120396531&fm=26&gp=0.jpg" alt="">
               <div class="emoji">
-                        <span v-for="(item,index) in icons" @click="chooseEmoji(item)" :key="index">{{item}}</span>
+                <span v-for="(item,index) in icons" @click="chooseEmoji(item)" :key="index">{{item}}</span>
               </div>
             </div>
           </div>
         </div>
         <div v-if="!withoutSubComment&&item.children&&item.children.length">
-                <commentitem ref="subCommentItemMark" :postInfo="{postOwnerUserId:postInfo.postOwnerUserId,isPostOwnerHighlight:postInfo.isPostOwnerHighlight}"
+          <commentitem ref="subCommentItemMark" :postInfo="{postOwnerUserId:postInfo.postOwnerUserId,isPostOwnerHighlight:postInfo.isPostOwnerHighlight}"
                        :is-show-copy-comment-link="isShowCopyCommentLinkTmp"
-                @rep="rep" @refreshComment="refreshComment" @refreshDelete="refreshDelete" @toReplay2="toReplay2" :showRep="showR" :treeData="item.children"></commentitem>
+                       @rep="rep" @refreshComment="refreshComment" @refreshDelete="refreshDelete" @toReplay2="toReplay2" :showRep="showR" :treeData="item.children"></commentitem>
           <!-- <div  v-for="(item,index) in item.children" :key="index" class="comment_item">
               <div class="c_left">
                   <img @click.stop="doZanComment(1,item)" src="../../assets/images/icon/up.png" alt="">
