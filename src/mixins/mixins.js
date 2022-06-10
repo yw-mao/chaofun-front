@@ -12,7 +12,7 @@ export default {
   },
   data() {
     return {
-      imgOrigin: 'https://i.chao.fun/',
+      imgOrigin: 'http://47.114.76.196/',
       defaultUserIcon: 'f58b7f52d7c801ba0806e2125a776a44.png',
       ISPHONE: document.body.clientWidth > 800 && !navigator.userAgent.includes('iPad') ? false : true,
       imgMaxWidth: document.body.clientWidth - 100,

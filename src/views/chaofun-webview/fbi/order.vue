@@ -9,7 +9,7 @@
     </div>
     <div>
       <div> 附：Tshirt 尺码表 </div>
-      <img style="padding-right: 10px; padding-left: 10px; width: 100%" src="https://i.chao.fun/biz/1653661535749_34ceba8b87684ddeade0df1cd4213606.png">
+      <img style="padding-right: 10px; padding-left: 10px; width: 100%" src="http://47.114.76.196/biz/1653661535749_34ceba8b87684ddeade0df1cd4213606.png">
     </div>
     <div>
 

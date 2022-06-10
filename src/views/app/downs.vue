@@ -6,7 +6,7 @@
         </div>
         <div class="logo_con">
             <div style="height: 140px;">
-                <img src="https://i.chao.fun/biz/08a2d3a676f4f520cb99910496e48b4e.png?x-oss-process=image/resize,h_80/format,webp/quality,q_75" alt="">
+                <img src="http://47.114.76.196/biz/08a2d3a676f4f520cb99910496e48b4e.png?x-oss-process=image/resize,h_80/format,webp/quality,q_75" alt="">
             </div>
             
             <div class="app_name">
@@ -246,7 +246,7 @@ import * as api from '../../api/api'
     &::-webkit-scrollbar{
         display:none;
     }
-    // background: url('https://i.chao.fun/biz/94aaa9cd9cdd920c969dd073ebb41869.jpg');
+    // background: url('http://47.114.76.196/biz/94aaa9cd9cdd920c969dd073ebb41869.jpg');
     
     // height: 100vh;
 }

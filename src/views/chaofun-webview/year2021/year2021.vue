@@ -73,19 +73,19 @@
       <div class="year_2021_title" style=" font-weight: bold; font-size: 24px; color: #FF9300;  width: 100%">
         你获得的年度徽章
         <div v-if="this.year2021.total_ups_rank <= 10" @click="toBadge(11)" style="width: 100%;  text-align: center;">
-          <img src="https://i.chao.fun/biz/c4b9870e41eb2d27c52370251765704c.png" style="display: inline-block; vertical-align: middle;">
+          <img src="http://47.114.76.196/biz/c4b9870e41eb2d27c52370251765704c.png" style="display: inline-block; vertical-align: middle;">
           <div style="color: #4E7DB8">炒饭2021白金</div>
         </div>
         <div v-else-if="this.year2021.total_ups_rank <= 50" @click="toBadge(10)"  style="width: 100%;  text-align: center;">
-          <img src="https://i.chao.fun/biz/c01094eabfc82a18337f85a25de29b21.png" style="align-items: center;">
+          <img src="http://47.114.76.196/biz/c01094eabfc82a18337f85a25de29b21.png" style="align-items: center;">
           <div style="color: #F35E23">炒饭2021黄金</div>
         </div>
         <div v-else-if="this.year2021.total_ups_rank <= 150" @click="toBadge(9)" style="width: 100%;  text-align: center;">
-          <img src="https://i.chao.fun/biz/7a49afb7f3c5478405759787a8ae45c6.png" style="align-items: center;">
+          <img src="http://47.114.76.196/biz/7a49afb7f3c5478405759787a8ae45c6.png" style="align-items: center;">
           <div style="color: #677C94">炒饭2021白银</div>
         </div>
         <div v-else-if="this.year2021.total_ups_rank <= 350" @click="toBadge(8)" style="width: 100%;  text-align: center;">
-          <img src="https://i.chao.fun/biz/9cf8273f24cddf5b33bead625f7bcd79.png" style="align-items: center;">
+          <img src="http://47.114.76.196/biz/9cf8273f24cddf5b33bead625f7bcd79.png" style="align-items: center;">
           <div style="color: #6A9191">炒饭2021青铜</div>
         </div>
         <div v-else style="color: black">

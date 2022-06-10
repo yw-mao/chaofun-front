@@ -69,11 +69,11 @@
             
             <div class="ls">Web端版主功能入库--Web 版块页面右上角</div>
             <div>
-                <img src="https://i.chao.fun/biz/d48b9daf9b762918274afda6ef544cd5.png" alt="">
+                <img src="http://47.114.76.196/biz/d48b9daf9b762918274afda6ef544cd5.png" alt="">
             </div>
             <div class="ls">App端版主功能入口--App 版块首页右上角</div>
             <div>
-                <img style="width:50%;" src="https://i.chao.fun/biz/3ecffcc7d085359d23979f105ff34a08.jpg" alt="">
+                <img style="width:50%;" src="http://47.114.76.196/biz/3ecffcc7d085359d23979f105ff34a08.jpg" alt="">
             </div>
             
         </div>

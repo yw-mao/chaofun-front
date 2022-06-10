@@ -21,7 +21,7 @@
                 <div class="right_main">
                     <div v-for="(item,index) in listsData" :key="index"  @click="toUrl({path:'/f/'+item.id})">
                         <div class="item">
-                          <img :src="'https://i.chao.fun/'+item.imageName+'?x-oss-process=image/resize,h_80/format,webp/quality,q_75'" alt="">
+                          <img :src="'http://47.114.76.196/'+item.imageName+'?x-oss-process=image/resize,h_80/format,webp/quality,q_75'" alt="">
                           <div class="center">
                             <div class="name">{{item.name}}</div>
 
@@ -66,7 +66,7 @@
                 <div class="right_main">
                     <div v-for="(item,index) in listsData" :key="index"  @click="toUrl({path:'/f/'+item.id})">
                         <div class="item">
-                          <img :src="'https://i.chao.fun/'+item.imageName+'?x-oss-process=image/resize,h_80/format,webp/quality,q_75'" alt="">
+                          <img :src="'http://47.114.76.196/'+item.imageName+'?x-oss-process=image/resize,h_80/format,webp/quality,q_75'" alt="">
                           <div class="center">
                             <div class="name">{{item.name}}</div>
 

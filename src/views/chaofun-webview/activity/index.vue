@@ -140,12 +140,12 @@ export default {
       if(this.version == 'new'){
         params = {
           method: 'viewImage',
-          data: {imgSrc: ['https://i.chao.fun/'+'biz/10c40905c46e8c9c65d8d95b9fb25bdf.jpg'],index:0},
+          data: {imgSrc: ['http://47.114.76.196/'+'biz/10c40905c46e8c9c65d8d95b9fb25bdf.jpg'],index:0},
         }
       }else{
         params = {
           type: 'viewImage',
-          query: {imgSrc: 'https://i.chao.fun/'+'biz/10c40905c46e8c9c65d8d95b9fb25bdf.jpg'},
+          query: {imgSrc: 'http://47.114.76.196/'+'biz/10c40905c46e8c9c65d8d95b9fb25bdf.jpg'},
         }
       }
 
