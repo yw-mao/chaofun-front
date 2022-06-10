@@ -10,8 +10,7 @@ const port = process.env.port || process.env.npm_config_port || 8099
 const isProduction = process.env.NODE_ENV === 'production';
 
 // 线上打包路径，请根据项目实际线上情况
-const BASE_URL = process.env.NODE_ENV === "production" ? "https://s.chao.fun/" : "/";
-
+const BASE_URL = process.env.NODE_ENV === "production" ? "/" : "/";
 const fs = require('fs');
 
 // directory to check if exists
