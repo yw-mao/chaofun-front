@@ -18,7 +18,7 @@
       if (this.redirectUrl) {
         this.getUserToken();
       } else {
-        window.location.href = 'https://chao.fun';
+        window.location.href = 'http://47.96.98.153';
       }
     },
     mounted() {

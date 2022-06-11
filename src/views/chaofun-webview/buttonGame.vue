@@ -81,7 +81,7 @@
     </div>
     <div class="fixed_bottom">
       <div @click="toIndex" class="left_b">讨论区</div>
-      <div v-clipboard:copy="'https://chao.fun/webview/buttonGame'" v-clipboard:success="onCopy" class="left_b">复制游戏链接</div>
+      <div v-clipboard:copy="'http://47.96.98.153/webview/buttonGame'" v-clipboard:success="onCopy" class="left_b">复制游戏链接</div>
     </div>
     <van-dialog v-model="showR" confirmButtonText="我知道了">
       <div class="rtitle">游戏规则</div>
@@ -247,7 +247,7 @@ export default {
       try {
         // window.flutter_inappwebview.callHandler('toAppIndex', {})
         window.flutter_inappwebview.callHandler('toViewPage', {
-          url: "https://chao.fun/all",
+          url: "http://47.96.98.153/all",
           title: '炒饭网页首页',
           showHeader: true
         })
@@ -272,7 +272,7 @@ export default {
       try {
         // window.flutter_inappwebview.callHandler('toAppIndex', {})
         window.flutter_inappwebview.callHandler('toViewPage', {
-          url: 'https://chao.fun/webview/fbi',
+          url: 'http://47.96.98.153/webview/fbi',
           title: '饭币 (FBi)',
           showHeader: true
         })

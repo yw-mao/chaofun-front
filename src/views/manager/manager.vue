@@ -143,11 +143,11 @@
         <div  v-show="nowIndex===4">
           <div v-for="(item,lists) in applyList"  style="width: 100%; padding-top: 10px">
             <div v-if="item.type == 'apply_mod'">
-              <div> 用户 <a :href="'https://chao.fun/user/' + item.applyUserInfo.userId" >{{item.applyUserInfo.userName}} (赞: {{item.applyUserInfo.ups}})</a> 申请版块 <a :href="'https://chao.fun/f/' + item.forumInfo.id">{{item.forumInfo.name}}</a> 版主 </div>
+              <div> 用户 <a :href="'http://47.96.98.153/user/' + item.applyUserInfo.userId" >{{item.applyUserInfo.userName}} (赞: {{item.applyUserInfo.ups}})</a> 申请版块 <a :href="'http://47.96.98.153/f/' + item.forumInfo.id">{{item.forumInfo.name}}</a> 版主 </div>
               <div> 原因为 {{item.arg1}}</div>
             </div>
             <div v-if="item.type == 'apply_forum'">
-              <div> 用户 <a :href="'https://chao.fun/user/' + item.applyUserInfo.userId" >{{item.applyUserInfo.userName}} (赞: {{item.applyUserInfo.ups}})</a>  申请创建版块 {{item.arg1}} </div>
+              <div> 用户 <a :href="'http://47.96.98.153/user/' + item.applyUserInfo.userId" >{{item.applyUserInfo.userName}} (赞: {{item.applyUserInfo.ups}})</a>  申请创建版块 {{item.arg1}} </div>
               <div> 原因为 {{item.arg2}}</div>
             </div>
             <div>

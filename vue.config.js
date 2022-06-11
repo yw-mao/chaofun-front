@@ -164,7 +164,7 @@ module.exports = {
     port: port, // 端口
     proxy: {
       '/api':{
-        target: `https://chao.fun/api`,
+        target: `http://47.96.98.153/api`,
         changeOrigin: true,
         pathRewrite: {
           '^/api': ''
