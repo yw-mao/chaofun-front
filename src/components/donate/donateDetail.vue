@@ -97,7 +97,7 @@
           <el-input-number v-model="fbi" :min=5 :step=5 />
         </div>
         <div style="margin-top: 20px;">
-          <div style="font-weight: bold;width: 100%;">赠言</div>
+          <div style="font-weight: bold;width: 100%;">赠言(违规会封号)</div>
           <el-input v-model="reason" autocomplete="off" style="width: 200px;"></el-input>
         </div>
 
