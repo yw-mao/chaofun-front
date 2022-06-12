@@ -23,7 +23,7 @@
                 </div>
               </viewer>
             </div>
-            <div v-else>
+            <div v-else-if="item.postInfo.imageName">
               <viewer :images="doImgs(item.postInfo.imageName)" ref="viewer" style="line-height: 0px" >
                 <div v-for="(i,k) in item.postInfo.imageName.split(',')" :key="k">
                             <span class="aaa">
@@ -45,7 +45,7 @@
             <el-button @click="dealReport(item.id, 'ignore')">不处理</el-button>
             <el-button @click="dealReport(item.id, 'delete')">删除内容</el-button>
             <el-button @click="dealReport(item.id, 'publish_sex')">处罚：色情+删除</el-button>
-            <el-button @click="dealReport(item.id, 'publish_politics')">处罚：政治+删除</el-button>
+            <el-button @click="dealReport(item.id, 'punish_politic')">处罚：政治+删除</el-button>
             <el-button @click="dealReport(item.id, 'malicious')">恶意举报</el-button>
           </div>
         </div>
@@ -121,7 +121,41 @@
             <el-button @click="dealReport(item.id, 'clear_user_thing')">清空所有</el-button>
           </div>
         </div>
-      </div>
+
+<!--        <div style="border-bottom: 1px solid #f1f1f1;" v-if="item.type === 'user'" >-->
+<!--          <div @click="t(item.userInfo)" style="font-size: 20px; font-weight: bold">-->
+<!--            用户 {{item.userInfo.userName}}-->
+<!--          </div>-->
+<!--          <div @click="toUser(item.userInfo)" style="font-size: 16px">-->
+<!--            用户描述&头像：{{item.userInfo.desc}}-->
+<!--          </div>-->
+<!--          <span v-if="item.userInfo.icon" class="comImgs">-->
+<!--                    <viewer :images="doImgs(item.userInfo.icon)" ref="viewer" style="line-height: 0px" >-->
+<!--                        <div v-for="(i,k) in item.userInfo.icon.split(',')" :key="k">-->
+<!--                            <span class="aaa">-->
+<!--&lt;!&ndash;                                【附图】&ndash;&gt;-->
+<!--                              <img  style="opacity:0;width:60px;height:60px" :src="imgOrigin+i+'?x-oss-process=image/resize,h_60/format,webp/quality,q_75'" :data-source="imgOrigin+i" >-->
+<!--                              <div :src="imgOrigin+i+'?x-oss-process=image/resize,h_60/format,webp/quality,q_75'" :data-source="imgOrigin+i" :style="{'background-image':'url('+imgOrigin+i+')','background-size':'cover',width:'60px',height:'60px'}" ></div>-->
+<!--                            </span>-->
+<!--                        </div>-->
+<!--                    </viewer>-->
+<!--            &lt;!&ndash; <a v-for="(i,k) in item.imageNames.split(',')" :key="k" :href="imgOrigin+i" target="_blank">【附图】</a> &ndash;&gt;-->
+<!--                </span>-->
+<!--          <div @click="toUser(item.userInfo)" style="font-size: 16px">-->
+<!--            举报原因：{{item.reason}}-->
+<!--          </div>-->
+<!--          <div>-->
+<!--            <el-button @click="dealReport(item.id, 'ignore')">不处理</el-button>-->
+<!--            <el-button @click="dealReport(item.id, 'clear_user_name')">清空用户名</el-button>-->
+<!--            <el-button @click="dealReport(item.id, 'clear_user_desc')">清空描述</el-button>-->
+<!--            <el-button @click="dealReport(item.id, 'clear_user_icon')">清空头像</el-button>-->
+<!--            <el-button @click="dealReport(item.id, 'clear_user_thing')">清空所有</el-button>-->
+<!--          </div>-->
+<!--        </div>-->
+
+<!--      </div>-->
+
+
     </div>
     <div v-else>
       暂无举报
@@ -248,7 +282,7 @@ export default {
           })
         })
 
-      } else if (action === 'publish_plitics') {
+      } else if (action === 'punish_politic') {
         this.$confirm(`是否执行政治处罚（永久封禁）并删除内容？`, "提示", {
           type: "warning",
         }).then(() => {

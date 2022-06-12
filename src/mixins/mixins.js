@@ -89,6 +89,13 @@ export default {
         // this.$router.push({name: 'userhome',params:{id: userInfo.userId,userInfo}})
       }
     },
+    toForum(item){
+      try {
+        window.flutter_inappwebview.callHandler('toAppForum',{forumId: item.id+''})
+      } catch (e) {
+        window.open(location.origin + '/f/'+item.id,"_blank");
+      }
+    },
     toUserById(userInfo) {
       localStorage.removeItem('storedata')
       localStorage.removeItem('spage')
