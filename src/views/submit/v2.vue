@@ -474,20 +474,22 @@
           }
           const { type, post } = this;
           if (type === 'image' && (!post.ossNames || post.ossNames.length < 1)) {
-            this.$message.error('请上传至少一张图片或一个视频！');
-            return;
+            // 如果直接改this.type会造成UI变化
+            this.doSubmit('article');
           }
-          this.doSubmit();
+          else {
+            this.doSubmit(this.type);
+          }
         });
       },
       // 提交操作
-      async doSubmit() {
+      async doSubmit(type) {
         this.loading = true;
         const loginStatus = await this.doLoginStatus();
         if (!loginStatus) {
           return;
         }
-        const { type, post } = this;
+        const { post } = this;
         let result;
         // 公共参数
         const params = {
