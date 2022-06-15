@@ -226,7 +226,7 @@ export default {
       currentChannelId: 0,
       inputText: "",
 
-      url: `${location.protocol === "https:" ? "wss" : "ws"}://${location.host}/ws/v0/all`,
+      url: `ws://47.96.98.153/ws/v0/all`,
       ws: null,
 
       fileData: {},
