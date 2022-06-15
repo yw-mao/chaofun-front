@@ -226,7 +226,7 @@ export default {
       currentChannelId: 0,
       inputText: "",
 
-      url: `wss://chao.fan/ws/v0/all`,
+      url: `${location.protocol === "https:" ? "wss" : "ws"}://${location.host}/ws/v0/all`,
       ws: null,
 
       fileData: {},
