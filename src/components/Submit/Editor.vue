@@ -161,6 +161,7 @@ export default {
     position: relative;
     bottom: 0px;
     top: 0px;
+    min-height: 300px;
   }
 }
 .toastui-editor-popup-body {
