@@ -172,7 +172,7 @@
                             <div class="col_title">合集：《{{pagedata.collection.name}}》</div>
                             <div @click="toDetail(it)" v-for="(it,inds) in collectList" :key="inds" class="col_item">
                               <div :style="{'background-image': `url(${doColBg(it)})`}" class="col_img">
-                                <!-- <img src="http://47.114.76.196/biz/de1910aadfac6f7b7fbef647e7ff4b1b.jpeg" alt=""> -->
+                                <!-- <img src="https://i.chao.fan/biz/de1910aadfac6f7b7fbef647e7ff4b1b.jpeg" alt=""> -->
                               </div>
                               <div class="c_main">
                                 <div class="cc_title"><span class="sim_tab">[{{doType(it)}}]</span> {{it.title}}</div>
@@ -203,7 +203,7 @@
         <div v-if="!hasData" class="is404">
           <div>
             <div class="s404">
-              <img src="http://47.114.76.196/biz/d5eb6aa7ed1fb2a5a0a04abbcc170e03.png" alt="">
+              <img src="https://i.chao.fan/biz/d5eb6aa7ed1fb2a5a0a04abbcc170e03.png" alt="">
             </div>
             <p>帖子已被删除或不存在 <span @click="back" class="lookother">看看其他 ></span></p>
           </div>

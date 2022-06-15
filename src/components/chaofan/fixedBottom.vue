@@ -2,7 +2,7 @@
  <div>  
     <div v-if="ISPHONE&&show" class="fixed_bottom">
         <div class="logo">
-            <img src="http://47.114.76.196/biz/08a2d3a676f4f520cb99910496e48b4e.png?x-oss-process=image/resize,h_80/format,webp/quality,q_75" alt="">
+            <img src="https://i.chao.fan/biz/08a2d3a676f4f520cb99910496e48b4e.png?x-oss-process=image/resize,h_80/format,webp/quality,q_75" alt="">
         </div>
         <div class="center">
             <div class="title">炒饭超Fun</div>
