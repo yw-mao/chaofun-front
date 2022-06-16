@@ -37,12 +37,6 @@
       </div>
     </el-radio-group>
     <div class="tag-buttons">
-      <el-button
-        :disabled="tag === null"
-        @click="confirmTag"
-        type="primary"
-        round
-      >选 择</el-button>
       <el-button @click="clearTag" round>清除选择</el-button>
     </div>
 
@@ -99,6 +93,7 @@ export default {
     // 修改Tag
     changeTag(label) {
       this.tag = this.tags.find(tag => tag.id === label);
+      this.confirmTag();
     },
     // 设置Tag
     async setTag(label) {
