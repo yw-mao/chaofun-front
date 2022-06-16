@@ -1,6 +1,6 @@
 <template>
 <div>
-  <baidu-map :center="center" :zoom="zoom" @ready="handler" @click="click" class="bm-view" @focus>
+  <baidu-map :center="center" :zoom="zoom" @ready="handler" @ @click="click" class="bm-view" @focus>
     <bm-marker v-if="this.lng != null" :position="{lng: this.lng, lat: this.lat}" :dragging="true" animation="BMAP_ANIMATION_BOUNCE">
       <bm-label content="你选择了" :labelStyle="{color: 'red', fontSize : '24px'}" :offset="{width: -35, height: 30}"/>
     </bm-marker>
@@ -26,6 +26,9 @@ export default {
       lat: null,
     }
   },
+  mounted() {
+    map.centerAndZoom(new BMap.Point(116.404, 39.915), 11);
+  },
   methods: {
     handler ({BMap, map}) {
       console.log(BMap, map)
@@ -35,10 +38,14 @@ export default {
     },
 
     click(e) {
-      console.log(e)
+      console.log(e);
+      console.log('123');
+
+      // map.centerAndZoom(new BMap.Point(116.404, 39.915), 11);
+
       console.log(e.Bg);
-      this.lng = e.Bg.lng;
-      this.lat = e.Bg.lat;
+      this.lng = e.point.lng;
+      this.lat = e.point.lat;
     },
   }
 }
