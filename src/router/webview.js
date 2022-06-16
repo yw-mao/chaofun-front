@@ -249,6 +249,13 @@ routes = [
     hidden: true
   },
   {
+    path: '/tuxun',
+    component: () => import('@/views/tuxun/TXHome'),
+    name: 'tuxun',
+    meta: { title: 'tuxun'},
+    hidden: true
+  },
+  {
     path: '/webview/forumIntro',
     component: () => import('@/views/activity/help/forumIntro'),
     name: 'webViewForumIntro',
