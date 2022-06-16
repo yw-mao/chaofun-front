@@ -35,12 +35,6 @@
     </el-form>
 
     <div class="collection-buttons">
-      <el-button
-        :disabled="collection === null"
-        @click="confirmCollection"
-        type="primary"
-        round
-      >选 择</el-button>
       <el-button @click="clearCollection" round>清除选择</el-button>
     </div>
 
@@ -92,6 +86,7 @@ export default {
     changeCollection(label) {
       this.collection = this.collections.find(collection => collection.id === label)
       this.$emit('input', label);
+      this.confirmCollection();
     },
     // 设置Collection Id
     setCollection(label) {
