@@ -80,7 +80,7 @@ export default {
     },
     confirm() {
       if (this.lng == null) {
-        this.$toast('')
+        this.$toast('还未在地图上选择地点，请选择！');
         return;
       }
       this.zoom = 20;
