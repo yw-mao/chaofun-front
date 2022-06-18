@@ -1,6 +1,5 @@
 <template>
   <div>
-
     <img v-if="image" class="im-view" :src="imgOrigin+ this.image" alt="">
     </img>
     <div class="home">
@@ -29,6 +28,12 @@
       <el-button v-if="confirmed && returnResult">距离 {{distance}} 千米</el-button>
       <el-button v-if="confirmed" @click="next">下一题</el-button>
       <el-button v-if="!confirmed"  @click="confirm">确定选择</el-button>
+    </div>
+
+    <div class="topRight">
+      <div>
+        在线人数：{{this.onlineNums}}
+      </div>
     </div>
   </div>
 </template>
@@ -60,49 +65,54 @@ export default {
       distance: null,
       image: null,
       id: null,
+      url: `${location.protocol === "https:" ? "wss" : "ws"}://${location.host}/ws/v0/tuxun`,
+      // url: `ws://127.0.0.1:8080/ws/v0/tuxun`,
+      ws: null,
+      onlineNums: 0,
     }
   },
   mounted() {
     // this.resizeScreen();
+    if (this.ws) {
+      this.ws.close();
+    }
+    this.ws = new WebSocket(this.url);
+    this.ws.onopen = this.wsOnOpen;
+    this.ws.onmessage = this.wsOnMessage;
+    // this.ws.onerror = this.wsOnError;
+    // this.ws.onclose = this.wsOnClose;
+
     this.next();
   },
 
 
   methods: {
+
+    wsOnOpen(e) {
+      console.log("wsOnOpen");
+      // console.log(e);
+
+      // 每3秒发送一次心跳
+      setInterval(() => {
+        this.sendHeartBeat();
+      }, 3000);
+    },
+
+    //
+    wsOnMessage(e) {
+      console.log("wsOnMessage");
+      // console.log(e);
+      const data = JSON.parse(e.data);
+      // console.log(data);
+
+      this.onlineNums = data.data.onlineNums;
+    },
+      // 发送心跳
+    sendHeartBeat() {
+      this.wsSend(`{"scope": "heart_beat"}`);
+    },
     resizeScreen() {
-      const _this = this;
-      // 利用 CSS3 旋转 对根容器逆时针旋转 90 度
-      const detectOrient = function() {
-        let width = document.documentElement.clientWidth,
-            height = document.documentElement.clientHeight,
-            $wrapper = _this.$refs.view, // 这里是页面最外层元素
-            style = "";
-        if (width >= height) {
-          // 横屏
-          style += "width:" + width + "px;"; // 注意旋转后的宽高切换
-          style += "height:" + height + "px;";
-          style += "-webkit-transform: rotate(0); transform: rotate(0);";
-          style += "-webkit-transform-origin: 0 0;";
-          style += "transform-origin: 0 0;";
-        } else {
-          // 竖屏
-          style += "width:" + height + "px;";
-          style += "height:" + width + "px;";
-          style +=
-              "-webkit-transform: rotate(90deg); transform: rotate(90deg);";
-          // 注意旋转中点的处理
-          style +=
-              "-webkit-transform-origin: " +
-              width / 2 +
-              "px " +
-              width / 2 +
-              "px;";
-          style += "transform-origin: " + width / 2 + "px " + width / 2 + "px;";
-        }
-        $wrapper.style.cssText = style;
-      };
-      window.onresize = detectOrient;
-      detectOrient();
+
     },
     handler ({BMap, map}) {
       console.log(BMap, map)
@@ -210,5 +220,11 @@ export default {
   position: absolute;
   top: 20px;
   left: 20px;
+}
+
+.topRight {
+  position: absolute;
+  top: 20px;
+  right: 20px;
 }
 </style>
