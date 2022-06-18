@@ -1,8 +1,17 @@
 <template>
   <div>
-    <img v-if="image" class="im-view" :src="imgOrigin+ this.image" alt="">
 
+    <img v-if="image" class="im-view" :src="imgOrigin+ this.image" alt="">
     </img>
+    <div class="home">
+      <div>
+        <el-button @click="toForum"> 社区讨论 </el-button>
+      </div>
+
+      <div style="padding-top: 10px">
+        <el-button @click="toRank"> 排行榜 </el-button>
+      </div>
+    </div>
     <baidu-map :center="center" :zoom="zoom" :scroll-wheel-zoom="true" :auto-resize="true" @ready="handler" @ @click="click" class="bm-view">
       <bm-marker v-if="this.lng != null" :position="{lng: this.lng, lat: this.lat}" :dragging="true" animation="BMAP_ANIMATION_BOUNCE">
         <bm-label content="你选择了" :labelStyle="{color: 'red', fontSize : '24px'}" :offset="{width: -35, height: 30}"/>
@@ -54,14 +63,52 @@ export default {
     }
   },
   mounted() {
+    // this.resizeScreen();
     this.next();
   },
+
+
   methods: {
+    resizeScreen() {
+      const _this = this;
+      // 利用 CSS3 旋转 对根容器逆时针旋转 90 度
+      const detectOrient = function() {
+        let width = document.documentElement.clientWidth,
+            height = document.documentElement.clientHeight,
+            $wrapper = _this.$refs.view, // 这里是页面最外层元素
+            style = "";
+        if (width >= height) {
+          // 横屏
+          style += "width:" + width + "px;"; // 注意旋转后的宽高切换
+          style += "height:" + height + "px;";
+          style += "-webkit-transform: rotate(0); transform: rotate(0);";
+          style += "-webkit-transform-origin: 0 0;";
+          style += "transform-origin: 0 0;";
+        } else {
+          // 竖屏
+          style += "width:" + height + "px;";
+          style += "height:" + width + "px;";
+          style +=
+              "-webkit-transform: rotate(90deg); transform: rotate(90deg);";
+          // 注意旋转中点的处理
+          style +=
+              "-webkit-transform-origin: " +
+              width / 2 +
+              "px " +
+              width / 2 +
+              "px;";
+          style += "transform-origin: " + width / 2 + "px " + width / 2 + "px;";
+        }
+        $wrapper.style.cssText = style;
+      };
+      window.onresize = detectOrient;
+      detectOrient();
+    },
     handler ({BMap, map}) {
       console.log(BMap, map)
       this.center.lng = 106.0
       this.center.lat = 38.8
-      this.zoom = 5;
+      this.zoom = 1;
       this.map = map;
       this.BMap = BMap;
 
@@ -99,8 +146,16 @@ export default {
           {lng: res.data.lng, lat: res.data.lat}
         ]
       });
+
     },
 
+    toForum(){
+      try {
+        window.flutter_inappwebview.callHandler('toAppForum',{forumId: 84+''})
+      } catch (e) {
+        window.open(location.origin + '/f/84',"_blank");
+      }
+    },
     next() {
       this.confirmed = false;
       this.returnResult = true;
@@ -121,6 +176,9 @@ export default {
       console.log("hahah");
       console.log(e)
       this.map = e;
+    },
+    toRank() {
+      this.$toast('敬请期待');
     }
   }
 }
@@ -146,6 +204,11 @@ export default {
   position: absolute;
   bottom: 30px;
   right: 30px;
-  width: 300px;
+  width: 250px;
+}
+.home {
+  position: absolute;
+  top: 20px;
+  left: 20px;
 }
 </style>
