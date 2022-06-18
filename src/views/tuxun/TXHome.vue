@@ -68,7 +68,7 @@ export default {
       url: `${location.protocol === "https:" ? "wss" : "ws"}://${location.host}/ws/v0/tuxun`,
       // url: `ws://127.0.0.1:8080/ws/v0/tuxun`,
       ws: null,
-      onlineNums: 0,
+      onlineNums: 1,
     }
   },
   mounted() {
@@ -225,6 +225,6 @@ export default {
 .topRight {
   position: absolute;
   top: 20px;
-  right: 20px;
+  left: 50%;
 }
 </style>
