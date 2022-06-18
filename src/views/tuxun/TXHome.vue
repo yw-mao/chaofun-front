@@ -17,7 +17,7 @@
     </baidu-map>
 
     <div class="confirm">
-      <el-button v-if="confirmed && returnResult"  @click="confirm">距离 {{distance}} 千米</el-button>
+      <el-button v-if="confirmed && returnResult">距离 {{distance}} 千米</el-button>
       <el-button v-if="confirmed" @click="next">下一题</el-button>
       <el-button v-if="!confirmed"  @click="confirm">确定选择</el-button>
     </div>

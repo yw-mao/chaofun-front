@@ -1,14 +1,14 @@
 <template>
   <div>
     <img v-if="image" class="im-view" :src="imgOrigin+ this.image" alt="">
-
     </img>
 
 
     <div class="confirm">
-      <el-button v-if="confirmed && returnResult"  @click="confirm">距离 {{distance}} 千米</el-button>
-      <el-button v-if="confirmed" @click="next">下一题</el-button>
-      <el-button v-if="!confirmed"  @click="confirm">确定选择</el-button>
+      <el-button v-if="confirmed && returnResult">距离 {{distance}} 千米</el-button>
+      <el-button @click="last">上一题</el-button>
+      <el-button @click="next">下一题 {{this.index}}</el-button>
+      <el-button @click="deleteQ">删除题目</el-button>
     </div>
   </div>
 </template>
@@ -40,9 +40,27 @@ export default {
       distance: null,
       image: null,
       id: null,
+      index: -1,
     }
   },
   mounted() {
+    let self = this;
+    document.onkeydown=function(event){
+      console.log("hahah");
+      var e = event || window.event || arguments.callee.caller.arguments[0];
+      console.log(e);
+
+      if(e && e.keyCode==37){//左
+          self.last()
+      }
+      if(e && e.keyCode==39){//右
+          self.next()
+      }
+
+      if(e && e.keyCode==40){//上
+          self.deleteQ()
+      }
+    };
     this.next();
   },
   methods: {
@@ -67,27 +85,16 @@ export default {
         this.lat = e.point.lat;
       }
     },
-    confirm() {
-      if (this.lng == null) {
-        this.$toast('还未在地图上选择地点，请选择！');
-        return;
-      }
-      this.zoom = 20;
-      this.map.setZoom(0);
-      this.$toast('确认成功！')
-
-      this.confirmed = true;
-      api.getByPath("/api/v0/tuxun/game/confirm", {id: this.id, lng: this.lng, lat: this.lat}).then(res => {
-        this.confirmed = true;
-        this.targetLng = res.data.lng;
-        this.targetLat = res.data.lat;
-        this.distance = (res.data.distanceMeter / 1000).toFixed(2);
-
-        this.polylinePath = [
-          {lng: this.lng, lat: this.lat},
-          {lng: res.data.lng, lat: res.data.lat}
-        ]
+    deleteQ() {
+      api.getByPath("/api/v0/tuxun/game/delete", {id: this.id}).then(res => {
+        this.index = this.index -1;
+        this.next();
       });
+    },
+
+    last() {
+      this.index  = this.index -2 ;
+      this.next();
     },
 
     next() {
@@ -100,7 +107,8 @@ export default {
       this.targetLng = null;
       this.image = null;
       this.distance = null;
-      api.getByPath("/api/v0/tuxun/game/generate", null).then(res => {
+      this.index = this.index + 1;
+      api.getByPath("/api/v0/tuxun/game/generateQueue", {index: this.index}).then(res => {
             this.image = res.data.content;
             this.id  = res.data.id;
           }
