@@ -256,6 +256,13 @@ routes = [
     hidden: true
   },
   {
+    path: '/tuxunAdmin',
+    component: () => import('@/views/tuxun/TXAdmin'),
+    name: 'tuxunAdmin',
+    meta: { title: 'tuxunAdmin'},
+    hidden: true
+  },
+  {
     path: '/webview/forumIntro',
     component: () => import('@/views/activity/help/forumIntro'),
     name: 'webViewForumIntro',
