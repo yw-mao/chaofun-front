@@ -65,8 +65,8 @@ export default {
       distance: null,
       image: null,
       id: null,
-      url: `${location.protocol === "https:" ? "wss" : "ws"}://${location.host}/ws/v0/tuxun`,
-      // url: `ws://127.0.0.1:8080/ws/v0/tuxun`,
+      // url: `${location.protocol === "https:" ? "wss" : "ws"}://${location.host}/ws/v0/tuxun`,
+      url: `ws://127.0.0.1:8080/ws/v0/tuxun`,
       ws: null,
       onlineNums: 1,
     }
@@ -104,8 +104,15 @@ export default {
       // console.log(e);
       const data = JSON.parse(e.data);
       // console.log(data);
-
-      this.onlineNums = data.data.onlineNums;
+      if (data.data.type === 'tick') {
+        this.onlineNums = data.data.onlineNums;
+        if (data.data.chooseLat != null) {
+          this.confirmed = true;
+          this.lat = data.data.chooseLat;
+          this.lng = data.data.chooseLng;
+        }
+        this.image = data.data.content;
+      }
     },
       // 发送心跳
     sendHeartBeat() {
@@ -167,20 +174,20 @@ export default {
       }
     },
     next() {
-      this.confirmed = false;
-      this.returnResult = true;
-      this.polylinePath = false;
-      this.lng = null;
-      this.lat = null;
-      this.targetLat = null;
-      this.targetLng = null;
-      this.image = null;
-      this.distance = null;
-      api.getByPath("/api/v0/tuxun/game/generate", null).then(res => {
-            this.image = res.data.content;
-            this.id  = res.data.id;
-          }
-      );
+      // this.confirmed = false;
+      // this.returnResult = true;
+      // this.polylinePath = false;
+      // this.lng = null;
+      // this.lat = null;
+      // this.targetLat = null;
+      // this.targetLng = null;
+      // this.image = null;
+      // this.distance = null;
+      // api.getByPath("/api/v0/tuxun/game/generate", null).then(res => {
+      //       this.image = res.data.content;
+      //       this.id  = res.data.id;
+      //     }
+      // );
     },
     mapReady(e) {
       console.log("hahah");
