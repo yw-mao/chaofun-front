@@ -94,15 +94,7 @@ export default {
     }
   },
   mounted() {
-    // this.resizeScreen();
-    if (this.ws) {
-      this.ws.close();
-    }
-    this.ws = new WebSocket(this.url);
-    this.ws.onopen = this.wsOnOpen;
-    this.ws.onmessage = this.wsOnMessage;
-    // this.ws.onclose = this.wsOnClose;
-
+    this.initWS();
     this.next();
   },
 
@@ -111,6 +103,17 @@ export default {
   },
 
   methods: {
+
+    initWS() {
+      // this.resizeScreen();
+      if (this.ws) {
+        this.ws.close();
+      }
+      this.ws = new WebSocket(this.url);
+      this.ws.onopen = this.wsOnOpen;
+      this.ws.onmessage = this.wsOnMessage;
+      this.ws.onclose = this.wsOnClose;
+    },
 
     wsOnOpen(e) {
       console.log("wsOnOpen");
@@ -184,7 +187,12 @@ export default {
         this.$toast(data.data.noteMessage);
       }
     },
-      // 发送心跳
+    wsOnClose(e) {
+      this.initWS();
+      console.log("wsOnClose");
+    },
+
+    // 发送心跳
     sendHeartBeat() {
       this.wsSend(`{"scope": "heart_beat"}`);
     },
