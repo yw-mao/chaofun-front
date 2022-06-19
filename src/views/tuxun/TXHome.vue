@@ -7,9 +7,9 @@
         <el-button @click="toForum"> 社区讨论 </el-button>
       </div>
 
-      <div style="padding-top: 10px">
-        <el-button @click="toRank"> 天梯排行榜 </el-button>
-      </div>
+<!--      <div style="padding-top: 10px">-->
+<!--        <el-button @click="toRank"> 天梯排行榜 </el-button>-->
+<!--      </div>-->
     </div>
     <baidu-map :center="center" :zoom="zoom" :scroll-wheel-zoom="true" :auto-resize="true" @ready="handler" @ @click="click" class="bm-view">
       <bm-marker v-if="this.lng != null" :position="{lng: this.lng, lat: this.lat}" :dragging="true" animation="BMAP_ANIMATION_BOUNCE">
