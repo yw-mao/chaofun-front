@@ -690,10 +690,6 @@ export default {
 
     wsOnClose(e) {
       console.log("wsOnClose");
-      // console.log(e);
-
-      // TODO
-      // wsInit();
     },
 
     // 初始化

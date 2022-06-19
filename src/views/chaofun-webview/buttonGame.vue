@@ -453,7 +453,6 @@ export default {
         this.newCommentUserName = redata.lastCommentUserName;
         this.now_timestamp = redata.now_timestamp;
         this.lastGetPriceTimestamp = redata.lastGetPriceTime;
-
         this.showNotificationAndRecord(redata);
         this.clickTimes = redata.clickTimes;
       } else if (redata.type == 'selfInfo') {

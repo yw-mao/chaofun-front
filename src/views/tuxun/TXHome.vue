@@ -1,15 +1,22 @@
 <template>
   <div>
-    <img v-if="image" class="im-view" :src="imgOrigin+ this.image" alt="">
-    </img>
-    <div class="home">
-      <div>
-        <el-button @click="toForum"> 社区讨论 </el-button>
+    <div class="im-view">
+      <img style=" width: 100%;height: 100%;object-fit: contain;" v-if="image" :src="imgOrigin+ this.image" alt=""></img>
+      <div v-if="status === 'rank'" style=" position: absolute; width: 100%; height: 100%; background: white; opacity: 80% ">
+        <div style="padding-top: 50px; font-weight: bold; font-size: 20px">排行榜:</div>
+        <div v-for="item in this.ranks" class="item">
+            <div class="left">
+              <img :src="imgOrigin+item.userAO.icon + '?x-oss-process=image/resize,h_80/format,webp/quality,q_75'" alt="">
+              <div class="info">
+                <div class="title">{{item.userAO.userName}}</div>
+<!--                <p v-if="item.userAO.desc" class="desc">{{item.userAO.desc}}</p>-->
+              </div>
+            </div>
+            <div class="right">距离
+              <p>{{ (item.distance / 1000.0).toFixed(2) }} 千米</p>
+            </div>
+        </div>
       </div>
-
-<!--      <div style="padding-top: 10px">-->
-<!--        <el-button @click="toRank"> 天梯排行榜 </el-button>-->
-<!--      </div>-->
     </div>
     <baidu-map :center="center" :zoom="zoom" :scroll-wheel-zoom="true" :auto-resize="true" @ready="handler" @ @click="click" class="bm-view">
       <bm-marker v-if="this.lng != null" :position="{lng: this.lng, lat: this.lat}" :dragging="true" animation="BMAP_ANIMATION_BOUNCE">
@@ -25,14 +32,25 @@
     </baidu-map>
 
     <div class="confirm">
-      <el-button v-if="confirmed && returnResult">距离 {{distance}} 千米</el-button>
-      <el-button v-if="confirmed" @click="next">下一题</el-button>
-      <el-button v-if="!confirmed"  @click="confirm">确定选择</el-button>
+      <el-button v-if="confirmed && distance">距离 {{distance.toFixed(2)}} 千米</el-button>
+      <el-button v-if="!confirmed && status !== 'rank'"  @click="confirm">确定选择</el-button>
+      <el-button v-if="confirmed && !distance">等待答案</el-button>
     </div>
 
     <div class="topRight">
-      <div>
+      <div style="font-size: 20px; font-weight: bold; color: white;  -webkit-text-stroke: 0.8px black;">
         在线人数：{{this.onlineNums}}
+      </div>
+      <div v-if="timeLeft &&( this.status === 'wait' || this.status === 'wait_result')" style="font-size: 20px; font-weight: bold; color: white;  -webkit-text-stroke: 0.8px black;">
+        选择倒计时: {{Math.round(timeLeft)}}
+      </div>
+      <div v-if="timeLeft && this.status === 'rank'" style="font-size: 20px; font-weight: bold; color: white;  -webkit-text-stroke: 0.8px black; ">
+        下一题: {{Math.round(timeLeft)}}
+      </div>
+    </div>
+    <div class="home">
+      <div>
+        <el-button @click="toForum"> 社区讨论 </el-button>
       </div>
     </div>
   </div>
@@ -65,10 +83,14 @@ export default {
       distance: null,
       image: null,
       id: null,
-      // url: `${location.protocol === "https:" ? "wss" : "ws"}://${location.host}/ws/v0/tuxun`,
-      url: `ws://127.0.0.1:8080/ws/v0/tuxun`,
+      url: `${location.protocol === "https:" ? "wss" : "ws"}://${location.host}/ws/v0/tuxun`,
+      // url: `ws://127.0.0.1:8080/ws/v0/tuxun`,
       ws: null,
       onlineNums: 1,
+      status: null,
+      rank: null,
+      timeLeft: null,
+      ranks: []
     }
   },
   mounted() {
@@ -79,12 +101,14 @@ export default {
     this.ws = new WebSocket(this.url);
     this.ws.onopen = this.wsOnOpen;
     this.ws.onmessage = this.wsOnMessage;
-    // this.ws.onerror = this.wsOnError;
     // this.ws.onclose = this.wsOnClose;
 
     this.next();
   },
 
+  destroyed() {
+    this.ws.close();
+  },
 
   methods: {
 
@@ -103,15 +127,61 @@ export default {
       console.log("wsOnMessage");
       // console.log(e);
       const data = JSON.parse(e.data);
-      // console.log(data);
+      console.log(data);
       if (data.data.type === 'tick') {
+        this.status = data.data.status;
         this.onlineNums = data.data.onlineNums;
-        if (data.data.chooseLat != null) {
-          this.confirmed = true;
+        this.image = data.data.content;
+        this.confirmed = data.data.confirmed;
+        this.timeLeft = data.data.timeLeft;
+
+        // this.$toast(this.status)
+
+        if (data.data.status === 'wait') {
+
+          this.confirmed = false;
+          this.polylinePath = null;
+          if (this.targetLat !== null) {
+            this.lat = null;
+            this.lng = null;
+          }
+          this.targetLat = null;
+          this.targetLng = null;
+          this.polylinePath = null;
+          this.distance = null;
+          this.rank = null;
+          this.ranks = null;
+        }
+        if (data.data.status === 'wait_result') {
           this.lat = data.data.chooseLat;
           this.lng = data.data.chooseLng;
+          this.targetLat = null;
+          this.targetLng = null;
+          this.distance = null;
+          this.rank = null;
+          this.ranks = null;
         }
-        this.image = data.data.content;
+        if (data.data.status === 'rank') {
+          this.lat = data.data.chooseLat;
+          this.lng = data.data.chooseLng;
+          if (this.targetLat == null) {
+            this.map.centerAndZoom(new BMap.Point(data.data.lng, data.data.lat), 1);
+          }
+          this.targetLat = data.data.lat;
+          this.targetLng = data.data.lng;
+          if (data.data.chooseLat != null && this.polylinePath === null) {
+            this.polylinePath = [
+              {lng: data.data.lng, lat:data.data.lat},
+              {lng: data.data.chooseLng, lat: data.data.chooseLat}];
+          }
+          this.distance = data.data.distance / 1000;
+          this.rank = data.data.rank;
+          this.ranks = data.data.ranks;
+        }
+      } else if (data.data.type === 'need_login') {
+        this.$toast("请现在炒饭社区登陆");
+      } else if (data.data.type === 'warning') {
+        this.$toast(data.data.noteMessage);
       }
     },
       // 发送心跳
@@ -132,14 +202,17 @@ export default {
     },
 
     click(e) {
-      if (!this.confirmed) {
-        console.log(e);
-        console.log('123');
+      if (this.status === 'wait') {
+        if (!this.confirmed) {
+          console.log(e);
+          console.log('123');
 
-        // map.centerAndZoom(new BMap.Point(116.404, 39.915), 11);
-        console.log(e.Bg);
-        this.lng = e.point.lng;
-        this.lat = e.point.lat;
+          console.log(e.Bg);
+          this.lng = e.point.lng;
+          this.lat = e.point.lat;
+        }
+      } else {
+        this.$toast('暂不支持选择');
       }
     },
     confirm() {
@@ -147,23 +220,13 @@ export default {
         this.$toast('还未在地图上选择地点，请选择！');
         return;
       }
-      this.zoom = 20;
-      this.map.setZoom(0);
-      this.$toast('确认成功！')
-
       this.confirmed = true;
-      api.getByPath("/api/v0/tuxun/game/confirm", {id: this.id, lng: this.lng, lat: this.lat}).then(res => {
-        this.confirmed = true;
-        this.targetLng = res.data.lng;
-        this.targetLat = res.data.lat;
-        this.distance = (res.data.distanceMeter / 1000).toFixed(2);
+      this.wsSend("{\"scope\": \"tuxun\", \"data\": {\"type\": \"confirm\", \"lat\": " + this.lat + ", \"lng\": " + this.lng + "}}");
+    },
 
-        this.polylinePath = [
-          {lng: this.lng, lat: this.lat},
-          {lng: res.data.lng, lat: res.data.lat}
-        ]
-      });
-
+    wsSend(data) {
+      console.log("wsSend: " + data);
+      this.ws.send(data);
     },
 
     toForum(){
@@ -174,20 +237,7 @@ export default {
       }
     },
     next() {
-      // this.confirmed = false;
-      // this.returnResult = true;
-      // this.polylinePath = false;
-      // this.lng = null;
-      // this.lat = null;
-      // this.targetLat = null;
-      // this.targetLng = null;
-      // this.image = null;
-      // this.distance = null;
-      // api.getByPath("/api/v0/tuxun/game/generate", null).then(res => {
-      //       this.image = res.data.content;
-      //       this.id  = res.data.id;
-      //     }
-      // );
+
     },
     mapReady(e) {
       console.log("hahah");
@@ -201,13 +251,21 @@ export default {
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .im-view {
   position: absolute;
   width: 60%;
   height: 100%;
   bottom: 0;
   left: 0;
+  text-align: center;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
+  transform-origin: center;
+
 }
 .bm-view {
   position: absolute;
@@ -233,5 +291,53 @@ export default {
   position: absolute;
   top: 20px;
   left: 50%;
+}
+.item{
+  display: flex;
+  justify-content: space-between;
+  padding: 5px;
+  border-bottom: 1px solid #f1f1f1;
+  // height: 60px;
+  // box-sizing: border-box;
+  text-align: left;
+  overflow: hidden;
+  .left{
+    flex: 1;
+    display: flex;
+    img{
+      flex: 0 0 40px;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      margin-right: 10px;
+      vertical-align: middle;
+    }
+    .title{
+      font-size: 16px;
+      text-align: left;
+    }
+    .desc{
+      width: 180px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      color: #888;
+      font-size: 13px;
+    }
+    .info{
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+    }
+  }
+  .right{
+    flex: 0 0 60px;
+    // line-height: 40px;
+    text-align: center;
+    font-size: 12px;
+    p{
+      font-size: 14px;
+    }
+  }
 }
 </style>
