@@ -8,7 +8,7 @@
       </div>
 
       <div style="padding-top: 10px">
-        <el-button @click="toRank"> 排行榜 </el-button>
+        <el-button @click="toRank"> 天梯排行榜 </el-button>
       </div>
     </div>
     <baidu-map :center="center" :zoom="zoom" :scroll-wheel-zoom="true" :auto-resize="true" @ready="handler" @ @click="click" class="bm-view">
@@ -214,7 +214,7 @@ export default {
   position: absolute;
   bottom: 30px;
   right: 30px;
-  width: 250px;
+  width: 300px;
 }
 .home {
   position: absolute;
