@@ -3,7 +3,8 @@
     <div class="im-view">
       <img style=" width: 100%;height: 100%;object-fit: contain;" v-if="image" :src="imgOrigin+ this.image" alt=""></img>
       <div v-if="status === 'rank'" style=" position: absolute; width: 100%; height: 100%; background: white; opacity: 80% ">
-        <div style="padding-top: 50px; font-weight: bold; font-size: 20px">排行榜:</div>
+        <div v-if="this.rank" style="padding-top: 20px; font-weight: bold; font-size: 20px">你的排名:{{this.rank}}</div>
+        <div style="padding-top: 40px; font-weight: bold; font-size: 20px">排行榜:</div>
         <div v-for="item in this.ranks" class="item">
             <div class="left">
               <img :src="imgOrigin+item.userAO.icon + '?x-oss-process=image/resize,h_80/format,webp/quality,q_75'" alt="">
@@ -32,7 +33,7 @@
     </baidu-map>
 
     <div class="confirm">
-      <el-button v-if="confirmed && distance">距离 {{distance.toFixed(2)}} 千米</el-button>
+      <el-button v-if="confirmed && distance">距离 {{ distance.toFixed(2) }} 千米</el-button>
       <el-button v-if="!confirmed && status !== 'rank'"  @click="confirm">确定选择</el-button>
       <el-button v-if="confirmed && !distance">等待答案</el-button>
     </div>
@@ -182,7 +183,9 @@ export default {
           this.ranks = data.data.ranks;
         }
       } else if (data.data.type === 'need_login') {
-        this.$toast("请现在炒饭社区登陆");
+        this.doLoginStatus().then((res) => {
+
+        });
       } else if (data.data.type === 'warning') {
         this.$toast(data.data.noteMessage);
       }
@@ -220,7 +223,7 @@ export default {
           this.lat = e.point.lat;
         }
       } else {
-        this.$toast('暂不支持选择');
+        this.$toast('暂不支持选择, 请等待结果或者下一题');
       }
     },
     confirm() {
