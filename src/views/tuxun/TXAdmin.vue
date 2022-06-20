@@ -5,7 +5,7 @@
 
 
     <div class="confirm">
-      <el-button v-if="confirmed && returnResult">距离 {{distance}} 千米</el-button>
+      <el-button @click="check">加入题库</el-button>
       <el-button @click="last">上一题</el-button>
       <el-button @click="next">下一题 {{this.index}}</el-button>
       <el-button @click="deleteQ">删除题目</el-button>
@@ -53,11 +53,14 @@ export default {
       if(e && e.keyCode==37){//左
           self.last()
       }
+      if(e && e.keyCode==38){//左
+        self.check()
+      }
       if(e && e.keyCode==39){//右
           self.next()
       }
 
-      if(e && e.keyCode==40){//上
+      if(e && e.keyCode==40){//下
           self.deleteQ()
       }
     };
@@ -95,6 +98,13 @@ export default {
     last() {
       this.index  = this.index -2 ;
       this.next();
+    },
+
+    check() {
+      api.getByPath("/api/v0/tuxun/game/check", {id: this.id}).then(res => {
+        this.index = this.index -1;
+        this.next();
+      });
     },
 
     next() {
@@ -143,6 +153,6 @@ export default {
   position: absolute;
   bottom: 30px;
   right: 30px;
-  width: 300px;
+  width: 500px;
 }
 </style>
