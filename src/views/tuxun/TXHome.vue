@@ -3,8 +3,8 @@
     <div class="im-view">
       <img style=" width: 100%;height: 100%;object-fit: contain;" v-if="image" :src="imgOrigin+ this.image" alt=""></img>
       <div v-if="status === 'rank'" style=" position: absolute; width: 100%; height: 100%; background: white; opacity: 80% ">
-        <div v-if="this.rank" style="padding-top: 20px; font-weight: bold; font-size: 20px">你的排名:{{this.rank}}</div>
-        <div style="padding-top: 40px; font-weight: bold; font-size: 20px">排行榜:</div>
+        <div v-if="this.rank" style="padding-top: 20px; font-weight: bold; font-size: 20px">你的本场次排名:{{this.rank}}</div>
+        <div style="padding-top: 10px; font-weight: bold; font-size: 20px;">排行榜:</div>
         <div v-for="item in this.ranks" class="item">
             <div class="left">
               <img :src="imgOrigin+item.userAO.icon + '?x-oss-process=image/resize,h_80/format,webp/quality,q_75'" alt="">
