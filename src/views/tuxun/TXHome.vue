@@ -13,7 +13,7 @@
                 <p v-if="item.ratingChange  && item.ratingChange > 0" class="desc">积分变化：+{{item.ratingChange}}, 积分：{{ item.rating }}</p>
                 <p v-if="item.ratingChange  && item.ratingChange === 0" class="desc">积分无变化, 积分：{{ item.rating }}</p>
                 <p v-if="item.ratingChange  && item.ratingChange < 0" class="desc">积分变化：{{item.ratingChange}}, 积分：{{ item.rating }}</p>
-                <p v-if="!item.ratingChange" class="desc">积分无变化, 两人及以上参与游戏积分才会变化</p>
+                <p v-if="!item.ratingChange" class="desc">积分未变, 需要两人及以上参与</p>
               </div>
             </div>
             <div class="right">距离
