@@ -24,6 +24,11 @@
     </div>
       </div>
     <baidu-map :center="center" :zoom="zoom" :scroll-wheel-zoom="true" :auto-resize="true" @ready="handler" @ @click="click" :class="[{'bm-view': !ISPHONE}, {'bm-view-phone': ISPHONE}]">
+
+      <bm-map-type
+          :map-types="['BMAP_NORMAL_MAP', 'BMAP_SATELLITE_MAP']"
+          anchor="BMAP_ANCHOR_TOP_LEFT"
+      ></bm-map-type>
       <bm-marker v-if="this.lng != null" :position="{lng: this.lng, lat: this.lat}" :dragging="true" animation="BMAP_ANIMATION_BOUNCE">
         <bm-label content="你选择了" :labelStyle="{color: 'red', fontSize : '24px'}" :offset="{width: -35, height: 30}"/>
       </bm-marker>
