@@ -53,7 +53,7 @@ export default {
       if(e && e.keyCode==37){//左
           self.last()
       }
-      if(e && e.keyCode==38){//左
+      if(e && e.keyCode==38){//上
         self.check()
       }
       if(e && e.keyCode==39){//右
