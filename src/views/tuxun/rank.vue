@@ -6,7 +6,8 @@
             <span>Top 100（5秒自动刷新 / 当局两人及以上积分）</span>
         </div>
         <div @click="toUser(item)" v-for="(item,index) in pagedata" :key="index" class="item">
-            <div class="left">
+          <div class="title">{{item.rank}}.</div>
+          <div class="left">
                 <img :src="imgOrigin+item.userAO.icon + '?x-oss-process=image/resize,h_80/format,webp/quality,q_75'" alt="">
                 <div class="info">
                     <div class="title">{{item.userAO.userName}}</div>
@@ -70,6 +71,10 @@ export default {
     padding-top: 0;
     height: 100vh;
 }
+.title{
+  font-size: 16px;
+  padding-right: 10px;
+}
 .content{
     .item{
         display: flex;
@@ -79,6 +84,9 @@ export default {
         // height: 60px;
         // box-sizing: border-box;
         overflow: hidden;
+        text-align: center;
+        align-items: center;
+
         .left{
             flex: 1;
             display: flex;
