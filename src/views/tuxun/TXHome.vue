@@ -350,6 +350,7 @@ export default {
   position: absolute;
   top: 20px;
   right: 20px;
+  z-index: 100000;
 }
 
 .top-info {
