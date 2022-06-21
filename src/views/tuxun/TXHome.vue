@@ -53,6 +53,10 @@
       <div>
         <el-button @click="toForum"> 社区讨论 </el-button>
       </div>
+
+      <div style="padding-top: 10px">
+        <el-button @click="toRank"> 积分排行 </el-button>
+      </div>
     </div>
   </div>
 </template>
@@ -247,6 +251,9 @@ export default {
         window.open(location.origin + '/f/84',"_blank");
       }
     },
+    toRank(){
+        window.open(location.origin + '/tuxun/rank',"_blank");
+    },
     next() {
 
     },
@@ -255,9 +262,7 @@ export default {
       console.log(e)
       this.map = e;
     },
-    toRank() {
-      this.$toast('敬请期待');
-    }
+
   }
 }
 </script>

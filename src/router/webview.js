@@ -256,6 +256,13 @@ routes = [
     hidden: true
   },
   {
+    path: '/tuxun/rank',
+    component: () => import('@/views/tuxun/rank'),
+    name: 'rank',
+    meta: { title: 'rank'},
+    hidden: true
+  },
+  {
     path: '/tuxunAdmin',
     component: () => import('@/views/tuxun/TXAdmin'),
     name: 'tuxunAdmin',
