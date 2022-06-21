@@ -2,7 +2,6 @@
   <div>
     <div :class="[{'im-view': !ISPHONE}, {'im-view-phone': ISPHONE}]">
       <img v-viewer="{inline: false}" :data-source="imgOrigin+ this.image" style=" width: 100%;height: 100%;object-fit: contain;" v-if="this.image" :src="imgOrigin+ this.image" alt="">
-
       </img>
       <div v-if="status === 'rank'" style=" position: absolute; width: 100%; height: 100%; background: white; opacity: 80% ">
         <div style="padding-top: 40px; font-weight: bold; font-size: 20px;">排行榜:</div>
@@ -23,6 +22,7 @@
             </div>
         </div>
     </div>
+      </div>
     <baidu-map :center="center" :zoom="zoom" :scroll-wheel-zoom="true" :auto-resize="true" @ready="handler" @ @click="click" :class="[{'bm-view': !ISPHONE}, {'bm-view-phone': ISPHONE}]">
       <bm-marker v-if="this.lng != null" :position="{lng: this.lng, lat: this.lat}" :dragging="true" animation="BMAP_ANIMATION_BOUNCE">
         <bm-label content="你选择了" :labelStyle="{color: 'red', fontSize : '24px'}" :offset="{width: -35, height: 30}"/>
