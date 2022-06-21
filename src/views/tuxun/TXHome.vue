@@ -3,17 +3,17 @@
     <div class="im-view">
       <img style=" width: 100%;height: 100%;object-fit: contain;" v-if="image" :src="imgOrigin+ this.image" alt=""></img>
       <div v-if="status === 'rank'" style=" position: absolute; width: 100%; height: 100%; background: white; opacity: 80% ">
-        <div v-if="this.rank" style="padding-top: 20px; font-weight: bold; font-size: 20px">你的本场次排名:{{this.rank}}</div>
-        <div style="padding-top: 20px; font-weight: bold; font-size: 20px;">排行榜:</div>
+        <div style="padding-top: 40px; font-weight: bold; font-size: 20px;">排行榜:</div>
+        <div v-if="this.rank" style="padding-top: 10px; font-weight: bold; font-size: 20px">你的本场次排名:{{this.rank}}</div>
         <div v-for="item in this.ranks" class="item">
             <div class="left">
               <img :src="imgOrigin+item.userAO.icon + '?x-oss-process=image/resize,h_80/format,webp/quality,q_75'" alt="">
               <div class="info">
                 <div class="title">{{item.userAO.userName}}</div>
-                <p v-if="item.ratingChange !== null && item.ratingChange > 0" class="desc">积分变化：+{{item.ratingChange}}, 积分：{{ item.rating }}</p>
-                <p v-if="item.ratingChange !== null && item.ratingChange == 0" class="desc">积分无变化, 积分：{{ item.rating }}</p>
-                <p v-if="item.ratingChange !== null && item.ratingChange < 0" class="desc">积分变化：{{item.ratingChange}}, 积分：{{ item.rating }}</p>
-                <p v-if="item.ratingChange === null" class="desc">积分无变化, 两人及以上参与游戏积分才会变化</p>
+                <p v-if="item.ratingChange  && item.ratingChange > 0" class="desc">积分变化：+{{item.ratingChange}}, 积分：{{ item.rating }}</p>
+                <p v-if="item.ratingChange  && item.ratingChange === 0" class="desc">积分无变化, 积分：{{ item.rating }}</p>
+                <p v-if="item.ratingChange  && item.ratingChange < 0" class="desc">积分变化：{{item.ratingChange}}, 积分：{{ item.rating }}</p>
+                <p v-if="!item.ratingChange" class="desc">积分无变化, 两人及以上参与游戏积分才会变化</p>
               </div>
             </div>
             <div class="right">距离
@@ -336,7 +336,7 @@ export default {
       text-align: left;
     }
     .desc{
-      width: 180px;
+      width: 250px;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
