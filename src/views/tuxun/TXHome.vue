@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="im-view">
+    <div :class="[{'im-view': !ISPHONE}, {'im-view-phone': ISPHONE}]">
       <img style=" width: 100%;height: 100%;object-fit: contain;" v-if="image" :src="imgOrigin+ this.image" alt=""></img>
       <div v-if="status === 'rank'" style=" position: absolute; width: 100%; height: 100%; background: white; opacity: 80% ">
         <div style="padding-top: 40px; font-weight: bold; font-size: 20px;">排行榜:</div>
@@ -22,7 +22,7 @@
         </div>
       </div>
     </div>
-    <baidu-map :center="center" :zoom="zoom" :scroll-wheel-zoom="true" :auto-resize="true" @ready="handler" @ @click="click" class="bm-view">
+    <baidu-map :center="center" :zoom="zoom" :scroll-wheel-zoom="true" :auto-resize="true" @ready="handler" @ @click="click" :class="[{'bm-view': !ISPHONE}, {'bm-view-phone': ISPHONE}]">
       <bm-marker v-if="this.lng != null" :position="{lng: this.lng, lat: this.lat}" :dragging="true" animation="BMAP_ANIMATION_BOUNCE">
         <bm-label content="你选择了" :labelStyle="{color: 'red', fontSize : '24px'}" :offset="{width: -35, height: 30}"/>
       </bm-marker>
@@ -35,13 +35,13 @@
       <bm-view style="width: 100%; height: 100%; flex: 1"></bm-view>
     </baidu-map>
 
-    <div class="confirm">
+    <div :class="[{'confirm': !ISPHONE}, {'confirm-phone': ISPHONE}]">
       <el-button v-if="confirmed && distance">距离 {{ distance.toFixed(2) }} 千米</el-button>
       <el-button v-if="!confirmed && status !== 'rank'"  @click="confirm">确定选择</el-button>
       <el-button v-if="confirmed && !distance">等待答案</el-button>
     </div>
 
-    <div class="topRight">
+    <div :class="[{'topRight': !ISPHONE}, {'topRight-phone': ISPHONE}]">
       <div style="font-size: 20px; font-weight: bold; color: white;  -webkit-text-stroke: 0.8px black;">
         在线人数：{{this.onlineNums}}
       </div>
@@ -91,8 +91,8 @@ export default {
       distance: null,
       image: null,
       id: null,
-      url: `${location.protocol === "https:" ? "wss" : "ws"}://${location.host}/ws/v0/tuxun`,
-      // url: `ws://127.0.0.1:8080/ws/v0/tuxun`,
+      // url: `${location.protocol === "https:" ? "wss" : "ws"}://${location.host}/ws/v0/tuxun`,
+      url: `ws://47.96.98.153/ws/v0/tuxun`,
       ws: null,
       onlineNums: 1,
       status: null,
@@ -102,9 +102,13 @@ export default {
     }
   },
   mounted() {
+    // screen.orientation.lock('landscape');
+    // this.resizeScreen();
     this.initWS();
     this.next();
   },
+
+
 
   destroyed() {
     this.ws.close();
@@ -206,9 +210,7 @@ export default {
     sendHeartBeat() {
       this.wsSend(`{"scope": "heart_beat"}`);
     },
-    resizeScreen() {
 
-    },
     handler ({BMap, map}) {
       console.log(BMap, map)
       this.center.lng = 106.0
@@ -286,6 +288,20 @@ export default {
   transform-origin: center;
 
 }
+.im-view-phone {
+  position: absolute;
+  width: 100%;
+  height: 50%;
+  right: 0;
+  left: 0;
+  text-align: center;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
+  transform-origin: center;
+}
 .bm-view {
   position: absolute;
   width: 40%;
@@ -293,6 +309,14 @@ export default {
   bottom: 0;
   right: 0;
 }
+.bm-view-phone {
+  position: absolute;
+  width: 100%;
+  height: 50%;
+  bottom: 0;
+  right: 0;
+}
+
 
 .confirm {
   position: absolute;
@@ -300,16 +324,28 @@ export default {
   right: 30px;
   width: 300px;
 }
+
+.confirm-phone {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  margin:auto;
+}
 .home {
   position: absolute;
   top: 20px;
   left: 20px;
 }
-
 .topRight {
   position: absolute;
   top: 20px;
   left: 50%;
+}
+
+.topRight-phone {
+  position: absolute;
+  top: 20px;
+  right: 20px;
 }
 .item{
   display: flex;
@@ -359,4 +395,6 @@ export default {
     }
   }
 }
+
+
 </style>
