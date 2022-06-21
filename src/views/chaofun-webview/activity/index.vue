@@ -49,6 +49,13 @@ export default {
           title: '秘密花园',
           showBottom: false,
         },
+
+        {
+          path: '/tuxun',
+          title: '图寻小游戏',
+          desc: '网络迷踪/看图找地点小游戏',
+          showBottom: true
+        },
         {
           path: '/p/1137991',
           title: '炒饭社区内容公约',
