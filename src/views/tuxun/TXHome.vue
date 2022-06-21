@@ -1,7 +1,9 @@
 <template>
   <div>
     <div :class="[{'im-view': !ISPHONE}, {'im-view-phone': ISPHONE}]">
-      <img style=" width: 100%;height: 100%;object-fit: contain;" v-if="image" :src="imgOrigin+ this.image" alt=""></img>
+      <viewer :images="[imgOrigin+ this.image]">
+        <img style=" width: 100%;height: 100%;object-fit: contain;" v-if="image" :src="imgOrigin+ this.image" alt=""></img>
+      </viewer>
       <div v-if="status === 'rank'" style=" position: absolute; width: 100%; height: 100%; background: white; opacity: 80% ">
         <div style="padding-top: 40px; font-weight: bold; font-size: 20px;">排行榜:</div>
         <div v-if="this.rank" style="padding-top: 10px; font-weight: bold; font-size: 20px">你的本场次排名:{{this.rank}}</div>
@@ -42,13 +44,13 @@
     </div>
 
     <div :class="[{'topRight': !ISPHONE}, {'topRight-phone': ISPHONE}]">
-      <div style="font-size: 20px; font-weight: bold; color: white;  -webkit-text-stroke: 0.8px black;">
+      <div :class="[{'top-info': !ISPHONE}, {'top-info-phone': ISPHONE}]">
         在线人数：{{this.onlineNums}}
       </div>
-      <div v-if="timeLeft &&( this.status === 'wait' || this.status === 'wait_result')" style="font-size: 20px; font-weight: bold; color: white;  -webkit-text-stroke: 0.8px black;">
+      <div v-if="timeLeft &&( this.status === 'wait' || this.status === 'wait_result')" :class="[{'top-info': !ISPHONE}, {'top-info-phone': ISPHONE}]">
         选择倒计时: {{Math.round(timeLeft)}}
       </div>
-      <div v-if="timeLeft && this.status === 'rank'" style="font-size: 20px; font-weight: bold; color: white;  -webkit-text-stroke: 0.8px black; ">
+      <div v-if="timeLeft && this.status === 'rank'" :class="[{'top-info': !ISPHONE}, {'top-info-phone': ISPHONE}]">
         下一题: {{Math.round(timeLeft)}}
       </div>
     </div>
@@ -333,7 +335,7 @@ export default {
 }
 .home {
   position: absolute;
-  top: 20px;
+  top: 5px;
   left: 20px;
 }
 .topRight {
@@ -346,6 +348,19 @@ export default {
   position: absolute;
   top: 20px;
   right: 20px;
+}
+
+.top-info {
+  font-size: 20px;
+  font-weight: bold;
+  color: white;
+  -webkit-text-stroke: 0.8px black;
+}
+.top-info-phone {
+  font-size: 10px;
+  font-weight: bold;
+  color: white;
+  -webkit-text-stroke: 0.4px black;
 }
 .item{
   display: flex;
