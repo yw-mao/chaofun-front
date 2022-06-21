@@ -10,7 +10,7 @@
                 <img :src="imgOrigin+item.userAO.icon + '?x-oss-process=image/resize,h_80/format,webp/quality,q_75'" alt="">
                 <div class="info">
                     <div class="title">{{item.userAO.userName}}</div>
-                    <p v-if="item.userAO.desc" class="desc">{{item.userAO.desc}}</p>
+<!--                    <p v-if="item.userAO.desc" class="desc">{{item.userAO.desc}}</p>-->
                 </div>
             </div>
             <div class="right"> 积分
