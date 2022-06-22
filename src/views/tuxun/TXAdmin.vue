@@ -1,13 +1,11 @@
 <template>
   <div>
-    <img v-if="image" class="im-view" :src="imgOrigin+ this.image" alt="">
+    <img v-if="image" class="im-view" :src="imgOrigin+ this.image+ '?x-oss-process=image/resize,h_1024/format,webp/quality,q_75' " alt="">
     </img>
 
 
     <div class="confirm">
       <el-button @click="check">加入题库</el-button>
-      <el-button @click="last">上一题</el-button>
-      <el-button @click="next">下一题 {{this.index}}</el-button>
       <el-button @click="deleteQ">删除题目</el-button>
     </div>
   </div>
@@ -49,16 +47,16 @@ export default {
       console.log("hahah");
       var e = event || window.event || arguments.callee.caller.arguments[0];
       console.log(e);
-
-      if(e && e.keyCode==37){//左
-          self.last()
-      }
+      //
+      // if(e && e.keyCode==37){//左
+      //     self.last()
+      // }
       if(e && e.keyCode==38){//上
         self.check()
       }
-      if(e && e.keyCode==39){//右
-          self.next()
-      }
+      // if(e && e.keyCode==39){//右
+      //     self.next()
+      // }
 
       if(e && e.keyCode==40){//下
           self.deleteQ()
