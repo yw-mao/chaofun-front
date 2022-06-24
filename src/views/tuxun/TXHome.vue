@@ -1,9 +1,9 @@
 <template>
   <div>
     <div :class="[{'im-view': !ISPHONE}, {'im-view-phone': ISPHONE}]">
-      <img v-viewer="{inline: false}" :data-source="imgOrigin+ this.image" style=" width: 100%;height: 100%;object-fit: contain;" v-if="this.image" :src="imgOrigin+ this.image" alt="">
-      </img>
-      <div v-if="status === 'rank'" style=" position: absolute; width: 100%; height: 100%; background: white; opacity: 80% ">
+      <div id="viewer" v-if="this.contentType === 'panorama'"style="width: 100%; height: 100%"></div>
+      <img v-if="this.image && this.contentType === 'image'" v-viewer="{inline: false}" :data-source="imgOrigin+ this.image" style=" width: 100%;height: 100%;object-fit: contain;"  :src="imgOrigin+ this.image" alt=""></img>
+      <div v-if="status === 'rank'" style="position: absolute; width: 100%; height: 100%; background: white; opacity: 80% ">
         <div style="padding-top: 40px; font-weight: bold; font-size: 20px;">排行榜:</div>
         <div v-if="this.rank" style="padding-top: 10px; font-weight: bold; font-size: 20px">你的本场次排名:{{this.rank}}</div>
         <div v-for="item in this.ranks" class="item">
@@ -79,10 +79,14 @@ Vue.use(BaiduMap, {
   // ak 是在百度地图开发者平台申请的密钥 详见 http://lbsyun.baidu.com/apiconsole/key */
   ak: 'GZPIvvSbzgo188vmBGwPOtU2ZCHDhkry'
 })
+import {Viewer} from 'photo-sphere-viewer'
+import 'photo-sphere-viewer/dist/photo-sphere-viewer.css'
 export default {
+
   name: "TXHome",
   data () {
     return {
+      viewer: null,
       center: {lng: 0, lat: 0},
       zoom: 3,
       lng: null,
@@ -96,6 +100,7 @@ export default {
       returnResult: true,
       distance: null,
       image: null,
+      contentType: null,
       id: null,
       url: `${location.protocol === "https:" ? "wss" : "ws"}://${location.host}/ws/v0/tuxun`,
       // url: `ws://47.96.98.153/ws/v0/tuxun`,
@@ -122,8 +127,23 @@ export default {
 
   methods: {
 
+    initPanorama() {
+      var temp = document.querySelector('#viewer');
+      console.log(temp);
+      console.log(123);
+      try {
+         this.viewer = new Viewer({
+            container: document.querySelector('#viewer'),
+            panorama:  this.imgOrigin + this.image,
+          });
+      } catch (e) {
+        console.log(e)
+      }
+    },
+    notShowPanorama() {
+      this.viewer.hide();
+    },
     initWS() {
-      // this.resizeScreen();
       if (this.ws) {
         this.ws.close();
       }
@@ -154,7 +174,21 @@ export default {
         this.onlineNums = data.data.onlineNums;
         if (this.image !== data.data.content) {
           this.image = data.data.content;
+
         }
+        if (this.contentType !== data.data.contentType) {
+          this.contentType = data.data.contentType;
+          if (this.contentType === 'image' && this.viewer !== null) {
+            this.viewer.destroy();
+            this.viewer = null;
+          }
+        }
+
+        if (this.contentType === "panorama" && this.viewer === null) {
+          console.log('1234');
+          this.initPanorama();
+        }
+
         this.confirmed = data.data.confirmed;
         this.timeLeft = data.data.timeLeft;
 
