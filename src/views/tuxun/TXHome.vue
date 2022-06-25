@@ -184,10 +184,9 @@ export default {
               this.viewer.destroy();
               this.viewer = null;
             }
-          }
-
-          if (this.contentType === 'panorama') {
-            this.initPanorama();
+            if (this.contentType === 'panorama') {
+              this.initPanorama();
+            }
           }
         }
 
