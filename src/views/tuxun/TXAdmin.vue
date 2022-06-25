@@ -62,7 +62,10 @@ export default {
           self.deleteQ()
       }
     };
-    this.next();
+
+    this.doLoginStatus().then((res) => {
+      this.next();
+    });
   },
   methods: {
     handler ({BMap, map}) {
