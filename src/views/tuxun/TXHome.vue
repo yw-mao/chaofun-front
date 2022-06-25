@@ -1,7 +1,7 @@
 <template>
   <div>
     <div :class="[{'im-view': !ISPHONE}, {'im-view-phone': ISPHONE}]">
-      <div id="viewer" v-if="this.contentType === 'panorama'"style="width: 100%; height: 100%"></div>
+      <div id="viewer" v-if="this.contentType === 'panorama'" style="width: 100%; height: 100%"></div>
       <img v-if="this.image && this.contentType === 'image'" v-viewer="{inline: false}" :data-source="imgOrigin+ this.image" style=" width: 100%;height: 100%;object-fit: contain;"  :src="imgOrigin+ this.image" alt=""></img>
       <div v-if="status === 'rank'" style="position: absolute; width: 100%; height: 100%; background: white; opacity: 80% ">
         <div style="padding-top: 40px; font-weight: bold; font-size: 20px;">排行榜:</div>
@@ -174,18 +174,19 @@ export default {
         this.status = data.data.status;
         this.onlineNums = data.data.onlineNums;
 
-        if (this.contentType !== data.data.contentType) {
-          this.contentType = data.data.contentType;
-          if (this.contentType === 'image' && this.viewer !== null) {
-            this.viewer.destroy();
-            this.viewer = null;
-          }
-        }
 
         if (this.image !== data.data.content) {
           this.image = data.data.content;
-          if (this.contentType === "panorama") {
+          if (this.contentType === 'panorama') {
             this.initPanorama();
+          }
+
+          if (this.contentType !== data.data.contentType) {
+            this.contentType = data.data.contentType;
+            if (this.contentType === 'image' && this.viewer !== null) {
+              this.viewer.destroy();
+              this.viewer = null;
+            }
           }
         }
 
