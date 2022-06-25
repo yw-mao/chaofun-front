@@ -128,14 +128,15 @@ export default {
   methods: {
 
     initPanorama() {
-      var temp = document.querySelector('#viewer');
-      console.log(temp);
-      console.log(123);
       try {
-         this.viewer = new Viewer({
+        if (this.viewer !== null) {
+          this.viewer = new Viewer({
             container: document.querySelector('#viewer'),
-            panorama:  this.imgOrigin + this.image,
+            panorama: this.imgOrigin + this.image,
           });
+        } else {
+          this.viewer.setPanorama(this.imgOrigin + this.image);
+        }
       } catch (e) {
         console.log(e)
       }
@@ -172,10 +173,7 @@ export default {
       if (data.data.type === 'tick') {
         this.status = data.data.status;
         this.onlineNums = data.data.onlineNums;
-        if (this.image !== data.data.content) {
-          this.image = data.data.content;
 
-        }
         if (this.contentType !== data.data.contentType) {
           this.contentType = data.data.contentType;
           if (this.contentType === 'image' && this.viewer !== null) {
@@ -184,9 +182,11 @@ export default {
           }
         }
 
-        if (this.contentType === "panorama" && this.viewer === null) {
-          console.log('1234');
-          this.initPanorama();
+        if (this.image !== data.data.content) {
+          this.image = data.data.content;
+          if (this.contentType === "panorama") {
+            this.initPanorama();
+          }
         }
 
         this.confirmed = data.data.confirmed;
