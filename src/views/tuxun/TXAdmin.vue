@@ -134,10 +134,11 @@ export default {
 <style scoped>
 .im-view {
   position: absolute;
-  width: 60%;
+  width: 100%;
   height: 100%;
   bottom: 0;
   left: 0;
+  object-fit: contain;
 }
 .bm-view {
   position: absolute;
@@ -151,6 +152,5 @@ export default {
   position: absolute;
   bottom: 30px;
   right: 30px;
-  width: 500px;
 }
 </style>
