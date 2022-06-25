@@ -126,17 +126,12 @@ export default {
   },
 
   methods: {
-
     initPanorama() {
       try {
-        if (this.viewer === null) {
-          this.viewer = new Viewer({
-            container: document.querySelector('#viewer'),
-            panorama: this.imgOrigin + this.image,
-          });
-        } else {
-          this.viewer.setPanorama(this.imgOrigin + this.image);
-        }
+        this.viewer = new Viewer({
+          container: document.querySelector('#viewer'),
+          panorama: 'https://i.chao.fan/biz/1655976055245_a832c6fc94c54b739edcf46d82e285cd.jpg'
+        });
       } catch (e) {
         console.log(e)
       }
@@ -173,21 +168,21 @@ export default {
       if (data.data.type === 'tick') {
         this.status = data.data.status;
         this.onlineNums = data.data.onlineNums;
-
-
         if (this.image !== data.data.content) {
           this.image = data.data.content;
 
           if (this.contentType !== data.data.contentType) {
             this.contentType = data.data.contentType;
-            if (this.contentType === 'image' && this.viewer !== null) {
-              this.viewer.destroy();
-              this.viewer = null;
-            }
-            if (this.contentType === 'panorama') {
-              this.initPanorama();
-            }
           }
+
+          if (this.viewer !== null) {
+            this.viewer.destroy();
+            this.viewer = null;
+          }
+        }
+
+        if (this.contentType === "panorama" && this.viewer === null) {
+          this.initPanorama();
         }
 
         this.confirmed = data.data.confirmed;
