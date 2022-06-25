@@ -130,7 +130,7 @@ export default {
       try {
         this.viewer = new Viewer({
           container: document.querySelector('#viewer'),
-          panorama: 'https://i.chao.fan/biz/1655976055245_a832c6fc94c54b739edcf46d82e285cd.jpg'
+          panorama: 'https://i.chao.fan/' + this.image,
         });
       } catch (e) {
         console.log(e)
