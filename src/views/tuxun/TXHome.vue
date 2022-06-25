@@ -177,9 +177,6 @@ export default {
 
         if (this.image !== data.data.content) {
           this.image = data.data.content;
-          if (this.contentType === 'panorama') {
-            this.initPanorama();
-          }
 
           if (this.contentType !== data.data.contentType) {
             this.contentType = data.data.contentType;
@@ -187,6 +184,10 @@ export default {
               this.viewer.destroy();
               this.viewer = null;
             }
+          }
+
+          if (this.contentType === 'panorama') {
+            this.initPanorama();
           }
         }
 
