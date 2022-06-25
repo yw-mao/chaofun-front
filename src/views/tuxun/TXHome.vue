@@ -129,7 +129,7 @@ export default {
 
     initPanorama() {
       try {
-        if (this.viewer !== null) {
+        if (this.viewer === null) {
           this.viewer = new Viewer({
             container: document.querySelector('#viewer'),
             panorama: this.imgOrigin + this.image,
