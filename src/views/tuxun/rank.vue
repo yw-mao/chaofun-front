@@ -3,7 +3,7 @@
     <div class="content">
         <div class="nav">
             <img src="../chaofun-webview/assets/images/rank.png" alt="">
-            <span>Top 100（5秒自动刷新 / 当局两人及以上积分）</span>
+            <span>Top 100 </span>
         </div>
         <div @click="toUser(item)" v-for="(item,index) in pagedata" :key="index" class="item">
           <div class="title">{{item.rank}}.</div>
