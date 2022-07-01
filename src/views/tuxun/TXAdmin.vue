@@ -1,6 +1,6 @@
 <template>
   <div>
-    <img v-if="image" class="im-view" :src="'http://47.114.76.196/'+ this.image+ '?x-oss-process=image/resize,h_512/format,webp/quality,q_20' " alt="">
+    <img v-if="image" class="im-view" :src="'http://47.114.76.196/'+ this.image" alt="">
     </img>
 
 
