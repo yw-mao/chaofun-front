@@ -34,7 +34,7 @@
       <p>  - 向站长 (cijianzy) 反馈问题, 奖励 100 FBi</p>
       <div>
         <p>
-          - 邀请用户注册炒饭，其他用户注册成功后，奖励 100 FBi, 邀请链接： http://47.96.98.153/app?inviter={{this.userInfo.userId}}
+          - 邀请用户注册炒饭，其他用户注册成功后，奖励 100 FBi, 邀请链接： https://chao.fan/app?inviter={{this.userInfo.userId}}
         </p>
         <el-button @click="this.copyInviterLink">点击复制链接</el-button>
       </div>
@@ -200,7 +200,7 @@ export default {
     },
     copyInviterLink() {
       var input = document.createElement('input');
-      input.setAttribute('value', 'http://47.96.98.153/app?inviter=' + this.userInfo.userId);
+      input.setAttribute('value', 'https://chao.fan/app?inviter=' + this.userInfo.userId);
       document.body.appendChild(input);
       input.select();
       var result = document.execCommand('copy');
@@ -241,7 +241,7 @@ export default {
     orderCup(type) {
       try {
         window.flutter_inappwebview.callHandler('toViewPage', {
-          url: "http://47.96.98.153/webview/fbi/order?type=" + type,
+          url: "https://chao.fan/webview/fbi/order?type=" + type,
           title: '下单',
           showHeader: true
         })

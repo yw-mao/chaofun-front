@@ -888,7 +888,7 @@ queryChildren (parent, list) {
       if(this.forumInfo&&this.forumInfo.id){
         this.centerDialogVisible = false;
       }else{
-        location.href = 'http://47.96.98.153'
+        location.href = 'https://chao.fan'
       }
     },
     close(e){

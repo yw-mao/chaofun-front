@@ -534,7 +534,7 @@ export default {
     },
 
     copyCommentLink(item) {
-      const url = "http://47.96.98.153/p/" + item.postId + "?commentId=" + item.id;
+      const url = "https://chao.fan/p/" + item.postId + "?commentId=" + item.id;
       this.copy2Clipboard(url);
       this.$toast('复制链接成功！');
     },

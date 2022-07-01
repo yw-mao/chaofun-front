@@ -135,7 +135,7 @@ export default {
 
       // });
       // window.flutter_inappwebview.callHandler('toViewPage',{
-      //     url: 'http://47.96.98.153',
+      //     url: 'https://chao.fan',
       //     title:'炒饭超Fun',
       //     showHeader: true
       // });

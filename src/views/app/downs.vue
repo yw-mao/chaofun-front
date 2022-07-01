@@ -161,13 +161,13 @@ import * as api from '../../api/api'
         var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
         if(!this.isWeiXin()){
             // if(this.value=='666666'){
-            //     location.href = 'http://47.96.98.153/chaofan_test.apk'
+            //     location.href = 'https://chao.fan/chaofan_test.apk'
             // }else{
             //     this.$toast('口令错误');
             // }
             
             // if(isAndroid){
-            //     location.href = 'http://47.96.98.153/chaofan.apk'
+            //     location.href = 'https://chao.fan/chaofan.apk'
             //     // location.href = `opentest://host`;
             // }else{
             //     location.href = 'https://apps.apple.com/cn/app/%E7%82%92%E9%A5%AD%E8%B6%85fun/id1526950194'
@@ -177,7 +177,7 @@ import * as api from '../../api/api'
               // } else if (/(Android)/i.test(navigator.userAgent)) {
             } else {
                 // location.href = 'vivoMarket://details?id=com.chao.app'
-                if(type==2) {window.open('http://47.96.98.153/chaofan.apk',"_blank"); return;}
+                if(type==2) {window.open('https://chao.fan/chaofan.apk',"_blank"); return;}
                 //跳转到安卓商城地址
                 let ua = u.toLowerCase();
                 let isVivo = ua.indexOf("vivo") != -1;
@@ -204,7 +204,7 @@ import * as api from '../../api/api'
                 try{
                     window.location.href = hreff;
                 }catch(e){
-                    window.open('http://47.96.98.153/chaofan.apk',"_blank");
+                    window.open('https://chao.fan/chaofan.apk',"_blank");
                 }
                 
             //   window.open('https://chao.fun/chaofan.apk',"_blank");

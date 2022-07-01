@@ -60,7 +60,7 @@ import Vue from 'vue';
             var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Linux') > -1; //android终端或者uc浏览器
             var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
             if(isAndroid){
-                location.href = 'http://47.96.98.153/chaofan.apk'
+                location.href = 'https://chao.fan/chaofan.apk'
             }else{
                 location.href = 'https://testflight.apple.com/join/YWXpW03v'
             }
