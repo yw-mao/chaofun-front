@@ -1,6 +1,6 @@
 <template>
   <div>
-    <img v-if="image" class="im-view" :src="'http://47.114.76.196/'+ this.image" alt="">
+    <img v-if="image" class="im-view" :src="'https://i.chao.fan/'+ this.image" alt="">
     </img>
 
 
