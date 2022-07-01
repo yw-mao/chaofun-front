@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div style="width: 100%; text-align: center; align-items: center;">
+    <div style="width: 100%; text-align: center; align-items: center; padding-top: 20px">
         <div @click="" v-if="this.userProfile" class="left">
           <img :src="imgOrigin+this.userProfile.userAO.icon + '?x-oss-process=image/resize,h_80/format,webp/quality,q_75'" alt="">
           <div class="info">
@@ -12,11 +12,11 @@
     <div v-if="this.userProfile" style="padding-left: 20px">
       <div>
         <span>分数: </span>
-        <span>{{this.userProfile.rating}}</span>
+        <span style="color: red">{{this.userProfile.rating}}</span>
       </div>
       <div>
         <span>排名: </span>
-        <span>{{this.userProfile.rank}}</span>
+        <span style="color: blue">{{this.userProfile.rank}}</span>
       </div>
       <div>
         <span>最高分: </span>
