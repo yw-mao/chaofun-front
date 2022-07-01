@@ -56,11 +56,7 @@ export default {
         })
     },
     toUser(item){
-        try {
-            window.flutter_inappwebview.callHandler('toAppUser',{userId: item.userAO.userId+''})
-        } catch (e) {
-            window.open(location.origin + '/user/'+item.userAO.userId,"_blank");
-        }
+      window.open(location.origin + '/tuxun/user/'+item.userAO.userId,"_blank");
     },
   },
 }

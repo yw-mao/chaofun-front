@@ -263,6 +263,13 @@ routes = [
     hidden: true
   },
   {
+    path: '/tuxun/user/:id',
+    component: () => import('@/views/tuxun/profile'),
+    name: 'tuxunProfile',
+    meta: { title: '',keepAlive: true,},
+    hidden: true
+  },
+  {
     path: '/tuxunAdmin',
     component: () => import('@/views/tuxun/TXAdmin'),
     name: 'tuxunAdmin',
