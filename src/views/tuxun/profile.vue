@@ -1,7 +1,7 @@
 <template>
   <div>
     <div style="width: 100%; text-align: center; align-items: center; padding-top: 20px">
-        <div @click="toUser" v-if="this.userProfile" class="left">
+        <div @click="toUser(this.userProfile.userAO)" v-if="this.userProfile" class="left">
           <img :src="imgOrigin+this.userProfile.userAO.icon + '?x-oss-process=image/resize,h_80/format,webp/quality,q_75'" alt="">
           <div class="info">
             <div class="title">{{this.userProfile.userAO.userName}}</div>
