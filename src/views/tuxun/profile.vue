@@ -32,7 +32,7 @@
         <span>{{this.userProfile.gameTimes}}</span>
       </div>
     </div>
-    <div style="padding-left: 20px; padding-top: 20px;">
+    <div style="padding-left: 20px; padding-top: 20px; padding-right: 20px">
       <div style="font-size: 20px">
         游戏活跃：
       </div>
@@ -88,7 +88,6 @@ export default {
         window.open(location.origin + '/user/'+item.userAO.userId,"_blank");
       }
     },
-
   }
 }
 </script>
