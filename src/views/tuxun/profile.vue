@@ -32,6 +32,12 @@
         <span>{{this.userProfile.gameTimes}}</span>
       </div>
     </div>
+    <div style="padding-left: 20px; padding-top: 20px;">
+      <div style="font-size: 20px">
+        游戏活跃：
+      </div>
+      <calendar-heatmap :values="this.activity" :end-date="this.endDate" tooltip-unit="活动" />
+    </div>
   </div>
 
 </template>
@@ -40,24 +46,39 @@
 // @ is an alias to /src
 // import Header from '@/components/common/Header.vue'
 import * as api from '@/api/api'
+import { CalendarHeatmap } from 'vue-calendar-heatmap'
+
 export default {
   components: {
-
+    CalendarHeatmap
   },
   data(){
     return {
       userId: null,
       userProfile: null,
+      endDate: null,
+      activity: [],
     }
   },
   created() {
     this.userId= this.$route.path.split("/")[3];
+    var today = new Date();
+    var dd = String(today.getDate()).padStart(2, '0');
+    var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+    var yyyy = today.getFullYear();
+    this.endDate = yyyy + '-' + mm + '-' + dd;
     this.getUserProfile();
+    this.getUserActivity();
   },
   methods: {
     getUserProfile() {
       api.getByPath('/api/v0/tuxun/getProfile', {userId: this.userId}).then(res=>{
         this.userProfile = res.data
+      })
+    },
+    getUserActivity() {
+      api.getByPath('/api/v0/tuxun/getUserDailyActivity', {userId: this.userId}).then(res=>{
+        this.activity = res.data
       })
     },
     toUser(item){
