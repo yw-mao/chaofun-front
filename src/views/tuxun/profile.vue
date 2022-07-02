@@ -22,10 +22,14 @@
         <span>最高分: </span>
         <span>{{this.userProfile.maxRating}}</span>
       </div>
-
       <div>
         <span>最高排名: </span>
         <span>{{this.userProfile.maxRanking}}</span>
+      </div>
+
+      <div>
+        <span>游戏次数:  </span>
+        <span>{{this.userProfile.gameTimes}}</span>
       </div>
     </div>
   </div>
