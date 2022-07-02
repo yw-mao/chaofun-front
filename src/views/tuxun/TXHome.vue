@@ -59,13 +59,9 @@
       </div>
     </div>
     <div class="home">
-      <div>
-        <el-button @click="toForum"> 社区讨论 </el-button>
-      </div>
-
-      <div style="padding-top: 10px">
-        <el-button @click="toRank"> 积分排行 </el-button>
-      </div>
+        <el-button size="small" @click="toForum"> 社区讨论 </el-button>
+        <el-button size="small"  @click="toRank"> 积分排行 </el-button>
+        <el-button size="small"  @click="toReport"> 坏题反馈 </el-button>
     </div>
   </div>
 </template>
@@ -296,6 +292,11 @@ export default {
     },
     toRank(){
         window.open(location.origin + '/tuxun/rank',"_blank");
+    },
+    toReport() {
+      api.getByPath('/api/v0/tuxun/game/report', {content: this.image}).then(res=>{
+        this.$toast("反馈成功");
+      })
     },
     next() {
 
