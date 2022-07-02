@@ -155,6 +155,6 @@ export default {
 <style scoped lang="scss">
 .chart {
   //height: 50vh;
-  height: 200px;
+  height: 400px;
 }
 </style>
