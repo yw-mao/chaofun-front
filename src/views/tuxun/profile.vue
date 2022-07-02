@@ -34,6 +34,12 @@
     </div>
     <div style="padding-left: 20px; padding-top: 20px; padding-right: 20px">
       <div style="font-size: 20px">
+        分数走势：
+      </div>
+      <v-chart class="chart" :option="option" />
+    </div>
+    <div style="padding-left: 20px; padding-top: 20px; padding-right: 20px">
+      <div style="font-size: 20px">
         游戏活跃：
       </div>
       <calendar-heatmap :values="this.activity" :end-date="this.endDate" tooltip-unit="活动" />
@@ -47,10 +53,31 @@
 // import Header from '@/components/common/Header.vue'
 import * as api from '@/api/api'
 import { CalendarHeatmap } from 'vue-calendar-heatmap'
+import { use } from "echarts/core";
+import { CanvasRenderer } from "echarts/renderers";
+import { LineChart } from "echarts/charts";
+import {
+  TitleComponent,
+  GridComponent,
+  TooltipComponent,
+  LegendComponent
+} from "echarts/components";
+import VChart, { THEME_KEY } from "vue-echarts";
+
+use([
+  CanvasRenderer,
+  LineChart,
+  TitleComponent,
+  TooltipComponent,
+  LegendComponent,
+  GridComponent
+]);
+
 
 export default {
   components: {
-    CalendarHeatmap
+    CalendarHeatmap,
+    VChart
   },
   data(){
     return {
@@ -58,6 +85,20 @@ export default {
       userProfile: null,
       endDate: null,
       activity: [],
+      historys: null,
+      option: {
+        xAxis: {
+          type: 'time',
+        },
+        yAxis: {
+          type: 'value'
+        },
+        series: [{
+          data: [],
+          type: 'line',
+          smooth: true
+        }]
+      }
     }
   },
   created() {
@@ -69,6 +110,7 @@ export default {
     this.endDate = yyyy + '-' + mm + '-' + dd;
     this.getUserProfile();
     this.getUserActivity();
+    this.getHistory();
   },
   methods: {
     getUserProfile() {
@@ -81,6 +123,25 @@ export default {
         this.activity = res.data
       })
     },
+    getHistory() {
+      api.getByPath('/api/v0/tuxun/getUserHistory', {userId: this.userId}).then(res=>{
+        this.historys = res.data
+        console.log(this.historys);
+        var data = [];
+
+        this.historys = this.historys.reverse();
+        for (let i = 0; i < this.historys.length; i++) {
+          var history = this.historys[i];
+          data.push([history['gmt_create'], history['rating']])
+        }
+        this.option.series = [{
+          data:data,
+          type: 'line',
+          smooth: false
+        }];
+      })
+
+    },
     toUser(item){
       try {
         window.flutter_inappwebview.callHandler('toAppUser',{userId: item.userAO.userId+''})
@@ -92,5 +153,8 @@ export default {
 }
 </script>
 <style scoped lang="scss">
-
+.chart {
+  //height: 50vh;
+  height: 200px;
+}
 </style>
