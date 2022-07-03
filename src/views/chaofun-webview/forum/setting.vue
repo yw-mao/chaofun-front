@@ -165,7 +165,7 @@ export default {
     toBan() {
       try {
         window.flutter_inappwebview.callHandler('toViewPage', {
-          url: "https://47.96.98.153/webview/forum/ban_manager" + "?forumId=" + this.forumId,
+          url: "http://47.96.98.153/webview/forum/ban_manager" + "?forumId=" + this.forumId,
           title: '用户封禁',
           showHeader: true
         })
