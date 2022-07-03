@@ -3,7 +3,7 @@
     <el-dialog title="发送弹幕" :visible.sync="dialogVisible" :append-to-body="true">
       <el-form :model="form"  @submit.native.prevent="send" v-on:submit.prevent="send">
         <el-form-item label="弹幕:">
-          <el-input v-model="form.applyModReason" autocomplete="off"> </el-input>
+          <el-input id="input" v-model="form.applyModReason" autocomplete="off"> </el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -338,6 +338,9 @@ export default {
     },
     toSend() {
       this.dialogVisible = true;
+      setTimeout(function () {
+        document.getElementById("input").focus();
+      }, 500);
     },
     hide() {
       this.dialogVisible = false;
