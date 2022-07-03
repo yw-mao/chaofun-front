@@ -1,28 +1,45 @@
 <template>
   <div>
+    <el-dialog title="发送弹幕" :visible.sync="dialogVisible" :append-to-body="true">
+      <el-form :model="form">
+        <el-form-item label="弹幕:">
+          <el-input v-model="form.applyModReason" autocomplete="off" :autofocus="true" autofocus="true"></el-input>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="hide()">取 消</el-button>
+        <el-button type="primary" @click="send()">确 定</el-button>
+      </div>
+    </el-dialog>
     <div :class="[{'im-view': !ISPHONE}, {'im-view-phone': ISPHONE}]">
+
       <div id="viewer" v-if="this.contentType === 'panorama'" style="width: 100%; height: 100%"></div>
       <img v-if="this.image && this.contentType === 'image'" v-viewer="{inline: false}" :data-source="imgOrigin+ this.image" style=" width: 100%;height: 100%;object-fit: contain;"  :src="imgOrigin+ this.image" alt=""></img>
       <div v-if="status === 'rank'" style="position: absolute; width: 100%; height: 100%; background: white; opacity: 80%; overflow:auto;">
         <div style="padding-top: 40px; font-weight: bold; font-size: 20px;">排行榜:</div>
         <div v-if="this.rank" style="padding-top: 10px; font-weight: bold; font-size: 20px">你的本场次排名:{{this.rank}}</div>
         <div v-for="item in this.ranks" class="item">
-            <div class="left">
-              <img :src="imgOrigin+item.userAO.icon + '?x-oss-process=image/resize,h_80/format,webp/quality,q_75'" alt="">
-              <div class="info">
-                <div class="title">{{item.userAO.userName}}</div>
-                <p v-if="item.ratingChange  && item.ratingChange > 0" class="desc">积分变化：+{{item.ratingChange}}, 积分：{{ item.rating }}</p>
-                <p v-if="!item.ratingChange && item.rating" class="desc">积分无变化, 积分：{{ item.rating }}</p>
-                <p v-if="!item.ratingChange && !item.rating" class="desc">积分无变化</p>
-                <p v-if="item.ratingChange  && item.ratingChange < 0" class="desc">积分变化：{{item.ratingChange}}, 积分：{{ item.rating }}</p>
-              </div>
+          <div class="left">
+            <img :src="imgOrigin+item.userAO.icon + '?x-oss-process=image/resize,h_80/format,webp/quality,q_75'" alt="">
+            <div class="info">
+              <div class="title">{{item.userAO.userName}}</div>
+              <p v-if="item.ratingChange  && item.ratingChange > 0" class="desc">积分变化：+{{item.ratingChange}}, 积分：{{ item.rating }}</p>
+              <p v-if="!item.ratingChange && item.rating" class="desc">积分无变化, 积分：{{ item.rating }}</p>
+              <p v-if="!item.ratingChange && !item.rating" class="desc">积分无变化</p>
+              <p v-if="item.ratingChange  && item.ratingChange < 0" class="desc">积分变化：{{item.ratingChange}}, 积分：{{ item.rating }}</p>
             </div>
-            <div class="right">距离
-              <p>{{ (item.distance / 1000.0).toFixed(2) }} 千米</p>
-            </div>
+          </div>
+          <div class="right">距离
+            <p>{{ (item.distance / 1000.0).toFixed(2) }} 千米</p>
+          </div>
         </div>
-    </div>
       </div>
+      <vue-danmaku :danmus="danmus" use-slot  style="height:80%; width:100%; position: absolute; pointer-events: none">
+        <template slot="dm" slot-scope="{ index, danmu }">
+          <div style="color: black;   -webkit-text-stroke: 0.4px white;">{{ danmu }}</div>
+        </template>
+      </vue-danmaku>
+    </div>
     <baidu-map :center="center" :zoom="zoom" :scroll-wheel-zoom="true" :auto-resize="true" @ready="handler" @ @click="click" :class="[{'bm-view': !ISPHONE}, {'bm-view-phone': ISPHONE}]">
 
       <bm-map-type
@@ -59,9 +76,10 @@
       </div>
     </div>
     <div class="home">
-        <el-button size="small" @click="toForum"> 社区讨论 </el-button>
-        <el-button size="small"  @click="toRank"> 积分排行 </el-button>
-        <el-button size="small"  @click="toReport"> 坏题反馈 </el-button>
+      <el-button size="small" @click="toForum"> 社区讨论 </el-button>
+      <el-button size="small"  @click="toRank"> 积分排行 </el-button>
+      <el-button size="small"  @click="toReport"> 坏题反馈 </el-button>
+      <el-button size="small"  @click="toSend"> 发送弹幕 </el-button>
     </div>
   </div>
 </template>
@@ -71,6 +89,8 @@ import Vue from 'vue'
 import BaiduMap from 'vue-baidu-map'
 import { mapGetters } from 'vuex'
 import * as api from '../../api/api'
+import vueDanmaku from 'vue-danmaku'
+
 Vue.use(BaiduMap, {
   // ak 是在百度地图开发者平台申请的密钥 详见 http://lbsyun.baidu.com/apiconsole/key */
   ak: 'GZPIvvSbzgo188vmBGwPOtU2ZCHDhkry'
@@ -78,10 +98,17 @@ Vue.use(BaiduMap, {
 import {Viewer} from 'photo-sphere-viewer'
 import 'photo-sphere-viewer/dist/photo-sphere-viewer.css'
 export default {
-
+  components: {
+    vueDanmaku,
+  },
   name: "TXHome",
   data () {
     return {
+      danmus: [''],
+      form: {
+        applyModReason: '',
+      },
+      dialogVisible: false,
       viewer: null,
       center: {lng: 0, lat: 0},
       zoom: 3,
@@ -233,6 +260,8 @@ export default {
         });
       } else if (data.data.type === 'warning') {
         this.$toast(data.data.noteMessage);
+      } else if (data.data.type === 'receive_bullet') {
+        this.danmus.push(data.data.text);
       }
     },
     wsOnClose(e) {
@@ -291,7 +320,7 @@ export default {
       }
     },
     toRank(){
-        window.open(location.origin + '/tuxun/rank',"_blank");
+      window.open(location.origin + '/tuxun/rank',"_blank");
     },
     toReport() {
       api.getByPath('/api/v0/tuxun/game/report', {content: this.image}).then(res=>{
@@ -300,6 +329,18 @@ export default {
     },
     next() {
 
+    },
+    send() {
+      this.dialogVisible = false;
+      this.wsSend("{\"scope\": \"tuxun\", \"data\": {\"type\": \"send_bullet\", \"text\": \"" + this.form.applyModReason + "\"}}");
+      this.form.applyModReason = null;
+      this.$toast("发送成功");
+    },
+    toSend() {
+      this.dialogVisible = true;
+    },
+    hide() {
+      this.dialogVisible = false;
     },
     mapReady(e) {
       console.log("hahah");
@@ -449,6 +490,5 @@ export default {
     }
   }
 }
-
 
 </style>
