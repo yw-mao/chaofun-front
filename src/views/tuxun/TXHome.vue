@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-dialog title="发送弹幕" :visible.sync="dialogVisible" :append-to-body="true">
-      <el-form :model="form">
+      <el-form :model="form"  @submit.native.prevent>
         <el-form-item label="弹幕:">
           <el-input v-model="form.applyModReason" autocomplete="off"> </el-input>
         </el-form-item>
