@@ -78,8 +78,8 @@
     <div class="home">
       <el-button size="small" @click="toForum"> 社区讨论 </el-button>
       <el-button size="small"  @click="toRank"> 积分排行 </el-button>
-      <el-button size="small"  @click="toReport"> 坏题反馈 </el-button>
       <el-button size="small"  @click="toSend"> 发送弹幕 </el-button>
+      <el-button size="small"  @click="toReport"> 坏题反馈 </el-button>
     </div>
   </div>
 </template>
