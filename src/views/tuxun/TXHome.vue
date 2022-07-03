@@ -3,7 +3,7 @@
     <el-dialog title="发送弹幕" :visible.sync="dialogVisible" :append-to-body="true">
       <el-form :model="form">
         <el-form-item label="弹幕:">
-          <el-input v-model="form.applyModReason" autocomplete="off" :autofocus="true" autofocus="true"></el-input>
+          <el-input v-model="form.applyModReason" autocomplete="off"> </el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -36,7 +36,7 @@
       </div>
       <vue-danmaku :danmus="danmus" use-slot  style="height:80%; width:100%; position: absolute; pointer-events: none">
         <template slot="dm" slot-scope="{ index, danmu }">
-          <div style="color: black;   -webkit-text-stroke: 0.4px white;">{{ danmu }}</div>
+          <div style="color: white;   -webkit-text-stroke: 0.3px black;">{{ danmu }}</div>
         </template>
       </vue-danmaku>
     </div>
