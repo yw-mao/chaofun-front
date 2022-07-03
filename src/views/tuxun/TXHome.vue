@@ -34,7 +34,7 @@
           </div>
         </div>
       </div>
-      <vue-danmaku :danmus="danmus" use-slot  style="height:80%; width:100%; position: absolute; pointer-events: none">
+      <vue-danmaku :danmus="danmus" use-slot  style="height:80%; width:100%; position: absolute; pointer-events: none" speeds="120">
         <template slot="dm" slot-scope="{ index, danmu }">
           <div style="color: white; font-size: 24px;   -webkit-text-stroke: 0.5px black;">{{ danmu }}</div>
         </template>
