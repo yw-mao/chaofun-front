@@ -49,7 +49,7 @@
       <bm-marker v-if="this.lng != null" :position="{lng: this.lng, lat: this.lat}" :dragging="true" animation="BMAP_ANIMATION_BOUNCE">
         <bm-label content="你选择了" :labelStyle="{color: 'red', fontSize : '24px'}" :offset="{width: -35, height: 30}"/>
       </bm-marker>
-      <bm-polyline v-if="this.polylinePath" :path="this.polylinePath" stroke-color="blue" :stroke-opacity="0.5" :stroke-weight="2" :editing="true" @lineupdate="updatePolylinePath"></bm-polyline>
+      <bm-polyline v-if="this.polylinePath" :path="this.polylinePath" stroke-color="blue" :stroke-opacity="0.5" :stroke-weight="2" :editing="true"></bm-polyline>
 
       <bm-marker v-if="this.targetLng != null" :position="{lng: this.targetLng, lat: this.targetLat}" :dragging="true" animation="BMAP_ANIMATION_BOUNCE">
         <bm-label content="目标地址" :labelStyle="{color: 'red', fontSize : '24px'}" :offset="{width: -35, height: 30}"/>
@@ -61,10 +61,11 @@
     <div :class="[{'confirm': !ISPHONE}, {'confirm-phone': ISPHONE}]">
       <el-button v-if="confirmed && distance">距离 {{ distance.toFixed(2) }} 千米</el-button>
       <el-button v-if="!confirmed && status !== 'rank'"  @click="confirm">确定选择</el-button>
-      <el-button v-if="confirmed && !distance">等待答案</el-button>
+      <el-button v-if="!isMaps && confirmed && !distance">等待答案</el-button>
+      <el-button v-if="isMaps && confirmed && distance" @click="next" >下一题</el-button>
     </div>
 
-    <div :class="[{'topRight': !ISPHONE}, {'topRight-phone': ISPHONE}]">
+    <div v-if="!this.isMaps" :class="[{'topRight': !ISPHONE}, {'topRight-phone': ISPHONE}]">
       <div :class="[{'top-info': !ISPHONE}, {'top-info-phone': ISPHONE}]">
         在线人数：{{this.onlineNums}}
       </div>
@@ -76,10 +77,11 @@
       </div>
     </div>
     <div class="home">
-      <el-button size="small" @click="toForum"> 社区讨论 </el-button>
-      <el-button size="small"  @click="toRank"> 积分排行 </el-button>
-      <el-button size="small"  @click="toSend"> 发送弹幕 </el-button>
-      <el-button size="small"  @click="toReport"> 坏题反馈 </el-button>
+      <el-button size="mini" @click="toForum"> 社区讨论 </el-button>
+      <el-button v-if="!this.isMaps" size="mini"  @click="toRank"> 积分排行 </el-button>
+      <el-button v-if="!this.isMaps" size="mini"  @click="toSend"> 发送弹幕 </el-button>
+      <el-button size="mini"  @click="toReport"> 坏题反馈 </el-button>
+      <el-button size="mini"  @click="toMaps"> 训练赛 </el-button>
     </div>
   </div>
 </template>
@@ -136,14 +138,26 @@ export default {
       status: null,
       rank: null,
       timeLeft: null,
+      mapsId: null,
+      isMaps: false,
       ranks: []
+    }
+  },
+
+  created() {
+    this.mapsId = this.$route.query.mapsId;
+    if (this.mapsId != null) {
+      this.isMaps = true;
     }
   },
   mounted() {
     // screen.orientation.lock('landscape');
     // this.resizeScreen();
-    this.initWS();
-    this.next();
+    if (!this.isMaps) {
+      this.initWS();
+    } else {
+      this.next();
+    }
   },
 
 
@@ -307,7 +321,7 @@ export default {
     },
 
     click(e) {
-      if (this.status === 'wait') {
+      if (this.status === 'wait' || this.isMaps) {
         if (!this.confirmed) {
           console.log(e);
           console.log('123');
@@ -325,8 +339,29 @@ export default {
         this.$toast('还未在地图上选择地点，请选择！');
         return;
       }
-      this.confirmed = true;
-      this.wsSend("{\"scope\": \"tuxun\", \"data\": {\"type\": \"confirm\", \"lat\": " + this.lat + ", \"lng\": " + this.lng + "}}");
+      if (!this.isMaps) {
+        this.confirmed = true;
+        this.wsSend("{\"scope\": \"tuxun\", \"data\": {\"type\": \"confirm\", \"lat\": " + this.lat + ", \"lng\": " + this.lng + "}}");
+      } else {
+        if (this.lng == null) {
+          this.$toast('')
+          return;
+        }
+        this.zoom = 20;
+        this.map.setZoom(0);
+        this.$toast('确认成功！')
+        this.confirmed = true;
+        api.getByPath("/api/v0/tuxun/game/confirm", {id: this.id, lng: this.lng, lat: this.lat}).then(res => {
+          this.confirmed = true;
+          this.targetLng = res.data.lng;
+          this.targetLat = res.data.lat;
+          this.distance = res.data.distanceMeter;
+          this.polylinePath = [
+            {lng: this.lng, lat: this.lat},
+            {lng: res.data.lng, lat: res.data.lat}
+          ]
+        });
+      }
     },
 
     wsSend(data) {
@@ -349,9 +384,39 @@ export default {
         this.$toast("反馈成功");
       })
     },
-    next() {
-
+    toMaps() {
+      window.open(location.origin + '/tuxun/maps',"_blank");
     },
+    next() {
+      this.confirmed = false;
+      this.returnResult = true;
+      this.polylinePath = false;
+      this.lng = null;
+      this.lat = null;
+      this.targetLat = null;
+      this.targetLng = null;
+      this.image = null;
+      this.distance = null;
+      this.heading = null;
+      if (this.viewer !== null) {
+        this.viewer.destroy();
+        this.viewer = null;
+      }
+      api.getByPath("/api/v0/tuxun/game/generate", {mapsId: this.mapsId}).then(res => {
+            this.image = res.data.content;
+            this.id  = res.data.id;
+            this.contentType = res.data.type;
+            this.heading = res.data.heading;
+        var self = this;
+        if (this.contentType === 'panorama') {
+              setTimeout(function () {
+                self.initPanorama();
+              }, 500);
+            }
+          }
+      );
+    },
+
     send() {
       this.dialogVisible = false;
       this.wsSend("{\"scope\": \"tuxun\", \"data\": {\"type\": \"send_bullet\", \"text\": \"" + this.form.applyModReason + "\"}}");
