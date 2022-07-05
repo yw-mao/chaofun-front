@@ -34,7 +34,7 @@
           </div>
         </div>
       </div>
-      <vue-danmaku :danmus="danmus" use-slot  style="height:80%; width:100%; position: absolute; pointer-events: none" speeds="120">
+      <vue-danmaku :danmus="danmus" use-slot  style="height:80%; width:100%; position: absolute; pointer-events: none" :speeds="120">
         <template slot="dm" slot-scope="{ index, danmu }">
           <div style="color: white; font-size: 24px;   -webkit-text-stroke: 0.5px black;">{{ danmu }}</div>
         </template>
@@ -97,6 +97,9 @@ Vue.use(BaiduMap, {
 })
 import {Viewer} from 'photo-sphere-viewer'
 import 'photo-sphere-viewer/dist/photo-sphere-viewer.css'
+import { CompassPlugin } from 'photo-sphere-viewer/dist/plugins/compass'
+import 'photo-sphere-viewer/dist/plugins/compass.css'
+
 export default {
   components: {
     vueDanmaku,
@@ -124,6 +127,7 @@ export default {
       distance: null,
       image: null,
       contentType: null,
+      heading: null,
       id: null,
       url: `${location.protocol === "https:" ? "wss" : "ws"}://${location.host}/ws/v0/tuxun`,
       // url: `ws://47.96.98.153/ws/v0/tuxun`,
@@ -154,6 +158,23 @@ export default {
         this.viewer = new Viewer({
           container: document.querySelector('#viewer'),
           panorama: 'https://i.chao.fan/' + this.image,
+          panoData: {
+            // fullWidth: 6000,
+            // fullHeight: 3000,
+            // croppedWidth: 4000,
+            // croppedHeight: 2000,
+            // croppedX: 1000,
+            // croppedY: 500,
+            poseHeading: this.heading, // 0 to 360
+            // posePitch: 0, // -90 to 90
+            // poseRoll: 0, // -180 to 180
+          },
+          plugins: this.heading ? [
+            [CompassPlugin, {
+              size: '10vh',
+              position: 'left bottom'
+            }],
+          ]: [],
         });
       } catch (e) {
         console.log(e)
@@ -192,6 +213,7 @@ export default {
         this.status = data.data.status;
         this.onlineNums = data.data.onlineNums;
         if (this.image !== data.data.content) {
+          this.heading = data.data.heading;
           this.image = data.data.content;
 
           if (this.contentType !== data.data.contentType) {
