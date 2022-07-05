@@ -40,7 +40,7 @@
         </template>
       </vue-danmaku>
     </div>
-    <baidu-map :center="center" :zoom="zoom" :scroll-wheel-zoom="true" :auto-resize="true" @ready="handler" @ @click="click" :class="[{'bm-view': !ISPHONE}, {'bm-view-phone': ISPHONE}]">
+    <baidu-map :center="center" :zoom="zoom" :scroll-wheel-zoom="true" :auto-resize="true" @ready="handler"  @click="click" :class="[{'bm-view': !ISPHONE}, {'bm-view-phone': ISPHONE}]">
 
       <bm-map-type
           :map-types="['BMAP_NORMAL_MAP', 'BMAP_SATELLITE_MAP']"
@@ -171,7 +171,7 @@ export default {
           },
           plugins: this.heading ? [
             [CompassPlugin, {
-              size: '10vh',
+              size: '5vh',
               position: 'left bottom'
             }],
           ]: [],
