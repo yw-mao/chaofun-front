@@ -256,6 +256,13 @@ routes = [
     hidden: true
   },
   {
+    path: '/live',
+    component: () => import('@/views/live/test'),
+    name: 'live',
+    meta: { title: 'live'},
+    hidden: true
+  },
+  {
     path: '/tuxun/rank',
     component: () => import('@/views/tuxun/rank'),
     name: 'rank',
