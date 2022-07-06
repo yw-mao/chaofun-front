@@ -355,7 +355,7 @@ export default {
           this.confirmed = true;
           this.targetLng = res.data.lng;
           this.targetLat = res.data.lat;
-          this.distance = res.data.distanceMeter;
+          this.distance = res.data.distanceMeter / 1000;
           this.polylinePath = [
             {lng: this.lng, lat: this.lat},
             {lng: res.data.lng, lat: res.data.lat}
