@@ -2,7 +2,7 @@
   <div class="container">
     <div class="content">
         <div class="nav">
-            <span>训练图</span>
+            <span>训练赛</span>
         </div>
         <div @click="toMaps(item)" v-for="(item,index) in pagedata" :key="index" class="item">
 <!--          <div class="title">{{item.rank}}.</div>-->
@@ -36,7 +36,7 @@ export default {
   },
   mounted(){
     this.getButtonRank()
-    document.title = "图寻总积分";
+    document.title = "训练赛";
 
     let _this = this;
     let timer = setInterval(()=>{
