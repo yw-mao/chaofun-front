@@ -258,7 +258,7 @@ export default {
     align-items: center;
     color: #fff;
     justify-content: space-between;
-    background: url('https://i.chao.fan/biz/0dd39345f731e512a2308a9cf20b8926.png');
+    background: url('https://chaofun.oss-cn-hangzhou.aliyuncs.com/biz/0dd39345f731e512a2308a9cf20b8926.png');
     .t_left{
         flex: 0 0 1;
         margin-right: 30px;

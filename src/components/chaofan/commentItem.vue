@@ -108,7 +108,7 @@
               <img style="vertical-align:middle;margin-right:10px;cursor:pointer;" src="../../assets/images/icon/choose.png" alt="">
             </el-upload>
             <div class="icons">
-              <img @click="showIcons" src="https://i.chao.fan/biz/1657171357596_51b6f962c13d4bbb855dc74a716a87d9.png" alt="">
+              <img @click="showIcons" src="https://chaofun.oss-cn-hangzhou.aliyuncs.com/biz/1657171357596_51b6f962c13d4bbb855dc74a716a87d9.png" alt="">
               <div class="emoji">
                 <span v-for="(item,index) in icons" @click="chooseEmoji(item)" :key="index">{{item}}</span>
               </div>

@@ -56,7 +56,7 @@
     </div>
     <div style="width: 100%; ">
       <div @click="getWechatCover" style="padding-top: 20px;width: 50%; display: inline-block; text-align: center">
-        <img style="padding-right: 10px; padding-left: 10px; max-width: 100%; max-height: 200px" src="https://i.chao.fan/biz/76b1d8fd9240d15b3520e9085662b415.png">
+        <img style="padding-right: 10px; padding-left: 10px; max-width: 100%; max-height: 200px" src="https://chaofun.oss-cn-hangzhou.aliyuncs.com/biz/76b1d8fd9240d15b3520e9085662b415.png">
         <p style="text-align: center">
           微信炒饭娘红包封面
         </p>
@@ -65,7 +65,7 @@
         </p>
       </div>
       <div @click="getMusicPackage" style="padding-top: 20px;width: 50%; display: inline-block; text-align: center">
-        <img style="padding-right: 10px; padding-left: 10px; max-width: 100%; max-height: 200px" src="https://i.chao.fan/biz/1653662548745_fe793a4930f64d31a6acc0129adfc4d6.png">
+        <img style="padding-right: 10px; padding-left: 10px; max-width: 100%; max-height: 200px" src="https://chaofun.oss-cn-hangzhou.aliyuncs.com/biz/1653662548745_fe793a4930f64d31a6acc0129adfc4d6.png">
         <p style="text-align: center">
           网易云音乐 音乐包月卡
         </p>
@@ -75,7 +75,7 @@
       </div>
 
       <div @click="getJDECard" style="width: 50%; display: inline-block">
-        <img style="padding-right: 10px; padding-left: 10px; width: 100%" src="https://i.chao.fan/biz/fc21232af2fa1849c3f0853b8748224c.png">
+        <img style="padding-right: 10px; padding-left: 10px; width: 100%" src="https://chaofun.oss-cn-hangzhou.aliyuncs.com/biz/fc21232af2fa1849c3f0853b8748224c.png">
         <p style="text-align: center">
           10元京东E卡
         </p>
@@ -84,7 +84,7 @@
         </p>
       </div>
       <div @click="getQQMusicPackage" style="padding-top: 20px; width: 50%; display: inline-block">
-        <img style="padding-right: 10px; padding-left: 10px; width: 100%" src="https://i.chao.fan/biz/1653664313972_86702ab2d35c487ca376ec939e4110d1.png">
+        <img style="padding-right: 10px; padding-left: 10px; width: 100%" src="https://chaofun.oss-cn-hangzhou.aliyuncs.com/biz/1653664313972_86702ab2d35c487ca376ec939e4110d1.png">
         <p style="text-align: center">
           QQ音乐 绿钻1个月
         </p>
@@ -93,7 +93,7 @@
         </p>
       </div>
       <div @click="orderCup('cup')" style="padding-top: 20px; width: 50%; display: inline-block">
-        <img style="padding-right: 10px; padding-left: 10px; width: 100%" src="https://i.chao.fan/biz/0e848c137be852a5d7999f4acd10a640.png">
+        <img style="padding-right: 10px; padding-left: 10px; width: 100%" src="https://chaofun.oss-cn-hangzhou.aliyuncs.com/biz/0e848c137be852a5d7999f4acd10a640.png">
         <p style="text-align: center">
           炒饭马克杯
         </p>
@@ -103,7 +103,7 @@
       </div>
 
       <div @click="orderCup('pillow')" style="padding-top: 20px; width: 50%; display: inline-block">
-        <img style="padding-right: 10px; padding-left: 10px; width: 100%" src="https://i.chao.fan/biz/8ac76ef85cc8096adf30863e45a27374.jpg">
+        <img style="padding-right: 10px; padding-left: 10px; width: 100%" src="https://chaofun.oss-cn-hangzhou.aliyuncs.com/biz/8ac76ef85cc8096adf30863e45a27374.jpg">
         <p style="text-align: center">
           炒饭 抱枕 一个
         </p>
@@ -113,7 +113,7 @@
       </div>
 
       <div @click="orderCup('mask')" style="padding-top: 20px;width: 50%; display: inline-block">
-        <img style="padding-right: 10px; padding-left: 10px; width: 100%" src="https://i.chao.fan/biz/1654480598414_3451e4cf70784419a54c1476224101f0.png">
+        <img style="padding-right: 10px; padding-left: 10px; width: 100%" src="https://chaofun.oss-cn-hangzhou.aliyuncs.com/biz/1654480598414_3451e4cf70784419a54c1476224101f0.png">
         <p style="text-align: center">
           炒饭口罩 30 个（独立包装）
         </p>
@@ -123,7 +123,7 @@
       </div>
 
       <div @click="getBilibili1Month" style="padding-top: 20px; width: 50%; display: inline-block">
-        <img style="padding-right: 10px; padding-left: 10px; width: 100%" src="https://i.chao.fan/biz/9683983f7ae6a723a76fc00dd7f9a103.png">
+        <img style="padding-right: 10px; padding-left: 10px; width: 100%" src="https://chaofun.oss-cn-hangzhou.aliyuncs.com/biz/9683983f7ae6a723a76fc00dd7f9a103.png">
         <p style="text-align: center">
           Bilibili月度大会员
         </p>
@@ -132,7 +132,7 @@
         </p>
       </div>
       <div @click="orderCup('tshirt')" style="padding-top: 20px;width: 50%; display: inline-block">
-        <img style="padding-right: 10px; padding-left: 10px; width: 100%" src="https://i.chao.fan/biz/e3e44a77908676ea7047c18601a0297b.png">
+        <img style="padding-right: 10px; padding-left: 10px; width: 100%" src="https://chaofun.oss-cn-hangzhou.aliyuncs.com/biz/e3e44a77908676ea7047c18601a0297b.png">
         <p style="text-align: center">
           炒饭 T-shirt (无L码)
         </p>
@@ -142,7 +142,7 @@
       </div>
 
       <div @click="getBilibili1Year" style="padding-top: 20px; width: 50%; display: inline-block">
-        <img style="padding-right: 10px; padding-left: 10px; width: 100%" src="https://i.chao.fan/biz/9683983f7ae6a723a76fc00dd7f9a103.png">
+        <img style="padding-right: 10px; padding-left: 10px; width: 100%" src="https://chaofun.oss-cn-hangzhou.aliyuncs.com/biz/9683983f7ae6a723a76fc00dd7f9a103.png">
         <p style="text-align: center">
           Bilibili年度大会员
         </p>
@@ -151,7 +151,7 @@
         </p>
       </div>
       <div style="padding-top: 20px; width: 50%; display: inline-block">
-        <img style="padding-right: 10px; padding-left: 10px; width: 100%" src="https://i.chao.fan/biz/da67f9c40bc0f80db68e40de94b9a3f5.png">
+        <img style="padding-right: 10px; padding-left: 10px; width: 100%" src="https://chaofun.oss-cn-hangzhou.aliyuncs.com/biz/da67f9c40bc0f80db68e40de94b9a3f5.png">
         <p style="text-align: center">
           西兰公国 Lord (勋爵)
         </p>

@@ -147,12 +147,12 @@ export default {
       if(this.version == 'new'){
         params = {
           method: 'viewImage',
-          data: {imgSrc: ['https://i.chao.fan/'+'biz/10c40905c46e8c9c65d8d95b9fb25bdf.jpg'],index:0},
+          data: {imgSrc: ['https://chaofun.oss-cn-hangzhou.aliyuncs.com/'+'biz/10c40905c46e8c9c65d8d95b9fb25bdf.jpg'],index:0},
         }
       }else{
         params = {
           type: 'viewImage',
-          query: {imgSrc: 'https://i.chao.fan/'+'biz/10c40905c46e8c9c65d8d95b9fb25bdf.jpg'},
+          query: {imgSrc: 'https://chaofun.oss-cn-hangzhou.aliyuncs.com/'+'biz/10c40905c46e8c9c65d8d95b9fb25bdf.jpg'},
         }
       }
 

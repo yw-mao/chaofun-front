@@ -12,7 +12,7 @@ export default {
   },
   data() {
     return {
-      imgOrigin: 'https://i.chao.fan/',
+      imgOrigin: 'https://chaofun.oss-cn-hangzhou.aliyuncs.com/',
       defaultUserIcon: 'f58b7f52d7c801ba0806e2125a776a44.png',
       ISPHONE: document.body.clientWidth > 800 && !navigator.userAgent.includes('iPad') ? false : true,
       imgMaxWidth: document.body.clientWidth - 100,

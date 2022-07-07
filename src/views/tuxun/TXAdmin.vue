@@ -1,6 +1,6 @@
 <template>
   <div>
-    <img v-if="image" class="im-view" :src="'https://i.chao.fan/'+ this.image" alt="">
+    <img v-if="image" class="im-view" :src="'https://chaofun.oss-cn-hangzhou.aliyuncs.com/'+ this.image" alt="">
     </img>
 
 
