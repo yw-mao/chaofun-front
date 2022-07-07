@@ -174,7 +174,7 @@ export default {
       try {
         this.viewer = new Viewer({
           container: document.querySelector('#viewer'),
-          panorama: 'https://chaofun.oss-cn-hangzhou.aliyuncs.com/' + this.image,
+          panorama: 'https://i.chao.fan/' + this.image,
           panoData: {
             // fullWidth: 6000,
             // fullHeight: 3000,
