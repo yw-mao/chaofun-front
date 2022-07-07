@@ -33,8 +33,8 @@ export default {
     }
   },
   mounted() {
-    api.getByPath('/api/v0/user/getLiveToken', {channelName: this.channel_name, role: 0}).then(res=>{
-      this.token = res.data
+    api.getByPath('/api/v0/user/getLiveToken', {channelName: this.channel_name, role: 101}).then(res=>{
+      this.token = res.data;
     })
   },
   methods: {

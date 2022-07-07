@@ -96,7 +96,7 @@
 
                             </el-upload>
                             <div class="icons" style="z-index: 1;">
-                              <img @click="showIcons" src="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=105646479,4120396531&fm=26&gp=0.jpg" alt="">
+                              <img @click="showIcons" src="https://i.chao.fan/biz/1657171357596_51b6f962c13d4bbb855dc74a716a87d9.png" alt="">
                               <div  class="emoji">
                                 <span v-for="(item,index) in icons" @click="chooseEmoji(item)" :key="index">{{item}}</span>
                               </div>
@@ -1296,7 +1296,7 @@ queryChildren (parent, list) {
           }
         }
         .icons{
-          padding: 4px 20px 0;
+          padding: 4px 10px 0;
           text-align: right;
           height: 60px;
           &:hover {
