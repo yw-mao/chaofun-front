@@ -1,5 +1,5 @@
 <template>
-  <agora v-if="token" :appid="appid" channel="test_channel" :token="token">
+  <agora v-if="token" :appid="appid" channel="test_channel" :token="token" :uid="uid">
     <agora-audio-sender/>
     <agora-audio-receiver/>
 <!--    <agora-video-sender/>-->
@@ -29,11 +29,14 @@ export default {
       appid: 'ae4b1253d6804e01917909de12f751ee',
       token: null,
       channel_name: 'test_channel',
-      timer: 0
+      uid: 1
     }
   },
+  created() {
+    this.uid = this.$store.state.user.userInfo.userId;
+  },
   mounted() {
-    api.getByPath('/api/v0/user/getLiveToken', {channelName: this.channel_name, role: 101}).then(res=>{
+    api.getByPath('/api/v0/user/getLiveToken', {channelName: this.channel_name, role: 1}).then(res=>{
       this.token = res.data;
     })
   },
