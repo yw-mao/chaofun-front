@@ -80,8 +80,9 @@
       <el-button size="mini" @click="toForum"> 社区讨论 </el-button>
       <el-button v-if="!this.isMaps" size="mini"  @click="toRank"> 积分排行 </el-button>
       <el-button v-if="!this.isMaps" size="mini"  @click="toSend"> 发送弹幕 </el-button>
+      <el-button size="mini"  @click="toHome"> 排位赛 </el-button>
+      <el-button size="mini"  @click="toMaps"> 训练赛首页 </el-button>
       <el-button size="mini"  @click="toReport"> 坏题反馈 </el-button>
-      <el-button size="mini"  @click="toMaps"> 训练赛 </el-button>
     </div>
   </div>
 </template>
@@ -386,6 +387,9 @@ export default {
     },
     toMaps() {
       window.open(location.origin + '/tuxun/maps',"_blank");
+    },
+    toHome() {
+      window.open(location.origin + '/tuxun',"_blank");
     },
     next() {
       this.confirmed = false;
