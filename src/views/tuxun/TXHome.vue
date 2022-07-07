@@ -83,6 +83,8 @@
       <el-button v-if="this.isMaps" size="mini"  @click="toHome"> 排位赛 </el-button>
       <el-button size="mini"  @click="toMaps"> 训练赛 </el-button>
       <el-button size="mini"  @click="toReport"> 坏题反馈 </el-button>
+      <el-button v-if="this.$store.state.user.userInfo.userId === 1" size="mini"  @click="deleteTuxun"> 删除该题 </el-button>
+      <el-button v-if="this.$store.state.user.userInfo.userId === 1" size="mini"  @click="removeFromMaps"> 移除该题 </el-button>
     </div>
   </div>
 </template>
@@ -380,9 +382,21 @@ export default {
     toRank(){
       window.open(location.origin + '/tuxun/rank',"_blank");
     },
+
     toReport() {
       api.getByPath('/api/v0/tuxun/game/report', {content: this.image}).then(res=>{
         this.$toast("反馈成功");
+      })
+    },
+    deleteTuxun() {
+      api.getByPath('/api/v0/tuxun/game/delete', {content: this.image}).then(res=>{
+        this.$toast("删除成功");
+      })
+    },
+
+    removeFromMaps() {
+      api.getByPath('/api/v0/tuxun/maps/remove', {tuxunId: this.id, mapsId: this.mapsId}).then(res=>{
+        this.$toast("移除成功");
       })
     },
     toMaps() {
