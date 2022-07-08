@@ -5,6 +5,7 @@
 
 
     <div class="confirm">
+      剩余 {{totalCount}}
       <el-button @click="check">加入题库</el-button>
       <el-button @click="deleteQ">删除题目</el-button>
     </div>
@@ -39,6 +40,7 @@ export default {
       image: null,
       id: null,
       index: -1,
+      totalCount: null
     }
   },
   mounted() {
@@ -122,6 +124,7 @@ export default {
       api.getByPath("/api/v0/tuxun/game/generateQueue", {index: this.index}).then(res => {
             this.image = res.data.content;
             this.id  = res.data.id;
+            this.totalCount = res.data.totalCount;
           }
       );
     },
