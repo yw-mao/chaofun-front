@@ -84,7 +84,7 @@
       <el-button size="mini"  @click="toMaps"> 训练赛 </el-button>
       <el-button size="mini"  @click="toReport"> 坏题反馈 </el-button>
       <el-button v-if="this.$store.state.user.userInfo.userId === 1" size="mini"  @click="deleteTuxun"> 删除该题 </el-button>
-      <el-button v-if="this.$store.state.user.userInfo.userId === 1" size="mini"  @click="removeFromMaps"> 移除该题 </el-button>
+      <el-button v-if="this.$store.state.user.userInfo.userId === 1 && this.isMaps" size="mini"  @click="removeFromMaps"> 移除该题 </el-button>
     </div>
   </div>
 </template>
