@@ -39,11 +39,13 @@ export default {
       distance: null,
       image: null,
       id: null,
+      queryId: null,
       index: -1,
       totalCount: null
     }
   },
   mounted() {
+    this.queryId = this.$route.query.id;
     let self = this;
     document.onkeydown=function(event){
       console.log("hahah");
@@ -92,10 +94,14 @@ export default {
       }
     },
     deleteQ() {
-      api.getByPath("/api/v0/tuxun/game/delete", {id: this.id}).then(res => {
-        this.index = this.index -1;
-        this.next();
-      });
+        api.getByPath("/api/v0/tuxun/game/delete", {content: this.image}).then(res => {
+          this.index = this.index - 1;
+          if (this.queryId === null) {
+            this.next();
+          } else {
+            window.close();
+          }
+        });
     },
 
     last() {
@@ -104,6 +110,10 @@ export default {
     },
 
     check() {
+      if (this.queryId !== null) {
+        window.close();
+        return;
+      }
       api.getByPath("/api/v0/tuxun/game/check", {id: this.id}).then(res => {
         this.index = this.index -1;
         this.next();
@@ -121,12 +131,21 @@ export default {
       this.image = null;
       this.distance = null;
       this.index = this.index + 1;
-      api.getByPath("/api/v0/tuxun/game/generateQueue", {index: this.index}).then(res => {
-            this.image = res.data.content;
-            this.id  = res.data.id;
-            this.totalCount = res.data.totalCount;
-          }
-      );
+      if (this.queryId !== null) {
+        api.getByPath("/api/v0/tuxun/game/getContent", {id: this.queryId}).then(res => {
+              this.image = res.data.content;
+              this.id = res.data.id;
+              this.totalCount = res.data.totalCount;
+            }
+        );
+      } else {
+        api.getByPath("/api/v0/tuxun/game/generateQueue", {index: this.index}).then(res => {
+              this.image = res.data.content;
+              this.id = res.data.id;
+              this.totalCount = res.data.totalCount;
+            }
+        );
+      }
     },
     mapReady(e) {
       console.log("hahah");
