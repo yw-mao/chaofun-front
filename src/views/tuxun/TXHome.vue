@@ -15,6 +15,23 @@
 
       <div id="viewer" v-if="this.contentType === 'panorama'" style="width: 100%; height: 100%"></div>
       <img v-if="this.image && this.contentType === 'image'" v-viewer="{inline: false}" :data-source="imgOrigin+ this.image" style=" width: 100%;height: 100%;object-fit: contain;"  :src="imgOrigin+ this.image" alt=""></img>
+<!--      <video style="height: 100%" v-if="this.image && this.contentType === 'video'" controls autoplay muted :src="imgOrigin + this.image" alt="" ></video>-->
+      <video style="height: 100%"
+             v-if="this.image && this.contentType === 'video'"
+             webkit-playsinline="true"
+             x-webkit-airplay="true"
+             playsinline="true"
+             x5-video-player-type="h5"
+             x5-video-orientation="h5"
+             x5-video-player-fullscreen="true"
+             controls
+             autoplay
+             loop
+             muted
+             :src="imgOrigin+this.image"
+             ref="videoPlayer"
+             alt="">
+      </video>
       <div v-if="status === 'rank'" style="position: absolute; width: 100%; height: 100%; background: white; opacity: 80%; overflow:auto;">
         <div style="padding-top: 40px; font-weight: bold; font-size: 20px;">排行榜:</div>
         <div v-if="this.rank" style="padding-top: 10px; font-weight: bold; font-size: 20px">你的本场次排名:{{this.rank}}</div>
@@ -143,6 +160,7 @@ export default {
       timeLeft: null,
       mapsId: null,
       isMaps: false,
+      mute: false,
       ranks: []
     }
   },
@@ -155,12 +173,15 @@ export default {
   },
   mounted() {
     // screen.orientation.lock('landscape');
-    // this.resizeScreen();
     if (!this.isMaps) {
       this.initWS();
     } else {
       this.next();
     }
+
+    // this.contentType = 'video';
+    // this.image = 'biz/dc7487cc7d3b849fa903f3e04b9a2824.mp4';
+
   },
 
 
@@ -479,7 +500,7 @@ export default {
 .im-view-phone {
   position: absolute;
   width: 100%;
-  height: 50%;
+  height: 60%;
   right: 0;
   left: 0;
   text-align: center;
@@ -500,7 +521,7 @@ export default {
 .bm-view-phone {
   position: absolute;
   width: 100%;
-  height: 50%;
+  height: 40%;
   bottom: 0;
   right: 0;
 }
