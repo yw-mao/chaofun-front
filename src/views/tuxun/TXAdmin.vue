@@ -46,6 +46,7 @@ export default {
   },
   mounted() {
     this.queryId = this.$route.query.id;
+    console.log(this.queryId);
     let self = this;
     document.onkeydown=function(event){
       console.log("hahah");
@@ -131,7 +132,7 @@ export default {
       this.image = null;
       this.distance = null;
       this.index = this.index + 1;
-      if (this.queryId !== null) {
+      if (this.queryId !== null && this.queryId) {
         api.getByPath("/api/v0/tuxun/game/getContent", {id: this.queryId}).then(res => {
               this.image = res.data.content;
               this.id = res.data.id;
