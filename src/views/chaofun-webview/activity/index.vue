@@ -53,7 +53,7 @@ export default {
         {
           path: '/tuxun',
           title: '图寻小游戏',
-          desc: '网络迷踪/看图找地点小游戏',
+          desc: '网络迷踪/看图找地点小游戏(暂不兼容华为荣耀)',
           showBottom: true
         },
         {
