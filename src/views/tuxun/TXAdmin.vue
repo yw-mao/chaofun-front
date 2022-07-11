@@ -98,9 +98,9 @@ export default {
         api.getByPath("/api/v0/tuxun/game/delete", {content: this.image}).then(res => {
           this.index = this.index - 1;
           if (this.queryId !== null && this.queryId) {
-            this.next();
-          } else {
             window.close();
+          } else {
+            this.next();
           }
         });
     },
