@@ -161,12 +161,14 @@ export default {
       mapsId: null,
       isMaps: false,
       mute: false,
+      autoRotate: null,
       ranks: []
     }
   },
 
   created() {
     this.mapsId = this.$route.query.mapsId;
+    this.autoRotate = this.$route.query.autoRotate;
     if (this.mapsId != null) {
       this.isMaps = true;
     }
@@ -200,7 +202,7 @@ export default {
             poseHeading: this.heading, // 0 to 360
           },
           defaultZoomLvl: 0,
-          // autorotateDelay: 100,
+          autorotateDelay: this.autoRotate !== 'true' ? null : 100,
           // autorotateIdle: 2000,
           plugins: this.heading ? [
             [CompassPlugin, {
