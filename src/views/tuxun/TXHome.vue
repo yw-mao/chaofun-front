@@ -197,16 +197,11 @@ export default {
           container: document.querySelector('#viewer'),
           panorama: 'https://chaofun.oss-cn-hangzhou.aliyuncs.com/' + this.image,
           panoData: {
-            // fullWidth: 6000,
-            // fullHeight: 3000,
-            // croppedWidth: 4000,
-            // croppedHeight: 2000,
-            // croppedX: 1000,
-            // croppedY: 500,
             poseHeading: this.heading, // 0 to 360
-            // posePitch: 0, // -90 to 90
-            // poseRoll: 0, // -180 to 180
           },
+          defaultZoomLvl: 0,
+          autorotateDelay: 100,
+          // autorotateIdle: 2000,
           plugins: this.heading ? [
             [CompassPlugin, {
               size: '5vh',

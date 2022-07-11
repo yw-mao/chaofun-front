@@ -171,7 +171,7 @@ module.exports = {
         }
       },
       '/ws': {
-        target: `wss://chao.fun/ws`,
+        target: `wss://chao.fan/ws`,
         ws: true,
         changeOrigin: true,
         pathRewrite: {
