@@ -200,7 +200,7 @@ export default {
             poseHeading: this.heading, // 0 to 360
           },
           defaultZoomLvl: 0,
-          autorotateDelay: 100,
+          // autorotateDelay: 100,
           // autorotateIdle: 2000,
           plugins: this.heading ? [
             [CompassPlugin, {
