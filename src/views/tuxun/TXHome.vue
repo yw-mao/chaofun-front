@@ -57,7 +57,7 @@
         </template>
       </vue-danmaku>
     </div>
-    <baidu-map :center="center" :zoom="zoom" :scroll-wheel-zoom="true" :auto-resize="true" @ready="handler"  @click="click" :class="[{'bm-view': !ISPHONE}, {'bm-view-phone': ISPHONE}]">
+    <baidu-map :center="center" :zoom="zoom" :scroll-wheel-zoom="true" :auto-resize="true" @ready="handler" @touchend="touchEnd" @touchstart="touchStart" @click="click" :class="[{'bm-view': !ISPHONE}, {'bm-view-phone': ISPHONE}]">
 
       <bm-map-type
           :map-types="['BMAP_NORMAL_MAP', 'BMAP_SATELLITE_MAP']"
@@ -162,6 +162,7 @@ export default {
       isMaps: false,
       mute: false,
       autoRotate: null,
+      lastTouchTime: null,
       ranks: []
     }
   },
@@ -339,15 +340,31 @@ export default {
       this.map = map;
       this.BMap = BMap;
 
+      // this.map.disableDoubleClickZoom();
+      // this.map.disableInertialDragging();
+    },
+
+    touchStart(e) {
+      this.lastTouchTime = new Date().getTime();
+    },
+
+    touchEnd(e) {
+      var period = new Date().getTime() - this.lastTouchTime;
+      this.$toast(period);
+      if (period < 100) {
+        this.click(e);
+      }
+      this.lastTouchTime = 0;
     },
 
     click(e) {
+      this.$toast('点击');
       if (this.status === 'wait' || this.isMaps) {
         if (!this.confirmed) {
-          console.log(e);
-          console.log('123');
+          // console.log(e);
+          // console.log('123');
 
-          console.log(e.Bg);
+          // console.log(e.Bg);
           this.lng = e.point.lng;
           this.lat = e.point.lat;
         }
