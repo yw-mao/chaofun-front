@@ -340,6 +340,7 @@ export default {
       this.map = map;
       this.BMap = BMap;
 
+
       // this.map.disableDoubleClickZoom();
       // this.map.disableInertialDragging();
     },
@@ -350,7 +351,6 @@ export default {
 
     touchEnd(e) {
       var period = new Date().getTime() - this.lastTouchTime;
-      this.$toast(period);
       if (period < 100) {
         this.click(e);
       }
@@ -358,7 +358,6 @@ export default {
     },
 
     click(e) {
-      this.$toast('点击');
       if (this.status === 'wait' || this.isMaps) {
         if (!this.confirmed) {
           // console.log(e);
