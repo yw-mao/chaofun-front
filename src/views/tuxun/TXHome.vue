@@ -13,6 +13,7 @@
     </el-dialog>
 
     <div id="container" :class="[{'im-view': !ISPHONE}, {'im-view-phone': ISPHONE}]">
+<!--      <div id="panorama" style="width: 100%; height: 100%;"></div>-->
       <div id="viewer" v-if="this.contentType === 'panorama'" style="width: 100%; height: 100%"></div>
       <img v-if="this.image && this.contentType === 'image'" v-viewer="{inline: false}" :data-source="imgOrigin+ this.image" style=" width: 100%;height: 100%;object-fit: contain;"  :src="imgOrigin+ this.image" alt=""></img>
       <video style="height: 100%" v-if="this.image && this.contentType === 'video'" controls autoplay muted :src="imgOrigin + this.image" alt="" ></video>
@@ -187,6 +188,7 @@ export default {
       });
       var opts = {anchor: BMAP_ANCHOR_TOP_RIGHT};
       map.addControl(new BMap.NavigationControl(opts));
+      map.addControl(new BMap.MapTypeControl({anchor: BMAP_ANCHOR_TOP_LEFT, mapTypes: [BMAP_NORMAL_MAP ,BMAP_SATELLITE_MAP]}));
       this.map = map;
       this.BMap = Bmap;
     });
