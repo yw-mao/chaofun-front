@@ -253,7 +253,7 @@ export default {
       if (data.data.type === 'tick') {
         this.status = data.data.status;
         this.onlineNums = data.data.onlineNums;
-        if (this.image !== data.data.content) {
+        if (this.image !== data.data.content && data.data.content && data.data.content !== null) {
           this.heading = data.data.heading;
           this.image = data.data.content;
 
