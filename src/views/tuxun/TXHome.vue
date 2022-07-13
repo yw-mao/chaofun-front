@@ -174,7 +174,7 @@ export default {
       key: 'aibVGReAhMEtxu4Bj2aHixWprh28AhrT' ,
       version: '3.0'
     }).then((Bmap) => {
-      var panorama = new BMap.Panorama('panorama',  {navigationControl: true, linksControl:false}); //默认为显示导航控件
+      var panorama = new BMap.Panorama('panorama',  {navigationControl: true, linksControl:true}); //默认为显示导航控件
       this.panorama = panorama;
 
       var map = new BMap.Map("map", {});          // 创建地图实例
