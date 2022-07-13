@@ -11,11 +11,12 @@
         <el-button type="primary" @click="send()">确 定</el-button>
       </div>
     </el-dialog>
-    <div :class="[{'im-view': !ISPHONE}, {'im-view-phone': ISPHONE}]">
 
+    <div id="container" :class="[{'im-view': !ISPHONE}, {'im-view-phone': ISPHONE}]">
       <div id="viewer" v-if="this.contentType === 'panorama'" style="width: 100%; height: 100%"></div>
       <img v-if="this.image && this.contentType === 'image'" v-viewer="{inline: false}" :data-source="imgOrigin+ this.image" style=" width: 100%;height: 100%;object-fit: contain;"  :src="imgOrigin+ this.image" alt=""></img>
-<!--      <video style="height: 100%" v-if="this.image && this.contentType === 'video'" controls autoplay muted :src="imgOrigin + this.image" alt="" ></video>-->
+      <video style="height: 100%" v-if="this.image && this.contentType === 'video'" controls autoplay muted :src="imgOrigin + this.image" alt="" ></video>
+
       <video style="height: 100%; max-width: 100%;"
              v-if="this.image && this.contentType === 'video'"
              webkit-playsinline="true"
@@ -57,24 +58,7 @@
         </template>
       </vue-danmaku>
     </div>
-    <baidu-map :center="center" :zoom="zoom" :scroll-wheel-zoom="true" :auto-resize="true" @ready="handler" @touchend="touchEnd" @touchstart="touchStart" @click="click" :class="[{'bm-view': !ISPHONE}, {'bm-view-phone': ISPHONE}]">
-
-      <bm-map-type
-          :map-types="['BMAP_NORMAL_MAP', 'BMAP_SATELLITE_MAP']"
-          anchor="BMAP_ANCHOR_TOP_LEFT"
-      ></bm-map-type>
-      <bm-marker v-if="this.lng != null" :position="{lng: this.lng, lat: this.lat}" :dragging="true" animation="BMAP_ANIMATION_BOUNCE">
-        <bm-label content="你选择了" :labelStyle="{color: 'red', fontSize : '24px'}" :offset="{width: -35, height: 30}"/>
-      </bm-marker>
-      <bm-polyline v-if="this.polylinePath" :path="this.polylinePath" stroke-color="blue" :stroke-opacity="0.5" :stroke-weight="2" :editing="true"></bm-polyline>
-
-      <bm-marker v-if="this.targetLng != null" :position="{lng: this.targetLng, lat: this.targetLat}" :dragging="true" animation="BMAP_ANIMATION_BOUNCE">
-        <bm-label content="目标地址" :labelStyle="{color: 'red', fontSize : '24px'}" :offset="{width: -35, height: 30}"/>
-      </bm-marker>
-      <bm-navigation anchor="BMAP_ANCHOR_TOP_RIGHT"></bm-navigation>
-      <bm-view style="width: 100%; height: 100%; flex: 1"></bm-view>
-    </baidu-map>
-
+    <div id="map" :class="[{'bm-view': !ISPHONE}, {'bm-view-phone': ISPHONE}]"></div>
     <div :class="[{'confirm': !ISPHONE}, {'confirm-phone': ISPHONE}]">
       <el-button v-if="confirmed && distance">距离 {{ distance.toFixed(2) }} 千米</el-button>
       <el-button v-if="!confirmed && status !== 'rank'"  @click="confirm">确定选择</el-button>
@@ -108,19 +92,20 @@
 
 <script>
 import Vue from 'vue'
-import BaiduMap from 'vue-baidu-map'
+// import BaiduMap from 'vue-baidu-map'
 import { mapGetters } from 'vuex'
 import * as api from '../../api/api'
 import vueDanmaku from 'vue-danmaku'
 
-Vue.use(BaiduMap, {
-  // ak 是在百度地图开发者平台申请的密钥 详见 http://lbsyun.baidu.com/apiconsole/key */
-  ak: 'GZPIvvSbzgo188vmBGwPOtU2ZCHDhkry'
-})
+// Vue.use(BaiduMap, {
+//   // ak 是在百度地图开发者平台申请的密钥 详见 http://lbsyun.baidu.com/apiconsole/key */
+//   ak: 'aibVGReAhMEtxu4Bj2aHixWprh28AhrT'
+// })
 import {Viewer} from 'photo-sphere-viewer'
 import 'photo-sphere-viewer/dist/photo-sphere-viewer.css'
 import { CompassPlugin } from 'photo-sphere-viewer/dist/plugins/compass'
 import 'photo-sphere-viewer/dist/plugins/compass.css'
+import BMapLoader from "../../utils/bmap-jsapi-loader";
 
 export default {
   components: {
@@ -163,7 +148,10 @@ export default {
       mute: false,
       autoRotate: null,
       lastTouchTime: null,
-      ranks: []
+      chooseMarker: null,
+      targetMarker: null,
+      targetLine: null,
+      ranks: [],
     }
   },
 
@@ -175,19 +163,34 @@ export default {
     }
   },
   mounted() {
-    // screen.orientation.lock('landscape');
     if (!this.isMaps) {
       this.initWS();
     } else {
       this.next();
     }
 
-    // this.contentType = 'video';
-    // this.image = 'biz/dc7487cc7d3b849fa903f3e04b9a2824.mp4';
+    BMapLoader.load({
+      key: 'aibVGReAhMEtxu4Bj2aHixWprh28AhrT' ,
+      version: '3.0'
+    }).then((Bmap) => {
+      // var panorama = new BMap.Panorama('panorama',  {navigationControl: true, linksControl:true}); //默认为显示导航控件
+      // panorama.setPosition(new BMap.Point(111.654807, 29.444377));
 
+
+      var map = new BMap.Map("map", {});          // 创建地图实例
+      map.centerAndZoom(new BMap.Point(106.0, 38.8), 1);
+      map.enableScrollWheelZoom();
+      map.disableContinuousZoom();
+      var self = this;
+      map.addEventListener("click", function(e){
+        self.click(e);
+      });
+      var opts = {anchor: BMAP_ANCHOR_TOP_RIGHT};
+      map.addControl(new BMap.NavigationControl(opts));
+      this.map = map;
+      this.BMap = Bmap;
+    });
   },
-
-
 
   destroyed() {
     this.ws.close();
@@ -272,16 +275,17 @@ export default {
         // this.$toast(this.status)
 
         if (data.data.status === 'wait') {
-
           this.confirmed = false;
-          this.polylinePath = null;
           if (this.targetLat !== null) {
             this.lat = null;
             this.lng = null;
+            this.removeChooseMarker();
           }
           this.targetLat = null;
           this.targetLng = null;
+          this.removeTargetMarker();
           this.polylinePath = null;
+          this.removeLine();
           this.distance = null;
           this.rank = null;
           this.ranks = null;
@@ -289,8 +293,10 @@ export default {
         if (data.data.status === 'wait_result') {
           this.lat = data.data.chooseLat;
           this.lng = data.data.chooseLng;
+          this.addChooseMarker();
           this.targetLat = null;
           this.targetLng = null;
+          this.removeTargetMarker();
           this.distance = null;
           this.rank = null;
           this.ranks = null;
@@ -298,17 +304,22 @@ export default {
         if (data.data.status === 'rank') {
           this.lat = data.data.chooseLat;
           this.lng = data.data.chooseLng;
-          if (this.targetLat == null) {
-            this.map.centerAndZoom(new BMap.Point(data.data.lng, data.data.lat), 1);
-          }
+          this.addChooseMarker();
+
           this.targetLat = data.data.lat;
           this.targetLng = data.data.lng;
+          this.addTargetMarker()
           if (data.data.chooseLat != null && this.polylinePath === null) {
             this.polylinePath = [
-              {lng: data.data.lng, lat:data.data.lat},
-              {lng: data.data.chooseLng, lat: data.data.chooseLat}];
+              new BMap.Point(this.lng, this.lat),
+              new BMap.Point(this.targetLng, this.targetLat),
+            ]
+            this.addLine();
           }
           this.distance = data.data.distance / 1000;
+          if (this.targetLat && this.targetLat !== null ) {
+            this.map.centerAndZoom(new BMap.Point(data.data.lng, data.data.lat), 1);
+          }
           this.rank = data.data.rank;
           this.ranks = data.data.ranks;
         }
@@ -332,19 +343,6 @@ export default {
       this.wsSend(`{"scope": "heart_beat"}`);
     },
 
-    handler ({BMap, map}) {
-      console.log(BMap, map)
-      this.center.lng = 106.0
-      this.center.lat = 38.8
-      this.zoom = 1;
-      this.map = map;
-      this.BMap = BMap;
-
-
-      // this.map.disableDoubleClickZoom();
-      // this.map.disableInertialDragging();
-    },
-
     touchStart(e) {
       this.lastTouchTime = new Date().getTime();
     },
@@ -356,21 +354,77 @@ export default {
       }
       this.lastTouchTime = 0;
     },
+    removeChooseMarker() {
+      if (this.chooseMarker !== null) {
+        this.map.removeOverlay(this.chooseMarker);
+      }
+      this.chooseMarker = null;
+    },
+    addChooseMarker() {
+      var point = new BMap.Point(this.lng,this.lat);
+      var marker = new BMap.Marker(point);        // 创建标注
+      marker.disableDragging();
+      var label = new BMap.Label('你选择了');        // 创建标注
+      label.setOffset(new BMap.Size(-15, 30));
+      console.log(label.getOffset())
+      marker.setLabel(label);
+      if (this.chooseMarker !== null) {
+        this.map.removeOverlay(this.chooseMarker);
+      }
+      this.chooseMarker = marker;
+      this.map.addOverlay(marker);
+    },
+
+    addLine() {
+      var line =  new BMap.Polyline(this.polylinePath);
+      if (this.targetLine !== null) {
+        this.map.removeOverlay(line);
+      }
+      this.targetLine = line;
+      this.map.addOverlay(line);
+    },
+
+    removeLine() {
+      if (this.targetLine !== null) {
+        this.map.removeOverlay(this.targetLine);
+      }
+      this.targetLine = null;
+    },
+
+    removeTargetMarker() {
+      if (this.targetMarker !== null) {
+        this.map.removeOverlay(this.targetMarker);
+      }
+      this.targetMarker = null;
+    },
+
+    addTargetMarker() {
+      var point = new BMap.Point(this.targetLng,this.targetLat);
+      var marker = new BMap.Marker(point);        // 创建标注
+      marker.disableDragging();
+      var label = new BMap.Label('目标位置');        // 创建标注
+      label.setOffset(new BMap.Size(-15, 30));
+      console.log(label.getOffset())
+      marker.setLabel(label);
+      if (this.targetMarker !== null) {
+        this.map.removeOverlay(this.targetMarker);
+      }
+      this.targetMarker = marker;
+      this.map.addOverlay(marker);
+    },
 
     click(e) {
       if (this.status === 'wait' || this.isMaps) {
         if (!this.confirmed) {
-          // console.log(e);
-          // console.log('123');
-
-          // console.log(e.Bg);
           this.lng = e.point.lng;
           this.lat = e.point.lat;
+          this.addChooseMarker();
         }
       } else {
         this.$toast('暂不支持选择, 请等待结果或者下一题');
       }
     },
+
     confirm() {
       if (this.lng == null) {
         this.$toast('还未在地图上选择地点，请选择！');
@@ -392,11 +446,14 @@ export default {
           this.confirmed = true;
           this.targetLng = res.data.lng;
           this.targetLat = res.data.lat;
+          this.addTargetMarker();
+          this.map.centerAndZoom(new BMap.Point(this.targetLng, this.targetLat), 1);
           this.distance = res.data.distanceMeter / 1000;
           this.polylinePath = [
-            {lng: this.lng, lat: this.lat},
-            {lng: res.data.lng, lat: res.data.lat}
+            new BMap.Point(this.lng, this.lat),
+            new BMap.Point(this.targetLng, this.targetLat),
           ]
+          this.addLine();
         });
       }
     },
@@ -442,7 +499,7 @@ export default {
     next() {
       this.confirmed = false;
       this.returnResult = true;
-      this.polylinePath = false;
+      this.polylinePath = null;
       this.lng = null;
       this.lat = null;
       this.targetLat = null;
@@ -454,6 +511,9 @@ export default {
         this.viewer.destroy();
         this.viewer = null;
       }
+      this.removeChooseMarker();
+      this.removeTargetMarker();
+      this.removeLine();
       api.getByPath("/api/v0/tuxun/game/generate", {mapsId: this.mapsId}).then(res => {
             this.image = res.data.content;
             this.id  = res.data.id;
