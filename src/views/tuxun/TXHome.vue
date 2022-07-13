@@ -317,11 +317,12 @@ export default {
               new BMap.Point(this.targetLng, this.targetLat),
             ]
             this.addLine();
+            if (this.targetLat && this.targetLat !== null ) {
+              this.map.centerAndZoom(new BMap.Point(data.data.lng, data.data.lat), 1);
+            }
           }
           this.distance = data.data.distance / 1000;
-          if (this.targetLat && this.targetLat !== null ) {
-            this.map.centerAndZoom(new BMap.Point(data.data.lng, data.data.lat), 1);
-          }
+
           this.rank = data.data.rank;
           this.ranks = data.data.ranks;
         }
