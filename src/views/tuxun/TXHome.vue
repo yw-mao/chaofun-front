@@ -13,10 +13,10 @@
     </el-dialog>
 
     <div id="container" :class="[{'im-view': !ISPHONE}, {'im-view-phone': ISPHONE}]">
-<!--      <div id="panorama" style="width: 100%; height: 100%;"></div>-->
-      <div id="viewer" v-if="this.contentType === 'panorama'" style="width: 100%; height: 100%"></div>
-      <img v-if="this.image && this.contentType === 'image'" v-viewer="{inline: false}" :data-source="imgOrigin+ this.image" style=" width: 100%;height: 100%;object-fit: contain;"  :src="imgOrigin+ this.image" alt=""></img>
-      <video style="height: 100%" v-if="this.image && this.contentType === 'video'" controls autoplay muted :src="imgOrigin + this.image" alt="" ></video>
+      <div v-show="this.contentType === 'panorama' && this.baiduPano && this.baiduPano !== null"  id="panorama" style="width: 100%; height: 100%;"></div>
+      <div v-if="this.contentType === 'panorama' && !this.baiduPano " id="viewer"  style="width: 100%; height: 100%"></div>
+      <img  v-show="this.image && this.contentType === 'image'" v-viewer="{inline: false}" :data-source="imgOrigin+ this.image" style=" width: 100%;height: 100%;object-fit: contain;"  :src="imgOrigin+ this.image" alt=""></img>
+      <video style="height: 100%"  v-show="this.image && this.contentType === 'video'" controls autoplay muted :src="imgOrigin + this.image" alt="" ></video>
 
       <video style="height: 100%; max-width: 100%;"
              v-if="this.image && this.contentType === 'video'"
@@ -138,7 +138,7 @@ export default {
       heading: null,
       id: null,
       url: `${location.protocol === "https:" ? "wss" : "ws"}://${location.host}/ws/v0/tuxun`,
-      // url: `ws://47.96.98.153/ws/v0/tuxun`,
+      // url: `ws://127.0.0.1:8080/ws/v0/tuxun`,
       ws: null,
       onlineNums: 1,
       status: null,
@@ -152,6 +152,8 @@ export default {
       chooseMarker: null,
       targetMarker: null,
       targetLine: null,
+      panorama: null,
+      baiduPano: null,
       ranks: [],
     }
   },
@@ -174,9 +176,8 @@ export default {
       key: 'aibVGReAhMEtxu4Bj2aHixWprh28AhrT' ,
       version: '3.0'
     }).then((Bmap) => {
-      // var panorama = new BMap.Panorama('panorama',  {navigationControl: true, linksControl:true}); //默认为显示导航控件
-      // panorama.setPosition(new BMap.Point(111.654807, 29.444377));
-
+      var panorama = new BMap.Panorama('panorama',  {navigationControl: true, linksControl:true}); //默认为显示导航控件
+      this.panorama = panorama;
 
       var map = new BMap.Map("map", {});          // 创建地图实例
       map.centerAndZoom(new BMap.Point(106.0, 38.8), 1);
@@ -234,6 +235,10 @@ export default {
       this.ws.onclose = this.wsOnClose;
     },
 
+    initBaiduPanorama() {
+      this.panorama.setId(this.baiduPano);
+    },
+
     wsOnOpen(e) {
       console.log("wsOnOpen");
       // console.log(e);
@@ -256,6 +261,7 @@ export default {
         if (this.image !== data.data.content) {
           this.heading = data.data.heading;
           this.image = data.data.content;
+          this.baiduPano = data.data.baiduPano;
 
           if (this.contentType !== data.data.contentType) {
             this.contentType = data.data.contentType;
@@ -267,8 +273,12 @@ export default {
           }
         }
 
-        if (this.contentType === "panorama" && this.viewer === null) {
-          this.initPanorama();
+        if (this.contentType === "panorama" ) {
+          if (this.baiduPano && this.baiduPano !== null ) {
+            this.initBaiduPanorama();
+          } else if (this.viewer == null) {
+            this.initPanorama();
+          }
         }
 
         this.confirmed = data.data.confirmed;
