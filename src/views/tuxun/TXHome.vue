@@ -13,8 +13,8 @@
     </el-dialog>
 
     <div id="container" :class="[{'im-view': !ISPHONE}, {'im-view-phone': ISPHONE}]">
-      <div v-show="this.contentType === 'panorama' && this.baiduPano && this.baiduPano !== null"  id="panorama" style="width: 100%; height: 100%;"></div>
-      <div v-if="this.contentType === 'panorama' && !this.baiduPano " id="viewer"  style="width: 100%; height: 100%"></div>
+<!--      <div v-show="this.contentType === 'panorama' && this.baiduPano && this.baiduPano !== null"  id="panorama" style="width: 100%; height: 100%;"></div>-->
+      <div v-if="this.contentType === 'panorama'" id="viewer"  style="width: 100%; height: 100%"></div>
       <img  v-show="this.image && this.contentType === 'image'" v-viewer="{inline: false}" :data-source="imgOrigin+ this.image" style=" width: 100%;height: 100%;object-fit: contain;"  :src="imgOrigin+ this.image" alt=""></img>
       <video style="height: 100%"  v-show="this.image && this.contentType === 'video'" controls autoplay muted :src="imgOrigin + this.image" alt="" ></video>
 
@@ -176,8 +176,8 @@ export default {
       key: 'aibVGReAhMEtxu4Bj2aHixWprh28AhrT' ,
       version: '3.0'
     }).then((Bmap) => {
-      var panorama = new BMap.Panorama('panorama',  {navigationControl: true, linksControl:true}); //默认为显示导航控件
-      this.panorama = panorama;
+      // var panorama = new BMap.Panorama('panorama',  {navigationControl: true, linksControl:false}); //默认为显示导航控件
+      // this.panorama = panorama;
 
       var map = new BMap.Map("map", {});          // 创建地图实例
       map.centerAndZoom(new BMap.Point(106.0, 38.8), 1);
@@ -236,7 +236,8 @@ export default {
     },
 
     initBaiduPanorama() {
-      this.panorama.setId(this.baiduPano);
+      this.panorama.setPosition(new BMap.Point(111.654807, 29.444377));
+      // this.panorama.setId(this.baiduPano);
     },
 
     wsOnOpen(e) {
@@ -271,15 +272,23 @@ export default {
             this.viewer.destroy();
             this.viewer = null;
           }
+          // if (this.baiduPano && this.baiduPano !== null ) {
+          //   this.initBaiduPanorama();
+          // }
         }
 
-        if (this.contentType === "panorama" ) {
-          if (this.baiduPano && this.baiduPano !== null ) {
-            this.initBaiduPanorama();
-          } else if (this.viewer == null) {
+        // if (this.contentType === "panorama") {
+        //   if (this.viewer == null && (!this.baiduPano || this.baiduPano === null) ) {
+        //     this.initPanorama();
+        //   }
+        // }
+
+        if (this.contentType === "panorama") {
+          if (this.viewer == null) {
             this.initPanorama();
           }
         }
+
 
         this.confirmed = data.data.confirmed;
         this.timeLeft = data.data.timeLeft;
