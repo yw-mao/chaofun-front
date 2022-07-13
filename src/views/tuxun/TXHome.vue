@@ -16,8 +16,6 @@
 <!--      <div v-show="this.contentType === 'panorama' && this.baiduPano && this.baiduPano !== null"  id="panorama" style="width: 100%; height: 100%;"></div>-->
       <div v-if="this.contentType === 'panorama'" id="viewer"  style="width: 100%; height: 100%"></div>
       <img  v-show="this.image && this.contentType === 'image'" v-viewer="{inline: false}" :data-source="imgOrigin+ this.image" style=" width: 100%;height: 100%;object-fit: contain;"  :src="imgOrigin+ this.image" alt=""></img>
-      <video style="height: 100%"  v-show="this.image && this.contentType === 'video'" controls autoplay muted :src="imgOrigin + this.image" alt="" ></video>
-
       <video style="height: 100%; max-width: 100%;"
              v-if="this.image && this.contentType === 'video'"
              webkit-playsinline="true"
