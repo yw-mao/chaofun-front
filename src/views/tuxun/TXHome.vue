@@ -61,7 +61,7 @@
     <div :class="[{'confirm': !ISPHONE}, {'confirm-phone': ISPHONE}]">
       <el-button v-if="confirmed && distance">距离 {{ distance.toFixed(2) }} 千米</el-button>
       <el-button v-if="!confirmed && status !== 'rank'"  @click="confirm">确定选择</el-button>
-      <el-button v-if="!isMaps && confirmed && !distance">等待答案</el-button>
+      <el-button v-if="!isMaps && confirmed && !distance" @click="centerChoose">等待答案</el-button>
       <el-button v-if="isMaps && confirmed && distance" @click="next" >下一题</el-button>
     </div>
 
@@ -357,6 +357,10 @@ export default {
       console.log("wsOnClose");
     },
 
+    centerChoose() {
+      this.map.centerAndZoom(new BMap.Point(this.lng, this.lat), 5);
+    },
+
     // 发送心跳
     sendHeartBeat() {
       this.wsSend(`{"scope": "heart_beat"}`);
@@ -445,7 +449,7 @@ export default {
     },
 
     confirm() {
-      if (this.lng == null) {
+      if (this.lng === null) {
         this.$toast('还未在地图上选择地点，请选择！');
         return;
       }
@@ -453,7 +457,7 @@ export default {
         this.confirmed = true;
         this.wsSend("{\"scope\": \"tuxun\", \"data\": {\"type\": \"confirm\", \"lat\": " + this.lat + ", \"lng\": " + this.lng + "}}");
       } else {
-        if (this.lng == null) {
+        if (this.lng === null) {
           this.$toast('')
           return;
         }
