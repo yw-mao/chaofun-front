@@ -534,18 +534,22 @@ export default {
       this.removeTargetMarker();
       this.removeLine();
       api.getByPath("/api/v0/tuxun/game/generate", {mapsId: this.mapsId}).then(res => {
-            this.image = res.data.content;
-            this.id  = res.data.id;
-            this.contentType = res.data.type;
-            this.heading = res.data.heading;
+        this.image = res.data.content;
+        this.id  = res.data.id;
+        this.contentType = res.data.type;
+        this.heading = res.data.heading;
+        this.baiduPano = res.data.baiduPano;
         var self = this;
         if (this.contentType === 'panorama') {
-              setTimeout(function () {
-                self.initPanorama();
-              }, 500);
+          setTimeout(function () {
+            if (self.baiduPano && self.baiduPano !== null) {
+              self.initBaiduPanorama();
+            } else {
+              self.initPanorama();
             }
-          }
-      );
+          }, 500);
+        }
+      });
     },
 
     send() {
