@@ -14,11 +14,11 @@
           alt="" style="width: 50px;height: 50px;border-radius: 100%;" />
       </div>
       <div class="box" style="display: flex;flex-direction: column;">
-        <div class="front">
+        <div class="front" style="min-width: 42px;">
           <div style="color: #e85827;font-size: 24px;">{{ remainFbi }}</div>
           <div style="color: #999;font-size: 12px;">剩余FBi</div>
         </div>
-        <div class="back_info">
+        <div class="back_info" style="min-width: 42px;">
           <div style="color: #ffba00;font-size: 24px;">{{ totalFbi }}</div>
           <div style="color: #999;font-size: 12px;">总捐赠</div>
         </div>
