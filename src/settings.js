@@ -1,6 +1,6 @@
 module.exports = {
   title: '炒饭 - 世界那么大',
-  logo: 'https://chaofun.oss-cn-hangzhou.aliyuncs.com/biz/08a2d3a676f4f520cb99910496e48b4e.png',
+  logo: 'https://i.chao-fan.com/biz/08a2d3a676f4f520cb99910496e48b4e.png',
   styles: {
     // type 'open-close'
     navbarStyle: {

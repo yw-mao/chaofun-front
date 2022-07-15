@@ -303,7 +303,7 @@
                 if(res.success){
                   let length = self.quill.getSelection(true).index;
                   //图片上传成功后，img的src需要在这里添加
-                  let url = 'https://chaofun.oss-cn-hangzhou.aliyuncs.com/'+res.data
+                  let url = 'https://i.chao-fan.com/'+res.data
                   self.quill.insertEmbed(length, 'image', url);
                   self.quill.setSelection(length + 1)
 
@@ -335,10 +335,10 @@
         fileLists: [
           // 'biz/563a9785150700000c41340852d39afa.jpg?x-oss-process=image/resize,h_512/format,webp/quality,q_75',
           // 'biz/563a9785150700000c41340852d39afa.jpg?x-oss-process=image/resize,h_512/format,webp/quality,q_75',
-          // 'https://chaofun.oss-cn-hangzhou.aliyuncs.com/biz/563a9785150700000c41340852d39afa.jpg?x-oss-process=image/resize,h_512/format,webp/quality,q_75',
-          // 'https://chaofun.oss-cn-hangzhou.aliyuncs.com/biz/563a9785150700000c41340852d39afa.jpg?x-oss-process=image/resize,h_512/format,webp/quality,q_75',
-          // 'https://chaofun.oss-cn-hangzhou.aliyuncs.com/biz/563a9785150700000c41340852d39afa.jpg?x-oss-process=image/resize,h_512/format,webp/quality,q_75',
-          // 'https://chaofun.oss-cn-hangzhou.aliyuncs.com/biz/563a9785150700000c41340852d39afa.jpg?x-oss-process=image/resize,h_512/format,webp/quality,q_75'
+          // 'https://i.chao-fan.com/biz/563a9785150700000c41340852d39afa.jpg?x-oss-process=image/resize,h_512/format,webp/quality,q_75',
+          // 'https://i.chao-fan.com/biz/563a9785150700000c41340852d39afa.jpg?x-oss-process=image/resize,h_512/format,webp/quality,q_75',
+          // 'https://i.chao-fan.com/biz/563a9785150700000c41340852d39afa.jpg?x-oss-process=image/resize,h_512/format,webp/quality,q_75',
+          // 'https://i.chao-fan.com/biz/563a9785150700000c41340852d39afa.jpg?x-oss-process=image/resize,h_512/format,webp/quality,q_75'
         ],
         filedata: {},
         activeName: 'first',
@@ -427,7 +427,7 @@
             name: 'img',
             action: '/api/upload_image',
             response: (res) => {
-              return 'https://chaofun.oss-cn-hangzhou.aliyuncs.com/' + res.data
+              return 'https://i.chao-fan.com/' + res.data
             }
           },
           toolbar: {

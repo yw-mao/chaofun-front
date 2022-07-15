@@ -202,7 +202,7 @@ export default {
       try {
         this.viewer = new Viewer({
           container: document.querySelector('#viewer'),
-          panorama: 'https://chaofun.oss-cn-hangzhou.aliyuncs.com/' + this.image,
+          panorama: 'https://i.chao-fan.com/' + this.image,
           panoData: {
             poseHeading: this.heading, // 0 to 360
           },
@@ -435,6 +435,7 @@ export default {
       this.targetMarker = marker;
       this.map.addOverlay(marker);
     },
+
 
     click(e) {
       if (this.status === 'wait' || this.isMaps) {

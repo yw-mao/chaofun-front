@@ -5,7 +5,7 @@
         <div class="content">
             <canvas id="canvas" :width="width" :height="height" style="border:5px solid #2f0606;"></canvas>
             <div style="display:none;" class="cover" id="cover">
-                <img src="https://chaofun.oss-cn-hangzhou.aliyuncs.com/cde965f71165184148f3be3343b7e5df.png" alt="">
+                <img src="https://i.chao-fan.com/cde965f71165184148f3be3343b7e5df.png" alt="">
             </div>
             <div class="cover" id="cover2">
                 <img src="../../../assets/images/game/snake/snake.jpg" alt="">
