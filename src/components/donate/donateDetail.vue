@@ -7,27 +7,23 @@
       </el-button>
     </div>
 
-    <div class="selectDisable" style="position: relative;width: 100%;height: 0;">
-      <div style=" width: 0;height: 0; margin: 0 auto;">
+    <div style="margin: 0 auto;padding-top: 5px; display: flex;justify-content: center;">
+      <div style="margin-right: 2px;">
         <img
           :src="imgOrigin + 'biz/a7a11ce394ec3bad0f25f4aead7855ec.png'"
-          alt="" style="width: 40px;height: 40px;border-radius: 100%; position: relative;top:12px; left: -80px;" />
+          alt="" style="width: 50px;height: 50px;border-radius: 100%;" />
       </div>
-    </div>
-
-    <div class="selectDisable" style="height: 60px;text-align: center;width: 100%;">
-      <div class="box" style="height: 60px; padding-top: 5px; width: 85px;margin: 0 auto;">
-        <div class="front" style="width: 100%;">
-          <div style="width: 100%;color: #e85827;font-size: 24px;">{{ remainFbi }}</div>
-          <div style="width: 100%;font-size: 12px;color: #999;">剩余FBi</div>
+      <div class="box" style="display: flex;flex-direction: column;">
+        <div class="front" style="min-width: 42px;">
+          <div style="color: #e85827;font-size: 24px;">{{ remainFbi }}</div>
+          <div style="color: #999;font-size: 12px;">剩余FBi</div>
         </div>
-        <div class="back_info" style="width: 100%;">
-          <div style="width: 100%;color: #ffba00;font-size: 24px;">{{ totalFbi }}</div>
-          <div style="width: 100%;font-size: 12px;color: #999;">总捐赠</div>
+        <div class="back_info" style="min-width: 42px;">
+          <div style="color: #ffba00;font-size: 24px;">{{ totalFbi }}</div>
+          <div style="color: #999;font-size: 12px;">总捐赠</div>
         </div>
       </div>
     </div>
-
 
     <div class="selectDisable" style="margin: 15px 0 20px 0;">
 
