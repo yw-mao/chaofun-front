@@ -152,6 +152,7 @@ export default {
       targetLine: null,
       panorama: null,
       baiduPano: null,
+      ranksMarker: null,
       ranks: [],
     }
   },
@@ -307,6 +308,7 @@ export default {
           this.distance = null;
           this.rank = null;
           this.ranks = null;
+          this.clearRanksMarker();
         }
         if (data.data.status === 'wait_result') {
           this.lat = data.data.chooseLat;
@@ -318,6 +320,7 @@ export default {
           this.distance = null;
           this.rank = null;
           this.ranks = null;
+          this.clearRanksMarker();
         }
         if (data.data.status === 'rank') {
           this.lat = data.data.chooseLat;
@@ -327,6 +330,10 @@ export default {
           this.targetLat = data.data.lat;
           this.targetLng = data.data.lng;
           this.addTargetMarker()
+          this.distance = data.data.distance / 1000;
+
+          this.rank = data.data.rank;
+          this.ranks = data.data.ranks;
           if (data.data.chooseLat != null && this.polylinePath === null) {
             this.polylinePath = [
               new BMap.Point(this.lng, this.lat),
@@ -336,11 +343,10 @@ export default {
             if (this.targetLat && this.targetLat !== null ) {
               this.map.centerAndZoom(new BMap.Point(data.data.lng, data.data.lat), 1);
             }
+            // 增加其他人
+            this.addRanksMarker();
           }
-          this.distance = data.data.distance / 1000;
 
-          this.rank = data.data.rank;
-          this.ranks = data.data.ranks;
         }
       } else if (data.data.type === 'need_login') {
         this.doLoginStatus().then((res) => {
@@ -436,6 +442,33 @@ export default {
       this.map.addOverlay(marker);
     },
 
+    addRanksMarker() {
+      this.ranksMarker = [];
+      if (this.ranks) {
+        this.ranks.forEach( item => {
+          if (item.userAO.userId !== this.$store.state.user.userInfo.userId) {
+            var point = new BMap.Point(item.latLng.lng, item.latLng.lat);
+            var marker = new BMap.Marker(point);        // 创建标注
+            marker.disableDragging();
+            var label = new BMap.Label(item.userAO.userName);        // 创建标注
+            label.setOffset(new BMap.Size(-15, 30));
+            console.log(label.getOffset())
+            marker.setLabel(label);
+            this.ranksMarker.push(marker);
+            this.map.addOverlay(marker);
+          }
+        });
+      }
+    },
+
+    clearRanksMarker() {
+      if (this.ranksMarker) {
+        this.ranksMarker.forEach(item => {
+          this.map.removeOverlay(item);
+        });
+      }
+      this.ranksMarker = [];
+    },
 
     click(e) {
       if (this.status === 'wait' || this.isMaps) {
