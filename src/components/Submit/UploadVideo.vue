@@ -1,5 +1,6 @@
 <template>
   <div>
+    <div v-if="file.status === 'uploading'">上传中...（进度100%是后台转码中，并未上传成功）,请稍候</div>
     <div class="uploader-video">
       <video
         preload="metadata"
