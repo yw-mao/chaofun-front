@@ -6,7 +6,7 @@
         </div>
         <div class="logo_con">
             <div style="height: 140px;">
-                <img src="http://47.114.76.196/biz/08a2d3a676f4f520cb99910496e48b4e.png?x-oss-process=image/resize,h_80/format,webp/quality,q_75" alt="">
+                <img src="https://i.chao-fan.com/biz/08a2d3a676f4f520cb99910496e48b4e.png?x-oss-process=image/resize,h_80/format,webp/quality,q_75" alt="">
             </div>
             
             <div class="app_name">
@@ -19,13 +19,11 @@
             </div>
         </div>
         <div v-if="ISPHONE" class="down_btn">
-            <div @click="sure(1)" class="btn_green">安装</div>
-           
+            <div @click="sure(2)" class="btn_green">安装</div>
         </div>
         <div v-else class="down_btn" style="text-align:center;">
             <img style="height:100%;height:210px;" src="../../assets/images/app.png" alt="">
             <p style="margin:10px 0;">扫一扫下载app</p>
-
         </div>
        <div class="home_btn">
          <div @click="back" class="btn_green">访问炒饭</div>
@@ -246,7 +244,7 @@ import * as api from '../../api/api'
     &::-webkit-scrollbar{
         display:none;
     }
-    // background: url('http://47.114.76.196/biz/94aaa9cd9cdd920c969dd073ebb41869.jpg');
+    // background: url('https://i.chao-fan.com/biz/94aaa9cd9cdd920c969dd073ebb41869.jpg');
     
     // height: 100vh;
 }

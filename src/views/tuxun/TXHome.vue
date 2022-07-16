@@ -395,7 +395,7 @@ export default {
       }
       this.lastTouchTime = 0;
     },
-    
+
     removeChooseMarker() {
       if (this.chooseMarker !== null) {
         this.map.removeOverlay(this.chooseMarker);
