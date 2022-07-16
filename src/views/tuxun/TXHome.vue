@@ -407,10 +407,10 @@ export default {
     },
 
     addLine() {
-      var line =  new BMap.Polyline(this.polylinePath);
-      if (this.targetLine !== null) {
+      if (this.targetLine && this.targetLine !== null) {
         this.map.removeOverlay(this.targetLine);
       }
+      var line =  new BMap.Polyline(this.polylinePath);
       this.targetLine = line;
       this.map.addOverlay(line);
     },
