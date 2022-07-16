@@ -186,6 +186,14 @@ export default {
       map.addEventListener("click", function(e){
         self.click(e);
       });
+      map.addEventListener("touchend", function(e){
+        self.touchEnd(e);
+      });
+
+      map.addEventListener("touchstart", function(e){
+        self.touchStart(e);
+      });
+
       var opts = {anchor: BMAP_ANCHOR_TOP_RIGHT};
       map.addControl(new BMap.NavigationControl(opts));
       map.addControl(new BMap.MapTypeControl({anchor: BMAP_ANCHOR_TOP_LEFT, mapTypes: [BMAP_NORMAL_MAP ,BMAP_SATELLITE_MAP]}));
@@ -379,12 +387,15 @@ export default {
     },
 
     touchEnd(e) {
+      console.log('touchEnd');
       var period = new Date().getTime() - this.lastTouchTime;
-      if (period < 100) {
+      console.log(period);
+      if (period < 150) {
         this.click(e);
       }
       this.lastTouchTime = 0;
     },
+    
     removeChooseMarker() {
       if (this.chooseMarker !== null) {
         this.map.removeOverlay(this.chooseMarker);
