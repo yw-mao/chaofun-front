@@ -343,7 +343,9 @@ export default {
             if (this.targetLat && this.targetLat !== null ) {
               this.map.centerAndZoom(new BMap.Point(data.data.lng, data.data.lat), 1);
             }
-            // 增加其他人
+          }
+          // 增加其他人
+          if (this.ranksMarker && this.ranksMarker.length == 0 && this.ranks != null) {
             this.addRanksMarker();
           }
 
