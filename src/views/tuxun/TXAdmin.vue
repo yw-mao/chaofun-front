@@ -6,8 +6,8 @@
 
     <div class="confirm">
       剩余 {{totalCount}}
-      <el-button @click="check">加入题库</el-button>
-      <el-button @click="deleteQ">删除题目</el-button>
+      <el-button @click="check" style="white-space: pre-line;">加入题库(方向键上)</el-button>
+      <el-button @click="deleteQ"  style="white-space: pre-line;">删除题目(方向键下)</el-button>
     </div>
   </div>
 </template>
