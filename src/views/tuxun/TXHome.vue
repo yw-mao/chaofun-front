@@ -102,8 +102,12 @@ import vueDanmaku from 'vue-danmaku'
 // })
 import {Viewer} from 'photo-sphere-viewer'
 import 'photo-sphere-viewer/dist/photo-sphere-viewer.css'
-import { CompassPlugin } from 'photo-sphere-viewer/dist/plugins/compass'
+import { CompassPlugin} from 'photo-sphere-viewer/dist/plugins/compass'
+import { MarkersPlugin} from 'photo-sphere-viewer/dist/plugins/markers'
+import { VirtualTourPlugin } from 'photo-sphere-viewer/dist/plugins/virtual-tour'
 import 'photo-sphere-viewer/dist/plugins/compass.css'
+import 'photo-sphere-viewer/dist/plugins/virtual-tour.css'
+import 'photo-sphere-viewer/dist/plugins/markers.css'
 import BMapLoader from "../../utils/bmap-jsapi-loader";
 
 export default {
@@ -132,6 +136,7 @@ export default {
       returnResult: true,
       distance: null,
       image: null,
+      contents: null,
       contentType: null,
       heading: null,
       id: null,
@@ -209,6 +214,25 @@ export default {
   methods: {
     initPanorama() {
       try {
+
+        // this.viewer = new Viewer({
+        //   container: document.querySelector('#viewer'),
+        //   loadingImg: 'https://photo-sphere-viewer.js.org/assets/photosphere-logo.gif',
+        //   touchmoveTwoFingers: true,
+        //   mousewheelCtrlKey: true,
+        //   // caption    : 'Cape Florida Light, Key Biscayne <b>&copy; Pixexid</b>',
+        //   defaultLong: '100deg',
+        //   plugins    : [
+        //     MarkersPlugin,
+        //     [VirtualTourPlugin, {
+        //       positionMode: VirtualTourPlugin.MODE_GPS,
+        //       renderMode  : VirtualTourPlugin.MODE_3D,
+        //     }],
+        //   ],
+        //   navbar: 'zoom move download nodesList caption fullscreen',
+        // });
+
+
         this.viewer = new Viewer({
           container: document.querySelector('#viewer'),
           panorama: 'https://i.chao-fan.com/' + this.image,
@@ -223,8 +247,37 @@ export default {
               size: '5vh',
               position: 'left bottom'
             }],
+              [VirtualTourPlugin, {
+                positionMode: VirtualTourPlugin.MODE_GPS,
+                renderMode  : VirtualTourPlugin.MODE_3D,
+              }],
           ]: [],
         });
+
+
+
+        if (this.contents && this.contents != null && this.contents.length > 1) {
+          var nodes = [];
+          console.log(this.contents)
+          for (var i in this.contents) {
+            console.log(content);
+            const content = this.contents[i];
+            var k = {};
+            k.panorama = 'https://i.chao-fan.com/' + content.content;
+            k.links = [];
+            for (var j in content.links) {
+              k.links.push({nodeId:  content.links[j]});
+            }
+            k.title = '全景图_' + i;
+            k.id = content.id;
+            k.position = [content.lat, content.lng, 0];
+            k.panoData = {poseHeading: content.degree};
+            nodes.push(k);
+          }
+
+          var virtualTour = this.viewer.getPlugin(VirtualTourPlugin);
+          virtualTour.setNodes(nodes, nodes[0].id);
+        }
       } catch (e) {
         console.log(e)
       }
@@ -273,6 +326,7 @@ export default {
           this.heading = data.data.heading;
           this.image = data.data.content;
           this.baiduPano =  data.data.baiduPano;
+          this.contents = data.data.contents;
 
           if (this.contentType !== data.data.contentType) {
             this.contentType = data.data.contentType;
@@ -577,6 +631,7 @@ export default {
       this.image = null;
       this.distance = null;
       this.heading = null;
+      this.contents = null;
       if (this.viewer !== null) {
         this.viewer.destroy();
         this.viewer = null;
@@ -590,6 +645,7 @@ export default {
         this.contentType = res.data.type;
         this.heading = res.data.heading;
         this.baiduPano = res.data.baiduPano;
+        this.contents = res.data.contents;
         var self = this;
         if (this.contentType === 'panorama') {
           setTimeout(function () {
