@@ -232,6 +232,21 @@ export default {
         //   navbar: 'zoom move download nodesList caption fullscreen',
         // });
 
+        var plugins = [];
+        if (this.heading) {
+          plugins.push([CompassPlugin, {
+            size: '5vh',
+            position: 'left bottom'
+          }]);
+        }
+
+        if (this.contents && this.contents != null) {
+          plugins.push([VirtualTourPlugin, {
+            positionMode: VirtualTourPlugin.MODE_GPS,
+            renderMode  : VirtualTourPlugin.MODE_3D,
+          }]);
+        }
+
 
         this.viewer = new Viewer({
           container: document.querySelector('#viewer'),
@@ -242,16 +257,7 @@ export default {
           defaultZoomLvl: 0,
           autorotateDelay: this.autoRotate !== 'true' ? null : 100,
           // autorotateIdle: 2000,
-          plugins: this.heading ? [
-            [CompassPlugin, {
-              size: '5vh',
-              position: 'left bottom'
-            }],
-              this.contents? [VirtualTourPlugin, {
-                positionMode: VirtualTourPlugin.MODE_GPS,
-                renderMode  : VirtualTourPlugin.MODE_3D,
-              }] : null,
-          ]: [],
+          plugins: plugins,
         });
 
         if (this.contents && this.contents != null && this.contents.length > 1) {
@@ -273,44 +279,10 @@ export default {
             nodes.push(k);
           }
 
-        console.log(nodes);
+          console.log(nodes);
           var virtualTour = this.viewer.getPlugin(VirtualTourPlugin);
           virtualTour.setNodes(nodes, nodes[0].id);
-        //   virtualTour.setNodes([
-        //     {
-        //       id      : '1',
-        //       panorama: 'https://i.chao-fan.com/biz/1658236717341_8c44a6b80d1445bc827992f9050786b0.jpg',
-        //       name    : 'One',
-        //       links   : [
-        //         { nodeId: '2' },
-        //       ],
-        //       // markers: [
-        //       //   {
-        //       //     id: 'marker-1',
-        //       //     image: 'https://photo-sphere-viewer.js.org/assets/pin-red.png',
-        //       //     tooltip: 'Cape Florida Light, Key Biscayne',
-        //       //     width    : 32,
-        //       //     height   : 32,
-        //       //     anchor   : 'bottom center',
-        //       //     longitude: '105deg',
-        //       //     latitude: '35deg',
-        //       //   }
-        //       // ],
-        //       position: [35.3727772,32.8111256],
-        //       panoData: { poseHeading: 277},
-        //     },
-        //     {
-        //       id      : '2',
-        //       panorama: 'https://i.chao-fan.com/biz/1658236624849_950752c6454b4c3989b971b9dd821ec9.jpg',
-        //       name    : 'Two',
-        //       links   : [
-        //         { nodeId: '1' },
-        //       ],
-        //       position: [35.3723218, 32.8110895],
-        //       panoData: { poseHeading: 274 },
-        //     },
-        //   ], '2');
-        }
+       }
       } catch (e) {
         console.log(e)
       }
