@@ -236,9 +236,9 @@ export default {
         this.viewer = new Viewer({
           container: document.querySelector('#viewer'),
           panorama: 'https://i.chao-fan.com/' + this.image,
-          // panoData: {
-          //   poseHeading: this.heading, // 0 to 360
-          // },
+          panoData: {
+            poseHeading: this.heading, // 0 to 360
+          },
           defaultZoomLvl: 0,
           autorotateDelay: this.autoRotate !== 'true' ? null : 100,
           // autorotateIdle: 2000,
@@ -268,14 +268,48 @@ export default {
             }
             k.name = '全景图_' + i;
             k.id = content.id;
-            k.position = [content.lat, content.lng];
-            k.panoData = {poseHeading: content.degree};
+            k.position = [content.lng, content.lat];
+            k.panoData = {poseHeading: content.heading};
             nodes.push(k);
           }
 
         console.log(nodes);
           var virtualTour = this.viewer.getPlugin(VirtualTourPlugin);
           virtualTour.setNodes(nodes, nodes[0].id);
+        //   virtualTour.setNodes([
+        //     {
+        //       id      : '1',
+        //       panorama: 'https://i.chao-fan.com/biz/1658236717341_8c44a6b80d1445bc827992f9050786b0.jpg',
+        //       name    : 'One',
+        //       links   : [
+        //         { nodeId: '2' },
+        //       ],
+        //       // markers: [
+        //       //   {
+        //       //     id: 'marker-1',
+        //       //     image: 'https://photo-sphere-viewer.js.org/assets/pin-red.png',
+        //       //     tooltip: 'Cape Florida Light, Key Biscayne',
+        //       //     width    : 32,
+        //       //     height   : 32,
+        //       //     anchor   : 'bottom center',
+        //       //     longitude: '105deg',
+        //       //     latitude: '35deg',
+        //       //   }
+        //       // ],
+        //       position: [35.3727772,32.8111256],
+        //       panoData: { poseHeading: 277},
+        //     },
+        //     {
+        //       id      : '2',
+        //       panorama: 'https://i.chao-fan.com/biz/1658236624849_950752c6454b4c3989b971b9dd821ec9.jpg',
+        //       name    : 'Two',
+        //       links   : [
+        //         { nodeId: '1' },
+        //       ],
+        //       position: [35.3723218, 32.8110895],
+        //       panoData: { poseHeading: 274 },
+        //     },
+        //   ], '2');
         }
       } catch (e) {
         console.log(e)
