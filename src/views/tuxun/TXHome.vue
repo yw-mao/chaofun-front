@@ -252,7 +252,7 @@ export default {
           container: document.querySelector('#viewer'),
           panorama: 'https://i.chao-fan.com/' + this.image,
           panoData: {
-            poseHeading: this.getHeading(this.heading), // 0 to 360
+            poseHeading: this.heading, // 0 to 360
           },
           defaultZoomLvl: 0,
           autorotateDelay: this.autoRotate !== 'true' ? null : 100,
@@ -275,7 +275,7 @@ export default {
             k.name = '全景图_' + i;
             k.id = content.id;
             k.position = [content.lng, content.lat];
-            k.panoData = {poseHeading: this.getHeading(content.heading)};
+            k.panoData = {poseHeading: content.heading};
             nodes.push(k);
           }
 
@@ -333,14 +333,6 @@ export default {
       this.ws.onopen = this.wsOnOpen;
       this.ws.onmessage = this.wsOnMessage;
       this.ws.onclose = this.wsOnClose;
-    },
-
-    getHeading(heading) {
-      var theading = 180 - heading ;
-      if (theading < 0) {
-        theading =  theading + 360
-      }
-      return theading;
     },
 
     initBaiduPanorama() {
