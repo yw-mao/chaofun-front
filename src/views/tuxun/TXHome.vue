@@ -338,8 +338,9 @@ export default {
 
           if (this.contentType === "panorama" ) {
             if (this.baiduPano && this.baiduPano !== null) {
+              var self = this;
               setTimeout(function () {
-                this.initBaiduPanorama();
+                self.initBaiduPanorama();
               }, 200);
             }
           }
