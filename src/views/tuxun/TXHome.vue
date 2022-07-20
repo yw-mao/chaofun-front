@@ -236,9 +236,9 @@ export default {
         this.viewer = new Viewer({
           container: document.querySelector('#viewer'),
           panorama: 'https://i.chao-fan.com/' + this.image,
-          panoData: {
-            poseHeading: this.heading, // 0 to 360
-          },
+          // panoData: {
+          //   poseHeading: this.heading, // 0 to 360
+          // },
           defaultZoomLvl: 0,
           autorotateDelay: this.autoRotate !== 'true' ? null : 100,
           // autorotateIdle: 2000,
@@ -247,14 +247,12 @@ export default {
               size: '5vh',
               position: 'left bottom'
             }],
-              [VirtualTourPlugin, {
+              this.contents? [VirtualTourPlugin, {
                 positionMode: VirtualTourPlugin.MODE_GPS,
                 renderMode  : VirtualTourPlugin.MODE_3D,
-              }],
+              }] : null,
           ]: [],
         });
-
-
 
         if (this.contents && this.contents != null && this.contents.length > 1) {
           var nodes = [];
@@ -268,13 +266,14 @@ export default {
             for (var j in content.links) {
               k.links.push({nodeId:  content.links[j]});
             }
-            k.title = '全景图_' + i;
+            k.name = '全景图_' + i;
             k.id = content.id;
-            k.position = [content.lat, content.lng, 0];
+            k.position = [content.lat, content.lng];
             k.panoData = {poseHeading: content.degree};
             nodes.push(k);
           }
 
+        console.log(nodes);
           var virtualTour = this.viewer.getPlugin(VirtualTourPlugin);
           virtualTour.setNodes(nodes, nodes[0].id);
         }
@@ -339,7 +338,9 @@ export default {
 
           if (this.contentType === "panorama" ) {
             if (this.baiduPano && this.baiduPano !== null) {
-              this.initBaiduPanorama();
+              setTimeout(function () {
+                this.initBaiduPanorama();
+              }, 200);
             }
           }
         }
