@@ -65,6 +65,10 @@
       <el-button v-if="isMaps && confirmed && distance" @click="next" >下一题</el-button>
     </div>
 
+    <div v-if="ISPHONE" style="position: absolute; left: 20px; bottom: 20px">
+      <el-button @click="reloadPage">刷新页面</el-button>
+    </div>
+
     <div v-if="!this.isMaps" :class="[{'topRight': !ISPHONE}, {'topRight-phone': ISPHONE}]">
       <div :class="[{'top-info': !ISPHONE}, {'top-info-phone': ISPHONE}]">
         在线人数：{{this.onlineNums}}
@@ -472,6 +476,10 @@ export default {
 
     centerChoose() {
       this.map.centerAndZoom(new BMap.Point(this.lng, this.lat), 5);
+    },
+
+    reloadPage() {
+      this.$router.go(this.$router.currentRoute);
     },
 
     // 发送心跳
