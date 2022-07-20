@@ -252,7 +252,7 @@ export default {
           container: document.querySelector('#viewer'),
           panorama: 'https://i.chao-fan.com/' + this.image,
           panoData: {
-            poseHeading: this.heading, // 0 to 360
+            poseHeading: this.getHeading(this.heading), // 0 to 360
           },
           defaultZoomLvl: 0,
           autorotateDelay: this.autoRotate !== 'true' ? null : 100,
@@ -275,14 +275,49 @@ export default {
             k.name = '全景图_' + i;
             k.id = content.id;
             k.position = [content.lng, content.lat];
-            k.panoData = {poseHeading: content.heading};
+            k.panoData = {poseHeading: this.getHeading(content.heading)};
             nodes.push(k);
           }
 
           console.log(nodes);
           var virtualTour = this.viewer.getPlugin(VirtualTourPlugin);
           virtualTour.setNodes(nodes, nodes[0].id);
-       }
+            // virtualTour.setNodes([
+            //   {
+            //     id      : '1',
+            //     panorama: 'https://i.chao-fan.com/biz/1658285860881_d818f13b64cc4dda898fb182753a9632.jpg',
+            //     name    : 'One',
+            //     links   : [
+            //       { nodeId: '2' },
+            //     ],
+            //     // markers: [
+            //     //   {
+            //     //     id: 'marker-1',
+            //     //     image: 'https://photo-sphere-viewer.js.org/assets/pin-red.png',
+            //     //     tooltip: 'Cape Florida Light, Key Biscayne',
+            //     //     width    : 32,
+            //     //     height   : 32,
+            //     //     anchor   : 'bottom center',
+            //     //     longitude: '105deg',
+            //     //     latitude: '35deg',
+            //     //   }
+            //     // ],
+            //     position: [-4.8173819084,55.9613959704],
+            //     panoData: { poseHeading: 221 + 90},
+            //   },
+            //   {
+            //     id      : '2',
+            //     panorama: 'https://i.chao-fan.com/biz/1658285509950_2609964d2ccf4afea374f6922a04c918.jpg',
+            //     name    : 'Two',
+            //     links   : [
+            //       { nodeId: '1' },
+            //     ],
+            //     position: [-4.8180745917, 55.9615859632],
+            //     panoData: { poseHeading: 205 + 90},
+            //   },
+            // ], '1');
+
+        }
       } catch (e) {
         console.log(e)
       }
@@ -298,6 +333,14 @@ export default {
       this.ws.onopen = this.wsOnOpen;
       this.ws.onmessage = this.wsOnMessage;
       this.ws.onclose = this.wsOnClose;
+    },
+
+    getHeading(heading) {
+      var theading = 180 - heading ;
+      if (theading < 0) {
+        theading =  theading + 360
+      }
+      return theading;
     },
 
     initBaiduPanorama() {
