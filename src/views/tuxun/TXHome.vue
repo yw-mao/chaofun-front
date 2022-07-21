@@ -271,7 +271,7 @@ export default {
             console.log(content);
             const content = this.contents[i];
             var k = {};
-            k.panorama = 'https://i.chao-fan.com/' + content.content;
+            k.panorama = 'https://i.chao-fan.com/' + content.content + '?x-oss-process=image/resize,h_3328';
             k.links = [];
             for (var j in content.links) {
               k.links.push({nodeId:  content.links[j]});
