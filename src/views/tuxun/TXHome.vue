@@ -698,6 +698,11 @@ export default {
         this.heading = res.data.heading;
         this.baiduPano = res.data.baiduPano;
         this.contents = res.data.contents;
+
+        if (res.data.contentSpeedUp && res.data.contentSpeedUp !== null) {
+          this.image = res.data.contentSpeedUp;
+        }
+
         var self = this;
         if (this.contentType === 'panorama') {
           setTimeout(function () {
