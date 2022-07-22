@@ -337,12 +337,13 @@ export default {
       if (data.data.type === 'tick') {
         this.status = data.data.status;
         this.onlineNums = data.data.onlineNums;
+        // 避免下面的判断失误
+        if (data.data.contentSpeedUp && data.data.contentSpeedUp !== null) {
+          data.data.content = data.data.contentSpeedUp
+        }
         if (this.image !== data.data.content && data.data.content && data.data.content !== null) {
           this.heading = data.data.heading;
           this.image = data.data.content;
-          if (data.data.contentSpeedUp && data.data.contentSpeedUp !== null) {
-            this.image = data.data.contentSpeedUp
-          }
 
           this.baiduPano =  data.data.baiduPano;
           this.contents = data.data.contents;
