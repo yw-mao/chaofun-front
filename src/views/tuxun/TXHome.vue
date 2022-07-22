@@ -253,6 +253,7 @@ export default {
 
 
         this.viewer = new Viewer({
+          navbar: null,
           container: document.querySelector('#viewer'),
           panorama: 'https://i.chao-fan.com/' + this.image,
           panoData: {
