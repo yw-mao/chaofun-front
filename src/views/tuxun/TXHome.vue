@@ -14,7 +14,7 @@
 
     <div id="container" :class="[{'im-view': !ISPHONE}, {'im-view-phone': ISPHONE}]">
       <div v-show="this.contentType === 'panorama' && this.baiduPano && this.baiduPano !== null"  id="panorama" style="width: 100%; height: 100%;"></div>
-      <div v-if="this.contentType === 'panorama' && !(this.baiduPano && this.baiduPano !== null) " id="viewer"  style="width: 100%; height: 100%"></div>
+      <div v-show="this.contentType === 'panorama' && !(this.baiduPano && this.baiduPano !== null) " id="viewer"  style="width: 100%; height: 100%"></div>
       <img  v-show="this.image && this.contentType === 'image'" v-viewer="{inline: false}" :data-source="imgOrigin+ this.image" style=" width: 100%;height: 100%;object-fit: contain;"  :src="imgOrigin+ this.image" alt=""></img>
       <video style="height: 100%; max-width: 100%;"
              v-show="this.image && this.contentType === 'video'"
@@ -198,7 +198,6 @@ export default {
       map.addEventListener("touchend", function(e){
         self.touchEnd(e);
       });
-
       map.addEventListener("touchstart", function(e){
         self.touchStart(e);
       });
@@ -248,6 +247,7 @@ export default {
           plugins.push([VirtualTourPlugin, {
             positionMode: VirtualTourPlugin.MODE_GPS,
             renderMode  : VirtualTourPlugin.MODE_3D,
+            // preload: true,
           }]);
         }
 
@@ -272,7 +272,12 @@ export default {
             console.log(content);
             const content = this.contents[i];
             var k = {};
-            k.panorama = 'https://i.chao-fan.com/' + content.content + '?x-oss-process=image/resize,h_3328';
+            if (content.contentSpeedUp && content.contentSpeedUp !== null) {
+              k.panorama = 'https://i.chao-fan.com/' + content.contentSpeedUp;
+            } else {
+              k.panorama = 'https://i.chao-fan.com/' + content.content;
+            }
+            // k.panorama =  k.panorama + '?x-oss-process=image/resize,h_1664'
             k.links = [];
             for (var j in content.links) {
               k.links.push({nodeId:  content.links[j]});
@@ -335,6 +340,10 @@ export default {
         if (this.image !== data.data.content && data.data.content && data.data.content !== null) {
           this.heading = data.data.heading;
           this.image = data.data.content;
+          if (data.data.contentSpeedUp && data.data.contentSpeedUp !== null) {
+            this.image = data.data.contentSpeedUp
+          }
+
           this.baiduPano =  data.data.baiduPano;
           this.contents = data.data.contents;
 
