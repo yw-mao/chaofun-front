@@ -70,7 +70,7 @@
     </div>
 
 
-    <div v-if="showMap" style="position: absolute; left: 20px; bottom: 20px">
+    <div v-if="showMap && ISPHONE" style="position: absolute; left: 20px; bottom: 20px">
       <el-button @click="showMap = false">隐藏地图</el-button>
     </div>
 
