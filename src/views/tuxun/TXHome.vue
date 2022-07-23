@@ -13,7 +13,7 @@
     </el-dialog>
 
     <div id="container" :class="[{'im-view': !ISPHONE}, {'im-view-phone': ISPHONE}]">
-      <div v-show="this.contentType === 'panorama' && this.baiduPano && this.baiduPano !== null"  id="panorama" style="width: 100%; height: 100%;"></div>
+      <div v-if="this.contentType === 'panorama' && this.baiduPano && this.baiduPano !== null"  id="panorama" style="width: 100%; height: 100%;"></div>
       <div v-if="this.contentType === 'panorama' && !(this.baiduPano && this.baiduPano !== null) " id="viewer"  style="width: 100%; height: 100%"></div>
       <img  v-show="this.image && this.contentType === 'image'" v-viewer="{inline: false}" :data-source="imgOrigin+ this.image" style=" width: 100%;height: 100%;object-fit: contain;"  :src="imgOrigin+ this.image" alt=""></img>
       <video style="height: 100%; max-width: 100%;"
@@ -184,8 +184,7 @@ export default {
       key: 'aibVGReAhMEtxu4Bj2aHixWprh28AhrT' ,
       version: '3.0'
     }).then((Bmap) => {
-      var panorama = new BMap.Panorama('panorama',  {navigationControl: true, linksControl:true}); //默认为显示导航控件
-      this.panorama = panorama;
+
 
       var map = new BMap.Map("map", {});          // 创建地图实例
       map.centerAndZoom(new BMap.Point(106.0, 38.8), 1);
@@ -311,6 +310,10 @@ export default {
     },
 
     initBaiduPanorama() {
+      if (!this.panorama || this.panorama === null) {
+        var panorama = new BMap.Panorama('panorama',  {navigationControl: true, linksControl:true}); //默认为显示导航控件
+        this.panorama = panorama;
+      }
       this.panorama.setId(this.baiduPano);
       setTimeout(function () {
        var element =  document.getElementById('panorama');
@@ -662,6 +665,10 @@ export default {
       if (this.viewer !== null) {
         this.viewer.destroy();
         this.viewer = null;
+      }
+
+      if (this.panorama && this.panorama !== null) {
+
       }
       this.removeChooseMarker();
       this.removeTargetMarker();
