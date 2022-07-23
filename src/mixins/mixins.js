@@ -173,6 +173,20 @@ export default {
         }
       })
     },
+    doSsoLogin() {
+      return new Promise((resolve, reject) => {
+        if (this.$store.state.user.islogin) {
+          resolve(true)
+        } else {
+          this.$login({
+            callBack: () => {
+              this.$store.dispatch('webview/oauth')
+            },
+          });
+          resolve(false)
+        }
+      })
+    },
     toUrl(query) {
       if (query.routeType == 1) {
         window.open(query.url, '_blank')

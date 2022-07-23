@@ -35,9 +35,14 @@
             } else {
               this.redirectUrl = this.redirectUrl + "?cfToken=" + res.data.token;
             }
+            window.location.href = this.redirectUrl;
+          } else if (res.errorCode === 'need_login') {
+            this.doSsoLogin();
+          } else {
+            this.$toast(res.errorMessage);
+            setTimeout(() => window.location.href = this.redirectUrl, 3000)
           }
-          // this.$toast(this.redirectUrl);
-          window.location.href = this.redirectUrl;
+          // window.location.href = this.redirectUrl;
         });
 
       }
