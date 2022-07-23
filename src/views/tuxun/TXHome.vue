@@ -57,16 +57,21 @@
         </template>
       </vue-danmaku>
     </div>
-    <div id="map" :class="[{'bm-view': !ISPHONE}, {'bm-view-phone': ISPHONE}]"></div>
-    <div :class="[{'confirm': !ISPHONE}, {'confirm-phone': ISPHONE}]">
-      <el-button v-if="confirmed && distance">距离 {{ distance.toFixed(2) }} 千米</el-button>
-      <el-button v-if="!confirmed && status !== 'rank'"  @click="confirm">确定选择</el-button>
-      <el-button v-if="!isMaps && confirmed && !distance" @click="centerChoose">等待答案</el-button>
-      <el-button v-if="isMaps && confirmed && distance" @click="next" >下一题</el-button>
+
+    <div id="map" :class="[{'bm-view': !ISPHONE}, {'bm-view-phone': ISPHONE && showMap}, {'bm-view-phone-hidden': ISPHONE && !showMap}]"></div>
+
+    <div  :class="[{'confirm': !ISPHONE}, {'confirm-phone': ISPHONE}]">
+      <el-button v-if="confirmed && distance" @click="clickDistance">距离 {{ distance.toFixed(2)}} 千米</el-button>
+      <el-button v-if="(showMap || !ISPHONE) && !confirmed && status !== 'rank'"  @click="confirm">确定选择</el-button>
+      <el-button v-else-if="!isMaps && confirmed && !distance" @click="centerChoose">等待答案</el-button>
+      <el-button v-else-if="!showMap && ISPHONE && confirmed" @click="showMap = true">打开地图</el-button>
+      <el-button v-else-if="!showMap && ISPHONE" @click="showMap = true">选择地点</el-button>
+      <el-button v-if="isMaps && confirmed && distance" @click="next">下一题</el-button>
     </div>
 
-    <div v-if="ISPHONE" style="position: absolute; left: 20px; bottom: 20px">
-      <el-button @click="reloadPage">刷新页面</el-button>
+
+    <div v-if="showMap" style="position: absolute; left: 20px; bottom: 20px">
+      <el-button @click="showMap = false">隐藏地图</el-button>
     </div>
 
     <div v-if="!this.isMaps" :class="[{'topRight': !ISPHONE}, {'topRight-phone': ISPHONE}]">
@@ -87,6 +92,7 @@
       <el-button v-if="this.isMaps" size="mini"  @click="toHome"> 排位赛 </el-button>
       <el-button size="mini"  @click="toMaps"> 训练赛 </el-button>
       <el-button size="mini"  @click="toReport"> 坏题反馈 </el-button>
+      <el-button v-if="ISPHONE" @click="reloadPage" size="mini">刷新页面</el-button>
       <el-button v-if="this.$store.state.user.userInfo.userId === 1" size="mini"  @click="deleteTuxun"> 删除该题 </el-button>
       <el-button v-if="this.$store.state.user.userInfo.userId === 1 && this.isMaps" size="mini"  @click="removeFromMaps"> 移除该题 </el-button>
     </div>
@@ -144,6 +150,7 @@ export default {
       contentType: null,
       heading: null,
       id: null,
+      showMap: false,
       url: `${location.protocol === "https:" ? "wss" : "ws"}://${location.host}/ws/v0/tuxun`,
       // url: `ws://127.0.0.1:8080/ws/v0/tuxun`,
       ws: null,
@@ -316,7 +323,7 @@ export default {
       }
       this.panorama.setId(this.baiduPano);
       setTimeout(function () {
-       var element =  document.getElementById('panorama');
+        var element =  document.getElementById('panorama');
         element.childNodes.item(3).style.display = 'none'
       }, 200);
     },
@@ -345,10 +352,11 @@ export default {
           data.data.content = data.data.contentSpeedUp
         }
         if (this.image !== data.data.content && data.data.content && data.data.content !== null) {
+          this.showMap = false;
           this.heading = data.data.heading;
           this.image = data.data.content;
 
-          this.baiduPano =  data.data.baiduPano;
+          this.baiduPano = data.data.baiduPano;
           // this.contents = data.data.contents;
 
           if (this.contentType !== data.data.contentType) {
@@ -360,7 +368,7 @@ export default {
             this.viewer = null;
           }
 
-          if (this.contentType === "panorama" ) {
+          if (this.contentType === "panorama") {
             if (this.baiduPano && this.baiduPano !== null) {
               var self = this;
               setTimeout(function () {
@@ -370,7 +378,7 @@ export default {
           }
         }
 
-        if (this.contentType === "panorama" ) {
+        if (this.contentType === "panorama") {
           if (this.viewer == null && !(this.baiduPano && this.baiduPano !== null)) {
             this.initPanorama();
           }
@@ -411,32 +419,36 @@ export default {
           this.clearRanksMarker();
         }
         if (data.data.status === 'rank') {
-          this.lat = data.data.chooseLat;
-          this.lng = data.data.chooseLng;
-          this.addChooseMarker();
+          if (!this.targetLat || this.targetLat === null) {
+            this.lat = data.data.chooseLat;
+            this.lng = data.data.chooseLng;
+            this.addChooseMarker();
+            this.targetLat = data.data.lat;
+            this.targetLng = data.data.lng;
+            this.addTargetMarker()
+            this.distance = data.data.distance / 1000;
+            this.rank = data.data.rank;
+            this.ranks = data.data.ranks;
+            this.showMap = true;
 
-          this.targetLat = data.data.lat;
-          this.targetLng = data.data.lng;
-          this.addTargetMarker()
-          this.distance = data.data.distance / 1000;
 
-          this.rank = data.data.rank;
-          this.ranks = data.data.ranks;
-          if (data.data.chooseLat != null && this.polylinePath === null) {
-            this.polylinePath = [
-              new BMap.Point(this.lng, this.lat),
-              new BMap.Point(this.targetLng, this.targetLat),
-            ]
-            this.addLine();
-            if (this.targetLat && this.targetLat !== null ) {
+            if (data.data.chooseLat != null && this.polylinePath === null) {
+              this.polylinePath = [
+                new BMap.Point(this.lng, this.lat),
+                new BMap.Point(this.targetLng, this.targetLat),
+              ]
+              this.addLine();
+
+            }
+
+            if (this.targetLat && this.targetLat !== null) {
               this.map.centerAndZoom(new BMap.Point(data.data.lng, data.data.lat), 1);
             }
+            // 增加其他人
+            if (this.ranksMarker && this.ranksMarker.length == 0 && this.ranks != null) {
+              this.addRanksMarker();
+            }
           }
-          // 增加其他人
-          if (this.ranksMarker && this.ranksMarker.length == 0 && this.ranks != null) {
-            this.addRanksMarker();
-          }
-
         }
       } else if (data.data.type === 'need_login') {
         this.doLoginStatus().then((res) => {
@@ -453,7 +465,16 @@ export default {
       console.log("wsOnClose");
     },
 
+    clickDistance() {
+      if (this.showMap === false) {
+        this.showMap = true
+      }
+    },
+
     centerChoose() {
+      if (this.showMap === false) {
+        this.showMap = true
+      }
       this.map.centerAndZoom(new BMap.Point(this.lng, this.lat), 5);
     },
 
@@ -509,6 +530,7 @@ export default {
       this.targetLine = line;
       this.map.addOverlay(line);
     },
+
 
     removeLine() {
       if (this.targetLine !== null) {
@@ -651,6 +673,7 @@ export default {
       window.open(location.origin + '/tuxun',"_blank");
     },
     next() {
+      this.showMap = false;
       this.confirmed = false;
       this.returnResult = true;
       this.polylinePath = null;
@@ -742,7 +765,7 @@ export default {
 .im-view-phone {
   position: absolute;
   width: 100%;
-  height: 60%;
+  height: 100%;
   right: 0;
   left: 0;
   text-align: center;
@@ -763,9 +786,17 @@ export default {
 .bm-view-phone {
   position: absolute;
   width: 100%;
-  height: 40%;
+  height: 60%;
   bottom: 0;
   right: 0;
+}
+.bm-view-phone-hidden {
+  position: absolute;
+  width: 100%;
+  height: 60%;
+  bottom: 0;
+  right: 0;
+  visibility: hidden;
 }
 
 
