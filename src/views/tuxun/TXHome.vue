@@ -219,6 +219,16 @@ export default {
   },
 
   methods: {
+    initWS() {
+      if (this.ws) {
+        this.ws.close();
+      }
+      this.ws = new WebSocket(this.url);
+      this.ws.onopen = this.wsOnOpen;
+      this.ws.onmessage = this.wsOnMessage;
+      this.ws.onclose = this.wsOnClose;
+    },
+
     initPanorama() {
       try {
 
