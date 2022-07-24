@@ -13,11 +13,11 @@
     </el-dialog>
 
     <div id="container" :class="[{'im-view': !ISPHONE}, {'im-view-phone': ISPHONE}]">
-      <div v-if="this.contentType === 'panorama' && this.baiduPano && this.baiduPano !== null"  id="panorama" style="width: 100%; height: 100%;"></div>
-      <div v-if="this.contentType === 'panorama' && !(this.baiduPano && this.baiduPano !== null) " id="viewer"  style="width: 100%; height: 100%"></div>
-      <img  v-show="this.image && this.contentType === 'image'" v-viewer="{inline: false}" :data-source="imgOrigin+ this.image" style=" width: 100%;height: 100%;object-fit: contain;"  :src="imgOrigin+ this.image" alt=""></img>
+      <div v-show="this.contentType === 'panorama' && this.baiduPano && this.baiduPano !== null"  id="panorama" style="width: 100%; height: 100%;"></div>
+      <div v-show="this.contentType === 'panorama' && !(this.baiduPano && this.baiduPano !== null) " id="viewer"  style="width: 100%; height: 100%"></div>
+      <img v-if="this.image && this.contentType === 'image'" v-viewer="{inline: false}" :data-source="imgOrigin+ this.image" style=" width: 100%;height: 100%;object-fit: contain;"  :src="imgOrigin+ this.image" alt=""></img>
       <video style="height: 100%; max-width: 100%;"
-             v-show="this.image && this.contentType === 'video'"
+             v-if="this.image && this.contentType === 'video'"
              webkit-playsinline="true"
              x-webkit-airplay="true"
              playsinline="true"
@@ -255,6 +255,7 @@ export default {
           }]);
         }
 
+        console.log("initPanorama_3");
 
         this.viewer = new Viewer({
           navbar: null,
@@ -268,6 +269,9 @@ export default {
           // autorotateIdle: 2000,
           plugins: plugins,
         });
+
+        console.log("initPanorama_4");
+
 
         if (this.contents && this.contents != null && this.contents.length > 1) {
           var nodes = [];
@@ -304,25 +308,25 @@ export default {
     notShowPanorama() {
       this.viewer.hide();
     },
-    initWS() {
-      if (this.ws) {
-        this.ws.close();
-      }
-      this.ws = new WebSocket(this.url);
-      this.ws.onopen = this.wsOnOpen;
-      this.ws.onmessage = this.wsOnMessage;
-      this.ws.onclose = this.wsOnClose;
-    },
+
 
     initBaiduPanorama() {
+      console.log("initBaiduPanorama_1");
       if (!this.panorama || this.panorama === null) {
         var panorama = new BMap.Panorama('panorama',  {navigationControl: true, linksControl:true}); //默认为显示导航控件
         this.panorama = panorama;
+        console.log("initBaiduPanorama_2");
       }
+      console.log("initBaiduPanorama_3");
       this.panorama.setId(this.baiduPano);
       setTimeout(function () {
-        var element =  document.getElementById('panorama');
-        element.childNodes.item(3).style.display = 'none'
+        console.log("initBaiduPanorama_4");
+        try {
+          var element = document.getElementById('panorama');
+          element.childNodes.item(3).style.display = 'none'
+        } catch (e) {
+
+        }
       }, 200);
     },
 
@@ -688,9 +692,7 @@ export default {
         this.viewer = null;
       }
 
-      if (this.panorama && this.panorama !== null) {
 
-      }
       this.removeChooseMarker();
       this.removeTargetMarker();
       this.removeLine();
@@ -706,6 +708,7 @@ export default {
           this.image = res.data.contentSpeedUp;
         }
 
+        console.log('test_123');
         var self = this;
         if (this.contentType === 'panorama') {
           setTimeout(function () {
