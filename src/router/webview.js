@@ -250,7 +250,28 @@ routes = [
   },
   {
     path: '/tuxun',
+    component: () => import('@/views/tuxun/TXNewHome'),
+    name: '图寻首页',
+    meta: { title: '图寻首页'},
+    hidden: true
+  },
+  {
+    path: '/tuxun/main_game',
     component: () => import('@/views/tuxun/TXHome'),
+    name: '图寻',
+    meta: { title: '图寻'},
+    hidden: true
+  },
+  {
+    path: '/tuxun/maps_game',
+    component: () => import('@/views/tuxun/TXHome'),
+    name: '训练赛',
+    meta: { title: '训练赛'},
+    hidden: true
+  },
+  {
+    path: '/tuxun/home',
+    component: () => import('@/views/tuxun/TXNewHome'),
     name: 'tuxun',
     meta: { title: 'tuxun'},
     hidden: true

@@ -50,7 +50,7 @@ export default {
         })
     },
     toMaps(item){
-      window.open(location.origin + '/tuxun?mapsId=' + item.id, '_blank');
+      window.open(location.origin + '/tuxun/maps_game?mapsId=' + item.id, '_blank');
     },
   },
 }

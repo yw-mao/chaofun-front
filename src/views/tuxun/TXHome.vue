@@ -86,11 +86,9 @@
       </div>
     </div>
     <div class="home">
-      <el-button size="mini" @click="toForum"> 社区讨论 </el-button>
+      <el-button size="mini" @click="toHome"> 图寻首页 </el-button>
       <el-button v-if="!this.isMaps" size="mini"  @click="toRank"> 积分排行 </el-button>
       <el-button v-if="!this.isMaps" size="mini"  @click="toSend"> 发送弹幕 </el-button>
-      <el-button v-if="this.isMaps" size="mini"  @click="toHome"> 排位赛 </el-button>
-      <el-button size="mini"  @click="toMaps"> 训练赛 </el-button>
       <el-button size="mini"  @click="toReport"> 坏题反馈 </el-button>
       <el-button v-if="ISPHONE" @click="reloadPage" size="mini">刷新页面</el-button>
       <el-button v-if="this.$store.state.user.userInfo.userId === 1" size="mini"  @click="deleteTuxun"> 删除该题 </el-button>
@@ -670,7 +668,7 @@ export default {
       window.open(location.origin + '/tuxun/maps',"_blank");
     },
     toHome() {
-      window.open(location.origin + '/tuxun',"_blank");
+      this.$router.push({path: '/tuxun'});
     },
     next() {
       this.showMap = false;
