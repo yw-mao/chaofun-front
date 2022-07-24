@@ -241,7 +241,7 @@ export default {
     orderCup(type) {
       try {
         window.flutter_inappwebview.callHandler('toViewPage', {
-          url: "http://47.96.98.153/webview/fbi/order?type=" + type,
+          url: "https://chao.fan/webview/fbi/order?type=" + type,
           title: '下单',
           showHeader: true
         })

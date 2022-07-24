@@ -10,8 +10,6 @@
       <div style="max-width:600px;margin-top:10px;">
           <el-input type="textarea" maxlength="56" v-model="desc" style="resize:none;height:64px !important;overflow:hidden;margin-bottom:20px;" placeholder="请设置版块介绍"></el-input>
         </div>
-
-
       <div class="bottom">
         是否允许匿名发帖
         <el-switch
@@ -30,6 +28,10 @@
             active-color="#13ce66"
             inactive-color="#ff4949">
         </el-switch>
+      </div>
+
+      <div v-if="this.forumId==='84'" class="bottom">
+        <div @click="toTuxun" class="btns">图寻审图</div>
       </div>
 
       <div class="bottom">
@@ -154,7 +156,7 @@ export default {
     toAutoReplaySetting() {
       try {
         window.flutter_inappwebview.callHandler('toViewPage', {
-          url: "http://47.96.98.153/webview/forum/auto_replay" + "?forumId=" + this.forumId,
+          url: "https://chao.fan/webview/forum/auto_replay" + "?forumId=" + this.forumId,
           title: '自动回复管理',
           showHeader: true
         })
@@ -165,7 +167,7 @@ export default {
     toBan() {
       try {
         window.flutter_inappwebview.callHandler('toViewPage', {
-          url: "http://47.96.98.153/webview/forum/ban_manager" + "?forumId=" + this.forumId,
+          url: "https://chao.fan/webview/forum/ban_manager" + "?forumId=" + this.forumId,
           title: '用户封禁',
           showHeader: true
         })
@@ -177,7 +179,7 @@ export default {
     toSensitiveWord() {
       try {
         window.flutter_inappwebview.callHandler('toViewPage', {
-          url: "http://47.96.98.153/webview/forum/sensitive_word_manager" + "?forumId=" + this.forumId,
+          url: "https://chao.fan/webview/forum/sensitive_word_manager" + "?forumId=" + this.forumId,
           title: '敏感词',
           showHeader: true
         })
@@ -189,7 +191,7 @@ export default {
     toManagerBadge() {
       try {
         window.flutter_inappwebview.callHandler('toViewPage', {
-          url: "http://47.96.98.153/webview/forum/badge" + "?forumId=" + this.forumId,
+          url: "https://chao.fan/webview/forum/badge" + "?forumId=" + this.forumId,
           title: '徽章管理',
           showHeader: true
         })
@@ -201,7 +203,7 @@ export default {
     toTableManager() {
       try {
         window.flutter_inappwebview.callHandler('toViewPage', {
-          url: "http://47.96.98.153/webview/forum/table_manager" + "?forumId=" + this.forumId,
+          url: "https://chao.fan/webview/forum/table_manager" + "?forumId=" + this.forumId,
           title: '表格管理',
           showHeader: true
         })
@@ -210,6 +212,17 @@ export default {
       }
     },
 
+    toTuxun() {
+      try {
+        window.flutter_inappwebview.callHandler('toViewPage', {
+          url: "https://chao.fan/tuxunAdmin",
+          title: '图寻审核',
+          showHeader: true
+        })
+      } catch (e) {
+        window.open(location.origin + '/tuxunAdmin');
+      }
+    },
     toSave(){
         this.toSign();
     },
@@ -217,7 +230,7 @@ export default {
     toNotify() {
       try {
         window.flutter_inappwebview.callHandler('toViewPage', {
-          url: "http://47.96.98.153/webview/forum/notify" + "?forumId=" + this.forumId,
+          url: "https://chao.fan/webview/forum/notify" + "?forumId=" + this.forumId,
           title: '发送通知',
           showHeader: true
         })
@@ -228,7 +241,7 @@ export default {
     toManageTag() {
       try {
         window.flutter_inappwebview.callHandler('toViewPage', {
-          url: "http://47.96.98.153/webview/forum/tag" + "?forumId=" + this.forumId,
+          url: "https://chao.fan/webview/forum/tag" + "?forumId=" + this.forumId,
           title: '标签管理',
           showHeader: true
         })      } catch (e) {
@@ -238,7 +251,7 @@ export default {
     toManageUserTag() {
       try {
         window.flutter_inappwebview.callHandler('toViewPage', {
-          url: "http://47.96.98.153/webview/forum/user_tag" + "?forumId=" + this.forumId,
+          url: "https://chao.fan/webview/forum/user_tag" + "?forumId=" + this.forumId,
           title: '标签管理',
           showHeader: true
         })      } catch (e) {
@@ -249,7 +262,7 @@ export default {
     toManageRule() {
       try {
         window.flutter_inappwebview.callHandler('toViewPage', {
-          url: "http://47.96.98.153/webview/forum/rule" + "?forumId=" + this.forumId,
+          url: "https://chao.fan/webview/forum/rule" + "?forumId=" + this.forumId,
           title: '版块规范管理',
           showHeader: true
         })      } catch (e) {
@@ -260,7 +273,7 @@ export default {
     toAnalytics() {
       try {
         window.flutter_inappwebview.callHandler('toViewPage', {
-          url: "http://47.96.98.153/webview/forum/analytics" + "?forumId=" + this.forumId,
+          url: "https://chao.fan/webview/forum/analytics" + "?forumId=" + this.forumId,
           title: '版块统计',
           showHeader: true
         })      } catch (e) {
@@ -271,7 +284,7 @@ export default {
     toForumLog() {
       try {
         window.flutter_inappwebview.callHandler('toViewPage', {
-          url: "http://47.96.98.153/webview/forum/log?forumId=" + this.forumId,
+          url: "https://chao.fan/webview/forum/log?forumId=" + this.forumId,
           title: '版块日志',
           showHeader: true
         })
@@ -283,7 +296,7 @@ export default {
     toModManager() {
       try {
         window.flutter_inappwebview.callHandler('toViewPage', {
-          url: "http://47.96.98.153/webview/forum/mod_manager" + "?forumId=" + this.forumId,
+          url: "https://chao.fan/webview/forum/mod_manager" + "?forumId=" + this.forumId,
           title: '版主管理',
           showHeader: true
         })
