@@ -30,7 +30,6 @@
             </div>
           </div>
 
-
         </div>
         <div class="thx">
           特别鸣谢：猫，南山大王cf，网络迷踪版主
@@ -96,7 +95,7 @@ export default {
     grid-column-gap: 1rem;
     grid-template-columns: repeat(3, 1fr);
     .card {
-      background-color: #191A2E;
+      background-color: rgb(25,26,46, 0.7);
       background-position: 50%;
       background-repeat: no-repeat;
       background-size: 100%;
