@@ -84,8 +84,14 @@
                     <el-radio-button label="new">新评</el-radio-button>
                     <el-radio-button label="old">时间</el-radio-button>
                   </el-radio-group>
-                  <!--              <el-switch style="display: block" v-model="commentOrderType" active-color="#13ce66" inactive-color="#1890ff" active-text="新评" inactive-text="热评"-->
-                  <!--              @change="commentOrderTypeChange"></el-switch>-->
+                </div>
+
+                <div class="localSetting" style="display: flex;align-items: center;">
+                  <span>帖子发布默认类型: </span>
+                  <el-radio-group v-model="submitDefaultType" size="small" @change="submitDefaultTypeOnChange">
+                    <el-radio-button label="image">图片视频</el-radio-button>
+                    <el-radio-button label="article">文章</el-radio-button>
+                  </el-radio-group>
                 </div>
 
                 <div class="localSetting" style="display: flex;align-items: center;">
@@ -150,6 +156,7 @@ export default {
       tabActiveName: "baseInfo",
       expandSidebar:"",
       commentOrderType: "hot",
+      submitDefaultType: "image",
       isStoragePostOwnerCommentHighlight: false,
       type: "",
       title: "",
@@ -198,6 +205,9 @@ export default {
       : (("old" == localStorage.getItem("chao.fun.localSetting.commentOrderType")) ? "old" : "hot");
     localStorage.setItem("chao.fun.localSetting.commentOrderType", this.commentOrderType);
 
+
+    this.submitDefaultType = localStorage.getItem("chao.fun.localSetting.submitDefaultType") ?? "image";
+
     if (document.body.clientWidth < 700) {
       this.isPhone = true;
     }
@@ -227,6 +237,11 @@ export default {
 
     commentOrderTypeChange(val) {
       localStorage.setItem("chao.fun.localSetting.commentOrderType", val);
+      this.$toast("设置成功！");
+    },
+
+    submitDefaultTypeOnChange(val) {
+      localStorage.setItem("chao.fun.localSetting.submitDefaultType", val);
       this.$toast("设置成功！");
     },
 

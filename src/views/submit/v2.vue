@@ -326,7 +326,7 @@
     data() {
       return {
         logo,
-        type: 'image',
+        type:  localStorage.getItem("chao.fun.localSetting.submitDefaultType") ?? 'image',
         forum: {
           name: '',
           id:  this.$route.params.forumId,
@@ -368,7 +368,7 @@
         this.getPredictionsTournament();
         this.get
       });
-      
+
       // 自动聚焦标题
       this.$refs.title.focus();
     },
