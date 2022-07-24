@@ -14,7 +14,7 @@
 
     <div id="container" :class="[{'im-view': !ISPHONE}, {'im-view-phone': ISPHONE}]">
       <div v-show="this.contentType === 'panorama' && this.baiduPano && this.baiduPano !== null"  id="panorama" style="width: 100%; height: 100%;"></div>
-      <div v-show="this.contentType === 'panorama' && !(this.baiduPano && this.baiduPano !== null) " id="viewer"  style="width: 100%; height: 100%"></div>
+      <div v-if="this.contentType === 'panorama' && !(this.baiduPano && this.baiduPano !== null) " id="viewer"  style="width: 100%; height: 100%"></div>
       <img v-if="this.image && this.contentType === 'image'" v-viewer="{inline: false}" :data-source="imgOrigin+ this.image" style=" width: 100%;height: 100%;object-fit: contain;"  :src="imgOrigin+ this.image" alt=""></img>
       <video style="height: 100%; max-width: 100%;"
              v-if="this.image && this.contentType === 'video'"
@@ -232,22 +232,6 @@ export default {
     initPanorama() {
       try {
 
-        // this.viewer = new Viewer({
-        //   container: document.querySelector('#viewer'),
-        //   loadingImg: 'https://photo-sphere-viewer.js.org/assets/photosphere-logo.gif',
-        //   touchmoveTwoFingers: true,
-        //   mousewheelCtrlKey: true,
-        //   // caption    : 'Cape Florida Light, Key Biscayne <b>&copy; Pixexid</b>',
-        //   defaultLong: '100deg',
-        //   plugins    : [
-        //     MarkersPlugin,
-        //     [VirtualTourPlugin, {
-        //       positionMode: VirtualTourPlugin.MODE_GPS,
-        //       renderMode  : VirtualTourPlugin.MODE_3D,
-        //     }],
-        //   ],
-        //   navbar: 'zoom move download nodesList caption fullscreen',
-        // });
 
         var plugins = [];
         if (this.heading) {
@@ -265,7 +249,6 @@ export default {
           }]);
         }
 
-        console.log("initPanorama_3");
 
         this.viewer = new Viewer({
           navbar: null,
@@ -280,7 +263,6 @@ export default {
           plugins: plugins,
         });
 
-        console.log("initPanorama_4");
 
 
         if (this.contents && this.contents != null && this.contents.length > 1) {
@@ -623,7 +605,6 @@ export default {
         this.wsSend("{\"scope\": \"tuxun\", \"data\": {\"type\": \"confirm\", \"lat\": " + this.lat + ", \"lng\": " + this.lng + "}}");
       } else {
         if (this.lng === null) {
-          this.$toast('')
           return;
         }
         this.zoom = 20;
