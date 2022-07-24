@@ -326,7 +326,7 @@
     data() {
       return {
         logo,
-        type:  localStorage.getItem("chao.fun.localSetting.submitDefaultType") ?? 'image',
+        type:  'image',
         forum: {
           name: '',
           id:  this.$route.params.forumId,
@@ -361,6 +361,11 @@
       }
     },
     mounted() {
+
+      var tType = localStorage.getItem("chao.fun.localSetting.submitDefaultType");
+      if (tType && tType !== null) {
+        this.type = tType;
+      }
       // 加载论坛版块信息
       this.getForum().then(() => {
         this.getForumCategories();

@@ -205,8 +205,13 @@ export default {
       : (("old" == localStorage.getItem("chao.fun.localSetting.commentOrderType")) ? "old" : "hot");
     localStorage.setItem("chao.fun.localSetting.commentOrderType", this.commentOrderType);
 
+    var tType = localStorage.getItem("chao.fun.localSetting.submitDefaultType");
+    if (tType && tType !== null) {
+      this.submitDefaultType = tType;
+    } else {
+      this.submitDefaultType = 'image';
+    }
 
-    this.submitDefaultType = localStorage.getItem("chao.fun.localSetting.submitDefaultType") ?? "image";
 
     if (document.body.clientWidth < 700) {
       this.isPhone = true;
