@@ -1,5 +1,5 @@
 <template>
-  <div class="container" :style="{'background-image':'linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.6)),url('+imgOrigin+'biz/1658727369911_f6ca22ec1e8d4761909b673e0dbd0b2f.png)','background-size':'cover','background-position': 'center'}">
+  <div class="container" :style="{'background-image':'linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.6)),url('+imgOrigin+'biz/1658727369911_f6ca22ec1e8d4761909b673e0dbd0b2f.png?x-oss-process=image/format,webp)','background-size':'cover','background-position': 'center'}">
     <img style="margin-top: 25px; margin-left: 25px; width: 5rem; height: 3rem" :src="imgOrigin + 'biz/1658657631523_45db8dd090dc49af99f2a8a4ace01122.svg'">
     </img>
     <div>
