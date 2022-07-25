@@ -55,6 +55,10 @@
       </div>
 
       <div class="bottom">
+        <div @click="toAward" class="btns">众筹奖励</div>
+      </div>
+
+      <div class="bottom">
         <div @click="toManageUserTag" class="btns">用户标签</div>
       </div>
 
@@ -87,6 +91,34 @@
       </div>
 
     </div>
+    <div v-if="this.displayAdd" class="ycovers ">
+      <div class="ycontainer">
+        <div style="">
+          <div style="margin:10px 0px;display: flex; align-items: center">
+            <div style="align-content: center">用户名：</div>
+            <el-autocomplete
+                v-model="state"
+                :fetch-suggestions="querySearchAsync"
+                placeholder="搜索用户名"
+                @select="handleSelect"
+                style="z-index: 100000"
+            ></el-autocomplete>
+          </div>
+          <div style="margin:10px 0px; align-items: center">
+            <div style="align-content: center">FBi 奖励：</div>
+          </div>
+          <div style="">
+            <el-input-number v-model="fbi" :min=5 :step=5 />
+          </div>
+
+          <div style="margin:20px 0px;display: flex;">
+            <el-button @click="toAddFbi" type="success">确认</el-button>
+            <el-button @click="cancelAddFbi" type="success">取消</el-button>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
 </template>
 
@@ -104,8 +136,11 @@ export default {
   // components: { adminDashboard, editorDashboard },
   data() {
     return {
+      state: '',
       anonymity: true,
       donate: false,
+      displayAdd: false,
+      userIdToAdd: null,
       params: {
         forumId: '',
       },
@@ -114,6 +149,7 @@ export default {
       filedata: {},
       desc: '',
       forumInfo: '',
+      fbi: 5,
       modInfo: ''
     }
   },
@@ -151,6 +187,39 @@ export default {
   methods:{
     toBeContinue() {
       this.$toast('尽情期待：）');
+    },
+
+    toAddFbi() {
+      this.displayAdd = false;
+      api.getByPath('/api/v0/forum/awardFbi', {forumId: this.forumId, targetUserId: this.userIdToAdd, fbi: this.fbi}).then(res => {
+        if (res.success) {
+          this.userIdToAdd = null;
+        } else {
+          this.$toast(res.errorMessage);
+        }
+      });
+    },
+
+    cancelAddFbi() {
+      this.displayAdd = false;
+    },
+    handleSelect(item) {
+      this.userIdToAdd= item.userId;
+      console.log(item);
+    },
+
+    querySearchAsync(queryString, cb) {
+      api.getSearchUser({'keyword': queryString, 'pageNum': 1}).then((res) => {
+        let result = res.data.data.map(value => {
+          value.value = value.userName
+          return value;
+        });
+
+        clearTimeout(this.timeout);
+        this.timeout = setTimeout(() => {
+          cb(result);
+        }, 3000 * Math.random());
+      });
     },
 
     toAutoReplaySetting() {
@@ -312,6 +381,11 @@ export default {
       });
 
     },
+
+    toAward() {
+      this.displayAdd = true;
+    },
+
     getForumInfo() {
 
       api.getForumInfo({forumId: this.forumId}).then(res => {
@@ -418,4 +492,28 @@ export default {
     }
   }
 
+.ycovers {
+  position: fixed;
+  z-index: 20;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+
+  .ycontainer {
+    background: #fff;
+    width: 400px;
+    max-width: 90%;
+    // height: 350px;
+    box-sizing: border-box;
+    padding: 30px;
+    border-radius: 10px;
+    position: relative;
+    min-height: 200px;
+  }
+}
 </style>
