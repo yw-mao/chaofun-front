@@ -1,5 +1,5 @@
 <template>
-  <div class="container" :style="{'background-image':'url('+imgOrigin+'biz/1658657397538_8f413467acd14f32b97c918522fe463d.jpg)','background-size':'cover','background-position': 'center'}">
+  <div class="container" :style="{'background-image':'linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.6)),url('+imgOrigin+'biz/1658727369911_f6ca22ec1e8d4761909b673e0dbd0b2f.png)','background-size':'cover','background-position': 'center'}">
     <img style="margin-top: 25px; margin-left: 25px; width: 5rem; height: 3rem" :src="imgOrigin + 'biz/1658657631523_45db8dd090dc49af99f2a8a4ace01122.svg'">
     </img>
     <div>
@@ -95,7 +95,7 @@ export default {
     grid-column-gap: 1rem;
     grid-template-columns: repeat(3, 1fr);
     .card {
-      background-color: rgb(25,26,46, 0.7);
+      background-color: rgb(25,26,46, 0.9);
       background-position: 50%;
       background-repeat: no-repeat;
       background-size: 100%;
