@@ -413,6 +413,8 @@ export default {
           this.clearRanksMarker();
         }
         if (data.data.status === 'rank') {
+          this.rank = data.data.rank;
+          this.ranks = data.data.ranks;
           if (!this.targetLat || this.targetLat === null) {
             this.lat = data.data.chooseLat;
             this.lng = data.data.chooseLng;
@@ -421,10 +423,8 @@ export default {
             this.targetLng = data.data.lng;
             this.addTargetMarker()
             this.distance = data.data.distance / 1000;
-            this.rank = data.data.rank;
-            this.ranks = data.data.ranks;
-            this.showMap = true;
 
+            this.showMap = true;
 
             if (data.data.chooseLat != null && this.polylinePath === null) {
               this.polylinePath = [
