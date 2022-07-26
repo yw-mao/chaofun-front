@@ -189,8 +189,6 @@ export default {
       key: 'aibVGReAhMEtxu4Bj2aHixWprh28AhrT' ,
       version: '3.0'
     }).then((Bmap) => {
-
-
       var map = new BMap.Map("map", {});          // 创建地图实例
       map.centerAndZoom(new BMap.Point(106.0, 38.8), 1);
       map.enableScrollWheelZoom();
@@ -325,6 +323,8 @@ export default {
     wsOnOpen(e) {
       console.log("wsOnOpen");
       // console.log(e);
+
+      this.wsSend("{\"scope\": \"tuxun\", \"data\": {\"type\": \"enter_main_game\"}}");
 
       // 每3秒发送一次心跳
       setInterval(() => {
@@ -501,6 +501,7 @@ export default {
       }
       this.chooseMarker = null;
     },
+
     addChooseMarker() {
       var point = new BMap.Point(this.lng,this.lat);
       var marker = new BMap.Marker(point);        // 创建标注
