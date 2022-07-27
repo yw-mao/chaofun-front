@@ -350,7 +350,7 @@ export default {
           this.heading = data.data.heading;
           this.image = data.data.content;
 
-          this.baiduPano = data.data.baiduPano;
+          // this.baiduPano = data.data.baiduPano;
           // this.contents = data.data.contents;
 
           if (this.contentType !== data.data.contentType) {
@@ -693,7 +693,7 @@ export default {
         this.id  = res.data.id;
         this.contentType = res.data.type;
         this.heading = res.data.heading;
-        this.baiduPano = res.data.baiduPano;
+        // this.baiduPano = res.data.baiduPano;
         // this.contents = res.data.contents;
 
         if (res.data.contentSpeedUp && res.data.contentSpeedUp !== null) {
