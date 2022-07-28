@@ -13,7 +13,15 @@
               对战赢取积分/徽章/奖励
             </div>
           </div>
-          <div class="card" @click="toPage('训练赛', '/tuxun/maps')">
+          <div class="card" v-if="!ISPHONE" @click="createSolo" >
+            <div class="title">
+              邀请Solo
+            </div>
+            <div class="describe">
+              来一场图寻对决吧！
+            </div>
+          </div>
+          <div class="card" @click="toPage('邀请  赛', '/tuxun/maps')">
             <div class="title">
               训练赛
             </div>
@@ -41,6 +49,8 @@
 </template>
 
 <script>
+import * as api from '../../api/api'
+
 export default {
   name: "TXNewHome",
 
@@ -59,6 +69,14 @@ export default {
         window.open(location.origin + '/f/84',"_blank");
       }
     },
+
+    createSolo() {
+      api.getByPath("/api/v0/tuxun/solo/create").then(res => {
+        var id = res.data.id;
+        window.open(location.origin + '/tuxun/solo_game?gameId=' + id,"_blank");
+        // this.$router.push({path: '/tuxun/solo_game?gameId=' + id}).catch((e) => {})
+      });
+    }
   }
 }
 </script>
