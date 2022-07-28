@@ -13,7 +13,7 @@
               对战赢取积分/徽章/奖励
             </div>
           </div>
-          <div class="card" v-if="!ISPHONE" @click="createSolo" >
+          <div class="card" @click="createSolo" >
             <div class="title">
               邀请Solo
             </div>

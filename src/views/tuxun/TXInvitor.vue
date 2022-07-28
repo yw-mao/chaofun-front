@@ -17,8 +17,6 @@
         图寻1v1决斗
       </div>
 
-
-
       <div class="vs">
         <div class="player">
           <el-avatar :src="this.imgOrigin + gameData.host.icon" class="avatar"></el-avatar>
@@ -50,7 +48,7 @@
           邀请链接
         </div>
         <div class="body">
-          <input placeholder readonly :value="'https://chao.fan' + this.$route.fullPath" >
+          <input class="invite_input" placeholder readonly :value="'https://chao.fan' + this.$route.fullPath" >
           </input>
           <el-button class="button" type="warning" @click="copyInviterLink">复制</el-button>
         </div>
@@ -82,6 +80,10 @@
       </div>
 
       <div id="map" :class="[{'bm-view': !ISPHONE}, {'bm-view-phone': ISPHONE && showMap}, {'bm-view-phone-hidden': ISPHONE && !showMap}]"></div>
+
+      <div v-if="showMap && ISPHONE" style="position: absolute; left: 20px; bottom: 20px">
+        <el-button @click="showMap = false">隐藏地图</el-button>
+      </div>
 
       <div :class="[{'confirm': !ISPHONE}, {'confirm-phone': ISPHONE}]">
         <el-button v-if="(showMap || !ISPHONE) && !confirmed && status !== 'rank'"  @click="confirm">确定选择</el-button>
@@ -117,10 +119,6 @@
         </div>
 
       </div>
-    </div>
-
-    <div class="not_support_phone" v-if="ISPHONE">
-      移动端马上支持，尽请期待
     </div>
   </div>
 </template>
@@ -169,12 +167,9 @@ export default {
 
   mounted() {
     this.gameId = this.$route.query.gameId;
-
-    if (!this.ISPHONE) {
-      this.initWS();
-      this.join();
-      this.countDown();
-    }
+    this.initWS();
+    this.join();
+    this.countDown();
   },
 
 
@@ -226,8 +221,8 @@ export default {
               (this.lastRound && this.lastRound.endTime))
           && !this.showGameEnd ) {
         this.showRoundResult = true;
-
         if (!this.targetLng) {
+          this.showMap = true;
           this.targetLat = this.lastRound.lat;
           this.targetLng = this.lastRound.lng;
           this.polylinePath = [
@@ -253,6 +248,7 @@ export default {
             this.lastRound.content = this.lastRound.contentSpeedUp;
           }
           if (this.image !== this.lastRound.content) {
+            this.showMap = false;
             this.image = this.lastRound.content;
             this.lat = null;
             this.lng = null;
@@ -579,7 +575,7 @@ export default {
 
     .invite {
       margin: 5rem auto 0;
-      max-width: 42rem;
+      max-width: 80%;
       min-width: 35rem;
       .title {
         font-size: large;
@@ -589,6 +585,7 @@ export default {
         width: 30rem;
         height: 3rem;
         background-color: #191A2E;
+        max-width: 100%;
       }
       .button {
         font-size: large;
@@ -615,7 +612,7 @@ export default {
       width: 100%;
       position: absolute;
       margin: 0 auto;
-      padding-top: 1.5rem;
+      padding-top: 5rem;
       font-size: 1.2rem;
       font-weight: bold;
       color: #7654DB;
@@ -639,7 +636,6 @@ export default {
         .round_result_block {
           padding: 1rem;
           background: #171829;
-
           margin-bottom: 1rem;
         }
       }
@@ -691,7 +687,7 @@ export default {
     .bm-view-phone {
       position: absolute;
       width: 100%;
-      height: 60%;
+      height: 40%;
       bottom: 0;
       right: 0;
     }
@@ -770,6 +766,67 @@ export default {
     font-size: xxx-large;
     color: white;
     z-index: 10000;
+  }
+}
+
+@media only screen and (max-width: 679px) {
+  .container {
+    .prepare {
+      .vs {
+        width: 80%;
+
+        .vs_img {
+          width: 30px;
+          height: 30px;
+        }
+      }
+
+      .invite {
+        width: 100%;
+        min-width: 50%;
+        max-width: 100%;
+
+        .body {
+          padding-left: 10px;
+          padding-right: 10px;
+          max-width: 100%;
+        }
+      }
+    }
+
+    .player {
+      .avatar {
+        width: 50px;
+        height: 50px;
+        margin: 0 auto;
+      }
+
+      .userName {
+        margin-top: 1rem;
+        font-size: small;
+      }
+    }
+
+    .game {
+      .round_result {
+        display: block;
+        padding-top: 5rem;
+        .round_result_block {
+          padding: 0.2rem;
+        }
+      }
+      .game_hud {
+        .user_title {
+          font-size: medium;
+        }
+        .user_blod_left {
+          font-size: medium;
+        }
+        .user_blod_right {
+          font-size: medium;
+        }
+      }
+    }
   }
 }
 </style>
