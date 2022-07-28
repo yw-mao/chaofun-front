@@ -80,6 +80,14 @@
       <div v-if="lastRound && lastRound.timerStartTime && !lastRound.endTime " :class="[{'top-info': !ISPHONE}, {'top-info-phone': ISPHONE}]">
         选择倒计时: {{timeLeft}}
       </div>
+
+      <div id="map" :class="[{'bm-view': !ISPHONE}, {'bm-view-phone': ISPHONE && showMap}, {'bm-view-phone-hidden': ISPHONE && !showMap}]"></div>
+
+      <div :class="[{'confirm': !ISPHONE}, {'confirm-phone': ISPHONE}]">
+        <el-button v-if="(showMap || !ISPHONE) && !confirmed && status !== 'rank'"  @click="confirm">确定选择</el-button>
+        <el-button v-else-if="!showMap && ISPHONE && confirmed" @click="showMap = true">打开地图</el-button>
+        <el-button v-else-if="!showMap && ISPHONE" @click="showMap = true">选择地点</el-button>
+      </div>
       <div v-if="showGameEnd && winner" class="game_result">
         <div class="player">
           <div class="winner_title">
@@ -89,14 +97,6 @@
           <div class="userName">{{winner.userName}}</div>
         </div>
       </div>
-      <div id="map" :class="[{'bm-view': !ISPHONE}, {'bm-view-phone': ISPHONE && showMap}, {'bm-view-phone-hidden': ISPHONE && !showMap}]"></div>
-
-      <div :class="[{'confirm': !ISPHONE}, {'confirm-phone': ISPHONE}]">
-        <el-button v-if="(showMap || !ISPHONE) && !confirmed && status !== 'rank'"  @click="confirm">确定选择</el-button>
-        <el-button v-else-if="!showMap && ISPHONE && confirmed" @click="showMap = true">打开地图</el-button>
-        <el-button v-else-if="!showMap && ISPHONE" @click="showMap = true">选择地点</el-button>
-      </div>
-
       <div v-if="gameData" class="game_hud">
         <div class="hub_left">
           <div class="user_title">
@@ -766,6 +766,7 @@ export default {
     background-color: #090723;;
     font-size: xxx-large;
     color: white;
+    z-index: 10000;
   }
 }
 </style>
