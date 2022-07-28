@@ -342,7 +342,7 @@ export default {
 
     copyInviterLink() {
       var input = document.createElement('input');
-      input.setAttribute('value', location.host + this.$route.fullPath);
+      input.setAttribute('value', 'https://chao.fan' + this.$route.fullPath);
       document.body.appendChild(input);
       input.select();
       var result = document.execCommand('copy');
