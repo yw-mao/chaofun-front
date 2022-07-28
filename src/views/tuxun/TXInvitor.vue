@@ -249,8 +249,11 @@ export default {
 
         if (data.status === 'ongoing') {
           console.log('123')
-          if (this.image !== this.gameData.rounds[this.gameData.rounds.length-1].content) {
-            this.image = this.gameData.rounds[this.gameData.rounds.length-1].content;
+          if (this.lastRound.contentSpeedUp) {
+            this.lastRound.content = this.lastRound.contentSpeedUp;
+          }
+          if (this.image !== this.lastRound.content) {
+            this.image = this.lastRound.content;
             this.lat = null;
             this.lng = null;
             this.targetLat = undefined;
