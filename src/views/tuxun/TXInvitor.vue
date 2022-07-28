@@ -118,6 +118,10 @@
 
       </div>
     </div>
+
+    <div class="not_support_phone" v-if="ISPHONE">
+      移动端马上支持，尽请期待
+    </div>
   </div>
 </template>
 
@@ -165,9 +169,12 @@ export default {
 
   mounted() {
     this.gameId = this.$route.query.gameId;
-    this.initWS();
-    this.join();
-    this.countDown();
+
+    if (!this.ISPHONE) {
+      this.initWS();
+      this.join();
+      this.countDown();
+    }
   },
 
 
@@ -423,6 +430,8 @@ export default {
         setInterval(() => {
           if (this.lastRound && this.lastRound.timerStartTime && !this.lastRound.endTime) {
             this.timeLeft =  Math.round(15 - ((new Date().getTime()) - this.lastRound.timerStartTime) / 1000);
+          } else {
+            this.timeLeft = 15;
           }
         }, 1000);
     },
@@ -533,8 +542,7 @@ export default {
     .header {
       padding-top: 5rem;
       color: white;
-      font-width: 800;
-      font-size: xxx-large;
+      font-size: xx-large;
     }
 
     .vs {
@@ -558,7 +566,6 @@ export default {
         height: 3rem;
         width: 10rem;
         font-size: large;
-
       }
     }
 
@@ -638,7 +645,7 @@ export default {
       position: absolute;
       height: 100%;
       width: 100%;
-      background: #3D465B;
+      background: #090723;
       display: flex;
       justify-content: center;
     }
@@ -750,6 +757,15 @@ export default {
 
       }
     }
+  }
+
+  .not_support_phone {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: #090723;;
+    font-size: xxx-large;
+    color: white;
   }
 }
 </style>
