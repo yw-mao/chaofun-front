@@ -97,6 +97,7 @@
           </div>
           <el-avatar :src="this.imgOrigin + winner.icon" class="avatar"></el-avatar>
           <div class="userName">{{winner.userName}}</div>
+          <el-button class="home_button" type="warning" @click="goHome">回到图寻首页</el-button>
         </div>
       </div>
       <div v-if="gameData" class="game_hud">
@@ -499,6 +500,9 @@ export default {
       });
     },
 
+    goHome() {
+      window.location.href = '/tuxun';
+    }
   }
 
 }
@@ -520,6 +524,7 @@ export default {
     }
     .winner_title {
       font-size: xxx-large;
+      margin-bottom: 1rem;;
     }
     .avatar {
       width: 150px;
@@ -530,6 +535,10 @@ export default {
     .userName {
       margin-top: 1rem;
       font-size: x-large;
+    }
+    .home_button {
+      margin-top: 2rem;
+      font-size: large;
     }
   }
   .prepare {
