@@ -20,6 +20,15 @@ export function getByPath(path, params) {
   });
 }
 
+export function getByPathLongTimeout(path, params) {
+  return request({
+    // url: '/api/list_combine',
+    url: path,
+    method: "get",
+    params,
+    timeout: 60 * 1000 // 上传文件最大支持2分钟
+  });
+}
 /** 发布预测帖子 */
 export function postByPath(path, params) {
   return request({
