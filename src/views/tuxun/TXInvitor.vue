@@ -85,6 +85,10 @@
         <el-button @click="showMap = false">隐藏地图</el-button>
       </div>
 
+      <div class="home">
+        <el-button size="mini"  @click="toReport"> 坏题反馈 </el-button>
+      </div>
+
       <div :class="[{'confirm': !ISPHONE}, {'confirm-phone': ISPHONE}]">
         <el-button v-if="(showMap || !ISPHONE) && !confirmed && status !== 'rank'"  @click="confirm">确定选择</el-button>
         <el-button v-else-if="!showMap && ISPHONE && confirmed" @click="showMap = true">打开地图</el-button>
@@ -502,7 +506,12 @@ export default {
 
     goHome() {
       window.location.href = '/tuxun';
-    }
+    },
+    toReport() {
+      api.getByPath('/api/v0/tuxun/game/report', {content: this.image}).then(res=>{
+        this.$toast("反馈成功");
+      })
+    },
   }
 
 }
@@ -721,6 +730,12 @@ export default {
       bottom: 20px;
       right: 20px;
       margin:auto;
+    }
+
+    .home {
+      position: absolute;
+      top: 5px;
+      left: 20px;
     }
 
     .game_hud {
