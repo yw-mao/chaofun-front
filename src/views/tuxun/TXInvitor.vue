@@ -264,6 +264,8 @@ export default {
             this.removeTargetMarker();
             this.removeLine();
 
+            this.heading = this.lastRound.heading;
+
             if (this.viewer) {
               this.viewer.destroy();
               this.viewer = undefined;
@@ -271,7 +273,7 @@ export default {
 
             setTimeout(function () {
               var plugins = [];
-              if (this.lastRound.heading) {
+              if (this.heading) {
                 plugins.push([CompassPlugin, {
                   size: '5vh',
                   position: 'left bottom'
@@ -282,10 +284,11 @@ export default {
                 navbar: null,
                 container: document.querySelector('#viewer'),
                 panorama: 'https://i.chao-fan.com/' + this.lastRound.content,
-                // panoData: {
-                //   poseHeading: this.heading, // 0 to 360
-                // },
+                panoData: {
+                  poseHeading: this.heading, // 0 to 360
+                },
                 defaultZoomLvl: 0,
+                plugins: plugins
               });
             }.bind(this), 200);
 
@@ -739,10 +742,11 @@ export default {
     }
 
     .game_hud {
+      pointer-events: none;
       display: flex;
       position: absolute;
       justify-content: space-between;
-      top: 1rem ;
+      top: 2rem ;
       //height: 2.5rem;
       width: 100%;
       //background-color: blue;
