@@ -13,12 +13,20 @@
               对战赢取积分/徽章/奖励
             </div>
           </div>
+          <div class="card" @click="soloMatch" >
+            <div class="title">
+              匹配Solo
+            </div>
+            <div class="describe">
+              缘，妙不可言
+            </div>
+          </div>
           <div class="card" @click="createSolo" >
             <div class="title">
               邀请Solo
             </div>
             <div class="describe">
-              来一场图寻对决吧！
+              邀请朋友图寻对决吧！
             </div>
           </div>
           <div class="card" @click="toPage('邀请  赛', '/tuxun/maps')">
@@ -77,6 +85,10 @@ export default {
         window.location.href = '/tuxun/solo_game?gameId=' + id;
         // this.$router.push({path: '/tuxun/solo_game?gameId=' + id}).catch((e) => {})
       });
+    },
+
+    soloMatch() {
+        window.location.href = '/tuxun/solo_game'
     }
   }
 }

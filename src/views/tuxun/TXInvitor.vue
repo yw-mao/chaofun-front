@@ -122,7 +122,12 @@
             血量：{{gameData.teams[1].health}}
           </div>
         </div>
+      </div>
 
+    </div>
+    <div class="matching" v-if="this.showMatch">
+      <div class="content">
+        正在匹配对手中，请稍候...
       </div>
     </div>
   </div>
@@ -525,24 +530,25 @@ export default {
 
     match() {
       // 每3秒发送一次心跳
-      this.continueSend = true;
-      setInterval(() => {
-        try {
-          if (this.continueSend) {
-            this.continueSend = false;
-            api.getByPathLongTimeout('/api/v0/tuxun/solo/joinRandom').then(res => {
-              if (res.data) {
-                window.location.href = '/tuxun/solo_game?gameId=' + res.data;
-              } else {
-                this.continueSend = true;
-              }
-            })
+      this.doLoginStatus().then((res) => {
+        this.continueSend = true;
+        setInterval(() => {
+          try {
+            if (this.continueSend) {
+              this.continueSend = false;
+              api.getByPathLongTimeout('/api/v0/tuxun/solo/joinRandom').then(res => {
+                if (res.data) {
+                  window.location.href = '/tuxun/solo_game?gameId=' + res.data;
+                } else {
+                  this.continueSend = true;
+                }
+              })
+            }
+          } catch (e) {
+            this.continueSend = true;
           }
-        } catch (e) {
-          this.continueSend = true;
-        }
-      }, 5000);
-
+        }, 1500);
+      });
     },
   }
 
@@ -823,6 +829,20 @@ export default {
     font-size: xxx-large;
     color: white;
     z-index: 10000;
+  }
+  .matching {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+    .content {
+      color: white;
+      font-size: xx-large;
+    }
   }
 }
 
