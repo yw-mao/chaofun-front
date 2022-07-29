@@ -31,19 +31,23 @@
       </div>
 
 
-      <div class="start_game" v-if="status === 'ready' && this.$store.state.user.userInfo.userId === gameData.host.userId">
-        <el-button class="button" type="primary" round @click="start">开始图寻</el-button>
+      <div class="start_game" v-if="status === 'ready' && this.gameData.type !== 'solo_match' && this.$store.state.user.userInfo.userId === gameData.host.userId">
+        <el-button class="button" type="primary" round @click="start">开始图寻对决</el-button>
       </div>
 
-      <div v-if="gameData.playerIds.length !== 2" class="wait_game_start">
+      <div v-if="!gameData.playerIds || gameData.playerIds.length !== 2" class="wait_game_start">
         等待其他玩家加入....
       </div>
 
-      <div v-if="this.$store.state.user.userInfo.userId !== gameData.host.userId" class="wait_game_start">
+      <div v-if="this.$store.state.user.userInfo.userId !== gameData.host.userId && gameData.type !== 'solo_match'" class="wait_game_start">
         等待房主开始游戏...
       </div>
 
-      <div class="invite" v-if="status !== 'ready'">
+      <div v-if="gameData.type === 'solo_match' && gameData.status == 'ready'" class="wait_game_start">
+        开始倒计时 {{this.gameTimeLeft}} 秒
+      </div>
+
+      <div class="invite" v-if="status !== 'ready' && gameData.type !== 'solo_match'">
         <div class="title">
           邀请链接
         </div>
@@ -173,6 +177,7 @@ export default {
       showRoundResult:  false,
       showGameEnd: false,
       timeLeft: 15,
+      gameTimeLeft: 5,
       team1User: undefined,
       team2User: undefined,
       winner: undefined,
@@ -457,7 +462,15 @@ export default {
           } else {
             this.timeLeft = 15;
           }
+
+          if (this.gameData && this.gameData.timerStartTime && this.gameData.status === "ready") {
+            this.gameTimeLeft = Math.round(5 - ((new Date().getTime()) - this.gameData.timerStartTime) / 1000);
+          } else {
+            this.gameTimeLeft = 5;
+          }
+          console.log(this.gameTimeLeft);
         }, 1000);
+
     },
 
     removeLine() {
