@@ -276,6 +276,7 @@ export default {
             this.targetLat = undefined;
             this.targetLng = undefined;
             this.confirmed = null;
+            this.polylinePath = undefined;
             this.removeChooseMarker()
             this.removeTargetMarker();
             this.removeLine();
