@@ -128,7 +128,11 @@
     <div class="matching" v-if="this.showMatch">
       <div class="content">
         正在匹配对手中，请稍候...
+        <div class="matching_home_button">
+          <el-button class="home_button" type="warning" @click="goHome">结束匹配</el-button>
+        </div>
       </div>
+
     </div>
   </div>
 </template>
@@ -563,6 +567,10 @@ export default {
   min-height: 100%;
   text-align: center;
   background-color: #090723;
+  .home_button {
+    margin-top: 2rem;
+    font-size: large;
+  }
   .player {
     width: 40%;
     margin: auto;
@@ -583,10 +591,7 @@ export default {
       margin-top: 1rem;
       font-size: x-large;
     }
-    .home_button {
-      margin-top: 2rem;
-      font-size: large;
-    }
+
   }
   .prepare {
     padding-bottom: 10rem;
@@ -842,6 +847,9 @@ export default {
     .content {
       color: white;
       font-size: xx-large;
+    }
+    .matching_home_button {
+      width: 100%;
     }
   }
 }
