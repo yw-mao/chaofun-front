@@ -40,7 +40,7 @@
 
         </div>
         <div class="thx">
-          特别鸣谢：猫，南山大王cf，网络迷踪版主
+          特别鸣谢：猫，南山大王cf，网络迷踪版主, GeoGuessr
         </div>
       </section>
 
