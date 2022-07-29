@@ -18,9 +18,9 @@
       </div>
 
       <div class="vs">
-        <div class="player">
-          <el-avatar :src="this.imgOrigin + gameData.host.icon" class="avatar"></el-avatar>
-          <div class="userName">{{gameData.host.userName}}</div>
+        <div  v-if="gameData && gameData.playerIds.length >= 1" class="player">
+          <el-avatar :src="this.imgOrigin + gameData.players[0].icon" class="avatar"></el-avatar>
+          <div class="userName">{{gameData.players[0].userName}}</div>
         </div>
         <img class="vs_img" v-if="gameData && gameData.playerIds.length === 2" :src="this.imgOrigin + 'biz/1658807128256_91c9df63c2d144359005b6f504a96a81.png'">
         </img>
@@ -139,6 +139,7 @@ import 'photo-sphere-viewer/dist/plugins/compass.css'
 import 'photo-sphere-viewer/dist/plugins/virtual-tour.css'
 import 'photo-sphere-viewer/dist/plugins/markers.css'
 import BMapLoader from "../../utils/bmap-jsapi-loader";
+import {getByPathLongTimeout} from "../../api/api";
 
 export default {
   name: "TXInvitor",
@@ -166,15 +167,21 @@ export default {
       team1User: undefined,
       team2User: undefined,
       winner: undefined,
+      showMatch: false,
       // gameData: {playerIds: [1, 2]}
     }
   },
 
   mounted() {
     this.gameId = this.$route.query.gameId;
-    this.initWS();
-    this.join();
-    this.countDown();
+    if (this.gameId && this.gameId !== null && this.gameId !== '') {
+      this.initWS();
+      this.join();
+      this.countDown();
+    } else {
+      this.showMatch = true;
+      this.match();
+    }
   },
 
 
@@ -514,6 +521,28 @@ export default {
       api.getByPath('/api/v0/tuxun/game/report', {content: this.image}).then(res=>{
         this.$toast("反馈成功");
       })
+    },
+
+    match() {
+      // 每3秒发送一次心跳
+      this.continueSend = true;
+      setInterval(() => {
+        try {
+          if (this.continueSend) {
+            this.continueSend = false;
+            api.getByPathLongTimeout('/api/v0/tuxun/solo/joinRandom').then(res => {
+              if (res.data) {
+                window.location.href = '/tuxun/solo_game?gameId=' + res.data;
+              } else {
+                this.continueSend = true;
+              }
+            })
+          }
+        } catch (e) {
+          this.continueSend = true;
+        }
+      }, 5000);
+
     },
   }
 
