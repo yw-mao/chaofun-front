@@ -262,7 +262,6 @@ export default {
         });
 
 
-
         if (this.contents && this.contents != null && this.contents.length > 1) {
           var nodes = [];
           console.log(this.contents)

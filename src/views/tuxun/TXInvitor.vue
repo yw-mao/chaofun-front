@@ -276,6 +276,7 @@ export default {
           if (this.image !== this.lastRound.content) {
             this.showMap = false;
             this.image = this.lastRound.content;
+            this.contents = this.lastRound.contents;
             this.lat = null;
             this.lng = null;
             this.targetLat = undefined;
@@ -302,6 +303,14 @@ export default {
                 }]);
               }
 
+              if (this.contents && this.contents != null) {
+                plugins.push([VirtualTourPlugin, {
+                  positionMode: VirtualTourPlugin.MODE_GPS,
+                  renderMode  : VirtualTourPlugin.MODE_3D,
+                  // preload: true,
+                }]);
+              }
+
               this.viewer = new Viewer({
                 navbar: null,
                 container: document.querySelector('#viewer'),
@@ -312,13 +321,41 @@ export default {
                 defaultZoomLvl: 0,
                 plugins: plugins
               });
+
+              if (this.contents && this.contents != null && this.contents.length > 1) {
+                var nodes = [];
+                console.log(this.contents)
+                for (var i in this.contents) {
+                  console.log(content);
+                  const content = this.contents[i];
+                  var k = {};
+                  if (content.contentSpeedUp && content.contentSpeedUp !== null) {
+                    k.panorama = 'https://i.chao-fan.com/' + content.contentSpeedUp;
+                  } else {
+                    k.panorama = 'https://i.chao-fan.com/' + content.content;
+                  }
+                  // k.panorama =  k.panorama + '?x-oss-process=image/resize,h_1664'
+                  k.links = [];
+                  for (var j in content.links) {
+                    k.links.push({nodeId:  content.links[j]});
+                  }
+                  k.name = '全景图_' + i;
+                  k.id = content.id;
+                  k.position = [content.lng, content.lat];
+                  k.panoData = {poseHeading: content.heading};
+                  nodes.push(k);
+                }
+
+                console.log(nodes);
+                var virtualTour = this.viewer.getPlugin(VirtualTourPlugin);
+                virtualTour.setNodes(nodes, nodes[0].id);
+              }
             }.bind(this), 200);
 
           }
 
           if (this.map === null) {
             setTimeout(function () {
-
               BMapLoader.load({
                 key: 'aibVGReAhMEtxu4Bj2aHixWprh28AhrT',
                 version: '3.0'

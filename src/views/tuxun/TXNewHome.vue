@@ -29,7 +29,7 @@
               邀请朋友图寻对决吧！
             </div>
           </div>
-          <div class="card" @click="toPage('邀请赛', '/tuxun/maps')">
+          <div class="card" @click="toPage('训练赛', '/tuxun/maps')">
             <div class="title">
               训练赛
             </div>
