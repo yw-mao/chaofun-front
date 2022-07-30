@@ -351,7 +351,7 @@ export default {
           this.image = data.data.content;
 
           // this.baiduPano = data.data.baiduPano;
-          // this.contents = data.data.contents;
+          this.contents = data.data.contents;
 
           if (this.contentType !== data.data.contentType) {
             this.contentType = data.data.contentType;
@@ -694,7 +694,7 @@ export default {
         this.contentType = res.data.type;
         this.heading = res.data.heading;
         // this.baiduPano = res.data.baiduPano;
-        // this.contents = res.data.contents;
+        this.contents = res.data.contents;
 
         if (res.data.contentSpeedUp && res.data.contentSpeedUp !== null) {
           this.image = res.data.contentSpeedUp;
