@@ -48,7 +48,7 @@
 
         </div>
         <div class="thx">
-          特别鸣谢：猫，南山大王cf，网络迷踪版主, GeoGuessr
+          特别鸣谢：猫，南山大王cf，网络迷踪版主, GeoGuessr，百度街景，Google街景
         </div>
       </section>
 
