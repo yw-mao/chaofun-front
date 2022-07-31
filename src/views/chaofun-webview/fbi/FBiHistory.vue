@@ -140,6 +140,15 @@ export default {
         return '过滤举报';
       }
 
+      if (reason === 'tuxun_award') {
+        return '图寻Solo邀请奖励';
+      }
+
+      if (reason === 'tuxun_filter') {
+        return '图寻图片过滤';
+      }
+
+
       if (reason === 'report_solve') {
         return '举报处理';
       }
