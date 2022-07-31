@@ -105,7 +105,12 @@
           </div>
           <el-avatar :src="this.imgOrigin + winner.icon" class="avatar"></el-avatar>
           <div class="userName">{{winner.userName}}</div>
-          <el-button class="home_button" type="warning" @click="goHome">回到图寻首页</el-button>
+          <div>
+            <el-button class="home_button"  type="primary" @click="goTuxun">继续匹配</el-button>
+          </div>
+          <div>
+            <el-button class="home_button" type="warning" @click="goHome">回到图寻首页</el-button>
+          </div>
         </div>
       </div>
       <div v-if="gameData" class="game_hud">
@@ -574,9 +579,14 @@ export default {
       });
     },
 
+    goTuxun() {
+      window.location.href = '/tuxun/solo_game';
+    },
+
     goHome() {
       window.location.href = '/tuxun';
     },
+
     toReport() {
       api.getByPath('/api/v0/tuxun/game/report', {content: this.image}).then(res=>{
         this.$toast("反馈成功");
