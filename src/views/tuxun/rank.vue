@@ -2,7 +2,7 @@
   <div style="margin: 0 auto;width: 640px;max-width: 100%;padding: 10px;">
     <div style="display: flex;justify-content: center; align-items: center;">
       <img alt="" src="../chaofun-webview/assets/images/rank.png">
-      <span style="font-size: 18px;">Top 100（前三名FBi奖励）</span>
+      <span style="font-size: 18px;">Top 100（8月15日重置）</span>
     </div>
     <div style="display: flex;justify-content: space-around;position: relative;margin-top: 10px;">
 
