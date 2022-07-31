@@ -194,6 +194,8 @@ export default {
       api.getByPath('/api/v0/forum/awardFbi', {forumId: this.forumId, targetUserId: this.userIdToAdd, fbi: this.fbi}).then(res => {
         if (res.success) {
           this.userIdToAdd = null;
+          this.fbi = 5;
+          this.state = '';
         } else {
           this.$toast(res.errorMessage);
         }
