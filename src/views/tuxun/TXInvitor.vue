@@ -105,7 +105,7 @@
           </div>
           <el-avatar :src="this.imgOrigin + winner.icon" class="avatar"></el-avatar>
           <div class="userName">{{winner.userName}}</div>
-          <div>
+          <div v-if="gameData && gameData.type === 'solo_match'">
             <el-button class="home_button"  type="primary" @click="goTuxun">继续匹配</el-button>
           </div>
           <div>
