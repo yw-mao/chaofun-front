@@ -69,7 +69,6 @@
       <el-button v-if="isMaps && confirmed && distance" @click="next">下一题</el-button>
     </div>
 
-
     <div v-if="showMap && ISPHONE" style="position: absolute; left: 20px; bottom: 20px">
       <el-button @click="showMap = false">隐藏地图</el-button>
     </div>
@@ -176,6 +175,7 @@ export default {
     this.autoRotate = this.$route.query.autoRotate;
     if (this.mapsId != null) {
       this.isMaps = true;
+      this.enterMaps();
     }
   },
   mounted() {
@@ -229,8 +229,6 @@ export default {
 
     initPanorama() {
       try {
-
-
         var plugins = [];
         if (this.heading) {
           plugins.push([CompassPlugin, {
@@ -714,7 +712,10 @@ export default {
         }
       });
     },
-
+    enterMaps() {
+      api.getByPath('/api/v0/tuxun/game/enterMap', {mapsId: this.mapsId}).then(res=>{
+      })
+    },
     send() {
       this.dialogVisible = false;
       this.wsSend("{\"scope\": \"tuxun\", \"data\": {\"type\": \"send_bullet\", \"text\": \"" + this.form.applyModReason + "\"}}");
