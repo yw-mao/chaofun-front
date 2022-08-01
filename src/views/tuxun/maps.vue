@@ -1,7 +1,7 @@
 <template>
   <div class="container">
       <div class="back_home">
-        
+
       </div>
       <div class="nav">
         训练赛
@@ -87,6 +87,7 @@ export default {
     margin: 0 auto;
     max-width: 80rem;
     margin-top: 3rem;
+    margin-bottom: 5rem;
 
     .grid_main {
       display: grid;
