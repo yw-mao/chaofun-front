@@ -99,7 +99,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
 .container {
   height: 100%;
   background-color: #F7F7F8;
@@ -158,9 +157,7 @@ export default {
     }
   }
 }
-.thx {
 
-}
 @media only screen and (max-width: 679px) {
   .container {
     .grid_main {

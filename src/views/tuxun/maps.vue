@@ -132,16 +132,14 @@ export default {
     }
   }
 }
-.title{
-  font-size: 16px;
-  padding-right: 10px;
-}
 
 
 @media only screen and (max-width: 679px) {
   .container {
-    .grid_main {
-      grid-template-columns: repeat(1, 1fr);
+    .game_entrance {
+      .grid_main {
+        grid-template-columns: repeat(1, 1fr);
+      }
     }
   }
 }
