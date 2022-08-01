@@ -100,17 +100,32 @@
       </div>
       <div v-if="showGameEnd && winner" class="game_result">
         <div class="player">
-          <div class="winner_title">
-            赢家
+          <div v-if="isWin" class="winner_title">
+            胜利!
           </div>
-          <el-avatar :src="this.imgOrigin + winner.icon" class="avatar"></el-avatar>
-          <div class="userName">{{winner.userName}}</div>
+          <div v-else class="loser_title">
+            失败!
+          </div>
+
+          <el-avatar :src="this.imgOrigin + yourTeam.users[0].icon" class="avatar"></el-avatar>
+          <div class="userName">{{yourTeam.users[0].userName}}</div>
+
           <div v-if="gameData && gameData.type === 'solo_match'">
+            <div class="info">
+              <p v-if="yourTeam.ratingChange  && yourTeam.ratingChange > 0" class="desc">积分变化：+{{yourTeam.ratingChange}}</p>
+              <p v-if="!yourTeam.ratingChange && yourTeam.finalRating" class="desc">积分无变化, 积分：{{ yourTeam.finalRating }}</p>
+              <p v-if="!yourTeam.ratingChange && !yourTeam.finalRating" class="desc">积分无变化</p>
+              <p v-if="yourTeam.ratingChange  && yourTeam.ratingChange < 0" class="desc">积分变化：{{yourTeam.ratingChange}}</p>
+              <div>
+                最新积分：{{ yourTeam.finalRating }}
+              </div>
+            </div>
             <el-button class="home_button"  type="primary" @click="goTuxun">继续匹配</el-button>
           </div>
           <div>
             <el-button class="home_button" type="warning" @click="goHome">回到图寻首页</el-button>
           </div>
+
         </div>
       </div>
       <div v-if="gameData" class="game_hud">
@@ -186,6 +201,9 @@ export default {
       team1User: undefined,
       team2User: undefined,
       winner: undefined,
+      winTeam: undefined,
+      yourTeam: undefined,
+      isWin: undefined,
       showMatch: false,
       // gameData: {playerIds: [1, 2]}
     }
@@ -243,8 +261,22 @@ export default {
         this.showGameEnd = true;
         if (this.gameData.teams[0].health === 0) {
           this.winner = this.gameData.teams[1].users[0];
+          this.winTeam = this.gameData.teams[1];
         } else {
           this.winner = this.gameData.teams[0].users[0];
+          this.winTeam = this.gameData.teams[0];
+        }
+
+        if (this.winner.userId === this.$store.state.user.userInfo.userId) {
+          this.isWin = true;
+        } else {
+          this.isWin = false;
+        }
+
+        if (this.gameData.teams[0].users[0].userId === this.$store.state.user.userInfo.userId) {
+          this.yourTeam = this.gameData.teams[0];
+        } else {
+          this.yourTeam = this.gameData.teams[1];
         }
       }
 
@@ -256,15 +288,17 @@ export default {
           this.showMap = true;
           this.targetLat = this.lastRound.lat;
           this.targetLng = this.lastRound.lng;
-          this.polylinePath = [
-            new BMap.Point(this.lng, this.lat),
-            new BMap.Point(this.targetLng, this.targetLat),
-          ]
           this.addTargetMarker();
-          this.addLine();
-          if (this.lat) {
-            this.map.centerAndZoom(new BMap.Point(this.targetLng, this.targetLat), 1);
+
+          if (this.lng) {
+            this.polylinePath = [
+              new BMap.Point(this.lng, this.lat),
+              new BMap.Point(this.targetLng, this.targetLat),
+            ]
+            this.addLine();
           }
+
+          this.map.centerAndZoom(new BMap.Point(this.targetLng, this.targetLat), 1);
         }
       } else {
         this.showRoundResult = false;
@@ -498,20 +532,20 @@ export default {
     },
 
     countDown() {
-        setInterval(() => {
-          if (this.lastRound && this.lastRound.timerStartTime && !this.lastRound.endTime) {
-            this.timeLeft =  Math.round(15 - ((new Date().getTime()) - this.lastRound.timerStartTime) / 1000);
-          } else {
-            this.timeLeft = 15;
-          }
+      setInterval(() => {
+        if (this.lastRound && this.lastRound.timerStartTime && !this.lastRound.endTime) {
+          this.timeLeft =  Math.round(15 - ((new Date().getTime()) - this.lastRound.timerStartTime) / 1000);
+        } else {
+          this.timeLeft = 15;
+        }
 
-          if (this.gameData && this.gameData.timerStartTime && this.gameData.status === "ready") {
-            this.gameTimeLeft = Math.round(5 - ((new Date().getTime()) - this.gameData.timerStartTime) / 1000);
-          } else {
-            this.gameTimeLeft = 5;
-          }
-          console.log(this.gameTimeLeft);
-        }, 1000);
+        if (this.gameData && this.gameData.timerStartTime && this.gameData.status === "ready") {
+          this.gameTimeLeft = Math.round(5 - ((new Date().getTime()) - this.gameData.timerStartTime) / 1000);
+        } else {
+          this.gameTimeLeft = 5;
+        }
+        console.log(this.gameTimeLeft);
+      }, 1000);
 
     },
 
@@ -542,34 +576,6 @@ export default {
       }
       this.targetMarker = marker;
       this.map.addOverlay(marker);
-    },
-
-    addRanksMarker() {
-      this.ranksMarker = [];
-      if (this.ranks) {
-        this.ranks.forEach( item => {
-          if (item.userAO.userId !== this.$store.state.user.userInfo.userId) {
-            var point = new BMap.Point(item.latLng.lng, item.latLng.lat);
-            var marker = new BMap.Marker(point);        // 创建标注
-            marker.disableDragging();
-            var label = new BMap.Label(item.userAO.userName);        // 创建标注
-            label.setOffset(new BMap.Size(-15, 30));
-            console.log(label.getOffset())
-            marker.setLabel(label);
-            this.ranksMarker.push(marker);
-            this.map.addOverlay(marker);
-          }
-        });
-      }
-    },
-
-    clearRanksMarker() {
-      if (this.ranksMarker) {
-        this.ranksMarker.forEach(item => {
-          this.map.removeOverlay(item);
-        });
-      }
-      this.ranksMarker = [];
     },
 
     confirm() {
@@ -639,6 +645,12 @@ export default {
       color: white;
     }
     .winner_title {
+      color: gold;
+      font-size: xxx-large;
+      margin-bottom: 1rem;;
+    }
+    .loser_title {
+      color: silver;
       font-size: xxx-large;
       margin-bottom: 1rem;;
     }
@@ -769,6 +781,10 @@ export default {
       background: #090723;
       display: flex;
       justify-content: center;
+      .info {
+        padding-top: 20px;
+        font-size: large;
+      }
     }
     .im-view {
       position: absolute;
@@ -941,6 +957,7 @@ export default {
     }
 
     .player {
+      width: 80%;
       .avatar {
         width: 50px;
         height: 50px;
