@@ -1,20 +1,24 @@
 <template>
   <div class="container">
-    <div class="content">
-        <div class="nav">
-            <span>训练赛</span>
-        </div>
-        <div @click="toMaps(item)" v-for="(item,index) in pagedata" :key="index" class="item">
-<!--          <div class="title">{{item.rank}}.</div>-->
-          <div class="left">
-                <div class="info">
-                    <div class="title">{{item.name}}</div>
-                </div>
+      <div class="back_home">
+      </div>
+      <div class="nav">
+        训练赛
+      </div>
+      <section class="game_entrance">
+        <div class="grid_main">
+          <div  v-for="(item, index) in pagedata" class="card">
+            <div class="title">
+              {{item.name}}
             </div>
+            <div class="describe">
+              {{item.desc}}
+            </div>
+          </div>
         </div>
+      </section>
     </div>
-    
-  </div>
+
 </template>
 
 <script>
@@ -24,13 +28,13 @@ import * as api from '@/api/api'
 export default {
   name: 'tuxunRank',
   components: {
-    
+
   },
   data(){
-      return {
-          pagedata: [],
-        timer: 0
-      }
+    return {
+      pagedata: [],
+      timer: 0
+    }
   },
   created(){
   },
@@ -45,9 +49,9 @@ export default {
   },
   methods:{
     getButtonRank(){
-        api.getByPath('/api/v0/tuxun/maps/list').then(res=>{
-            this.pagedata = res.data
-        })
+      api.getByPath('/api/v0/tuxun/maps/list').then(res=>{
+        this.pagedata = res.data
+      })
     },
     toMaps(item){
       window.open(location.origin + '/tuxun/maps_game?mapsId=' + item.id, '_blank');
@@ -57,76 +61,79 @@ export default {
 </script>
 <style scoped lang="scss">
 .container{
-    // height: ;
-    padding-top: 0;
-    height: 100vh;
+  position: absolute;
+  width: 100%;
+  min-height: 120%;
+  text-align: center;
+  background-color: #090723;
+  .nav {
+    color: white;
+    font-size: xx-large;
+    font-weight: bold;
+    padding-top: 3rem;
+  }
+
+  section {
+    padding-top: 3rem;
+    display: block;
+  }
+
+  .game_entrance {
+    box-sizing: border-box;
+    display: block;
+    width: 100%;
+    padding: 0 2rem;
+    margin: 0 auto;
+    max-width: 80rem;
+    margin-top: 3rem;
+
+    .grid_main {
+      display: grid;
+      grid-row-gap: 1rem;
+      grid-column-gap: 1rem;
+      grid-template-columns: repeat(3, 1fr);
+      .card {
+        background-color: rgb(25,26,46, 0.9);
+        background-position: 50%;
+        background-repeat: no-repeat;
+        background-size: 100%;
+        box-sizing: border-box;
+        box-radius: 1rem;
+        flex-direction: column;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        height: 100%;
+        padding: 1.5rem;
+        min-height: 110px;
+        .title {
+          font-size: 1.5rem;
+          color: white;
+          font-weight: 700;
+          padding-bottom: 0.2rem;
+        }
+        .describe {
+          color: yellow;
+          font-size: 1rem;
+          font-weight: 700;
+          margin-bottom: 0.25rem;
+        }
+      }
+    }
+  }
+
 }
 .title{
   font-size: 16px;
   padding-right: 10px;
 }
-.content{
-    .item{
 
-        display: flex;
-        justify-content: space-between;
-        padding: 5px;
-        padding-left: 20px;
-        border-bottom: 1px solid #f1f1f1;
-        // height: 60px;
-        // box-sizing: border-box;
-        overflow: hidden;
-        text-align: center;
-        align-items: center;
 
-        .left{
-            flex: 1;
-            display: flex;
-            img{
-                flex: 0 0 40px;
-                width: 40px;
-                height: 40px;
-                border-radius: 50%;
-                margin-right: 10px;
-                vertical-align: middle;
-            }
-            .title{
-                font-size: 16px;
-            }
-            .desc{
-                width: 180px;
-                white-space: nowrap;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                color: #888;
-                font-size: 13px;
-            }
-            .info{
-                display: flex;
-                flex-direction: column;
-                justify-content: space-around;
-                
-            }
-        }
-        .right{
-            flex: 0 0 60px;
-            // line-height: 40px;
-            text-align: center;
-            font-size: 12px;
-            p{
-                font-size: 14px;
-            }
-        }
+@media only screen and (max-width: 679px) {
+  .container {
+    .grid_main {
+      grid-template-columns: repeat(1, 1fr);
     }
-}
-.nav{
-    padding: 20px;
-    img{
-        width: 24px;
-        height: 24px;
-        vertical-align: middle;
-        margin-right: 10px;
-    }
-    font-size: 18px;
+  }
 }
 </style>
