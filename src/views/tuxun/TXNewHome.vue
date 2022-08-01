@@ -5,7 +5,7 @@
     <div>
       <section class="game_entrance">
         <div class="grid_main">
-          <div class="card" @click="toPage('积分赛主赛场', '/tuxun/main_game')">
+          <div class="card" @click="redirectPage( '/tuxun/main_game')">
             <div class="title">
               积分赛
             </div>
@@ -29,7 +29,7 @@
               邀请朋友图寻对决吧！
             </div>
           </div>
-          <div class="card" @click="toPage('训练赛', '/tuxun/maps')">
+          <div class="card" @click="redirectPage( '/tuxun/maps')">
             <div class="title">
               训练赛
             </div>
@@ -85,6 +85,10 @@ export default {
         window.location.href = '/tuxun/solo_game?gameId=' + id;
         // this.$router.push({path: '/tuxun/solo_game?gameId=' + id}).catch((e) => {})
       });
+    },
+
+    redirectPage(path) {
+      window.location.href = path
     },
 
     soloMatch() {

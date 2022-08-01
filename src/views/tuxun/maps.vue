@@ -1,6 +1,7 @@
 <template>
   <div class="container">
-      <div class="back_home">
+      <div class="back_home" @click="goHome">
+        <el-button type="primary">←返回首页</el-button>
       </div>
       <div class="nav">
         训练赛
@@ -55,6 +56,10 @@ export default {
     toMaps(item){
       window.open(location.origin + '/tuxun/maps_game?mapsId=' + item.id, '_blank');
     },
+
+    goHome() {
+      window.location.href = '/tuxun';
+    },
   },
 }
 </script>
@@ -72,6 +77,11 @@ export default {
     padding-top: 3rem;
   }
 
+  .back_home {
+    position: absolute;
+    padding-top: 1rem;
+    padding-left: 1rem;
+  }
   section {
     padding-top: 3rem;
     display: block;
