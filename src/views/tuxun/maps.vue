@@ -1,13 +1,14 @@
 <template>
   <div class="container">
       <div class="back_home">
+        
       </div>
       <div class="nav">
         训练赛
       </div>
       <section class="game_entrance">
         <div class="grid_main">
-          <div  v-for="(item, index) in pagedata" class="card">
+          <div v-for="(item, index) in pagedata" :style="{'background-image': 'linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.6)), url('+ imgOrigin + (item.cover ?? 'biz/1659323781589_7d19c33667a54a4dabb0405ee5aec20f.jpeg') + '?x-oss-process=image/resize,h_400/format,webp)','background-size':'cover'}" class="card">
             <div class="title">
               {{item.name}}
             </div>
@@ -89,8 +90,8 @@ export default {
 
     .grid_main {
       display: grid;
-      grid-row-gap: 1rem;
-      grid-column-gap: 1rem;
+      grid-row-gap: 1.5rem;
+      grid-column-gap: 1.5rem;
       grid-template-columns: repeat(3, 1fr);
       .card {
         background-color: rgb(25,26,46, 0.9);
@@ -104,7 +105,7 @@ export default {
         flex-direction: column;
         align-items: center;
         height: 100%;
-        padding: 1.5rem;
+        padding: 4rem;
         min-height: 110px;
         .title {
           font-size: 1.5rem;
