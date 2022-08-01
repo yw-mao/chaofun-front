@@ -1,14 +1,13 @@
 <template>
   <div class="container">
       <div class="back_home">
-
       </div>
       <div class="nav">
         训练赛
       </div>
       <section class="game_entrance">
         <div class="grid_main">
-          <div v-for="(item, index) in pagedata" :style="{'background-image': 'linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.6)), url('+ imgOrigin + (item.cover ?? 'biz/1659323781589_7d19c33667a54a4dabb0405ee5aec20f.jpeg') + '?x-oss-process=image/resize,h_400/format,webp)','background-size':'cover'}" class="card">
+          <div v-for="(item, index) in pagedata" @click="toMaps(item)"  :style="{'background-image': 'linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.6)), url('+ imgOrigin + (item.cover ?? 'biz/1659323781589_7d19c33667a54a4dabb0405ee5aec20f.jpeg') + '?x-oss-process=image/resize,h_400/format,webp)','background-size':'cover'}" class="card">
             <div class="title">
               {{item.name}}
             </div>
@@ -19,7 +18,6 @@
         </div>
       </section>
     </div>
-
 </template>
 
 <script>
@@ -123,7 +121,6 @@ export default {
       }
     }
   }
-
 }
 .title{
   font-size: 16px;
