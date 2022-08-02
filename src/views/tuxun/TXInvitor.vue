@@ -535,12 +535,18 @@ export default {
       setInterval(() => {
         if (this.lastRound && this.lastRound.timerStartTime && !this.lastRound.endTime) {
           this.timeLeft =  Math.round(15 - ((new Date().getTime()) - this.lastRound.timerStartTime) / 1000);
+          if (this.timeLeft < 0) {
+            this.timeLeft = 0;
+          }
         } else {
           this.timeLeft = 15;
         }
 
         if (this.gameData && this.gameData.timerStartTime && this.gameData.status === "ready") {
           this.gameTimeLeft = Math.round(5 - ((new Date().getTime()) - this.gameData.timerStartTime) / 1000);
+          if (this.gameTimeLeft < 0) {
+            this.gameTimeLeft = 0;
+          }
         } else {
           this.gameTimeLeft = 5;
         }
