@@ -272,8 +272,8 @@ routes = [
   {
     path: '/tuxun/maps_game',
     component: () => import('@/views/tuxun/TXHome'),
-    name: '训练赛',
-    meta: { title: '训练赛'},
+    name: '练习赛',
+    meta: { title: '练习赛'},
     hidden: true
   },
   {

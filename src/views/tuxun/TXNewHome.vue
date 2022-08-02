@@ -31,7 +31,7 @@
           </div>
           <div class="card" @click="redirectPage( '/tuxun/maps')">
             <div class="title">
-              训练赛
+              练习赛
             </div>
             <div class="describe">
               走遍大江南北

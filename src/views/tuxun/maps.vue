@@ -4,7 +4,7 @@
         <el-button type="primary">←返回首页</el-button>
       </div>
       <div class="nav">
-        训练赛
+        练习赛
       </div>
       <section class="game_entrance">
         <div class="grid_main">
@@ -40,7 +40,7 @@ export default {
   },
   mounted(){
     this.getButtonRank()
-    document.title = "训练赛";
+    document.title = "练习赛";
 
     let _this = this;
     let timer = setInterval(()=>{
