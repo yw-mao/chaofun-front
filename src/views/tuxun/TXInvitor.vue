@@ -832,7 +832,7 @@ export default {
     .bm-view-phone-hidden {
       position: absolute;
       width: 100%;
-      height: 60%;
+      height: 40%;
       bottom: 0;
       right: 0;
       visibility: hidden;
