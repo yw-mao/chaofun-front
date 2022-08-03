@@ -186,8 +186,8 @@ export default {
       gameId: this.gameId,
       gameData: undefined,
       lastRound: undefined,
-      map: null,
-      BMap: null,
+      map: undefined,
+      BMap: undefined,
       viewer: undefined,
       image: undefined,
       confirmed: false,
@@ -291,7 +291,7 @@ export default {
           this.targetLng = this.lastRound.lng;
           this.addTargetMarker();
 
-          if (this.lng) {
+          if (this.lng && this.BMap) {
             this.polylinePath = [
               new BMap.Point(this.lng, this.lat),
               new BMap.Point(this.targetLng, this.targetLat),
@@ -299,7 +299,9 @@ export default {
             this.addLine();
           }
 
-          this.map.centerAndZoom(new BMap.Point(this.targetLng, this.targetLat), 1);
+          if (this.map && this.BMap) {
+            this.map.centerAndZoom(new BMap.Point(this.targetLng, this.targetLat), 1);
+          }
         }
       } else {
         this.showRoundResult = false;
@@ -392,7 +394,7 @@ export default {
 
           }
 
-          if (this.map === null) {
+          if (!this.map) {
             setTimeout(function () {
               BMapLoader.load({
                 key: 'aibVGReAhMEtxu4Bj2aHixWprh28AhrT',
@@ -569,6 +571,9 @@ export default {
     },
 
     addTargetMarker() {
+      if (!this.BMap) {
+        return;
+      }
       var point = new BMap.Point(this.targetLng,this.targetLat);
       var marker = new BMap.Marker(point);        // 创建标注
       marker.disableDragging();
