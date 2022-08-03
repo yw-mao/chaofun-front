@@ -162,6 +162,7 @@
 </template>
 
 <script>
+import * as THREE from 'three';
 import * as api from '../../api/api'
 import {Viewer} from 'photo-sphere-viewer'
 import 'photo-sphere-viewer/dist/photo-sphere-viewer.css'
@@ -328,40 +329,31 @@ export default {
 
             this.heading = this.lastRound.heading;
 
-            if (this.viewer) {
-              this.viewer.destroy();
-              this.viewer = undefined;
-            }
-
             setTimeout(function () {
-              var plugins = [];
-              if (this.heading) {
+              if (!this.viewer) {
+                var plugins = [];
                 plugins.push([CompassPlugin, {
                   size: '5vh',
                   position: 'left bottom'
                 }]);
-              }
-
-              if (this.contents && this.contents != null) {
                 plugins.push([VirtualTourPlugin, {
                   positionMode: VirtualTourPlugin.MODE_GPS,
-                  renderMode  : VirtualTourPlugin.MODE_3D,
+                  renderMode: VirtualTourPlugin.MODE_3D,
                   // preload: true,
                 }]);
+
+                this.viewer = new Viewer({
+                  loadingImg: this.imgOrigin + 'biz/1659528755270_550cd22e10c84073a12e6f83840320bc.gif',
+                  navbar: null,
+                  container: document.querySelector('#viewer'),
+                  panoData: {
+                    poseHeading: this.heading, // 0 to 360
+                  },
+                  defaultZoomLvl: 0,
+                  plugins: plugins
+                });
               }
-
-              this.viewer = new Viewer({
-                navbar: null,
-                container: document.querySelector('#viewer'),
-                panorama: 'https://i.chao-fan.com/' + this.lastRound.content,
-                panoData: {
-                  poseHeading: this.heading, // 0 to 360
-                },
-                defaultZoomLvl: 0,
-                plugins: plugins
-              });
-
-              if (this.contents && this.contents != null && this.contents.length > 1) {
+              if (this.contents  && this.contents.length > 1) {
                 var nodes = [];
                 console.log(this.contents)
                 for (var i in this.contents) {
@@ -388,8 +380,15 @@ export default {
                 console.log(nodes);
                 var virtualTour = this.viewer.getPlugin(VirtualTourPlugin);
                 virtualTour.setNodes(nodes, nodes[0].id);
+              } else {
+                var virtualTour = this.viewer.getPlugin(VirtualTourPlugin);
+                virtualTour.setNodes([{panorama: 'https://i.chao-fan.com/' + this.image, id: this.image, position: [0,0], links: [], panoData : {poseHeading: this.heading}}])
               }
-            }.bind(this), 200);
+
+              setTimeout(function () {
+                THREE.Cache.clear();
+              }, 1000);
+            }.bind(this), 100);
 
           }
 

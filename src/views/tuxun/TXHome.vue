@@ -108,6 +108,7 @@ import vueDanmaku from 'vue-danmaku'
 //   ak: 'aibVGReAhMEtxu4Bj2aHixWprh28AhrT'
 // })
 import {Viewer} from 'photo-sphere-viewer'
+import * as THREE from 'three';
 import 'photo-sphere-viewer/dist/photo-sphere-viewer.css'
 import { CompassPlugin} from 'photo-sphere-viewer/dist/plugins/compass'
 import { MarkersPlugin} from 'photo-sphere-viewer/dist/plugins/markers'
@@ -129,7 +130,7 @@ export default {
         applyModReason: '',
       },
       dialogVisible: false,
-      viewer: null,
+      viewer: undefined,
       center: {lng: 0, lat: 0},
       zoom: 3,
       lng: null,
@@ -143,7 +144,7 @@ export default {
       returnResult: true,
       distance: null,
       image: null,
-      contents: null,
+      contents: undefined ,
       contentType: null,
       heading: null,
       id: null,
@@ -229,38 +230,32 @@ export default {
 
     initPanorama() {
       try {
-        var plugins = [];
-        if (this.heading) {
+
+
+        if (!this.viewer) {
+          var plugins = [];
           plugins.push([CompassPlugin, {
             size: '5vh',
             position: 'left bottom'
           }]);
-        }
 
-        if (this.contents && this.contents != null) {
           plugins.push([VirtualTourPlugin, {
             positionMode: VirtualTourPlugin.MODE_GPS,
-            renderMode  : VirtualTourPlugin.MODE_3D,
+            renderMode: VirtualTourPlugin.MODE_3D,
             // preload: true,
-          }]);
+          }])
+
+          this.viewer = new Viewer({
+            loadingImg: this.imgOrigin + 'biz/1659528755270_550cd22e10c84073a12e6f83840320bc.gif',
+            navbar: null,
+            container: document.querySelector('#viewer'),
+            defaultZoomLvl: 0,
+            autorotateDelay: this.autoRotate !== 'true' ? null : 100,
+            // autorotateIdle: 2000,
+            plugins: plugins,
+          });
         }
-
-
-        this.viewer = new Viewer({
-          navbar: null,
-          container: document.querySelector('#viewer'),
-          panorama: 'https://i.chao-fan.com/' + this.image,
-          panoData: {
-            poseHeading: this.heading, // 0 to 360
-          },
-          defaultZoomLvl: 0,
-          autorotateDelay: this.autoRotate !== 'true' ? null : 100,
-          // autorotateIdle: 2000,
-          plugins: plugins,
-        });
-
-
-        if (this.contents && this.contents != null && this.contents.length > 1) {
+        if (this.contents && this.contents.length > 1) {
           var nodes = [];
           console.log(this.contents)
           for (var i in this.contents) {
@@ -283,11 +278,16 @@ export default {
             k.panoData = {poseHeading: content.heading};
             nodes.push(k);
           }
-
           console.log(nodes);
           var virtualTour = this.viewer.getPlugin(VirtualTourPlugin);
           virtualTour.setNodes(nodes, nodes[0].id);
+        } else {
+          var virtualTour = this.viewer.getPlugin(VirtualTourPlugin);
+          virtualTour.setNodes([{panorama: 'https://i.chao-fan.com/' + this.image, id: this.image, position: [0,0], links: [], panoData : {poseHeading: this.heading}}])
         }
+        setTimeout(function () {
+          THREE.Cache.clear();
+        }, 1000);
       } catch (e) {
         console.log(e)
       }
@@ -354,24 +354,17 @@ export default {
             this.contentType = data.data.contentType;
           }
 
-          if (this.viewer !== null) {
-            this.viewer.destroy();
-            this.viewer = null;
-          }
-
           if (this.contentType === "panorama") {
             if (this.baiduPano && this.baiduPano !== null) {
               var self = this;
               setTimeout(function () {
                 self.initBaiduPanorama();
               }, 200);
+            } else {
+              setTimeout(function () {
+                this.initPanorama();
+              }.bind(this), 200);
             }
-          }
-        }
-
-        if (this.contentType === "panorama") {
-          if (this.viewer == null && !(this.baiduPano && this.baiduPano !== null)) {
-            this.initPanorama();
           }
         }
 
@@ -389,8 +382,8 @@ export default {
           }
           this.targetLat = null;
           this.targetLng = null;
-          this.heading = null;
-          this.contents = null;
+          this.heading = undefined;
+          this.contents = undefined;
           this.removeTargetMarker();
           this.polylinePath = null;
           this.removeLine();
@@ -431,7 +424,6 @@ export default {
                 new BMap.Point(this.targetLng, this.targetLat),
               ]
               this.addLine();
-
             }
 
             if (this.targetLat && this.targetLat !== null) {
@@ -676,17 +668,13 @@ export default {
       this.targetLng = null;
       this.image = null;
       this.distance = null;
-      this.heading = null;
-      this.contents = null;
-      if (this.viewer !== null) {
-        this.viewer.destroy();
-        this.viewer = null;
-      }
-
+      this.heading = undefined;
+      this.contents = undefined;
 
       this.removeChooseMarker();
       this.removeTargetMarker();
       this.removeLine();
+
       api.getByPath("/api/v0/tuxun/game/generate", {mapsId: this.mapsId}).then(res => {
         this.image = res.data.content;
         this.id  = res.data.id;
