@@ -49,6 +49,9 @@
         </div>
         <div class="thx">
           特别鸣谢：猫，南山大王cf，网络迷踪版主, GeoGuessr，百度街景，Google街景
+          <p>
+            QQ群：937191695
+          </p>
         </div>
       </section>
 
@@ -118,7 +121,7 @@ export default {
     }
   }
   .thx {
-    font-size: 0.5rem;
+    font-size: 12px;
     color: white;
     padding-top: 40px;
   }
