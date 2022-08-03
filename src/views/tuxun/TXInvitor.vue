@@ -746,6 +746,7 @@ export default {
       font-size: 1.2rem;
       font-weight: bold;
       color: #7654DB;
+      pointer-events: none;
     }
 
     .top-info-phone {
@@ -756,7 +757,9 @@ export default {
       font-size: 1.2rem;
       font-weight: bold;
       color: #7654DB;
+      pointer-events: none;
     }
+
     .round_result {
       position: absolute;
       width: 100%;
