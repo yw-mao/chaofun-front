@@ -14,7 +14,7 @@
 
     <el-dialog title="提交街景" :visible.sync="submitPanoramaShow" :append-to-body="true">
       <el-form :model="form">
-        <el-form-item label="街景链接:一行一条，支持百度和Google，需要与本联系赛有关联, 审核通过会加入到题库中">
+        <el-form-item label="街景链接:一行一条，支持百度和Google，需要与本练习赛有关联, 审核通过会加入到题库中">
           <el-input type="textarea" :autosize="{ minRows: 4}"
                     v-model="panoramaSubmitForm.links" autocomplete="off"> </el-input>
         </el-form-item>
