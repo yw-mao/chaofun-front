@@ -35,6 +35,17 @@
         <span>本赛季游戏次数:  </span>
         <span>{{this.userProfile.gameTimes}}</span>
       </div>
+
+      <div>
+        <span>本赛季匹配Solo目前连胜:  </span>
+        <span>{{this.userProfile.winningStreak}}</span>
+      </div>
+
+      <div>
+        <span>本赛季匹配Solo最长连胜:  </span>
+        <span>{{this.userProfile.longestWinningStreak}}</span>
+      </div>
+
     </div>
     <div style="padding-left: 20px; padding-top: 20px; padding-right: 20px">
       <div style="font-size: 20px">
