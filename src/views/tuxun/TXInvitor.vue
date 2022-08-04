@@ -39,7 +39,7 @@
         等待其他玩家加入....
       </div>
 
-      <div v-if="this.$store.state.user.userInfo.userId !== gameData.host.userId && gameData.type !== 'solo_match'" class="wait_game_start">
+      <div v-if="gameData.host && this.$store.state.user.userInfo.userId !== gameData.host.userId && gameData.type !== 'solo_match'" class="wait_game_start">
         等待房主开始游戏...
       </div>
 

@@ -12,6 +12,19 @@
       </div>
     </el-dialog>
 
+    <el-dialog title="提交街景" :visible.sync="submitPanoramaShow" :append-to-body="true">
+      <el-form :model="form">
+        <el-form-item label="街景链接:一行一条，支持百度和Google，需要与本联系赛有关联, 审核通过会加入到题库中">
+          <el-input type="textarea" :autosize="{ minRows: 4}"
+                    v-model="panoramaSubmitForm.links" autocomplete="off"> </el-input>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="hideSubmitPanorama()">取 消</el-button>
+        <el-button type="primary" @click="submitPanorama()">确 定</el-button>
+      </div>
+    </el-dialog>
+
     <div id="container" :class="[{'im-view': !ISPHONE}, {'im-view-phone': ISPHONE}]">
       <div v-show="this.contentType === 'panorama' && this.baiduPano && this.baiduPano !== null"  id="panorama" style="width: 100%; height: 100%;"></div>
       <div v-if="this.contentType === 'panorama' && !(this.baiduPano && this.baiduPano !== null) " id="viewer"  style="width: 100%; height: 100%"></div>
@@ -89,6 +102,7 @@
       <el-button v-if="!this.isMaps" size="mini"  @click="toRank"> 积分排行 </el-button>
       <el-button v-if="!this.isMaps" size="mini"  @click="toSend"> 发送弹幕 </el-button>
       <el-button size="mini"  @click="toReport"> 坏题反馈 </el-button>
+      <el-button v-if="!ISPHONE && this.isMaps" size="mini"  @click="toSubmitPanorama"> 提交街景 </el-button>
       <el-button v-if="ISPHONE" @click="reloadPage" size="mini">刷新页面</el-button>
       <el-button v-if="this.$store.state.user.userInfo.userId === 1" size="mini"  @click="deleteTuxun"> 删除该题 </el-button>
       <el-button v-if="this.$store.state.user.userInfo.userId === 1 && this.isMaps" size="mini"  @click="removeFromMaps"> 移除该题 </el-button>
@@ -129,7 +143,11 @@ export default {
       form: {
         applyModReason: '',
       },
+      panoramaSubmitForm: {
+        links: '',
+      },
       dialogVisible: false,
+      submitPanoramaShow: false,
       viewer: undefined,
       center: {lng: 0, lat: 0},
       zoom: 3,
@@ -718,6 +736,26 @@ export default {
     },
     hide() {
       this.dialogVisible = false;
+    },
+
+    submitPanorama() {
+      api.postByPath('/api/v0/tuxun/maps/userAddPanorama',
+          {links: this.panoramaSubmitForm.links, mapsId: this.mapsId}).then(res=>{
+        this.panoramaSubmitForm.links = '';
+        this.$toast('提交成功, 谢谢你！');
+        this.submitPanoramaShow = false;
+      })
+    },
+
+    toSubmitPanorama() {
+      this.submitPanoramaShow = true;
+      setTimeout(function () {
+        document.getElementById("input").focus();
+      }, 500);
+    },
+
+    hideSubmitPanorama() {
+      this.submitPanoramaShow = false;
     },
     mapReady(e) {
       console.log("hahah");
