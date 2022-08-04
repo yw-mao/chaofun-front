@@ -19,6 +19,10 @@
         <span style="color: blue">{{this.userProfile.rank}}</span>
       </div>
       <div>
+        <span>贡献街景: </span>
+        <span>{{this.userProfile.contributes}}</span>
+      </div>
+      <div>
         <span>本赛季最高分: </span>
         <span>{{this.userProfile.maxRating}}</span>
       </div>

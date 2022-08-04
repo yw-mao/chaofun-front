@@ -1,6 +1,5 @@
 <template>
   <div>
-
     <img v-if="image" class="im-view" :src="'https://i.chao-fan.com/'+ this.image" alt="">
     </img>
     <div class="confirm">
