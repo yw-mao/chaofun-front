@@ -1,13 +1,15 @@
 <template>
   <div>
+
     <img v-if="image" class="im-view" :src="'https://i.chao-fan.com/'+ this.image" alt="">
     </img>
-
-
     <div class="confirm">
       剩余 {{totalCount}}
       <el-button @click="check" style="white-space: pre-line;">加入题库(方向键上)</el-button>
       <el-button @click="deleteQ"  style="white-space: pre-line;">删除题目(方向键下)</el-button>
+    </div>
+    <div v-if="this.mapsName" class="info">
+      用户投稿训练赛：{{this.mapsName}}
     </div>
   </div>
 </template>
@@ -36,6 +38,7 @@ export default {
       confirmed: false,
       polylinePath: null,
       returnResult: true,
+      mapsName: undefined,
       distance: null,
       image: null,
       id: null,
@@ -144,6 +147,7 @@ export default {
               this.image = res.data.content;
               this.id = res.data.id;
               this.totalCount = res.data.totalCount;
+              this.mapsName = res.data.mapsName;
             }
         );
       }
@@ -157,7 +161,13 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+.info {
+  font-size: xxx-large;
+  position: absolute;
+  left: 20px;
+  right: 20px;
+}
 .im-view {
   position: absolute;
   width: 100%;
