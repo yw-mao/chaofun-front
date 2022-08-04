@@ -468,7 +468,22 @@ export default {
       this.doLoginStatus().then((res) => {
         api.getByPath("/api/v0/tuxun/solo/join", {gameId: this.gameId}).then(res => {
           console.log(res.data);
-          this.solveGameData(res.data, undefined);
+          if (res.success) {
+            this.solveGameData(res.data, undefined);
+          } else {
+            this.getGameInfo()
+          }
+        });
+      });
+    },
+
+    getGameInfo() {
+      this.doLoginStatus().then((res) => {
+        api.getByPath("/api/v0/tuxun/solo/join", {gameId: this.gameId}).then(res => {
+          console.log(res.data);
+          if (res.success) {
+            this.solveGameData(res.data, undefined);
+          }
         });
       });
     },
