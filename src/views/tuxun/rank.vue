@@ -129,7 +129,7 @@ div {
   border-bottom: 1px solid #f9f9f9;
 
   &:hover {
-    background-color: #f6f6f6;
+    background-color: grey;
   }
 }
 
