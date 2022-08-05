@@ -1,5 +1,8 @@
 <template>
-  <div>
+  <div class="container">
+    <div class="top-left">
+      <el-button type="primary" @click="goHome">←返回首页</el-button>
+    </div>
     <div style="width: 100%; text-align: center; align-items: center; padding-top: 20px">
         <div @click="toUser(userProfile)" v-if="this.userProfile" class="left">
           <img :src="imgOrigin+this.userProfile.userAO.icon + '?x-oss-process=image/resize,h_80/format,webp/quality,q_75'" alt="">
@@ -164,10 +167,25 @@ export default {
         window.open(location.origin + '/user/'+item.userAO.userId,"_blank");
       }
     },
+    goHome() {
+      window.location.href = '/tuxun';
+    },
   }
 }
 </script>
 <style scoped lang="scss">
+.container {
+  background-color: #090723;
+  div {
+    color: white;
+  }
+
+  .top-left {
+    padding-left: 1rem;
+    padding-top: 1rem;
+  }
+
+}
 .chart {
   //height: 50vh;
   height: 400px;

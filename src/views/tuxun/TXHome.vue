@@ -99,7 +99,6 @@
     </div>
     <div class="home">
       <el-button size="mini" @click="toHome"> 图寻首页 </el-button>
-      <el-button v-if="!this.isMaps" size="mini"  @click="toRank"> 积分排行 </el-button>
       <el-button v-if="!this.isMaps" size="mini"  @click="toSend"> 发送弹幕 </el-button>
       <el-button size="mini"  @click="toReport"> 坏题反馈 </el-button>
       <el-button v-if="!ISPHONE && this.isMaps" size="mini"  @click="toSubmitPanorama"> 提交街景 </el-button>

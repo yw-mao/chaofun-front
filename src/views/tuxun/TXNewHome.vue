@@ -1,9 +1,19 @@
 <template>
   <div class="container" :style="{'background-image':'linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.6)),url('+imgOrigin+'biz/1658727369911_f6ca22ec1e8d4761909b673e0dbd0b2f.png?x-oss-process=image/format,webp)','background-size':'cover','background-position': 'center'}">
-    <img style="margin-top: 25px; margin-left: 25px; width: 5rem; height: 3rem" :src="imgOrigin + 'biz/1658657631523_45db8dd090dc49af99f2a8a4ace01122.svg'">
-    </img>
-    <div>
+
+    <div class="top">
+      <img style="margin-top: 25px; margin-left: 25px; width: 5rem; height: 3rem" :src="imgOrigin + 'biz/1658657631523_45db8dd090dc49af99f2a8a4ace01122.svg'">
+      </img>
+      <div class="top-right">
+        <el-button type="primary" @click="toRank">积分排行</el-button>
+        <el-button type="primary" @click="toUserHome">个人首页</el-button>
+      </div>
+    </div>
+
+    <div class="game">
+
       <section class="game_entrance">
+
         <div class="grid_main">
           <div class="card" @click="redirectPage( '/tuxun/main_game')">
             <div class="title">
@@ -84,8 +94,8 @@ export default {
     createSolo() {
       api.getByPath("/api/v0/tuxun/solo/create").then(res => {
         var id = res.data.id;
-        // window.open(location.origin + '/tuxun/solo_game?gameId=' + id,"_blank");
-        window.location.href = '/tuxun/solo_game?gameId=' + id;
+        window.open(location.origin + '/tuxun/solo_game?gameId=' + id,"_blank");
+        // window.location.href = '/tuxun/solo_game?gameId=' + id;
         // this.$router.push({path: '/tuxun/solo_game?gameId=' + id}).catch((e) => {})
       });
     },
@@ -96,6 +106,14 @@ export default {
 
     soloMatch() {
         window.location.href = '/tuxun/solo_game'
+    },
+    toRank() {
+      window.location.href = location.origin + '/tuxun/rank'
+    },
+    toUserHome() {
+      this.doLoginStatus().then((res) => {
+        window.location.href = location.origin + '/tuxun/user/' + this.$store.state.user.userInfo.userId;
+      });
     }
   }
 }
@@ -104,8 +122,20 @@ export default {
 <style lang="scss" scoped>
 .container {
   height: 100%;
+  width: 100%;
   background-color: #F7F7F8;
-  div {
+
+  .top {
+    display: flex;
+    justify-content: space-between;
+    .top-right {
+      padding-top: 2rem;
+      padding-right: 2rem;
+    }
+  }
+
+
+  .game {
     box-sizing: border-box;
     display: block;
     width: 100%;
@@ -118,13 +148,16 @@ export default {
     }
     .game_entrance {
       margin-top: 15%;
+
     }
+
   }
   .thx {
     font-size: 12px;
     color: white;
     padding-top: 40px;
   }
+
 
   .grid_main {
     display: grid;
