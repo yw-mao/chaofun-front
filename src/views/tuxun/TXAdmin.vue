@@ -8,7 +8,7 @@
       <el-button @click="deleteQ"  style="white-space: pre-line;">删除题目(方向键下)</el-button>
     </div>
     <div v-if="this.mapsName" class="info">
-      用户投稿训练赛：{{this.mapsName}}
+      用户投稿练习赛：{{this.mapsName}}
     </div>
   </div>
 </template>
@@ -166,10 +166,10 @@ export default {
 
 <style lang="scss" scoped>
 .info {
-  font-size: xxx-large;
+  font-size: xx-large;
   position: absolute;
-  left: 20px;
-  right: 20px;
+  left: 2rem;
+  right: 2rem;
 }
 .im-view {
   position: absolute;
