@@ -11,9 +11,8 @@
     </div>
 
     <div class="game">
-
+      <div class="info">维护中...</div>
       <section class="game_entrance">
-
         <div class="grid_main">
           <div class="card" @click="redirectPage( '/tuxun/main_game')">
             <div class="title">
@@ -142,6 +141,10 @@ export default {
     padding: 0 2rem;
     margin: 0 auto;
     max-width: 80rem;
+    .info {
+      color: white;
+      font-size: xx-large;
+    }
     section {
       padding-top: 20px;
       display: block;
