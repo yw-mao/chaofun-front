@@ -11,7 +11,7 @@
     </div>
 
     <div class="game">
-      <div class="info">维护中...</div>
+<!--      <div class="info">维护中...</div>-->
       <section class="game_entrance">
         <div class="grid_main">
           <div class="card" @click="redirectPage( '/tuxun/main_game')">
