@@ -74,6 +74,13 @@ import * as api from '../../api/api'
 export default {
   name: "TXNewHome",
 
+  mounted() {
+    var Notification = window.Notification || window.mozNotification || window.webkitNotification;
+    if (Notification) {
+      Notification.requestPermission(function (status) {
+      })
+    }
+  },
   methods:{
     toPage(title, path) {
       try {
