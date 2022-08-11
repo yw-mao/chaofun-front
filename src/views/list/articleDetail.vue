@@ -967,24 +967,16 @@ queryChildren (parent, list) {
               this.canSub = true;
               if (res.success) {
                 this.images = [];
-                this.$toast('评论成功')
                 this.comment = '';
                 setTimeout(() => {
-                  // 先直接获取，后面评论多了再优化
-                  // if(this.replayItem){
-                  //   this.lists.push({
-                  //     parentId: this.replayItem?this.replayItem.id:0,
-                  //     text: comment,
-                  //     type: 'text',
-                  //     downs: 0,
-                  //     ups: 0,
-                  //     userInfo: this.userinfo
-                  //   })
-                  // }else{
-                  //   this.lists.unshift(res.data)
-                  // }
                   this.getLists()
                 }, 1500)
+
+                if (res.hintCode) {
+                  this.$toast(res.hintMessage)
+                } else {
+                  this.$toast('评论成功')
+                }
               } else {
                 this.$toast(res.errorMessage);
               }

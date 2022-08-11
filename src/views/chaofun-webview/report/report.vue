@@ -72,7 +72,21 @@
                         </div>
                     </viewer>
             <!-- <a v-for="(i,k) in item.imageNames.split(',')" :key="k" :href="imgOrigin+i" target="_blank">【附图】</a> -->
-                </span>
+          </span>
+
+          <span v-if="item.commentInfo.audio">
+            <audio
+            webkit-playsinline="true"
+            x-webkit-airplay="true"
+            playsinline="true"
+            x5-video-player-type="h5"
+            x5-video-orientation="h5"
+            x5-video-player-fullscreen="true"
+            controls
+            :src="imgOrigin+item.commentInfo.audio"
+            alt="">
+            </audio>
+          </span>
           <div @click="toPost(item.postInfo.postId)" style="font-size: 16px">
             原帖标题: {{item.postInfo.title}}
           </div>

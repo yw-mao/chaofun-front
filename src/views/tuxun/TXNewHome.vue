@@ -118,7 +118,9 @@ export default {
     },
     toUserHome() {
       this.doLoginStatus().then((res) => {
-        window.location.href = location.origin + '/tuxun/user/' + this.$store.state.user.userInfo.userId;
+        if (res) {
+          window.location.href = location.origin + '/tuxun/user/' + this.$store.state.user.userInfo.userId;
+        }
       });
     }
   }
