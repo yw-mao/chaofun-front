@@ -782,7 +782,7 @@ export default {
 }
 .im-view {
   position: absolute;
-  width: 60%;
+  width: 100%;
   height: 100%;
   bottom: 0;
   left: 0;
@@ -811,10 +811,10 @@ export default {
 }
 .bm-view {
   position: absolute;
-  width: 40%;
-  height: 100%;
-  bottom: 0;
-  right: 0;
+  width: 30%;
+  height: 40%;
+  bottom: 1.5rem;
+  right: 2rem;
 }
 .bm-view-phone {
   position: absolute;
