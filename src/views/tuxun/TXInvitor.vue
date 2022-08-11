@@ -814,6 +814,10 @@ export default {
       font-weight: bold;
       color: #7654DB;
       pointer-events: none;
+      -webkit-user-select:none;
+      -moz-user-select:none;
+      -ms-user-select:none;
+      user-select:none;
     }
 
     .top-info-phone {
@@ -825,6 +829,10 @@ export default {
       font-weight: bold;
       color: #7654DB;
       pointer-events: none;
+      -webkit-user-select:none;
+      -moz-user-select:none;
+      -ms-user-select:none;
+      user-select:none;
     }
 
     .round_result {

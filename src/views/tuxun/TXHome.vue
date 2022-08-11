@@ -64,9 +64,9 @@
           </div>
         </div>
       </div>
-      <vue-danmaku :danmus="danmus" use-slot  style="height:80%; width:100%; position: absolute; pointer-events: none" :speeds="120">
-        <template slot="dm" slot-scope="{ index, danmu }">
-          <div style="color: white; font-size: 24px;   -webkit-text-stroke: 0.5px black;">{{ danmu }}</div>
+      <vue-danmaku :danmus="danmus" use-slot class="danmaku"  style="height:80%; width:100%; position: absolute; pointer-events: none" :speeds="120">
+        <template slot="dm" slot-scope="{ index, danmu }" >
+          <div class="danmaku-title" style="color: white; font-size: 24px;   -webkit-text-stroke: 0.5px black;">{{ danmu }}</div>
         </template>
       </vue-danmaku>
     </div>
@@ -767,6 +767,19 @@ export default {
 </script>
 
 <style scoped lang="scss">
+
+.danmaku {
+  -webkit-user-select:none;
+  -moz-user-select:none;
+  -ms-user-select:none;
+  user-select:none;
+  .danmaku-title {
+    -webkit-user-select:none;
+    -moz-user-select:none;
+    -ms-user-select:none;
+    user-select:none;
+  }
+}
 .im-view {
   position: absolute;
   width: 60%;
@@ -843,6 +856,10 @@ export default {
   top: 20px;
   left: 50%;
   z-index: 100000;
+  -webkit-user-select:none;
+  -moz-user-select:none;
+  -ms-user-select:none;
+  user-select:none;
 }
 
 .topRight-phone {
@@ -850,6 +867,10 @@ export default {
   top: 20px;
   right: 20px;
   z-index: 100000;
+  -webkit-user-select:none;
+  -moz-user-select:none;
+  -ms-user-select:none;
+  user-select:none;
 }
 
 .top-info {
@@ -857,12 +878,20 @@ export default {
   font-weight: bold;
   color: white;
   -webkit-text-stroke: 0.8px black;
+  -webkit-user-select:none;
+  -moz-user-select:none;
+  -ms-user-select:none;
+  user-select:none;
 }
 .top-info-phone {
   font-size: 10px;
   font-weight: bold;
   color: white;
   -webkit-text-stroke: 0.4px black;
+  -webkit-user-select:none;
+  -moz-user-select:none;
+  -ms-user-select:none;
+  user-select:none;
 }
 .item{
   display: flex;
