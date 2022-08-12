@@ -163,7 +163,6 @@ export default {
     }
     .game_entrance {
       margin-top: 15%;
-
     }
 
   }
@@ -191,7 +190,7 @@ export default {
       flex-direction: column;
       align-items: center;
       height: 100%;
-      padding: 1.5rem;
+      padding: 2rem;
       min-height: 110px;
       .title {
         font-size: 1.5rem;
