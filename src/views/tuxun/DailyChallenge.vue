@@ -142,7 +142,7 @@ export default {
       }
       .rank {
         padding-top: 4rem;
-        font-size: xx-large;
+        font-size: large;
         color: darkgray;
       }
       .rank_container {
@@ -206,15 +206,24 @@ export default {
         }
       }
     }
-
-
-
   }
 
   .back_home {
     position: absolute;
     padding-top: 1rem;
     padding-left: 1rem;
+  }
+}
+
+@media only screen and (max-width: 679px) {
+  .container {
+    .main_content {
+      .top {
+        .rank_container {
+          width: 90%;
+        }
+      }
+    }
   }
 }
 </style>
