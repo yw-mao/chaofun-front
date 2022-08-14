@@ -245,7 +245,7 @@ export default {
     this.challengeId = this.$route.query.challengeId;
     this.init();
   },
-  
+
   methods: {
     init() {
       if (this.gameId && this.gameId !== null && this.gameId !== '') {
@@ -615,8 +615,6 @@ export default {
         } else {
           this.timeLeft = 15;
         }
-
-        console.log(this.timeLeft)
 
         if (this.gameData && this.gameData.timerStartTime && this.gameData.status === "ready") {
           this.gameTimeLeft = Math.round(5 - ((new Date().getTime()) - this.gameData.timerStartTime) / 1000);

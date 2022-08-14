@@ -9,8 +9,8 @@
         <div class="time">
           {{this.getDate()}}
         </div>
-        <el-button v-if="this.gameData && this.gameData.status === 'ready'" type="primary" size="large" @click="begin">开始每日挑战</el-button>
-        <el-button v-if="this.gameData && this.gameData.status === 'ongoing'" type="warning" size="large" @click="begin">继续每日挑战</el-button>
+        <el-button v-if="(this.gameData && this.gameData.status === 'ready') || this.showBegin" type="primary" size="large" @click="begin">开始每日挑战</el-button>
+        <el-button v-if="this.gameData && this.gameData.status === 'ongoing'" type="warning" size="large" @click="again">继续每日挑战</el-button>
         <div class="score" v-if="this.gameData && this.gameData.status === 'finish'">今日得分: {{this.gameData.player.totalScore}}</div>
         <div class="rank">
           排名实现中...
@@ -29,6 +29,7 @@ export default {
   data() {
     return {
       gameData: undefined,
+      showBegin: false,
 
     }
   },
@@ -36,8 +37,12 @@ export default {
   mounted() {
     api.getByPath('/api/v0/tuxun/challenge/getGameInfo', {'day': '1'}).then(res=>{
       console.log(res.data)
-      if (res.data) {
-        this.gameData = res.data;
+      if (res.success) {
+        if (res.data) {
+          this.gameData = res.data;
+        }
+      } else {
+        this.showBegin = true;
       }
     })
   },
@@ -48,13 +53,18 @@ export default {
     },
     begin() {
       this.doLoginStatus().then(res => {
+        console.log(res)
         if (res) {
           api.getByPath('/api/v0/tuxun/challenge/start', {'gameId': this.gameData.id}).then(res=>{
+              this.gameData= res.data;
               window.location.href = '/tuxun/challenge?challengeId=' + this.gameData.challengeId;
           })
         }
       });
       // window.location.href =
+    },
+    again() {
+      window.location.href = '/tuxun/challenge?challengeId=' + this.gameData.challengeId;
     },
     getDate() {  //当前时间格式化处理
       var str = '';
