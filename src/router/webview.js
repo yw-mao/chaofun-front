@@ -263,10 +263,24 @@ routes = [
     hidden: true
   },
   {
+    path: '/tuxun/daily_challenge',
+    component: () => import('@/views/tuxun/DailyChallenge'),
+    name: '图寻每日挑战',
+    meta: { title: '图寻每日挑战'},
+    hidden: true
+  },
+  {
     path: '/tuxun/solo_game',
     component: () => import('@/views/tuxun/TXInvitor'),
     name: '图寻邀请PK',
     meta: { title: '图寻邀请PK'},
+    hidden: true
+  },
+  {
+    path: '/tuxun/challenge',
+    component: () => import('@/views/tuxun/TXInvitor'),
+    name: '图寻挑战',
+    meta: { title: '图寻挑战'},
     hidden: true
   },
   {

@@ -14,6 +14,14 @@
 <!--      <div class="info">维护中...</div>-->
       <section class="game_entrance">
         <div class="grid_main">
+          <div class="card" @click="redirectPage( '/tuxun/daily_challenge')">
+            <div class="title">
+              每日挑战
+            </div>
+            <div class="describe">
+              每天五题，神清气爽
+            </div>
+          </div>
           <div class="card" @click="redirectPage( '/tuxun/main_game')">
             <div class="title">
               积分赛
@@ -27,7 +35,7 @@
               匹配Solo
             </div>
             <div class="describe">
-              缘，妙不可言
+              缘，妙不可言(积分)
             </div>
           </div>
           <div class="card" @click="createSolo" >
@@ -164,15 +172,12 @@ export default {
     .game_entrance {
       margin-top: 15%;
     }
-
   }
   .thx {
     font-size: 12px;
     color: white;
     padding-top: 40px;
   }
-
-
   .grid_main {
     display: grid;
     grid-row-gap: 1rem;

@@ -63,7 +63,7 @@
       <div :class="[{'im-view': !ISPHONE}, {'im-view-phone': ISPHONE}]">
         <div id="viewer"  style="width: 100%; height: 100%"></div>
         <div v-if="showRoundResult" class="round_result">
-          <div class="round_result_center">
+          <div class="round_result_center" v-if="!gameData.player">
             <div class="round_result_block">
               {{gameData.teams[0].users[0].userName}} 本局得分: {{gameData.teams[0].lastRoundResult.score}}
               <div>
@@ -75,6 +75,19 @@
               <div>
                 血量变化：{{gameData.teams[1].lastRoundResult.healthAfter - gameData.teams[1].lastRoundResult.healthBefore}}
               </div>
+            </div>
+          </div>
+
+          <div class="round_result_center" v-if="gameData.player">
+            <div class="round_result_block">
+              <div>
+                局数:  {{gameData.currentRound}} / {{gameData.roundNumber}}
+              </div>
+              本局得分: {{gameData.player.lastRoundResult.score}}
+              <div>
+                总得分:  {{gameData.player.totalScore}}
+              </div>
+
             </div>
           </div>
         </div>
@@ -94,9 +107,27 @@
       </div>
 
       <div :class="[{'confirm': !ISPHONE}, {'confirm-phone': ISPHONE}]">
-        <el-button v-if="(showMap || !ISPHONE) && !confirmed && status !== 'rank'"  @click="confirm">确定选择</el-button>
+        <el-button v-if="(showMap || !ISPHONE) && !confirmed && !this.targetLat"  @click="confirm">确定选择</el-button>
         <el-button v-else-if="!showMap && ISPHONE && confirmed" @click="showMap = true">打开地图</el-button>
         <el-button v-else-if="!showMap && ISPHONE" @click="showMap = true">选择地点</el-button>
+        <el-button v-if="gameData.status === 'ongoing' && gameData.player && this.targetLat" @click="next">下一题</el-button>
+      </div>
+      <div v-if="this.showChallengeGameEnd" class="game_result">
+        <div class="player">
+          <el-avatar :src="this.imgOrigin + gameData.player.user.icon" class="avatar"></el-avatar>
+          <div class="userName">{{gameData.player.user.userName}}</div>
+          <div class="info">
+            <div>
+              总分数：{{gameData.player.totalScore}}
+            </div>
+          </div>
+          <div>
+            <el-button class="home_button" type="warning" @click="goDailyChallenge">查看总排名</el-button>
+          </div>
+          <div>
+            <el-button class="home_button"  type="primary" @click="goHome">回到首页</el-button>
+          </div>
+        </div>
       </div>
       <div v-if="showGameEnd && winner" class="game_result">
         <div class="player">
@@ -125,10 +156,9 @@
           <div>
             <el-button class="home_button" type="warning" @click="goHome">回到图寻首页</el-button>
           </div>
-
         </div>
       </div>
-      <div v-if="gameData" class="game_hud">
+      <div v-if="gameData && !gameData.player" class="game_hud">
         <div class="hub_left">
           <div class="user_title">
             {{gameData.teams[0].users[0].userName}}
@@ -148,16 +178,10 @@
         </div>
       </div>
 
-    </div>
-    <div class="matching" v-if="this.showMatch">
-      <div class="content">
-        正在匹配对手中，请稍候...
-        <div class="matching_home_button">
-          <el-button class="home_button" type="warning" @click="goHome">结束匹配</el-button>
-        </div>
-      </div>
 
     </div>
+
+    <matching v-if="this.showMatch"/>
   </div>
 </template>
 
@@ -174,9 +198,11 @@ import 'photo-sphere-viewer/dist/plugins/virtual-tour.css'
 import 'photo-sphere-viewer/dist/plugins/markers.css'
 import BMapLoader from "../../utils/bmap-jsapi-loader";
 import {getByPathLongTimeout} from "../../api/api";
+import Matching from "./Matching";
 
 export default {
   name: "TXInvitor",
+  components: {Matching},
   data () {
     return {
       url: `${location.protocol === "https:" ? "wss" : "ws"}://${location.host}/ws/v0/tuxun`,
@@ -206,6 +232,8 @@ export default {
       yourTeam: undefined,
       isWin: undefined,
       showMatch: false,
+      challengeId: undefined,
+      showChallengeGameEnd: undefined,
       notifyStatus: '',
 
       // gameData: {playerIds: [1, 2]}
@@ -214,11 +242,10 @@ export default {
 
   mounted() {
     this.gameId = this.$route.query.gameId;
+    this.challengeId = this.$route.query.challengeId;
     this.init();
-
   },
-
-
+  
   methods: {
     init() {
       if (this.gameId && this.gameId !== null && this.gameId !== '') {
@@ -226,7 +253,7 @@ export default {
         this.initWS();
         this.join();
         this.countDown();
-      } else {
+      } else if (!this.challengeId) {
         this.showMatch = true;
         this.match();
         var Notification = window.Notification || window.mozNotification || window.webkitNotification;
@@ -235,7 +262,20 @@ export default {
             this.notifyStatus = status;
           }.bind(this))
         }
+      } else {
+        this.showMatch = false;
+        this.challengeInit();
       }
+    },
+    challengeInit() {
+      api.getByPath('/api/v0/tuxun/challenge/getGameInfo', {'challengeId': this.challengeId}).then(res=>{
+        if (res.data) {
+          this.gameId = res.data.id;
+          this.solveGameData(res.data, undefined)
+          this.initWS();
+          this.countDown();
+        }
+      })
     },
     initWS() {
       if (this.ws) {
@@ -251,7 +291,6 @@ export default {
     wsOnOpen(e) {
       console.log("wsOnOpen");
       // console.log(e);
-
       this.wsSend("{\"scope\": \"tuxun\", \"data\": {\"type\": \"subscribe_solo\", \"text\": \"" + this.gameId+ "\"}}");
       // 每3秒发送一次心跳
       setInterval(() => {
@@ -271,7 +310,7 @@ export default {
         this.lastRound = this.gameData.rounds[this.gameData.rounds.length-1];
       }
 
-      if (code === 'game_end' || data.status === 'finish') {
+      if (!this.gameData.player && (code === 'game_end' || data.status === 'finish')) {
         this.showGameEnd = true;
         if (this.gameData.teams[0].health === 0) {
           this.winner = this.gameData.teams[1].users[0];
@@ -294,38 +333,15 @@ export default {
         }
       }
 
-      if ((code === 'round_end' ||
-              (this.lastRound && this.lastRound.endTime))
-          && !this.showGameEnd ) {
-        this.showRoundResult = true;
-        if (!this.targetLng) {
-          this.showMap = true;
-          this.targetLat = this.lastRound.lat;
-          this.targetLng = this.lastRound.lng;
-          this.addTargetMarker();
-          this.addRanksMarker();
-
-          if (this.lng && this.BMap) {
-            this.polylinePath = [
-              new BMap.Point(this.lng, this.lat),
-              new BMap.Point(this.targetLng, this.targetLat),
-            ]
-            this.addLine();
-          }
-
-          if (this.map && this.BMap) {
-            this.map.centerAndZoom(new BMap.Point(this.targetLng, this.targetLat), 1);
-          }
-        }
-      } else {
-        this.showRoundResult = false;
+      if (this.gameData.player && (code === 'game_end' || data.status === 'finish')) {
+        this.showChallengeGameEnd = true;
       }
+
 
       if (data.status === 'wait_join' || data.status === 'ready' || data.status === 'ongoing' || data.status === 'finish') {
         this.status = data.status;
 
         if (data.status === 'ongoing') {
-          console.log('123')
           if (this.lastRound.contentSpeedUp) {
             this.lastRound.content = this.lastRound.contentSpeedUp;
           }
@@ -407,6 +423,33 @@ export default {
               }, 1000);
             }.bind(this), 100);
 
+          }
+
+          if ((code === 'round_end' ||
+                  (this.lastRound && this.lastRound.endTime))
+              && !this.showGameEnd ) {
+            this.showRoundResult = true;
+            if (!this.targetLng) {
+              this.showMap = true;
+              this.targetLat = this.lastRound.lat;
+              this.targetLng = this.lastRound.lng;
+              this.addTargetMarker();
+              this.addRanksMarker();
+
+              if (this.lng && this.BMap) {
+                this.polylinePath = [
+                  new BMap.Point(this.lng, this.lat),
+                  new BMap.Point(this.targetLng, this.targetLat),
+                ]
+                this.addLine();
+              }
+
+              if (this.map && this.BMap) {
+                this.map.centerAndZoom(new BMap.Point(this.targetLng, this.targetLat), 1);
+              }
+            }
+          } else {
+            this.showRoundResult = false;
           }
 
           if (!this.map) {
@@ -565,13 +608,15 @@ export default {
     countDown() {
       setInterval(() => {
         if (this.lastRound && this.lastRound.timerStartTime && !this.lastRound.endTime) {
-          this.timeLeft =  Math.round(15 - ((new Date().getTime()) - this.lastRound.timerStartTime) / 1000);
+          this.timeLeft =  Math.round((this.gameData.roundTimePeriod - ((new Date().getTime()) - this.lastRound.timerStartTime)) / 1000);
           if (this.timeLeft < 0) {
             this.timeLeft = 0;
           }
         } else {
           this.timeLeft = 15;
         }
+
+        console.log(this.timeLeft)
 
         if (this.gameData && this.gameData.timerStartTime && this.gameData.status === "ready") {
           this.gameTimeLeft = Math.round(5 - ((new Date().getTime()) - this.gameData.timerStartTime) / 1000);
@@ -656,13 +701,27 @@ export default {
 
     confirm() {
       this.confirmed = true;
-      api.getByPath("/api/v0/tuxun/solo/guess", {gameId: this.gameId, lng: this.lng, lat: this.lat}).then(res => {
+      var path = "/api/v0/tuxun/solo/guess";
+      if (this.gameData.type === 'daily_challenge') {
+        path = "/api/v0/tuxun/challenge/guess";
+      }
+      api.getByPath(path, {gameId: this.gameId, lng: this.lng, lat: this.lat}).then(res => {
         // this.solveGameData(res.data, undefined);
+      });
+    },
+
+    next() {
+      api.getByPath("/api/v0/tuxun/challenge/next", {gameId: this.gameId}).then(res => {
+        this.solveGameData(res.data, undefined);
       });
     },
 
     goTuxun() {
       window.location.href = '/tuxun/solo_game';
+    },
+
+    goDailyChallenge() {
+      window.location.href = '/tuxun/daily_challenge';
     },
 
     goHome() {
@@ -801,7 +860,6 @@ export default {
         height: 100px;
         margin: auto;
       }
-
     }
 
     .start_game {
@@ -1035,23 +1093,7 @@ export default {
     color: white;
     z-index: 10000;
   }
-  .matching {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    align-content: center;
-    justify-content: center;
-    .content {
-      color: white;
-      font-size: xx-large;
-    }
-    .matching_home_button {
-      width: 100%;
-    }
-  }
+
 }
 
 @media only screen and (max-width: 679px) {

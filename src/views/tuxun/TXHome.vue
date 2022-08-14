@@ -672,7 +672,7 @@ export default {
       window.open(location.origin + '/tuxun/maps',"_blank");
     },
     toHome() {
-      this.$router.push({path: '/tuxun'});
+      window.location.href = '/tuxun';
     },
     next() {
       this.showMap = false;
