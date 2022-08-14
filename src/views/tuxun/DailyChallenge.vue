@@ -13,7 +13,20 @@
         <el-button v-if="this.gameData && this.gameData.status === 'ongoing'" type="warning" size="large" @click="again">继续每日挑战</el-button>
         <div class="score" v-if="this.gameData && this.gameData.status === 'finish'">今日得分: {{this.gameData.player.totalScore}}</div>
         <div class="rank">
-          排名实现中...
+          今日挑战排名
+        </div>
+        <div class="rank_container" v-if="this.rank">
+          <div @click="toUser(item)" v-for="(item,index) in this.rank" :key="index" class="item">
+            <div class="left">
+              <img style="object-fit: cover;" :src="imgOrigin+ item.user.icon + '?x-oss-process=image/resize,h_80/format,webp/quality,q_75'" alt="">
+              <div class="info">
+                <div class="title">{{item.user.userName}}</div>
+              </div>
+            </div>
+            <div class="right">
+              <p>总分: {{item.score}}</p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -28,7 +41,9 @@ export default {
 
   data() {
     return {
+      challengeId: undefined,
       gameData: undefined,
+      rank: undefined,
       showBegin: false,
 
     }
@@ -43,6 +58,13 @@ export default {
         }
       } else {
         this.showBegin = true;
+      }
+    })
+
+    api.getByPath('/api/v0/tuxun/challenge/getDailyChallengeId').then(res=>{
+      if (res.data) {
+        this.challengeId = res.data;
+        this.getRank();
       }
     })
   },
@@ -65,6 +87,14 @@ export default {
     },
     again() {
       window.location.href = '/tuxun/challenge?challengeId=' + this.gameData.challengeId;
+    },
+
+    getRank() {
+      api.getByPath('/api/v0/tuxun/challenge/rank', {challengeId: this.challengeId}).then(res=>{
+        if (res.success) {
+          this.rank = res.data;
+        }
+      })
     },
     getDate() {  //当前时间格式化处理
       var str = '';
@@ -90,9 +120,17 @@ export default {
     width: 100%;
     justify-content: center;
     text-align: center;
+    //align-items: center;
 
     .top {
+      width: 100%;
       padding-top: 5rem;
+      //display: flex;
+      justify-content: center;
+
+      div {
+        color: floralwhite;
+      }
       .score {
         font-size: xx-large;
         color: white;
@@ -102,13 +140,74 @@ export default {
         color: gold;
         padding-bottom: 2rem;
       }
+      .rank {
+        padding-top: 4rem;
+        font-size: xx-large;
+        color: darkgray;
+      }
+      .rank_container {
+        padding-top: 2rem;
+        margin: auto;
+        width: 40%;
+
+        .item {
+          display: flex;
+          justify-content: space-between;
+          padding: 5px;
+          border-bottom: 1px solid #f1f1f1;
+          // height: 60px;
+          // box-sizing: border-box;
+          overflow: hidden;
+
+          .left {
+            flex: 1;
+            display: flex;
+
+            img {
+              flex: 0 0 40px;
+              width: 40px;
+              height: 40px;
+              border-radius: 50%;
+              margin-right: 10px;
+              vertical-align: middle;
+            }
+
+            .title {
+              font-size: 16px;
+            }
+
+            .desc {
+              width: 180px;
+              white-space: nowrap;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              color: #888;
+              font-size: 13px;
+            }
+
+            .info {
+              display: flex;
+              flex-direction: column;
+              justify-content: space-around;
+
+            }
+          }
+
+          .right {
+            flex: 0 0 60px;
+            // line-height: 40px;
+            text-align: center;
+            font-size: 12px;
+
+            p {
+              font-size: 14px;
+            }
+          }
+        }
+      }
     }
 
-    .rank {
-      padding-top: 2rem;
-      font-size: xx-large;
-      color: grey;
-    }
+
 
   }
 
