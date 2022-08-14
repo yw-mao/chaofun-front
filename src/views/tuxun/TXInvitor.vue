@@ -87,16 +87,15 @@
               <div>
                 总得分:  {{gameData.player.totalScore}}
               </div>
-
             </div>
           </div>
         </div>
       </div>
+      <div id="map" :class="[{'bm-view': !ISPHONE}, {'bm-view-phone': ISPHONE && showMap}, {'bm-view-phone-hidden': ISPHONE && !showMap}]"></div>
       <div v-if="lastRound && lastRound.timerStartTime && !lastRound.endTime " :class="[{'top-info': !ISPHONE}, {'top-info-phone': ISPHONE}]">
         选择倒计时: {{timeLeft}}
       </div>
 
-      <div id="map" :class="[{'bm-view': !ISPHONE}, {'bm-view-phone': ISPHONE && showMap}, {'bm-view-phone-hidden': ISPHONE && !showMap}]"></div>
 
       <div v-if="showMap && ISPHONE" style="position: absolute; left: 20px; bottom: 20px">
         <el-button @click="showMap = false">隐藏地图</el-button>
@@ -337,10 +336,8 @@ export default {
         this.showChallengeGameEnd = true;
       }
 
-
       if (data.status === 'wait_join' || data.status === 'ready' || data.status === 'ongoing' || data.status === 'finish') {
         this.status = data.status;
-
         if (data.status === 'ongoing') {
           if (this.lastRound.contentSpeedUp) {
             this.lastRound.content = this.lastRound.contentSpeedUp;
@@ -425,33 +422,6 @@ export default {
 
           }
 
-          if ((code === 'round_end' ||
-                  (this.lastRound && this.lastRound.endTime))
-              && !this.showGameEnd ) {
-            this.showRoundResult = true;
-            if (!this.targetLng) {
-              this.showMap = true;
-              this.targetLat = this.lastRound.lat;
-              this.targetLng = this.lastRound.lng;
-              this.addTargetMarker();
-              this.addRanksMarker();
-
-              if (this.lng && this.BMap) {
-                this.polylinePath = [
-                  new BMap.Point(this.lng, this.lat),
-                  new BMap.Point(this.targetLng, this.targetLat),
-                ]
-                this.addLine();
-              }
-
-              if (this.map && this.BMap) {
-                this.map.centerAndZoom(new BMap.Point(this.targetLng, this.targetLat), 1);
-              }
-            }
-          } else {
-            this.showRoundResult = false;
-          }
-
           if (!this.map) {
             setTimeout(function () {
               BMapLoader.load({
@@ -490,6 +460,33 @@ export default {
           }
 
         }
+      }
+
+      if ((code === 'round_end' ||
+              (this.lastRound && this.lastRound.endTime))
+          && !this.showGameEnd ) {
+        this.showRoundResult = true;
+        if (!this.targetLng) {
+          this.showMap = true;
+          this.targetLat = this.lastRound.lat;
+          this.targetLng = this.lastRound.lng;
+          this.addTargetMarker();
+          this.addRanksMarker();
+
+          if (this.lng && this.BMap) {
+            this.polylinePath = [
+              new BMap.Point(this.lng, this.lat),
+              new BMap.Point(this.targetLng, this.targetLat),
+            ]
+            this.addLine();
+          }
+
+          if (this.map && this.BMap) {
+            this.map.centerAndZoom(new BMap.Point(this.targetLng, this.targetLat), 1);
+          }
+        }
+      } else {
+        this.showRoundResult = false;
       }
     },
 
@@ -709,6 +706,7 @@ export default {
     },
 
     next() {
+      this.confirmed = false;
       api.getByPath("/api/v0/tuxun/challenge/next", {gameId: this.gameId}).then(res => {
         this.solveGameData(res.data, undefined);
       });
