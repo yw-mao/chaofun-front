@@ -1,6 +1,5 @@
 <template>
   <div class="container">
-
     <div class="back_home" @click="goHome">
       <el-button type="primary">←返回首页</el-button>
     </div>
@@ -8,6 +7,9 @@
       <div class="top">
         <div class="time">
           {{this.getDate()}}
+        </div>
+        <div class="hint">
+          每日挑战所有人的题目都一样
         </div>
         <el-button v-if="(this.gameData && this.gameData.status === 'ready') || this.showBegin" type="primary" size="large" @click="begin">开始每日挑战</el-button>
         <el-button v-if="this.gameData && this.gameData.status === 'ongoing'" type="warning" size="large" @click="again">继续每日挑战</el-button>
@@ -142,6 +144,9 @@ export default {
       .time {
         font-size: xx-large;
         color: gold;
+      }
+      .hint {
+        color: gray;
         padding-bottom: 2rem;
       }
       .rank {
