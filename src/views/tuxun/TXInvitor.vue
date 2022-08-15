@@ -89,9 +89,20 @@
               </div>
             </div>
           </div>
+
+          <div v-if="this.showChallengeGameEnd" class="challenge_result_bottom" >
+            <div>
+              <el-button class="result_button" type="warning" @click="goDailyChallenge">查看总排名</el-button>
+            </div>
+            <div>
+              <el-button class="result_button"  type="primary" @click="goHome">回到首页</el-button>
+            </div>
+          </div>
+
         </div>
       </div>
       <div id="map" :class="[{'bm-view': !ISPHONE}, {'bm-view-phone': ISPHONE && showMap}, {'bm-view-phone-hidden': ISPHONE && !showMap}]"></div>
+
       <div v-if="lastRound && lastRound.timerStartTime && !lastRound.endTime " :class="[{'top-info': !ISPHONE}, {'top-info-phone': ISPHONE}]">
         选择倒计时: {{timeLeft}}
       </div>
@@ -103,6 +114,7 @@
 
       <div class="home">
         <el-button size="mini"  @click="toReport"> 坏题反馈 </el-button>
+        <el-button v-if="ISPHONE" @click="reloadPage" size="mini">刷新页面</el-button>
       </div>
 
       <div :class="[{'confirm': !ISPHONE}, {'confirm-phone': ISPHONE}]">
@@ -111,23 +123,7 @@
         <el-button v-else-if="!showMap && ISPHONE" @click="showMap = true">选择地点</el-button>
         <el-button v-if="gameData.status === 'ongoing' && gameData.player && this.targetLat" @click="next">下一题</el-button>
       </div>
-      <div v-if="this.showChallengeGameEnd" class="game_result">
-        <div class="player">
-          <el-avatar :src="this.imgOrigin + gameData.player.user.icon" class="avatar"></el-avatar>
-          <div class="userName">{{gameData.player.user.userName}}</div>
-          <div class="info">
-            <div>
-              总分数：{{gameData.player.totalScore}}
-            </div>
-          </div>
-          <div>
-            <el-button class="home_button" type="warning" @click="goDailyChallenge">查看总排名</el-button>
-          </div>
-          <div>
-            <el-button class="home_button"  type="primary" @click="goHome">回到首页</el-button>
-          </div>
-        </div>
-      </div>
+
       <div v-if="showGameEnd && winner" class="game_result">
         <div class="player">
           <div v-if="isWin" class="winner_title">
@@ -175,6 +171,8 @@
             血量：{{gameData.teams[1].health}}
           </div>
         </div>
+
+
       </div>
 
 
@@ -232,7 +230,6 @@ export default {
       isWin: undefined,
       showMatch: false,
       challengeId: undefined,
-      showChallengeGameEnd: undefined,
       notifyStatus: '',
 
       // gameData: {playerIds: [1, 2]}
@@ -246,6 +243,10 @@ export default {
   },
 
   methods: {
+
+    reloadPage() {
+      this.$router.go(this.$router.currentRoute);
+    },
     init() {
       if (this.gameId && this.gameId !== null && this.gameId !== '') {
         this.showMatch = false;
@@ -338,7 +339,7 @@ export default {
 
       if (data.status === 'wait_join' || data.status === 'ready' || data.status === 'ongoing' || data.status === 'finish') {
         this.status = data.status;
-        if (data.status === 'ongoing') {
+        if (data.status === 'ongoing' || data.status === 'finish') {
           if (this.lastRound.contentSpeedUp) {
             this.lastRound.content = this.lastRound.contentSpeedUp;
           }
@@ -423,42 +424,38 @@ export default {
           }
 
           if (!this.map) {
-            setTimeout(function () {
-              BMapLoader.load({
-                key: 'aibVGReAhMEtxu4Bj2aHixWprh28AhrT',
-                version: '3.0'
-              }).then((Bmap) => {
-                var map = new BMap.Map("map", {});          // 创建地图实例
-                map.centerAndZoom(new BMap.Point(106.0, 38.8), 1);
-                map.enableScrollWheelZoom();
-                map.disableContinuousZoom();
-                var self = this;
-                map.addEventListener("click", function (e) {
-                  self.click(e);
-                });
-                map.addEventListener("touchend", function (e) {
-                  self.touchEnd(e);
-                });
-                map.addEventListener("touchstart", function (e) {
-                  self.touchStart(e);
-                });
-                // map.setMapStyleV2({
-                //   styleId: '0eb3aa47a2aac583e238cabe88a001f3'
-                // });
-
-                var opts = {anchor: BMAP_ANCHOR_TOP_RIGHT};
-                map.addControl(new BMap.NavigationControl(opts));
-                map.addControl(new BMap.MapTypeControl({
-                  anchor: BMAP_ANCHOR_TOP_LEFT,
-                  mapTypes: [BMAP_NORMAL_MAP, BMAP_SATELLITE_MAP]
-                }));
-                this.map = map;
-                this.BMap = Bmap;
+            BMapLoader.load({
+              key: 'aibVGReAhMEtxu4Bj2aHixWprh28AhrT',
+              version: '3.0'
+            }).then((Bmap) => {
+              var map = new BMap.Map("map", {});          // 创建地图实例
+              map.centerAndZoom(new BMap.Point(106.0, 38.8), 1);
+              map.enableScrollWheelZoom();
+              map.disableContinuousZoom();
+              var self = this;
+              map.addEventListener("click", function (e) {
+                self.click(e);
               });
+              map.addEventListener("touchend", function (e) {
+                self.touchEnd(e);
+              });
+              map.addEventListener("touchstart", function (e) {
+                self.touchStart(e);
+              });
+              // map.setMapStyleV2({
+              //   styleId: '0eb3aa47a2aac583e238cabe88a001f3'
+              // });
 
-            }.bind(this), 200);
+              var opts = {anchor: BMAP_ANCHOR_TOP_RIGHT};
+              map.addControl(new BMap.NavigationControl(opts));
+              map.addControl(new BMap.MapTypeControl({
+                anchor: BMAP_ANCHOR_TOP_LEFT,
+                mapTypes: [BMAP_NORMAL_MAP, BMAP_SATELLITE_MAP]
+              }));
+              this.map = map;
+              this.BMap = Bmap;
+            });
           }
-
         }
       }
 
@@ -695,6 +692,11 @@ export default {
     },
 
     confirm() {
+
+      if (!this.lng) {
+        this.$toast('请在地图上选择位置');
+        return
+      }
       this.confirmed = true;
       var path = "/api/v0/tuxun/solo/guess";
       if (this.gameData.type === 'daily_challenge') {
@@ -948,6 +950,12 @@ export default {
           padding: 1rem;
           background: #171829;
           margin-bottom: 1rem;
+        }
+      }
+      .challenge_result_bottom {
+        .result_button {
+          margin-top: 1rem;
+          font-size: large;
         }
       }
     }
