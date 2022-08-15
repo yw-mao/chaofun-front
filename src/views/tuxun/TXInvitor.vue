@@ -104,7 +104,7 @@
       <div id="map" :class="[{'bm-view': !ISPHONE}, {'bm-view-phone': ISPHONE && showMap}, {'bm-view-phone-hidden': ISPHONE && !showMap}]"></div>
 
       <div v-if="lastRound && lastRound.timerStartTime && !lastRound.endTime " :class="[{'top-info': !ISPHONE}, {'top-info-phone': ISPHONE}]">
-        选择倒计时: {{timeLeft}}
+        选择倒计时: {{timeLeftStr}}
       </div>
 
 
@@ -222,6 +222,7 @@ export default {
       showGameEnd: false,
       timeLeft: 15,
       gameTimeLeft: 5,
+      timeLeftStr: '',
       team1User: undefined,
       team2User: undefined,
       winner: undefined,
@@ -607,7 +608,16 @@ export default {
             this.timeLeft = 0;
           }
         } else {
+          // if (this.gameData) {
+          //   this.timeLeft = this.gameData.roundTimePeriod / 1000;
+          // }
           this.timeLeft = 15;
+        }
+
+        if (this.timeLeft < 60) {
+          this.timeLeftStr = this.timeLeft.toString()
+        } else {
+          this.timeLeftStr = Math.floor(this.timeLeft / 60).toString().padStart(2,'0') + ':' + (this.timeLeft % 60).toString().padStart(2, '0');
         }
 
         if (this.gameData && this.gameData.timerStartTime && this.gameData.status === "ready") {
