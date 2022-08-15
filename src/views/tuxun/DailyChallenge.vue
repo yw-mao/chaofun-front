@@ -20,6 +20,9 @@
         <div class="rank_container" v-if="this.rank">
           <div @click="toUser(item.user)" v-for="(item,index) in this.rank" :key="index" class="item">
             <div class="left">
+              <div class="number">
+                {{index + 1}}.
+              </div>
               <img style="object-fit: cover;" :src="imgOrigin+ item.user.icon + '?x-oss-process=image/resize,h_80/format,webp/quality,q_75'" alt="">
               <div class="info">
                 <div class="title">{{item.user.userName}}</div>
@@ -173,6 +176,16 @@ export default {
             flex: 1;
             display: flex;
 
+            .number {
+              //position: absolute;
+              text-align: end;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              height: 100%;
+              font-size: 16px;
+              margin-right: 8px;
+            }
             img {
               flex: 0 0 40px;
               width: 40px;
