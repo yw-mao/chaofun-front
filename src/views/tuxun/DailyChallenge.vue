@@ -16,7 +16,7 @@
           今日挑战排名
         </div>
         <div class="rank_container" v-if="this.rank">
-          <div @click="toUser(item)" v-for="(item,index) in this.rank" :key="index" class="item">
+          <div @click="toUser(item.user)" v-for="(item,index) in this.rank" :key="index" class="item">
             <div class="left">
               <img style="object-fit: cover;" :src="imgOrigin+ item.user.icon + '?x-oss-process=image/resize,h_80/format,webp/quality,q_75'" alt="">
               <div class="info">
@@ -96,6 +96,10 @@ export default {
         }
       })
     },
+    toUser(user) {
+      window.location.href = location.origin + '/tuxun/user/' + user.userId;
+    },
+
     getDate() {  //当前时间格式化处理
       var str = '';
       var date = new Date();
