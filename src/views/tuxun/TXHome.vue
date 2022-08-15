@@ -674,6 +674,7 @@ export default {
     toHome() {
       window.location.href = '/tuxun';
     },
+
     next() {
       this.showMap = false;
       this.confirmed = false;

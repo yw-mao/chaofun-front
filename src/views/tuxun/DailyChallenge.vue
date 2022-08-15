@@ -147,6 +147,7 @@ export default {
       }
       .rank_container {
         padding-top: 2rem;
+        padding-bottom: 5rem;
         margin: auto;
         width: 40%;
 
