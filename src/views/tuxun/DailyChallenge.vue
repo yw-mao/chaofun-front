@@ -9,7 +9,7 @@
           {{this.getDate()}}
         </div>
         <div class="hint">
-          每日0点更新，所有人的题目统一
+          每日0点更新，5个所有人统一的题目，满分25000
         </div>
         <el-button v-if="(this.gameData && this.gameData.status === 'ready') || this.showBegin" type="primary" size="large" @click="begin">开始每日挑战</el-button>
         <el-button v-if="this.gameData && this.gameData.status === 'ongoing'" type="warning" size="large" @click="again">继续每日挑战</el-button>
