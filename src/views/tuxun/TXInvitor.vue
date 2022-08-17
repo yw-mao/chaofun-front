@@ -305,7 +305,14 @@ export default {
     },
 
     solveGameData(data, code) {
+
       this.gameData = data;
+
+      if (this.gameData.status === 'match_fail') {
+        this.$toast('匹配失败，重新匹配！');
+        window.location.href = '/tuxun/solo_game'
+        return;
+      }
 
       if (this.gameData.rounds && this.gameData.rounds.length > 0) {
         this.lastRound = this.gameData.rounds[this.gameData.rounds.length-1];
