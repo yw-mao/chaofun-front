@@ -249,6 +249,12 @@ export default {
       this.$router.go(this.$router.currentRoute);
     },
     init() {
+      var Notification = window.Notification || window.mozNotification || window.webkitNotification;
+      if (Notification) {
+        Notification.requestPermission(function (status) {
+          this.notifyStatus = status;
+        }.bind(this))
+      }
       if (this.gameId && this.gameId !== null && this.gameId !== '') {
         this.showMatch = false;
         this.initWS();
@@ -257,12 +263,6 @@ export default {
       } else if (!this.challengeId) {
         this.showMatch = true;
         this.match();
-        var Notification = window.Notification || window.mozNotification || window.webkitNotification;
-        if (Notification) {
-          Notification.requestPermission(function (status) {
-            this.notifyStatus = status;
-          }.bind(this))
-        }
       } else {
         this.showMatch = false;
         this.challengeInit();
@@ -312,6 +312,10 @@ export default {
         this.$toast('匹配失败，重新匹配！');
         window.location.href = '/tuxun/solo_game'
         return;
+      }
+
+      if (this.gameData.type === 'solo' && code === 'player_join' && this.$store.state.user.userInfo.userId === this.gameData.host.userId) {
+        this.notify("您的邀请Solo赛已经准备就绪，可以开始了！");
       }
 
       if (this.gameData.rounds && this.gameData.rounds.length > 0) {
@@ -709,7 +713,6 @@ export default {
     },
 
     confirm() {
-
       if (!this.lng) {
         this.$toast('请在地图上选择位置');
         return
@@ -749,6 +752,40 @@ export default {
       })
     },
 
+    notify(text) {
+      var Notification = window.Notification || window.mozNotification || window.webkitNotification;
+      if (Notification) {
+        if ("granted" !== this.notifyStatus) {
+        } else {
+          var notify = new Notification("图寻通知", {
+            dir: 'auto',
+            data: '',
+            lang: 'zh-CN',
+            requireInteraction: false,
+            // tag: ,//实例化的notification的id
+            icon: 'https://i.chao-fan.com/biz/08a2d3a676f4f520cb99910496e48b4e.png?x-oss-process=image/resize,h_80/format,webp/quality,q_75',//通知的缩略图,//icon 支持ico、png、jpg、jpeg格式
+            body: text
+          });
+          notify.onclick = function (val) {
+            //如果通知消息被点击,通知窗口将被激活
+            window.focus();
+            notify.close();
+          },
+              notify.onshow = function () {
+                setTimeout(notify.close.bind(notify), 5000);
+              }
+          notify.onerror = function () {
+            console.log("HTML5桌面消息出错！！！");
+          };
+          notify.onclose = function () {
+            console.log("HTML5桌面消息关闭！！！");
+          };
+        }
+      } else {
+        console.log("您的浏览器不支持桌面消息");
+      }
+    },
+
     match() {
       // 每3秒发送一次心跳
       this.doLoginStatus().then((res) => {
@@ -759,37 +796,7 @@ export default {
               this.continueSend = false;
               api.getByPathLongTimeout('/api/v0/tuxun/solo/joinRandom').then(res => {
                 if (res.data) {
-                  var Notification = window.Notification || window.mozNotification || window.webkitNotification;
-                  if (Notification) {
-                    if ("granted" !== this.notifyStatus) {
-                    } else {
-                      var notify = new Notification("图寻通知", {
-                        dir: 'auto',
-                        data: '',
-                        lang: 'zh-CN',
-                        requireInteraction: false,
-                        // tag: ,//实例化的notification的id
-                        icon: 'https://i.chao-fan.com/biz/08a2d3a676f4f520cb99910496e48b4e.png?x-oss-process=image/resize,h_80/format,webp/quality,q_75',//通知的缩略图,//icon 支持ico、png、jpg、jpeg格式
-                        body: "您的图寻已匹配到对手，点击开始游戏"
-                      });
-                      notify.onclick = function (val) {
-                        //如果通知消息被点击,通知窗口将被激活
-                        window.focus();
-                        notify.close();
-                      },
-                          notify.onshow = function () {
-                            setTimeout(notify.close.bind(notify), 5000);
-                          }
-                      notify.onerror = function () {
-                        console.log("HTML5桌面消息出错！！！");
-                      };
-                      notify.onclose = function () {
-                        console.log("HTML5桌面消息关闭！！！");
-                      };
-                    }
-                  } else {
-                    console.log("您的浏览器不支持桌面消息");
-                  }
+                  this.notify("您的图寻已匹配到对手，点击开始游戏");
                   this.$router.push({path: '/tuxun/solo_game?gameId=' + res.data })
                   this.gameId=res.data;
                   this.init();
