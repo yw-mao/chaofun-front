@@ -43,11 +43,15 @@ export default {
       id: null,
       queryId: null,
       index: -1,
-      totalCount: null
+      totalCount: null,
+      mapsid: undefined
     }
+
   },
   mounted() {
     this.queryId = this.$route.query.id;
+    this.mapsid = this.$route.query.mapsid;
+
     console.log(this.queryId);
     let self = this;
     document.onkeydown=function(event){
@@ -142,7 +146,7 @@ export default {
             }
         );
       } else {
-        api.getByPath("/api/v0/tuxun/game/generateQueue", {index: this.index}).then(res => {
+        api.getByPath("/api/v0/tuxun/game/generateQueue", {index: this.index, mapsId: this.mapsid}).then(res => {
               if (res.data.contentSpeedUp) {
                 this.image = res.data.contentSpeedUp;
               } else {
