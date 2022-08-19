@@ -543,7 +543,7 @@ export default {
 
     getGameInfo() {
       this.doLoginStatus().then((res) => {
-        api.getByPath("/api/v0/tuxun/solo/join", {gameId: this.gameId}).then(res => {
+        api.getByPath("/api/v0/tuxun/solo/get", {gameId: this.gameId}).then(res => {
           console.log(res.data);
           if (res.success) {
             this.solveGameData(res.data, undefined);
