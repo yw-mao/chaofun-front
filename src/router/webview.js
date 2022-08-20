@@ -333,6 +333,13 @@ routes = [
     hidden: true
   },
   {
+    path: '/tuxunFilter',
+    component: () => import('@/views/tuxun/TuxunFilter'),
+    name: 'tuxunFilter',
+    meta: { title: 'tuxunFilter'},
+    hidden: true
+  },
+  {
     path: '/webview/forumIntro',
     component: () => import('@/views/activity/help/forumIntro'),
     name: 'webViewForumIntro',
