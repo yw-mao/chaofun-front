@@ -159,11 +159,11 @@ export default {
       }
 
     },
-    getIOSVersion() {
+    canUseWebP() {
       if(window.MSStream){
         // There is some iOS in Windows Phone...
         // https://msdn.microsoft.com/en-us/library/hh869301(v=vs.85).aspx
-        return undefined;
+        return true;
       }
 
       var match = (navigator.userAgent).match(/OS (\d+)_(\d+)_?(\d+)?/),
@@ -175,11 +175,11 @@ export default {
           parseInt(match[2], 10),
           parseInt(match[3] || 0, 10)
         ];
-        console.log( parseFloat(version.join('.')))
-        return parseFloat(version.join('.'));
+        // console.log( parseFloat(version.join('.')))
+        return parseFloat(version.join('.')) >= 13.9999;
       }
 
-      return undefined;
+      return true;
     },
     doLoginStatus() { // 判断是否登录
       return new Promise((resolve, reject) => {
