@@ -1,9 +1,5 @@
 <template>
-  <div class="container" :style="{'background-image':'linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.6)),url('+imgOrigin+'biz/1658727369911_f6ca22ec1e8d4761909b673e0dbd0b2f.png)','background-size':'cover','background-position': 'center'}">
-
-    <div v-if="this.agent">
-      {{this.agent}}
-    </div>
+  <div class="container" :style="{'background-image':'linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.6)),url('+imgOrigin+ this.backgroundImage +')','background-size':'cover','background-position': 'center'}">
     <div class="top">
       <img style="margin-top: 25px; margin-left: 25px; width: 5rem; height: 3rem" :src="imgOrigin + 'biz/1658657631523_45db8dd090dc49af99f2a8a4ace01122.svg'">
       </img>
@@ -72,9 +68,6 @@
           <p>
             QQ群：815369699
           </p>
-          <p>
-            注：iOS 系统版本 < 14.0 无法展示街景
-          </p>
         </div>
       </section>
 
@@ -87,6 +80,16 @@ import * as api from '../../api/api'
 
 export default {
   name: "TXNewHome",
+  data() {
+    return {
+      backgroundImage: 'biz/1658727369911_f6ca22ec1e8d4761909b673e0dbd0b2f.png?x-oss-process=image/format,webp'
+    }
+  },
+  created() {
+    if (!this.canUseWebP()) {
+      this.backgroundImage = 'biz/1658727369911_f6ca22ec1e8d4761909b673e0dbd0b2f.png';
+    }
+  },
 
   mounted() {
     var Notification = window.Notification || window.mozNotification || window.webkitNotification;
