@@ -14,7 +14,7 @@ export default {
     return {
       imgOrigin: 'https://i.chao-fan.com/',
       defaultUserIcon: 'f58b7f52d7c801ba0806e2125a776a44.png',
-      ISPHONE: document.body.clientWidth > 800 && !navigator.userAgent.includes('iPad') ? false : true,
+      ISPHONE: document.body.clientWidth > 678 &&  document.body.clientWidth > document.body.clientHeight ? false : true,
       imgMaxWidth: document.body.clientWidth - 100,
       clientWidth: document.body.clientWidth,
       clientHeight: document.body.clientHeight,
