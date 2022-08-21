@@ -279,7 +279,7 @@ export default {
             console.log(content);
             const content = this.contents[i];
             var k = {};
-            if (content.contentSpeedUp && content.contentSpeedUp !== null) {
+            if ((!this.getIOSVersion() || this.getIOSVersion() >= 14) && content.contentSpeedUp && content.contentSpeedUp !== null) {
               k.panorama = 'https://i.chao-fan.com/' + content.contentSpeedUp;
             } else {
               k.panorama = 'https://i.chao-fan.com/' + content.content;
@@ -356,7 +356,7 @@ export default {
         this.status = data.data.status;
         this.onlineNums = data.data.onlineNums;
         // 避免下面的判断失误
-        if (data.data.contentSpeedUp && data.data.contentSpeedUp !== null) {
+        if ((!this.getIOSVersion() || this.getIOSVersion() >= 14) && data.data.contentSpeedUp && data.data.contentSpeedUp !== null) {
           data.data.content = data.data.contentSpeedUp
         }
         if (this.image !== data.data.content && data.data.content && data.data.content !== null) {
@@ -701,7 +701,7 @@ export default {
         // this.baiduPano = res.data.baiduPano;
         this.contents = res.data.contents;
 
-        if (res.data.contentSpeedUp && res.data.contentSpeedUp !== null) {
+        if ((!this.getIOSVersion() || this.getIOSVersion() >= 14) && res.data.contentSpeedUp && res.data.contentSpeedUp !== null) {
           this.image = res.data.contentSpeedUp;
         }
 
@@ -816,6 +816,10 @@ export default {
   height: 40%;
   bottom: 1.5rem;
   right: 2rem;
+  -webkit-user-select:none;
+  -moz-user-select:none;
+  -ms-user-select:none;
+  user-select:none;
 }
 .bm-view-phone {
   position: absolute;
@@ -823,6 +827,10 @@ export default {
   height: 60%;
   bottom: 0;
   right: 0;
+  -webkit-user-select:none;
+  -moz-user-select:none;
+  -ms-user-select:none;
+  user-select:none;
 }
 .bm-view-phone-hidden {
   position: absolute;

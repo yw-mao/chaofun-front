@@ -352,7 +352,7 @@ export default {
       if (data.status === 'wait_join' || data.status === 'ready' || data.status === 'ongoing' || data.status === 'finish') {
         this.status = data.status;
         if (data.status === 'ongoing' || data.status === 'finish') {
-          if (this.lastRound.contentSpeedUp) {
+          if ((!this.getIOSVersion() || this.getIOSVersion() >= 14) && this.lastRound.contentSpeedUp) {
             this.lastRound.content = this.lastRound.contentSpeedUp;
           }
           if (this.image !== this.lastRound.content) {
@@ -403,7 +403,7 @@ export default {
                   console.log(content);
                   const content = this.contents[i];
                   var k = {};
-                  if (content.contentSpeedUp && content.contentSpeedUp !== null) {
+                  if ((!this.getIOSVersion() || this.getIOSVersion() >= 14) && content.contentSpeedUp && content.contentSpeedUp !== null) {
                     k.panorama = 'https://i.chao-fan.com/' + content.contentSpeedUp;
                   } else {
                     k.panorama = 'https://i.chao-fan.com/' + content.content;
@@ -1030,6 +1030,10 @@ export default {
       height: 40%;
       bottom: 1.5rem;
       right: 2rem;
+      -webkit-user-select:none;
+      -moz-user-select:none;
+      -ms-user-select:none;
+      user-select:none;
     }
     .bm-view-phone {
       position: absolute;
@@ -1037,6 +1041,10 @@ export default {
       height: 40%;
       bottom: 0;
       right: 0;
+      -webkit-user-select:none;
+      -moz-user-select:none;
+      -ms-user-select:none;
+      user-select:none;
     }
     .bm-view-phone-hidden {
       position: absolute;
@@ -1045,6 +1053,7 @@ export default {
       bottom: 0;
       right: 0;
       visibility: hidden;
+
     }
 
     .confirm {

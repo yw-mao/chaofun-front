@@ -159,6 +159,28 @@ export default {
       }
 
     },
+    getIOSVersion() {
+      if(window.MSStream){
+        // There is some iOS in Windows Phone...
+        // https://msdn.microsoft.com/en-us/library/hh869301(v=vs.85).aspx
+        return undefined;
+      }
+
+      var match = (navigator.userAgent).match(/OS (\d+)_(\d+)_?(\d+)?/),
+          version;
+
+      if (match !== undefined && match !== null) {
+        version = [
+          parseInt(match[1], 10),
+          parseInt(match[2], 10),
+          parseInt(match[3] || 0, 10)
+        ];
+        console.log( parseFloat(version.join('.')))
+        return parseFloat(version.join('.'));
+      }
+
+      return undefined;
+    },
     doLoginStatus() { // 判断是否登录
       return new Promise((resolve, reject) => {
         if (this.$store.state.user.islogin) {
