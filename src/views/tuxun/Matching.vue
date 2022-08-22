@@ -1,7 +1,12 @@
 <template>
   <div class="matching" >
     <div class="content">
-      正在匹配对手中，请稍候...
+      <div>
+        <circle2 style="width: 100px; height: 100px" class="loading_image" background="#F9BA02"></circle2>
+      </div>
+      <div class="loading_text">
+        正在匹配对手中，请稍候...
+      </div>
       <div class="matching_home_button">
         <el-button class="home_button" type="warning" @click="goHome">结束匹配</el-button>
       </div>
@@ -10,8 +15,13 @@
 </template>
 
 <script>
+import {Circle2} from 'vue-loading-spinner'
+
 export default {
   name: "Matching",
+  components: {
+    Circle2,
+  },
   methods: {
     goHome() {
       window.location.href = '/tuxun';
@@ -21,6 +31,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
 .matching {
   width: 100%;
   height: 100%;
@@ -30,6 +41,13 @@ export default {
   align-items: center;
   align-content: center;
   justify-content: center;
+  text-align: center;
+  .loading_image {
+    margin: auto;
+  }
+  .loading_text {
+    margin-top: 2rem;
+  }
   .content {
     color: white;
     font-size: xx-large;
