@@ -148,6 +148,9 @@
             </div>
             <el-button class="home_button"  type="primary" @click="goTuxun">继续匹配</el-button>
           </div>
+          <div v-if="gameData && gameData.type === 'solo'">
+            <el-button class="home_button"  type="primary" @click="again">再来一局</el-button>
+          </div>
           <div>
             <el-button class="home_button" type="warning" @click="goHome">回到图寻首页</el-button>
           </div>
@@ -736,6 +739,14 @@ export default {
 
     goTuxun() {
       window.location.href = '/tuxun/solo_game';
+    },
+
+    again() {
+      api.getByPath('/api/v0/tuxun/solo/again', {'gameId': this.gameId}).then(res=>{
+        if (res.data) {
+          window.location.href = '/tuxun/solo_game?gameId=' + res.data.id;
+        }
+      })
     },
 
     goDailyChallenge() {
