@@ -100,7 +100,7 @@
 
         </div>
       </div>
-      <div id="map" :class="[{'bm-view': !ISPHONE}, {'bm-view-phone': ISPHONE && showMap}, {'bm-view-phone-hidden': ISPHONE && !showMap}]"></div>
+      <div id="map" :class="[{'bm-view': !ISPHONE}, {'bm-view-phone': ISPHONE && showMap}, {'bm-view-phone-hidden': ISPHONE && !showMap}]" @mouseover="mapMouseOver" @mouseout="mapMouseOut"></div>
 
       <div v-if="lastRound && lastRound.timerStartTime && !lastRound.endTime " :class="[{'top-info': !ISPHONE}, {'top-info-phone': ISPHONE}]">
         选择倒计时: {{timeLeftStr}}
@@ -118,10 +118,10 @@
       </div>
 
       <div :class="[{'confirm': !ISPHONE}, {'confirm-phone': ISPHONE}]">
-        <el-button v-if="(showMap || !ISPHONE) && !confirmed && !this.targetLat"  @click="confirm">确定选择</el-button>
-        <el-button v-else-if="!showMap && ISPHONE && confirmed" @click="showMap = true">打开地图</el-button>
-        <el-button v-else-if="!showMap && ISPHONE" @click="showMap = true">选择地点</el-button>
-        <el-button v-if="gameData.status === 'ongoing' && gameData.player && this.targetLat" @click="next">下一题</el-button>
+        <el-button @mouseover.native="mapMouseOver" v-if="(showMap || !ISPHONE) && !confirmed && !this.targetLat"  @click="confirm">确定选择</el-button>
+        <el-button @mouseover.native="mapMouseOver" v-else-if="!showMap && ISPHONE && confirmed" @click="showMap = true">打开地图</el-button>
+        <el-button @mouseover.native="mapMouseOver" v-else-if="!showMap && ISPHONE" @click="showMap = true">选择地点</el-button>
+        <el-button @mouseover.native="mapMouseOver" v-if="gameData.status === 'ongoing' && gameData.player && this.targetLat" @click="next">下一题</el-button>
       </div>
 
       <div v-if="showGameEnd && winner" class="game_result">
@@ -256,6 +256,23 @@ export default {
   },
 
   methods: {
+    mapMouseOver() {
+      if (!window.matchMedia( "(hover: none)" ).matches && document.body.clientWidth > 678) {
+        var element = document.getElementById("map")
+        element.style.width = '40%';
+        element.style.height = '60%';
+        element.style.opacity = 1.0;
+      }
+    },
+
+    mapMouseOut() {
+      if (!window.matchMedia( "(hover: none)" ).matches && document.body.clientWidth > 678) {
+        var element = document.getElementById("map")
+        element.style.width = '20%';
+        element.style.height = '30%';
+        element.style.opacity = 0.7;
+      }
+    },
     hideEmojiSender() {
       this.sendEmoji = false;
     },
@@ -1063,14 +1080,15 @@ export default {
     }
     .bm-view {
       position: absolute;
-      width: 30%;
-      height: 40%;
+      width: 20%;
+      height: 30%;
       bottom: 1.5rem;
       right: 2rem;
       -webkit-user-select:none;
       -moz-user-select:none;
       -ms-user-select:none;
       user-select:none;
+      opacity: 0.7;
     }
     .bm-view-phone {
       position: absolute;
@@ -1231,6 +1249,13 @@ export default {
         }
       }
     }
+  }
+}
+@media  (any-hover:none) {
+  .bm-view {
+    width: 40%;
+    height: 40%;
+    opacity: 1;
   }
 }
 </style>
