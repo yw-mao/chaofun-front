@@ -10,7 +10,6 @@
 
     <div class="prepare" v-if="status==='wait_join' || status === 'ready'">
       <div class="goback">
-
       </div>
 
       <div class="header">
@@ -114,6 +113,7 @@
 
       <div class="home">
         <el-button size="mini"  @click="toReport"> 坏题反馈 </el-button>
+        <el-button size="mini"  @click="sendEmoji=true"> 发送表情 </el-button>
         <el-button v-if="ISPHONE" @click="reloadPage" size="mini">刷新页面</el-button>
       </div>
 
@@ -164,6 +164,9 @@
           <div class="user_blod_left">
             血量：{{gameData.teams[0].health}}
           </div>
+          <div v-if="team1Emoji" class="emoji">
+            <img :src="imgOrigin+team1Emoji +'?x-oss-process=image/resize,h_120'"/>
+          </div>
         </div>
 
         <div class="hub_right">
@@ -173,15 +176,17 @@
           <div class="user_blod_right">
             血量：{{gameData.teams[1].health}}
           </div>
+          <div v-if="this.team2Emoji" class="emoji">
+            <img :src="imgOrigin+team2Emoji +'?x-oss-process=image/resize,h_120'"/>
+          </div>
         </div>
-
-
       </div>
 
 
     </div>
 
     <matching v-if="this.showMatch"/>
+    <emoji-sender :gameId="gameData.id" v-if="this.sendEmoji" @hide="hideEmojiSender"></emoji-sender>
   </div>
 </template>
 
@@ -199,10 +204,11 @@ import 'photo-sphere-viewer/dist/plugins/markers.css'
 import BMapLoader from "../../utils/bmap-jsapi-loader";
 import {getByPathLongTimeout} from "../../api/api";
 import Matching from "./Matching";
+import EmojiSender from "./EmojiSender";
 
 export default {
   name: "TXInvitor",
-  components: {Matching},
+  components: {EmojiSender, Matching},
   data () {
     return {
       url: `${location.protocol === "https:" ? "wss" : "ws"}://${location.host}/ws/v0/tuxun`,
@@ -234,6 +240,9 @@ export default {
       isWin: undefined,
       showMatch: false,
       challengeId: undefined,
+      sendEmoji: false,
+      team1Emoji: undefined,
+      team2Emoji: undefined,
       notifyStatus: '',
 
       // gameData: {playerIds: [1, 2]}
@@ -247,7 +256,9 @@ export default {
   },
 
   methods: {
-
+    hideEmojiSender() {
+      this.sendEmoji = false;
+    },
     reloadPage() {
       this.$router.go(this.$router.currentRoute);
     },
@@ -304,9 +315,25 @@ export default {
 
     wsOnMessage(e) {
       const data = JSON.parse(e.data);
-      this.solveGameData(data.data.game, data.data.code);
+      if (data.scope === 'tuxun_game') {
+        this.solveGameData(data.data.game, data.data.code);
+      } else if (data.scope === 'tuxun_emoji') {
+        this.showEmoji(data.data)
+      }
     },
-
+    showEmoji(data) {
+      if (data.teamId === this.gameData.teams[0].id) {
+        this.team1Emoji = data.image;
+        setTimeout(function () {
+          this.team1Emoji = undefined;
+        }.bind(this), 5000);
+      } else {
+        this.team2Emoji = data.image;
+        setTimeout(function () {
+          this.team2Emoji = undefined;
+        }.bind(this), 5000);
+      }
+    },
     solveGameData(data, code) {
 
       this.gameData = data;
@@ -642,7 +669,6 @@ export default {
         } else {
           this.gameTimeLeft = 5;
         }
-        console.log(this.gameTimeLeft);
       }, 1000);
 
     },
@@ -1098,8 +1124,6 @@ export default {
       //background-color: blue;
       z-index: 1000;
       touch-action: pan-x pan-y;
-      align-items: center;
-
       padding-left: 20px;
       padding-right: 20px;
       .user_title {
