@@ -1126,6 +1126,10 @@ export default {
       touch-action: pan-x pan-y;
       padding-left: 20px;
       padding-right: 20px;
+      -webkit-user-select:none;
+      -moz-user-select:none;
+      -ms-user-select:none;
+      user-select:none;
       .user_title {
         text-align: left;
         font-size: x-large;

@@ -71,15 +71,15 @@
       </vue-danmaku>
     </div>
 
-    <div id="map" :class="[{'bm-view': !ISPHONE}, {'bm-view-phone': ISPHONE && showMap}, {'bm-view-phone-hidden': ISPHONE && !showMap}]"></div>
+    <div id="map" :class="[{'bm-view': !ISPHONE}, {'bm-view-phone': ISPHONE && showMap}, {'bm-view-phone-hidden': ISPHONE && !showMap}]" @mouseover="mapMouseOver" @mouseout="mapMouseOut"></div>
 
     <div  :class="[{'confirm': !ISPHONE}, {'confirm-phone': ISPHONE}]">
-      <el-button v-if="confirmed && distance" @click="clickDistance">距离 {{ distance.toFixed(2)}} 千米</el-button>
-      <el-button v-if="(showMap || !ISPHONE) && !confirmed && status !== 'rank'"  @click="confirm">确定选择</el-button>
-      <el-button v-else-if="!isMaps && confirmed && !distance" @click="centerChoose">等待答案</el-button>
-      <el-button v-else-if="!showMap && ISPHONE && confirmed" @click="showMap = true">打开地图</el-button>
-      <el-button v-else-if="!showMap && ISPHONE" @click="showMap = true">选择地点</el-button>
-      <el-button v-if="isMaps && confirmed && distance" @click="next">下一题</el-button>
+      <el-button @mouseover.native="mapMouseOver" class="not_stop_hover" v-if="confirmed && distance" @click="clickDistance">距离 {{ distance.toFixed(2)}} 千米</el-button>
+      <el-button @mouseover.native="mapMouseOver"   class="not_stop_hover" v-if="(showMap || !ISPHONE) && !confirmed && status !== 'rank'"  @click="confirm">确定选择</el-button>
+      <el-button @mouseover.native="mapMouseOver"  class="not_stop_hover" v-else-if="!isMaps && confirmed && !distance" @click="centerChoose">等待答案</el-button>
+      <el-button @mouseover.native="mapMouseOver"  class="not_stop_hover" v-else-if="!showMap && ISPHONE && confirmed" @click="showMap = true">打开地图</el-button>
+      <el-button @mouseover.native="mapMouseOver"  class="not_stop_hover" v-else-if="!showMap && ISPHONE" @click="showMap = true">选择地点</el-button>
+      <el-button @mouseover.native="mapMouseOver" class="not_stop_hover" v-if="isMaps && confirmed && distance" @click="next">下一题</el-button>
     </div>
 
     <div v-if="showMap && ISPHONE" style="position: absolute; left: 20px; bottom: 20px">
@@ -235,6 +235,25 @@ export default {
   },
 
   methods: {
+    mapMouseOver() {
+      var element = document.getElementById("map")
+      // console.log(element);
+      if (!window.matchMedia( "(hover: none)" ).matches && document.body.clientWidth > 678) {
+        element.style.width = '40%';
+        element.style.height = '60%';
+        element.style.opacity = 1.0;
+      }
+    },
+
+    mapMouseOut() {
+      if (!window.matchMedia( "(hover: none)" ).matches && document.body.clientWidth > 678) {
+        var element = document.getElementById("map")
+        element.style.width = '20%';
+        element.style.height = '30%';
+        element.style.opacity = 0.7;
+      }
+    },
+
     initWS() {
       if (this.ws) {
         this.ws.close();
@@ -768,6 +787,9 @@ export default {
 </script>
 
 <style scoped lang="scss">
+//.not_stop_hover {
+//  pointer-events:none
+//}
 
 .danmaku {
   -webkit-user-select:none;
@@ -812,14 +834,16 @@ export default {
 }
 .bm-view {
   position: absolute;
-  width: 30%;
-  height: 40%;
+  width: 20%;
+  height: 30%;
   bottom: 1.5rem;
   right: 2rem;
   -webkit-user-select:none;
   -moz-user-select:none;
   -ms-user-select:none;
   user-select:none;
+  opacity: 0.7;
+
 }
 .bm-view-phone {
   position: absolute;
@@ -840,7 +864,6 @@ export default {
   right: 0;
   visibility: hidden;
 }
-
 
 .confirm {
   position: absolute;
@@ -948,6 +971,25 @@ export default {
     p{
       font-size: 14px;
     }
+  }
+
+}
+
+
+//@media(any-hover:hover) {
+//  .bm-view {
+//    &:hover {
+//      width: 40%;
+//      height: 60%;
+//      opacity: 1;
+//    }
+//  }
+//}
+@media  (any-hover:none) {
+  .bm-view {
+    width: 40%;
+    height: 40%;
+    opacity: 1;
   }
 }
 
