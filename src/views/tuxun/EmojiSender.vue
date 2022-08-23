@@ -27,6 +27,15 @@
       <div class="emoji" @click="sendEmoji(7)">
         <img class="emoji_img" src="https://i.chao-fan.com/biz/1661241246316_d3e72340c9474994a3d7ef51fc7675ee_0.png?x-oss-process=image/resize,h_120" alt="">
       </div>
+      <div class="emoji" @click="sendEmoji(8)">
+        <img class="emoji_img" src="https://i.chao-fan.com/biz/1661246001105_330ad5bd5e3e4bd7ac7f1b90c0759ac6_0.png?x-oss-process=image/resize,h_120" alt="">
+      </div>
+      <div class="emoji" @click="sendEmoji(9)">
+        <img class="emoji_img" src="https://i.chao-fan.com/biz/1661246085609_4abc7836e7b84a8bbac25e22f5f5ef7b_0.png?x-oss-process=image/resize,h_120" alt="">
+      </div>
+      <div class="emoji" @click="sendEmoji(10)">
+        <img class="emoji_img" src="https://i.chao-fan.com/biz/1661246067634_22b16bd0e7b34c709c872b7385d725e1_0.png?x-oss-process=image/resize,h_120" alt="">
+      </div>
     </div>
   </div>
 </template>
