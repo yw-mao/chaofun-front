@@ -1252,10 +1252,14 @@ export default {
   }
 }
 @media  (any-hover:none) {
-  .bm-view {
-    width: 40%;
-    height: 40%;
-    opacity: 1;
+  .container {
+    .game {
+      .bm-view {
+        width: 40%;
+        height: 40%;
+        opacity: 1;
+      }
+    }
   }
 }
 </style>
