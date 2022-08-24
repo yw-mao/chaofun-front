@@ -174,6 +174,7 @@ export default {
   position: absolute;
   left: 2rem;
   right: 2rem;
+  -webkit-text-stroke: 0.5px white;
 }
 .im-view {
   position: absolute;
