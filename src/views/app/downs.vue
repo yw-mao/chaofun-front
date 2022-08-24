@@ -8,7 +8,7 @@
             <div style="height: 140px;">
                 <img src="https://i.chao-fan.com/biz/08a2d3a676f4f520cb99910496e48b4e.png?x-oss-process=image/resize,h_80/format,webp/quality,q_75" alt="">
             </div>
-            
+
             <div class="app_name">
                 <img class="plat_icon" src="../../assets/images/icon/android.png" alt="">
                 <img class="plat_icon" src="../../assets/images/icon/ios.png" alt="">
@@ -30,7 +30,7 @@
        </div>
         <div v-if="!isiOS" @click="sure(2)" style="text-align:center;color:#551A8B;margin-top:10px;" class="">直接下载Apk ></div>
      </div>
-     
+
     <div class="detail">
         <div class="nav">
             <div class="nav_item">
@@ -62,7 +62,7 @@
     </div>
     <div class="a">
         <!-- <input v-model="value" maxlength="6" placeholder="请输入下载口令" type="text"> -->
-        
+
         <!-- <div @click="sure" class="btn">下载</div> -->
     </div>
     <div v-if="showCover" class="covers" @click="showCover=false">
@@ -115,7 +115,9 @@ import * as api from '../../api/api'
 
    },
    created() {
-       var u = navigator.userAgent, app = navigator.appVersion;
+     document.title = "炒饭App-炒饭社区";
+
+     var u = navigator.userAgent, app = navigator.appVersion;
         var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Linux') > -1; //android终端或者uc浏览器
         this.isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/);
    },
@@ -163,7 +165,7 @@ import * as api from '../../api/api'
             // }else{
             //     this.$toast('口令错误');
             // }
-            
+
             // if(isAndroid){
             //     location.href = 'https://chao.fan/chaofan.apk'
             //     // location.href = `opentest://host`;
@@ -183,7 +185,7 @@ import * as api from '../../api/api'
                 let isMi = ua.indexOf("redmi") != -1 || ua.indexOf("xiaomi") != -1;
                 let isMeizu = ua.indexOf("meizu") != -1;
                 let isOppo = ua.indexOf("oppo") != -1;
-                
+
                 let hreff = "";
                 if (isVivo) {
                     hreff = "vivoMarket://details?id=com.chao.app";
@@ -204,7 +206,7 @@ import * as api from '../../api/api'
                 }catch(e){
                     window.open('https://chao.fan/chaofan.apk',"_blank");
                 }
-                
+
             //   window.open('https://chao.fun/chaofan.apk',"_blank");
             }
         }else{
@@ -213,9 +215,9 @@ import * as api from '../../api/api'
             }else{
                 this.showCover = true;
             }
-            
+
         }
-        
+
     },
     onInput(value) {
       Toast(value);
@@ -245,13 +247,13 @@ import * as api from '../../api/api'
         display:none;
     }
     // background: url('https://i.chao-fan.com/biz/94aaa9cd9cdd920c969dd073ebb41869.jpg');
-    
+
     // height: 100vh;
 }
  .logo_con{
      padding: 0px 0 0px;
      text-align: center;
-     
+
      img{
          width: 150px;
         border-radius: 8px;
@@ -345,10 +347,10 @@ import * as api from '../../api/api'
              border-radius: 4px;
              img{
                 width: 170px;
-                
+
             }
          }
-         
+
      }
      .desc{
          padding: 0 15px 30px;
@@ -406,7 +408,7 @@ import * as api from '../../api/api'
          top: 30px;
          right: 40px;
          width: 100px;
-     }  
+     }
  }
  .backto{
      text-align: center;

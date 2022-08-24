@@ -71,6 +71,7 @@ export const constantRoutes = [
   {
     path: '/app',
     component: () => import('@/views/app/downs'),
+    meta: { title: '炒饭App'},
     hidden: true
   },
   {
@@ -318,7 +319,7 @@ export const constantRoutes = [
         meta: { title: '竞猜',keepAlive: true,},
         hidden: true
       },
-      
+
       // {
       //   path: '/webview/userRank',
       //   component: () => import('@/views/chaofun-webview/activity/userRank'),
