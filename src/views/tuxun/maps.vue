@@ -15,6 +15,9 @@
             <div class="describe">
               {{item.desc}}
             </div>
+            <div class="players">
+              玩家人次: {{item.players}}
+            </div>
           </div>
         </div>
       </section>
@@ -125,6 +128,12 @@ export default {
         .describe {
           color: yellow;
           font-size: 1rem;
+          font-weight: 700;
+          margin-bottom: 0.25rem;
+        }
+        .players {
+          color: white;
+          font-size: 1px;
           font-weight: 700;
           margin-bottom: 0.25rem;
         }
