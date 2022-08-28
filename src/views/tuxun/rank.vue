@@ -13,6 +13,7 @@
 
         <!-- 第2名 -->
         <div
+            v-if="pagedata.length >= 2"
             class="podium" style="position: relative;top: 30px;"
             @click="toUser(pagedata[1])">
           <span style="display: block;color: #C0C0C0;font-weight: bold;font-size: 120%;">{{ pagedata[1].rating }}</span>
@@ -26,6 +27,7 @@
 
         <!-- 第1名 -->
         <div
+            v-if="pagedata && pagedata.length >= 0"
             class="podium" style="position: relative;"
             @click="toUser(pagedata[0])">
           <span style="display: block;color: #FFD700;font-weight: bold;font-size: 120%;">{{ pagedata[0].rating }}</span>
@@ -39,6 +41,7 @@
 
         <!-- 第3名 -->
         <div
+            v-if="pagedata && pagedata.length >= 3"
             class="podium" style="position: relative;top: 30px;"
             @click="toUser(pagedata[2])">
           <span style="display: block;color: #C47222;font-weight: bold;font-size: 120%;">{{ pagedata[2].rating }}</span>
