@@ -100,7 +100,9 @@
 
         </div>
       </div>
-      <div id="map" :class="[{'bm-view': !ISPHONE}, {'bm-view-phone': ISPHONE && showMap}, {'bm-view-phone-hidden': ISPHONE && !showMap}]" @mouseover="mapMouseOver" @mouseout="mapMouseOut"></div>
+      <div id="map-container" :class="[{'bm-view-container': !ISPHONE}, {'bm-view-container-phone': ISPHONE && showMap}, {'bm-view-container-phone-hidden': ISPHONE && !showMap}]"@mouseover="mapMouseOver" @mouseout="mapMouseOut">
+        <div id="map" :class="[{'bm-view': !ISPHONE}, {'bm-view-phone': ISPHONE && showMap}, {'bm-view-phone-hidden': ISPHONE && !showMap}]" @mouseover="mapMouseOver" @mouseout="mapMouseOut"></div>
+      </div>
 
       <div v-if="lastRound && lastRound.timerStartTime && !lastRound.endTime " :class="[{'top-info': !ISPHONE}, {'top-info-phone': ISPHONE}]">
         选择倒计时: {{timeLeftStr}}
@@ -258,7 +260,7 @@ export default {
   methods: {
     mapMouseOver() {
       if (!window.matchMedia( "(hover: none)" ).matches && document.body.clientWidth > 678) {
-        var element = document.getElementById("map")
+        var element = document.getElementById("map-container")
         element.style.width = '40%';
         element.style.height = '60%';
         element.style.opacity = 1.0;
@@ -267,9 +269,9 @@ export default {
 
     mapMouseOut() {
       if (!window.matchMedia( "(hover: none)" ).matches && document.body.clientWidth > 678) {
-        var element = document.getElementById("map")
-        element.style.width = '20%';
-        element.style.height = '30%';
+        var element = document.getElementById("map-container")
+        element.style.width = '25%';
+        element.style.height = '35%';
         element.style.opacity = 0.7;
       }
     },
@@ -874,7 +876,6 @@ export default {
 
 <style lang="scss" scoped>
 .container {
-
   position: absolute;
   width: 100%;
   min-height: 100%;
@@ -1078,30 +1079,41 @@ export default {
       justify-content: center;
       transform-origin: center;
     }
-    .bm-view {
+    .bm-view-container {
       position: absolute;
-      width: 20%;
-      height: 30%;
-      bottom: 1.5rem;
-      right: 2rem;
-      -webkit-user-select:none;
-      -moz-user-select:none;
-      -ms-user-select:none;
-      user-select:none;
+      padding-right: 2rem;
+      padding-bottom: 1.5rem;
+      bottom: 0;
+      right: 0;
+      width: 25%;
+      height: 35%;
       opacity: 0.7;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+
+      .bm-view {
+        width: 100%;
+        height: 100%;
+      }
     }
-    .bm-view-phone {
+    .bm-view-container-phone {
       position: absolute;
       width: 100%;
       height: 40%;
       bottom: 0;
       right: 0;
-      -webkit-user-select:none;
-      -moz-user-select:none;
-      -ms-user-select:none;
-      user-select:none;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+      .bm-view-phone {
+        width: 100%;
+        height: 100%;
+      }
     }
-    .bm-view-phone-hidden {
+    .bm-view-container-phone-hide {
       position: absolute;
       width: 100%;
       height: 40%;
@@ -1109,6 +1121,10 @@ export default {
       right: 0;
       visibility: hidden;
 
+      .bm-view-phone-hidden {
+        width: 100%;
+        height: 100%;
+      }
     }
 
     .confirm {
@@ -1254,7 +1270,7 @@ export default {
 @media  (any-hover:none) {
   .container {
     .game {
-      .bm-view {
+      .bm-view-container {
         width: 40%;
         height: 40%;
         opacity: 1;
