@@ -267,7 +267,6 @@ export default {
     initPanorama() {
       try {
 
-
         if (!this.viewer) {
           var plugins = [];
           plugins.push([CompassPlugin, {
@@ -321,6 +320,17 @@ export default {
           var virtualTour = this.viewer.getPlugin(VirtualTourPlugin);
           virtualTour.setNodes([{panorama: 'https://i.chao-fan.com/' + this.image, id: this.image, position: [0,0], links: [], panoData : {poseHeading: this.heading}}])
         }
+
+        var compassPlugin = this.viewer.getPlugin(CompassPlugin);
+        if (compassPlugin) {
+          console.log("compassPlugin")
+          if (this.heading) {
+            compassPlugin.show();
+          } else {
+            compassPlugin.hide();
+          }
+        }
+
         setTimeout(function () {
           THREE.Cache.clear();
         }, 1000);
@@ -695,6 +705,7 @@ export default {
     },
 
     next() {
+
       this.showMap = false;
       this.confirmed = false;
       this.returnResult = true;
