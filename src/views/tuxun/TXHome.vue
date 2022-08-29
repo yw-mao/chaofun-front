@@ -71,8 +71,9 @@
       </vue-danmaku>
     </div>
 
-    <div id="map" :class="[{'bm-view': !ISPHONE}, {'bm-view-phone': ISPHONE && showMap}, {'bm-view-phone-hidden': ISPHONE && !showMap}]" @mouseover="mapMouseOver" @mouseout="mapMouseOut"></div>
-
+    <div id="map-container" :class="[{'bm-view-container': !ISPHONE}, {'bm-view-container-phone': ISPHONE && showMap}, {'bm-view-container-phone-hidden': ISPHONE && !showMap}]"@mouseover="mapMouseOver" @mouseout="mapMouseOut">
+      <div id="map" :class="[{'bm-view': !ISPHONE}, {'bm-view-phone': ISPHONE && showMap}, {'bm-view-phone-hidden': ISPHONE && !showMap}]" ></div>
+    </div>
     <div  :class="[{'confirm': !ISPHONE}, {'confirm-phone': ISPHONE}]">
       <el-button @mouseover.native="mapMouseOver" class="not_stop_hover" v-if="confirmed && distance" @click="clickDistance">距离 {{ distance.toFixed(2)}} 千米</el-button>
       <el-button @mouseover.native="mapMouseOver"   class="not_stop_hover" v-if="(showMap || !ISPHONE) && !confirmed && status !== 'rank'"  @click="confirm">确定选择</el-button>
@@ -236,7 +237,7 @@ export default {
 
   methods: {
     mapMouseOver() {
-      var element = document.getElementById("map")
+      var element = document.getElementById("map-container")
       // console.log(element);
       if (!window.matchMedia( "(hover: none)" ).matches && document.body.clientWidth > 678) {
         element.style.width = '40%';
@@ -247,9 +248,9 @@ export default {
 
     mapMouseOut() {
       if (!window.matchMedia( "(hover: none)" ).matches && document.body.clientWidth > 678) {
-        var element = document.getElementById("map")
-        element.style.width = '20%';
-        element.style.height = '30%';
+        var element = document.getElementById("map-container")
+        element.style.width = '25%';
+        element.style.height = '35%';
         element.style.opacity = 0.7;
       }
     },
@@ -843,37 +844,54 @@ export default {
   justify-content: center;
   transform-origin: center;
 }
-.bm-view {
+.bm-view-container {
   position: absolute;
-  width: 20%;
-  height: 30%;
-  bottom: 1.5rem;
-  right: 2rem;
-  -webkit-user-select:none;
-  -moz-user-select:none;
-  -ms-user-select:none;
-  user-select:none;
+  padding-right: 2rem;
+  padding-bottom: 1.5rem;
+  bottom: 0;
+  right: 0;
+  width: 25%;
+  height: 35%;
   opacity: 0.7;
 
+  .bm-view {
+    width: 100%;
+    height: 100%;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
 }
-.bm-view-phone {
+
+.bm-view-container-phone {
   position: absolute;
   width: 100%;
   height: 60%;
   bottom: 0;
   right: 0;
-  -webkit-user-select:none;
-  -moz-user-select:none;
-  -ms-user-select:none;
-  user-select:none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+
+  .bm-view-phone {
+    width: 100%;
+    height: 100%;
+  }
 }
-.bm-view-phone-hidden {
+
+.bm-view-container-phone-hidden {
   position: absolute;
   width: 100%;
   height: 60%;
   bottom: 0;
   right: 0;
   visibility: hidden;
+  .bm-view-phone {
+    width: 100%;
+    height: 100%;
+  }
 }
 
 .confirm {
@@ -997,7 +1015,7 @@ export default {
 //  }
 //}
 @media  (any-hover:none) {
-  .bm-view {
+  .bm-view-container {
     width: 40%;
     height: 40%;
     opacity: 1;
