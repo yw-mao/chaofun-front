@@ -7,7 +7,7 @@
 
       <div style="display: flex;justify-content: center; align-items: center; padding-top: 4rem">
         <img alt="" src="../chaofun-webview/assets/images/rank.png">
-        <span style="font-size: 18px; color: white">Top 100（9月11日24点重置）</span>
+        <span style="font-size: 18px; color: white">Top 100（两周一赛季，9月11日24点重置）</span>
       </div>
       <div style="display: flex;justify-content: space-around;position: relative;margin-top: 10px;">
 
@@ -66,7 +66,9 @@
         <span style="flex: 1;">{{ item.userAO.userName }}</span>
         <span style="width: 60px;text-align: right;">{{ item.rating }}</span>
       </div>
+      <div class="footer">
 
+      </div>
     </div>
   </div>
 </template>
@@ -141,6 +143,9 @@ div {
   flex-direction: column;
   align-items: center;
   cursor: pointer;
+}
+.footer {
+  height: 10rem;
 }
 
 @media only screen and (max-width: 679px) {
