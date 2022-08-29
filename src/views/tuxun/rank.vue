@@ -7,13 +7,13 @@
 
       <div style="display: flex;justify-content: center; align-items: center; padding-top: 4rem">
         <img alt="" src="../chaofun-webview/assets/images/rank.png">
-        <span style="font-size: 18px; color: white">Top 100（8月28日24点重置）</span>
+        <span style="font-size: 18px; color: white">Top 100（9月11日24点重置）</span>
       </div>
       <div style="display: flex;justify-content: space-around;position: relative;margin-top: 10px;">
 
         <!-- 第2名 -->
         <div
-            v-if="pagedata.length >= 2"
+            v-if="pagedata && pagedata.length >= 2"
             class="podium" style="position: relative;top: 30px;"
             @click="toUser(pagedata[1])">
           <span style="display: block;color: #C0C0C0;font-weight: bold;font-size: 120%;">{{ pagedata[1].rating }}</span>
