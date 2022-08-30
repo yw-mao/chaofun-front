@@ -142,7 +142,7 @@ export default {
     },
     toFirstTournament() {
       try {
-        window.flutter_inappwebview.callHandler('toAppPost', {postId: 1203655});
+        window.flutter_inappwebview.callHandler('toAppPost', {postId: '1203655'});
       } catch (e) {
         window.open('/p/1203655', "_blank");
       }
