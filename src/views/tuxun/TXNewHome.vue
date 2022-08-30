@@ -10,7 +10,7 @@
     </div>
 
     <div class="game">
-<!--      <div class="info">维护中...</div>-->
+      <div class="info" @click="toFirstTournament">图寻第一届个人锦标赛, 点击报名...</div>
       <section class="game_entrance">
         <div class="grid_main">
           <div class="card" @click="redirectPage( '/tuxun/daily_challenge')">
@@ -139,6 +139,13 @@ export default {
           window.location.href = location.origin + '/tuxun/user/' + this.$store.state.user.userInfo.userId;
         }
       });
+    },
+    toFirstTournament() {
+      try {
+        window.flutter_inappwebview.callHandler('toAppPost', {postId: 1203655});
+      } catch (e) {
+        window.open('/p/1203655', "_blank");
+      }
     }
   }
 }
@@ -169,14 +176,15 @@ export default {
     max-width: 80rem;
     .info {
       color: white;
-      font-size: xx-large;
+      font-size: medium;
+      padding-top: 1rem;
     }
     section {
       padding-top: 20px;
       display: block;
     }
     .game_entrance {
-      margin-top: 15%;
+      margin-top: 10%;
     }
   }
   .thx {
