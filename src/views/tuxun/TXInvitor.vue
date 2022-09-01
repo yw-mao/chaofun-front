@@ -477,6 +477,16 @@ export default {
                 virtualTour.setNodes([{panorama: 'https://i.chao-fan.com/' + this.image, id: this.image, position: [0,0], links: [], panoData : {poseHeading: this.heading}}])
               }
 
+              var compassPlugin = this.viewer.getPlugin(CompassPlugin);
+              if (compassPlugin) {
+                console.log(this.heading);
+                if (this.heading) {
+                  compassPlugin.show();
+                } else {
+                  compassPlugin.hide();
+                }
+              }
+
               setTimeout(function () {
                 THREE.Cache.clear();
               }, 1000);
