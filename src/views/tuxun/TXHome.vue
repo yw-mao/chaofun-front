@@ -429,8 +429,6 @@ export default {
           }
           this.targetLat = null;
           this.targetLng = null;
-          this.heading = undefined;
-          this.contents = undefined;
           this.removeTargetMarker();
           this.polylinePath = null;
           this.removeLine();
