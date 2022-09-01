@@ -7,7 +7,7 @@
         练习赛
       </div>
       <section class="game_entrance">
-        <div class="first_session_head" v-if="recentPagedata && recentPagedata.length >= 1">最近访问</div>
+        <div class="first_session_head" v-if="recentPagedata && recentPagedata.length >= 1">最近玩过</div>
         <div class="line" v-if="recentPagedata && recentPagedata.length >= 1"></div>
         <div class="grid_main" v-if="recentPagedata && recentPagedata.length >= 1">
           <div v-for="(item, index) in recentPagedata" @click="toMaps(item)"  :style="{'background-image': 'linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.6)), url('+ imgOrigin + (item.cover ?? 'biz/1659323781589_7d19c33667a54a4dabb0405ee5aec20f.jpeg') + '?x-oss-process=image/resize,h_400)','background-size':'cover'}" class="card">
