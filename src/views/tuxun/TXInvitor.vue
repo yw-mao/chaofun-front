@@ -387,10 +387,14 @@ export default {
           this.isWin = false;
         }
 
-        if (this.gameData.teams[0].users[0].userId === this.$store.state.user.userInfo.userId) {
-          this.yourTeam = this.gameData.teams[0];
+        if (this.isWin) {
+          this.yourTeam = this.winTeam;
         } else {
-          this.yourTeam = this.gameData.teams[1];
+          if (this.gameData.teams[0].users[0].userId === this.$store.state.user.userInfo.userId) {
+            this.yourTeam = this.gameData.teams[0];
+          } else {
+            this.yourTeam = this.gameData.teams[1];
+          }
         }
       }
 
