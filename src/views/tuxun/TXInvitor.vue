@@ -54,7 +54,7 @@
       </div>
 
       <div v-if="(gameData.type === 'team') && gameData.status === 'wait_join'" class="wait_game_start">
-        等待其他玩家加入或者其中一只队伍人数不为0....
+        等待其他玩家加入或队伍至少有一人....
       </div>
 
       <div v-if="gameData.host && this.$store.state.user.userInfo.userId !== gameData.host.userId && gameData.type !== 'solo_match'" class="wait_game_start">
