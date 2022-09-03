@@ -45,6 +45,14 @@
               邀请朋友图寻对决吧！
             </div>
           </div>
+          <div class="card" @click="createTeam" >
+            <div class="title">
+              邀请组队对战
+            </div>
+            <div class="describe">
+              组队对决，群体的力量
+            </div>
+          </div>
           <div class="card" @click="redirectPage( '/tuxun/maps')">
             <div class="title">
               练习赛
@@ -122,6 +130,14 @@ export default {
         // this.$router.push({path: '/tuxun/solo_game?gameId=' + id}).catch((e) => {})
       });
     },
+    createTeam() {
+      api.getByPath("/api/v0/tuxun/team/create").then(res => {
+        var id = res.data.id;
+        // window.open(location.origin + '/tuxun/solo_game?gameId=' + id,"_blank");
+        window.location.href = '/tuxun/team_game?gameId=' + id;
+        // this.$router.push({path: '/tuxun/solo_game?gameId=' + id}).catch((e) => {})
+      });
+    },
 
     redirectPage(path) {
       window.location.href = path
@@ -165,7 +181,6 @@ export default {
       padding-right: 2rem;
     }
   }
-
 
   .game {
     box-sizing: border-box;

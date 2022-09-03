@@ -12,20 +12,35 @@
       <div class="goback">
       </div>
 
-      <div class="header">
+      <div class="header" v-if="gameData.type === 'solo' || gameData.type === 'solo_match'">
         图寻1v1决斗
       </div>
 
+      <div class="header" v-if="gameData.type === 'team'">
+        邀请组队对战
+      </div>
+
       <div class="vs">
-        <div  v-if="gameData && gameData.playerIds.length >= 1" class="player">
-          <el-avatar :src="this.imgOrigin + gameData.players[0].icon" class="avatar"></el-avatar>
-          <div class="userName">{{gameData.players[0].userName}}</div>
+        <div  class="player">
+          <div v-if="gameData && gameData.teams && gameData.teams.length >= 1">
+            <div v-for="(item, index) in gameData.teams[0].users">
+              <el-avatar :src="imgOrigin + item.icon" class="avatar"></el-avatar>
+              <div class="userName">{{item.userName}}</div>
+            </div>
+          </div>
         </div>
-        <img class="vs_img" v-if="gameData && gameData.playerIds.length === 2" :src="this.imgOrigin + 'biz/1658807128256_91c9df63c2d144359005b6f504a96a81.png'">
-        </img>
-        <div v-if="gameData && gameData.playerIds.length === 2" class="player">
-          <el-avatar :src="this.imgOrigin + gameData.players[1].icon" class="avatar"></el-avatar>
-          <div class="userName">{{gameData.players[1].userName}}</div>
+        <div>
+          <img class="vs_img"  :src="this.imgOrigin + 'biz/1658807128256_91c9df63c2d144359005b6f504a96a81.png'">
+          </img>
+          <el-button @click="swapTeam" v-if="gameData.type==='team'">换队伍</el-button>
+        </div>
+        <div class="player">
+          <div  v-if="gameData && gameData.teams && gameData.teams.length >= 2">
+            <div v-for="(item, index) in gameData.teams[1].users">
+              <el-avatar :src="imgOrigin + item.icon" class="avatar"></el-avatar>
+              <div class="userName">{{item.userName}}</div>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -34,8 +49,12 @@
         <el-button class="button" type="primary" round @click="start">开始图寻对决</el-button>
       </div>
 
-      <div v-if="!gameData.playerIds || gameData.playerIds.length !== 2" class="wait_game_start">
+      <div v-if="(gameData.type === 'solo' || gameData.type === 'solo_match') && gameData.status === 'wait_join'" class="wait_game_start">
         等待其他玩家加入....
+      </div>
+
+      <div v-if="(gameData.type === 'team') && gameData.status === 'wait_join'" class="wait_game_start">
+        等待其他玩家加入或者其中一只队伍人数不为0....
       </div>
 
       <div v-if="gameData.host && this.$store.state.user.userInfo.userId !== gameData.host.userId && gameData.type !== 'solo_match'" class="wait_game_start">
@@ -46,7 +65,7 @@
         开始倒计时 {{this.gameTimeLeft}} 秒
       </div>
 
-      <div class="invite" v-if="status !== 'ready' && gameData.type !== 'solo_match'">
+      <div class="invite" v-if="status !== 'ready' && gameData.type !== 'solo_match' || gameData.type == 'team'">
         <div class="title">
           邀请链接
         </div>
@@ -63,20 +82,38 @@
         <div id="viewer"  style="width: 100%; height: 100%"></div>
         <div v-if="showRoundResult" class="round_result">
           <div class="round_result_center" v-if="!gameData.player">
-            <div class="round_result_block">
+            <div class="round_result_block" v-if="gameData.type !== 'team'">
               {{gameData.teams[0].users[0].userName}} 本局得分: {{gameData.teams[0].lastRoundResult.score}}
               <div>
                 血量变化：{{gameData.teams[0].lastRoundResult.healthAfter - gameData.teams[0].lastRoundResult.healthBefore}}
               </div>
             </div>
-            <div class="round_result_block">
+            <div class="round_result_block" v-if="gameData.type !== 'team'">
               {{gameData.teams[1].users[0].userName}} 本局得分: {{gameData.teams[1].lastRoundResult.score}}
               <div>
                 血量变化：{{gameData.teams[1].lastRoundResult.healthAfter - gameData.teams[1].lastRoundResult.healthBefore}}
               </div>
             </div>
-          </div>
+            <div class="round_result_block" v-if="gameData.type === 'team'">
+              队伍1 本局得分: {{gameData.teams[0].lastRoundResult.score}}
+              <div v-if="gameData.teams[0].lastRoundResult.user">
+                最佳队员：{{gameData.teams[0].lastRoundResult.user.userName}}
+              </div>
+              <div>
+                血量变化：{{gameData.teams[0].lastRoundResult.healthAfter - gameData.teams[0].lastRoundResult.healthBefore}}
+              </div>
+            </div>
+            <div class="round_result_block" v-if="gameData.type === 'team'">
+              队伍2 本局得分: {{gameData.teams[1].lastRoundResult.score}}
+              <div v-if="gameData.teams[1].lastRoundResult.user">
+                最佳队员：{{gameData.teams[1].lastRoundResult.user.userName}}
+              </div>
+              <div>
+                血量变化：{{gameData.teams[1].lastRoundResult.healthAfter - gameData.teams[1].lastRoundResult.healthBefore}}
+              </div>
 
+            </div>
+          </div>
           <div class="round_result_center" v-if="gameData.player">
             <div class="round_result_block">
               <div>
@@ -89,7 +126,7 @@
             </div>
           </div>
 
-          <div v-if="this.showChallengeGameEnd" class="challenge_result_bottom" >
+          <div v-if="showChallengeGameEnd" class="challenge_result_bottom" >
             <div>
               <el-button class="result_button" type="warning" @click="goDailyChallenge">查看总排名</el-button>
             </div>
@@ -135,9 +172,9 @@
             失败!
           </div>
 
-          <el-avatar :src="this.imgOrigin + yourTeam.users[0].icon" class="avatar"></el-avatar>
-          <div class="userName">{{yourTeam.users[0].userName}}</div>
-
+          <el-avatar  v-if="gameData.type !== 'team'" :src="this.imgOrigin + yourTeam.users[0].icon" class="avatar"></el-avatar>
+          <div class="userName"  v-if="gameData.type !== 'team'">{{yourTeam.users[0].userName}}</div>
+          <div class="userName"  v-if="gameData.type === 'team'"></div>
           <div v-if="gameData && gameData.type === 'solo_match'">
             <div class="info">
               <p v-if="yourTeam.ratingChange  && yourTeam.ratingChange > 0" class="desc">积分变化：+{{yourTeam.ratingChange}}</p>
@@ -150,7 +187,7 @@
             </div>
             <el-button class="home_button"  type="primary" @click="goTuxun">继续匹配</el-button>
           </div>
-          <div v-if="gameData && gameData.type === 'solo'">
+          <div v-if="gameData && ( gameData.type === 'solo' || gameData.type === 'team')">
             <el-button class="home_button"  type="primary" @click="again">再来一局</el-button>
           </div>
           <div>
@@ -158,13 +195,20 @@
           </div>
         </div>
       </div>
-      <div v-if="gameData && !gameData.player" class="game_hud">
+
+      <div v-if="gameData && !gameData.player " class="game_hud">
         <div class="hub_left">
-          <div class="user_title">
+          <div class="user_title" v-if="gameData.type !== 'team'">
             {{gameData.teams[0].users[0].userName}}
+          </div>
+          <div class="user_title" v-if="gameData.type === 'team'">
+            队伍1
           </div>
           <div class="user_blod_left">
             血量：{{gameData.teams[0].health}}
+          </div>
+          <div class="sub_user_name" v-for="(item, index) in gameData.teams[0].users"  v-if="gameData.type === 'team'">
+            {{item.userName}}
           </div>
           <div v-if="team1Emoji" class="emoji">
             <img :src="imgOrigin+team1Emoji +'?x-oss-process=image/resize,h_120'"/>
@@ -172,11 +216,17 @@
         </div>
 
         <div class="hub_right">
-          <div class="user_title">
+          <div class="user_title" v-if="gameData.type !== 'team'">
             {{gameData.teams[1].users[0].userName}}
+          </div>
+          <div class="user_title" v-if="gameData.type === 'team'">
+            队伍2
           </div>
           <div class="user_blod_right">
             血量：{{gameData.teams[1].health}}
+          </div>
+          <div class="sub_user_name" v-for="(item, index) in gameData.teams[1].users"  v-if="gameData.type === 'team'">
+            {{item.userName}}
           </div>
           <div v-if="this.team2Emoji" class="emoji">
             <img :src="imgOrigin+team2Emoji +'?x-oss-process=image/resize,h_120'"/>
@@ -245,6 +295,7 @@ export default {
       sendEmoji: false,
       team1Emoji: undefined,
       team2Emoji: undefined,
+      showChallengeGameEnd: false,
       notifyStatus: '',
 
       // gameData: {playerIds: [1, 2]}
@@ -301,6 +352,7 @@ export default {
         this.challengeInit();
       }
     },
+
     challengeInit() {
       api.getByPath('/api/v0/tuxun/challenge/getGameInfo', {'challengeId': this.challengeId}).then(res=>{
         if (res.data) {
@@ -593,7 +645,20 @@ export default {
     join() {
       console.log('123');
       this.doLoginStatus().then((res) => {
-        api.getByPath("/api/v0/tuxun/solo/join", {gameId: this.gameId}).then(res => {
+        api.getByPath("/api/v0/tuxun/game/join", {gameId: this.gameId}).then(res => {
+          console.log(res.data);
+          if (res.success) {
+            this.solveGameData(res.data, undefined);
+          } else {
+            this.getGameInfo()
+          }
+        });
+      });
+    },
+
+    swapTeam() {
+      this.doLoginStatus().then((res) => {
+        api.getByPath("/api/v0/tuxun/team/swapTeam", {gameId: this.gameId}).then(res => {
           console.log(res.data);
           if (res.success) {
             this.solveGameData(res.data, undefined);
@@ -801,9 +866,13 @@ export default {
     },
 
     again() {
-      api.getByPath('/api/v0/tuxun/solo/again', {'gameId': this.gameId}).then(res=>{
+      api.getByPath('/api/v0/tuxun/game/again', {'gameId': this.gameId}).then(res=>{
         if (res.data) {
-          window.location.href = '/tuxun/solo_game?gameId=' + res.data.id;
+          if (res.data.type === 'team') {
+            window.location.href = '/tuxun/team_game?gameId=' + res.data.id;
+          } else {
+            window.location.href = '/tuxun/solo_game?gameId=' + res.data.id;
+          }
         }
       })
     },
@@ -1181,6 +1250,13 @@ export default {
       .user_title {
         text-align: left;
         font-size: x-large;
+        font-weight: bolder;
+        color: white;
+        -webkit-text-stroke: 1px black;
+      }
+      .sub_user_name {
+        text-align: left;
+        font-size: medium;
         font-weight: bolder;
         color: white;
         -webkit-text-stroke: 1px black;
