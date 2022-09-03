@@ -790,6 +790,25 @@ export default {
       this.targetMarker = undefined;
     },
 
+    drawTeamUser(teamUser) {
+      if (teamUser.user.userId !== this.$store.state.user.userInfo.userId) {
+        if (teamUser.guesses && teamUser.guesses.length > 0) {
+          var lastGuess = teamUser.guesses[teamUser.guesses.length -1];
+          if (lastGuess.round === this.gameData.currentRound) {
+            var point = new BMap.Point(lastGuess.lng, lastGuess.lat);
+            var marker = new BMap.Marker(point);        // 创建标注
+            marker.disableDragging();
+            var label = new BMap.Label(teamUser.user.userName);        // 创建标注
+            label.setOffset(new BMap.Size(-15, 30));
+            console.log(label.getOffset())
+            marker.setLabel(label);
+            this.ranksMarker.push(marker);
+            this.map.addOverlay(marker);
+          }
+        }
+      }
+    },
+
     addRanksMarker() {
       if (!this.BMap) {
         return;
@@ -798,22 +817,7 @@ export default {
       if (this.gameData) {
         this.gameData.teams.forEach( item => {
           item.teamUsers.forEach(teamUser => {
-            if (teamUser.user.userId !== this.$store.state.user.userInfo.userId) {
-              if (teamUser.guesses && teamUser.guesses.length > 0) {
-                var lastGuess = teamUser.guesses[teamUser.guesses.length -1];
-                if (lastGuess.round === this.gameData.currentRound) {
-                  var point = new BMap.Point(lastGuess.lng, lastGuess.lat);
-                  var marker = new BMap.Marker(point);        // 创建标注
-                  marker.disableDragging();
-                  var label = new BMap.Label(teamUser.user.userName);        // 创建标注
-                  label.setOffset(new BMap.Size(-15, 30));
-                  console.log(label.getOffset())
-                  marker.setLabel(label);
-                  this.ranksMarker.push(marker);
-                  this.map.addOverlay(marker);
-                }
-              }
-            }
+            this.drawTeamUser(teamUser);
           });
         });
       }
