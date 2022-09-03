@@ -433,10 +433,15 @@ export default {
           this.winTeam = this.gameData.teams[0];
         }
 
-        if (this.winner.userId === this.$store.state.user.userInfo.userId || !this.gameData.playerIds.includes(this.$store.state.user.userInfo.userId)) {
+        this.isWin = false;
+        this.winTeam.users.forEach(v => {
+          if (v.userId === this.$store.state.user.userInfo.userId ) {
+            this.isWin = true;
+          }
+        })
+
+        if (!this.gameData.playerIds.includes(this.$store.state.user.userInfo.userId)) {
           this.isWin = true;
-        } else {
-          this.isWin = false;
         }
 
         if (this.isWin) {
