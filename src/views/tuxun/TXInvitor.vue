@@ -797,22 +797,24 @@ export default {
       this.ranksMarker = [];
       if (this.gameData) {
         this.gameData.teams.forEach( item => {
-          if (item.teamUsers && item.teamUsers[0].user.userId !== this.$store.state.user.userInfo.userId) {
-            if (item.teamUsers[0].guesses && item.teamUsers[0].guesses.length > 0) {
-              var lastGuess = item.teamUsers[0].guesses[item.teamUsers[0].guesses.length -1];
-              if (lastGuess.round === this.gameData.currentRound) {
-                var point = new BMap.Point(lastGuess.lng, lastGuess.lat);
-                var marker = new BMap.Marker(point);        // 创建标注
-                marker.disableDragging();
-                var label = new BMap.Label(item.teamUsers[0].user.userName);        // 创建标注
-                label.setOffset(new BMap.Size(-15, 30));
-                console.log(label.getOffset())
-                marker.setLabel(label);
-                this.ranksMarker.push(marker);
-                this.map.addOverlay(marker);
+          item.teamUsers.forEach(teamUser => {
+            if (teamUser.user.userId !== this.$store.state.user.userInfo.userId) {
+              if (teamUser.guesses && teamUser.guesses.length > 0) {
+                var lastGuess = teamUser.guesses[teamUser.guesses.length -1];
+                if (lastGuess.round === this.gameData.currentRound) {
+                  var point = new BMap.Point(lastGuess.lng, lastGuess.lat);
+                  var marker = new BMap.Marker(point);        // 创建标注
+                  marker.disableDragging();
+                  var label = new BMap.Label(teamUser.user.userName);        // 创建标注
+                  label.setOffset(new BMap.Size(-15, 30));
+                  console.log(label.getOffset())
+                  marker.setLabel(label);
+                  this.ranksMarker.push(marker);
+                  this.map.addOverlay(marker);
+                }
               }
             }
-          }
+          });
         });
       }
     },
