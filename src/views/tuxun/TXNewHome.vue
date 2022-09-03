@@ -160,7 +160,7 @@ export default {
       try {
         window.flutter_inappwebview.callHandler('toAppPost', {postId: '1204478'});
       } catch (e) {
-        window.open('/p/1203655', "_blank");
+        window.open('/p/1204478', "_blank");
       }
     }
   }
