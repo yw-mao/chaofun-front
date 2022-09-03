@@ -277,6 +277,13 @@ routes = [
     hidden: true
   },
   {
+    path: '/tuxun/team_game',
+    component: () => import('@/views/tuxun/TXInvitor'),
+    name: '图寻邀请PK',
+    meta: { title: '图寻邀请PK'},
+    hidden: true
+  },
+  {
     path: '/tuxun/challenge',
     component: () => import('@/views/tuxun/TXInvitor'),
     name: '图寻挑战',
