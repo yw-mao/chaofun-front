@@ -208,7 +208,7 @@ export default {
       key: 'aibVGReAhMEtxu4Bj2aHixWprh28AhrT' ,
       version: '3.0'
     }).then((Bmap) => {
-      var map = new BMap.Map("map", {});          // 创建地图实例
+      var map = new BMap.Map("map", {enableMapClick:false});          // 创建地图实例
       map.centerAndZoom(new BMap.Point(106.0, 38.8), 1);
       map.enableScrollWheelZoom();
       map.disableContinuousZoom();
