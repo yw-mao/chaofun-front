@@ -52,8 +52,8 @@ export default {
 
         {
           path: '/tuxun',
-          title: '图寻小游戏',
-          desc: '网络迷踪/看图找地点小游戏',
+          title: '图寻',
+          desc: '网络迷踪/看图找地点',
           showBottom: true
         },
         {
