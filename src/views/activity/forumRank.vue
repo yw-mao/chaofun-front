@@ -4,7 +4,7 @@
     <div class="content">
         <div class="nav">
             <img src="./rank.png" alt="">
-            <span>24 小时版块排名(24小内帖子获赞)</span>
+            <span>24 小时版块排名(24小时内帖子获赞)</span>
         </div>
         <div @click="toUser(item)" v-for="(item,index) in pagedata" :key="index" class="item">
             <div class="left">
@@ -21,7 +21,7 @@
         </div>
     </div>
     <div v-if="!ISPHONE" class="padding"></div>
-    
+
   </div>
 </template>
 
@@ -32,7 +32,7 @@ import * as api from '@/api/api'
 export default {
   name: 'Home',
   components: {
-    
+
   },
   data(){
       return {
@@ -110,7 +110,7 @@ export default {
                 display: flex;
                 flex-direction: column;
                 justify-content: space-around;
-                
+
             }
         }
         .right{
@@ -119,12 +119,12 @@ export default {
             // text-align: center;
             font-size: 12px;
             overflow: hidden;
-            text-overflow:ellipsis; 
+            text-overflow:ellipsis;
             white-space: nowrap;
             p{
                 font-size: 14px;
                 overflow: hidden;
-                text-overflow:ellipsis; 
+                text-overflow:ellipsis;
                 white-space: nowrap;
                 text-align: right;
             }
