@@ -572,14 +572,6 @@ export default {
       this.targetMarker = marker;
     },
 
-    addMarker(lat, lng, label) {
-      var marker = L.marker([lat, lng], {icon: new L.Icon.Default()}).bindTooltip(label,
-          {
-            permanent: true,
-            direction: 'auto'
-          }).addTo(this.map);
-    },
-
     addRanksMarker() {
       this.ranksMarker = [];
       if (this.ranks) {
@@ -640,7 +632,7 @@ export default {
           this.targetLng = res.data.lng;
           this.targetLat = res.data.lat;
           this.distance = res.data.distanceMeter / 1000;
-          this.map.setView([this.targetLat,this.targetLng], 18);
+          this.map.setView([this.targetLat,this.targetLng], 3);
           this.addTargetMarker();
           this.addLine();
         });
