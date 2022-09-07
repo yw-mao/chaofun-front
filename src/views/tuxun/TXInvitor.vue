@@ -271,12 +271,12 @@ export default {
       ws: null,
       status: 'wait',
       gameId: this.gameId,
-      gameData: undefined,
-      lastRound: undefined,
-      map: undefined,
-      BMap: undefined,
-      viewer: undefined,
-      image: undefined,
+      gameData: null,
+      lastRound: null,
+      map: null,
+      BMap: null,
+      viewer: null,
+      image: null,
       confirmed: false,
       chooseMarker: null,
       showMap: false,
@@ -287,17 +287,17 @@ export default {
       timeLeft: 15,
       gameTimeLeft: 5,
       timeLeftStr: '',
-      team1User: undefined,
-      team2User: undefined,
-      winner: undefined,
-      winTeam: undefined,
-      yourTeam: undefined,
-      isWin: undefined,
+      team1User: null,
+      team2User: null,
+      winner: null,
+      winTeam: null,
+      yourTeam: null,
+      isWin: null,
       showMatch: false,
-      challengeId: undefined,
+      challengeId: null,
       sendEmoji: false,
-      team1Emoji: undefined,
-      team2Emoji: undefined,
+      team1Emoji: null,
+      team2Emoji: null,
       showChallengeGameEnd: false,
       notifyStatus: '',
 
@@ -421,12 +421,12 @@ export default {
       if (data.teamId === this.gameData.teams[0].id) {
         this.team1Emoji = data.image;
         setTimeout(function () {
-          this.team1Emoji = undefined;
+          this.team1Emoji = null;
         }.bind(this), 5000);
       } else {
         this.team2Emoji = data.image;
         setTimeout(function () {
-          this.team2Emoji = undefined;
+          this.team2Emoji = null;
         }.bind(this), 5000);
       }
     },
@@ -506,12 +506,12 @@ export default {
             this.showMap = false;
             this.image = this.lastRound.content;
             this.contents = this.lastRound.contents;
-            this.lat = undefined;
-            this.lng = undefined;
-            this.targetLat = undefined;
-            this.targetLng = undefined;
+            this.lat = null;
+            this.lng = null;
+            this.targetLat = null;
+            this.targetLng = null;
             this.confirmed = null;
-            this.polylinePath = undefined;
+            this.polylinePath = null;
 
             this.heading = this.lastRound.heading;
 
@@ -698,7 +698,7 @@ export default {
     removeChooseMarker() {
       if (this.chooseMarker !== null) {
         this.chooseMarker.remove();
-        this.chooseMarker = undefined;
+        this.chooseMarker = null;
       }
     },
 
@@ -717,7 +717,7 @@ export default {
     addLine() {
       if (this.polylinePath) {
         this.polylinePath.remove();
-        this.polylinePath = undefined;
+        this.polylinePath = null;
       }
 
       var latlngs = [
@@ -737,14 +737,14 @@ export default {
       if (this.polylinePath) {
         this.polylinePath.remove(this.map);
       }
-      this.polylinePath = undefined;
+      this.polylinePath = null;
     },
 
     removeTargetMarker() {
       if (this.targetMarker) {
         this.targetMarker.remove();
       }
-      this.targetMarker = undefined;
+      this.targetMarker = null;
     },
 
     addTargetMarker() {

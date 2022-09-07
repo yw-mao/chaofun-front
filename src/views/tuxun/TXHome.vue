@@ -152,7 +152,7 @@ export default {
       },
       dialogVisible: false,
       submitPanoramaShow: false,
-      viewer: undefined,
+      viewer: null,
       center: {lng: 0, lat: 0},
       zoom: 3,
       lng: null,
@@ -188,15 +188,16 @@ export default {
       targetLine: null,
       panorama: null,
       baiduPano: null,
-      ranksMarker: undefined,
-      ranks: undefined,
+      ranksMarker: null,
+      ranks: null,
     }
   },
 
   created() {
     this.mapsId = this.$route.query.mapsId;
     this.autoRotate = this.$route.query.autoRotate;
-    if (this.mapsId != null) {
+    console.log(this.mapsId);
+    if (this.mapsId) {
       this.isMaps = true;
       this.enterMaps();
     }
@@ -287,7 +288,7 @@ export default {
             console.log(content);
             const content = this.contents[i];
             var k = {};
-            if (this.canUseWebP() && content.contentSpeedUp && content.contentSpeedUp !== null) {
+            if (this.canUseWebP() && content.contentSpeedUp) {
               k.panorama = 'https://i.chao-fan.com/' + content.contentSpeedUp;
             } else {
               k.panorama = 'https://i.chao-fan.com/' + content.content;
@@ -411,30 +412,30 @@ export default {
         if (data.data.status === 'wait') {
           this.confirmed = false;
           if (this.targetLat) {
-            this.lat = undefined;
-            this.lng = undefined;
+            this.lat = null;
+            this.lng = null;
             this.removeChooseMarker();
           }
           this.removeTargetMarker();
           this.removeLine();
           this.clearRanksMarker();
-          this.polylinePath = undefined;
-          this.distance = undefined;
-          this.rank = undefined;
-          this.ranks = undefined;
-          this.targetLat = undefined;
-          this.targetLng = undefined;
+          this.polylinePath = null;
+          this.distance = null;
+          this.rank = null;
+          this.ranks = null;
+          this.targetLat = null;
+          this.targetLng = null;
         }
         if (data.data.status === 'wait_result') {
           this.lat = data.data.chooseLat;
           this.lng = data.data.chooseLng;
           this.addChooseMarker();
-          this.targetLat = undefined;
-          this.targetLng = undefined;
+          this.targetLat = null;
+          this.targetLng = null;
           this.removeTargetMarker();
-          this.distance = undefined;
-          this.rank = undefined;
-          this.ranks = undefined;
+          this.distance = null;
+          this.rank = null;
+          this.ranks = null;
           this.clearRanksMarker();
         }
         if (data.data.status === 'rank') {
@@ -449,16 +450,17 @@ export default {
             this.addTargetMarker()
             this.distance = data.data.distance / 1000;
 
-            this.showMap = true;
-            this.map.invalidateSize();
+            this.showMapTrue();
 
-            if (data.data.chooseLat != null && !this.polylinePath) {
+            if (!this.polylinePath) {
+              this.map.setView([this.targetLat, this.targetLng], 3);
+            }
+
+            if (data.data.chooseLat && !this.polylinePath) {
               this.addLine();
             }
 
-            if (this.targetLat && this.targetLat !== null) {
-              this.map.setView([data.data.lat, data.data.lng], 3);
-            }
+
             // 增加其他人
           }
 
@@ -515,11 +517,12 @@ export default {
     removeChooseMarker() {
       if (this.chooseMarker) {
         this.chooseMarker.remove();
-        this.chooseMarker = undefined;
+        this.chooseMarker = null;
       }
     },
 
     addChooseMarker() {
+
       if (!this.lat) {
         return;
       }
@@ -537,7 +540,7 @@ export default {
     addLine() {
       if (this.polylinePath) {
         this.polylinePath.remove();
-        this.polylinePath = undefined;
+        this.polylinePath = null;
       }
 
       if (!this.lat || !this.targetLat) {
@@ -562,14 +565,14 @@ export default {
       if (this.polylinePath) {
         this.polylinePath.remove(this.map);
       }
-      this.polylinePath = undefined;
+      this.polylinePath = null;
     },
 
     removeTargetMarker() {
       if (this.targetMarker) {
         this.targetMarker.remove();
       }
-      this.targetMarker = undefined;
+      this.targetMarker = null;
     },
 
     addTargetMarker() {
@@ -625,7 +628,7 @@ export default {
     },
 
     confirm() {
-      if (this.lng === null) {
+      if (!this.lng) {
         this.$toast('还未在地图上选择地点，请选择！');
         return;
       }
@@ -633,7 +636,7 @@ export default {
         this.confirmed = true;
         this.wsSend("{\"scope\": \"tuxun\", \"data\": {\"type\": \"confirm\", \"lat\": " + this.lat + ", \"lng\": " + this.lng + "}}");
       } else {
-        if (this.lng === null) {
+        if (!this.lng) {
           return;
         }
         this.zoom = 20;
@@ -699,15 +702,15 @@ export default {
       this.showMap = false;
       this.confirmed = false;
       this.returnResult = true;
-      this.polylinePath = undefined;
-      this.lng = undefined;
-      this.lat = undefined;
-      this.targetLat = undefined;
-      this.targetLng = undefined;
-      this.image = undefined;
-      this.distance = undefined;
-      this.heading = undefined;
-      this.contents = undefined;
+      this.polylinePath = null;
+      this.lng = null;
+      this.lat = null;
+      this.targetLat = null;
+      this.targetLng = null;
+      this.image = null;
+      this.distance = null;
+      this.heading = null;
+      this.contents = null;
 
       api.getByPath("/api/v0/tuxun/game/generate", {mapsId: this.mapsId}).then(res => {
         this.image = res.data.content;
@@ -717,7 +720,7 @@ export default {
         // this.baiduPano = res.data.baiduPano;
         this.contents = res.data.contents;
 
-        if (this.canUseWebP() && res.data.contentSpeedUp && res.data.contentSpeedUp !== null) {
+        if (this.canUseWebP() && res.data.contentSpeedUp) {
           this.image = res.data.contentSpeedUp;
         }
 
