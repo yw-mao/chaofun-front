@@ -256,6 +256,13 @@ routes = [
     hidden: true
   },
   {
+    path: '/tuxunNewMap',
+    component: () => import('@/views/tuxun/TXNewMap'),
+    name: '图寻首页',
+    meta: { title: '图寻首页'},
+    hidden: true
+  },
+  {
     path: '/tuxun/main_game',
     component: () => import('@/views/tuxun/TXHome'),
     name: '图寻',

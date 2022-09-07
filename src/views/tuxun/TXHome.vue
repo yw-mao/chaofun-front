@@ -72,18 +72,18 @@
     </div>
 
     <div id="map-container" :class="[{'bm-view-container': !ISPHONE}, {'bm-view-container-phone': ISPHONE && showMap}, {'bm-view-container-phone-hidden': ISPHONE && !showMap}]"@mouseover="mapMouseOver" @mouseout="mapMouseOut">
-      <div id="map" :class="[{'bm-view': !ISPHONE}, {'bm-view-phone': ISPHONE && showMap}, {'bm-view-phone-hidden': ISPHONE && !showMap}]" ></div>
+      <div id="map" :class="[{'bm-view': !ISPHONE}, {'bm-view-phone': ISPHONE}]" ></div>
     </div>
     <div  :class="[{'confirm': !ISPHONE}, {'confirm-phone': ISPHONE}]">
       <el-button @mouseover.native="mapMouseOver" class="not_stop_hover" v-if="confirmed && distance" @click="clickDistance">距离 {{ distance.toFixed(2)}} 千米</el-button>
       <el-button @mouseover.native="mapMouseOver"   class="not_stop_hover" v-if="(showMap || !ISPHONE) && !confirmed && status !== 'rank'"  @click="confirm">确定选择</el-button>
       <el-button @mouseover.native="mapMouseOver"  class="not_stop_hover" v-else-if="!isMaps && confirmed && !distance" @click="centerChoose">等待答案</el-button>
-      <el-button @mouseover.native="mapMouseOver"  class="not_stop_hover" v-else-if="!showMap && ISPHONE && confirmed" @click="showMap = true">打开地图</el-button>
-      <el-button @mouseover.native="mapMouseOver"  class="not_stop_hover" v-else-if="!showMap && ISPHONE" @click="showMap = true">选择地点</el-button>
+      <el-button @mouseover.native="mapMouseOver"  class="not_stop_hover" v-else-if="!showMap && ISPHONE && confirmed" @click="showMapTrue"> 打开地图</el-button>
+      <el-button @mouseover.native="mapMouseOver"  class="not_stop_hover" v-else-if="!showMap && ISPHONE" @click="showMapTrue">选择地点</el-button>
       <el-button @mouseover.native="mapMouseOver" class="not_stop_hover" v-if="isMaps && confirmed && distance" @click="next">下一题</el-button>
     </div>
 
-    <div v-if="showMap && ISPHONE" style="position: absolute; left: 20px; bottom: 20px">
+    <div v-if="showMap && ISPHONE" style="position: absolute; left: 20px; bottom: 20px;z-index: 1000">
       <el-button @click="showMap = false">隐藏地图</el-button>
     </div>
 
@@ -116,6 +116,10 @@ import Vue from 'vue'
 import { mapGetters } from 'vuex'
 import * as api from '../../api/api'
 import vueDanmaku from 'vue-danmaku'
+
+import "leaflet/dist/leaflet.css";
+import L from "leaflet";
+import "leaflet-bing-layer/leaflet-bing-layer"
 
 // Vue.use(BaiduMap, {
 //   // ak 是在百度地图开发者平台申请的密钥 详见 http://lbsyun.baidu.com/apiconsole/key */
@@ -184,8 +188,8 @@ export default {
       targetLine: null,
       panorama: null,
       baiduPano: null,
-      ranksMarker: null,
-      ranks: [],
+      ranksMarker: undefined,
+      ranks: undefined,
     }
   },
 
@@ -203,32 +207,12 @@ export default {
     } else {
       this.next();
     }
-
-    BMapLoader.load({
-      key: 'aibVGReAhMEtxu4Bj2aHixWprh28AhrT' ,
-      version: '3.0'
-    }).then((Bmap) => {
-      var map = new BMap.Map("map", {enableMapClick:false});          // 创建地图实例
-      map.centerAndZoom(new BMap.Point(106.0, 38.8), 1);
-      map.enableScrollWheelZoom();
-      map.disableContinuousZoom();
-      var self = this;
-      map.addEventListener("click", function(e){
-        self.click(e);
-      });
-      map.addEventListener("touchend", function(e){
-        self.touchEnd(e);
-      });
-      map.addEventListener("touchstart", function(e){
-        self.touchStart(e);
-      });
-
-      var opts = {anchor: BMAP_ANCHOR_TOP_RIGHT};
-      map.addControl(new BMap.NavigationControl(opts));
-      map.addControl(new BMap.MapTypeControl({anchor: BMAP_ANCHOR_TOP_LEFT, mapTypes: [BMAP_NORMAL_MAP ,BMAP_SATELLITE_MAP]}));
-      this.map = map;
-      this.BMap = Bmap;
-    });
+    var map = L.map('map').setView([38.8, 106.0], 3)
+    L.tileLayer.bing({coordType: 'gcj02', bingMapsKey: 'AljSFl1ezKYkuatAoeYdOxBPuuZqzRoYgEULlAh_ZuQDHac6gCWJUVDSF2g99WKv', imagerySet: 'RoadOnDemand', culture: 'zh-CN', style: 'vb', minZoom: 1, noWrap: true}).addTo(map)
+    this.map = map;
+    this.map.scrollWheelZoom.enable();
+    this.map.on('click', this.click);
+    this.map.worldCopyJump = false;
   },
 
   destroyed() {
@@ -236,6 +220,9 @@ export default {
   },
 
   methods: {
+    showMapTrue() {
+      this.showMap = true;
+    },
     mapMouseOver() {
       var element = document.getElementById("map-container")
       // console.log(element);
@@ -243,6 +230,8 @@ export default {
         element.style.width = '40%';
         element.style.height = '60%';
         element.style.opacity = 1.0;
+        this.map.invalidateSize();
+
       }
     },
 
@@ -252,6 +241,7 @@ export default {
         element.style.width = '25%';
         element.style.height = '35%';
         element.style.opacity = 0.7;
+        this.map.invalidateSize();
       }
     },
 
@@ -373,15 +363,15 @@ export default {
       // 每3秒发送一次心跳
       setInterval(() => {
         this.sendHeartBeat();
-      }, 3000);
+      }, 15000);
     },
 
     //
     wsOnMessage(e) {
-      console.log("wsOnMessage");
+      // console.log("wsOnMessage");
       // console.log(e);
       const data = JSON.parse(e.data);
-      console.log(data);
+      // console.log(data);
       if (data.data.type === 'tick') {
         this.status = data.data.status;
         this.onlineNums = data.data.onlineNums;
@@ -422,31 +412,31 @@ export default {
 
         if (data.data.status === 'wait') {
           this.confirmed = false;
-          if (this.targetLat !== null) {
-            this.lat = null;
-            this.lng = null;
+          if (this.targetLat) {
+            this.lat = undefined;
+            this.lng = undefined;
             this.removeChooseMarker();
           }
-          this.targetLat = null;
-          this.targetLng = null;
           this.removeTargetMarker();
-          this.polylinePath = null;
           this.removeLine();
-          this.distance = null;
-          this.rank = null;
-          this.ranks = null;
           this.clearRanksMarker();
+          this.polylinePath = undefined;
+          this.distance = undefined;
+          this.rank = undefined;
+          this.ranks = undefined;
+          this.targetLat = undefined;
+          this.targetLng = undefined;
         }
         if (data.data.status === 'wait_result') {
           this.lat = data.data.chooseLat;
           this.lng = data.data.chooseLng;
           this.addChooseMarker();
-          this.targetLat = null;
-          this.targetLng = null;
+          this.targetLat = undefined;
+          this.targetLng = undefined;
           this.removeTargetMarker();
-          this.distance = null;
-          this.rank = null;
-          this.ranks = null;
+          this.distance = undefined;
+          this.rank = undefined;
+          this.ranks = undefined;
           this.clearRanksMarker();
         }
         if (data.data.status === 'rank') {
@@ -462,22 +452,21 @@ export default {
             this.distance = data.data.distance / 1000;
 
             this.showMap = true;
+            this.map.invalidateSize();
 
-            if (data.data.chooseLat != null && this.polylinePath === null) {
-              this.polylinePath = [
-                new BMap.Point(this.lng, this.lat),
-                new BMap.Point(this.targetLng, this.targetLat),
-              ]
+            if (data.data.chooseLat != null && !this.polylinePath) {
               this.addLine();
             }
 
             if (this.targetLat && this.targetLat !== null) {
-              this.map.centerAndZoom(new BMap.Point(data.data.lng, data.data.lat), 1);
+              this.map.setView([data.data.lat, data.data.lng], 3);
             }
             // 增加其他人
-            if (this.ranksMarker && this.ranksMarker.length == 0 && this.ranks != null) {
-              this.addRanksMarker();
-            }
+          }
+
+          if (this.ranksMarker && this.ranksMarker.length == 0 && this.ranks) {
+            console.log("addRanksMarker");
+            this.addRanksMarker();
           }
         }
       } else if (data.data.type === 'need_login') {
@@ -505,7 +494,7 @@ export default {
       if (this.showMap === false) {
         this.showMap = true
       }
-      this.map.centerAndZoom(new BMap.Point(this.lng, this.lat), 5);
+      this.map.setView([this.lat, this.lng], 5);
     },
 
     reloadPage() {
@@ -533,79 +522,90 @@ export default {
 
     removeChooseMarker() {
       if (this.chooseMarker !== null) {
-        this.map.removeOverlay(this.chooseMarker);
+        this.chooseMarker.remove();
+        this.chooseMarker = undefined;
       }
-      this.chooseMarker = null;
     },
 
     addChooseMarker() {
-      var point = new BMap.Point(this.lng,this.lat);
-      var marker = new BMap.Marker(point);        // 创建标注
-      marker.disableDragging();
-      var label = new BMap.Label('你选择了');        // 创建标注
-      label.setOffset(new BMap.Size(-15, 30));
-      console.log(label.getOffset())
-      marker.setLabel(label);
-      if (this.chooseMarker !== null) {
-        this.map.removeOverlay(this.chooseMarker);
+      if (this.chooseMarker) {
+        this.chooseMarker.remove();
       }
+      var marker = L.marker([this.lat, this.lng], {icon: new L.Icon.Default()}).bindTooltip("你选择了",
+          {
+            permanent: true,
+            direction: 'auto'
+          }).addTo(this.map);
       this.chooseMarker = marker;
-      this.map.addOverlay(marker);
     },
 
     addLine() {
-      if (this.targetLine && this.targetLine !== null) {
-        this.map.removeOverlay(this.targetLine);
+      if (this.polylinePath) {
+        this.polylinePath.remove();
+        this.polylinePath = undefined;
       }
-      var line =  new BMap.Polyline(this.polylinePath);
-      this.targetLine = line;
-      this.map.addOverlay(line);
+
+      var latlngs = [
+        [this.lat, this.lng],
+        [this.targetLat, this.targetLng],
+      ];
+
+      this.polylinePath = new L.Polyline(latlngs, {color: 'blue',
+          weight: 3,
+          opacity: 0.5,
+          smoothFactor: 1
+      });
+      console.log("12312");
+      this.polylinePath.addTo(this.map);
     },
 
-
     removeLine() {
-      if (this.targetLine !== null) {
-        this.map.removeOverlay(this.targetLine);
+      if (this.polylinePath) {
+        this.polylinePath.remove(this.map);
       }
-      this.targetLine = null;
+      this.polylinePath = undefined;
     },
 
     removeTargetMarker() {
-      if (this.targetMarker !== null) {
-        this.map.removeOverlay(this.targetMarker);
+      if (this.targetMarker) {
+        this.targetMarker.remove();
       }
-      this.targetMarker = null;
+      this.targetMarker = undefined;
     },
 
     addTargetMarker() {
-      var point = new BMap.Point(this.targetLng,this.targetLat);
-      var marker = new BMap.Marker(point);        // 创建标注
-      marker.disableDragging();
-      var label = new BMap.Label('目标位置');        // 创建标注
-      label.setOffset(new BMap.Size(-15, 30));
-      console.log(label.getOffset())
-      marker.setLabel(label);
-      if (this.targetMarker !== null) {
-        this.map.removeOverlay(this.targetMarker);
+      if (this.targetMarker) {
+        this.targetMarker.remove();
       }
+      var marker = L.marker([this.targetLat, this.targetLng], {icon: new L.Icon.Default()}).bindTooltip("目标位置",
+          {
+            permanent: true,
+            direction: 'auto'
+          }).addTo(this.map);
       this.targetMarker = marker;
-      this.map.addOverlay(marker);
+    },
+
+    addMarker(lat, lng, label) {
+      var marker = L.marker([lat, lng], {icon: new L.Icon.Default()}).bindTooltip(label,
+          {
+            permanent: true,
+            direction: 'auto'
+          }).addTo(this.map);
     },
 
     addRanksMarker() {
       this.ranksMarker = [];
       if (this.ranks) {
+        console.log(this.ranks);
         this.ranks.forEach( item => {
           if (item.userAO.userId !== this.$store.state.user.userInfo.userId) {
-            var point = new BMap.Point(item.latLng.lng, item.latLng.lat);
-            var marker = new BMap.Marker(point);        // 创建标注
-            marker.disableDragging();
-            var label = new BMap.Label(item.userAO.userName);        // 创建标注
-            label.setOffset(new BMap.Size(-15, 30));
-            console.log(label.getOffset())
-            marker.setLabel(label);
+            console.log(item);
+            var marker = L.marker([item.latLng.lat, item.latLng.lng], {icon: new L.Icon.Default()}).bindTooltip(item.userAO.userName,
+                {
+                  permanent: true,
+                  direction: 'auto'
+                }).addTo(this.map);
             this.ranksMarker.push(marker);
-            this.map.addOverlay(marker);
           }
         });
       }
@@ -614,17 +614,18 @@ export default {
     clearRanksMarker() {
       if (this.ranksMarker) {
         this.ranksMarker.forEach(item => {
-          this.map.removeOverlay(item);
+          item.remove();
         });
       }
       this.ranksMarker = [];
     },
 
     click(e) {
+      console.log(e);
       if (this.status === 'wait' || this.isMaps) {
         if (!this.confirmed) {
-          this.lng = e.point.lng;
-          this.lat = e.point.lat;
+          this.lng = e.latlng.lng;
+          this.lat = e.latlng.lat;
           this.addChooseMarker();
         }
       } else {
@@ -645,20 +646,31 @@ export default {
           return;
         }
         this.zoom = 20;
-        this.map.setZoom(0);
         this.$toast('确认成功！')
         this.confirmed = true;
         api.getByPath("/api/v0/tuxun/game/confirm", {id: this.id, lng: this.lng, lat: this.lat}).then(res => {
+
+          api.getByPath("/api/v0/tuxun/game/confirm1", {id: this.id, lng: this.lng, lat: this.lat}).then(res => {
+            this.addMarker(res.data.lat, res.data.lng, "1");
+          });
+
+          api.getByPath("/api/v0/tuxun/game/confirm2", {id: this.id, lng: this.lng, lat: this.lat}).then(res => {
+            this.addMarker(res.data.lat, res.data.lng, "2");
+          });
+
+          api.getByPath("/api/v0/tuxun/game/confirm3", {id: this.id, lng: this.lng, lat: this.lat}).then(res => {
+            this.addMarker(res.data.lat, res.data.lng, "3");
+          });
+
+          api.getByPath("/api/v0/tuxun/game/confirm4", {id: this.id, lng: this.lng, lat: this.lat}).then(res => {
+            this.addMarker(res.data.lat, res.data.lng, "4");
+          });
           this.confirmed = true;
           this.targetLng = res.data.lng;
           this.targetLat = res.data.lat;
-          this.addTargetMarker();
-          this.map.centerAndZoom(new BMap.Point(this.targetLng, this.targetLat), 1);
           this.distance = res.data.distanceMeter / 1000;
-          this.polylinePath = [
-            new BMap.Point(this.lng, this.lat),
-            new BMap.Point(this.targetLng, this.targetLat),
-          ]
+          this.map.setView([this.targetLat,this.targetLng], 18);
+          this.addTargetMarker();
           this.addLine();
         });
       }
@@ -705,22 +717,22 @@ export default {
 
     next() {
 
-      this.showMap = false;
-      this.confirmed = false;
-      this.returnResult = true;
-      this.polylinePath = null;
-      this.lng = null;
-      this.lat = null;
-      this.targetLat = null;
-      this.targetLng = null;
-      this.image = null;
-      this.distance = null;
-      this.heading = undefined;
-      this.contents = undefined;
-
       this.removeChooseMarker();
       this.removeTargetMarker();
       this.removeLine();
+
+      this.showMap = false;
+      this.confirmed = false;
+      this.returnResult = true;
+      this.polylinePath = undefined;
+      this.lng = undefined;
+      this.lat = undefined;
+      this.targetLat = undefined;
+      this.targetLng = undefined;
+      this.image = undefined;
+      this.distance = undefined;
+      this.heading = undefined;
+      this.contents = undefined;
 
       api.getByPath("/api/v0/tuxun/game/generate", {mapsId: this.mapsId}).then(res => {
         this.image = res.data.content;
@@ -897,6 +909,7 @@ export default {
   bottom: 30px;
   right: 30px;
   width: 300px;
+  z-index: 1000;
 }
 
 .confirm-phone {
@@ -904,6 +917,7 @@ export default {
   bottom: 20px;
   right: 20px;
   margin:auto;
+  z-index: 1000;
 }
 .home {
   position: absolute;

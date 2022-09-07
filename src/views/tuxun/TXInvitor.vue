@@ -138,7 +138,7 @@
         </div>
       </div>
       <div id="map-container" :class="[{'bm-view-container': !ISPHONE}, {'bm-view-container-phone': ISPHONE && showMap}, {'bm-view-container-phone-hidden': ISPHONE && !showMap}]"@mouseover="mapMouseOver" @mouseout="mapMouseOut">
-        <div id="map" :class="[{'bm-view': !ISPHONE}, {'bm-view-phone': ISPHONE && showMap}, {'bm-view-phone-hidden': ISPHONE && !showMap}]" @mouseover="mapMouseOver" @mouseout="mapMouseOut"></div>
+        <div id="map" :class="[{'bm-view': !ISPHONE}, {'bm-view-phone': ISPHONE}]" @mouseover="mapMouseOver" @mouseout="mapMouseOut"></div>
       </div>
 
       <div v-if="lastRound && lastRound.timerStartTime && !lastRound.endTime " :class="[{'top-info': !ISPHONE}, {'top-info-phone': ISPHONE}]">

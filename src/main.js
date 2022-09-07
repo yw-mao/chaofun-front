@@ -94,7 +94,7 @@ Vue.config.productionTip = false
 
 // 加入百度统计
 router.beforeEach((to, from, next) => {
-  
+
   if (to.path) {
     if (window._hmt) {
       window._hmt.push(['_trackPageview', to.fullPath])
@@ -114,7 +114,16 @@ router.beforeEach((to, from, next) => {
   next()
 })
 
+import L from "leaflet"
+// import {pointCorrection} from '@shzl/shzl-leaflet';
+// pointCorrection(L)
+delete L.Icon.Default.prototype._getIconUrl;
 
+L.Icon.Default.mergeOptions({
+  iconRetinaUrl: require('leaflet/dist/images/marker-icon-2x.png'),
+  iconUrl: require('leaflet/dist/images/marker-icon.png'),
+  shadowUrl: require('leaflet/dist/images/marker-shadow.png'),
+});
 
 new Vue({
   el: '#app',
