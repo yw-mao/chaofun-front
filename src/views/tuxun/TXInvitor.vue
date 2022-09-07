@@ -145,8 +145,7 @@
         选择倒计时: {{timeLeftStr}}
       </div>
 
-
-      <div v-if="showMap && ISPHONE" style="position: absolute; left: 20px; bottom: 20px">
+      <div v-if="showMap && ISPHONE" style="position: absolute; left: 20px; bottom: 20px;z-index: 1000">
         <el-button @click="showMap = false">隐藏地图</el-button>
       </div>
 
@@ -258,6 +257,10 @@ import {getByPathLongTimeout} from "../../api/api";
 import Matching from "./Matching";
 import EmojiSender from "./EmojiSender";
 
+import "leaflet/dist/leaflet.css";
+import L from "leaflet";
+import "leaflet-bing-layer/leaflet-bing-layer"
+
 export default {
   name: "TXInvitor",
   components: {EmojiSender, Matching},
@@ -315,6 +318,7 @@ export default {
         element.style.width = '40%';
         element.style.height = '60%';
         element.style.opacity = 1.0;
+        this.map.invalidateSize();
       }
     },
 
@@ -324,6 +328,7 @@ export default {
         element.style.width = '25%';
         element.style.height = '35%';
         element.style.opacity = 0.7;
+        this.map.invalidateSize();
       }
     },
     hideEmojiSender() {
@@ -331,6 +336,24 @@ export default {
     },
     reloadPage() {
       this.$router.go(this.$router.currentRoute);
+    },
+    initMap() {
+      if (!this.map) {
+        var map = L.map('map').setView([38.8, 106.0], 3)
+        L.tileLayer.bing({
+          coordType: 'gcj02',
+          bingMapsKey: 'AljSFl1ezKYkuatAoeYdOxBPuuZqzRoYgEULlAh_ZuQDHac6gCWJUVDSF2g99WKv',
+          imagerySet: 'RoadOnDemand',
+          culture: 'zh-CN',
+          style: 'vb',
+          minZoom: 1,
+          noWrap: true
+        }).addTo(map)
+        this.map = map;
+        this.map.scrollWheelZoom.enable();
+        this.map.on('click', this.click);
+        this.map.worldCopyJump = false;
+      }
     },
     init() {
       var Notification = window.Notification || window.mozNotification || window.webkitNotification;
@@ -351,6 +374,7 @@ export default {
         this.showMatch = false;
         this.challengeInit();
       }
+
     },
 
     challengeInit() {
@@ -466,19 +490,20 @@ export default {
             this.lastRound.content = this.lastRound.contentSpeedUp;
           }
           if (this.image !== this.lastRound.content) {
-            this.showMap = false;
-            this.image = this.lastRound.content;
-            this.contents = this.lastRound.contents;
-            this.lat = null;
-            this.lng = null;
-            this.targetLat = undefined;
-            this.targetLng = undefined;
-            this.confirmed = null;
-            this.polylinePath = undefined;
             this.removeChooseMarker()
             this.removeTargetMarker();
             this.removeLine();
             this.clearRanksMarker();
+
+            this.showMap = false;
+            this.image = this.lastRound.content;
+            this.contents = this.lastRound.contents;
+            this.lat = undefined;
+            this.lng = undefined;
+            this.targetLat = undefined;
+            this.targetLng = undefined;
+            this.confirmed = null;
+            this.polylinePath = undefined;
 
             this.heading = this.lastRound.heading;
 
@@ -551,42 +576,9 @@ export default {
               setTimeout(function () {
                 THREE.Cache.clear();
               }, 1000);
+
+              this.initMap();
             }.bind(this), 100);
-
-          }
-
-          if (!this.map) {
-            BMapLoader.load({
-              key: 'aibVGReAhMEtxu4Bj2aHixWprh28AhrT',
-              version: '3.0'
-            }).then((Bmap) => {
-              var map = new BMap.Map("map", {enableMapClick:false});          // 创建地图实例
-              map.centerAndZoom(new BMap.Point(106.0, 38.8), 1);
-              map.enableScrollWheelZoom();
-              map.disableContinuousZoom();
-              var self = this;
-              map.addEventListener("click", function (e) {
-                self.click(e);
-              });
-              map.addEventListener("touchend", function (e) {
-                self.touchEnd(e);
-              });
-              map.addEventListener("touchstart", function (e) {
-                self.touchStart(e);
-              });
-              // map.setMapStyleV2({
-              //   styleId: '0eb3aa47a2aac583e238cabe88a001f3'
-              // });
-
-              var opts = {anchor: BMAP_ANCHOR_TOP_RIGHT};
-              map.addControl(new BMap.NavigationControl(opts));
-              map.addControl(new BMap.MapTypeControl({
-                anchor: BMAP_ANCHOR_TOP_LEFT,
-                mapTypes: [BMAP_NORMAL_MAP, BMAP_SATELLITE_MAP]
-              }));
-              this.map = map;
-              this.BMap = Bmap;
-            });
           }
         }
       }
@@ -602,16 +594,12 @@ export default {
           this.addTargetMarker();
           this.addRanksMarker();
 
-          if (this.lng && this.BMap) {
-            this.polylinePath = [
-              new BMap.Point(this.lng, this.lat),
-              new BMap.Point(this.targetLng, this.targetLat),
-            ]
+          if (this.lng) {
             this.addLine();
           }
 
-          if (this.map && this.BMap) {
-            this.map.centerAndZoom(new BMap.Point(this.targetLng, this.targetLat), 1);
+          if (this.map) {
+            this.map.setView([this.targetLat, this.targetLng], 3);
           }
         }
       } else {
@@ -693,55 +681,75 @@ export default {
 
     click(e) {
       if (!this.confirmed) {
-        this.lng = e.point.lng;
-        this.lat = e.point.lat;
+        this.lng = e.latlng.lng;
+        this.lat = e.latlng.lat;
         this.addChooseMarker();
       }
     },
 
-    touchStart(e) {
-      this.lastTouchTime = new Date().getTime();
-    },
-
-    touchEnd(e) {
-      console.log('touchEnd');
-      var period = new Date().getTime() - this.lastTouchTime;
-      console.log(period);
-      if (period < 150) {
-        this.click(e);
-      }
-      this.lastTouchTime = 0;
-    },
-
     removeChooseMarker() {
       if (this.chooseMarker !== null) {
-        this.map.removeOverlay(this.chooseMarker);
+        this.chooseMarker.remove();
+        this.chooseMarker = undefined;
       }
-      this.chooseMarker = null;
     },
 
     addChooseMarker() {
-      var point = new BMap.Point(this.lng,this.lat);
-      var marker = new BMap.Marker(point);        // 创建标注
-      marker.disableDragging();
-      var label = new BMap.Label('你选择了');        // 创建标注
-      label.setOffset(new BMap.Size(-15, 30));
-      console.log(label.getOffset())
-      marker.setLabel(label);
-      if (this.chooseMarker !== null) {
-        this.map.removeOverlay(this.chooseMarker);
+      if (this.chooseMarker) {
+        this.chooseMarker.remove();
       }
+      var marker = L.marker([this.lat, this.lng], {icon: new L.Icon.Default()}).bindTooltip("你选择了",
+          {
+            permanent: true,
+            direction: 'auto'
+          }).addTo(this.map);
       this.chooseMarker = marker;
-      this.map.addOverlay(marker);
     },
 
     addLine() {
-      if (this.targetLine && this.targetLine !== null) {
-        this.map.removeOverlay(this.targetLine);
+      if (this.polylinePath) {
+        this.polylinePath.remove();
+        this.polylinePath = undefined;
       }
-      var line =  new BMap.Polyline(this.polylinePath);
-      this.targetLine = line;
-      this.map.addOverlay(line);
+
+      var latlngs = [
+        [this.lat, this.lng],
+        [this.targetLat, this.targetLng],
+      ];
+
+      this.polylinePath = new L.Polyline(latlngs, {color: 'blue',
+        weight: 3,
+        opacity: 0.5,
+        smoothFactor: 1
+      });
+      console.log("12312");
+      this.polylinePath.addTo(this.map);
+    },
+
+    removeLine() {
+      if (this.polylinePath) {
+        this.polylinePath.remove(this.map);
+      }
+      this.polylinePath = undefined;
+    },
+
+    removeTargetMarker() {
+      if (this.targetMarker) {
+        this.targetMarker.remove();
+      }
+      this.targetMarker = undefined;
+    },
+
+    addTargetMarker() {
+      if (this.targetMarker) {
+        this.targetMarker.remove();
+      }
+      var marker = L.marker([this.targetLat, this.targetLng], {icon: new L.Icon.Default()}).bindTooltip("目标位置",
+          {
+            permanent: true,
+            direction: 'auto'
+          }).addTo(this.map);
+      this.targetMarker = marker;
     },
 
     countDown() {
@@ -773,21 +781,6 @@ export default {
           this.gameTimeLeft = 5;
         }
       }, 1000);
-
-    },
-
-    removeLine() {
-      if (this.targetLine) {
-        this.map.removeOverlay(this.targetLine);
-      }
-      this.targetLine = undefined;
-    },
-
-    removeTargetMarker() {
-      if (this.targetMarker) {
-        this.map.removeOverlay(this.targetMarker);
-      }
-      this.targetMarker = undefined;
     },
 
     drawTeamUser(teamUser) {
@@ -795,22 +788,19 @@ export default {
         if (teamUser.guesses && teamUser.guesses.length > 0) {
           var lastGuess = teamUser.guesses[teamUser.guesses.length -1];
           if (lastGuess.round === this.gameData.currentRound) {
-            var point = new BMap.Point(lastGuess.lng, lastGuess.lat);
-            var marker = new BMap.Marker(point);        // 创建标注
-            marker.disableDragging();
-            var label = new BMap.Label(teamUser.user.userName);        // 创建标注
-            label.setOffset(new BMap.Size(-15, 30));
-            console.log(label.getOffset())
-            marker.setLabel(label);
+            var marker = L.marker([lastGuess.lat, lastGuess.lng], {icon: new L.Icon.Default()}).bindTooltip(teamUser.user.userName,
+                {
+                  permanent: true,
+                  direction: 'auto'
+                }).addTo(this.map);
             this.ranksMarker.push(marker);
-            this.map.addOverlay(marker);
           }
         }
       }
     },
 
     addRanksMarker() {
-      if (!this.BMap) {
+      if (!this.map) {
         return;
       }
       this.ranksMarker = [];
@@ -826,28 +816,10 @@ export default {
     clearRanksMarker() {
       if (this.ranksMarker) {
         this.ranksMarker.forEach(item => {
-          this.map.removeOverlay(item);
+          item.remove();
         });
       }
       this.ranksMarker = [];
-    },
-
-    addTargetMarker() {
-      if (!this.BMap) {
-        return;
-      }
-      var point = new BMap.Point(this.targetLng,this.targetLat);
-      var marker = new BMap.Marker(point);        // 创建标注
-      marker.disableDragging();
-      var label = new BMap.Label('目标位置');        // 创建标注
-      label.setOffset(new BMap.Size(-15, 30));
-      console.log(label.getOffset())
-      marker.setLabel(label);
-      if (this.targetMarker) {
-        this.map.removeOverlay(this.targetMarker);
-      }
-      this.targetMarker = marker;
-      this.map.addOverlay(marker);
     },
 
     confirm() {
@@ -1226,6 +1198,7 @@ export default {
       bottom: 30px;
       right: 30px;
       width: 300px;
+      z-index: 1000;
     }
 
     .confirm-phone {
@@ -1233,6 +1206,7 @@ export default {
       bottom: 20px;
       right: 20px;
       margin:auto;
+      z-index: 1000;
     }
 
     .home {

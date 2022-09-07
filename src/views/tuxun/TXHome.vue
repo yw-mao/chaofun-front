@@ -83,7 +83,7 @@
       <el-button @mouseover.native="mapMouseOver" class="not_stop_hover" v-if="isMaps && confirmed && distance" @click="next">下一题</el-button>
     </div>
 
-    <div v-if="showMap && ISPHONE" style="position: absolute; left: 20px; bottom: 20px;z-index: 1000">
+    <div v-if="showMap && ISPHONE" style="position: absolute; left: 20px; bottom: 20px; z-index: 1000">
       <el-button @click="showMap = false">隐藏地图</el-button>
     </div>
 
@@ -508,7 +508,7 @@ export default {
     },
 
     removeChooseMarker() {
-      if (this.chooseMarker !== null) {
+      if (this.chooseMarker) {
         this.chooseMarker.remove();
         this.chooseMarker = undefined;
       }
