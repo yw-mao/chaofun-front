@@ -217,7 +217,7 @@ export default {
 
   methods: {
     initMap() {
-      var map = L.map('map', {worldCopyJump: true, coordType: 'gcj02',  zoomAnimation: false, fadeAnimation: false}).setView([38.8, 106.0], 3)
+      var map = L.map('map', {worldCopyJump: true, coordType: 'gcj02',  zoomAnimation: false, fadeAnimation: true}).setView([38.8, 106.0], 3)
       L.tileLayer.bing({coordType: 'gcj02', bingMapsKey: 'AljSFl1ezKYkuatAoeYdOxBPuuZqzRoYgEULlAh_ZuQDHac6gCWJUVDSF2g99WKv', imagerySet: 'RoadOnDemand', culture: 'zh-CN', style: 'vb', minZoom: 1, noWrap: true}).addTo(map)
       this.map = map;
       this.map.scrollWheelZoom.enable();
