@@ -520,6 +520,9 @@ export default {
     },
 
     addChooseMarker() {
+      if (!this.lat) {
+        return;
+      }
       if (this.chooseMarker) {
         this.chooseMarker.remove();
       }
@@ -535,6 +538,10 @@ export default {
       if (this.polylinePath) {
         this.polylinePath.remove();
         this.polylinePath = undefined;
+      }
+
+      if (!this.lat || !this.targetLat) {
+        return;
       }
 
       var latlngs = [
