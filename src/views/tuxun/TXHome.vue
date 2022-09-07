@@ -207,12 +207,7 @@ export default {
     } else {
       this.next();
     }
-    var map = L.map('map').setView([38.8, 106.0], 3)
-    L.tileLayer.bing({coordType: 'gcj02', bingMapsKey: 'AljSFl1ezKYkuatAoeYdOxBPuuZqzRoYgEULlAh_ZuQDHac6gCWJUVDSF2g99WKv', imagerySet: 'RoadOnDemand', culture: 'zh-CN', style: 'vb', minZoom: 1, noWrap: true}).addTo(map)
-    this.map = map;
-    this.map.scrollWheelZoom.enable();
-    this.map.on('click', this.click);
-    this.map.worldCopyJump = false;
+    this.initMap();
   },
 
   destroyed() {
@@ -220,6 +215,14 @@ export default {
   },
 
   methods: {
+    initMap() {
+      var map = L.map('map').setView([38.8, 106.0], 3)
+      L.tileLayer.bing({coordType: 'gcj02', bingMapsKey: 'AljSFl1ezKYkuatAoeYdOxBPuuZqzRoYgEULlAh_ZuQDHac6gCWJUVDSF2g99WKv', imagerySet: 'RoadOnDemand', culture: 'zh-CN', style: 'vb', minZoom: 1, noWrap: true}).addTo(map)
+      this.map = map;
+      this.map.scrollWheelZoom.enable();
+      this.map.on('click', this.click);
+      this.map.worldCopyJump = false;
+    },
     showMapTrue() {
       this.showMap = true;
     },
@@ -257,7 +260,6 @@ export default {
 
     initPanorama() {
       try {
-
         if (!this.viewer) {
           var plugins = [];
           plugins.push([CompassPlugin, {
@@ -332,7 +334,6 @@ export default {
     notShowPanorama() {
       this.viewer.hide();
     },
-
 
     initBaiduPanorama() {
       console.log("initBaiduPanorama_1");
@@ -506,20 +507,6 @@ export default {
       this.wsSend(`{"scope": "heart_beat"}`);
     },
 
-    touchStart(e) {
-      this.lastTouchTime = new Date().getTime();
-    },
-
-    touchEnd(e) {
-      console.log('touchEnd');
-      var period = new Date().getTime() - this.lastTouchTime;
-      console.log(period);
-      if (period < 150) {
-        this.click(e);
-      }
-      this.lastTouchTime = 0;
-    },
-
     removeChooseMarker() {
       if (this.chooseMarker !== null) {
         this.chooseMarker.remove();
@@ -649,22 +636,6 @@ export default {
         this.$toast('确认成功！')
         this.confirmed = true;
         api.getByPath("/api/v0/tuxun/game/confirm", {id: this.id, lng: this.lng, lat: this.lat}).then(res => {
-
-          api.getByPath("/api/v0/tuxun/game/confirm1", {id: this.id, lng: this.lng, lat: this.lat}).then(res => {
-            this.addMarker(res.data.lat, res.data.lng, "1");
-          });
-
-          api.getByPath("/api/v0/tuxun/game/confirm2", {id: this.id, lng: this.lng, lat: this.lat}).then(res => {
-            this.addMarker(res.data.lat, res.data.lng, "2");
-          });
-
-          api.getByPath("/api/v0/tuxun/game/confirm3", {id: this.id, lng: this.lng, lat: this.lat}).then(res => {
-            this.addMarker(res.data.lat, res.data.lng, "3");
-          });
-
-          api.getByPath("/api/v0/tuxun/game/confirm4", {id: this.id, lng: this.lng, lat: this.lat}).then(res => {
-            this.addMarker(res.data.lat, res.data.lng, "4");
-          });
           this.confirmed = true;
           this.targetLng = res.data.lng;
           this.targetLat = res.data.lat;
