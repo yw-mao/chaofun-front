@@ -440,7 +440,7 @@ export default {
         if (data.data.status === 'rank') {
           this.rank = data.data.rank;
           this.ranks = data.data.ranks;
-          if (!this.targetLat || this.targetLat === null) {
+          if (!this.targetLat) {
             this.lat = data.data.chooseLat;
             this.lng = data.data.chooseLng;
             this.addChooseMarker();
