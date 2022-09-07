@@ -157,8 +157,8 @@
 
       <div :class="[{'confirm': !ISPHONE}, {'confirm-phone': ISPHONE}]">
         <el-button @mouseover.native="mapMouseOver" v-if="(showMap || !ISPHONE) && !confirmed && !this.targetLat"  @click="confirm">确定选择</el-button>
-        <el-button @mouseover.native="mapMouseOver" v-else-if="!showMap && ISPHONE && confirmed" @click="showMap = true">打开地图</el-button>
-        <el-button @mouseover.native="mapMouseOver" v-else-if="!showMap && ISPHONE" @click="showMap = true">选择地点</el-button>
+        <el-button @mouseover.native="mapMouseOver" v-else-if="!showMap && ISPHONE && confirmed" @click="showMapTrue">打开地图</el-button>
+        <el-button @mouseover.native="mapMouseOver" v-else-if="!showMap && ISPHONE" @click="showMapTrue">选择地点</el-button>
         <el-button @mouseover.native="mapMouseOver" v-if="gameData.status === 'ongoing' && gameData.player && this.targetLat" @click="next">下一题</el-button>
       </div>
 
@@ -353,6 +353,7 @@ export default {
         this.map.scrollWheelZoom.enable();
         this.map.on('click', this.click);
         this.map.worldCopyJump = false;
+        this.map.invalidateSize();
       }
     },
     init() {
@@ -428,6 +429,13 @@ export default {
           this.team2Emoji = undefined;
         }.bind(this), 5000);
       }
+    },
+    showMapTrue() {
+      this.showMap = true;
+
+      setTimeout(function () {
+        this.map.invalidateSize();
+      }.bind(this), 100);
     },
     solveGameData(data, code) {
 
@@ -588,7 +596,7 @@ export default {
           && !this.showGameEnd ) {
         this.showRoundResult = true;
         if (!this.targetLng) {
-          this.showMap = true;
+          this.showMapTrue()
           this.targetLat = this.lastRound.lat;
           this.targetLng = this.lastRound.lng;
           this.addTargetMarker();
@@ -722,7 +730,6 @@ export default {
         opacity: 0.5,
         smoothFactor: 1
       });
-      console.log("12312");
       this.polylinePath.addTo(this.map);
     },
 

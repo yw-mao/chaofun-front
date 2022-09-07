@@ -223,9 +223,6 @@ export default {
       this.map.on('click', this.click);
       this.map.worldCopyJump = false;
     },
-    showMapTrue() {
-      this.showMap = true;
-    },
     mapMouseOver() {
       var element = document.getElementById("map-container")
       // console.log(element);
@@ -487,8 +484,16 @@ export default {
 
     clickDistance() {
       if (this.showMap === false) {
-        this.showMap = true
+        this.showMapTrue();
       }
+    },
+
+    showMapTrue() {
+      this.showMap = true;
+
+      setTimeout(function () {
+        this.map.invalidateSize();
+      }.bind(this), 100);
     },
 
     centerChoose() {
