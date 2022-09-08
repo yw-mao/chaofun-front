@@ -1173,6 +1173,8 @@ export default {
       -moz-user-select: none;
       -ms-user-select: none;
       user-select: none;
+      z-index: 500;
+
 
       .bm-view {
         width: 100%;

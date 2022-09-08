@@ -849,6 +849,7 @@ export default {
   width: 25%;
   height: 35%;
   opacity: 0.7;
+  z-index: 500;
 
   .bm-view {
     width: 100%;
