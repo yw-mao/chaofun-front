@@ -126,6 +126,7 @@ import "leaflet-bing-layer/leaflet-bing-layer"
 //   ak: 'aibVGReAhMEtxu4Bj2aHixWprh28AhrT'
 // })
 import {Viewer} from 'photo-sphere-viewer'
+import {EquirectangularTilesAdapter} from 'photo-sphere-viewer/dist/adapters/equirectangular-tiles'
 import * as THREE from 'three';
 import 'photo-sphere-viewer/dist/photo-sphere-viewer.css'
 import { CompassPlugin} from 'photo-sphere-viewer/dist/plugins/compass'
@@ -282,6 +283,8 @@ export default {
           this.viewer = new Viewer({
             loadingImg: this.imgOrigin + 'biz/1659528755270_550cd22e10c84073a12e6f83840320bc.gif',
             navbar: null,
+            adapter: EquirectangularTilesAdapter,
+
             container: document.querySelector('#viewer'),
             defaultZoomLvl: 0,
             autorotateDelay: this.autoRotate !== 'true' ? null : 100,
@@ -290,17 +293,23 @@ export default {
           });
         }
         if (this.contents && this.contents.length > 1) {
+          const  baseUrl = 'https://photo-sphere-viewer-data.netlify.app/assets/';
           var nodes = [];
           console.log(this.contents)
           for (var i in this.contents) {
+
             console.log(content);
             const content = this.contents[i];
             var k = {};
-            if (this.canUseWebP() && content.contentSpeedUp) {
-              k.panorama = 'https://i.chao-fan.com/' + content.contentSpeedUp;
-            } else {
-              k.panorama = 'https://i.chao-fan.com/' + content.content;
-            }
+              k.panorama =  {
+                width  : 6656,
+                cols   : 16,
+                rows   : 8,
+                baseUrl: `${baseUrl}sphere-small.jpg`,
+                tileUrl: (col, row) => {
+                  const num = row * 16 + col + 1;
+                  return `${baseUrl}sphere-tiles/image_part_${('000' + num).slice(-3)}.jpg`;
+                }};
             // k.panorama =  k.panorama + '?x-oss-process=image/resize,h_1664'
             k.links = [];
             for (var j in content.links) {
@@ -567,6 +576,7 @@ export default {
       });
       console.log("12312");
       this.polylinePath.addTo(this.map);
+      this.map.fitBounds(this.polylinePath.getBounds());
     },
 
     removeLine() {
