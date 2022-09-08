@@ -347,7 +347,7 @@ export default {
     },
     initMap() {
       if (!this.map) {
-        var map = L.map('map', {attributionControl: false, worldCopyJump: true, coordType: 'gcj02',  zoomAnimation: false, fadeAnimation: true, maxBoundsViscosity: 0.9, maxBounds:  [[-90,-180],   [90,180]]}).setView([38.8, 106.0], 3)
+        var map = L.map('map', {attributionControl: false, worldCopyJump: true, coordType: 'gcj02',  zoomAnimation: false, fadeAnimation: true, maxBoundsViscosity: 1.0, maxBounds:  [[-90,-360],   [90,360]]}).setView([38.8, 106.0], 3)
         L.tileLayer.bing({
           coordType: 'gcj02',
           bingMapsKey: 'AljSFl1ezKYkuatAoeYdOxBPuuZqzRoYgEULlAh_ZuQDHac6gCWJUVDSF2g99WKv',

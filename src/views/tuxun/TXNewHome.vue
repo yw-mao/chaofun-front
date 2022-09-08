@@ -10,7 +10,7 @@
     </div>
 
     <div class="game">
-      <div class="info" @click="toFirstTournament">图寻第一届团队赛周末开赛,点击报名...</div>
+      <div class="info" @click="toFirstTournament">图寻第一届个人锦标赛圆满结束, 查看结果...</div>
       <section class="game_entrance">
         <div class="grid_main">
           <div class="card" @click="redirectPage( '/tuxun/daily_challenge')">
@@ -161,9 +161,9 @@ export default {
     },
     toFirstTournament() {
       try {
-        window.flutter_inappwebview.callHandler('toAppPost', {postId: '1205380'});
+        window.flutter_inappwebview.callHandler('toAppPost', {postId: '1204478'});
       } catch (e) {
-        window.open('/p/1205380', "_blank");
+        window.open('/p/1204478', "_blank");
       }
     }
   }
