@@ -189,6 +189,7 @@ export default {
       panorama: null,
       baiduPano: null,
       ranksMarker: null,
+      needSmall: false,
       ranks: null,
     }
   },
@@ -229,21 +230,27 @@ export default {
       var element = document.getElementById("map-container")
       // console.log(element);
       if (!window.matchMedia( "(hover: none)" ).matches && document.body.clientWidth > 678) {
+        this.needSmall = false;
         element.style.width = '40%';
         element.style.height = '60%';
         element.style.opacity = 1.0;
         this.map.invalidateSize();
-
       }
     },
 
     mapMouseOut() {
       if (!window.matchMedia( "(hover: none)" ).matches && document.body.clientWidth > 678) {
-        var element = document.getElementById("map-container")
-        element.style.width = '25%';
-        element.style.height = '35%';
-        element.style.opacity = 0.7;
-        this.map.invalidateSize();
+        this.needSmall = true;
+        setTimeout(() => {
+          if (this.needSmall) {
+            this.needSmall = false;
+            var element = document.getElementById("map-container")
+            element.style.width = '25%';
+            element.style.height = '35%';
+            element.style.opacity = 0.7;
+            this.map.invalidateSize();
+          }
+        }, 1000)
       }
     },
 
