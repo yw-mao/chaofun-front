@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="top-left">
-      <el-button type="primary" @click="goHome">←返回首页</el-button>
+      <el-button type="primary" @click="goHome" round>←返回首页</el-button>
     </div>
     <div style="width: 100%; text-align: center; align-items: center; padding-top: 20px">
         <div @click="toUser(userProfile)" v-if="this.userProfile" class="left">

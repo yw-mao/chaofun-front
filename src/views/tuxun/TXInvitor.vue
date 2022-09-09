@@ -32,7 +32,7 @@
         <div>
           <img class="vs_img"  :src="this.imgOrigin + 'biz/1658807128256_91c9df63c2d144359005b6f504a96a81.png'">
           </img>
-          <el-button @click="swapTeam" v-if="gameData.type==='team'">换队伍</el-button>
+          <el-button @click="swapTeam"  type="primary" v-if="gameData.type==='team'" round>换队伍</el-button>
         </div>
         <div class="player">
           <div  v-if="gameData && gameData.teams && gameData.teams.length >= 2">
@@ -72,7 +72,7 @@
         <div class="body">
           <input class="invite_input" placeholder readonly :value="'https://chao.fan' + this.$route.fullPath" >
           </input>
-          <el-button class="button" type="warning" @click="copyInviterLink">复制</el-button>
+          <el-button class="button" type="success" @click="copyInviterLink" round>复制分享</el-button>
         </div>
       </div>
     </div>
@@ -150,16 +150,16 @@
       </div>
 
       <div class="home">
-        <el-button size="mini"  @click="toReport"> 坏题反馈 </el-button>
-        <el-button size="mini"  @click="sendEmoji=true"> 发送表情 </el-button>
-        <el-button v-if="ISPHONE" @click="reloadPage" size="mini">刷新页面</el-button>
+        <el-button size="mini"  @click="toReport" round> 坏题反馈 </el-button>
+        <el-button size="mini"  @click="sendEmoji=true" round> 发送表情 </el-button>
+        <el-button v-if="ISPHONE" @click="reloadPage" size="mini" round>刷新页面</el-button>
       </div>
 
       <div :class="[{'confirm': !ISPHONE}, {'confirm-phone': ISPHONE}]">
-        <el-button @mouseover.native="mapMouseOver" v-if="(showMap || !ISPHONE) && !confirmed && !this.targetLat"  @click="confirm">确定选择</el-button>
-        <el-button @mouseover.native="mapMouseOver" v-else-if="!showMap && ISPHONE && confirmed" @click="showMapTrue">打开地图</el-button>
-        <el-button @mouseover.native="mapMouseOver" v-else-if="!showMap && ISPHONE" @click="showMapTrue">选择地点</el-button>
-        <el-button @mouseover.native="mapMouseOver" v-if="gameData.status === 'ongoing' && gameData.player && this.targetLat" @click="next">下一题</el-button>
+        <el-button @mouseover.native="mapMouseOver" v-if="(showMap || !ISPHONE) && !confirmed && !this.targetLat"  @click="confirm" round>确定选择</el-button>
+        <el-button @mouseover.native="mapMouseOver" v-else-if="!showMap && ISPHONE && confirmed" @click="showMapTrue" round>打开地图</el-button>
+        <el-button @mouseover.native="mapMouseOver" v-else-if="!showMap && ISPHONE" @click="showMapTrue" round>选择地点</el-button>
+        <el-button @mouseover.native="mapMouseOver" v-if="gameData.status === 'ongoing' && gameData.player && this.targetLat" @click="next" round>下一题</el-button>
       </div>
 
       <div v-if="showGameEnd && winner" class="game_result">
@@ -184,13 +184,13 @@
                 最新积分：{{ yourTeam.finalRating }}
               </div>
             </div>
-            <el-button class="home_button"  type="primary" @click="goTuxun">继续匹配</el-button>
+            <el-button class="home_button"  type="primary" @click="goTuxun" round>继续匹配</el-button>
           </div>
           <div v-if="gameData && ( gameData.type === 'solo' || gameData.type === 'team')">
-            <el-button class="home_button"  type="primary" @click="again">再来一局</el-button>
+            <el-button class="home_button"  type="primary" @click="again" round>再来一局</el-button>
           </div>
           <div>
-            <el-button class="home_button" type="warning" @click="goHome">回到图寻首页</el-button>
+            <el-button class="home_button" type="warning" @click="goHome" round>回到图寻首页</el-button>
           </div>
         </div>
       </div>
@@ -961,7 +961,7 @@ export default {
   width: 100%;
   min-height: 100%;
   text-align: center;
-  background-color: #090723;
+  background-color: #18182A;
   .home_button {
     margin-top: 2rem;
     font-size: large;
@@ -1039,7 +1039,8 @@ export default {
       max-width: 80%;
       min-width: 35rem;
       .title {
-        font-size: large;
+        font-size: x-large;
+        font-weight: bolder;
         margin-bottom: 1rem;
       }
       input {

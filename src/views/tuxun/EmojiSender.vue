@@ -1,7 +1,7 @@
 <template>
   <div class="emojo_sender">
     <div class="button">
-      <el-button type="cancel" @click="hide">
+      <el-button type="cancel" @click="hide" round>
         取消发送
       </el-button>
     </div>

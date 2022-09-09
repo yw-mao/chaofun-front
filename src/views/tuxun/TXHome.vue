@@ -75,16 +75,16 @@
       <div id="map" :class="[{'bm-view': !ISPHONE}, {'bm-view-phone': ISPHONE}]" ></div>
     </div>
     <div  :class="[{'confirm': !ISPHONE}, {'confirm-phone': ISPHONE}]">
-      <el-button @mouseover.native="mapMouseOver" class="not_stop_hover" v-if="confirmed && distance" @click="clickDistance">距离 {{ distance.toFixed(2)}} 千米</el-button>
-      <el-button @mouseover.native="mapMouseOver"   class="not_stop_hover" v-if="(showMap || !ISPHONE) && !confirmed && status !== 'rank'"  @click="confirm">确定选择</el-button>
-      <el-button @mouseover.native="mapMouseOver"  class="not_stop_hover" v-else-if="!isMaps && confirmed && !distance" @click="centerChoose">等待答案</el-button>
-      <el-button @mouseover.native="mapMouseOver"  class="not_stop_hover" v-else-if="!showMap && ISPHONE && confirmed" @click="showMapTrue"> 打开地图</el-button>
-      <el-button @mouseover.native="mapMouseOver"  class="not_stop_hover" v-else-if="!showMap && ISPHONE" @click="showMapTrue">选择地点</el-button>
-      <el-button @mouseover.native="mapMouseOver" class="not_stop_hover" v-if="isMaps && confirmed && distance" @click="next">下一题</el-button>
+      <el-button @mouseover.native="mapMouseOver" class="not_stop_hover" v-if="confirmed && distance" @click="clickDistance" round>距离 {{ distance.toFixed(2)}} 千米</el-button>
+      <el-button @mouseover.native="mapMouseOver"   class="not_stop_hover" v-if="(showMap || !ISPHONE) && !confirmed && status !== 'rank'"  @click="confirm" round>确定选择</el-button>
+      <el-button @mouseover.native="mapMouseOver"  class="not_stop_hover" v-else-if="!isMaps && confirmed && !distance" @click="centerChoose" round>等待答案</el-button>
+      <el-button @mouseover.native="mapMouseOver"  class="not_stop_hover" v-else-if="!showMap && ISPHONE && confirmed" @click="showMapTrue" round> 打开地图</el-button>
+      <el-button @mouseover.native="mapMouseOver"  class="not_stop_hover" v-else-if="!showMap && ISPHONE" @click="showMapTrue" round>选择地点</el-button>
+      <el-button @mouseover.native="mapMouseOver" class="not_stop_hover" v-if="isMaps && confirmed && distance" @click="next" round>下一题</el-button>
     </div>
 
     <div v-if="showMap && ISPHONE" style="position: absolute; left: 20px; bottom: 20px; z-index: 1000">
-      <el-button @click="showMap = false">隐藏地图</el-button>
+      <el-button @click="showMap = false" round>隐藏地图</el-button>
     </div>
 
     <div v-if="!this.isMaps" :class="[{'topRight': !ISPHONE}, {'topRight-phone': ISPHONE}]">
@@ -99,13 +99,13 @@
       </div>
     </div>
     <div class="home">
-      <el-button size="mini" @click="toHome"> 图寻首页 </el-button>
-      <el-button v-if="!this.isMaps" size="mini"  @click="toSend"> 发送弹幕 </el-button>
-      <el-button size="mini"  @click="toReport"> 坏题反馈 </el-button>
-      <el-button v-if="!ISPHONE && this.isMaps" size="mini"  @click="toSubmitPanorama"> 提交街景 </el-button>
-      <el-button v-if="ISPHONE" @click="reloadPage" size="mini">刷新页面</el-button>
-      <el-button v-if="this.$store.state.user.userInfo.userId === 1" size="mini"  @click="deleteTuxun"> 删除该题 </el-button>
-      <el-button v-if="this.$store.state.user.userInfo.userId === 1 && this.isMaps" size="mini"  @click="removeFromMaps"> 移除该题 </el-button>
+      <el-button type="primary" size="mini" @click="toHome" round> 图寻首页 </el-button>
+      <el-button v-if="!this.isMaps" size="mini"  @click="toSend" round> 发送弹幕 </el-button>
+      <el-button size="mini"  @click="toReport" round> 坏题反馈 </el-button>
+      <el-button v-if="!ISPHONE && this.isMaps" size="mini"  @click="toSubmitPanorama" round> 提交街景 </el-button>
+      <el-button v-if="ISPHONE" @click="reloadPage" size="mini" round>刷新页面</el-button>
+      <el-button v-if="this.$store.state.user.userInfo.userId === 1" size="mini"  @click="deleteTuxun" round> 删除该题 </el-button>
+      <el-button v-if="this.$store.state.user.userInfo.userId === 1 && this.isMaps" size="mini"  @click="removeFromMaps" round> 移除该题 </el-button>
     </div>
   </div>
 </template>

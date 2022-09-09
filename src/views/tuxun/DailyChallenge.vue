@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="back_home" @click="goHome">
-      <el-button type="primary">←返回首页</el-button>
+      <el-button type="primary" round>←返回首页</el-button>
     </div>
     <div class="main_content">
       <div class="top">
@@ -11,8 +11,8 @@
         <div class="hint">
           每日0点更新，5个所有人统一的题目，满分25000，使用小号会被取消每日挑战资格
         </div>
-        <el-button v-if="(this.gameData && this.gameData.status === 'ready') || this.showBegin" type="primary" size="large" @click="begin">开始每日挑战</el-button>
-        <el-button v-if="this.gameData && this.gameData.status === 'ongoing'" type="warning" size="large" @click="again">继续每日挑战</el-button>
+        <el-button v-if="(this.gameData && this.gameData.status === 'ready') || this.showBegin" type="primary" size="large" @click="begin" round>开始每日挑战</el-button>
+        <el-button v-if="this.gameData && this.gameData.status === 'ongoing'" type="warning" size="large" @click="again" round>继续每日挑战</el-button>
         <div class="score" v-if="this.gameData && this.gameData.status === 'finish'">今日得分: {{this.gameData.player.totalScore}}</div>
         <div class="rank">
           今日挑战排名

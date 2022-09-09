@@ -4,8 +4,8 @@
       <img style="margin-top: 25px; margin-left: 25px; width: 5rem; height: 3rem" :src="imgOrigin + 'biz/1658657631523_45db8dd090dc49af99f2a8a4ace01122.svg'">
       </img>
       <div class="top-right">
-        <el-button type="primary" @click="toRank">积分排行</el-button>
-        <el-button type="primary" @click="toUserHome">个人首页</el-button>
+        <el-button type="primary" @click="toRank" round>积分排行</el-button>
+        <el-button type="primary" @click="toUserHome" round>个人首页</el-button>
       </div>
     </div>
 
@@ -174,7 +174,7 @@ export default {
 .container {
   height: 100%;
   width: 100%;
-  background-color: #F7F7F8;
+  background-color: #18182A;
 
   .top {
     display: flex;
