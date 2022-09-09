@@ -6,7 +6,7 @@ const resolve = dir => {
   return path.join(__dirname, dir);
 };
 
-const port = process.env.port || process.env.npm_config_port || 8099 
+const port = process.env.port || process.env.npm_config_port || 8099
 const isProduction = process.env.NODE_ENV === 'production';
 
 // 线上打包路径，请根据项目实际线上情况
@@ -117,7 +117,7 @@ module.exports = {
         .use(
           new webpack.ContextReplacementPlugin(/moment[/\\]locale$/, /zh-cn$/)
         );
-      
+
       // 压缩代码
       config.optimization.minimize(true);
       // 分割代码
@@ -152,18 +152,19 @@ module.exports = {
       },
       postcss: {
         plugins: [
-          
+
         ]
       }
     }
   },
-    
+
   // 反向代理的配置
   devServer: {
     host: "0.0.0.0", // ip
     port: port, // 端口
     proxy: {
       '/api':{
+        // target: `http://localhost:8080/api`,
         target: `https://chao.fan/api`,
         changeOrigin: true,
         pathRewrite: {
@@ -171,6 +172,7 @@ module.exports = {
         }
       },
       '/ws': {
+        // target: `ws://localhost:8080/ws`,
         target: `wss://chao.fan/ws`,
         ws: true,
         changeOrigin: true,
