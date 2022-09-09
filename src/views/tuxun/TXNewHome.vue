@@ -216,6 +216,7 @@ export default {
     grid-column-gap: 1rem;
     grid-template-columns: repeat(3, 1fr);
     .card {
+      border-radius: 1rem;
       background-color: rgb(25,26,46, 0.9);
       background-position: 50%;
       background-repeat: no-repeat;
