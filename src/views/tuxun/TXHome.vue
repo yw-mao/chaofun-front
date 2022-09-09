@@ -922,6 +922,14 @@ export default {
   user-select:none;
 }
 
+.leaflet-clickable {
+  cursor: crosshair !important;
+}
+/* Change cursor when over entire map */
+.leaflet-container {
+  cursor: crosshair !important;
+}
+
 .topRight-phone {
   position: absolute;
   top: 20px;

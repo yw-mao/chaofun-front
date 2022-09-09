@@ -956,6 +956,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.leaflet-clickable {
+  cursor: crosshair !important;
+}
+/* Change cursor when over entire map */
+.leaflet-container {
+  cursor: crosshair !important;
+}
 .container {
   position: absolute;
   width: 100%;
