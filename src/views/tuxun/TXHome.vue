@@ -250,7 +250,7 @@ export default {
             element.style.opacity = 0.7;
             this.map.invalidateSize();
           }
-        }, 1000)
+        }, 500)
       }
     },
 
