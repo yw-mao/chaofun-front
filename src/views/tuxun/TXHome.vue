@@ -914,7 +914,7 @@ export default {
 .topRight {
   position: absolute;
   top: 20px;
-  left: 50%;
+  right: 2rem;
   z-index: 100000;
   -webkit-user-select:none;
   -moz-user-select:none;
