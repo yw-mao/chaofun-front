@@ -856,6 +856,7 @@ h1 {
     padding-left: 8px;
     width: 100%;
     box-sizing: border-box;
+    line-height: 20px;
     &:hover {
       background: #fff;
       cursor: pointer;
