@@ -901,7 +901,7 @@ export default {
     addTeamMarker() {
       var timeout = 0;
       if (!this.map) {
-        timeout = 500;
+        timeout = 200;
       }
       setTimeout(() => {
         this.ranksMarker = [];
