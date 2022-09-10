@@ -521,6 +521,7 @@ export default {
             this.removeChooseMarker()
             this.removeTargetMarker();
             this.removeLine();
+            this.clearRanksMarker();
             this.showMap = false;
             this.image = this.lastRound.content;
             this.contents = this.lastRound.contents;
