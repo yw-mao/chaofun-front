@@ -447,6 +447,7 @@ export default {
           this.clearRanksMarker();
         }
         if (data.data.status === 'rank') {
+
           this.rank = data.data.rank;
           this.ranks = data.data.ranks;
           if (!this.targetLat) {
@@ -459,23 +460,18 @@ export default {
             this.distance = data.data.distance / 1000;
 
             this.showMapTrue();
-
-            if (!this.polylinePath) {
-              this.map.setView([this.targetLat, this.targetLng], 3);
-            }
-
             if (data.data.chooseLat && !this.polylinePath) {
               this.addLine();
+              this.centerView();
             }
-
-
-            // 增加其他人
           }
 
-          if (this.ranksMarker && this.ranksMarker.length == 0 && this.ranks) {
+          if (this.ranksMarker && this.ranksMarker.length === 0 && this.ranks) {
             console.log("addRanksMarker");
             this.addRanksMarker();
+            this.centerView();
           }
+
         }
       } else if (data.data.type === 'need_login') {
         this.doLoginStatus().then((res) => {
@@ -498,6 +494,23 @@ export default {
       }
     },
 
+    centerView() {
+      var group = [];
+      if (this.lat) {
+        group.push([this.lat, this.lng]);
+      }
+
+      if (this.targetLat) {
+        group.push([this.targetLat, this.targetLng]);
+      }
+
+      if (this.ranks) {
+        this.ranks.forEach(item => {
+          group.push([item.latLng.lat, item.latLng.lng]);
+        })
+      }
+      this.map.fitBounds(group);
+    },
     showMapTrue() {
       this.showMap = true;
 
@@ -611,6 +624,7 @@ export default {
           }
         });
       }
+
     },
 
     clearRanksMarker() {
@@ -655,9 +669,9 @@ export default {
           this.targetLng = res.data.lng;
           this.targetLat = res.data.lat;
           this.distance = res.data.distanceMeter / 1000;
-          this.map.setView([this.targetLat,this.targetLng], 3);
           this.addTargetMarker();
           this.addLine();
+          this.centerView();
         });
       }
     },

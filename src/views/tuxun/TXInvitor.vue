@@ -496,6 +496,7 @@ export default {
       }
 
       if (this.gameData.player && (code === 'game_end' || data.status === 'finish')) {
+        this.showMap = false;
         this.showChallengeGameEnd = true;
       }
 
@@ -608,14 +609,14 @@ export default {
           this.targetLat = this.lastRound.lat;
           this.targetLng = this.lastRound.lng;
           this.addTargetMarker();
-          this.addRanksMarker();
-
           if (this.lng) {
             this.addLine();
           }
 
+          this.addRanksMarker();
+
           if (this.map) {
-            this.map.setView([this.targetLat, this.targetLng], 3);
+            this.centerView();
           }
         }
       } else {
@@ -756,6 +757,9 @@ export default {
     },
 
     addTargetMarker() {
+      if (!this.map) {
+        return;
+      }
       if (this.targetMarker) {
         this.targetMarker.remove();
       }
@@ -769,6 +773,7 @@ export default {
 
     countDown() {
       setInterval(() => {
+        console.log(this.timeLeftStr);
         if (this.lastRound && this.lastRound.timerStartTime && !this.lastRound.endTime) {
           this.timeLeft =  Math.round((this.gameData.roundTimePeriod - ((new Date().getTime()) - this.lastRound.timerStartTime)) / 1000);
           if (this.timeLeft < 0) {
@@ -812,6 +817,29 @@ export default {
           }
         }
       }
+    },
+
+    centerView() {
+      var group = [];
+      if (this.lat) {
+        group.push([this.lat, this.lng]);
+      }
+
+      if (this.targetLat) {
+        group.push([this.targetLat, this.targetLng]);
+      }
+
+      if (this.gameData) {
+        this.gameData.teams.forEach( item => {
+          item.teamUsers.forEach(teamUser => {
+            var lastGuess = teamUser.guesses[teamUser.guesses.length -1];
+            if (lastGuess.round === this.gameData.currentRound) {
+              group.push([lastGuess.lat, lastGuess.lng]);
+            }
+          });
+        });
+      }
+      this.map.fitBounds(group);
     },
 
     addRanksMarker() {
