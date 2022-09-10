@@ -135,31 +135,6 @@
 
         </div>
       </div>
-      <div id="map-container" :class="[{'bm-view-container': !ISPHONE}, {'bm-view-container-phone': ISPHONE && showMap}, {'bm-view-container-phone-hidden': ISPHONE && !showMap}]"@mouseover="mapMouseOver" @mouseout="mapMouseOut">
-        <div id="map" :class="[{'bm-view': !ISPHONE}, {'bm-view-phone': ISPHONE}]" @mouseover="mapMouseOver" @mouseout="mapMouseOut"></div>
-      </div>
-
-      <div v-if="lastRound && lastRound.timerStartTime && !lastRound.endTime " :class="[{'top-info': !ISPHONE}, {'top-info-phone': ISPHONE}]">
-        选择倒计时: {{timeLeftStr}}
-      </div>
-
-      <div v-if="showMap && ISPHONE" style="position: absolute; left: 20px; bottom: 20px;z-index: 1000">
-        <el-button @click="showMap = false">隐藏地图</el-button>
-      </div>
-
-      <div class="home">
-        <el-button size="mini"  @click="toReport" round> 坏题反馈 </el-button>
-        <el-button size="mini"  @click="sendEmoji=true" round> 发送表情 </el-button>
-        <el-button v-if="ISPHONE" @click="reloadPage" size="mini" round>刷新页面</el-button>
-      </div>
-
-      <div :class="[{'confirm': !ISPHONE}, {'confirm-phone': ISPHONE}]">
-        <el-button @mouseover.native="mapMouseOver" v-if="(showMap || !ISPHONE) && !confirmed && !this.targetLat"  @click="confirm" round>确定选择</el-button>
-        <el-button @mouseover.native="mapMouseOver" v-else-if="!showMap && ISPHONE && confirmed" @click="showMapTrue" round>打开地图</el-button>
-        <el-button @mouseover.native="mapMouseOver" v-else-if="!showMap && ISPHONE" @click="showMapTrue" round>选择地点</el-button>
-        <el-button @mouseover.native="mapMouseOver" v-if="gameData.status === 'ongoing' && gameData.player && this.targetLat" @click="next" round>下一题</el-button>
-      </div>
-
       <div v-if="showGameEnd && winner" class="game_result">
         <div class="player">
           <div v-if="isWin" class="winner_title">
@@ -231,7 +206,30 @@
         </div>
       </div>
 
+      <div id="map-container" :class="[{'bm-view-container': !ISPHONE}, {'bm-view-container-phone': ISPHONE && showMap}, {'bm-view-container-phone-hidden': ISPHONE && !showMap}]"@mouseover="mapMouseOver" @mouseout="mapMouseOut">
+        <div id="map" :class="[{'bm-view': !ISPHONE}, {'bm-view-phone': ISPHONE}]" @mouseover="mapMouseOver" @mouseout="mapMouseOut"></div>
+      </div>
 
+      <div v-if="lastRound && lastRound.timerStartTime && !lastRound.endTime " :class="[{'top-info': !ISPHONE}, {'top-info-phone': ISPHONE}]">
+        选择倒计时: {{timeLeftStr}}
+      </div>
+
+      <div v-if="showMap && ISPHONE" style="position: absolute; left: 20px; bottom: 20px;z-index: 1000">
+        <el-button @click="showMap = false" round>隐藏地图</el-button>
+      </div>
+
+      <div class="home">
+        <el-button size="mini"  @click="toReport" round> 坏题反馈 </el-button>
+        <el-button size="mini"  @click="sendEmoji=true" round> 发送表情 </el-button>
+        <el-button v-if="ISPHONE" @click="reloadPage" size="mini" round>刷新页面</el-button>
+      </div>
+
+      <div :class="[{'confirm': !ISPHONE}, {'confirm-phone': ISPHONE}]">
+        <el-button @mouseover.native="mapMouseOver" v-if="(showMap || !ISPHONE) && !confirmed && !this.targetLat"  @click="confirm" round>确定选择</el-button>
+        <el-button @mouseover.native="mapMouseOver" v-else-if="!showMap && ISPHONE && confirmed" @click="showMapTrue" round>打开地图</el-button>
+        <el-button @mouseover.native="mapMouseOver" v-else-if="!showMap && ISPHONE" @click="showMapTrue" round>选择地点</el-button>
+        <el-button @mouseover.native="mapMouseOver" v-if="gameData.status === 'ongoing' && gameData.player && this.targetLat" @click="next" round>下一题</el-button>
+      </div>
     </div>
     <matching v-if="this.showMatch"/>
     <emoji-sender :gameId="gameData.id" v-if="this.sendEmoji" @hide="hideEmojiSender"></emoji-sender>
