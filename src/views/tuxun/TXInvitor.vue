@@ -898,7 +898,6 @@ export default {
     },
 
     addTeamMarker() {
-      this.$toast('add team marker')
       var timeout = 0;
       if (!this.map) {
         timeout = 500;
