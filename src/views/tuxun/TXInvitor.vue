@@ -1,11 +1,9 @@
 <template>
   <div class="container">
     <div class="" v-if="status==='wait'">
-
     </div>
 
     <div class="" v-if="status==='need_join'">
-
     </div>
 
     <div class="prepare" v-if="status==='wait_join' || status === 'ready'">
@@ -235,7 +233,6 @@
 
 
     </div>
-
     <matching v-if="this.showMatch"/>
     <emoji-sender :gameId="gameData.id" v-if="this.sendEmoji" @hide="hideEmojiSender"></emoji-sender>
   </div>
@@ -264,7 +261,7 @@ import "leaflet-bing-layer/leaflet-bing-layer"
 export default {
   name: "TXInvitor",
   components: {EmojiSender, Matching},
-  data () {
+  data() {
     return {
       url: `${location.protocol === "https:" ? "wss" : "ws"}://${location.host}/ws/v0/tuxun`,
       // url: `ws://127.0.0.1:8080/ws/v0/tuxun`,
@@ -282,7 +279,7 @@ export default {
       showMap: false,
       currentRound: null,
       lastTouchTime: 0,
-      showRoundResult:  false,
+      showRoundResult: false,
       showGameEnd: false,
       timeLeft: 15,
       gameTimeLeft: 5,
@@ -299,6 +296,8 @@ export default {
       team1Emoji: null,
       team2Emoji: null,
       showChallengeGameEnd: false,
+      ranksMarker: [],
+      teamMarker: [],
       needSmall: false,
       notifyStatus: '',
 
@@ -314,18 +313,20 @@ export default {
 
   methods: {
     mapMouseOver() {
-      if (!window.matchMedia( "(hover: none)" ).matches && document.body.clientWidth > 678) {
+      if (!window.matchMedia("(hover: none)").matches && document.body.clientWidth > 678) {
         this.needSmall = false;
         var element = document.getElementById("map-container")
         element.style.width = '40%';
         element.style.height = '60%';
         element.style.opacity = 1.0;
-        this.map.invalidateSize();
+        if (this.map) {
+          this.map.invalidateSize();
+        }
       }
     },
 
     mapMouseOut() {
-      if (!window.matchMedia( "(hover: none)" ).matches && document.body.clientWidth > 678) {
+      if (!window.matchMedia("(hover: none)").matches && document.body.clientWidth > 678) {
         this.needSmall = true;
         setTimeout(() => {
           if (this.needSmall) {
@@ -334,7 +335,9 @@ export default {
             element.style.width = '25%';
             element.style.height = '35%';
             element.style.opacity = 0.7;
-            this.map.invalidateSize();
+            if (this.map) {
+              this.map.invalidateSize();
+            }
           }
         }, 500)
       }
@@ -347,7 +350,15 @@ export default {
     },
     initMap() {
       if (!this.map) {
-        var map = L.map('map', {attributionControl: false, worldCopyJump: true, coordType: 'gcj02',  zoomAnimation: false, fadeAnimation: true, maxBoundsViscosity: 1.0, maxBounds:  [[-90,-360],   [90,360]]}).setView([38.8, 106.0], 3)
+        var map = L.map('map', {
+          attributionControl: false,
+          worldCopyJump: true,
+          coordType: 'gcj02',
+          zoomAnimation: false,
+          fadeAnimation: true,
+          maxBoundsViscosity: 1.0,
+          maxBounds: [[-90, -360], [90, 360]]
+        }).setView([38.8, 106.0], 3)
         L.tileLayer.bing({
           coordType: 'gcj02',
           bingMapsKey: 'AljSFl1ezKYkuatAoeYdOxBPuuZqzRoYgEULlAh_ZuQDHac6gCWJUVDSF2g99WKv',
@@ -387,7 +398,7 @@ export default {
     },
 
     challengeInit() {
-      api.getByPath('/api/v0/tuxun/challenge/getGameInfo', {'challengeId': this.challengeId}).then(res=>{
+      api.getByPath('/api/v0/tuxun/challenge/getGameInfo', {'challengeId': this.challengeId}).then(res => {
         if (res.data) {
           this.gameId = res.data.id;
           this.solveGameData(res.data, undefined)
@@ -410,7 +421,7 @@ export default {
     wsOnOpen(e) {
       console.log("wsOnOpen");
       // console.log(e);
-      this.wsSend("{\"scope\": \"tuxun\", \"data\": {\"type\": \"subscribe_solo\", \"text\": \"" + this.gameId+ "\"}}");
+      this.wsSend("{\"scope\": \"tuxun\", \"data\": {\"type\": \"subscribe_solo\", \"text\": \"" + this.gameId + "\"}}");
       // 每3秒发送一次心跳
       setInterval(() => {
         this.wsSend(`{"scope": "heart_beat"}`);
@@ -460,7 +471,7 @@ export default {
       }
 
       if (this.gameData.rounds && this.gameData.rounds.length > 0) {
-        this.lastRound = this.gameData.rounds[this.gameData.rounds.length-1];
+        this.lastRound = this.gameData.rounds[this.gameData.rounds.length - 1];
       }
 
       if (!this.gameData.player && (code === 'game_end' || data.status === 'finish')) {
@@ -475,7 +486,7 @@ export default {
 
         this.isWin = false;
         this.winTeam.users.forEach(v => {
-          if (v.userId === this.$store.state.user.userInfo.userId ) {
+          if (v.userId === this.$store.state.user.userInfo.userId) {
             this.isWin = true;
           }
         })
@@ -510,8 +521,6 @@ export default {
             this.removeChooseMarker()
             this.removeTargetMarker();
             this.removeLine();
-            this.clearRanksMarker();
-
             this.showMap = false;
             this.image = this.lastRound.content;
             this.contents = this.lastRound.contents;
@@ -548,7 +557,7 @@ export default {
                   plugins: plugins
                 });
               }
-              if (this.contents  && this.contents.length > 1) {
+              if (this.contents && this.contents.length > 1) {
                 var nodes = [];
                 console.log(this.contents)
                 for (var i in this.contents) {
@@ -563,7 +572,7 @@ export default {
                   // k.panorama =  k.panorama + '?x-oss-process=image/resize,h_1664'
                   k.links = [];
                   for (var j in content.links) {
-                    k.links.push({nodeId:  content.links[j]});
+                    k.links.push({nodeId: content.links[j]});
                   }
                   k.name = '全景图_' + i;
                   k.id = content.id;
@@ -577,7 +586,13 @@ export default {
                 virtualTour.setNodes(nodes, nodes[0].id);
               } else {
                 var virtualTour = this.viewer.getPlugin(VirtualTourPlugin);
-                virtualTour.setNodes([{panorama: 'https://i.chao-fan.com/' + this.image, id: this.image, position: [0,0], links: [], panoData : {poseHeading: this.heading}}])
+                virtualTour.setNodes([{
+                  panorama: 'https://i.chao-fan.com/' + this.image,
+                  id: this.image,
+                  position: [0, 0],
+                  links: [],
+                  panoData: {poseHeading: this.heading}
+                }])
               }
 
               var compassPlugin = this.viewer.getPlugin(CompassPlugin);
@@ -602,25 +617,28 @@ export default {
 
       if ((code === 'round_end' ||
               (this.lastRound && this.lastRound.endTime))
-          && !this.showGameEnd ) {
+          && !this.showGameEnd) {
         this.showRoundResult = true;
         if (!this.targetLng) {
           this.showMapTrue()
           this.targetLat = this.lastRound.lat;
           this.targetLng = this.lastRound.lng;
+          this.clearRanksMarker();
           this.addTargetMarker();
           if (this.lng) {
             this.addLine();
           }
 
           this.addRanksMarker();
-
-          if (this.map) {
-            this.centerView();
-          }
+          this.centerView();
         }
       } else {
         this.showRoundResult = false;
+      }
+
+      if (code ==='user_guess') {
+        this.clearRanksMarker();
+        this.addTeamMarker();
       }
     },
 
@@ -734,7 +752,8 @@ export default {
         [this.targetLat, this.targetLng],
       ];
 
-      this.polylinePath = new L.Polyline(latlngs, {color: 'blue',
+      this.polylinePath = new L.Polyline(latlngs, {
+        color: 'blue',
         weight: 3,
         opacity: 0.5,
         smoothFactor: 1
@@ -773,9 +792,8 @@ export default {
 
     countDown() {
       setInterval(() => {
-        console.log(this.timeLeftStr);
         if (this.lastRound && this.lastRound.timerStartTime && !this.lastRound.endTime) {
-          this.timeLeft =  Math.round((this.gameData.roundTimePeriod - ((new Date().getTime()) - this.lastRound.timerStartTime)) / 1000);
+          this.timeLeft = Math.round((this.gameData.roundTimePeriod - ((new Date().getTime()) - this.lastRound.timerStartTime)) / 1000);
           if (this.timeLeft < 0) {
             this.timeLeft = 0;
           }
@@ -789,7 +807,7 @@ export default {
         if (this.timeLeft < 60) {
           this.timeLeftStr = this.timeLeft.toString()
         } else {
-          this.timeLeftStr = Math.floor(this.timeLeft / 60).toString().padStart(2,'0') + ':' + (this.timeLeft % 60).toString().padStart(2, '0');
+          this.timeLeftStr = Math.floor(this.timeLeft / 60).toString().padStart(2, '0') + ':' + (this.timeLeft % 60).toString().padStart(2, '0');
         }
 
         if (this.gameData && this.gameData.timerStartTime && this.gameData.status === "ready") {
@@ -804,56 +822,99 @@ export default {
     },
 
     drawTeamUser(teamUser) {
-      if (teamUser.user.userId !== this.$store.state.user.userInfo.userId) {
-        if (teamUser.guesses && teamUser.guesses.length > 0) {
-          var lastGuess = teamUser.guesses[teamUser.guesses.length -1];
-          if (lastGuess.round === this.gameData.currentRound) {
+      if (teamUser.guesses && teamUser.guesses.length > 0) {
+        var lastGuess = teamUser.guesses[teamUser.guesses.length - 1];
+        if (lastGuess.round === this.gameData.currentRound) {
+          if (teamUser.user.userId !== this.$store.state.user.userInfo.userId) {
             var marker = L.marker([lastGuess.lat, lastGuess.lng], {icon: new L.Icon.Default()}).bindTooltip(teamUser.user.userName,
                 {
                   permanent: true,
                   direction: 'auto'
                 }).addTo(this.map);
             this.ranksMarker.push(marker);
+          } else {
+            this.lat = lastGuess.lat;
+            this.lng = lastGuess.lng;
+            this.confirmed = true;
+            this.addChooseMarker();
           }
         }
       }
     },
 
     centerView() {
-      var group = [];
-      if (this.lat) {
-        group.push([this.lat, this.lng]);
+      var timeout = 0;
+      if (!this.map) {
+        timeout = 200;
       }
+      setTimeout(() => {
+        var group = [];
+        if (this.lat) {
+          group.push([this.lat, this.lng]);
+        }
 
-      if (this.targetLat) {
-        group.push([this.targetLat, this.targetLng]);
-      }
+        if (this.targetLat) {
+          group.push([this.targetLat, this.targetLng]);
+        }
 
-      if (this.gameData) {
-        this.gameData.teams.forEach( item => {
-          item.teamUsers.forEach(teamUser => {
-            var lastGuess = teamUser.guesses[teamUser.guesses.length -1];
-            if (lastGuess.round === this.gameData.currentRound) {
-              group.push([lastGuess.lat, lastGuess.lng]);
-            }
+        if (this.gameData) {
+          this.gameData.teams.forEach(item => {
+            item.teamUsers.forEach(teamUser => {
+              var lastGuess = teamUser.guesses[teamUser.guesses.length - 1];
+              if (lastGuess && lastGuess.round === this.gameData.currentRound) {
+                group.push([lastGuess.lat, lastGuess.lng]);
+              }
+            });
           });
-        });
-      }
-      this.map.fitBounds(group);
+        }
+        this.map.fitBounds(group);
+      }, timeout);
     },
 
     addRanksMarker() {
+      var timeout = 0;
       if (!this.map) {
-        return;
+        timeout = 200;
       }
-      this.ranksMarker = [];
-      if (this.gameData) {
-        this.gameData.teams.forEach( item => {
-          item.teamUsers.forEach(teamUser => {
-            this.drawTeamUser(teamUser);
+      setTimeout(() => {
+        this.ranksMarker = [];
+        if (this.gameData) {
+          this.gameData.teams.forEach(item => {
+            item.teamUsers.forEach(teamUser => {
+              this.drawTeamUser(teamUser);
+            });
           });
-        });
+        }
+      });
+    },
+
+    checkInTeams(team) {
+      for (let i = 0; i < team.users.length; i++) {
+        if (team.users[i].userId == this.$store.state.user.userInfo.userId) {
+          return true;
+        }
       }
+      return false;
+    },
+
+    addTeamMarker() {
+      this.$toast('add team marker')
+      var timeout = 0;
+      if (!this.map) {
+        timeout = 500;
+      }
+      setTimeout(() => {
+        this.ranksMarker = [];
+        if (this.gameData) {
+          this.gameData.teams.forEach(item => {
+            if (this.checkInTeams(item)) {
+              item.teamUsers.forEach(teamUser => {
+                this.drawTeamUser(teamUser);
+              });
+            }
+          });
+        }
+      }, timeout);
     },
 
     clearRanksMarker() {
@@ -892,7 +953,7 @@ export default {
     },
 
     again() {
-      api.getByPath('/api/v0/tuxun/game/again', {'gameId': this.gameId}).then(res=>{
+      api.getByPath('/api/v0/tuxun/game/again', {'gameId': this.gameId}).then(res => {
         if (res.data) {
           if (res.data.type === 'team') {
             window.location.href = '/tuxun/team_game?gameId=' + res.data.id;
@@ -912,7 +973,7 @@ export default {
     },
 
     toReport() {
-      api.getByPath('/api/v0/tuxun/game/report', {content: this.image}).then(res=>{
+      api.getByPath('/api/v0/tuxun/game/report', {content: this.image}).then(res => {
         this.$toast("反馈成功");
       })
     },
@@ -962,10 +1023,10 @@ export default {
               api.getByPathLongTimeout('/api/v0/tuxun/solo/joinRandom').then(res => {
                 if (res.data) {
                   this.notify("您的图寻已匹配到对手，点击开始游戏");
-                  this.$router.push({path: '/tuxun/solo_game?gameId=' + res.data })
-                  this.gameId=res.data;
+                  this.$router.push({path: '/tuxun/solo_game?gameId=' + res.data})
+                  this.gameId = res.data;
                   this.init();
-                  this.continueSend=false;
+                  this.continueSend = false;
                   clearInterval(this.t);
                 } else {
                   this.continueSend = true;
@@ -979,7 +1040,6 @@ export default {
       });
     },
   }
-
 }
 </script>
 
