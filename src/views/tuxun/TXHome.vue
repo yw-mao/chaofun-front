@@ -600,7 +600,10 @@ export default {
       if (this.targetMarker) {
         this.targetMarker.remove();
       }
-      var marker = L.marker([this.targetLat, this.targetLng], {icon: new L.Icon.Default()}).bindTooltip("目标位置",
+      var options = JSON.parse(JSON.stringify(L.Icon.Default.prototype.options))
+      options.iconUrl = this.imgOrigin + 'biz/1662830770348_9499340182724556af66f2b42846135b_0.png';
+      options.iconRetinaUrl = this.imgOrigin + 'biz/1662830707508_d7e5c8ce884a4fb692096396a5405f5b_0.png';
+      var marker = L.marker([this.targetLat, this.targetLng], {icon: new L.Icon(options)}).bindTooltip("目标位置",
           {
             permanent: true,
             direction: 'auto'
