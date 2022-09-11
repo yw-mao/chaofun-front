@@ -115,6 +115,7 @@ export default {
 <style lang="scss" scoped>
 .container {
   width: 100%;
+  min-height: 100%;
   background-color: #090723;
   .top-left {
     position: absolute;
