@@ -357,7 +357,7 @@ export default {
           zoomAnimation: false,
           fadeAnimation: true,
           maxBoundsViscosity: 1.0,
-          maxBounds: [[-90, -360], [90, 360]]
+          maxBounds: [[-90, -540], [90, 540]]
         }).setView([38.8, 106.0], 3)
         L.tileLayer.bing({
           coordType: 'gcj02',
