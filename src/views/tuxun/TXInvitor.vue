@@ -211,7 +211,9 @@
       </div>
 
       <div v-if="lastRound && lastRound.timerStartTime && !lastRound.endTime " :class="[{'top-info': !ISPHONE}, {'top-info-phone': ISPHONE}]">
-        选择倒计时: {{timeLeftStr}}
+        <div class="count-down">
+          选择倒计时: {{timeLeftStr}}
+        </div>
       </div>
 
       <div v-if="showMap && ISPHONE" style="position: absolute; left: 20px; bottom: 20px;z-index: 1000">
@@ -1160,15 +1162,26 @@ export default {
       width: 100%;
       position: absolute;
       margin: 0 auto;
-      padding-top: 1.5rem;
+      margin-top: 1.5rem;
       font-size: 1.2rem;
       font-weight: bold;
-      color: #7654DB;
       pointer-events: none;
       -webkit-user-select:none;
       -moz-user-select:none;
       -ms-user-select:none;
       user-select:none;
+      text-align: center;
+      justify-content: center;
+
+    }
+
+    .count-down {
+      display: inline-block;
+      margin: 0 auto;
+      background-color: rgb(255, 255, 255, 0.7);
+      padding: 0.5rem;
+      border-radius: 10px;
+      color: #7654DB;
     }
 
     .top-info-phone {
