@@ -10,7 +10,7 @@
     </div>
 
     <div class="game">
-      <div class="info" @click="toFirstTournament">图寻第一届团队赛周末开赛,点击报名...</div>
+      <div class="info" @click="toFirstTournament">炒饭第一届团体赛圆满结束,点击查看结果...</div>
       <section class="game_entrance">
         <div class="grid_main">
           <div class="card" @click="redirectPage( '/tuxun/daily_challenge')">

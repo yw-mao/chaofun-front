@@ -359,7 +359,7 @@ export default {
         }).setView([38.8, 106.0], 3)
         L.tileLayer.bing({
           coordType: 'gcj02',
-          bingMapsKey: 'AljSFl1ezKYkuatAoeYdOxBPuuZqzRoYgEULlAh_ZuQDHac6gCWJUVDSF2g99WKv',
+          bingMapsKey: 'Aujbj-UAOzhT0cX9gHBrDrCrlZ5Jd1eZ9s1yVgXDxL2mOxV9iR5uwsbdKsHhytvR',
           imagerySet: 'RoadOnDemand',
           culture: 'zh-CN',
           style: 'vb',

@@ -219,7 +219,7 @@ export default {
   methods: {
     initMap() {
       var map = L.map('map', {attributionControl: false,worldCopyJump: true, coordType: 'gcj02',  zoomAnimation: false, fadeAnimation: true, maxBoundsViscosity: 1.0, maxBounds:  [[-90,-360],   [90,360]]}).setView([38.8, 106.0], 3)
-      L.tileLayer.bing({coordType: 'gcj02', bingMapsKey: 'AljSFl1ezKYkuatAoeYdOxBPuuZqzRoYgEULlAh_ZuQDHac6gCWJUVDSF2g99WKv', imagerySet: 'RoadOnDemand', culture: 'zh-CN', style: 'vb', minZoom: 1, noWrap: true}).addTo(map)
+      L.tileLayer.bing({coordType: 'gcj02', bingMapsKey: 'Aujbj-UAOzhT0cX9gHBrDrCrlZ5Jd1eZ9s1yVgXDxL2mOxV9iR5uwsbdKsHhytvR', imagerySet: 'RoadOnDemand', culture: 'zh-CN', style: 'vb', minZoom: 1, noWrap: true}).addTo(map)
       this.map = map;
       this.map.scrollWheelZoom.enable();
       this.map.on('click', this.click);
