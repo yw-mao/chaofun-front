@@ -624,12 +624,11 @@ export default {
           this.showMapTrue()
           this.targetLat = this.lastRound.lat;
           this.targetLng = this.lastRound.lng;
-          this.clearRanksMarker();
-          this.addTargetMarker();
           if (this.lng) {
             this.addLine();
           }
 
+          this.clearRanksMarker();
           this.addRanksMarker();
           this.centerView();
         }
@@ -889,7 +888,7 @@ export default {
             });
           });
         }
-      });
+      }, timeout);
     },
 
     checkInTeams(team) {
