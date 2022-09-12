@@ -466,8 +466,10 @@ export default {
             }
           }
 
-          if (this.ranksMarker && this.ranksMarker.length === 0 && this.ranks && this.ranks.length !== 0) {
-            console.log("addRanksMarker");
+          if (this.ranksMarker && this.ranksMarker.length === 0 && this.ranks
+              &&
+              (this.ranks.length >= 2 || (this.ranks.length === 1  && this.ranks[0].userAO.userId !== this.$store.state.user.userInfo.userId))
+          ) {
             this.addRanksMarker();
             this.centerView();
           }
@@ -618,7 +620,6 @@ export default {
     addRanksMarker() {
       this.ranksMarker = [];
       if (this.ranks) {
-        console.log(this.ranks);
         this.ranks.forEach( item => {
           if (item.userAO.userId !== this.$store.state.user.userInfo.userId) {
             console.log(item);
