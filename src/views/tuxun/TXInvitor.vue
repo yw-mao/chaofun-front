@@ -633,11 +633,13 @@ export default {
         }
       } else {
         this.showRoundResult = false;
+        // 只有没有结束的时候，采取添加队友，其余的话只添加Ranks
+        if (code ==='user_guess') {
+          this.addTeamMarker();
+        }
       }
 
-      if (code ==='user_guess') {
-        this.addTeamMarker();
-      }
+
     },
 
     wsSend(data) {
