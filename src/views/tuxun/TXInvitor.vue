@@ -627,7 +627,7 @@ export default {
           if (this.lng) {
             this.addLine();
           }
-
+          this.addTargetMarker()
           this.clearRanksMarker();
           this.addRanksMarker();
           this.centerView();
