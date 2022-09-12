@@ -55,7 +55,7 @@
               <div class="title">{{item.userAO.userName}}</div>
               <p v-if="item.ratingChange  && item.ratingChange > 0" class="desc">积分变化：+{{item.ratingChange}}, 积分：{{ item.rating }}</p>
               <p v-if="!item.ratingChange && item.rating" class="desc">积分无变化, 积分：{{ item.rating }}</p>
-              <p v-if="!item.ratingChange && !item.rating" class="desc">积分无变化</p>
+              <p v-if="!item.ratingChange && !item.rating" class="desc">积分无变化 (需要有其他人选择才计算积分)</p>
               <p v-if="item.ratingChange  && item.ratingChange < 0" class="desc">积分变化：{{item.ratingChange}}, 积分：{{ item.rating }}</p>
             </div>
           </div>

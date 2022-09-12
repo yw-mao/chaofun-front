@@ -151,7 +151,7 @@
             <div class="info">
               <p v-if="yourTeam.ratingChange  && yourTeam.ratingChange > 0" class="desc">积分变化：+{{yourTeam.ratingChange}}</p>
               <p v-if="!yourTeam.ratingChange && yourTeam.finalRating" class="desc">积分无变化, 积分：{{ yourTeam.finalRating }}</p>
-              <p v-if="!yourTeam.ratingChange && !yourTeam.finalRating" class="desc">积分无变化</p>
+              <p v-if="!yourTeam.ratingChange && !yourTeam.finalRating" class="desc">积分无变化 (需要有其他人选择才计算积分)</p>
               <p v-if="yourTeam.ratingChange  && yourTeam.ratingChange < 0" class="desc">积分变化：{{yourTeam.ratingChange}}</p>
               <div>
                 最新积分：{{ yourTeam.finalRating }}
