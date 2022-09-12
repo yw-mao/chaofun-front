@@ -628,7 +628,6 @@ export default {
             this.addLine();
           }
           this.addTargetMarker()
-          this.clearRanksMarker();
           this.addRanksMarker();
           this.centerView();
         }
@@ -637,7 +636,6 @@ export default {
       }
 
       if (code ==='user_guess') {
-        this.clearRanksMarker();
         this.addTeamMarker();
       }
     },
@@ -880,7 +878,7 @@ export default {
         timeout = 200;
       }
       setTimeout(() => {
-        this.ranksMarker = [];
+        this.clearRanksMarker();
         if (this.gameData) {
           this.gameData.teams.forEach(item => {
             item.teamUsers.forEach(teamUser => {
@@ -906,7 +904,7 @@ export default {
         timeout = 200;
       }
       setTimeout(() => {
-        this.ranksMarker = [];
+        this.clearRanksMarker();
         if (this.gameData) {
           this.gameData.teams.forEach(item => {
             if (this.checkInTeams(item)) {
