@@ -475,7 +475,7 @@ export default {
       }
 
       if (!this.gameData.player && (code === 'game_end' || data.status === 'finish')) {
-        this.showGameEnd = true;
+        this.showGameEnd = false;
         if (this.gameData.teams[0].health === 0) {
           this.winner = this.gameData.teams[1].users[0];
           this.winTeam = this.gameData.teams[1];
