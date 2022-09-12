@@ -509,7 +509,11 @@ export default {
           group.push([item.latLng.lat, item.latLng.lng]);
         })
       }
-      this.map.fitBounds(group);
+      if (group.length === 1) {
+        this.map.fitBounds(group, {maxZoom: 5});
+      } else {
+        this.map.fitBounds(group);
+      }
     },
     showMapTrue() {
       this.showMap = true;
