@@ -466,7 +466,7 @@ export default {
             }
           }
 
-          if (this.ranksMarker && this.ranksMarker.length === 0 && this.ranks) {
+          if (this.ranksMarker && this.ranksMarker.length === 0 && this.ranks && this.ranks.length !== 0) {
             console.log("addRanksMarker");
             this.addRanksMarker();
             this.centerView();
