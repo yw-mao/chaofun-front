@@ -135,6 +135,7 @@
 
         </div>
       </div>
+
       <div v-if="showGameEnd && winner" class="game_result">
         <div class="player">
           <div v-if="isWin" class="winner_title">
@@ -1306,7 +1307,7 @@ export default {
         height: 100%;
       }
     }
-    .bm-view-container-phone-hide {
+    .bm-view-container-phone-hidden {
       position: absolute;
       width: 100%;
       height: 40%;
@@ -1314,7 +1315,7 @@ export default {
       right: 0;
       visibility: hidden;
 
-      .bm-view-phone-hidden {
+      .bm-view-phone{
         width: 100%;
         height: 100%;
       }
