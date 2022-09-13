@@ -1073,12 +1073,12 @@ export default {
     }
     .winner_title {
       color: gold;
-      font-size: xxx-large;
+      font-size: 3rem;
       margin-bottom: 1rem;;
     }
     .loser_title {
       color: silver;
-      font-size: xxx-large;
+      font-size: 3rem;
       margin-bottom: 1rem;;
     }
     .avatar {
@@ -1089,7 +1089,7 @@ export default {
 
     .userName {
       margin-top: 1rem;
-      font-size: x-large;
+      font-size: 1.5rem;
     }
 
   }
@@ -1362,28 +1362,28 @@ export default {
       user-select:none;
       .user_title {
         text-align: left;
-        font-size: x-large;
+        font-size: 1.5rem;
         font-weight: bolder;
         color: white;
         -webkit-text-stroke: 1px black;
       }
       .sub_user_name {
         text-align: left;
-        font-size: medium;
+        font-size: 1rem;
         font-weight: bolder;
         color: white;
         -webkit-text-stroke: 1px black;
       }
       .user_blod_left {
         text-align: left;
-        font-size: x-large;
+        font-size: 1.5rem;
         font-weight: bolder;
         color: white;
         -webkit-text-stroke: 1px black;
       }
       .user_blod_right {
         text-align: left;
-        font-size: x-large;
+        font-size: 1.5rem;
         font-weight: bolder;
         color: white;
         -webkit-text-stroke: 1px black;
