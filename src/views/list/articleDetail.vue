@@ -205,7 +205,8 @@
             <div class="s404">
               <img src="https://i.chao-fan.com/biz/d5eb6aa7ed1fb2a5a0a04abbcc170e03.png" alt="">
             </div>
-            <p>帖子已被删除或不存在 <span @click="back" class="lookother">看看其他 ></span></p>
+            <p>帖子不存在或正在审核中</p>
+            <p><span @click="back" class="lookother">看看其他 ></span></p>
           </div>
 
         </div>
@@ -1389,9 +1390,9 @@ queryChildren (parent, list) {
   align-items: center;
   text-align: center;
   height: 100vh;
+  font-size: 20px;
   .s404{
     font-size: 44px;
-
     color: cornflowerblue;
     img{
       width: 100%;
