@@ -513,7 +513,7 @@ export default {
       }
       if (group.length === 1) {
         this.map.fitBounds(group, {maxZoom: 5});
-      } else {
+      } else if (group.length > 1) {
         this.map.fitBounds(group);
       }
     },
