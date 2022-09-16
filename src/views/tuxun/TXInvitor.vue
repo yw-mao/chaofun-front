@@ -23,7 +23,7 @@
           <div v-if="gameData && gameData.teams && gameData.teams.length >= 1">
             <div v-for="(item, index) in gameData.teams[0].users">
               <el-avatar :src="imgOrigin + item.icon" class="avatar"></el-avatar>
-              <div class="userName">{{item.userName}}</div>
+              <div class="userName">{{item.userName}} <span v-if="gameData.type === 'team' && item.userId === gameData.host.userId">(房主)</span></div>
             </div>
           </div>
         </div>
@@ -36,7 +36,7 @@
           <div  v-if="gameData && gameData.teams && gameData.teams.length >= 2">
             <div v-for="(item, index) in gameData.teams[1].users">
               <el-avatar :src="imgOrigin + item.icon" class="avatar"></el-avatar>
-              <div class="userName">{{item.userName}}</div>
+              <div class="userName">{{item.userName}} <span v-if="gameData.type === 'team' && item.userId === gameData.host.userId">(房主)</span></div>
             </div>
           </div>
         </div>
