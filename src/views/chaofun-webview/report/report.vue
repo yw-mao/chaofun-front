@@ -34,6 +34,9 @@
               </viewer>
             </div>
           </div>
+          <div v-if="item.postInfo.type == 'article'">
+            {{item.postInfo.article}}
+          </div>
           <div @click="toPost(item.postInfo.postId)" style="font-size: 16px">
             用户：{{item.postInfo.userInfo.userName}}
           </div>
