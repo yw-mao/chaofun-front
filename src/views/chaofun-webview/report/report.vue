@@ -37,6 +37,33 @@
           <div v-if="item.postInfo.type == 'article'">
             {{item.postInfo.article}}
           </div>
+          <div v-if="item.postInfo.type == 'audio'">
+            <audio
+                webkit-playsinline="true"
+                x-webkit-airplay="true"
+                playsinline="true"
+                x5-video-player-type="h5"
+                x5-video-orientation="h5"
+                x5-video-player-fullscreen="true"
+                controls
+                :src="imgOrigin+item.postInfo.audio"
+                alt="">
+            </audio>
+          </div>
+          <div v-if="item.postInfo.type == 'inner_video'">
+            <video style="width: 100%; max-height: 300px"
+                   webkit-playsinline="true"
+                   x-webkit-airplay="true"
+                   playsinline="true"
+                   x5-video-player-type="h5"
+                   x5-video-orientation="h5"
+                   x5-video-player-fullscreen="true"
+                   controls
+                   :src="imgOrigin+item.postInfo.video"
+                   ref="videoPlayer"
+                   alt="">
+            </video>
+          </div>
           <div @click="toPost(item.postInfo.postId)" style="font-size: 16px">
             用户：{{item.postInfo.userInfo.userName}}
           </div>
@@ -45,8 +72,8 @@
           </div>
 
           <div>
-            <el-button @click="dealReport(item.id, 'ignore')">不处理</el-button>
-            <el-button @click="dealReport(item.id, 'delete')">删除内容</el-button>
+            <el-button @click="dealReport(item.id, 'ignore')">忽略</el-button>
+            <el-button @click="dealReport(item.id, 'delete')">删除</el-button>
             <el-button @click="dealReport(item.id, 'publish_sex')">处罚：色情+删除</el-button>
             <el-button @click="dealReport(item.id, 'punish_politic')">处罚：政治+删除</el-button>
             <el-button @click="dealReport(item.id, 'malicious')">恶意举报</el-button>
@@ -100,8 +127,8 @@
             举报原因：{{item.reason}}
           </div>
           <div>
-            <el-button @click="dealReport(item.id, 'ignore')">不处理</el-button>
-            <el-button @click="dealReport(item.id, 'delete')">删除内容</el-button>
+            <el-button @click="dealReport(item.id, 'ignore')">忽略</el-button>
+            <el-button @click="dealReport(item.id, 'delete')">删除</el-button>
             <el-button @click="dealReport(item.id, 'publish_sex')">处罚：色情+删除</el-button>
             <el-button @click="dealReport(item.id, 'publish_politics')">处罚：政治+删除</el-button>
             <el-button @click="dealReport(item.id, 'malicious')">恶意举报</el-button>
