@@ -6,14 +6,14 @@ import { getToken } from '@/utils/auth'
 import router from 'vue-router'
 
 console.log('-------------------');
-function IsPC(){  
+function IsPC(){
   var userAgentInfo = navigator.userAgent;
-  var Agents = new Array("Android", "iPhone", "SymbianOS", "Windows Phone", "iPad", "iPod");  
-  var flag = true;  
-  for (var v = 0; v < Agents.length; v++) {  
-      if (userAgentInfo.indexOf(Agents[v]) > 0) { flag = false; break; }  
-  }  
-  return flag;  
+  var Agents = new Array("Android", "iPhone", "SymbianOS", "Windows Phone", "iPad", "iPod");
+  var flag = true;
+  for (var v = 0; v < Agents.length; v++) {
+      if (userAgentInfo.indexOf(Agents[v]) > 0) { flag = false; break; }
+  }
+  return flag;
 }
 // console.log(location.origin);
 // create an axios instance
@@ -32,7 +32,7 @@ service.interceptors.request.use(
     }else{
       config.headers['fun-device'] = 'h5'
     }
-    
+
     if (store.getters.token) {
       // let each request carry token
       // ['X-Token'] is a custom headers key
@@ -62,11 +62,14 @@ service.interceptors.response.use(
    */
   response => {
     const res = response.data
+    if (res.hintCode) {
+      Toast(res.hintMessage)
+    }
     // if the custom code is not 20000, it is judged as an error.
     if (!res.success) {
       Toast(res.errorMessage)
       if(res.errorCode&&res.errorCode!='need_login'){
-        
+
         if(res.message&&res.message.includes('timeout')){
           // errorMessage
         }else{
@@ -82,7 +85,7 @@ service.interceptors.response.use(
       }else{
         return res
       }
-      
+
 
       // 50008: Illegal token; 50012: Other clients logged in; 50014: Token expired;
       if (res.code === 50008 || res.code === 50012 || res.code === 50014) {
@@ -97,7 +100,7 @@ service.interceptors.response.use(
           })
         })
       }
-      
+
     } else {
       return res
     }
