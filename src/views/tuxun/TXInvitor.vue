@@ -82,19 +82,19 @@
           <div class="round_result_top">第 {{gameData.currentRound}} 轮 <span></span></div>
           <div class="round_result_center" v-if="!gameData.player">
             <div class="round_result_block" v-if="gameData.type !== 'team'">
-              {{gameData.teams[0].users[0].userName}} 本局得分: {{gameData.teams[0].lastRoundResult.score}}
+              {{gameData.teams[0].users[0].userName}} 本轮得分: {{gameData.teams[0].lastRoundResult.score}}
               <div>
                 血量变化：{{gameData.teams[0].lastRoundResult.healthAfter - gameData.teams[0].lastRoundResult.healthBefore}}
               </div>
             </div>
             <div class="round_result_block" v-if="gameData.type !== 'team'">
-              {{gameData.teams[1].users[0].userName}} 本局得分: {{gameData.teams[1].lastRoundResult.score}}
+              {{gameData.teams[1].users[0].userName}} 本轮得分: {{gameData.teams[1].lastRoundResult.score}}
               <div>
                 血量变化：{{gameData.teams[1].lastRoundResult.healthAfter - gameData.teams[1].lastRoundResult.healthBefore}}
               </div>
             </div>
             <div class="round_result_block" v-if="gameData.type === 'team'">
-              队伍1 本局得分: {{gameData.teams[0].lastRoundResult.score}}
+              队伍1 本轮得分: {{gameData.teams[0].lastRoundResult.score}}
               <div v-if="gameData.teams[0].lastRoundResult.user">
                 最佳队员：{{gameData.teams[0].lastRoundResult.user.userName}}
               </div>
@@ -103,7 +103,7 @@
               </div>
             </div>
             <div class="round_result_block" v-if="gameData.type === 'team'">
-              队伍2 本局得分: {{gameData.teams[1].lastRoundResult.score}}
+              队伍2 本轮得分: {{gameData.teams[1].lastRoundResult.score}}
               <div v-if="gameData.teams[1].lastRoundResult.user">
                 最佳队员：{{gameData.teams[1].lastRoundResult.user.userName}}
               </div>
@@ -118,7 +118,7 @@
               <div>
                 局数:  {{gameData.currentRound}} / {{gameData.roundNumber}}
               </div>
-              本局得分: {{gameData.player.lastRoundResult.score}}
+              本轮得分: {{gameData.player.lastRoundResult.score}}
               <div>
                 总得分:  {{gameData.player.totalScore}}
               </div>
