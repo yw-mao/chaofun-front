@@ -79,7 +79,8 @@
       <div :class="[{'im-view': !ISPHONE}, {'im-view-phone': ISPHONE}]">
         <div id="viewer"  style="width: 100%; height: 100%"></div>
         <div v-if="showRoundResult" class="round_result">
-          <div class="round_result_top">第 {{gameData.currentRound}} 轮 <span></span></div>
+          <div class="round_result_top">第 {{gameData.currentRound}} 轮 <span v-if="lastRound.isDamageMultiple"> - {{lastRound.damageMultiple}} 倍伤害</span></div>
+<!--          <div class="round_result_top">第 {{gameData.currentRound}} 轮 <span> - {} 倍伤害</span></div>-->
           <div class="round_result_center" v-if="!gameData.player">
             <div class="round_result_block" v-if="gameData.type !== 'team'">
               {{gameData.teams[0].users[0].userName}} 本轮得分: {{gameData.teams[0].lastRoundResult.score}}
@@ -212,8 +213,11 @@
         <div id="map" :class="[{'bm-view': !ISPHONE}, {'bm-view-phone': ISPHONE}]" @mouseover="mapMouseOver" @mouseout="mapMouseOut"></div>
       </div>
 
-      <div v-if="lastRound && lastRound.timerStartTime && !lastRound.endTime " :class="[{'top-info': !ISPHONE}, {'top-info-phone': ISPHONE}]">
-        <div class="count-down">
+      <div :class="[{'top-info': !ISPHONE}, {'top-info-phone': ISPHONE}]">
+        <div v-if="lastRound.isDamageMultiple" class="count-down">
+          本轮 {{lastRound.damageMultiple}} 倍伤害
+        </div>
+        <div v-if="lastRound && lastRound.timerStartTime && !lastRound.endTime" class="count-down">
           选择倒计时: {{timeLeftStr}}
         </div>
       </div>
