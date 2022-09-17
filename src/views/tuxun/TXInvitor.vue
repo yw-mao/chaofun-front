@@ -217,6 +217,7 @@
         <div v-if="lastRound.isDamageMultiple" class="count-down">
           本轮 {{lastRound.damageMultiple}} 倍伤害
         </div>
+        <div></div>
         <div v-if="lastRound && lastRound.timerStartTime && !lastRound.endTime" class="count-down">
           选择倒计时: {{timeLeftStr}}
         </div>
@@ -1180,7 +1181,6 @@ export default {
       justify-content: center;
 
     }
-
     .count-down {
       display: inline-block;
       margin: 0 auto;
