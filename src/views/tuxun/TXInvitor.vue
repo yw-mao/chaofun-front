@@ -79,6 +79,7 @@
       <div :class="[{'im-view': !ISPHONE}, {'im-view-phone': ISPHONE}]">
         <div id="viewer"  style="width: 100%; height: 100%"></div>
         <div v-if="showRoundResult" class="round_result">
+          <div class="round_result_top">第 {{gameData.currentRound}} 轮 <span></span></div>
           <div class="round_result_center" v-if="!gameData.player">
             <div class="round_result_block" v-if="gameData.type !== 'team'">
               {{gameData.teams[0].users[0].userName}} 本局得分: {{gameData.teams[0].lastRoundResult.score}}
@@ -1210,6 +1211,11 @@ export default {
       text-align: center;
       justify-content: center;
       padding-top: 8rem;
+      .round_result_top {
+        color: white;
+        font-size: 2rem;
+        font-weight: bold;
+      }
       .round_result_center {
         div {
           color: white;
@@ -1217,6 +1223,7 @@ export default {
         }
         margin: auto;
         text-align: center;
+
         .round_result_block {
           padding: 1rem;
           background: #171829;
