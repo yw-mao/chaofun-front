@@ -32,6 +32,7 @@
       <p>  - 每周五(炒饭爆炸星期五)登录使用炒饭，奖励 10 FBi </p>
       <p>  - 每发出一条评论 (评论自己的帖子不算), 奖励 1 FBi</p>
       <p>  - 向站长 (cijianzy) 反馈问题, 奖励 100 FBi</p>
+      <p>  - 图寻邀请新用户Solo, 奖励 100 FBi, 新用户奖励 50 FBi</p>
       <div>
         <p>
           - 邀请用户注册炒饭，其他用户注册成功后，奖励 100 FBi, 邀请链接： https://chao.fan/app?inviter={{this.userInfo.userId}}
