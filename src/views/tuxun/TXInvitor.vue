@@ -645,8 +645,6 @@ export default {
         // 只有没有结束的时候，采取添加队友，其余的话只添加Ranks
         this.addTeamMarker();
       }
-
-
     },
 
     wsSend(data) {
@@ -877,7 +875,11 @@ export default {
             });
           });
         }
-        this.map.fitBounds(group);
+        if (group.length === 1) {
+          this.map.fitBounds(group, {maxZoom: 5});
+        } else if (group.length > 1) {
+          this.map.fitBounds(group);
+        }
       }, timeout);
     },
 
