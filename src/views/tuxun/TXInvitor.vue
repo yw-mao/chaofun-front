@@ -76,11 +76,11 @@
     </div>
 
     <div class="game" v-if="status === 'ongoing' || status === 'finish'">
-      <div :class="[{'im-view': !ISPHONE}, {'im-view-phone': ISPHONE}]">
+      <div class="im-view">
         <div id="viewer"  style="width: 100%; height: 100%"></div>
         <div v-if="showRoundResult" class="round_result">
           <div class="round_result_top">第 {{gameData.currentRound}} 轮 <span v-if="lastRound.isDamageMultiple"> - {{lastRound.damageMultiple}} 倍伤害</span></div>
-<!--          <div class="round_result_top">第 {{gameData.currentRound}} 轮 <span> - {} 倍伤害</span></div>-->
+          <!--          <div class="round_result_top">第 {{gameData.currentRound}} 轮 <span> - {} 倍伤害</span></div>-->
           <div class="round_result_center" v-if="!gameData.player">
             <div class="round_result_block" v-if="gameData.type !== 'team'">
               {{gameData.teams[0].users[0].userName}} 本轮得分: {{gameData.teams[0].lastRoundResult.score}}
@@ -134,77 +134,74 @@
               <el-button class="result_button"  type="primary" @click="goHome">回到首页</el-button>
             </div>
           </div>
-
         </div>
-      </div>
-
-      <div v-if="showGameEnd && winner" class="game_result">
-        <div class="player">
-          <div v-if="isWin" class="winner_title">
-            胜利!
-          </div>
-          <div v-else class="loser_title">
-            失败!
-          </div>
-
-          <el-avatar  v-if="gameData.type !== 'team'" :src="this.imgOrigin + yourTeam.users[0].icon" class="avatar"></el-avatar>
-          <div class="userName"  v-if="gameData.type !== 'team'">{{yourTeam.users[0].userName}}</div>
-          <div class="userName"  v-if="gameData.type === 'team'"></div>
-          <div v-if="gameData && gameData.type === 'solo_match'">
-            <div class="info">
-              <p v-if="yourTeam.ratingChange  && yourTeam.ratingChange > 0" class="desc">积分变化：+{{yourTeam.ratingChange}}</p>
-              <p v-if="!yourTeam.ratingChange && yourTeam.finalRating" class="desc">积分无变化, 积分：{{ yourTeam.finalRating }}</p>
-              <p v-if="!yourTeam.ratingChange && !yourTeam.finalRating" class="desc">积分无变化 (需要有其他人选择才计算积分)</p>
-              <p v-if="yourTeam.ratingChange  && yourTeam.ratingChange < 0" class="desc">积分变化：{{yourTeam.ratingChange}}</p>
-              <div>
-                最新积分：{{ yourTeam.finalRating }}
-              </div>
+        <div v-if="showGameEnd && winner" class="game_result">
+          <div class="player">
+            <div v-if="isWin" class="winner_title">
+              胜利!
             </div>
-            <el-button class="home_button"  type="primary" @click="goTuxun" round>继续匹配</el-button>
-          </div>
-          <div v-if="gameData && ( gameData.type === 'solo' || gameData.type === 'team')">
-            <el-button class="home_button"  type="primary" @click="again" round>再来一局</el-button>
-          </div>
-          <div>
-            <el-button class="home_button" type="warning" @click="goHome" round>回到图寻首页</el-button>
+            <div v-else class="loser_title">
+              失败!
+            </div>
+
+            <el-avatar  v-if="gameData.type !== 'team'" :src="this.imgOrigin + yourTeam.users[0].icon" class="avatar"></el-avatar>
+            <div class="userName"  v-if="gameData.type !== 'team'">{{yourTeam.users[0].userName}}</div>
+            <div class="userName"  v-if="gameData.type === 'team'"></div>
+            <div v-if="gameData && gameData.type === 'solo_match'">
+              <div class="info">
+                <p v-if="yourTeam.ratingChange  && yourTeam.ratingChange > 0" class="desc">积分变化：+{{yourTeam.ratingChange}}</p>
+                <p v-if="!yourTeam.ratingChange && yourTeam.finalRating" class="desc">积分无变化, 积分：{{ yourTeam.finalRating }}</p>
+                <p v-if="!yourTeam.ratingChange && !yourTeam.finalRating" class="desc">积分无变化 (需要有其他人选择才计算积分)</p>
+                <p v-if="yourTeam.ratingChange  && yourTeam.ratingChange < 0" class="desc">积分变化：{{yourTeam.ratingChange}}</p>
+                <div>
+                  最新积分：{{ yourTeam.finalRating }}
+                </div>
+              </div>
+              <el-button class="home_button"  type="primary" @click="goTuxun" round>继续匹配</el-button>
+            </div>
+            <div v-if="gameData && ( gameData.type === 'solo' || gameData.type === 'team')">
+              <el-button class="home_button"  type="primary" @click="again" round>再来一局</el-button>
+            </div>
+            <div>
+              <el-button class="home_button" type="warning" @click="goHome" round>回到图寻首页</el-button>
+            </div>
           </div>
         </div>
-      </div>
+        <div v-if="gameData && !gameData.player " class="game_hud">
+          <div class="hub_left">
+            <div class="user_title" v-if="gameData.type !== 'team'">
+              {{gameData.teams[0].users[0].userName}}
+            </div>
+            <div class="user_title" v-if="gameData.type === 'team'">
+              队伍1
+            </div>
+            <div class="user_blod_left">
+              血量：{{gameData.teams[0].health}}
+            </div>
+            <div class="sub_user_name" v-for="(item, index) in gameData.teams[0].users"  v-if="gameData.type === 'team'">
+              {{item.userName}}
+            </div>
+            <div v-if="team1Emoji" class="emoji">
+              <img :src="imgOrigin+team1Emoji +'?x-oss-process=image/resize,h_120'"/>
+            </div>
+          </div>
 
-      <div v-if="gameData && !gameData.player " class="game_hud">
-        <div class="hub_left">
-          <div class="user_title" v-if="gameData.type !== 'team'">
-            {{gameData.teams[0].users[0].userName}}
-          </div>
-          <div class="user_title" v-if="gameData.type === 'team'">
-            队伍1
-          </div>
-          <div class="user_blod_left">
-            血量：{{gameData.teams[0].health}}
-          </div>
-          <div class="sub_user_name" v-for="(item, index) in gameData.teams[0].users"  v-if="gameData.type === 'team'">
-            {{item.userName}}
-          </div>
-          <div v-if="team1Emoji" class="emoji">
-            <img :src="imgOrigin+team1Emoji +'?x-oss-process=image/resize,h_120'"/>
-          </div>
-        </div>
-
-        <div class="hub_right">
-          <div class="user_title" v-if="gameData.type !== 'team'">
-            {{gameData.teams[1].users[0].userName}}
-          </div>
-          <div class="user_title" v-if="gameData.type === 'team'">
-            队伍2
-          </div>
-          <div class="user_blod_right">
-            血量：{{gameData.teams[1].health}}
-          </div>
-          <div class="sub_user_name" v-for="(item, index) in gameData.teams[1].users"  v-if="gameData.type === 'team'">
-            {{item.userName}}
-          </div>
-          <div v-if="this.team2Emoji" class="emoji">
-            <img :src="imgOrigin+team2Emoji +'?x-oss-process=image/resize,h_120'"/>
+          <div class="hub_right">
+            <div class="user_title" v-if="gameData.type !== 'team'">
+              {{gameData.teams[1].users[0].userName}}
+            </div>
+            <div class="user_title" v-if="gameData.type === 'team'">
+              队伍2
+            </div>
+            <div class="user_blod_right">
+              血量：{{gameData.teams[1].health}}
+            </div>
+            <div class="sub_user_name" v-for="(item, index) in gameData.teams[1].users"  v-if="gameData.type === 'team'">
+              {{item.userName}}
+            </div>
+            <div v-if="this.team2Emoji" class="emoji">
+              <img :src="imgOrigin+team2Emoji +'?x-oss-process=image/resize,h_120'"/>
+            </div>
           </div>
         </div>
       </div>
@@ -212,6 +209,7 @@
       <div id="map-container" :class="[{'bm-view-container': !ISPHONE}, {'bm-view-container-phone': ISPHONE && showMap}, {'bm-view-container-phone-hidden': ISPHONE && !showMap}]"@mouseover="mapMouseOver" @mouseout="mapMouseOut">
         <div id="map" :class="[{'bm-view': !ISPHONE}, {'bm-view-phone': ISPHONE}]" @mouseover="mapMouseOver" @mouseout="mapMouseOut"></div>
       </div>
+
 
       <div :class="[{'top-info': !ISPHONE}, {'top-info-phone': ISPHONE}]">
         <div v-if="!lastRound.endTime && lastRound.isDamageMultiple" class="count-down">
@@ -484,6 +482,7 @@ export default {
       if (!this.gameData.player && (code === 'game_end' || data.status === 'finish')) {
         this.showMap = false;
         this.showGameEnd = true;
+        this.showRoundResult = false;
         if (this.gameData.teams[0].health === 0) {
           this.winner = this.gameData.teams[1].users[0];
           this.winTeam = this.gameData.teams[1];
@@ -517,6 +516,7 @@ export default {
       if (this.gameData.player && (code === 'game_end' || data.status === 'finish')) {
         this.showMap = false;
         this.showChallengeGameEnd = true;
+        this.showRoundResult = false;
       }
 
       if (data.status === 'wait_join' || data.status === 'ready' || data.status === 'ongoing' || data.status === 'finish') {
@@ -1266,21 +1266,6 @@ export default {
       align-content: center;
       justify-content: center;
       transform-origin: center;
-
-    }
-    .im-view-phone {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      right: 0;
-      left: 0;
-      text-align: center;
-      overflow: hidden;
-      display: flex;
-      align-items: center;
-      align-content: center;
-      justify-content: center;
-      transform-origin: center;
     }
     .bm-view-container {
       position: absolute;
@@ -1296,7 +1281,6 @@ export default {
       -ms-user-select: none;
       user-select: none;
       z-index: 500;
-
 
       .bm-view {
         width: 100%;
