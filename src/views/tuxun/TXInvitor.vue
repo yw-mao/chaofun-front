@@ -78,6 +78,7 @@
     <div class="game" v-if="status === 'ongoing' || status === 'finish'">
       <div class="im-view">
         <div id="viewer"  style="width: 100%; height: 100%"></div>
+
         <div v-if="showRoundResult" class="round_result">
           <div class="round_result_top">第 {{gameData.currentRound}} 轮 <span v-if="lastRound.isDamageMultiple"> - {{lastRound.damageMultiple}} 倍伤害</span></div>
           <!--          <div class="round_result_top">第 {{gameData.currentRound}} 轮 <span> - {} 倍伤害</span></div>-->
@@ -204,12 +205,12 @@
             </div>
           </div>
         </div>
+
       </div>
 
       <div id="map-container" :class="[{'bm-view-container': !ISPHONE}, {'bm-view-container-phone': ISPHONE && showMap}, {'bm-view-container-phone-hidden': ISPHONE && !showMap}]"@mouseover="mapMouseOver" @mouseout="mapMouseOut">
         <div id="map" :class="[{'bm-view': !ISPHONE}, {'bm-view-phone': ISPHONE}]" @mouseover="mapMouseOver" @mouseout="mapMouseOut"></div>
       </div>
-
 
       <div :class="[{'top-info': !ISPHONE}, {'top-info-phone': ISPHONE}]">
         <div v-if="!lastRound.endTime && lastRound.isDamageMultiple" class="count-down">
@@ -642,9 +643,7 @@ export default {
       } else {
         this.showRoundResult = false;
         // 只有没有结束的时候，采取添加队友，其余的话只添加Ranks
-        if (code ==='user_guess') {
-          this.addTeamMarker();
-        }
+        this.addTeamMarker();
       }
 
 
