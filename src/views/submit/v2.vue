@@ -73,7 +73,7 @@
                           autosize
                           placeholder="请输入标题"
                           v-model="post.title"
-                          maxlength="300"
+                          maxlength="140"
                           show-word-limit
                           :autofocus="true"
                           ref="title"
@@ -112,7 +112,7 @@
                         </el-input>
                       </el-form-item>
                     </el-row>
-                    
+
                     <el-row class="vote-box" v-if="type === 'vote'">
                       <div class="vote-control">
                         <draggable
@@ -277,16 +277,16 @@
           </el-container>
        <!-- <div class="main_content">
         <div v-if="!ISPHONE" class="main_left">
-          
+
         </div>
         <div class="main_center">
-          
+
         </div>
         <div v-if="!ISPHONE" class="main_right">
         </div>
        </div> -->
 </div>
-  
+
 </template>
 
 <script>
@@ -435,7 +435,7 @@
           });
         }
       },
-      
+
       // === 链接相关 ===
       // 通过URL获取链接标题
       async getUrlTitle() {
@@ -606,7 +606,7 @@
   //max-width: 1248px;
   padding: 60px 15px 60px 215px;
   margin: 0 auto;
-  
+
   .section-submit-header {
     border-bottom: 1px solid #DCDFE6;
     margin-bottom: 10px;
@@ -734,7 +734,7 @@
           }
         }
       }
-     
+
     }
   }
   .postbox-fields {
@@ -994,7 +994,7 @@
         height: 24px;
         overflow: hidden;
       }
-      
+
       span {
         display: flex;
         padding-left: 8px;
@@ -1003,7 +1003,7 @@
       &.selected {
         background-color: #F5F7FA;
       }
-      
+
     }
   }
   .el-aside {
