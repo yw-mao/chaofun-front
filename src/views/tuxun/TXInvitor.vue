@@ -136,7 +136,7 @@
 <!--                本轮距离: {{(gameData.player.lastRoundResult.distance / 1000).toFixed(3)}} 千米-->
 <!--              </div>-->
               <div>
-                猜测国家： {{gameData.player.lastRoundResult.guessPlace}}
+                选择国家： {{gameData.player.lastRoundResult.guessPlace}}
               </div>
               <div>
                 正确答案： {{gameData.player.lastRoundResult.targetPlace}}
