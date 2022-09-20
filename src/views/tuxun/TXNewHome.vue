@@ -58,7 +58,7 @@
               连胜挑战
             </div>
             <div class="describe">
-              是男人就坚持一百题(待开放)
+              是男人就坚持一百题
             </div>
           </div>
           <div class="card" @click="redirectPage( '/tuxun/maps')">
