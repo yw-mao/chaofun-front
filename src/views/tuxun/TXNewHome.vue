@@ -26,7 +26,7 @@
               连胜挑战
             </div>
             <div class="describe">
-              是男人就胜100次(待开放)
+              是男人就连胜100次(待开放)
             </div>
           </div>
           <div class="card" @click="redirectPage( '/tuxun/main_game')">
