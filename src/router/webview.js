@@ -256,6 +256,20 @@ routes = [
     hidden: true
   },
   {
+    path: '/tuxun/streak',
+    component: () => import('@/views/tuxun/TXStreak'),
+    name: '图寻首页',
+    meta: { title: '图寻首页'},
+    hidden: true
+  },
+  {
+    path: '/tuxun/streak_game',
+    component: () => import('@/views/tuxun/TXInvitor'),
+    name: '图寻连胜',
+    meta: { title: '图寻连胜'},
+    hidden: true
+  },
+  {
     path: '/tuxunNewMap',
     component: () => import('@/views/tuxun/TXNewMap'),
     name: '图寻首页',

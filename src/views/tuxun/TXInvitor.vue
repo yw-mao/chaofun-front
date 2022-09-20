@@ -80,8 +80,8 @@
         <div id="viewer"  style="width: 100%; height: 100%"></div>
 
         <div v-if="showRoundResult" class="round_result">
-          <div class="round_result_top">第 {{gameData.currentRound}} 轮 <span v-if="lastRound.isDamageMultiple"> - {{lastRound.damageMultiple}} 倍伤害</span></div>
-          <!--          <div class="round_result_top">第 {{gameData.currentRound}} 轮 <span> - {} 倍伤害</span></div>-->
+          <div class="round_result_top"><span v-if="gameData.type === 'country_streak'">国家连胜 - </span>第 {{gameData.currentRound}} 轮 <span v-if="lastRound.isDamageMultiple"> - {{lastRound.damageMultiple}} 倍伤害</span></div>
+
           <div class="round_result_center" v-if="!gameData.player">
             <div class="round_result_block" v-if="gameData.type !== 'team'">
               {{gameData.teams[0].users[0].userName}} 本轮得分: {{gameData.teams[0].lastRoundResult.score}}
@@ -112,17 +112,34 @@
               <div>
                 血量变化：{{gameData.teams[1].lastRoundResult.healthAfter - gameData.teams[1].lastRoundResult.healthBefore}}
               </div>
-
             </div>
           </div>
-          <div class="round_result_center" v-if="gameData.player">
+
+          <div class="round_result_center" v-if="gameData.type === 'daily_challenge'">
             <div class="round_result_block">
               <div>
-                局数:  {{gameData.currentRound}} / {{gameData.roundNumber}}
+                轮数:  {{gameData.currentRound}} / {{gameData.roundNumber}}
               </div>
-              本轮得分: {{gameData.player.lastRoundResult.score}}
+                本轮得分: {{gameData.player.lastRoundResult.score}}
               <div>
                 总得分:  {{gameData.player.totalScore}}
+              </div>
+            </div>
+          </div>
+
+          <div class="round_result_center" v-if="gameData.type === 'country_streak'">
+            <div class="round_result_block">
+<!--              <div>-->
+<!--                本轮得分: {{gameData.player.lastRoundResult.score}}-->
+<!--              </div>-->
+<!--              <div v-if="gameData.player.lastRoundResult.distance">-->
+<!--                本轮距离: {{(gameData.player.lastRoundResult.distance / 1000).toFixed(3)}} 千米-->
+<!--              </div>-->
+              <div>
+                猜测国家： {{gameData.player.lastRoundResult.guessPlace}}
+              </div>
+              <div>
+                正确答案： {{gameData.player.lastRoundResult.targetPlace}}
               </div>
             </div>
           </div>
@@ -135,7 +152,24 @@
               <el-button class="result_button"  type="primary" @click="goHome">回到首页</el-button>
             </div>
           </div>
+
+          <div v-if="showStreakGameEnd" class="challenge_result_bottom" >
+            <div style="font-size: 30px; color: orangered">
+              猜测错误，挑战结束
+            </div>
+            <div style="font-size: 30px; color: yellow">
+              你连胜了 {{gameData.player.streaks}} 轮
+            </div>
+            <div>
+              <el-button class="result_button" @click="createNew">重新开始挑战</el-button>
+            </div>
+            <div>
+              <el-button class="result_button"  type="primary" @click="goHome">回到首页</el-button>
+            </div>
+          </div>
+
         </div>
+
         <div v-if="showGameEnd && winner" class="game_result">
           <div class="player">
             <div v-if="isWin" class="winner_title">
@@ -222,6 +256,13 @@
         </div>
       </div>
 
+      <div v-if="gameData.type === 'country_streak'" :class="[{'topRight': !ISPHONE}, {'topRight-phone': ISPHONE}]">
+        <div :class="[{'topRight-info': !ISPHONE}, {'topRight-info-phone': ISPHONE}]">
+          连胜次数：{{gameData.player.streaks}}
+        </div>
+      </div>
+
+
       <div v-if="showMap && ISPHONE" style="position: absolute; left: 20px; bottom: 20px;z-index: 1000">
         <el-button @click="showMap = false" round>隐藏地图</el-button>
       </div>
@@ -293,6 +334,7 @@ export default {
       team1User: null,
       team2User: null,
       winner: null,
+      showStreakGameEnd: false,
       winTeam: null,
       yourTeam: null,
       isWin: null,
@@ -314,10 +356,35 @@ export default {
   mounted() {
     this.gameId = this.$route.query.gameId;
     this.challengeId = this.$route.query.challengeId;
+    this.streakId = this.$route.query.streakId;
     this.init();
   },
 
   methods: {
+    init() {
+      var Notification = window.Notification || window.mozNotification || window.webkitNotification;
+      if (Notification) {
+        Notification.requestPermission(function (status) {
+          this.notifyStatus = status;
+        }.bind(this))
+      }
+      if (this.gameId && this.gameId !== null && this.gameId !== '') {
+        this.showMatch = false;
+        this.initWS();
+        this.join();
+        this.countDown();
+      } else if (!this.challengeId && !this.streakId) {
+        this.showMatch = true;
+        this.match();
+      } else if (this.challengeId) {
+        this.showMatch = false;
+        this.challengeInit();
+      } else if (this.streakId) {
+        this.showMatch = false;
+        this.gameId = this.streakId;
+        this.getGameInfo();
+      }
+    },
     mapMouseOver() {
       if (!window.matchMedia("(hover: none)").matches && document.body.clientWidth > 678) {
         this.needSmall = false;
@@ -381,27 +448,7 @@ export default {
         this.map.invalidateSize();
       }
     },
-    init() {
-      var Notification = window.Notification || window.mozNotification || window.webkitNotification;
-      if (Notification) {
-        Notification.requestPermission(function (status) {
-          this.notifyStatus = status;
-        }.bind(this))
-      }
-      if (this.gameId && this.gameId !== null && this.gameId !== '') {
-        this.showMatch = false;
-        this.initWS();
-        this.join();
-        this.countDown();
-      } else if (!this.challengeId) {
-        this.showMatch = true;
-        this.match();
-      } else {
-        this.showMatch = false;
-        this.challengeInit();
-      }
 
-    },
 
     challengeInit() {
       api.getByPath('/api/v0/tuxun/challenge/getGameInfo', {'challengeId': this.challengeId}).then(res => {
@@ -483,7 +530,6 @@ export default {
       if (!this.gameData.player && (code === 'game_end' || data.status === 'finish')) {
         this.showMap = false;
         this.showGameEnd = true;
-        this.showRoundResult = false;
         if (this.gameData.teams[0].health === 0) {
           this.winner = this.gameData.teams[1].users[0];
           this.winTeam = this.gameData.teams[1];
@@ -514,10 +560,14 @@ export default {
         }
       }
 
-      if (this.gameData.player && (code === 'game_end' || data.status === 'finish')) {
+      if (this.gameData.type === 'daily_challenge' && (code === 'game_end' || data.status === 'finish')) {
         this.showMap = false;
         this.showChallengeGameEnd = true;
-        this.showRoundResult = false;
+      }
+
+      if (this.gameData.type === 'country_streak' && (code === 'game_end' || data.status === 'finish')) {
+        this.showMap = false;
+        this.showStreakGameEnd = true;
       }
 
       if (data.status === 'wait_join' || data.status === 'ready' || data.status === 'ongoing' || data.status === 'finish') {
@@ -676,7 +726,6 @@ export default {
       });
     },
     join() {
-      console.log('123');
       this.doLoginStatus().then((res) => {
         api.getByPath("/api/v0/tuxun/game/join", {gameId: this.gameId}).then(res => {
           console.log(res.data);
@@ -716,6 +765,12 @@ export default {
     start() {
       api.getByPath("/api/v0/tuxun/solo/start", {gameId: this.gameId}).then(res => {
         this.solveGameData(res.data, undefined);
+      });
+    },
+
+    createNew() {
+      api.getByPath("/api/v0/tuxun/streak/createCountryStreak").then(res => {
+        window.location.href = '/tuxun/streak_game?streakId=' + res.data.id;
       });
     },
 
@@ -947,16 +1002,28 @@ export default {
       if (this.gameData.type === 'daily_challenge') {
         path = "/api/v0/tuxun/challenge/guess";
       }
+
+      if (this.gameData.type === 'country_streak') {
+        path = "/api/v0/tuxun/streak/guess";
+      }
       api.getByPath(path, {gameId: this.gameId, lng: this.lng, lat: this.lat}).then(res => {
-        // this.solveGameData(res.data, undefined);
+            if (this.gameData.type === 'country_streak') {
+              this.solveGameData(res.data, undefined);
+            }
       });
     },
 
     next() {
       this.confirmed = false;
-      api.getByPath("/api/v0/tuxun/challenge/next", {gameId: this.gameId}).then(res => {
-        this.solveGameData(res.data, undefined);
-      });
+      if (this.challengeId) {
+        api.getByPath("/api/v0/tuxun/challenge/next", {gameId: this.gameId}).then(res => {
+          this.solveGameData(res.data, undefined);
+        });
+      } else {
+        api.getByPath("/api/v0/tuxun/streak/next", {gameId: this.gameId}).then(res => {
+          this.solveGameData(res.data, undefined);
+        });
+      }
     },
 
     goTuxun() {
@@ -1206,6 +1273,47 @@ export default {
       user-select:none;
     }
 
+    .topRight {
+      position: absolute;
+      top: 20px;
+      right: 2rem;
+      z-index: 100000;
+      -webkit-user-select:none;
+      -moz-user-select:none;
+      -ms-user-select:none;
+      user-select:none;
+    }
+    .topRight-phone {
+      position: absolute;
+      top: 30px;
+      right: 20px;
+      z-index: 100000;
+      -webkit-user-select:none;
+      -moz-user-select:none;
+      -ms-user-select:none;
+      user-select:none;
+    }
+    .topRight-info {
+      font-size: 20px;
+      font-weight: bold;
+      color: white;
+      -webkit-text-stroke: 0.8px black;
+      -webkit-user-select:none;
+      -moz-user-select:none;
+      -ms-user-select:none;
+      user-select:none;
+    }
+    .topRight-info-phone {
+      font-size: 20px;
+      font-weight: bold;
+      color: white;
+      -webkit-text-stroke: 0.4px black;
+      -webkit-user-select:none;
+      -moz-user-select:none;
+      -ms-user-select:none;
+      user-select:none;
+    }
+
     .round_result {
       position: absolute;
       width: 100%;
@@ -1216,6 +1324,9 @@ export default {
       text-align: center;
       justify-content: center;
       padding-top: 8rem;
+      .country-streak-round-result {
+
+      }
       .round_result_top {
         color: white;
         font-size: 2rem;
@@ -1465,6 +1576,7 @@ export default {
       }
     }
   }
+
 }
 @media  (any-hover:none) {
   .container {
