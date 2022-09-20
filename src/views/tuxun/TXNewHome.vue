@@ -21,6 +21,14 @@
               每天五题，神清气爽
             </div>
           </div>
+          <div class="card" @click="$toast('尽请期待')">
+            <div class="title">
+              连胜挑战
+            </div>
+            <div class="describe">
+              是男人就胜100次(待开放)
+            </div>
+          </div>
           <div class="card" @click="redirectPage( '/tuxun/main_game')">
             <div class="title">
               积分赛
