@@ -155,7 +155,7 @@
 
           <div v-if="showStreakGameEnd" class="challenge_result_bottom" >
             <div style="font-size: 30px; color: orangered">
-              猜测错误，挑战结束
+              选择错误，挑战结束
             </div>
             <div style="font-size: 30px; color: yellow">
               你连胜了 {{gameData.player.streaks}} 轮
