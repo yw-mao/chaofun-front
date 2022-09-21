@@ -223,7 +223,6 @@ export default {
       this.map = map;
       this.map.scrollWheelZoom.enable();
       this.map.on('click', this.click);
-      this.map.worldCopyJump = false;
 
     },
     mapMouseOver() {
@@ -648,8 +647,8 @@ export default {
       console.log(e);
       if (this.status === 'wait' || this.isMaps) {
         if (!this.confirmed) {
-          this.lng = e.latlng.lng;
-          this.lat = e.latlng.lat;
+          this.lng = e.latlng.wrap().lng;
+          this.lat = e.latlng.wrap().lat;
           this.addChooseMarker();
         }
       } else {

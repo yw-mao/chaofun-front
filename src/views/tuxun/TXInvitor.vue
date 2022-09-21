@@ -445,7 +445,6 @@ export default {
         this.map = map;
         this.map.scrollWheelZoom.enable();
         this.map.on('click', this.click);
-        this.map.worldCopyJump = false;
         this.map.invalidateSize();
       }
     },
@@ -777,8 +776,8 @@ export default {
 
     click(e) {
       if (!this.confirmed) {
-        this.lng = e.latlng.lng;
-        this.lat = e.latlng.lat;
+        this.lng = e.latlng.wrap().lng;
+        this.lat = e.latlng.wrap().lat;
         this.addChooseMarker();
       }
     },
@@ -993,6 +992,8 @@ export default {
       this.ranksMarker = [];
     },
 
+
+
     confirm() {
       if (!this.lng) {
         this.$toast('请在地图上选择位置');
@@ -1028,7 +1029,7 @@ export default {
     },
 
     skip() {
-      this.$confirm('此操作会消耗10FBi，是否确认操作?', '换一题？', {
+      this.$confirm('此操作会消耗 10 FBi，是否确认操作?', '换一题？', {
         confirmButtonText: '确认',
         cancelButtonText: '取消',
         type: 'warning'
