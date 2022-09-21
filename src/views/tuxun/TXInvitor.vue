@@ -146,10 +146,10 @@
 
           <div v-if="showChallengeGameEnd" class="challenge_result_bottom" >
             <div>
-              <el-button class="result_button" type="warning" @click="goDailyChallenge">查看总排名</el-button>
+              <el-button class="result_button" type="warning" @click="goDailyChallenge" round>查看总排名</el-button>
             </div>
             <div>
-              <el-button class="result_button"  type="primary" @click="goHome">回到首页</el-button>
+              <el-button class="result_button"  type="primary" @click="goHome" round>回到首页</el-button>
             </div>
           </div>
 
@@ -161,10 +161,10 @@
               你连胜了 {{gameData.player.streaks}} 轮
             </div>
             <div>
-              <el-button class="result_button" @click="createNew">重新开始挑战</el-button>
+              <el-button class="result_button" @click="createNew" round>重新开始挑战</el-button>
             </div>
             <div>
-              <el-button class="result_button"  type="primary" @click="goHome">回到首页</el-button>
+              <el-button class="result_button"  type="primary" @click="goHome" round>回到首页</el-button>
             </div>
           </div>
 
@@ -269,7 +269,7 @@
 
       <div class="home">
         <el-button size="mini"  @click="toReport" round> 坏题反馈 </el-button>
-        <el-button size="mini"  @click="sendEmoji=true" round> 发送表情 </el-button>
+        <el-button size="mini" v-if="gameData && !gameData.player"  @click="sendEmoji=true" round> 发送表情 </el-button>
         <el-button v-if="ISPHONE" @click="reloadPage" size="mini" round>刷新页面</el-button>
       </div>
 
