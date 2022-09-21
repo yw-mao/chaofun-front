@@ -270,7 +270,7 @@
       <div class="home">
         <el-button size="mini"  @click="toReport" round> 坏题反馈 </el-button>
         <el-button size="mini" v-if="gameData && !gameData.player"  @click="sendEmoji=true" round> 发送表情 </el-button>
-        <el-button size="mini" v-if="gameData && gameData.type ==='country_streak'"  @click="sendEmoji=true" round> 跳过这题 </el-button>
+<!--        <el-button size="mini" v-if="gameData && gameData.type ==='country_streak'"  @click="sendEmoji=true" round> 跳过这题 </el-button>-->
         <el-button v-if="ISPHONE" @click="reloadPage" size="mini" round>刷新页面</el-button>
       </div>
 
