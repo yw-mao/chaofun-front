@@ -6,7 +6,7 @@
   <div class="nav">
     连胜挑战
   </div>
-  <div style="color: white; ">
+  <div style="color: white; padding-top: 2rem;font-size: 16px">
     连续选对正确的国家，看你能坚持多少轮
   </div>
 
