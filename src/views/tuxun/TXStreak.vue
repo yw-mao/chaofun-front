@@ -7,7 +7,7 @@
     连胜挑战
   </div>
   <div style="color: white; ">
-    连续选对正确的国家，看你能坚持多少轮（国家判断还有小Bug，尽快修复）
+    连续选对正确的国家，看你能坚持多少轮
   </div>
 
   <div class="top-button">
