@@ -80,7 +80,10 @@
         <div id="viewer"  style="width: 100%; height: 100%"></div>
 
         <div v-if="showRoundResult" class="round_result">
-          <div class="round_result_top"><span v-if="gameData.type === 'country_streak'">国家连胜 - </span>第 {{gameData.currentRound}} 轮 <span v-if="lastRound.isDamageMultiple"> - {{lastRound.damageMultiple}} 倍伤害</span></div>
+          <div class="round_result_top">
+            <span v-if="gameData.type === 'country_streak'">国家连胜 - </span>
+            <span v-if="gameData.type === 'province_streak'">省份连胜 - </span>
+            第 {{gameData.currentRound}} 轮 <span v-if="lastRound.isDamageMultiple"> - {{lastRound.damageMultiple}} 倍伤害</span></div>
 
           <div class="round_result_center" v-if="!gameData.player">
             <div class="round_result_block" v-if="gameData.type !== 'team'">
@@ -127,7 +130,7 @@
             </div>
           </div>
 
-          <div class="round_result_center" v-if="gameData.type === 'country_streak'">
+          <div class="round_result_center" v-if="gameData.type === 'country_streak' || gameData.type === 'province_streak'">
             <div class="round_result_block">
 <!--              <div>-->
 <!--                本轮得分: {{gameData.player.lastRoundResult.score}}-->
@@ -135,8 +138,11 @@
 <!--              <div v-if="gameData.player.lastRoundResult.distance">-->
 <!--                本轮距离: {{(gameData.player.lastRoundResult.distance / 1000).toFixed(3)}} 千米-->
 <!--              </div>-->
-              <div>
+              <div v-if="gameData.type === 'country_streak'">
                 选择国家： {{gameData.player.lastRoundResult.guessPlace}}
+              </div>
+              <div v-if="gameData.type === 'province_streak'">
+                选择省份： {{gameData.player.lastRoundResult.guessPlace}}
               </div>
               <div>
                 正确答案： {{gameData.player.lastRoundResult.targetPlace}}
@@ -256,7 +262,7 @@
         </div>
       </div>
 
-      <div v-if="gameData.type === 'country_streak'" :class="[{'topRight': !ISPHONE}, {'topRight-phone': ISPHONE}]">
+      <div v-if="gameData.type === 'country_streak' || gameData.type === 'province_streak'" :class="[{'topRight': !ISPHONE}, {'topRight-phone': ISPHONE}]">
         <div :class="[{'topRight-info': !ISPHONE}, {'topRight-info-phone': ISPHONE}]">
           连胜次数：{{gameData.player.streaks}}
         </div>
@@ -270,7 +276,7 @@
       <div class="home">
         <el-button size="mini"  @click="toReport" round> 坏题反馈 </el-button>
         <el-button size="mini" v-if="gameData && !gameData.player"  @click="sendEmoji=true" round> 发送表情 </el-button>
-        <el-button size="mini" v-if="gameData && gameData.type ==='country_streak'"  @click="skip" round> 换一题 </el-button>
+        <el-button size="mini" v-if="gameData && (gameData.type ==='country_streak' || gameData.type ==='province_streak')"  @click="skip" round> 换一题 </el-button>
         <el-button v-if="ISPHONE" @click="reloadPage" size="mini" round>刷新页面</el-button>
       </div>
 
@@ -565,7 +571,7 @@ export default {
         this.showChallengeGameEnd = true;
       }
 
-      if (this.gameData.type === 'country_streak' && (code === 'game_end' || data.status === 'finish')) {
+      if ((this.gameData.type === 'country_streak' || this.gameData.type === 'province_streak') && (code === 'game_end' || data.status === 'finish')) {
         this.showMap = false;
         this.showStreakGameEnd = true;
       }
@@ -769,9 +775,15 @@ export default {
     },
 
     createNew() {
-      api.getByPath("/api/v0/tuxun/streak/createCountryStreak").then(res => {
-        window.location.href = '/tuxun/streak_game?streakId=' + res.data.id;
-      });
+      if (this.gameData.type === 'country_streak' ) {
+        api.getByPath("/api/v0/tuxun/streak/create", {type: 'country'}).then(res => {
+          window.location.href = '/tuxun/streak_game?streakId=' + res.data.id;
+        });
+      } else {
+        api.getByPath("/api/v0/tuxun/streak/create", {type: 'province'}).then(res => {
+          window.location.href = '/tuxun/streak_game?streakId=' + res.data.id;
+        });
+      }
     },
 
     click(e) {
@@ -1005,11 +1017,11 @@ export default {
         path = "/api/v0/tuxun/challenge/guess";
       }
 
-      if (this.gameData.type === 'country_streak') {
+      if (this.gameData.type === 'country_streak' || this.gameData.type === 'province_streak') {
         path = "/api/v0/tuxun/streak/guess";
       }
       api.getByPath(path, {gameId: this.gameId, lng: this.lng, lat: this.lat}).then(res => {
-            if (this.gameData.type === 'country_streak') {
+        if (this.gameData.type === 'country_streak' || this.gameData.type === 'province_streak') {
               this.solveGameData(res.data, undefined);
             }
       });

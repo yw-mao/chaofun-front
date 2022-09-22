@@ -1,41 +1,57 @@
 <template>
-<div class="container">
-  <div class="back_home" @click="goHome">
-    <el-button type="primary" round>←返回首页</el-button>
-  </div>
-  <div class="nav">
-    连胜挑战
-  </div>
-  <div style="color: white; padding-top: 2rem;font-size: 16px">
-    连续选对正确的国家，看你能坚持多少轮
-  </div>
+  <div class="container">
+    <div class="back_home" @click="goHome">
+      <el-button type="primary" round>←返回首页</el-button>
+    </div>
+    <div class="nav">
+      连胜挑战
+    </div>
 
-  <div class="top-button">
-    <el-button @click="createNew" round>开始新挑战</el-button>
-    <el-button class="top-button-continue"  type="primary" @click="$toast('尽请期待')" round>继续上次挑战</el-button>
-  </div>
-
-  <div class="rank">
-    排行榜
-  </div>
-  <div class="rank_container" v-if="this.rank">
-    <div @click="toUser(item.user)" v-for="(item,index) in this.rank" :key="index" class="item">
-      <div class="left">
-        <div class="number">
-          {{index + 1}}.
+    <div class="tab_container">
+      <div class="tab">
+        <div @click="type='country';init()" :class="{'normal': type!=='country', 'choose': type==='country'}">
+          国家连胜
         </div>
-        <img style="object-fit: cover;" :src="imgOrigin+ item.user.icon + '?x-oss-process=image/resize,h_80/format,webp/quality,q_75'" alt="">
-        <div class="info">
-          <div class="title">{{item.user.userName}}</div>
+        <div @click="type='province';init();"  :class="{'normal': type!=='province', 'choose': type==='province'}">
+          省份连胜
         </div>
-      </div>
-      <div class="right">
-        <p>连胜: {{item.bestStreaks}}</p>
       </div>
     </div>
-  </div>
 
-</div>
+    <div v-if="type==='country'" style="color: white; padding-top: 2rem;font-size: 16px">
+      连续选对正确的国家，看你能坚持多少轮
+    </div>
+
+    <div v-if="type==='province'" style="color: white; padding-top: 2rem;font-size: 16px">
+      连续选对正确的省份，看你能坚持多少轮
+    </div>
+
+    <div class="top-button">
+      <el-button @click="createNew" round>开始新挑战</el-button>
+<!--      <el-button class="top-button-continue"  type="warning" @click="$toast('尽请期待')" round>继续上次挑战</el-button>-->
+    </div>
+
+    <div class="rank">
+      排行榜
+    </div>
+    <div class="rank_container" v-if="this.rank">
+      <div @click="toUser(item.user)" v-for="(item,index) in this.rank" :key="index" class="item">
+        <div class="left">
+          <div class="number">
+            {{index + 1}}.
+          </div>
+          <img style="object-fit: cover;" :src="imgOrigin+ item.user.icon + '?x-oss-process=image/resize,h_80/format,webp/quality,q_75'" alt="">
+          <div class="info">
+            <div class="title">{{item.user.userName}}</div>
+          </div>
+        </div>
+        <div class="right">
+          <p>连胜: {{item.bestStreaks}}</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
 </template>
 
 <script>
@@ -46,26 +62,34 @@ export default {
   data(){
     return {
       rank: null,
+      type: 'country',
     }
-  },  mounted() {
-    this.listRank();
+  },
+  mounted() {
+    this.init();
   },
   methods: {
+    init() {
+      this.rank = null;
+      this.listRank();
+    },
     goHome() {
       window.location.href = '/tuxun';
     },
     createNew() {
-      api.getByPath("/api/v0/tuxun/streak/createCountryStreak").then(res => {
+      api.getByPath("/api/v0/tuxun/streak/create", {type: this.type}).then(res => {
         window.location.href = '/tuxun/streak_game?streakId=' + res.data.id;
       });
     },
 
     listRank() {
-      api.getByPath("/api/v0/tuxun/streak/listRank", {type: 'country'}).then(res => {
+      api.getByPath("/api/v0/tuxun/streak/listRank", {type: this.type}).then(res => {
         this.rank = res.data
       });
-    }
-
+    },
+    toUser(user) {
+      window.location.href = location.origin + '/tuxun/user/' + user.userId;
+    },
   }
 }
 </script>
@@ -78,6 +102,8 @@ export default {
   min-height: 120%;
   text-align: center;
   background-color: #090723;
+  justify-content: center;
+
   .back_home {
     position: absolute;
     padding-top: 1rem;
@@ -175,12 +201,51 @@ export default {
       }
     }
   }
+
+  .tab_container {
+    width: 40%;
+    margin: auto;
+    padding-top: 2rem;
+    .tab {
+      width: 100%;
+      display: flex;
+      .choose {
+        display: flex;
+        text-align: center;
+        justify-content: center;
+        align-items: center;
+        align-content: center;
+        width: 50%;
+        height: 50px;
+        font-size: 32px;
+        color: gold;
+        background-color: #3590FF;
+      }
+
+      .normal {
+        display: flex;
+        text-align: center;
+        justify-content: center;
+        align-items: center;
+        align-content: center;
+        border-width: 1px;
+        border-color: red;
+        height: 50px;
+        width: 50%;
+        font-size: 32px;
+        background-color: white;
+      }
+    }
+  }
 }
 
 
 @media only screen and (max-width: 679px) {
   .container {
     .rank_container {
+      width: 90%;
+    }
+    .tab_container {
       width: 90%;
     }
   }
