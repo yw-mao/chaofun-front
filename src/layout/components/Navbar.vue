@@ -39,7 +39,7 @@
             <img src="../../assets/images/erweima3.png" alt="">
             <p>扫码加入QQ用户群(784495660)</p>
           </div>
-          
+
         </div>
       </div>
       <div class="">
@@ -84,7 +84,7 @@
           <router-link v-if="islogin" to="/setting">
             <el-dropdown-item>设置</el-dropdown-item>
           </router-link>
-          <router-link v-if="islogin&&(ISPHONE||clientWidth<865)" :to="'/submitH5'">
+          <router-link v-if="islogin&&(ISPHONE||clientWidth<865)" :to="'/f/submit'">
             <el-dropdown-item>发帖</el-dropdown-item>
           </router-link>
           <el-dropdown-item v-if="islogin" divided>
@@ -93,7 +93,7 @@
         </el-dropdown-menu>
       </el-dropdown>
       </div>
-      
+
     </div>
   </div>
 </template>
@@ -320,7 +320,7 @@ export default {
   // right: 200px;
   width: 350px;
   background: transparent;
-  
+
 }
 ::v-deep .el-input--medium .el-input__inner{
     background: transparent;
