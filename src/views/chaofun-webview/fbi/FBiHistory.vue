@@ -132,6 +132,14 @@ export default {
         return 'FBi 兑换T恤';
       }
 
+      if (reason === 'convertPillow') {
+        return 'FBi 兑换枕头';
+      }
+
+      if (reason === 'tuxunCountryStreakSkip') {
+        return '图寻消费';
+      }
+
       if (reason === 'report') {
         return '有效举报';
       }
