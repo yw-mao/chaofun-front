@@ -64,6 +64,20 @@
                    alt="">
             </video>
           </div>
+          <div v-if="item.postInfo.type == 'gif'">
+            <video style="width: 100%; max-height: 300px"
+                   webkit-playsinline="true"
+                   x-webkit-airplay="true"
+                   playsinline="true"
+                   x5-video-player-type="h5"
+                   x5-video-orientation="h5"
+                   x5-video-player-fullscreen="true"
+                   controls
+                   :src="imgOrigin+item.postInfo.imageName"
+                   ref="videoPlayer"
+                   alt="">
+            </video>
+          </div>
           <div @click="toPost(item.postInfo.postId)" style="font-size: 16px">
             用户：{{item.postInfo.userInfo.userName}}
           </div>
