@@ -7,7 +7,7 @@
 
       <div style="display: flex;justify-content: center; align-items: center; padding-top: 4rem">
         <img alt="" src="../chaofun-webview/assets/images/rank.png">
-        <span style="font-size: 18px; color: white">Top 100（两周一赛季，9月25日24点重置）</span>
+        <span style="font-size: 18px; color: white">Top 100</span>
       </div>
       <div style="display: flex;justify-content: space-around;position: relative;margin-top: 10px;">
 
