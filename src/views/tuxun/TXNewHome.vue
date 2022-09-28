@@ -69,6 +69,14 @@
               走遍大江南北
             </div>
           </div>
+          <div class="card" @click="$toast('暂未开放')">
+            <div class="title">
+              淘汰挑战
+            </div>
+            <div class="describe">
+              国庆活动(暂未开放)
+            </div>
+          </div>
           <div class="card" @click="toForum()">
             <div class="title">
               讨论区
@@ -77,7 +85,6 @@
               全国最好的网络迷踪社区
             </div>
           </div>
-
         </div>
         <div class="thx">
           特别鸣谢：猫，南山大王cf，网络迷踪版主, GeoGuessr，百度街景，Google街景
