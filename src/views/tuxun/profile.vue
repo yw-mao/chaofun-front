@@ -26,26 +26,26 @@
         <span>{{this.userProfile.contributes}}</span>
       </div>
       <div>
-        <span>本赛季最高分: </span>
+        <span>最高分: </span>
         <span>{{this.userProfile.maxRating}}</span>
       </div>
       <div>
-        <span>本赛季最高排名: </span>
+        <span>最高排名: </span>
         <span>{{this.userProfile.maxRanking}}</span>
       </div>
 
       <div>
-        <span>本赛季游戏次数:  </span>
+        <span>游戏次数:  </span>
         <span>{{this.userProfile.gameTimes}}</span>
       </div>
 
       <div>
-        <span>本赛季匹配Solo目前连胜:  </span>
+        <span>匹配Solo目前连胜:  </span>
         <span>{{this.userProfile.winningStreak}}</span>
       </div>
 
       <div>
-        <span>本赛季匹配Solo最长连胜:  </span>
+        <span>匹配Solo最长连胜:  </span>
         <span>{{this.userProfile.longestWinningStreak}}</span>
       </div>
 
