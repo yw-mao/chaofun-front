@@ -121,8 +121,12 @@ export default {
 @media only screen and (max-width: 679px) {
   .emojo_sender {
     .grid_main {
-      width: 100%;
-      grid-template-columns: repeat(3, 1fr);
+      width: 80%;
+      grid-template-columns: repeat(5, 1fr);
+      .emoji {
+        width: 40px;
+        height: 40px;
+      }
     }
   }
 }
