@@ -220,6 +220,10 @@ export default {
         font-size: 32px;
         color: gold;
         background-color: #3590FF;
+        -webkit-user-select:none;
+        -moz-user-select:none;
+        -ms-user-select:none;
+        user-select:none;
       }
 
       .normal {
@@ -230,6 +234,10 @@ export default {
         align-content: center;
         border-width: 1px;
         border-color: red;
+        -webkit-user-select:none;
+        -moz-user-select:none;
+        -ms-user-select:none;
+        user-select:none;
         height: 50px;
         width: 50%;
         font-size: 32px;
