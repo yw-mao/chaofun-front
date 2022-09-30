@@ -78,6 +78,8 @@ export default {
   text-align: center;
   background-color: #090723;
   justify-content: center;
+  align-items: center;
+  align-content: center;
 
   .back_home {
     position: absolute;
@@ -91,19 +93,25 @@ export default {
     padding-top: 3rem;
   }
   .desc {
+    margin: auto;
     padding-top: 1rem;
+    width: 80%;
     color: gray;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+    text-align: center;
   }
   .next-round {
     padding-top: 1rem;
     .next-round-info {
       color: white;
-      font-size: 24px;
+      font-size: 20px;
     }
 
     .next-round-count {
       color: yellow;
-      font-size: 36px;
+      font-size: 24px;
     }
   }
 }
