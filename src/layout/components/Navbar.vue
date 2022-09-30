@@ -84,7 +84,7 @@
           <router-link v-if="islogin" to="/setting">
             <el-dropdown-item>设置</el-dropdown-item>
           </router-link>
-          <router-link v-if="islogin&&(ISPHONE||clientWidth<865)" :to="'/f/submit'">
+          <router-link v-if="islogin" :to="'/f/submit'">
             <el-dropdown-item>发帖</el-dropdown-item>
           </router-link>
           <el-dropdown-item v-if="islogin" divided>
