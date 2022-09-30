@@ -69,7 +69,7 @@
               走遍大江南北
             </div>
           </div>
-          <div class="card" @click="$toast('暂未开放')">
+          <div class="card" @click="redirectPage( '/tuxun/guoqing')">
             <div class="title">
               淘汰挑战
             </div>
