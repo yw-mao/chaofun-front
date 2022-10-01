@@ -231,4 +231,11 @@ export default {
 
 }
 
+@media only screen and (max-width: 679px) {
+  .container {
+    .rank_container {
+      width: 90%;
+    }
+  }
+}
 </style>
