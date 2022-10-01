@@ -276,7 +276,7 @@
       </div>
 
       <div :class="[{'top-info': !ISPHONE}, {'top-info-phone': ISPHONE}]">
-        <div v-if="!lastRound.endTime && lastRound.isDamageMultiple" class="count-down">
+        <div v-if="lastRound && !lastRound.endTime && lastRound.isDamageMultiple" class="count-down">
           本轮 {{lastRound.damageMultiple}} 倍伤害
         </div>
         <div v-if="gameData.type === 'battle_royale'" class="count-down">
