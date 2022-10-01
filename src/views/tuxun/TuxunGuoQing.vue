@@ -59,8 +59,8 @@ export default {
           return;
         }
         var timeLeft = parseInt((this.nextStartTime - (new Date().getTime())) / 1000);
-        if (timeLeft < 60) {
-          if (timeLeft % 5 == 0) {
+        if (timeLeft < 20) {
+          if (timeLeft % 2 == 0) {
             this.get();
           }
         }
