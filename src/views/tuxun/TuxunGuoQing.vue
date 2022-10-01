@@ -10,15 +10,20 @@
       10月1日-10月7日，每天8点-23点，每整点一场. 按照最终存活场次排序，前10名获得积分奖励 1000，900依次递减的积分奖励
     </div>
     <div v-if="nextStartTime" class="next-round">
-      <div class="next-round-info">
+      <div v-if="!this.gameId"  class="next-round-info">
         下一场倒计时
       </div>
-      <div class="next-round-count">
+      <div v-if="!this.gameId" class="next-round-count">
         {{this.timeLeftStr}}
+      </div>
+
+      <el-button type="primary" v-if="this.gameId" @click="toGame" round>
+        进入游戏
+      </el-button>
+      <div>
       </div>
     </div>
     <div>
-
     </div>
   </div>
 </template>
@@ -34,7 +39,7 @@ export default {
     return {
       timeLeftStr: null,
       nextStartTime: null,
-      gameId: null
+      gameId: null,
     }
   },
 
@@ -54,6 +59,11 @@ export default {
           return;
         }
         var timeLeft = parseInt((this.nextStartTime - (new Date().getTime())) / 1000);
+        if (timeLeft < 60) {
+          if (timeLeft % 5 == 0) {
+            this.get();
+          }
+        }
         this.timeLeftStr = Math.floor(timeLeft / 60 / 60 ) + ' 小时 ' + Math.floor(timeLeft / 60 % 60).toString().padStart(2, '0') + ' 分 ' + (timeLeft % 60).toString().padStart(2, '0') + ' 秒';
       }.bind(this), 1000)
     },
@@ -61,10 +71,13 @@ export default {
     get() {
       this.nextStartTime = null;
       api.getByPath("/api/v0/tuxun/br/get").then(res => {
-        this.gameId = res.data.gameId;
+        // this.gameId = res.data.gameId;
         this.nextStartTime = res.data.nextStartTime;
       });
     },
+    toGame() {
+      window.location.href = '/tuxun/guoqing_game?guoqingId=' + this.gameId;
+    }
   }
 }
 </script>

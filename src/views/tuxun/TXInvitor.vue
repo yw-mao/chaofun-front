@@ -18,7 +18,7 @@
         邀请组队对战
       </div>
 
-      <div class="vs">
+      <div class="vs" v-if="gameData.type !== 'battle_royale'">
         <div  class="player">
           <div v-if="gameData && gameData.teams && gameData.teams.length >= 1">
             <div v-for="(item, index) in gameData.teams[0].users">
@@ -42,8 +42,7 @@
         </div>
       </div>
 
-
-      <div class="start_game" v-if="status === 'ready' && this.gameData.type !== 'solo_match' && this.$store.state.user.userInfo.userId === gameData.host.userId">
+      <div class="start_game" v-if="status === 'ready' && this.gameData.type !== 'solo_match' && this.gameData.type !== 'battle_royale' && this.$store.state.user.userInfo.userId === gameData.host.userId">
         <el-button class="button" type="primary" round @click="start">开始图寻对决</el-button>
       </div>
 
@@ -55,15 +54,18 @@
         等待其他玩家加入或队伍至少有一人....
       </div>
 
-      <div v-if="gameData.host && this.$store.state.user.userInfo.userId !== gameData.host.userId && gameData.type !== 'solo_match'" class="wait_game_start">
+      <div v-if="gameData.host && this.$store.state.user.userInfo.userId !== gameData.host.userId && gameData.type !== 'solo_match' && gameData.type !== 'battle_royale' " class="wait_game_start">
         等待房主开始游戏...
       </div>
 
-      <div v-if="gameData.type === 'solo_match' && gameData.status == 'ready'" class="wait_game_start">
+      <div v-if="gameData.type === 'battle_royale' && gameData.status == 'ready'" class="wait_game_start">
+        本次游戏人数 {{gameData.players.length}}
+      </div>
+      <div v-if="(gameData.type === 'solo_match' || gameData.type === 'battle_royale') && gameData.status == 'ready'" class="wait_game_start">
         开始倒计时 {{this.gameTimeLeft}} 秒
       </div>
 
-      <div class="invite" v-if="status !== 'ready' && gameData.type !== 'solo_match' || gameData.type == 'team'">
+      <div class="invite" v-if="status !== 'ready' && ((gameData.type !== 'battle_royale' && gameData.type !== 'solo_match')  || gameData.type == 'team')">
         <div class="title">
           邀请链接
         </div>
@@ -85,7 +87,7 @@
             <span v-if="gameData.type === 'province_streak'">省份连胜 - </span>
             第 {{gameData.currentRound}} 轮 <span v-if="lastRound.isDamageMultiple"> - {{lastRound.damageMultiple}} 倍伤害</span></div>
 
-          <div class="round_result_center" v-if="!gameData.player">
+          <div class="round_result_center" v-if="!gameData.player && gameData.type !== 'battle_royale'">
             <div class="round_result_block" v-if="gameData.type !== 'team'">
               {{gameData.teams[0].users[0].userName}} 本轮得分: {{gameData.teams[0].lastRoundResult.score}}
               <div>
@@ -118,12 +120,21 @@
             </div>
           </div>
 
+          <div class="round_result_center" v-if="gameData.type === 'battle_royale'">
+            <div>
+              淘汰用户：
+            </div>
+            <div v-for="(item, index) in obsoleteUsers">
+              {{item.userName}}
+            </div>
+          </div>
+
           <div class="round_result_center" v-if="gameData.type === 'daily_challenge'">
             <div class="round_result_block">
               <div>
                 轮数:  {{gameData.currentRound}} / {{gameData.roundNumber}}
               </div>
-                本轮得分: {{gameData.player.lastRoundResult.score}}
+              本轮得分: {{gameData.player.lastRoundResult.score}}
               <div>
                 总得分:  {{gameData.player.totalScore}}
               </div>
@@ -132,12 +143,12 @@
 
           <div class="round_result_center" v-if="gameData.type === 'country_streak' || gameData.type === 'province_streak'">
             <div class="round_result_block">
-<!--              <div>-->
-<!--                本轮得分: {{gameData.player.lastRoundResult.score}}-->
-<!--              </div>-->
-<!--              <div v-if="gameData.player.lastRoundResult.distance">-->
-<!--                本轮距离: {{(gameData.player.lastRoundResult.distance / 1000).toFixed(3)}} 千米-->
-<!--              </div>-->
+              <!--              <div>-->
+              <!--                本轮得分: {{gameData.player.lastRoundResult.score}}-->
+              <!--              </div>-->
+              <!--              <div v-if="gameData.player.lastRoundResult.distance">-->
+              <!--                本轮距离: {{(gameData.player.lastRoundResult.distance / 1000).toFixed(3)}} 千米-->
+              <!--              </div>-->
               <div v-if="gameData.type === 'country_streak'">
                 选择国家： {{gameData.player.lastRoundResult.guessPlace}}
               </div>
@@ -173,10 +184,8 @@
               <el-button class="result_button"  type="primary" @click="goHome" round>回到首页</el-button>
             </div>
           </div>
-
         </div>
-
-        <div v-if="showGameEnd && winner" class="game_result">
+        <div v-if="showGameEnd && winner && gameData.type !== 'battle_royale'" class="game_result">
           <div class="player">
             <div v-if="isWin" class="winner_title">
               胜利!
@@ -208,7 +217,22 @@
             </div>
           </div>
         </div>
-        <div v-if="gameData && !gameData.player " class="game_hud">
+        <div v-if="showGameEnd && gameData.type === 'battle_royale'" class="game_result">
+          <div class="player">
+            <div v-if="gameData.saveTeamCount === 0" style="font-size: 30px; color: white">
+              无人存活
+            </div>
+            <div v-if="gameData.saveTeamCount !== 0" style="font-size: 30px; color: gold">
+              最终存活: {{winner.userName}}
+            </div>
+            <div>
+              <el-button class="home_button" type="warning" @click="goHome" round>回到图寻首页</el-button>
+            </div>
+          </div>
+        </div>
+
+
+        <div v-if="gameData && !gameData.player && gameData.type !== 'battle_royale' " class="game_hud">
           <div class="hub_left">
             <div class="user_title" v-if="gameData.type !== 'team'">
               {{gameData.teams[0].users[0].userName}}
@@ -245,7 +269,6 @@
             </div>
           </div>
         </div>
-
       </div>
 
       <div id="map-container" :class="[{'bm-view-container': !ISPHONE}, {'bm-view-container-phone': ISPHONE && showMap}, {'bm-view-container-phone-hidden': ISPHONE && !showMap}]"@mouseover="mapMouseOver" @mouseout="mapMouseOut">
@@ -256,7 +279,9 @@
         <div v-if="!lastRound.endTime && lastRound.isDamageMultiple" class="count-down">
           本轮 {{lastRound.damageMultiple}} 倍伤害
         </div>
-        <div></div>
+        <div v-if="gameData.type === 'battle_royale'" class="count-down">
+          存活人数: {{gameData.saveTeamCount}}
+        </div>
         <div v-if="lastRound && lastRound.timerStartTime && !lastRound.endTime" class="count-down">
           选择倒计时: {{timeLeftStr}}
         </div>
@@ -267,7 +292,6 @@
           连胜次数：{{gameData.player.streaks}}
         </div>
       </div>
-
 
       <div v-if="showMap && ISPHONE" style="position: absolute; left: 20px; bottom: 20px;z-index: 1000">
         <el-button @click="showMap = false" round>隐藏地图</el-button>
@@ -343,6 +367,7 @@ export default {
       team1User: null,
       team2User: null,
       winner: null,
+      saveUser: null,
       showStreakGameEnd: false,
       winTeam: null,
       yourTeam: null,
@@ -356,6 +381,8 @@ export default {
       ranksMarker: [],
       teamMarker: [],
       needSmall: false,
+      guoqingId: null,
+      obsoleteUsers: [],
       notifyStatus: '',
 
       // gameData: {playerIds: [1, 2]}
@@ -366,6 +393,7 @@ export default {
     this.gameId = this.$route.query.gameId;
     this.challengeId = this.$route.query.challengeId;
     this.streakId = this.$route.query.streakId;
+    this.guoqingId = this.$route.query.guoqingId;
     this.init();
   },
 
@@ -382,7 +410,7 @@ export default {
         this.initWS();
         this.join();
         this.countDown();
-      } else if (!this.challengeId && !this.streakId) {
+      } else if (!this.challengeId && !this.streakId && !this.guoqingId) {
         this.showMatch = true;
         this.match();
       } else if (this.challengeId) {
@@ -392,6 +420,12 @@ export default {
         this.showMatch = false;
         this.gameId = this.streakId;
         this.getGameInfo();
+      } else if (this.guoqingId) {
+        this.showMatch = false;
+        this.gameId = this.guoqingId;
+        this.initWS();
+        this.joinGuoqing();
+        this.countDown();
       }
     },
     mapMouseOver() {
@@ -462,7 +496,7 @@ export default {
       api.getByPath('/api/v0/tuxun/challenge/getGameInfo', {'challengeId': this.challengeId}).then(res => {
         if (res.data) {
           this.gameId = res.data.id;
-          this.solveGameData(res.data, undefined)
+          this.solveGameData(res.data, null)
           this.initWS();
           this.countDown();
         }
@@ -535,36 +569,38 @@ export default {
         this.lastRound = this.gameData.rounds[this.gameData.rounds.length - 1];
       }
 
-      if (!this.gameData.player && (code === 'game_end' || data.status === 'finish')) {
+      if (!this.gameData.player  && (code === 'game_end' || data.status === 'finish')) {
         this.showMap = false;
         this.showGameEnd = true;
-        if (this.gameData.teams[0].health === 0) {
-          this.winner = this.gameData.teams[1].users[0];
-          this.winTeam = this.gameData.teams[1];
-        } else {
-          this.winner = this.gameData.teams[0].users[0];
-          this.winTeam = this.gameData.teams[0];
-        }
+        if (this.gameData.type !== 'battle_royale') {
+          this.gameData.teams.forEach(v => {
+            if (v.health !== 0) {
+              this.winner = v.users[0];
+              this.winTeam = v
+            }
+            if (v.users[0].userId === this.$store.state.user.userInfo.userId) {
+              this.yourTeam = v;
+            }
+          })
+          this.isWin = false;
+          this.winTeam.users.forEach(v => {
+            if (v.userId === this.$store.state.user.userInfo.userId) {
+              this.isWin = true;
+            }
+          })
 
-        this.isWin = false;
-        this.winTeam.users.forEach(v => {
-          if (v.userId === this.$store.state.user.userInfo.userId) {
+          if (!this.gameData.playerIds.includes(this.$store.state.user.userInfo.userId)) {
             this.isWin = true;
           }
-        })
-
-        if (!this.gameData.playerIds.includes(this.$store.state.user.userInfo.userId)) {
-          this.isWin = true;
-        }
-
-        if (this.isWin) {
-          this.yourTeam = this.winTeam;
         } else {
-          if (this.gameData.teams[0].users[0].userId === this.$store.state.user.userInfo.userId) {
-            this.yourTeam = this.gameData.teams[0];
-          } else {
-            this.yourTeam = this.gameData.teams[1];
-          }
+          this.gameData.teams.forEach(v => {
+            if (v.health !== 0) {
+              this.winner = v.users[0];
+              this.isWin = true;
+              this.winTeam = v
+              this.yourTeam = v;
+            }
+          })
         }
       }
 
@@ -598,6 +634,7 @@ export default {
             this.targetLng = null;
             this.confirmed = null;
             this.polylinePath = null;
+            this.obsoleteUsers = [];
 
             this.heading = this.lastRound.heading;
 
@@ -694,6 +731,16 @@ export default {
           if (this.lng) {
             this.addLine();
           }
+
+          if (this.lastRound.obsoleteTeamIds) {
+            this.gameData.teams.forEach(v => {
+              if (this.lastRound.obsoleteTeamIds.includes(v.id)) {
+                this.obsoleteUsers.push(v.users[0]);
+              }
+            })
+          }
+
+
           this.addTargetMarker()
           this.addRanksMarker();
           this.centerView();
@@ -738,7 +785,20 @@ export default {
         api.getByPath("/api/v0/tuxun/game/join", {gameId: this.gameId}).then(res => {
           console.log(res.data);
           if (res.success) {
-            this.solveGameData(res.data, undefined);
+            this.solveGameData(res.data, null);
+          } else {
+            this.getGameInfo()
+          }
+        });
+      });
+    },
+
+    joinGuoqing() {
+      this.doLoginStatus().then((res) => {
+        api.getByPath("/api/v0/tuxun/br/join", {gameId: this.gameId}).then(res => {
+          console.log(res.data);
+          if (res.success) {
+            this.solveGameData(res.data, null);
           } else {
             this.getGameInfo()
           }
@@ -888,12 +948,12 @@ export default {
         }
 
         if (this.gameData && this.gameData.timerStartTime && this.gameData.status === "ready") {
-          this.gameTimeLeft = Math.round(5 - ((new Date().getTime()) - this.gameData.timerStartTime) / 1000);
+          this.gameTimeLeft = Math.round( (this.gameData.startTimerPeriod - ((new Date().getTime()) - this.gameData.timerStartTime)) / 1000);
           if (this.gameTimeLeft < 0) {
             this.gameTimeLeft = 0;
           }
         } else {
-          this.gameTimeLeft = 5;
+          this.gameTimeLeft = Math.round( this.gameData.startTimerPeriod / 1000);
         }
       }, 1000);
     },
@@ -1019,13 +1079,18 @@ export default {
         path = "/api/v0/tuxun/challenge/guess";
       }
 
+      if (this.gameData.type === 'battle_royale') {
+        path = "/api/v0/tuxun/br/guess";
+      }
+
       if (this.gameData.type === 'country_streak' || this.gameData.type === 'province_streak') {
         path = "/api/v0/tuxun/streak/guess";
       }
+
       api.getByPath(path, {gameId: this.gameId, lng: this.lng, lat: this.lat}).then(res => {
         if (this.gameData.type === 'country_streak' || this.gameData.type === 'province_streak') {
-              this.solveGameData(res.data, undefined);
-            }
+          this.solveGameData(res.data, undefined);
+        }
       });
     },
 

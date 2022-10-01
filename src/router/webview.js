@@ -277,6 +277,13 @@ routes = [
     hidden: true
   },
   {
+    path: '/tuxun/guoqing_game',
+    component: () => import('@/views/tuxun/TXInvitor'),
+    name: '图寻国庆活动',
+    meta: { title: '图寻国庆活动'},
+    hidden: true
+  },
+  {
     path: '/tuxunNewMap',
     component: () => import('@/views/tuxun/TXNewMap'),
     name: '图寻首页',
