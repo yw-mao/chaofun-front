@@ -13,6 +13,14 @@
       <div class="info" @click="toFirstTournament">图寻第二届团队赛圆满结束,点击查看排名...</div>
       <section class="game_entrance">
         <div class="grid_main">
+          <div class="card" @click="redirectPage( '/tuxun/guoqing')">
+            <div class="title">
+              淘汰赛
+            </div>
+            <div class="describe">
+              国庆活动，积分奖励
+            </div>
+          </div>
           <div class="card" @click="redirectPage( '/tuxun/daily_challenge')">
             <div class="title">
               每日挑战
@@ -69,14 +77,7 @@
               走遍大江南北
             </div>
           </div>
-          <div class="card" @click="redirectPage( '/tuxun/guoqing')">
-            <div class="title">
-              淘汰挑战
-            </div>
-            <div class="describe">
-              国庆活动(暂未开放)
-            </div>
-          </div>
+
           <div class="card" @click="toForum()">
             <div class="title">
               讨论区
