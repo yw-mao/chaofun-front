@@ -122,7 +122,7 @@
 
           <div class="round_result_center" v-if="gameData.type === 'battle_royale'">
             <div>
-              淘汰用户：
+              淘汰用户
             </div>
             <div v-for="(item, index) in obsoleteUsers">
               {{item.userName}}
