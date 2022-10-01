@@ -23,7 +23,8 @@
       <div>
       </div>
     </div>
-    <div>
+    <div class="rank">
+      场次结果（实现中）
     </div>
   </div>
 </template>
@@ -69,9 +70,8 @@ export default {
     },
 
     get() {
-      this.nextStartTime = null;
       api.getByPath("/api/v0/tuxun/br/get").then(res => {
-        // this.gameId = res.data.gameId;
+        this.gameId = res.data.gameId;
         this.nextStartTime = res.data.nextStartTime;
       });
     },
@@ -126,6 +126,11 @@ export default {
       color: yellow;
       font-size: 24px;
     }
+  }
+  .rank {
+    padding-top: 4rem;
+    font-size: large;
+    color: darkgray;
   }
 }
 
