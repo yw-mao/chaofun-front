@@ -308,7 +308,7 @@ export default {
           })
         })
 
-      } else if (action === 'punish_politic') {
+      } else if (action === 'publish_politics') {
         this.$confirm(`是否执行政治处罚（永久封禁）并删除内容？`, "提示", {
           type: "warning",
         }).then(() => {
