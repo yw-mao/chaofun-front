@@ -97,7 +97,10 @@ export default {
       api.getByPath("/api/v0/tuxun/br/listResult").then(res => {
         this.rank = res.data;
       });
-    }
+    },
+    toUser(item) {
+      window.open(location.origin + "/tuxun/user/" + item.userId, "_blank");
+    },
   }
 }
 </script>
