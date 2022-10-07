@@ -592,6 +592,10 @@ export default {
           if (!this.gameData.playerIds.includes(this.$store.state.user.userInfo.userId)) {
             this.isWin = true;
           }
+
+          if (!this.yourTeam) {
+            this.yourTeam = this.winTeam;
+          }
         } else {
           this.gameData.teams.forEach(v => {
             if (v.health !== 0) {
