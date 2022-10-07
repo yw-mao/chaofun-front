@@ -18,7 +18,7 @@
               淘汰赛
             </div>
             <div class="describe">
-              国庆活动，积分奖励
+              每天8点-23点，每整点一场
             </div>
           </div>
           <div class="card" @click="redirectPage( '/tuxun/daily_challenge')">

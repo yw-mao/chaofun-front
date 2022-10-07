@@ -4,10 +4,10 @@
       <el-button type="primary" round>←返回首页</el-button>
     </div>
     <div class="nav">
-      国庆淘汰赛
+      日常淘汰赛
     </div>
     <div class="desc">
-      10月1日-10月7日，每天8点-23点，每整点一场。10月7日按照最终存活总次数排序，前10名获得 1000，900, 800...依次递减的积分奖励
+      每天8点-23点，每整点一场, 暂时不算积分。
     </div>
     <div v-if="nextStartTime" class="next-round">
       <div v-if="!this.gameId"  class="next-round-info">
