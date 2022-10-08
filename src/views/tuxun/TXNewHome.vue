@@ -13,20 +13,20 @@
       <div class="info" @click="toFirstTournament">图寻第二届团队赛圆满结束,点击查看排名...</div>
       <section class="game_entrance">
         <div class="grid_main">
-          <div class="card" @click="redirectPage( '/tuxun/guoqing')">
-            <div class="title">
-              淘汰赛
-            </div>
-            <div class="describe">
-              每天8点-23点，每整点一场
-            </div>
-          </div>
           <div class="card" @click="redirectPage( '/tuxun/daily_challenge')">
             <div class="title">
               每日挑战
             </div>
             <div class="describe">
               每天五题，神清气爽
+            </div>
+          </div>
+          <div class="card" @click="redirectPage( '/tuxun/guoqing')">
+            <div class="title">
+              淘汰赛
+            </div>
+            <div class="describe">
+              每天8点-23点，每整点一场
             </div>
           </div>
           <div class="card" @click="redirectPage( '/tuxun/main_game')">
