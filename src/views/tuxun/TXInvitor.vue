@@ -475,7 +475,7 @@ export default {
           maxBoundsViscosity: 1.0,
           maxBounds: [[-90, -540], [90, 540]]
         }).setView([38.8, 106.0], 3)
-        L.tileLayer('https://mapapi.cloud.huawei.com/mapApi/v1/mapService/getTile?x={x}&y={y}&z={z}&language=zh&scale=2&key=DAEDAALLJxDN3xIxrZz2g5NX2lXE%2Fqbk4v%2BzupvIWqwiMyZDKFQr3CqRmVb6Jn1cgoBxn20G47eawHQwysQulh3nYfG9pToO0CdGfA%3D%3D', {
+        L.tileLayer('http://map.chao-fan.com/mapApi/v1/mapService/getTile?x={x}&y={y}&z={z}&language=zh&scale=2&key=DAEDAALLJxDN3xIxrZz2g5NX2lXE%2Fqbk4v%2BzupvIWqwiMyZDKFQr3CqRmVb6Jn1cgoBxn20G47eawHQwysQulh3nYfG9pToO0CdGfA%3D%3D', {
           maxZoom: 19,
           minZoom: 1,
         }).addTo(map);
