@@ -219,7 +219,10 @@ export default {
   methods: {
     initMap() {
       var map = L.map('map', {attributionControl: false,worldCopyJump: true, coordType: 'gcj02',  zoomAnimation: false, fadeAnimation: true, maxBoundsViscosity: 1.0, maxBounds:  [[-90,-540],   [90,540]]}).setView([38.8, 106.0], 3)
-      L.tileLayer.bing({coordType: 'gcj02', bingMapsKey: 'Aujbj-UAOzhT0cX9gHBrDrCrlZ5Jd1eZ9s1yVgXDxL2mOxV9iR5uwsbdKsHhytvR', imagerySet: 'RoadOnDemand', culture: 'zh-CN', style: 'vb', minZoom: 1, noWrap: true}).addTo(map)
+      L.tileLayer('https://mapapi.cloud.huawei.com/mapApi/v1/mapService/getTile?x={x}&y={y}&z={z}&language=zh&scale=2&key=DAEDAALLJxDN3xIxrZz2g5NX2lXE%2Fqbk4v%2BzupvIWqwiMyZDKFQr3CqRmVb6Jn1cgoBxn20G47eawHQwysQulh3nYfG9pToO0CdGfA%3D%3D', {
+        maxZoom: 19,
+        minZoom: 1,
+      }).addTo(map);
       this.map = map;
       this.map.scrollWheelZoom.enable();
       this.map.on('click', this.click);
