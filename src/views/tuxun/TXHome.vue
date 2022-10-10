@@ -72,6 +72,12 @@
     </div>
 
     <div id="map-container" :class="[{'bm-view-container': !ISPHONE}, {'bm-view-container-phone': ISPHONE && showMap}, {'bm-view-container-phone-hidden': ISPHONE && !showMap}]"@mouseover="mapMouseOver" @mouseout="mapMouseOut">
+      <div v-if="!this.isMapSmall && !ISPHONE">
+        <el-button size="small" @click="mapBig" round>放大</el-button>
+        <el-button size="small" @click="mapSmall" round>缩小</el-button>
+        <el-button size="small" v-if="!mapPin" @click="mapPin = true" round>固定大小</el-button>
+        <el-button size="small" v-if="mapPin" @click="mapPin = false" round>解除固定</el-button>
+      </div>
       <div id="map" :class="[{'bm-view': !ISPHONE}, {'bm-view-phone': ISPHONE}]" ></div>
     </div>
     <div  :class="[{'confirm': !ISPHONE}, {'confirm-phone': ISPHONE}]">
@@ -190,6 +196,10 @@ export default {
       baiduPano: null,
       ranksMarker: null,
       needSmall: false,
+      maxMapWidth: '40%',
+      maxMapHeight: '60%',
+      isMapSmall: true,
+      mapPin: false,
       ranks: null,
     }
   },
@@ -238,33 +248,54 @@ export default {
       this.map = map;
       this.map.scrollWheelZoom.enable();
       this.map.on('click', this.click);
-
+      this.map.invalidateSize();
     },
-    mapMouseOver() {
+
+    mapBig() {
+      this.maxMapWidth = '68%';
+      this.maxMapHeight = '85%';
+      this.changeMapBig();
+    },
+
+    mapSmall() {
+      this.maxMapWidth = '40%';
+      this.maxMapHeight = '60%';
+      this.changeMapBig();
+    },
+    changeMapBig() {
+      this.isMapSmall = false
+      this.needSmall = false;
       var element = document.getElementById("map-container")
-      // console.log(element);
-      if (!window.matchMedia( "(hover: none)" ).matches && document.body.clientWidth > 678) {
-        this.needSmall = false;
-        element.style.width = '40%';
-        element.style.height = '60%';
-        element.style.opacity = 1.0;
+      element.style.width = this.maxMapWidth;
+      element.style.height = this.maxMapHeight;
+      element.style.opacity = 1.0;
+      if (this.map) {
         this.map.invalidateSize();
       }
     },
 
+    mapMouseOver() {
+      if (!window.matchMedia("(hover: none)").matches && document.body.clientWidth > 678 && !this.mapPin) {
+        this.changeMapBig();
+      }
+    },
+
     mapMouseOut() {
-      if (!window.matchMedia( "(hover: none)" ).matches && document.body.clientWidth > 678) {
+      if (!window.matchMedia("(hover: none)").matches && document.body.clientWidth > 678 && !this.mapPin) {
         this.needSmall = true;
         setTimeout(() => {
           if (this.needSmall) {
             this.needSmall = false;
+            this.isMapSmall = true;
             var element = document.getElementById("map-container")
             element.style.width = '25%';
             element.style.height = '35%';
             element.style.opacity = 0.7;
-            this.map.invalidateSize();
+            if (this.map) {
+              this.map.invalidateSize();
+            }
           }
-        }, 500)
+        }, 750)
       }
     },
 
@@ -887,13 +918,13 @@ export default {
   opacity: 0.7;
   z-index: 500;
 
+  display:flex;
+  flex-flow:column nowrap;
+  overflow:hidden;
+
+
   .bm-view {
-    width: 100%;
-    height: 100%;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
+    flex: 1;
   }
 }
 

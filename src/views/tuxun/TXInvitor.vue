@@ -492,7 +492,7 @@ export default {
               this.map.invalidateSize();
             }
           }
-        }, 500)
+        }, 750)
       }
     },
     hideEmojiSender() {
