@@ -101,6 +101,9 @@
           <p>
             小建议：尽量使用图片中的信息进行猜测，不借助搜索引擎，才能让你更快成为高手。
           </p>
+          <p>
+            背景图：巴塞罗那
+          </p>
         </div>
       </section>
 
@@ -115,7 +118,7 @@ export default {
   name: "TXNewHome",
   data() {
     return {
-      backgroundImage: 'biz/1658727369911_f6ca22ec1e8d4761909b673e0dbd0b2f.png?x-oss-process=image/format,webp'
+      backgroundImage: 'biz/1665370526912_495e8dbd52364a83b6f5235ce2ddafa8_0.jpeg?x-oss-process=image/quality,q_80'
     }
   },
   created() {
