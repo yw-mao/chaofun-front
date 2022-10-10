@@ -170,7 +170,7 @@ export default {
 
 <style lang="scss" scoped>
 .info {
-  font-size: xx-large;
+  font-size: 32px;
   position: absolute;
   left: 2rem;
   right: 2rem;

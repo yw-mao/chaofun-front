@@ -1278,7 +1278,7 @@ export default {
     .header {
       padding-top: 5rem;
       color: white;
-      font-size: xx-large;
+      font-size: 32px;
     }
 
     .vs {

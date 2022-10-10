@@ -48,11 +48,11 @@ export default {
   .loading_text {
     margin-top: 2rem;
     color: white;
-    font-size: xx-large;
+    font-size: 32px;
   }
   .content {
     color: white;
-    font-size: xx-large;
+    font-size: 32px;
   }
   .matching_home_button {
     width: 100%;

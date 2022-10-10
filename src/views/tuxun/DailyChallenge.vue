@@ -141,11 +141,11 @@ export default {
         color: floralwhite;
       }
       .score {
-        font-size: xx-large;
+        font-size: 32px;
         color: white;
       }
       .time {
-        font-size: xx-large;
+        font-size: 32px;
         color: gold;
       }
       .hint {
