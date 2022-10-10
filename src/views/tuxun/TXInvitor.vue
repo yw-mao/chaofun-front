@@ -467,9 +467,10 @@ export default {
       element.style.width = this.maxMapWidth;
       element.style.height = this.maxMapHeight;
       element.style.opacity = 1.0;
-      if (this.map) {
+      this.map.invalidateSize();
+      setTimeout(() => {
         this.map.invalidateSize();
-      }
+      }, 5)
     },
     mapMouseOver() {
       if (!window.matchMedia("(hover: none)").matches && document.body.clientWidth > 678 && !this.mapPin) {
@@ -583,7 +584,6 @@ export default {
     },
     showMapTrue() {
       this.showMap = true;
-
       setTimeout(function () {
         this.map.invalidateSize();
       }.bind(this), 100);

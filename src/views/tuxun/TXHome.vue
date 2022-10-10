@@ -249,6 +249,7 @@ export default {
       this.map.scrollWheelZoom.enable();
       this.map.on('click', this.click);
       this.map.invalidateSize();
+
     },
 
     mapBig() {
@@ -269,9 +270,10 @@ export default {
       element.style.width = this.maxMapWidth;
       element.style.height = this.maxMapHeight;
       element.style.opacity = 1.0;
-      if (this.map) {
+      this.map.invalidateSize();
+      setTimeout(() => {
         this.map.invalidateSize();
-      }
+      }, 5)
     },
 
     mapMouseOver() {
@@ -291,9 +293,7 @@ export default {
             element.style.width = '25%';
             element.style.height = '35%';
             element.style.opacity = 0.7;
-            if (this.map) {
-              this.map.invalidateSize();
-            }
+            this.map.invalidateSize();
           }
         }, 750)
       }
