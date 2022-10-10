@@ -160,12 +160,12 @@ export default {
       margin-top: 1rem;
     }
     .first_session_head {
-      font-size: x-large;
+      font-size: 24px;
       color: whitesmoke;
       font-weight: bolder;
     }
     .session_head {
-      font-size: x-large;
+      font-size: 24px;
       color: whitesmoke;
       padding-top: 2rem;
       font-weight: bolder;

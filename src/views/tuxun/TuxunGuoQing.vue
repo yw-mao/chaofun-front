@@ -152,7 +152,7 @@ export default {
   }
   .rank {
     padding-top: 4rem;
-    font-size: large;
+    font-size: 16px;
     color: darkgray;
   }
 

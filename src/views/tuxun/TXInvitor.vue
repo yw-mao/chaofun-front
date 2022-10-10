@@ -1239,7 +1239,7 @@ export default {
   background-color: #18182A;
   .home_button {
     margin-top: 2rem;
-    font-size: large;
+    font-size: 16px;
   }
   .player {
     width: 40%;
@@ -1300,13 +1300,13 @@ export default {
       .button {
         height: 3rem;
         width: 10rem;
-        font-size: large;
+        font-size: 16px;
       }
     }
 
     .wait_game_start {
       padding-top: 3rem;
-      font-size: x-large;
+      font-size: 24px;
     }
 
     .invite {
@@ -1314,7 +1314,7 @@ export default {
       max-width: 80%;
       min-width: 35rem;
       .title {
-        font-size: x-large;
+        font-size: 24px;
         font-weight: bolder;
         margin-bottom: 1rem;
       }
@@ -1325,7 +1325,7 @@ export default {
         max-width: 100%;
       }
       .button {
-        font-size: large;
+        font-size: 16px;
         margin-left: 1rem;
       }
     }
@@ -1437,7 +1437,7 @@ export default {
       .round_result_center {
         div {
           color: white;
-          font-size: x-large;
+          font-size: 24px;
         }
         margin: auto;
         text-align: center;
@@ -1451,7 +1451,7 @@ export default {
       .challenge_result_bottom {
         .result_button {
           margin-top: 1rem;
-          font-size: large;
+          font-size: 16px;
         }
       }
     }
@@ -1464,7 +1464,7 @@ export default {
       justify-content: center;
       .info {
         padding-top: 20px;
-        font-size: large;
+        font-size: 16px;
       }
     }
     .im-view {
