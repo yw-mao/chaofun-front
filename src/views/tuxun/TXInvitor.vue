@@ -395,6 +395,16 @@ export default {
     this.streakId = this.$route.query.streakId;
     this.guoqingId = this.$route.query.guoqingId;
     this.init();
+    document.onkeydown=function(event){
+      var e = event || window.event || arguments.callee.caller.arguments[0];
+      console.log(e.keyCode)
+      if(e && e.keyCode===32){//空格
+        this.keyConfirm()
+      }
+    }.bind(this);
+  },
+  destroyed() {
+    document.onkeydown = undefined;
   },
 
   methods: {
@@ -1064,9 +1074,9 @@ export default {
       }
       this.ranksMarker = [];
     },
-
-
-
+    keyConfirm() {
+      this.confirm();
+    },
     confirm() {
       if (!this.lng) {
         this.$toast('请在地图上选择位置');
