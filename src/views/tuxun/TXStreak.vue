@@ -111,7 +111,7 @@ export default {
   }
   .nav {
     color: white;
-    font-size: xxx-large;
+    font-size: 48px;
     font-weight: bold;
     padding-top: 3rem;
   }
