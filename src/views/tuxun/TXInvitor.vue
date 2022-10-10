@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="game_container">
     <div class="" v-if="status==='wait'">
     </div>
 
@@ -1263,7 +1263,7 @@ export default {
 .leaflet-container {
   cursor: crosshair !important;
 }
-.container {
+.game_container {
   position: absolute;
   width: 100%;
   min-height: 100%;
