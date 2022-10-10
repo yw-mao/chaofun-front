@@ -1611,7 +1611,7 @@ export default {
     width: 100%;
     height: 100%;
     background-color: #090723;;
-    font-size: xxx-large;
+    font-size: 48px;
     color: white;
     z-index: 10000;
   }

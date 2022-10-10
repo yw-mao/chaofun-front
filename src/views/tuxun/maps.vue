@@ -127,7 +127,7 @@ export default {
   background-color: #090723;
   .nav {
     color: white;
-    font-size: xxx-large;
+    font-size: 48px;
     font-weight: bold;
     padding-top: 3rem;
   }
