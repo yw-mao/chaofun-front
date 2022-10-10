@@ -88,7 +88,10 @@
           </div>
         </div>
         <div class="thx">
-          特别鸣谢：猫，南山大王cf，网络迷踪版主, GeoGuessr，百度街景，Google街景
+          <p>快捷键：空格-确定答案</p>
+          <p>
+            特别鸣谢：猫，南山大王cf，网络迷踪版主, GeoGuessr，百度街景，Google街景
+          </p>
           <p>
             QQ群：943507031
           </p>
