@@ -125,9 +125,9 @@ export default {
     }
   },
   created() {
-    if (!this.canUseWebP()) {
-      this.backgroundImage = 'biz/1658727369911_f6ca22ec1e8d4761909b673e0dbd0b2f.png';
-    }
+    // if (!this.canUseWebP()) {
+    //   this.backgroundImage = 'biz/1665370526912_495e8dbd52364a83b6f5235ce2ddafa8_0.jpeg';
+    // }
   },
 
   mounted() {
@@ -237,6 +237,7 @@ export default {
     font-size: 12px;
     color: white;
     padding-top: 40px;
+    padding-bottom: 2rem;
   }
   .grid_main {
     display: grid;
