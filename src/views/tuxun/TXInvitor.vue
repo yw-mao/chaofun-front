@@ -1527,6 +1527,11 @@ export default {
       flex-flow:column nowrap;
       overflow:hidden;
 
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+
       .bm-view {
         flex: 1;
       }
