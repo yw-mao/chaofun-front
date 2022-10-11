@@ -58,10 +58,16 @@
         等待房主开始游戏...
       </div>
 
+      <div v-if="gameData.type === 'battle_royale' && gameData.status == 'ready'" class="wait_game_title">
+        图寻淘汰赛-准备中
+        </div>
       <div v-if="gameData.type === 'battle_royale' && gameData.status == 'ready'" class="wait_game_start">
-        本次游戏人数 {{gameData.players.length}}
+        本次游戏人数
       </div>
-      <div>
+      <div v-if="gameData.type === 'battle_royale' && gameData.status == 'ready'" class="wait_game_number">
+        {{gameData.players.length}}
+      </div>
+      <div v-if="gameData.type === 'battle_royale' && gameData.status == 'ready'"  class="wait_game_hint">
         满5人开始游戏
       </div>
       <div v-if="(gameData.type === 'solo_match' || gameData.type === 'battle_royale') && gameData.status == 'ready' && gameData.timerStartTime" class="wait_game_start">
@@ -1347,9 +1353,25 @@ export default {
       }
     }
 
-    .wait_game_start {
+    .wait_game_title {
       padding-top: 3rem;
+      font-size: 48px;
+      font-weight: bold;
+    }
+    .wait_game_start {
+      padding-top: 1rem;
       font-size: 24px;
+    }
+
+    .wait_game_number {
+      font-size: 48px;
+      color: white;
+      padding-bottom: 2rem;
+    }
+
+    .wait_game_hint {
+      font-size: 16px;
+      color: grey;
     }
 
     .invite {
