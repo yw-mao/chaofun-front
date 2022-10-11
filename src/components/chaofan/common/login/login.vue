@@ -1,15 +1,15 @@
 <template>
- <div  v-if="show" class="cover">  
+ <div  v-if="show" class="cover">
     <div @keyup="enters" v-if="logStatus == 'login'" class="ycovers ">
       <div class="ycontainer">
         <img @click="cancelLogin" class="cancel" :src='cancelImg'/>
         <div class="tnames">
           <div @click="checkoutLoginType('account')" :class="['tts',{'tts_act':loginType=='account'}]">账号登录</div>
           <div @click="checkoutLoginType('phone')" :class="['tts',{'tts_act':loginType=='phone'}]">短信登录</div>
-          <div v-if="!ISPHONE" @click="checkoutLoginType('scan')" :class="['tts',{'tts_act':loginType=='scan'}]">
-            <img class="codes" :src="imgOrigin+'biz/7303906d6ddbb39a3616ac81f9d9a46c.png'" alt="">
-            微信扫码
-          </div>
+<!--          <div v-if="!ISPHONE" @click="checkoutLoginType('scan')" :class="['tts',{'tts_act':loginType=='scan'}]">-->
+<!--            <img class="codes" :src="imgOrigin+'biz/7303906d6ddbb39a3616ac81f9d9a46c.png'" alt="">-->
+<!--            微信扫码-->
+<!--          </div>-->
         </div>
         <div v-if="loginType=='account'" style="">
           <input type="text" v-model="params.userName"  placeholder="用户名 / 手机号"/>
@@ -25,11 +25,11 @@
         <div v-if="loginType=='scan'" style="">
           <iframe class="" src="https://open.weixin.qq.com/connect/qrconnect?appid=wx758a87aa8b4a7eb0&redirect_uri=https%3A%2F%2Fchao.fun&response_type=code&scope=snsapi_login&state=STATE#wechat_redirect"  frameborder="0"></iframe>
         </div>
-        
+
         <div class="remPassword">
           <!-- <input  type="checkbox"/> -->
           <!-- <el-checkbox style="font-size:12px;" v-model="ifRemember">记住密码</el-checkbox> -->
-          
+
         </div>
         <div v-if="loginType!='scan'">
           <div class="ylogin" @click="logOrReg(1)">登录</div>
@@ -48,7 +48,7 @@
           <input type="text" v-model="params.userName" placeholder="用户名"/>
           <!-- <input type="password" v-model="params.repassword"  placeholder="密码"/> -->
           <input type="password" v-model="params.password" placeholder="密码"/>
-          
+
         </div>
         <div class="phonever">
           <div class="title">手机号验证</div>
@@ -75,9 +75,9 @@
           <input type="text" v-model="params.userName" placeholder="用户名"/>
           <!-- <input type="password" v-model="params.repassword"  placeholder="密码"/> -->
           <input type="password" v-model="params.password" placeholder="密码"/>
-          
+
         </div>
-        
+
         <div @click="logOrReg(3)" class="ylogin">确定</div>
         <p>还未注册？ <span @click='toWhat("register")'>去注册</span></p>
       </div>
@@ -173,7 +173,7 @@ import { Checkbox } from 'element-ui'
        console.log('999')
        this.callBack()
      }
-     
+
      if(location.href.includes('code=')){
         this.isWxscan = true;
       }
@@ -230,13 +230,13 @@ import { Checkbox } from 'element-ui'
               this.time = null;
               this.timer = null;
             }
-            
+
           },1000)
         }else{
           this.$toast(res.message)
         }
       })
-      
+
       // getCode
     },
     onFail(){
@@ -254,12 +254,12 @@ import { Checkbox } from 'element-ui'
       console.log('---------',v)
       this.logStatus = v || 'login';
       this.show = true;
-      
+
     },
     toWhat(v){
       // this.$store.dispatch('user/SET_logStatus',v)
       // this.$store.commit('user/SET_logStatus', v)
-      
+
       this.logStatus = v;
     },
     cancelLogin(){
@@ -337,7 +337,7 @@ import { Checkbox } from 'element-ui'
             console.log(123)
           }
         })
-        
+
       }
     },
     ifNull(v){
@@ -359,7 +359,7 @@ import { Checkbox } from 'element-ui'
             return false
           }
         }
-        
+
       }else{
         if(!params.phone||!(/^1[3456789]\d{9}$/.test(params.phone))||!params.code){
           this.$toast('请完成手机号码验证')
@@ -367,7 +367,7 @@ import { Checkbox } from 'element-ui'
         }
         if(params.userName&&params.password){
           return true
-          
+
         }else{
           return false
         }
@@ -381,7 +381,7 @@ import { Checkbox } from 'element-ui'
       setTimeout(()=>{
         location.reload()
       },10)
-      
+
     },
     tils(){
       const randStr = () => Math.random().toString(36).substr(2);
@@ -461,8 +461,8 @@ import { Checkbox } from 'element-ui'
       .tts:nth-child(2){
         padding-left: 20px;
         padding-right: 20px;
-        
-        
+
+
       }
       .tts:nth-child(3){
         padding-left: 20px;
