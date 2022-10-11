@@ -9,7 +9,7 @@
     <div class="desc">
       满五人发车，暂时不算积分
     </div>
-    <div v-if="nextStartTime" class="next-round">
+    <div class="next-round">
       <el-button type="primary" v-if="this.gameId" @click="toGame" round>
         进入游戏
       </el-button>
