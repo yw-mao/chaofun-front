@@ -61,7 +61,10 @@
       <div v-if="gameData.type === 'battle_royale' && gameData.status == 'ready'" class="wait_game_start">
         本次游戏人数 {{gameData.players.length}}
       </div>
-      <div v-if="(gameData.type === 'solo_match' || gameData.type === 'battle_royale') && gameData.status == 'ready'" class="wait_game_start">
+      <div>
+        满5人开始游戏
+      </div>
+      <div v-if="(gameData.type === 'solo_match' || gameData.type === 'battle_royale') && gameData.status == 'ready' && gameData.timerStartTime" class="wait_game_start">
         开始倒计时 {{this.gameTimeLeft}} 秒
       </div>
 
