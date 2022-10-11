@@ -26,7 +26,7 @@
               淘汰赛
             </div>
             <div class="describe">
-              每天8点-23点，每整点一场
+              满5人发车
             </div>
           </div>
           <div class="card" @click="redirectPage( '/tuxun/main_game')">

@@ -7,16 +7,9 @@
       日常淘汰赛
     </div>
     <div class="desc">
-      每天8点-23点，每整点一场, 暂时不算积分。
+      满五人发车，暂时不算积分
     </div>
     <div v-if="nextStartTime" class="next-round">
-      <div v-if="!this.gameId"  class="next-round-info">
-        下一场倒计时
-      </div>
-      <div v-if="!this.gameId" class="next-round-count">
-        {{this.timeLeftStr}}
-      </div>
-
       <el-button type="primary" v-if="this.gameId" @click="toGame" round>
         进入游戏
       </el-button>
@@ -74,13 +67,10 @@ export default {
         if (!this.nextStartTime) {
           return;
         }
-        var timeLeft = parseInt((this.nextStartTime - (new Date().getTime())) / 1000);
-        if (timeLeft < 20) {
-          if (timeLeft % 5 == 0) {
-            this.get();
-          }
+        var time = parseInt((this.nextStartTime - (new Date().getTime())) / 1000);
+        if (time % 5 == 0) {
+          this.get();
         }
-        this.timeLeftStr = Math.floor(timeLeft / 60 / 60 ) + ' 小时 ' + Math.floor(timeLeft / 60 % 60).toString().padStart(2, '0') + ' 分 ' + (timeLeft % 60).toString().padStart(2, '0') + ' 秒';
       }.bind(this), 1000)
     },
 
