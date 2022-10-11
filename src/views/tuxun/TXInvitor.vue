@@ -297,6 +297,7 @@
         <div v-if="gameData.type === 'battle_royale'" class="count-down">
           存活人数: {{gameData.saveTeamCount}}
         </div>
+        <div></div>
         <div v-if="lastRound && lastRound.timerStartTime && !lastRound.endTime" class="count-down">
           选择倒计时: {{timeLeftStr}}
         </div>

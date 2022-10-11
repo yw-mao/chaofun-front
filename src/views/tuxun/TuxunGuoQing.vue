@@ -208,7 +208,7 @@ export default {
 
       .left {
         display: flex;
-        flex: 0 0 60px;
+        flex: 0 0 140px;
         // line-height: 40px;
         text-align: center;
         font-size: 12px;
