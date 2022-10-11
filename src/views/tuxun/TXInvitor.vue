@@ -662,6 +662,9 @@ export default {
             this.lastRound.content = this.lastRound.contentSpeedUp;
           }
           if (this.image !== this.lastRound.content) {
+            if (this.map) {
+              this.map.setView([38.8, 106.0], 3);
+            }
             this.removeChooseMarker()
             this.removeTargetMarker();
             this.removeLine();
@@ -740,6 +743,11 @@ export default {
                   panoData: {poseHeading: this.heading}
                 }])
               }
+
+              this.viewer.animate({
+                zoom: 0,
+                speed: '1000rpm',
+              }).then(() => {});
 
               var compassPlugin = this.viewer.getPlugin(CompassPlugin);
               if (compassPlugin) {

@@ -365,6 +365,12 @@ export default {
           virtualTour.setNodes([{panorama: 'https://i.chao-fan.com/' + this.image, id: this.image, position: [0,0], links: [], panoData : {poseHeading: this.heading}}])
         }
 
+        // this.viewer.setOptions({zoom: 0});
+        this.viewer.animate({
+          zoom: 0,
+          speed: '1000rpm',
+        }).then(() => {});
+
         var compassPlugin = this.viewer.getPlugin(CompassPlugin);
         if (compassPlugin) {
           console.log("compassPlugin")
@@ -464,6 +470,9 @@ export default {
 
         if (data.data.status === 'wait') {
           this.confirmed = false;
+          if (this.map) {
+            this.map.setView([38.8, 106.0], 3);
+          }
           if (this.targetLat) {
             this.lat = null;
             this.lng = null;
@@ -786,6 +795,9 @@ export default {
       this.distance = null;
       this.heading = null;
       this.contents = null;
+      if (this.map) {
+        this.map.setView([38.8, 106.0], 3);
+      }
 
       api.getByPath("/api/v0/tuxun/game/generate", {mapsId: this.mapsId}).then(res => {
         this.image = res.data.content;
