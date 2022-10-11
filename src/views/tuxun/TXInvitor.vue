@@ -60,7 +60,7 @@
 
       <div v-if="gameData.type === 'battle_royale' && gameData.status == 'ready'" class="wait_game_title">
         图寻淘汰赛-准备中
-        </div>
+      </div>
       <div v-if="gameData.type === 'battle_royale' && gameData.status == 'ready'" class="wait_game_start">
         本次游戏人数
       </div>
@@ -1356,7 +1356,7 @@ export default {
 
     .wait_game_title {
       padding-top: 3rem;
-      font-size: 48px;
+      font-size: 32px;
       font-weight: bold;
     }
     .wait_game_start {
