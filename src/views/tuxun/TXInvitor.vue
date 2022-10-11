@@ -235,6 +235,9 @@
               最终存活: {{winner.userName}}
             </div>
             <div>
+              <el-button class="home_button"  type="primary" @click="toNew" round>进入最新局</el-button>
+            </div>
+            <div>
               <el-button class="home_button" type="warning" @click="goHome" round>回到图寻首页</el-button>
             </div>
           </div>
@@ -1182,6 +1185,13 @@ export default {
       window.location.href = '/tuxun/solo_game';
     },
 
+    toNew() {
+      api.getByPath("/api/v0/tuxun/br/get").then(res => {
+        if (res.data.gameId) {
+          window.location.href = '/tuxun/guoqing_game?guoqingId=' + res.data.gameId;
+        }
+      });
+    },
     again() {
       api.getByPath('/api/v0/tuxun/game/again', {'gameId': this.gameId}).then(res => {
         if (res.data) {
