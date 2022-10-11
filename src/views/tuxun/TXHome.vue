@@ -470,12 +470,12 @@ export default {
 
         if (data.data.status === 'wait') {
           this.confirmed = false;
-          if (this.map) {
-            this.map.setView([38.8, 106.0], 3);
-          }
           if (this.targetLat) {
             this.lat = null;
             this.lng = null;
+            if (this.map) {
+              this.map.setView([38.8, 106.0], 3);
+            }
             this.removeChooseMarker();
           }
           this.removeTargetMarker();
