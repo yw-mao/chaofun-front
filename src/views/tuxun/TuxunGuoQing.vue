@@ -77,7 +77,6 @@ export default {
     get() {
       api.getByPath("/api/v0/tuxun/br/get").then(res => {
         this.gameId = res.data.gameId;
-        this.nextStartTime = res.data.nextStartTime;
       });
     },
     toGame() {
@@ -208,7 +207,7 @@ export default {
 
       .left {
         display: flex;
-        flex: 0 0 140px;
+        flex: 0 0 100px;
         // line-height: 40px;
         text-align: center;
         font-size: 12px;
