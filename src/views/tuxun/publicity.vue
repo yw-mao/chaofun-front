@@ -63,7 +63,7 @@ export default {
   data(){
     return {
       recentPagedata: [
-        {name: '10月12日图寻每日挑战3分钟速答2万分', cover: 'biz/1665579980139_302b8010aa6e4a69a530b014981b7bfc_0.webp', url: 'https://www.bilibili.com/video/BV1mK411Q7NB'},
+        {name: '10月12日图寻每日挑战3分钟速答2万分', cover: 'biz/1665579980139_302b8010aa6e4a69a530b014981b7bfc_0.webp', url: 'https://www.bilibili.com/video/BV1A14y1E71P'},
         {name: '每日五题地理挑战游戏2022年10月10号【炒饭图寻】', cover: 'biz/1665574383610_dcd05466fdcb49b18de214a9c976ef42_0.webp', url: 'https://www.bilibili.com/video/BV1FR4y1R7jB'},
         {name: '炒饭图寻  随机传送到世界上的某地，如何选出大概位置？', cover: 'biz/1665574863776_f56f0bfff84a45d7ba2b1e47bdc9f681_0.webp', url: 'https://www.bilibili.com/video/BV1ee4y1i7em'},
         {name: '当你做了一道地球人都会的题后， 一定会有一道地球人都不会的题等着你', cover: 'biz/1665575510613_fcb281887a3c4b1c970e7b654ae48f0f_0.webp', url: 'https://www.bilibili.com/video/BV1He411j79D'}
