@@ -6,6 +6,20 @@
       <div class="nav">
         直播/视频/教程
       </div>
+    <section class="game_entrance">
+      <div class="first_session_head" v-if="recommendPagedata && recommendPagedata.length >= 1">推荐</div>
+      <div class="line" v-if="recommendPagedata && recommendPagedata.length >= 1"></div>
+      <div class="grid_main" v-if="recommendPagedata && recommendPagedata.length >= 1">
+        <div v-for="(item, index) in recommendPagedata" @click="toLink(item.url)"  :style="{'background-image': 'linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.6)), url('+ imgOrigin + (item.cover ?? 'biz/1659323781589_7d19c33667a54a4dabb0405ee5aec20f.jpeg') + '?x-oss-process=image/resize,h_400)','background-size':'cover'}" class="card">
+          <div class="title">
+            {{item.name}}
+          </div>
+          <div class="describe">
+            {{item.desc}}
+          </div>
+        </div>
+      </div>
+    </section>
       <section class="game_entrance">
         <div class="first_session_head" v-if="recentPagedata && recentPagedata.length >= 1">最新</div>
         <div class="line" v-if="recentPagedata && recentPagedata.length >= 1"></div>
@@ -21,10 +35,10 @@
         </div>
       </section>
     <section class="game_entrance">
-      <div class="first_session_head" v-if="recommentPagedata && recommentPagedata.length >= 1">教程</div>
-      <div class="line" v-if="recommentPagedata && recommentPagedata.length >= 1"></div>
-      <div class="grid_main" v-if="recommentPagedata && recommentPagedata.length >= 1">
-        <div v-for="(item, index) in recommentPagedata" @click="toLink(item.url)"  :style="{'background-image': 'linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.6)), url('+ imgOrigin + (item.cover ?? 'biz/1659323781589_7d19c33667a54a4dabb0405ee5aec20f.jpeg') + '?x-oss-process=image/resize,h_400)','background-size':'cover'}" class="card">
+      <div class="first_session_head" v-if="coursePagedata && coursePagedata.length >= 1">教程</div>
+      <div class="line" v-if="coursePagedata && coursePagedata.length >= 1"></div>
+      <div class="grid_main" v-if="coursePagedata && coursePagedata.length >= 1">
+        <div v-for="(item, index) in coursePagedata" @click="toLink(item.url)"  :style="{'background-image': 'linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.6)), url('+ imgOrigin + (item.cover ?? 'biz/1659323781589_7d19c33667a54a4dabb0405ee5aec20f.jpeg') + '?x-oss-process=image/resize,h_400)','background-size':'cover'}" class="card">
           <div class="title">
             {{item.name}}
           </div>
@@ -52,7 +66,10 @@ export default {
         {name: '每日五题地理挑战游戏2022年10月10号【炒饭图寻】', cover: 'biz/1665574383610_dcd05466fdcb49b18de214a9c976ef42_0.webp', url: 'https://www.bilibili.com/video/BV1FR4y1R7jB'},
         {name: '炒饭图寻  随机传送到世界上的某地，如何选出大概位置？', cover: 'biz/1665574863776_f56f0bfff84a45d7ba2b1e47bdc9f681_0.webp', url: 'https://www.bilibili.com/video/BV1ee4y1i7em'}
       ],
-      recommentPagedata: [
+      recommendPagedata: [
+        {name:'图寻第二届个人锦标赛录播',cover: 'biz/1665575107534_a7506b339de4404b89ad4ed17258b69c_0.webp', url: 'https://www.bilibili.com/video/BV19e4y1871Q' },
+      ],
+      coursePagedata: [
         {name:'图寻总笔记1.0',cover: 'biz/1665574727065_92d546eddc4a427d9eb503077a34fd06_0.webp', url: 'https://www.bilibili.com/video/BV1Xg411a78m' },
         {name:'美国加拿大独门秘笈（不完全教程） Geoguessr图寻游戏教学',cover: 'biz/1665573905878_ab983dfaa6b14416be4085e1bd63c99c_0.webp', url: 'https://www.bilibili.com/video/BV1sR4y1R7J1' },
       ],
@@ -151,7 +168,7 @@ export default {
         padding: 4rem;
         min-height: 110px;
         .title {
-          font-size: 16px;
+          font-size: 20px;
           color: white;
           font-weight: 700;
           padding-bottom: 0.2rem;
