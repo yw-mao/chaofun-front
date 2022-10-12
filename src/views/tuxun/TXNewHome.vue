@@ -77,7 +77,14 @@
               走遍大江南北
             </div>
           </div>
-
+          <div class="card" @click="$toast('暂不支持')">
+            <div class="title">
+              直播/视频/教程
+            </div>
+            <div class="describe">
+              看看图寻er们都创作了哪些内容吧
+            </div>
+          </div>
           <div class="card" @click="toForum()">
             <div class="title">
               讨论区
