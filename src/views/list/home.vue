@@ -829,9 +829,9 @@ export default {
 
 .tag_item {
   border: 1px solid transparent;
-  line-height: 36px;
+  line-height: 24px;
   // text-align: center;
-  margin: 10px 0;
+  margin: 5px 0;
   border-radius: 4px;
   cursor: pointer;
   font-weight: bold;
