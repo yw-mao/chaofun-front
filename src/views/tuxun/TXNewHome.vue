@@ -10,7 +10,7 @@
     </div>
 
     <div class="game">
-      <div class="info" @click="toFirstTournament">图寻第二届团队赛圆满结束,点击查看排名...</div>
+      <div class="info" @click="toFirstTournament">炒饭第三届图寻个人赛开始啦，10月16号下午开赛，大家赶快来报名吧....</div>
       <section class="game_entrance">
         <div class="grid_main">
           <div class="card" @click="redirectPage( '/tuxun/daily_challenge')">
@@ -196,9 +196,9 @@ export default {
     },
     toFirstTournament() {
       try {
-        window.flutter_inappwebview.callHandler('toAppPost', {postId: '1211106'});
+        window.flutter_inappwebview.callHandler('toAppPost', {postId: '1214684'});
       } catch (e) {
-        window.open('/p/1211106', "_blank");
+        window.open('/p/1214684', "_blank");
       }
     }
   }
