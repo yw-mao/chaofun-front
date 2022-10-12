@@ -611,6 +611,10 @@ export default {
         return;
       }
 
+      if (code === 'game_start' && this.gameData.type === 'battle_royale') {
+        this.notify("淘汰赛开始了，点击进入");
+      }
+
       if (this.gameData.type === 'solo' && code === 'player_join' && this.$store.state.user.userInfo.userId === this.gameData.host.userId) {
         this.notify("您的邀请Solo赛已经准备就绪，可以开始了！");
       }
