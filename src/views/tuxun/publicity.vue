@@ -64,10 +64,12 @@ export default {
     return {
       recentPagedata: [
         {name: '每日五题地理挑战游戏2022年10月10号【炒饭图寻】', cover: 'biz/1665574383610_dcd05466fdcb49b18de214a9c976ef42_0.webp', url: 'https://www.bilibili.com/video/BV1FR4y1R7jB'},
-        {name: '炒饭图寻  随机传送到世界上的某地，如何选出大概位置？', cover: 'biz/1665574863776_f56f0bfff84a45d7ba2b1e47bdc9f681_0.webp', url: 'https://www.bilibili.com/video/BV1ee4y1i7em'}
+        {name: '炒饭图寻  随机传送到世界上的某地，如何选出大概位置？', cover: 'biz/1665574863776_f56f0bfff84a45d7ba2b1e47bdc9f681_0.webp', url: 'https://www.bilibili.com/video/BV1ee4y1i7em'},
+        {name: '当你做了一道地球人都会的题后， 一定会有一道地球人都不会的题等着你', cover: 'biz/1665575510613_fcb281887a3c4b1c970e7b654ae48f0f_0.webp', url: 'https://www.bilibili.com/video/BV1He411j79D'}
       ],
       recommendPagedata: [
         {name:'图寻第二届个人锦标赛录播',cover: 'biz/1665575107534_a7506b339de4404b89ad4ed17258b69c_0.webp', url: 'https://www.bilibili.com/video/BV19e4y1871Q' },
+        {name:'图寻第一届个人锦标赛录播1',cover: 'biz/1665575321286_9f85c32bccd2401191aed9e468129888_0.webp', url: 'https://www.bilibili.com/video/BV1Ma41137zr' },
       ],
       coursePagedata: [
         {name:'图寻总笔记1.0',cover: 'biz/1665574727065_92d546eddc4a427d9eb503077a34fd06_0.webp', url: 'https://www.bilibili.com/video/BV1Xg411a78m' },
