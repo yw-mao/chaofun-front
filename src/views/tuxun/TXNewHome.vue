@@ -77,7 +77,7 @@
               走遍大江南北
             </div>
           </div>
-          <div class="card" @click="$toast('暂不支持')">
+          <div class="card" @click="redirectPage( '/tuxun/publicity')">
             <div class="title">
               直播/视频/教程
             </div>

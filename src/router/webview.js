@@ -361,6 +361,13 @@ routes = [
     hidden: true
   },
   {
+    path: '/tuxun/publicity',
+    component: () => import('@/views/tuxun/publicity'),
+    name: '外宣',
+    meta: { title: '直播/视频/教程'},
+    hidden: true
+  },
+  {
     path: '/tuxun/user/:id',
     component: () => import('@/views/tuxun/profile'),
     name: 'tuxunProfile',
