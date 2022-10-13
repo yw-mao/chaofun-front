@@ -368,6 +368,13 @@ routes = [
     hidden: true
   },
   {
+    path: '/tuxun/googleTest',
+    component: () => import('@/views/tuxun/GoogleTest'),
+    name: '',
+    meta: { title: ''},
+    hidden: true
+  },
+  {
     path: '/tuxun/user/:id',
     component: () => import('@/views/tuxun/profile'),
     name: 'tuxunProfile',

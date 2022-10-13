@@ -1,0 +1,51 @@
+<template>
+  <div>
+    <div id="map" class="container" style=""></div>
+  </div>
+</template>
+
+<script>
+export default {
+  name: "GoogleTest",
+  mounted() {
+    let recaptchaScript = document.createElement('script')
+    recaptchaScript.setAttribute('src', 'https://maps.googleapis.com/maps/api/js?key=AIzaSyAZZWaODguEaDaHTt7IuJuQEqoJ_mQXzaQ')
+    document.head.appendChild(recaptchaScript)
+    setTimeout(() => {
+
+      this.test();
+    }, 2000)
+  },
+
+  methods: {
+    test() {
+      var panorama = new google.maps.StreetViewPanorama(
+          document.getElementById("map"), {
+            fullscreenControl:false,
+            panControl:false,
+            addressControl: false,
+            imageDateControl: true,
+            motionTrackingControl:false,
+            streetViewControl:true
+          }
+      );
+
+      panorama.setPano('Yz0xoYXr1b4BH_TiNNdzXA');
+      panorama.setPov({
+        heading: 270,
+        pitch: 0,
+      });
+      panorama.setVisible(true);
+    }
+  }
+}
+</script>
+
+<style scoped>
+.container {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+</style>
