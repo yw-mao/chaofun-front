@@ -94,7 +94,10 @@
           <div class="round_result_top">
             <span v-if="gameData.type === 'country_streak'">国家连胜 - </span>
             <span v-if="gameData.type === 'province_streak'">省份连胜 - </span>
-            第 {{gameData.currentRound}} 轮 <span v-if="lastRound.isDamageMultiple"> - {{lastRound.damageMultiple}} 倍伤害</span></div>
+            第 {{gameData.currentRound}} 轮
+            <span v-if="lastRound.isDamageMultiple"> - {{lastRound.damageMultiple}} 倍伤害</span>
+            <span v-if="gameData.type === 'battle_royale'"> - 淘汰用户 </span>
+          </div>
 
           <div class="round_result_center" v-if="!gameData.player && gameData.type !== 'battle_royale'">
             <div class="round_result_block" v-if="gameData.type !== 'team'">
@@ -130,9 +133,6 @@
           </div>
 
           <div class="round_result_center" v-if="gameData.type === 'battle_royale'">
-            <div>
-              淘汰用户
-            </div>
             <div v-for="(item, index) in obsoleteUsers">
               {{item.userName}}
             </div>
