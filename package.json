@@ -9,6 +9,7 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "@shzl/shzl-leaflet": "git@github.com:springsheep/shzl-leaflet.git",
     "@toast-ui/vue-editor": "^3.1.1",
     "agora-rtc-sdk-ng": "^4.12.1",
     "agora-rtc-vue": "^0.2.53",
@@ -40,7 +41,6 @@
     "nprogress": "^0.2.0",
     "path-to-regexp": "^6.1.0",
     "photo-sphere-viewer": "github:cijianzy/Photo-Sphere-Viewer",
-    "@shzl/shzl-leaflet": "git@github.com:springsheep/shzl-leaflet.git",
     "piexifjs": "^1.0.6",
     "qs": "^6.9.1",
     "remixicon": "^2.5.0",
@@ -63,6 +63,7 @@
     "vue-echarts": "^6.1.0",
     "vue-i18n": "^8.15.3",
     "vue-loading-spinner": "^1.0.11",
+    "vue-plugin-load-script": "^2.1.1",
     "vue-quill-editor": "^3.0.6",
     "vue-quill-editor-upload": "^1.1.0",
     "vue-router": "^3.1.3",

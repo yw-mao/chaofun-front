@@ -77,6 +77,14 @@
               走遍大江南北
             </div>
           </div>
+          <div class="card" @click="redirectPage( '/tuxun/random')">
+            <div class="title">
+              随机街景
+            </div>
+            <div class="describe">
+              飞一般的感觉
+            </div>
+          </div>
           <div class="card" @click="redirectPage( '/tuxun/publicity')">
             <div class="title">
               直播/视频/教程

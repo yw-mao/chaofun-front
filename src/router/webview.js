@@ -249,6 +249,13 @@ routes = [
     hidden: true
   },
   {
+    path: '/tuxun/random',
+    component: () => import('@/views/tuxun/RandomStreetView'),
+    name: '图寻首页',
+    meta: { title: '图寻首页'},
+    hidden: true
+  },
+  {
     path: '/tuxun',
     component: () => import('@/views/tuxun/TXNewHome'),
     name: '图寻首页',
@@ -365,6 +372,13 @@ routes = [
     component: () => import('@/views/tuxun/publicity'),
     name: '外宣',
     meta: { title: '直播/视频/教程'},
+    hidden: true
+  },
+  {
+    path: '/tuxun/random',
+    component: () => import('@/views/tuxun/RandomStreetView'),
+    name: '随机街景',
+    meta: { title: '随机街景'},
     hidden: true
   },
   {
