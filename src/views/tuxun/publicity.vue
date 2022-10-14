@@ -63,6 +63,7 @@ export default {
   data(){
     return {
       recentPagedata: [
+        {name: '小伙首次挑战图寻，直呼好爽！（10月14日挑战） Geoguessr/溯景寻踪/图寻/周游盖世', cover: 'biz/1665770090636_e23d05e6e25848e0a99c5a26bc5eaed4_0.webp', url: 'https://www.bilibili.com/video/BV1M8411s7ug'},
         {name: '10月12日图寻每日挑战3分钟速答2万分', cover: 'biz/1665579980139_302b8010aa6e4a69a530b014981b7bfc_0.webp', url: 'https://www.bilibili.com/video/BV1A14y1E71P'},
         {name: '每日五题地理挑战游戏2022年10月10号【炒饭图寻】', cover: 'biz/1665574383610_dcd05466fdcb49b18de214a9c976ef42_0.webp', url: 'https://www.bilibili.com/video/BV1FR4y1R7jB'},
         {name: '炒饭图寻  随机传送到世界上的某地，如何选出大概位置？', cover: 'biz/1665574863776_f56f0bfff84a45d7ba2b1e47bdc9f681_0.webp', url: 'https://www.bilibili.com/video/BV1ee4y1i7em'},
