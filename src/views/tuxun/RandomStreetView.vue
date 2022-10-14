@@ -24,8 +24,9 @@ export default {
     }
   },
   mounted() {
+    document.head.insertAdjacentHTML("beforeend", `<style>a[href^="http://maps.google.com/maps"]{display:none !important}a[href^="https://maps.google.com/maps"]{display:none !important}.gmnoprint a, .gmnoprint span, .gm-style-cc {display:none;}</style>`)
     this.sharePanoId = this.$route.query.pano;
-    loadScript('https://chaofun-test.oss-cn-hangzhou.aliyuncs.com/google/js-1.js?key=AIzaSyAZZWaODguEaDaHTt7IuJuQEqoJ_mQXzaQ&callback=initialize&v=weekly&channel=2').then(() => {
+    loadScript('https://gac-geo.googlecnapps.cn/maps/api/js?v=3.49&key=AIzaSyCdt719yJI_9hg8WNct5hSbFim7vApmdrU').then(() => {
       this.test();
     })
   },
@@ -42,6 +43,23 @@ export default {
             streetViewControl:true
           }
       );
+
+      // // document.getElementsByTagName("a[href^=\"http://maps.google.com/maps\"]").style.display="none";
+      // console.log('123')
+      // // console.log(document.querySelectorAll('a[href^="https://maps.google.com/maps"]'))
+      // console.log( document.getElementsByClassName('gmnoprint'))
+      // console.log('234')
+      // setTimeout(() => {
+      //   document.querySelectorAll('a').forEach(v => {
+      //     v.style.display="none";
+      //   })
+      //   var els = document.getElementsByClassName('gmnoprint');
+      //   Array.prototype.forEach.call(els, function(el) {
+      //       el.style.display="none";
+      //   });
+      // }, 3000)
+
+
       if (this.sharePanoId) {
         this.setPano(this.sharePanoId)
       } else {
@@ -61,13 +79,18 @@ export default {
       this.panorama.setVisible(true);
     },
     change() {
-      if (this.sharePanoId) {
-        window.location.href = '/tuxun/random'
-        return;
+      this.doLoginStatus().then((res) => {
+      if (res) {
+
+        if (this.sharePanoId) {
+          window.location.href = '/tuxun/random'
+          return;
+        }
+        api.getByPath("/api/v0/tuxun/random", {mapsId: this.mapsId}).then(res => {
+          this.setPano(res.data);
+        })
       }
-      api.getByPath("/api/v0/tuxun/random", {mapsId: this.mapsId}).then(res => {
-        this.setPano(res.data);
-      })
+      });
     },
     shareLink() {
       var input = document.createElement('input');
@@ -82,7 +105,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .back_home {
   position: absolute;
   padding-top: 1rem;
@@ -94,5 +117,6 @@ export default {
   width: 100%;
   height: 100%;
 }
-
 </style>
+
+
