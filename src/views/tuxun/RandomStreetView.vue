@@ -52,6 +52,7 @@ export default {
       window.location.href = '/tuxun';
     },
     setPano(panoId) {
+      this.currentPanoId = panoId;
       this.panorama.setPano(panoId);
       this.panorama.setPov({
         heading: 270,
@@ -65,7 +66,6 @@ export default {
         return;
       }
       api.getByPath("/api/v0/tuxun/random", {mapsId: this.mapsId}).then(res => {
-        this.currentPanoId = res.data;
         this.setPano(res.data);
       })
     },
