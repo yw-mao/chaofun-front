@@ -76,7 +76,7 @@ export default {
       input.select();
       var result = document.execCommand('copy');
       document.body.removeChild(input);
-      this.$toast("复制邀请地址成功");
+      this.$toast("复制街景地址成功");
     },
   }
 }
