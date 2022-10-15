@@ -78,6 +78,7 @@ export default {
       ],
       coursePagedata: [
         {name:'图寻总笔记1.0',cover: 'biz/1665574727065_92d546eddc4a427d9eb503077a34fd06_0.webp', url: 'https://www.bilibili.com/video/BV1Xg411a78m' },
+        {name:'这个视频将会双倍你的Geoguessr/图寻能力 历史地理人文知识问答Jetpunk',cover: 'biz/1665856643354_58dc7397ce96424fb1ac053b07cb8737_0.webp', url: 'https://www.bilibili.com/video/BV1VD4y1C7Mr' },
         {name:'美国加拿大独门秘笈（不完全教程） Geoguessr图寻游戏教学',cover: 'biz/1665573905878_ab983dfaa6b14416be4085e1bd63c99c_0.webp', url: 'https://www.bilibili.com/video/BV1sR4y1R7J1' },
       ],
       timer: 0
