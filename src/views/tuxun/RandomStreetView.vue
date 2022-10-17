@@ -36,7 +36,7 @@ export default {
       this.panorama = new google.maps.StreetViewPanorama(
           document.getElementById("map"), {
             fullscreenControl:false,
-            panControl:false,
+            panControl:true,
             addressControl: false,
             imageDateControl: true,
             motionTrackingControl:false,
@@ -73,10 +73,12 @@ export default {
       this.currentPanoId = panoId;
       this.panorama.setPano(panoId);
       this.panorama.setPov({
-        heading: 270,
-        pitch: 0,
+        // heading: 90,
+        // pitch: 0,
       });
       this.panorama.setVisible(true);
+      // 调整视角大小的
+      // this.panorama.setZoom(1);
     },
     change() {
       this.doLoginStatus().then((res) => {
