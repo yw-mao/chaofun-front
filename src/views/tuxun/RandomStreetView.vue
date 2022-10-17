@@ -5,6 +5,9 @@
       <el-button type="warning" @click="change"  round>换一个</el-button>
       <el-button @click="shareLink" round>分享街景</el-button>
     </div>
+    <div v-if="this.location" class="location" >
+      {{this.location}}
+    </div>
     <div id="map" class="container" style=""></div>
   </div>
 </template>
@@ -21,6 +24,7 @@ export default {
       panorama: null,
       currentPanoId: null,
       sharePanoId: null,
+      location: null,
     }
   },
   mounted() {
@@ -89,10 +93,17 @@ export default {
           return;
         }
         api.getByPath("/api/v0/tuxun/random", {mapsId: this.mapsId}).then(res => {
+          this.location = null;
           this.setPano(res.data);
+          this.getLocation(res.data);
         })
       }
       });
+    },
+    getLocation(panoId) {
+      api.getByPath("/api/v0/tuxun/getLocation", {panoId: panoId}).then(res => {
+        this.location = res.data;
+      })
     },
     shareLink() {
       var input = document.createElement('input');
@@ -118,6 +129,14 @@ export default {
   position: absolute;
   width: 100%;
   height: 100%;
+}
+.location {
+  font-size: 24px;
+  font-weight: bold;
+  position: absolute;
+  bottom: 1rem;
+  padding-left: 1rem;
+  z-index: 500;
 }
 </style>
 
