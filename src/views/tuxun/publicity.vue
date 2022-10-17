@@ -64,6 +64,7 @@ export default {
     return {
       recentPagedata: [
         {name: '一个正直的小伙不认识邪教很合理吧（10月17日图寻每日挑战） Geoguessr/溯景寻踪/图寻/周游盖世', cover: 'biz/1666036967147_b9cb9c4a47fe418aa25127d0671bf9b4_1.png', url: 'https://www.bilibili.com/video/BV1xt4y1F7PY'},
+        {name: '炒饭图寻每日挑战10/16 Geoguessr/溯景寻踪/图寻/周游盖世', cover: 'biz/1666037132615_62682012bee744a792692f55b26c25c5_0.png', url: 'https://www.bilibili.com/video/BV11m4y1c7df'},
         {name: '非著名小丑来了（10月16日图寻每日挑战） Geoguessr/溯景寻踪/图寻/周游盖世', cover: 'biz/1666036673496_04e8f0d6fdce4842b9a88d21f1e5702d_0.png', url: 'https://www.bilibili.com/video/BV1pd4y117Lc'},
         {name: '图寻 每日挑战 | 15分钟内找出五个地点 2分钟速答20000分', cover: 'biz/1665856527702_704ac3a286da44289caf4ec194317f1a_0.webp', url: 'https://www.bilibili.com/video/BV1u84y1z7Tq'},
         {name: '原形毕露？回光返照？图寻国家streak挑战！ Geoguessr/溯景寻踪/图寻/周游盖世', cover: 'biz/1665856408307_c8fbf37ca1be439cb530d1d6c1cf3510_0.webp', url: 'https://www.bilibili.com/video/BV1ie411L7W9'},
