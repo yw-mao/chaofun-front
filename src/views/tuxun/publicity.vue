@@ -63,6 +63,8 @@ export default {
   data(){
     return {
       recentPagedata: [
+        {name: '一个正直的小伙不认识邪教很合理吧（10月17日图寻每日挑战） Geoguessr/溯景寻踪/图寻/周游盖世', cover: 'biz/1666036967147_b9cb9c4a47fe418aa25127d0671bf9b4_1.png', url: 'https://www.bilibili.com/video/BV1xt4y1F7PY'},
+        {name: '非著名小丑来了（10月16日图寻每日挑战） Geoguessr/溯景寻踪/图寻/周游盖世', cover: 'biz/1666036673496_04e8f0d6fdce4842b9a88d21f1e5702d_0.png', url: 'https://www.bilibili.com/video/BV1pd4y117Lc'},
         {name: '图寻 每日挑战 | 15分钟内找出五个地点 2分钟速答20000分', cover: 'biz/1665856527702_704ac3a286da44289caf4ec194317f1a_0.webp', url: 'https://www.bilibili.com/video/BV1u84y1z7Tq'},
         {name: '原形毕露？回光返照？图寻国家streak挑战！ Geoguessr/溯景寻踪/图寻/周游盖世', cover: 'biz/1665856408307_c8fbf37ca1be439cb530d1d6c1cf3510_0.webp', url: 'https://www.bilibili.com/video/BV1ie411L7W9'},
         {name: '不认识上海是我的错吗？！（10月15日图寻每日挑战） Geoguessr/溯景寻踪/图寻/周游盖世', cover: 'biz/1665856318382_c9018e95887047dba224a96281902d71_0.webp', url: 'https://www.bilibili.com/video/BV1XD4y1k7eH'},
@@ -73,6 +75,8 @@ export default {
         {name: '当你做了一道地球人都会的题后， 一定会有一道地球人都不会的题等着你', cover: 'biz/1665575510613_fcb281887a3c4b1c970e7b654ae48f0f_0.webp', url: 'https://www.bilibili.com/video/BV1He411j79D'}
       ],
       recommendPagedata: [
+        {name:'非官方解说图寻第三届个人锦标赛（恭喜HM）Pt. 1',cover: 'biz/1666036564211_7cfdf16e1f68425787bcd57f8bfd2732_0.png', url: 'bilibili.com/video/BV1Qe4y1j7R1' },
+        {name:'图寻第三届个人锦标赛录播',cover: 'biz/1666036472357_1ecdc1dd6d24498bae0d11affb1acb58_0.png', url: 'https://www.bilibili.com/video/BV1AW4y1n7wf' },
         {name:'图寻第二届个人锦标赛录播',cover: 'biz/1665575107534_a7506b339de4404b89ad4ed17258b69c_0.webp', url: 'https://www.bilibili.com/video/BV19e4y1871Q' },
         {name:'图寻第一届个人锦标赛录播1',cover: 'biz/1665575321286_9f85c32bccd2401191aed9e468129888_0.webp', url: 'https://www.bilibili.com/video/BV1Ma41137zr' },
       ],
