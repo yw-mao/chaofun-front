@@ -76,7 +76,7 @@ export default {
         {name: '当你做了一道地球人都会的题后， 一定会有一道地球人都不会的题等着你', cover: 'biz/1665575510613_fcb281887a3c4b1c970e7b654ae48f0f_0.webp', url: 'https://www.bilibili.com/video/BV1He411j79D'}
       ],
       recommendPagedata: [
-        {name:'非官方解说图寻第三届个人锦标赛（恭喜HM）Pt. 1',cover: 'biz/1666036564211_7cfdf16e1f68425787bcd57f8bfd2732_0.png', url: 'bilibili.com/video/BV1Qe4y1j7R1' },
+        {name:'非官方解说图寻第三届个人锦标赛（恭喜HM）Pt. 1',cover: 'biz/1666036564211_7cfdf16e1f68425787bcd57f8bfd2732_0.png', url: 'https://bilibili.com/video/BV1Qe4y1j7R1' },
         {name:'图寻第三届个人锦标赛录播',cover: 'biz/1666036472357_1ecdc1dd6d24498bae0d11affb1acb58_0.png', url: 'https://www.bilibili.com/video/BV1AW4y1n7wf' },
         {name:'图寻第二届个人锦标赛录播',cover: 'biz/1665575107534_a7506b339de4404b89ad4ed17258b69c_0.webp', url: 'https://www.bilibili.com/video/BV19e4y1871Q' },
         {name:'图寻第一届个人锦标赛录播1',cover: 'biz/1665575321286_9f85c32bccd2401191aed9e468129888_0.webp', url: 'https://www.bilibili.com/video/BV1Ma41137zr' },
