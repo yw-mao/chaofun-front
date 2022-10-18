@@ -86,10 +86,10 @@ export default {
     setPano(panoId) {
       this.currentPanoId = panoId;
       this.panorama.setPano(panoId);
-      this.panorama.setPov({
-        // heading: 90,
-        // pitch: 0,
-      });
+      // this.panorama.setPov({
+      //   // heading: 90,
+      //   // pitch: 0,
+      // });
       this.panorama.setVisible(true);
       // 调整视角大小的
       // this.panorama.setZoom(1);
