@@ -33,6 +33,16 @@ export default {
     loadScript('https://gac-geo.googlecnapps.cn/maps/api/js?v=3.49&key=AIzaSyCdt719yJI_9hg8WNct5hSbFim7vApmdrU').then(() => {
       this.test();
     })
+
+    document.onkeydown=function(event){
+      var e = event || window.event || arguments.callee.caller.arguments[0];
+      if(e && e.keyCode===32){//空格
+        this.change();
+      }
+    }.bind(this);
+  },
+  destroyed() {
+    document.onkeydown = undefined;
   },
 
   methods: {
