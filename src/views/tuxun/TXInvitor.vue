@@ -788,10 +788,15 @@ export default {
 
       if ((code === 'round_end' ||
               (this.lastRound && this.lastRound.endTime))
-          && !this.showGameEnd) {
-        this.showRoundResult = true;
-        if (!this.targetLng) {
+          ) {
+        if (!this.showGameEnd) {
           this.showMapTrue()
+          this.showRoundResult = true;
+        } else {
+          this.showRoundResult = false;
+        }
+        if (!this.targetLng) {
+
           this.targetLat = this.lastRound.lat;
           this.targetLng = this.lastRound.lng;
           if (this.lng) {
@@ -805,7 +810,6 @@ export default {
               }
             })
           }
-
 
           this.addTargetMarker()
           this.addRanksMarker();
@@ -976,21 +980,28 @@ export default {
     },
 
     addTargetMarker() {
+      var timeout = 0;
       if (!this.map) {
-        return;
+        timeout = 200;
       }
+
       if (this.targetMarker) {
         this.targetMarker.remove();
       }
-      var options = JSON.parse(JSON.stringify(L.Icon.Default.prototype.options))
-      options.iconUrl = this.imgOrigin + 'biz/1662830770348_9499340182724556af66f2b42846135b_0.png';
-      options.iconRetinaUrl = this.imgOrigin + 'biz/1662830707508_d7e5c8ce884a4fb692096396a5405f5b_0.png';
-      var marker = L.marker([this.targetLat, this.targetLng], {icon: new L.Icon(options)}).bindTooltip("目标位置",
-          {
-            permanent: true,
-            direction: 'auto'
-          }).addTo(this.map);
-      this.targetMarker = marker;
+
+      setTimeout(() => {
+        var options = JSON.parse(JSON.stringify(L.Icon.Default.prototype.options))
+        options.iconUrl = this.imgOrigin + 'biz/1662830770348_9499340182724556af66f2b42846135b_0.png';
+        options.iconRetinaUrl = this.imgOrigin + 'biz/1662830707508_d7e5c8ce884a4fb692096396a5405f5b_0.png';
+        var marker = L.marker([this.targetLat, this.targetLng], {icon: new L.Icon(options)}).bindTooltip("目标位置",
+            {
+              permanent: true,
+              direction: 'auto'
+            }).addTo(this.map);
+        this.targetMarker = marker;
+
+      }, timeout)
+
     },
 
     countDown() {
