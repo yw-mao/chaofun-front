@@ -63,6 +63,8 @@ export default {
   data(){
     return {
       recentPagedata: [
+        {name: '10月18日图寻每日挑战 露脸初解说，勉强2万分', cover: 'biz/1666105306246_113c97b1527645be98d69ba0f8140e47_0.png', url: 'https://www.bilibili.com/video/BV1Nm4y1P7Sz'},
+        {name: '哼，运气游戏！（10月18日图寻每日挑战） Geoguessr/溯景寻踪/图寻/周游盖世', cover: 'biz/1666105386447_5ce6961ac26c4673b53df36bd8b972c4_0.png', url: 'https://www.bilibili.com/video/BV1g14y1j7J1'},
         {name: '一个正直的小伙不认识邪教很合理吧（10月17日图寻每日挑战） Geoguessr/溯景寻踪/图寻/周游盖世', cover: 'biz/1666036967147_b9cb9c4a47fe418aa25127d0671bf9b4_1.png', url: 'https://www.bilibili.com/video/BV1xt4y1F7PY'},
         {name: '炒饭图寻每日挑战10/16 Geoguessr/溯景寻踪/图寻/周游盖世', cover: 'biz/1666037132615_62682012bee744a792692f55b26c25c5_0.png', url: 'https://www.bilibili.com/video/BV11m4y1c7df'},
         {name: '非著名小丑来了（10月16日图寻每日挑战） Geoguessr/溯景寻踪/图寻/周游盖世', cover: 'biz/1666036673496_04e8f0d6fdce4842b9a88d21f1e5702d_0.png', url: 'https://www.bilibili.com/video/BV1pd4y117Lc'},
