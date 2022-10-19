@@ -68,7 +68,7 @@
         {{gameData.players.length}}
       </div>
       <div v-if="gameData.type === 'battle_royale' && gameData.status == 'ready'"  class="wait_game_hint">
-        满5人开始游戏
+        满3人开始游戏
       </div>
       <div v-if="(gameData.type === 'solo_match' || gameData.type === 'battle_royale') && gameData.status == 'ready' && gameData.timerStartTime" class="wait_game_start">
         开始倒计时 {{this.gameTimeLeft}} 秒
@@ -406,6 +406,7 @@ export default {
       guoqingId: null,
       mapPin: false,
       obsoleteUsers: [],
+      panorama: null,
       notifyStatus: '',
 
       // gameData: {playerIds: [1, 2]}
@@ -425,6 +426,8 @@ export default {
         this.keyConfirm()
       }
     }.bind(this);
+
+
   },
   destroyed() {
     document.onkeydown = undefined;
@@ -698,7 +701,6 @@ export default {
             this.obsoleteUsers = [];
 
             this.heading = this.lastRound.heading;
-
             setTimeout(function () {
               if (!this.viewer) {
                 var plugins = [];
