@@ -242,7 +242,7 @@ export default {
         url = 'https://map.chao-fan.com/mapApi/v1/mapService/getTile?x={x}&y={y}&z={z}&language=zh&scale=1&key=DAEDAALLJxDN3xIxrZz2g5NX2lXE%2Fqbk4v%2BzupvIWqwiMyZDKFQr3CqRmVb6Jn1cgoBxn20G47eawHQwysQulh3nYfG9pToO0CdGfA%3D%3D';
       }
       L.tileLayer(url, {
-        maxZoom: 19,
+        maxZoom: 18,
         minZoom: 1,
       }).addTo(map);
       this.map = map;
