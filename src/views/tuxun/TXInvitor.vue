@@ -1713,11 +1713,10 @@ export default {
 }
 
 @media only screen and (max-width: 679px) {
-  .container {
+  .game_container {
     .prepare {
       .vs {
         width: 80%;
-
         .vs_img {
           width: 30px;
           height: 30px;
@@ -1775,7 +1774,7 @@ export default {
 
 }
 @media  (any-hover:none) {
-  .container {
+  .game_container {
     .game {
       .bm-view-container {
         width: 40%;
