@@ -92,6 +92,7 @@ export default {
       //   // pitch: 0,
       // });
       this.panorama.setVisible(true);
+      this.getLocation(panoId)
       // 调整视角大小的
       // this.panorama.setZoom(1);
     },
@@ -106,7 +107,6 @@ export default {
         api.getByPath("/api/v0/tuxun/random", {mapsId: this.mapsId}).then(res => {
           this.location = null;
           this.setPano(res.data);
-          this.getLocation(res.data);
         })
       }
       });
