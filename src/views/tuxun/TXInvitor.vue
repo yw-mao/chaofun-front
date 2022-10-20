@@ -1644,6 +1644,7 @@ export default {
       height: 40%;
       bottom: 0;
       right: 0;
+      z-index: 500;
       -webkit-user-select: none;
       -moz-user-select: none;
       -ms-user-select: none;
