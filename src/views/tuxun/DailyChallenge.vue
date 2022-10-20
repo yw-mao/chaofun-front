@@ -14,10 +14,10 @@
         <div class="tab_container">
           <div class="tab">
             <div @click="type='noMove';init();" :class="{'normal': type!=='noMove', 'choose': type==='noMove'}">
-              不移动挑战
+              固定街景
             </div>
             <div @click="type='move';init()" :class="{'normal': type!=='move', 'choose': type==='move'}">
-              移动挑战
+              移动街景
             </div>
           </div>
         </div>
@@ -307,6 +307,9 @@ export default {
     .main_content {
       .top {
         .rank_container {
+          width: 90%;
+        }
+        .tab_container {
           width: 90%;
         }
       }
