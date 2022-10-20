@@ -11,16 +11,16 @@
         <div class="hint">
           每日0点更新，5个所有人统一的题目，满分25000，使用小号会被取消每日挑战资格，不建议看过当日解析视频/讨论的用户挑战
         </div>
-<!--        <div class="tab_container">-->
-<!--          <div class="tab">-->
-<!--            <div @click="type='noMove';init();" :class="{'normal': type!=='noMove', 'choose': type==='noMove'}">-->
-<!--              不移动挑战-->
-<!--            </div>-->
-<!--            <div @click="type='move';init()" :class="{'normal': type!=='move', 'choose': type==='move'}">-->
-<!--              移动挑战-->
-<!--            </div>-->
-<!--          </div>-->
-<!--        </div>-->
+        <div class="tab_container">
+          <div class="tab">
+            <div @click="type='noMove';init();" :class="{'normal': type!=='noMove', 'choose': type==='noMove'}">
+              不移动挑战
+            </div>
+            <div @click="type='move';init()" :class="{'normal': type!=='move', 'choose': type==='move'}">
+              移动挑战
+            </div>
+          </div>
+        </div>
         <el-button v-if="(this.gameData && this.gameData.status === 'ready') || this.showBegin" type="primary" size="large" @click="begin" round>开始每日挑战</el-button>
         <el-button v-if="this.gameData && this.gameData.status === 'ongoing'" type="warning" size="large" @click="again" round>继续每日挑战</el-button>
         <div class="score" v-if="this.gameData && this.gameData.status === 'finish'">今日得分: {{this.gameData.player.totalScore}}</div>
