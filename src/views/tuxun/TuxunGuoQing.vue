@@ -7,7 +7,7 @@
       日常淘汰赛
     </div>
     <div class="desc">
-      满五人发车，暂时不算积分
+      满3人发车，暂时不算积分
     </div>
     <div class="next-round">
       <el-button type="primary" v-if="this.gameId" @click="toGame" round>
