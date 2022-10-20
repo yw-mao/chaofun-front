@@ -797,13 +797,17 @@ export default {
                           fullscreenControl:false,
                           panControl:true,
                           addressControl: false,
-                          imageDateControl: true,
+                          imageDateControl: false,
+                          motionTracking: false,
                           motionTrackingControl:false,
-                          streetViewControl:true
+                          streetViewControl:false,
+                          showRoadLabels: false,
+                          panControlOptions: {
+                            position: google.maps.ControlPosition.BOTTOM_LEFT,
+                          },
                         }
                     );
                     this.setGoogle(this.lastRound.panoId);
-
                   })
                 } else {
                   this.setGoogle(this.lastRound.panoId);
@@ -855,6 +859,7 @@ export default {
 
     setGoogle(panoId) {
       this.viewer.setPano(panoId);
+      this.viewer.setZoom(1);
     },
 
     wsSend(data) {
