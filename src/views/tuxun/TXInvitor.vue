@@ -352,6 +352,8 @@ import BMapLoader from "../../utils/bmap-jsapi-loader";
 import {getByPathLongTimeout} from "../../api/api";
 import Matching from "./Matching";
 import EmojiSender from "./EmojiSender";
+import { loadScript } from "vue-plugin-load-script";
+
 
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
@@ -545,7 +547,6 @@ export default {
       }
     },
 
-
     challengeInit() {
       api.getByPath('/api/v0/tuxun/challenge/getGameInfo', {'challengeId': this.challengeId}).then(res => {
         if (res.data) {
@@ -701,87 +702,113 @@ export default {
             this.obsoleteUsers = [];
 
             this.heading = this.lastRound.heading;
+
             setTimeout(function () {
-              if (!this.viewer) {
-                var plugins = [];
-                plugins.push([CompassPlugin, {
-                  size: '5vh',
-                  position: 'left bottom'
-                }]);
-                plugins.push([VirtualTourPlugin, {
-                  positionMode: VirtualTourPlugin.MODE_GPS,
-                  renderMode: VirtualTourPlugin.MODE_3D,
-                  // preload: true,
-                }]);
+              if (!this.lastRound.source) {
+                if (!this.viewer) {
+                  var plugins = [];
+                  plugins.push([CompassPlugin, {
+                    size: '5vh',
+                    position: 'left bottom'
+                  }]);
+                  plugins.push([VirtualTourPlugin, {
+                    positionMode: VirtualTourPlugin.MODE_GPS,
+                    renderMode: VirtualTourPlugin.MODE_3D,
+                    // preload: true,
+                  }]);
 
-                this.viewer = new Viewer({
-                  loadingImg: this.imgOrigin + 'biz/1659528755270_550cd22e10c84073a12e6f83840320bc.gif',
-                  navbar: null,
-                  container: document.querySelector('#viewer'),
-                  panoData: {
-                    poseHeading: this.heading, // 0 to 360
-                  },
-                  defaultZoomLvl: 0,
-                  plugins: plugins
-                });
-              }
-              if (this.contents && this.contents.length > 1) {
-                var nodes = [];
-                console.log(this.contents)
-                for (var i in this.contents) {
-                  console.log(content);
-                  const content = this.contents[i];
-                  var k = {};
-                  if (this.canUseWebP() && content.contentSpeedUp && content.contentSpeedUp !== null) {
-                    k.panorama = 'https://i.chao-fan.com/' + content.contentSpeedUp;
-                  } else {
-                    k.panorama = 'https://i.chao-fan.com/' + content.content;
-                  }
-                  // k.panorama =  k.panorama + '?x-oss-process=image/resize,h_1664'
-                  k.links = [];
-                  for (var j in content.links) {
-                    k.links.push({nodeId: content.links[j]});
-                  }
-                  k.name = '全景图_' + i;
-                  k.id = content.id;
-                  k.position = [content.lng, content.lat];
-                  k.panoData = {poseHeading: content.heading};
-                  nodes.push(k);
+                  this.viewer = new Viewer({
+                    loadingImg: this.imgOrigin + 'biz/1659528755270_550cd22e10c84073a12e6f83840320bc.gif',
+                    navbar: null,
+                    container: document.querySelector('#viewer'),
+                    panoData: {
+                      poseHeading: this.heading, // 0 to 360
+                    },
+                    defaultZoomLvl: 0,
+                    plugins: plugins
+                  });
                 }
+                if (this.contents && this.contents.length > 1) {
+                  var nodes = [];
+                  console.log(this.contents)
+                  for (var i in this.contents) {
+                    console.log(content);
+                    const content = this.contents[i];
+                    var k = {};
+                    if (this.canUseWebP() && content.contentSpeedUp && content.contentSpeedUp !== null) {
+                      k.panorama = 'https://i.chao-fan.com/' + content.contentSpeedUp;
+                    } else {
+                      k.panorama = 'https://i.chao-fan.com/' + content.content;
+                    }
+                    // k.panorama =  k.panorama + '?x-oss-process=image/resize,h_1664'
+                    k.links = [];
+                    for (var j in content.links) {
+                      k.links.push({nodeId: content.links[j]});
+                    }
+                    k.name = '全景图_' + i;
+                    k.id = content.id;
+                    k.position = [content.lng, content.lat];
+                    k.panoData = {poseHeading: content.heading};
+                    nodes.push(k);
+                  }
 
-                console.log(nodes);
-                var virtualTour = this.viewer.getPlugin(VirtualTourPlugin);
-                virtualTour.setNodes(nodes, nodes[0].id);
-              } else {
-                var virtualTour = this.viewer.getPlugin(VirtualTourPlugin);
-                virtualTour.setNodes([{
-                  panorama: 'https://i.chao-fan.com/' + this.image,
-                  id: this.image,
-                  position: [0, 0],
-                  links: [],
-                  panoData: {poseHeading: this.heading}
-                }])
-              }
-
-              this.viewer.animate({
-                zoom: 0,
-                speed: '1000rpm',
-              }).then(() => {});
-
-              var compassPlugin = this.viewer.getPlugin(CompassPlugin);
-              if (compassPlugin) {
-                console.log(this.heading);
-                if (this.heading) {
-                  compassPlugin.show();
+                  console.log(nodes);
+                  var virtualTour = this.viewer.getPlugin(VirtualTourPlugin);
+                  virtualTour.setNodes(nodes, nodes[0].id);
                 } else {
-                  compassPlugin.hide();
+                  var virtualTour = this.viewer.getPlugin(VirtualTourPlugin);
+                  virtualTour.setNodes([{
+                    panorama: 'https://i.chao-fan.com/' + this.image,
+                    id: this.image,
+                    position: [0, 0],
+                    links: [],
+                    panoData: {poseHeading: this.heading}
+                  }])
+                }
+
+                this.viewer.animate({
+                  zoom: 0,
+                  speed: '1000rpm',
+                }).then(() => {
+                });
+
+                var compassPlugin = this.viewer.getPlugin(CompassPlugin);
+                if (compassPlugin) {
+                  console.log(this.heading);
+                  if (this.heading) {
+                    compassPlugin.show();
+                  } else {
+                    compassPlugin.hide();
+                  }
+                }
+
+                setTimeout(function () {
+                  THREE.Cache.clear();
+                }, 1000);
+
+              } else {
+                if (!this.viewer) {
+                  document.title = "随机街景";
+                  document.head.insertAdjacentHTML("beforeend", `<style>a[href^="http://maps.google.com/maps"]{display:none !important}a[href^="https://maps.google.com/maps"]{display:none !important}.gmnoprint a, .gmnoprint span, .gm-style-cc {display:none;}</style>`)
+                  this.sharePanoId = this.$route.query.pano;
+                  loadScript('https://gac-geo.googlecnapps.cn/maps/api/js?v=3.49&key=AIzaSyCdt719yJI_9hg8WNct5hSbFim7vApmdrU').then(() => {
+                    this.viewer = new google.maps.StreetViewPanorama(
+                        document.getElementById("viewer"), {
+                          fullscreenControl:false,
+                          panControl:true,
+                          addressControl: false,
+                          imageDateControl: true,
+                          motionTrackingControl:false,
+                          streetViewControl:true
+                        }
+                    );
+                    this.setGoogle(this.lastRound.panoId);
+
+                  })
+                } else {
+                  this.setGoogle(this.lastRound.panoId);
                 }
               }
-
-              setTimeout(function () {
-                THREE.Cache.clear();
-              }, 1000);
-
               this.initMap();
             }.bind(this), 100);
           }
@@ -789,8 +816,8 @@ export default {
       }
 
       if ((code === 'round_end' ||
-              (this.lastRound && this.lastRound.endTime))
-          ) {
+          (this.lastRound && this.lastRound.endTime))
+      ) {
         if (!this.showGameEnd) {
           this.showMapTrue()
           this.showRoundResult = true;
@@ -799,11 +826,7 @@ export default {
         }
         if (!this.targetLng) {
 
-          this.targetLat = this.lastRound.lat;
-          this.targetLng = this.lastRound.lng;
-          if (this.lng) {
-            this.addLine();
-          }
+
 
           if (this.lastRound.obsoleteTeamIds) {
             this.gameData.teams.forEach(v => {
@@ -816,12 +839,22 @@ export default {
           this.addTargetMarker()
           this.addRanksMarker();
           this.centerView();
+
+          this.targetLat = this.lastRound.lat;
+          this.targetLng = this.lastRound.lng;
+          if (this.lng) {
+            this.addLine();
+          }
         }
       } else {
         this.showRoundResult = false;
         // 只有没有结束的时候，采取添加队友，其余的话只添加Ranks
         this.addTeamMarker();
       }
+    },
+
+    setGoogle(panoId) {
+      this.viewer.setPano(panoId);
     },
 
     wsSend(data) {
@@ -1315,6 +1348,7 @@ export default {
   text-align: center;
   background-color: #18182A;
   .home_button {
+    z-index: 1000;
     margin-top: 2rem;
     font-size: 16px;
   }
@@ -1429,6 +1463,7 @@ export default {
     height: 100%;
 
     .top-info {
+      z-index: 20000;
       width: 100%;
       position: absolute;
       margin: 0 auto;
@@ -1510,6 +1545,7 @@ export default {
     }
 
     .round_result {
+      z-index: 499;
       position: absolute;
       width: 100%;
       height: 100%;
@@ -1646,6 +1682,7 @@ export default {
       position: absolute;
       top: 5px;
       left: 20px;
+      z-index: 1000;
     }
 
     .game_hud {

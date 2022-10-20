@@ -11,6 +11,16 @@
         <div class="hint">
           每日0点更新，5个所有人统一的题目，满分25000，使用小号会被取消每日挑战资格，不建议看过当日解析视频/讨论的用户挑战
         </div>
+        <div class="tab_container">
+          <div class="tab">
+            <div @click="type='noMove';init();" :class="{'normal': type!=='noMove', 'choose': type==='noMove'}">
+              不移动挑战
+            </div>
+            <div @click="type='move';init()" :class="{'normal': type!=='move', 'choose': type==='move'}">
+              移动挑战
+            </div>
+          </div>
+        </div>
         <el-button v-if="(this.gameData && this.gameData.status === 'ready') || this.showBegin" type="primary" size="large" @click="begin" round>开始每日挑战</el-button>
         <el-button v-if="this.gameData && this.gameData.status === 'ongoing'" type="warning" size="large" @click="again" round>继续每日挑战</el-button>
         <div class="score" v-if="this.gameData && this.gameData.status === 'finish'">今日得分: {{this.gameData.player.totalScore}}</div>
@@ -50,31 +60,39 @@ export default {
       gameData: undefined,
       rank: undefined,
       showBegin: false,
+      type: 'noMove',
 
     }
   },
 
   mounted() {
-    api.getByPath('/api/v0/tuxun/challenge/getGameInfo', {'day': '1'}).then(res=>{
-      console.log(res.data)
-      if (res.success) {
-        if (res.data) {
-          this.gameData = res.data;
-        }
-      } else {
-        this.showBegin = true;
-      }
-    })
-
-    api.getByPath('/api/v0/tuxun/challenge/getDailyChallengeId').then(res=>{
-      if (res.data) {
-        this.challengeId = res.data;
-        this.getRank();
-      }
-    })
+    this.init();
   },
 
   methods: {
+    init() {
+      this.gameData = null;
+      this.showBegin = false;
+      this.challengeId = null;
+      this.rank = null;
+      api.getByPath('/api/v0/tuxun/challenge/getGameInfo', {'day': '1', type: this.type}).then(res => {
+        console.log(res.data)
+        if (res.success) {
+          if (res.data) {
+            this.gameData = res.data;
+          }
+        } else {
+          this.showBegin = true;
+        }
+      })
+
+      api.getByPath('/api/v0/tuxun/challenge/getDailyChallengeId', {type: this.type}).then(res => {
+        if (res.data) {
+          this.challengeId = res.data;
+          this.getRank();
+        }
+      })
+    },
     goHome() {
       window.location.href = '/tuxun';
     },
@@ -153,9 +171,55 @@ export default {
         padding-bottom: 2rem;
       }
       .rank {
-        padding-top: 4rem;
+        padding-top: 2rem;
         font-size: 16px;
         color: darkgray;
+      }
+      .tab_container {
+        width: 40%;
+        margin: auto;
+        padding-top: 0rem;
+        padding-bottom: 2rem;
+        color: black;
+
+        .tab {
+          width: 100%;
+          display: flex;
+          .choose {
+            display: flex;
+            text-align: center;
+            justify-content: center;
+            align-items: center;
+            align-content: center;
+            width: 50%;
+            height: 50px;
+            font-size: 32px;
+            color: gold;
+            background-color: #3590FF;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+          }
+          .normal {
+            color: black ;
+            display: flex;
+            text-align: center;
+            justify-content: center;
+            align-items: center;
+            align-content: center;
+            border-width: 1px;
+            border-color: red;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            height: 50px;
+            width: 50%;
+            font-size: 32px;
+            background-color: white;
+          }
+        }
       }
       .rank_container {
         padding-top: 2rem;
