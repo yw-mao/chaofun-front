@@ -1486,6 +1486,7 @@ export default {
 
     }
     .count-down {
+      z-index: 500;
       display: inline-block;
       margin: 0 auto;
       background-color: rgb(255, 255, 255, 0.7);
