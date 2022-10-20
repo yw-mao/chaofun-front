@@ -1495,6 +1495,7 @@ export default {
     }
 
     .top-info-phone {
+      z-index: 20000;
       width: 100%;
       position: absolute;
       margin: 0 auto;
