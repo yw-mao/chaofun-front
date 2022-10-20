@@ -802,6 +802,7 @@ export default {
                           motionTrackingControl:false,
                           streetViewControl:false,
                           showRoadLabels: false,
+                          scaleControl: false,
                           panControlOptions: {
                             position: google.maps.ControlPosition.BOTTOM_LEFT,
                           },
