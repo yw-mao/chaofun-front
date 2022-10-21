@@ -63,8 +63,10 @@ export default {
   data(){
     return {
       recentPagedata: [
+        {name: '[炒饭图寻] 东南亚的野外题真的是让人十分为难', cover: 'biz/1666369895706_34bb231901e04d26bbd83499b8ba5c1b_0.png', url: 'https://www.bilibili.com/video/BV1aP4y1U72K'},
+        {name: '【炒饭图寻solo】靠纯记忆5000分？', cover: 'biz/1666368152871_587ac6d6814a4138b5904cf75affc192_0.png', url: 'https://www.bilibili.com/video/BV19g41187Bo'},
+        {name: '双倍快乐，听我说谢谢你（10月21日图寻每日挑战）', cover: 'biz/1666368016766_96ca8435e1d64bee8fad6346b52a57c1_0.png', url: 'https://www.bilibili.com/video/BV1Nm4y1P7Sz'},
         {name: '震惊！小伙竟分不清泰语与柬埔寨语，这究竟是道德的沦丧还是人性的扭曲', cover: 'biz/1666282434580_3803702ca639468683179e66082e1549_1.png', url: 'https://www.bilibili.com/video/BV1D8411e7Gz'},
-        {name: '10月18日图寻每日挑战 露脸初解说，勉强2万分', cover: 'biz/1666105306246_113c97b1527645be98d69ba0f8140e47_0.png', url: 'https://www.bilibili.com/video/BV1Nm4y1P7Sz'},
         {name: '大数据，你干嘛～啊哈～哎呦～你好烦～ （10月19日图寻每日挑战）', cover: 'biz/1666282381420_fb2fb2f03ebe4489bfa5b5cf64743fa8_1.png', url: 'https://www.bilibili.com/video/BV1ud4y127cH'},
         {name: '10月18日图寻每日挑战 露脸初解说，勉强2万分', cover: 'biz/1666105306246_113c97b1527645be98d69ba0f8140e47_0.png', url: 'https://www.bilibili.com/video/BV1Nm4y1P7Sz'},
         {name: '哼，运气游戏！（10月18日图寻每日挑战）', cover: 'biz/1666105386447_5ce6961ac26c4673b53df36bd8b972c4_0.png', url: 'https://www.bilibili.com/video/BV1g14y1j7J1'},
