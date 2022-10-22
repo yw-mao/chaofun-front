@@ -63,6 +63,7 @@ export default {
   data(){
     return {
       recentPagedata: [
+        {name: '小伙根据一张图判断国家（10月22日图寻每日挑战)', cover: 'biz/1666455338595_c06e4d7ab2f147f9a86e418a8e15363c_0.png', url: 'https://www.bilibili.com/video/BV1ze411V74b'},
         {name: '[炒饭图寻] 东南亚的野外题真的是让人十分为难', cover: 'biz/1666369895706_34bb231901e04d26bbd83499b8ba5c1b_0.png', url: 'https://www.bilibili.com/video/BV1aP4y1U72K'},
         {name: '【炒饭图寻solo】靠纯记忆5000分？', cover: 'biz/1666368152871_587ac6d6814a4138b5904cf75affc192_0.png', url: 'https://www.bilibili.com/video/BV19g41187Bo'},
         {name: '双倍快乐，听我说谢谢你（10月21日图寻每日挑战）', cover: 'biz/1666368016766_96ca8435e1d64bee8fad6346b52a57c1_0.png', url: 'https://www.bilibili.com/video/BV1Nm4y1P7Sz'},
