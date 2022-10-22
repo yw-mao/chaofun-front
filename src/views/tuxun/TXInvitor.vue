@@ -607,6 +607,10 @@ export default {
     },
     solveGameData(data, code) {
 
+      if (!data) {
+        return;
+      }
+
       this.gameData = data;
 
       if (this.gameData.status === 'match_fail') {
@@ -1217,11 +1221,15 @@ export default {
       this.confirmed = false;
       if (this.challengeId) {
         api.getByPath("/api/v0/tuxun/challenge/next", {gameId: this.gameId}).then(res => {
-          this.solveGameData(res.data, undefined);
+          if(res.success) {
+            this.solveGameData(res.data, undefined);
+          }
         });
       } else {
         api.getByPath("/api/v0/tuxun/streak/next", {gameId: this.gameId}).then(res => {
-          this.solveGameData(res.data, undefined);
+          if (res.success) {
+            this.solveGameData(res.data, undefined);
+          }
         });
       }
     },
