@@ -148,7 +148,7 @@ export default {
       } else {
         api.getByPath("/api/v0/tuxun/game/generateQueue", {index: this.index, mapsId: this.mapsid}).then(res => {
               if (this.canUseWebP() && res.data.contentSpeedUp) {
-                this.image = res.data.content;
+                this.image = res.data.contentSpeedUp;
               } else {
                 this.image = res.data.content;
               }

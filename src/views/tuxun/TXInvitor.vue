@@ -684,7 +684,7 @@ export default {
         this.status = data.status;
         if (data.status === 'ongoing' || data.status === 'finish') {
           if (this.canUseWebP() && this.lastRound.contentSpeedUp) {
-            this.lastRound.content = this.lastRound.content;
+            this.lastRound.content = this.lastRound.contentSpeedUp;
           }
           if (this.image !== this.lastRound.content) {
             if (this.map) {
@@ -740,7 +740,7 @@ export default {
                     const content = this.contents[i];
                     var k = {};
                     if (this.canUseWebP() && content.contentSpeedUp && content.contentSpeedUp !== null) {
-                      k.panorama = 'https://i.chao-fan.com/' + content.content;
+                      k.panorama = 'https://i.chao-fan.com/' + content.contentSpeedUp;
                     } else {
                       k.panorama = 'https://i.chao-fan.com/' + content.content;
                     }
