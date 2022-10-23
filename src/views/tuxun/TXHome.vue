@@ -342,7 +342,7 @@ export default {
             const content = this.contents[i];
             var k = {};
             if (this.canUseWebP() && content.contentSpeedUp) {
-              k.panorama = 'https://i.chao-fan.com/' + content.contentSpeedUp;
+              k.panorama = 'https://i.chao-fan.com/' + content.content;
             } else {
               k.panorama = 'https://i.chao-fan.com/' + content.content;
             }
@@ -435,7 +435,7 @@ export default {
         this.onlineNums = data.data.onlineNums;
         // 避免下面的判断失误
         if (this.canUseWebP() && data.data.contentSpeedUp && data.data.contentSpeedUp !== null) {
-          data.data.content = data.data.contentSpeedUp
+          data.data.content = data.data.content;
         }
         if (this.image !== data.data.content && data.data.content && data.data.content !== null) {
           this.showMap = false;
@@ -808,7 +808,7 @@ export default {
         this.contents = res.data.contents;
 
         if (this.canUseWebP() && res.data.contentSpeedUp) {
-          this.image = res.data.contentSpeedUp;
+          this.image = res.data.content;
         }
 
         console.log('test_123');
