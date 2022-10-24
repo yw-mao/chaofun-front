@@ -12,6 +12,8 @@
     <div class="game">
       <div class="info" @click="toFirstTournament">炒饭网络迷踪图寻第三届个人锦标赛圆满结束</div>
       <section class="game_entrance">
+        <div class="first_session_head">单人</div>
+        <div class="line"></div>
         <div class="grid_main">
           <div class="card" @click="redirectPage( '/tuxun/daily_challenge')">
             <div class="title">
@@ -21,7 +23,28 @@
               每天五题，神清气爽
             </div>
           </div>
-          <div class="card" @click="redirectPage( '/tuxun/guoqing')">
+          <div class="card" @click="redirectPage( '/tuxun/streak')">
+            <div class="title">
+              连胜挑战
+            </div>
+            <div class="describe">
+              是男人就坚持一百题
+            </div>
+          </div>
+          <div class="card" @click="redirectPage( '/tuxun/maps')">
+            <div class="title">
+              练习赛
+            </div>
+            <div class="describe">
+              走遍大江南北
+            </div>
+          </div>
+        </div>
+
+        <div class="first_session_head">多人</div>
+        <div class="line"></div>
+        <div class="grid_main">
+        <div class="card" @click="redirectPage( '/tuxun/guoqing')">
             <div class="title">
               淘汰赛
             </div>
@@ -61,22 +84,12 @@
               组队对决，群体的力量
             </div>
           </div>
-          <div class="card" @click="redirectPage( '/tuxun/streak')">
-            <div class="title">
-              连胜挑战
-            </div>
-            <div class="describe">
-              是男人就坚持一百题
-            </div>
-          </div>
-          <div class="card" @click="redirectPage( '/tuxun/maps')">
-            <div class="title">
-              练习赛
-            </div>
-            <div class="describe">
-              走遍大江南北
-            </div>
-          </div>
+        </div>
+
+        <div class="first_session_head">其他</div>
+        <div class="line"></div>
+          <div class="grid_main">
+
           <div class="card" @click="redirectPage( '/tuxun/random')">
             <div class="title">
               随机街景
@@ -239,13 +252,27 @@ export default {
       color: white;
       font-size: medium;
       padding-top: 1rem;
+      text-decoration:underline;
     }
     section {
       padding-top: 20px;
       display: block;
     }
     .game_entrance {
-      margin-top: 6%;
+      margin-top: 3%;
+      .line {
+        width: 100%;
+        height: 2px;
+        background-color: white;
+        margin-bottom: 2rem;
+        margin-top: 1rem;
+      }
+      .first_session_head {
+        font-size: 24px;
+        color: whitesmoke;
+        font-weight: bolder;
+        text-align: center;
+      }
     }
   }
   .thx {
@@ -255,6 +282,7 @@ export default {
     padding-bottom: 2rem;
   }
   .grid_main {
+    padding-bottom: 2rem;
     display: grid;
     grid-row-gap: 1rem;
     grid-column-gap: 1rem;
