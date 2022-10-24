@@ -63,6 +63,8 @@ export default {
   data(){
     return {
       recentPagedata: [
+        {name: '10.24每日挑战', cover: 'biz/1666625741761_7333a9d939664d8fafc249fe49fb5ffc_1.png', url: 'https://www.bilibili.com/video/BV1a84y1B7Ks'},
+        {name: '震惊！小伙用一张图精确定位路口（10月42日图寻每日挑战）', cover: 'biz/1666625698999_3d94bd88fdfd4021943fdeafbf466071_0.png', url: 'https://www.bilibili.com/video/BV1sm4y1w7DM'},
         {name: '10.23图寻每日挑战', cover: 'biz/1666546512018_081aa1446cb145698480f56f9db19fc1_1.png', url: 'https://www.bilibili.com/video/BV1bD4y1r7RF'},
         {name: '震惊！小伙用一张图判断所在国家（10月32日图寻每日挑战）', cover: 'biz/1666546440990_1828cfb5e62a4e0481aeeb77108fc7d7_0.png', url: 'https://www.bilibili.com/video/BV1xG4y1H7eA'},
         {name: '小伙根据一张图判断国家（10月22日图寻每日挑战)', cover: 'biz/1666455338595_c06e4d7ab2f147f9a86e418a8e15363c_0.png', url: 'https://www.bilibili.com/video/BV1ze411V74b'},
@@ -86,6 +88,7 @@ export default {
         {name: '当你做了一道地球人都会的题后， 一定会有一道地球人都不会的题等着你', cover: 'biz/1665575510613_fcb281887a3c4b1c970e7b654ae48f0f_0.webp', url: 'https://www.bilibili.com/video/BV1He411j79D'}
       ],
       recommendPagedata: [
+        {name:'街景挑战：图寻竟然有人40连胜 你也来挑战试试',cover: 'biz/1666625855777_9fd11e1920bf468f88c698d0f9c5c410_0.png', url: 'https://www.bilibili.com/video/BV1ig411z7iC' },
         {name:'挑战世界街景，分辨出是哪个国家',cover: 'biz/1666546562290_0ff5cd41cf0b417888ade23e57ddb62c_0.png', url: 'https://www.bilibili.com/video/BV1Ee4y1e7B3' },
         {name:'随机将你扔在世界任何一个地方，你知道自己在哪里吗？——探索世界',cover: 'biz/1666200760653_621b3846c53a45008601ad6c2decbfb2_0.png', url: 'https://www.bilibili.com/video/BV1284y1z786' },
         {name:'非官方解说图寻第三届个人锦标赛（恭喜HM）Pt. 1',cover: 'biz/1666036564211_7cfdf16e1f68425787bcd57f8bfd2732_0.png', url: 'https://bilibili.com/video/BV1Qe4y1j7R1' },
