@@ -6,6 +6,16 @@
     <div class="nav">
       日常淘汰赛
     </div>
+    <div class="tab_container">
+      <div class="tab">
+        <div @click="type='noMove';init();" :class="{'normal': type!=='noMove', 'choose': type==='noMove'}">
+          固定街景
+        </div>
+        <div @click="type='move';init()" :class="{'normal': type!=='move', 'choose': type==='move'}">
+          移动街景
+        </div>
+      </div>
+    </div>
     <div class="desc">
       满3人发车，暂时不算积分
     </div>
@@ -48,16 +58,24 @@ export default {
       nextStartTime: null,
       gameId: null,
       rank: null,
+      type: 'noMove',
     }
   },
 
   mounted() {
-    this.get();
-    this.listResult();
-    this.countDown();
+    this.init();
   },
 
   methods: {
+    init() {
+      this.timeLeftStr = null;
+      this.nextStartTime = null;
+      this.gameId = null;
+      this.rank = null;
+      this.get();
+      this.listResult();
+      this.countDown();
+    },
     goHome() {
       window.location.href = '/tuxun';
     },
@@ -75,7 +93,7 @@ export default {
     },
 
     get() {
-      api.getByPath("/api/v0/tuxun/br/get").then(res => {
+      api.getByPath("/api/v0/tuxun/br/get", {type: this.type}).then(res => {
         this.gameId = res.data.gameId;
       });
     },
@@ -83,7 +101,7 @@ export default {
       window.location.href = '/tuxun/guoqing_game?guoqingId=' + this.gameId;
     },
     listResult() {
-      api.getByPath("/api/v0/tuxun/br/listResult").then(res => {
+      api.getByPath("/api/v0/tuxun/br/listResult", {type: this.type}).then(res => {
         this.rank = res.data;
       });
     },
@@ -105,7 +123,51 @@ export default {
   justify-content: center;
   align-items: center;
   align-content: center;
+  .tab_container {
+    width: 40%;
+    margin: auto;
+    padding-top: 2rem;
 
+    .tab {
+      width: 100%;
+      display: flex;
+
+      .choose {
+        display: flex;
+        text-align: center;
+        justify-content: center;
+        align-items: center;
+        align-content: center;
+        width: 50%;
+        height: 50px;
+        font-size: 32px;
+        color: gold;
+        background-color: #3590FF;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+      }
+
+      .normal {
+        display: flex;
+        text-align: center;
+        justify-content: center;
+        align-items: center;
+        align-content: center;
+        border-width: 1px;
+        border-color: red;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        height: 50px;
+        width: 50%;
+        font-size: 32px;
+        background-color: white;
+      }
+    }
+  }
   .back_home {
     position: absolute;
     padding-top: 1rem;

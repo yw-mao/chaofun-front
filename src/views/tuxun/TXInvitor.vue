@@ -1608,6 +1608,7 @@ export default {
       background: #090723;
       display: flex;
       justify-content: center;
+      z-index: 500;
       .info {
         padding-top: 20px;
         font-size: 16px;
