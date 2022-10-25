@@ -94,7 +94,7 @@ export default {
       this.panorama.setVisible(true);
       this.getLocation(panoId)
       // 调整视角大小的
-      // this.panorama.setZoom(1);
+      this.panorama.setZoom(0);
     },
     change() {
       this.doLoginStatus().then((res) => {
