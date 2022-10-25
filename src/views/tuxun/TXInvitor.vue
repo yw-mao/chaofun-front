@@ -92,7 +92,7 @@
 
         <div v-if="showRoundResult" class="round_result">
           <div class="round_result_top">
-            <span v-if="gameData.type === 'country_streak'">国家连胜 - </span>
+            <span v-if="gameData.type === 'country_streak'">国家连胜<span v-if="lastRound.source">(移动)</span><span v-if="!lastRound.source">(固定)</span> - </span>
             <span v-if="gameData.type === 'province_streak'">省份连胜 - </span>
             第 {{gameData.currentRound}} 轮
             <span v-if="lastRound.isDamageMultiple"> - {{lastRound.damageMultiple}} 倍伤害</span>
