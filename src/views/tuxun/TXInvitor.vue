@@ -954,7 +954,12 @@ export default {
 
     createNew() {
       if (this.gameData.type === 'country_streak' ) {
-        api.getByPath("/api/v0/tuxun/streak/create", {type: 'country'}).then(res => {
+        var tType = 'country';
+
+        if (this.lastRound.source) {
+          tType = 'country_move'
+        }
+        api.getByPath("/api/v0/tuxun/streak/create", {type: tType}).then(res => {
           window.location.href = '/tuxun/streak_game?streakId=' + res.data.id;
         });
       } else {

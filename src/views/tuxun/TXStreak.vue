@@ -10,7 +10,20 @@
     <div class="tab_container">
       <div class="tab">
         <div @click="type='country';init()" :class="{'normal': type!=='country', 'choose': type==='country'}">
-          国家连胜
+          <div>
+            <div style="line-height: 1">
+              国家连胜
+              <p>固定</p>
+            </div>
+          </div>
+        </div>
+        <div @click="type='country_move';init()" :class="{'normal': type!=='country_move', 'choose': type==='country_move'}">
+          <div>
+            <div style="line-height: 1">
+              国家连胜
+              <p>可移动</p>
+            </div>
+          </div>
         </div>
         <div @click="type='province';init();"  :class="{'normal': type!=='province', 'choose': type==='province'}">
           省份连胜
@@ -18,7 +31,7 @@
       </div>
     </div>
 
-    <div v-if="type==='country'" style="color: white; padding-top: 2rem;font-size: 16px">
+    <div v-if="type==='country' || type==='country_move' " style="color: white; padding-top: 2rem;font-size: 16px">
       连续选对正确的国家，看你能坚持多少轮
     </div>
 
@@ -217,7 +230,7 @@ export default {
         align-content: center;
         width: 50%;
         height: 50px;
-        font-size: 32px;
+        font-size: 24px;
         color: gold;
         background-color: #3590FF;
         -webkit-user-select:none;
@@ -240,7 +253,7 @@ export default {
         user-select:none;
         height: 50px;
         width: 50%;
-        font-size: 32px;
+        font-size: 24px;
         background-color: white;
       }
     }
