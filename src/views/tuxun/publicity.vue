@@ -63,6 +63,8 @@ export default {
   data(){
     return {
       recentPagedata: [
+        {name: '震惊！小伙居然用眼球追踪做这种事', cover: 'biz/1666768356432_92fc9d6c3a4145d2a1bfc6f494fca254_1.png', url: 'https://www.bilibili.com/video/BV1x14y157Qx'},
+        {name: '震惊！小伙用一张图定位错误地点（10月52日图寻每日挑战', cover: 'biz/1666768287038_651f59dc96d6422aab61aabe79289351_0.png', url: 'https://www.bilibili.com/video/BV1CR4y1Q7tW'},
         {name: '10.24每日挑战', cover: 'biz/1666625741761_7333a9d939664d8fafc249fe49fb5ffc_1.png', url: 'https://www.bilibili.com/video/BV1a84y1B7Ks'},
         {name: '震惊！小伙用一张图精确定位路口（10月42日图寻每日挑战）', cover: 'biz/1666625698999_3d94bd88fdfd4021943fdeafbf466071_0.png', url: 'https://www.bilibili.com/video/BV1sm4y1w7DM'},
         {name: '10.23图寻每日挑战', cover: 'biz/1666546512018_081aa1446cb145698480f56f9db19fc1_1.png', url: 'https://www.bilibili.com/video/BV1bD4y1r7RF'},
