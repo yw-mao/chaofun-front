@@ -22,6 +22,7 @@
             <div class="describe">
               每天五题，神清气爽
             </div>
+            <div class="card-top-right">可移动</div>
           </div>
           <div class="card" @click="redirectPage( '/tuxun/streak')">
             <div class="title">
@@ -30,6 +31,7 @@
             <div class="describe">
               是男人就坚持一百题
             </div>
+            <div class="card-top-right">可移动</div>
           </div>
           <div class="card" @click="redirectPage( '/tuxun/maps')">
             <div class="title">
@@ -51,7 +53,8 @@
             <div class="describe">
               满3人发车
             </div>
-          </div>
+          <div class="card-top-right">可移动</div>
+        </div>
           <div class="card" @click="redirectPage( '/tuxun/main_game')">
             <div class="title">
               积分赛
@@ -97,6 +100,7 @@
             <div class="describe">
               漫步孤独星球
             </div>
+            <div class="card-top-right">可移动</div>
           </div>
           <div class="card" @click="redirectPage( '/tuxun/publicity')">
             <div class="title">
@@ -288,6 +292,7 @@ export default {
     grid-column-gap: 1rem;
     grid-template-columns: repeat(3, 1fr);
     .card {
+      position: relative;
       border-radius: 1rem;
       background-color: rgb(25,26,46, 0.9);
       background-position: 50%;
@@ -313,6 +318,17 @@ export default {
         font-size: 1rem;
         font-weight: 700;
         margin-bottom: 0.25rem;
+      }
+      .card-top-right {
+        position: absolute;
+        right: 2px;
+        top: 2px;
+        color: white;
+        font-weight: bold;
+        font-size: 16px;
+        padding-left: 5px;
+        padding-right: 5px;
+        background-color: #3590FF;
       }
     }
   }
