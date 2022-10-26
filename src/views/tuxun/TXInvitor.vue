@@ -865,7 +865,7 @@ export default {
 
     setGoogle(panoId) {
       this.viewer.setPano(panoId);
-      this.viewer.setZoom(1);
+      this.viewer.setZoom(0);
     },
 
     wsSend(data) {
