@@ -95,7 +95,7 @@
               随机街景
             </div>
             <div class="describe">
-              闪现探索世界
+              漫步孤独星球
             </div>
           </div>
           <div class="card" @click="redirectPage( '/tuxun/publicity')">
