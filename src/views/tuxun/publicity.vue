@@ -63,6 +63,7 @@ export default {
   data(){
     return {
       recentPagedata: [
+        {name: '震惊！这个小伙居然每天震惊！（10月62日图寻每日挑战）', cover: 'biz/1666799453267_debf9ecc5356485e8aa1438e57312046_0.png', url: 'https://www.bilibili.com/video/BV1GR4y1Q7QV'},
         {name: '震惊！小伙居然用眼球追踪做这种事', cover: 'biz/1666768356432_92fc9d6c3a4145d2a1bfc6f494fca254_1.png', url: 'https://www.bilibili.com/video/BV1x14y157Qx'},
         {name: '震惊！小伙用一张图定位错误地点（10月52日图寻每日挑战', cover: 'biz/1666768287038_651f59dc96d6422aab61aabe79289351_0.png', url: 'https://www.bilibili.com/video/BV1CR4y1Q7tW'},
         {name: '10.24每日挑战', cover: 'biz/1666625741761_7333a9d939664d8fafc249fe49fb5ffc_1.png', url: 'https://www.bilibili.com/video/BV1a84y1B7Ks'},
@@ -90,6 +91,7 @@ export default {
         {name: '当你做了一道地球人都会的题后， 一定会有一道地球人都不会的题等着你', cover: 'biz/1665575510613_fcb281887a3c4b1c970e7b654ae48f0f_0.webp', url: 'https://www.bilibili.com/video/BV1He411j79D'}
       ],
       recommendPagedata: [
+        {name: 'H.M-炒饭图寻大神，猜国家地址游戏，倾情直播！（录播上）', cover: 'biz/1666799535958_996733eebf9a4834a3f7cc025db3d5dc_0.png', url: 'https://www.bilibili.com/video/BV1hg411z7nT'},
         {name:'街景挑战：图寻竟然有人40连胜 你也来挑战试试',cover: 'biz/1666625855777_9fd11e1920bf468f88c698d0f9c5c410_0.png', url: 'https://www.bilibili.com/video/BV1ig411z7iC' },
         {name:'挑战世界街景，分辨出是哪个国家',cover: 'biz/1666546562290_0ff5cd41cf0b417888ade23e57ddb62c_0.png', url: 'https://www.bilibili.com/video/BV1Ee4y1e7B3' },
         {name:'随机将你扔在世界任何一个地方，你知道自己在哪里吗？——探索世界',cover: 'biz/1666200760653_621b3846c53a45008601ad6c2decbfb2_0.png', url: 'https://www.bilibili.com/video/BV1284y1z786' },
