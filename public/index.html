@@ -21,12 +21,13 @@
     <style>
       .description{height: 0;overflow: hidden;}
     </style>
+
   </head>
   <body>
     <h1 id="description" class="description">炒饭 - 兴趣聚合的优质内容社区, <span id="dsc">世界那么大 每个兴趣都值得被尊重</span></h1>
     <div id="app"></div>
     <!-- built files will be auto injected -->
-    
+
   </body>
   <script>
     if ('serviceWorker' in navigator) {
@@ -63,7 +64,7 @@
       }catch(e){
 
       }
-      
+
       document.getElementById('description').innerHTML = document.title;
 
       // var bps = document.createElement('script');
@@ -92,5 +93,14 @@
 
 
     })();
+  </script>
+  <script>
+      var _hmt = _hmt || [];
+      (function() {
+          var hm = document.createElement("script");
+          hm.src = "https://hm.baidu.com/hm.js?bf945215d0d9bfd6c7a79f009ca3a0fd";
+          var s = document.getElementsByTagName("script")[0];
+          s.parentNode.insertBefore(hm, s);
+      })();
   </script>
 </html>
