@@ -63,6 +63,10 @@ export default {
   data(){
     return {
       recentPagedata: [
+        {name: '这是那个地方的鸟瞰图？根据鸟瞰图推理位置', cover: 'biz/1666896789446_c1a60f835e6c481eb556d1587ae6a516_0.png', url: 'https://www.bilibili.com/video/BV1Ym4y1F7pL'},
+        {name: '开局一张图，你能看出国家吗 (系列)', cover: 'biz/1666896756739_69513bcd1938430aa411f0394388caf6_0.png', url: 'https://www.bilibili.com/video/BV1ym4y1w7cW'},
+        {name: '在密室里如何判断自己在哪？', cover: 'biz/1666896699551_f4aed9720af74d22bb3e6a40fb58baa2_0.png', url: 'https://www.bilibili.com/video/BV1qe4y177iR'},
+        {name: '给你机会你不中用啊！根据照片猜测所在地（10月72日图寻每日挑战）', cover: 'biz/1666896546173_d0a421fa85bd42e19d0f656ee78e23b2_0.png', url: 'https://www.bilibili.com/video/BV1et4y1u7NE'},
         {name: '震惊！这个小伙居然每天震惊！（10月62日图寻每日挑战）', cover: 'biz/1666799453267_debf9ecc5356485e8aa1438e57312046_0.png', url: 'https://www.bilibili.com/video/BV1GR4y1Q7QV'},
         {name: '震惊！小伙居然用眼球追踪做这种事', cover: 'biz/1666768356432_92fc9d6c3a4145d2a1bfc6f494fca254_1.png', url: 'https://www.bilibili.com/video/BV1x14y157Qx'},
         {name: '震惊！小伙用一张图定位错误地点（10月52日图寻每日挑战', cover: 'biz/1666768287038_651f59dc96d6422aab61aabe79289351_0.png', url: 'https://www.bilibili.com/video/BV1CR4y1Q7tW'},
