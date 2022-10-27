@@ -10,7 +10,7 @@
     </div>
 
     <div class="game">
-      <div class="info" @click="toFirstTournament">炒饭网络迷踪图寻第三届个人锦标赛圆满结束</div>
+      <div class="info" @click="toFirstTournament">炒饭第三届图寻团队赛开始啦，10月30号下午2点，大家赶快来报名吧...</div>
       <section class="game_entrance">
         <div class="first_session_head">单人</div>
         <div class="line"></div>
@@ -221,9 +221,9 @@ export default {
     },
     toFirstTournament() {
       try {
-        window.flutter_inappwebview.callHandler('toAppPost', {postId: '1215269'});
+        window.flutter_inappwebview.callHandler('toAppPost', {postId: '1217005'});
       } catch (e) {
-        window.open('/p/1215269', "_blank");
+        window.open('/p/1217005', "_blank");
       }
     }
   }
