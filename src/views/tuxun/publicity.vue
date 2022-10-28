@@ -63,6 +63,9 @@ export default {
   data(){
     return {
       recentPagedata: [
+        {name: '图寻10月2日淘汰赛，用手机玩的教训太深刻了', cover: 'biz/1666984713933_f9ccb6a6818d4758921bbe93dee95d39_1.png', url: 'https://www.bilibili.com/video/BV1Kt4y1M7Xo'},
+        {name: '10.28图寻每日挑战', cover: 'biz/1666984607034_661134c1781846728f88b67280fc33b7_1.png', url: 'https://www.bilibili.com/video/BV1vG4y1h7Yj'},
+        {name: '按图索骥泰姬陵！根据照片猜测所在地（10月82日图寻每日挑战）', cover: 'biz/1666984491574_13be72c05beb46e0bcbc80bb4df31e41_0.png', url: 'https://www.bilibili.com/video/BV1GG4y1b7yd/'},
         {name: '这是那个地方的鸟瞰图？根据鸟瞰图推理位置', cover: 'biz/1666896789446_c1a60f835e6c481eb556d1587ae6a516_0.png', url: 'https://www.bilibili.com/video/BV1Ym4y1F7pL'},
         {name: '开局一张图，你能看出国家吗 (系列)', cover: 'biz/1666896756739_69513bcd1938430aa411f0394388caf6_0.png', url: 'https://www.bilibili.com/video/BV1ym4y1w7cW'},
         {name: '在密室里如何判断自己在哪？', cover: 'biz/1666896699551_f4aed9720af74d22bb3e6a40fb58baa2_0.png', url: 'https://www.bilibili.com/video/BV1qe4y177iR'},
