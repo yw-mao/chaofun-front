@@ -333,7 +333,7 @@
       </div>
     </div>
     <matching v-if="this.showMatch"/>
-    <emoji-sender :gameId="gameData.id" v-if="this.sendEmoji" @hide="hideEmojiSender"></emoji-sender>
+    <emoji-sender :gameId="gameData.id" v-if="this.sendEmoji" @hide="hideEmojiSender" style="z-index: 501"></emoji-sender>
   </div>
 </template>
 
