@@ -95,6 +95,7 @@
 
         <div v-if="showRoundResult" class="round_result">
           <div class="round_result_top">
+            <span v-if="gameData.type === 'daily_challenge'">每日挑战<span v-if="lastRound.source">(移动)</span><span v-if="!lastRound.source">(固定)</span> - </span>
             <span v-if="gameData.type === 'country_streak'">国家连胜<span v-if="lastRound.source">(移动)</span><span v-if="!lastRound.source">(固定)</span> - </span>
             <span v-if="gameData.type === 'province_streak'">省份连胜 - </span>
             第 {{gameData.currentRound}} 轮
@@ -174,15 +175,24 @@
           </div>
 
           <div v-if="showChallengeGameEnd" class="challenge_result_bottom" >
-            <div>
-              <el-button class="result_button" type="warning" @click="goDailyChallenge" round>查看总排名</el-button>
+            <div v-if="this.dailyChallengeRank" class="result_rank">
+              排名：{{this.dailyChallengeRank}}
+              <p>
+              </p>
+              超过：{{((1 - this.dailyChallengePercent) * 100).toFixed(2)}} % 选手
             </div>
             <div>
-              <el-button class="result_button"  type="primary" @click="goHome" round>回到首页</el-button>
+              <el-button class="result_button" type="primary" @click="goDailyChallenge" round>查看总排名</el-button>
+            </div>
+            <div>
+              <el-button class="result_button" @click="goHome" round>回到图寻首页</el-button>
             </div>
           </div>
 
           <div v-if="showStreakGameEnd" class="challenge_result_bottom" >
+<!--            <div class="result_rank">-->
+<!--              排名：{{x}}, 超过：{{x}}-->
+<!--            </div>-->
             <div style="font-size: 30px; color: orangered">
               选择错误，挑战结束
             </div>
@@ -190,10 +200,10 @@
               你连胜了 {{gameData.player.streaks}} 轮
             </div>
             <div>
-              <el-button class="result_button" @click="createNew" round>重新开始挑战</el-button>
+              <el-button class="result_button" type="primary" @click="createNew" round>重新开始挑战</el-button>
             </div>
             <div>
-              <el-button class="result_button"  type="primary" @click="goHome" round>回到首页</el-button>
+              <el-button class="result_button"  @click="goHome" round>回到图寻首页</el-button>
             </div>
           </div>
         </div>
@@ -412,6 +422,8 @@ export default {
       mapPin: false,
       obsoleteUsers: [],
       panorama: null,
+      dailyChallengeRank: null,
+      dailyChallengePercent: null,
       notifyStatus: '',
 
       // gameData: {playerIds: [1, 2]}
@@ -676,6 +688,7 @@ export default {
       if (this.gameData.type === 'daily_challenge' && (code === 'game_end' || data.status === 'finish')) {
         this.showMap = false;
         this.showChallengeGameEnd = true;
+        this.getDailyChallengeRank();
       }
 
       if ((this.gameData.type === 'country_streak' || this.gameData.type === 'province_streak') && (code === 'game_end' || data.status === 'finish')) {
@@ -893,9 +906,15 @@ export default {
       return result;
     },
 
+    getDailyChallengeRank() {
+      api.getByPath('/api/v0/tuxun/challenge/getDailyChallengeRank', {'challengeId': this.challengeId, 'gameId': this.gameId}).then(res=>{
+        this.dailyChallengeRank = res.data.rank;
+        this.dailyChallengePercent = res.data.percent;
+      })
+    },
+
     get() {
       this.doLoginStatus().then((res) => {
-
       });
     },
     join() {
@@ -1590,7 +1609,7 @@ export default {
       align-items: center;
       text-align: center;
       justify-content: center;
-      padding-top: 8rem;
+      padding-top: 6rem;
       .country-streak-round-result {
 
       }
@@ -1614,6 +1633,11 @@ export default {
         }
       }
       .challenge_result_bottom {
+        .result_rank {
+          font-size: 28px;
+          color: white;
+          padding-bottom: 1rem;
+        }
         .result_button {
           margin-top: 1rem;
           font-size: 16px;

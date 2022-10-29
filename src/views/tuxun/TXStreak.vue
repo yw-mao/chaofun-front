@@ -32,11 +32,11 @@
     </div>
 
     <div v-if="type==='country' || type==='country_move' " style="color: white; padding-top: 2rem;font-size: 16px">
-      连续选对正确的国家，看你能坚持多少轮
+      连续选对正确的国家，看你最多坚持多少轮
     </div>
 
     <div v-if="type==='province'" style="color: white; padding-top: 2rem;font-size: 16px">
-      连续选对正确的省份，看你能坚持多少轮
+      连续选对正确的省份，看你最多坚持多少轮
     </div>
 
     <div class="top-button">
