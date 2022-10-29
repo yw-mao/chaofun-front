@@ -45,7 +45,7 @@
     </div>
 
     <div class="rank">
-      排行榜
+      排行榜-记录单人最好成绩
     </div>
     <div class="rank_container" v-if="this.rank">
       <div @click="toUser(item.user)" v-for="(item,index) in this.rank" :key="index" class="item">
