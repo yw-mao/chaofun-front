@@ -1,8 +1,10 @@
 <template>
   <div class="container" :style="{'background-image':'linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.6)),url('+imgOrigin+ this.backgroundImage +')','background-size':'cover','background-position': 'center'}">
     <div class="top">
-      <img style="margin-top: 25px; margin-left: 25px; width: 5rem; height: 3rem" :src="imgOrigin + 'biz/1658657631523_45db8dd090dc49af99f2a8a4ace01122.svg'">
-      </img>
+      <div>
+        <img style="margin-top: 25px; margin-left: 25px; width: 5rem; height: 3rem" :src="imgOrigin + 'biz/1658657631523_45db8dd090dc49af99f2a8a4ace01122.svg'"></img>
+        <div style="margin-left: 25px; color: white">探索世界，收集线索，找出你在哪</div>
+      </div>
       <div class="top-right">
         <el-button type="primary" @click="toRank" round>积分排行</el-button>
         <el-button type="primary" @click="toUserHome" round>个人首页</el-button>
