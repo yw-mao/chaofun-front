@@ -61,19 +61,21 @@
       <div v-if="gameData.type === 'battle_royale' && gameData.status == 'ready'" class="wait_game_title">
         图寻淘汰赛-准备中
       </div>
+      <div v-if="(gameData.type === 'solo_match' || gameData.type === 'battle_royale') && gameData.status == 'ready' && gameData.timerStartTime" class="wait_game_start">
+        开始倒计时 <span style="color: greenyellow">{{this.gameTimeLeft}}</span> 秒
+      </div>
       <div v-if="gameData.type === 'battle_royale' && gameData.status == 'ready'" class="wait_game_start">
-        本次游戏人数
+        本次淘汰赛人数
       </div>
       <div v-if="gameData.type === 'battle_royale' && gameData.status == 'ready'" class="wait_game_number">
         {{gameData.players.length}}
       </div>
       <div v-if="gameData.type === 'battle_royale' && gameData.status == 'ready'"  class="wait_game_hint">
-        满3人开始游戏
+        满3人开始游戏, 选手列表：
       </div>
-      <div v-if="(gameData.type === 'solo_match' || gameData.type === 'battle_royale') && gameData.status == 'ready' && gameData.timerStartTime" class="wait_game_start">
-        开始倒计时 {{this.gameTimeLeft}} 秒
+      <div v-if="gameData.type === 'battle_royale' && gameData.status == 'ready'" class="wait_game_user">
+        <div v-for="(item, index) in gameData.players"> {{item.userName }}</div>
       </div>
-
       <div class="invite" v-if="status !== 'ready' && ((gameData.type !== 'battle_royale' && gameData.type !== 'solo_match')  || gameData.type == 'team')">
         <div class="title">
           邀请链接
@@ -1444,10 +1446,16 @@ export default {
       font-size: 24px;
     }
 
+    .wait_game_user {
+      padding-top: 1rem;
+      font-size: 24px;
+      align-items: center;
+    }
+
     .wait_game_number {
       font-size: 48px;
       color: white;
-      padding-bottom: 2rem;
+      padding-bottom: 1rem;
     }
 
     .wait_game_hint {
