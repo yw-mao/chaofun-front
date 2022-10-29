@@ -6,10 +6,11 @@
     <div class="" v-if="status==='need_join'">
     </div>
 
-    <div class="prepare" v-if="status==='wait_join' || status === 'ready'">
-      <div class="goback">
-      </div>
+    <div v-if="!gameData || (gameData.status !== 'ongoing' && gameData.status !== 'finish')" class="back_home" @click="goHome">
+      <el-button type="primary" round>←返回首页</el-button>
+    </div>
 
+    <div class="prepare" v-if="status==='wait_join' || status === 'ready'">
       <div class="header" v-if="gameData.type === 'solo' || gameData.type === 'solo_match'">
         图寻1v1决斗
       </div>
@@ -1355,6 +1356,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.back_home {
+  position: absolute;
+  padding-top: 1rem;
+  padding-left: 1rem;
+  z-index: 500;
+}
 .leaflet-clickable {
   cursor: crosshair !important;
 }
