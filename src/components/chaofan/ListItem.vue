@@ -55,7 +55,7 @@
                 <span :style="{'backgroundColor': (it.backgroundColor||'#ff9300'),'color': it.fontColor||'#fff'}"
               ># {{ it.name }}</span>
             </div>
-            
+
           </div>
           {{ item.title }}
         </div>
@@ -89,7 +89,7 @@
                   :item="item"
               ></itemGif>
             </div>
-            
+
             <div v-if="ISPHONE&&item.type == 'gif'" class="inner_videoc">
               <div v-if="!item.play" class="item_video">
                 <!-- <div @click.stop="toDetail(item)" class="title">
@@ -666,7 +666,7 @@ export default {
       console.log(index, data);
       this.lists.splice(index, 1, data);
     },
-    
+
     getPostInfo(postId) {
       api.getPostInfo({ postId }).then((res) => {});
     },
@@ -741,7 +741,7 @@ export default {
         let url =
           "https://chao.fan/p/" + (data.item.sourcePostId || data.item.postId);
         var sharesinastring =
-          "http://v.t.sina.com.cn/share/share.php?title=" +
+          "http://service.weibo.com/share/share.php?title=" +
           data.item.title +
           "&url=" +
           url +
@@ -785,7 +785,7 @@ export default {
       this.lists.forEach((i) => {
         i.play = false;
       });
-      
+
       if (this.canTo) {
         if (this.whichOne) {
           localStorage.setItem("whichOne", this.whichOne);

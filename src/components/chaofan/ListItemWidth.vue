@@ -524,7 +524,7 @@ export default {
       // // data.list.splice(this.index,1,item);
       // localStorage.setItem("storedata", JSON.stringify(data));
       // console.log("data", data);
-      
+
     },
     doFocued(bool, id) {
       this.lists.forEach((it) => {
@@ -617,7 +617,7 @@ export default {
         let url =
           "https://chao.fan/p/" + (data.item.sourcePostId || data.item.postId);
         var sharesinastring =
-          "http://v.t.sina.com.cn/share/share.php?title=" +
+          "http://service.weibo.com/share/share.php?title=" +
           data.item.title +
           "&url=" +
           url +

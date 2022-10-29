@@ -1,13 +1,13 @@
 <template>
  <div class="cc">
-     
+
             <div v-for="(item,index) in lists" :key="index" @click.stop="toDetail(item)" :class="['infinite-list-item']">
               <div @click.stop="" class="d_type" style="font-size: 13px;">
                   <span @click.stop="toUser(item.focusUser)" class="username" style="font-size: 13px; color: #666">{{item.focusUser?item.focusUser.userName:'测试账号'}}</span>
 
-                  {{moment.duration(moment(item.gmtCreate) - moment()).humanize(true)}} 
+                  {{moment.duration(moment(item.gmtCreate) - moment()).humanize(true)}}
                   {{item.type=='post'?'发布了':'点赞了'}}
-                  
+
               </div>
               <div :class="['item',{'phone-item': ISPHONE}]">
                     <div v-if="!ISPHONE" @click.stop="" class="zan">
@@ -21,7 +21,7 @@
                             <img v-if="item.postInfo.vote==-1||!ISPHONE" @click.stop="doZan(2,item,index)" src="../../assets/images/icon/down_active.png" alt="">
                         </p>
                     </div>
-                    <div v-if="ISPHONE" style="width:20px;"></div> 
+                    <div v-if="ISPHONE" style="width:20px;"></div>
                 <div class="rights" :style="{'width':ISPHONE?imgMaxWidth+'px':''}">
                     <!-- || (ISPHONE&&item.postInfo.type == 'video'&&item.postInfo.videoType == 'ifram')&&item.postInfo.link.includes('www.acfun.cn') -->
                     <itemTopTitle :item="item.postInfo" :isindex="isindex" @deletePost="deletePost" :index="index"></itemTopTitle>
@@ -118,7 +118,7 @@
                                 <img v-if="!item.postInfo.sourcePost.play" class="btn_play" @click="playVideo(index,item.postInfo.sourcePost,0)" src="../../assets/images/bg/play.png" alt="">
                                 <iframe v-if="!ISPHONE&&item.postInfo.sourcePost.play" style="width: 100%;min-height: 370px"   :src="item.postInfo.sourcePost.video+(item.postInfo.sourcePost.link.includes('www.acfun.cn')?'?':'')+'&autoplay=true'" allow="autoplay" id="ACPlayer-re"  scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>
                                 <iframe v-if="ISPHONE&&item.postInfo.sourcePost.play" style="width: 100%;height: 230px"   :src="item.postInfo.sourcePost.video+(item.postInfo.sourcePost.link.includes('www.acfun.cn')?'?':'')+'&autoplay=true'" allow="autoplay" id="ACPlayer-re"  scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>
-                          
+
                             </div>
                         </div>
                         <!-- 富文本 -->
@@ -147,34 +147,34 @@
                           {{item.postInfo.title}}
                       </div>
                     </div>
-            
+
                     <div class="tools">
                     <!-- <div><i class="el-icon-star-on"></i> <span>{{item.postInfo.ups-item.postInfo.downs}}</span> 点赞</div> -->
                     <div v-if="ISPHONE">
                         <span v-if="item.postInfo.vote!=1" @click.stop="doZan(1,item,index)">
-                        <img style="width:18px;vertical-align:middle;margin-top:-2px;" src="../../assets/images/icon/up.png" alt=""> 
+                        <img style="width:18px;vertical-align:middle;margin-top:-2px;" src="../../assets/images/icon/up.png" alt="">
                         </span>
                         <span v-if="item.postInfo.vote==1||!ISPHONE" @click.stop="doZan(1,item,index)">
                         <img style="width:18px;vertical-align:middle;margin-top:-2px;" src="../../assets/images/icon/up_active.png" alt="">
                         </span>
                         <span style="padding:0 10px;">{{item.postInfo.ups-item.postInfo.downs}}</span>
                         <span v-if="item.postInfo.vote!=-1" @click.stop="doZan(1,item,index)">
-                        <img style="width:18px;vertical-align:middle;margin-top:-2px;" v-if="item.postInfo.vote!=-1" @click.stop="doZan(2,item,index)" src="../../assets/images/icon/down.png" alt=""> 
+                        <img style="width:18px;vertical-align:middle;margin-top:-2px;" v-if="item.postInfo.vote!=-1" @click.stop="doZan(2,item,index)" src="../../assets/images/icon/down.png" alt="">
                         <!-- <span>{{item.postInfo.downs}}</span> -->
                         </span>
                         <span v-if="item.postInfo.vote==-1||!ISPHONE" @click.stop="doZan(1,item,index)">
-                        <img style="width:18px;vertical-align:middle;margin-top:-2px;" v-if="item.postInfo.vote==-1||!ISPHONE" @click.stop="doZan(2,item,index)" src="../../assets/images/icon/down_active.png" alt=""> 
+                        <img style="width:18px;vertical-align:middle;margin-top:-2px;" v-if="item.postInfo.vote==-1||!ISPHONE" @click.stop="doZan(2,item,index)" src="../../assets/images/icon/down_active.png" alt="">
                         <!-- <span>{{item.postInfo.downs}}</span> -->
                         </span>
                     </div>
                     <!-- <div v-if="ISPHONE">
                         <span v-if="item.postInfo.vote!=-1" @click.stop="doZan(1,item,index)">
-                        <img style="width:18px;vertical-align:middle;margin-top:-2px;" v-if="item.postInfo.vote!=-1" @click.stop="doZan(2,item,index)" src="../../assets/images/icon/down.png" alt=""> 
-                        
+                        <img style="width:18px;vertical-align:middle;margin-top:-2px;" v-if="item.postInfo.vote!=-1" @click.stop="doZan(2,item,index)" src="../../assets/images/icon/down.png" alt="">
+
                         </span>
                         <span v-if="item.postInfo.vote==-1||!ISPHONE" @click.stop="doZan(1,item,index)">
-                        <img style="width:18px;vertical-align:middle;margin-top:-2px;" v-if="item.postInfo.vote==-1||!ISPHONE" @click.stop="doZan(2,item,index)" src="../../assets/images/icon/down_active.png" alt=""> 
-                        
+                        <img style="width:18px;vertical-align:middle;margin-top:-2px;" v-if="item.postInfo.vote==-1||!ISPHONE" @click.stop="doZan(2,item,index)" src="../../assets/images/icon/down_active.png" alt="">
+
                         </span>
                     </div> -->
                     <div><i class="el-icon-s-comment"></i> <span>{{item.postInfo.comments}}</span>评论</div>
@@ -189,7 +189,7 @@
                         </el-dropdown-menu>
                     </el-dropdown>
                     <div :class="['b_icon',{'save_active':item.postInfo.save}]" @click.stop="savePost(item)"><i class="el-icon-s-help"></i> {{item.postInfo.save?'已收藏':'收藏'}}</div>
-                    
+
                     </div>
                 </div>
               </div>
@@ -285,7 +285,7 @@ import forwardH5 from '../h5/forward'
    },
    components: {
      forward,forwardH5,videoDialog,itemTopTitle,itemLink,itemImage,itemGif,itemIframeVideo,itemArticle,itemVote,itemForwardTitle,itemVideo
-   }, 
+   },
    activated(){
       console.log('666',this.$route.query)
       if(this.$route.query.time){
@@ -313,7 +313,7 @@ import forwardH5 from '../h5/forward'
    mounted() {
      if(this.$route.query.time){
        console.log('this.top',this.top)
-       this.$('.infinite-list').animate({ scrollTop:  this.top}, 10); 
+       this.$('.infinite-list').animate({ scrollTop:  this.top}, 10);
        setTimeout(()=>{
         localStorage.removeItem('storedata')
         localStorage.removeItem('spage')
@@ -324,7 +324,7 @@ import forwardH5 from '../h5/forward'
      }
    },
    destroyed(){
-     
+
    },
    methods: {
      callBack(index, data) {
@@ -382,15 +382,15 @@ import forwardH5 from '../h5/forward'
             // }else{
               this.dialogs.dialogVisible = true
             // }
-            
+
           }
         })
        }else{
         let picurl = 'https://oss.meibbc.com/gw/img/3380CC9482F74FA89C118FB99F4CE5E7.jpg';
         let url = 'https://chao.fan/p/'+(data.item.postInfo.sourcePostId || data.item.postInfo.postId);
-        var sharesinastring = 'http://v.t.sina.com.cn/share/share.php?title=' + data.item.postInfo.title+ '&url=' + url+'（分享来自@炒饭社区）'  + '&content=utf-8&sourceUrl=' + url + '&ralateUid=炒饭社区';
+        var sharesinastring = 'http://service.weibo.com/share/share.php?title=' + data.item.postInfo.title+ '&url=' + url+'（分享来自@炒饭社区）'  + '&content=utf-8&sourceUrl=' + url + '&ralateUid=炒饭社区';
         // window.open(sharesinastring, 'newwindow', 'height=400,width=400,top=100,left=100');
-        window.open(sharesinastring,"_blank");  
+        window.open(sharesinastring,"_blank");
 
   //       var _w = 106 , _h = 20;
   // var param = {
@@ -441,8 +441,8 @@ import forwardH5 from '../h5/forward'
             })
           })
        }
-       
-       
+
+
      },
      savePost(item){
        api.savePost({postId: item.postInfo.postId}).then(res=>{
@@ -500,9 +500,9 @@ import forwardH5 from '../h5/forward'
           setTimeout(()=>{
             this.canTo = true
           },1000)
-          
+
        }
-       
+
       //  console.log(window.document.getElementsByClassName('infinite-list')[0].scrollTop)
      },
      toUrls(item,params){
@@ -574,14 +574,14 @@ import forwardH5 from '../h5/forward'
             item.postInfo.vote=1;
             this.lists.splice(index,1,item)
             api.upvote_post({postId:item.postInfo.postId}).then(res=>{
-              
+
             })
           }else if(item.postInfo.vote===1){
             item.postInfo.vote=0;
             item.postInfo.ups -= 1
             this.lists.splice(index,1,item)
             api.upvote_post({postId:item.postInfo.postId}).then(res=>{
-              
+
             })
           }
        }else{//踩
@@ -594,17 +594,17 @@ import forwardH5 from '../h5/forward'
             item.postInfo.vote=-1;
             this.lists.splice(index,1,item)
             api.downvote_post({postId:item.postInfo.postId}).then(res=>{
-              
+
             })
           }else if(item.postInfo.vote===-1){
             item.postInfo.vote=0;
             item.postInfo.ups += 1
             this.lists.splice(index,1,item)
             api.downvote_post({postId:item.postInfo.postId}).then(res=>{
-              
+
             })
           }
-         
+
        }
      }
    }
