@@ -63,6 +63,11 @@ export default {
   data(){
     return {
       recentPagedata: [
+        {name: '3分钟挑战图寻10月29月日每日挑战20000分（成功了，但没完全成功）', cover: 'biz/1667059784925_2a85829fe2864560b7e3271125b1baea_0.png', url: 'https://www.bilibili.com/video/BV12m4y1F7gv'},
+        {name: '【图寻】国家挑战移动街景44连胜（暂无解说）', cover: 'biz/1667059727103_d6cc23b981604e73bccb58558d748267_0.png', url: 'https://www.bilibili.com/video/BV1uV4y1V765'},
+        {name: '10.29图寻每日挑战', cover: 'biz/1667059577008_c07e8348a7484aabaedd99f2ce098c31_1.png', url: 'https://www.bilibili.com/video/BV12K411U7PE'},
+        {name: '我终于发现了必胜的法则 Geoguessr/溯景寻踪/图寻/周游盖世', cover: 'biz/1667059495867_08c2a6e7ed1940739cda00437ce0fa05_0.png', url: 'https://www.bilibili.com/video/BV1NV4y1V7PP'},
+        {name: '请遵守交通规则!！根据照片推理位置（10月92日图寻每日挑战）', cover: 'biz/1667059435196_b16be93f861b441f81c22623d69adb0a_0.png', url: 'https://www.bilibili.com/video/BV1ie4y14758'},
         {name: '图寻10月2日淘汰赛，用手机玩的教训太深刻了', cover: 'biz/1666984713933_f9ccb6a6818d4758921bbe93dee95d39_1.png', url: 'https://www.bilibili.com/video/BV1Kt4y1M7Xo'},
         {name: '10.28图寻每日挑战', cover: 'biz/1666984607034_661134c1781846728f88b67280fc33b7_1.png', url: 'https://www.bilibili.com/video/BV1vG4y1h7Yj'},
         {name: '按图索骥泰姬陵！根据照片猜测所在地（10月82日图寻每日挑战）', cover: 'biz/1666984491574_13be72c05beb46e0bcbc80bb4df31e41_0.png', url: 'https://www.bilibili.com/video/BV1GG4y1b7yd/'},
@@ -108,6 +113,7 @@ export default {
         {name:'图寻第一届个人锦标赛录播1',cover: 'biz/1665575321286_9f85c32bccd2401191aed9e468129888_0.webp', url: 'https://www.bilibili.com/video/BV1Ma41137zr' },
       ],
       coursePagedata: [
+        {name: '【图寻小技巧】语言识别：罗曼语族（一）', cover: 'biz/1667059619190_aeba12ec6fb044158d5273307cb57ba1_0.png', url: 'https://www.bilibili.com/video/BV1b84y1i7iP'},
         {name:'图寻总笔记1.0',cover: 'biz/1665574727065_92d546eddc4a427d9eb503077a34fd06_0.webp', url: 'https://www.bilibili.com/video/BV1Xg411a78m' },
         {name:'这个视频将会双倍你的Geoguessr/图寻能力 历史地理人文知识问答Jetpunk',cover: 'biz/1665856643354_58dc7397ce96424fb1ac053b07cb8737_0.webp', url: 'https://www.bilibili.com/video/BV1VD4y1C7Mr' },
         {name:'美国加拿大独门秘笈（不完全教程） Geoguessr图寻游戏教学',cover: 'biz/1665573905878_ab983dfaa6b14416be4085e1bd63c99c_0.webp', url: 'https://www.bilibili.com/video/BV1sR4y1R7J1' },
