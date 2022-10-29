@@ -6,8 +6,10 @@
         <div style="margin-left: 25px; color: white">探索世界，收集线索，找出自己的位置</div>
       </div>
       <div class="top-right">
-        <el-button type="primary" @click="toRank" round>积分排行</el-button>
         <el-button type="primary" @click="toUserHome" round>个人首页</el-button>
+        <div style="height: 10px">
+        </div>
+        <el-button type="primary" @click="toRank" round>积分排行</el-button>
       </div>
     </div>
 
