@@ -3,7 +3,7 @@
     <div class="top">
       <div>
         <img style="margin-top: 25px; margin-left: 25px; width: 5rem; height: 3rem" :src="imgOrigin + 'biz/1658657631523_45db8dd090dc49af99f2a8a4ace01122.svg'"></img>
-        <div style="margin-left: 25px; color: white">探索世界，收集线索，找出你在哪</div>
+        <div style="margin-left: 25px; color: white">探索世界，收集线索，找出自己的位置</div>
       </div>
       <div class="top-right">
         <el-button type="primary" @click="toRank" round>积分排行</el-button>
