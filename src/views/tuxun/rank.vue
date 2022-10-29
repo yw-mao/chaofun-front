@@ -144,6 +144,7 @@ div {
   flex-direction: column;
   align-items: center;
   cursor: pointer;
+  width: 30%;
 }
 .footer {
   height: 10rem;
