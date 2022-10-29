@@ -5,6 +5,9 @@
     </div>
     <div class="main_content">
       <div class="top">
+        <div class="nav">
+          图寻每日挑战
+        </div>
         <div class="time">
           {{this.getDate()}}
         </div>
@@ -168,10 +171,16 @@ export default {
 
     .top {
       width: 100%;
-      padding-top: 5rem;
+      padding-top: 2rem;
       //display: flex;
       justify-content: center;
 
+      .nav {
+        color: white;
+        font-size: 48px;
+        font-weight: bold;
+        padding-top: 3rem;
+      }
       div {
         color: floralwhite;
       }
