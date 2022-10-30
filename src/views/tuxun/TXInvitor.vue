@@ -20,9 +20,9 @@
       </div>
 
       <div class="vs" v-if="gameData.type !== 'battle_royale'">
-        <div  class="player">
-          <div v-if="gameData && gameData.teams && gameData.teams.length >= 1">
-            <div v-for="(item, index) in gameData.teams[0].users">
+        <div class="player">
+          <div style="display: flex; flex-flow: row wrap; justify-content: center; width: 100%" v-if="gameData && gameData.teams && gameData.teams.length >= 1">
+            <div class="user" v-for="(item, index) in gameData.teams[0].users">
               <el-avatar :src="imgOrigin + item.icon" class="avatar"></el-avatar>
               <div class="userName">{{item.userName}} <span v-if="gameData.type === 'team' && item.userId === gameData.host.userId">(房主)</span></div>
             </div>
@@ -34,8 +34,8 @@
           <el-button @click="swapTeam"  type="primary" v-if="gameData.type==='team'" round>换队伍</el-button>
         </div>
         <div class="player">
-          <div  v-if="gameData && gameData.teams && gameData.teams.length >= 2">
-            <div v-for="(item, index) in gameData.teams[1].users">
+          <div style="display: flex; flex-flow: row wrap;  justify-content: center; width: 100%" v-if="gameData && gameData.teams && gameData.teams.length >= 2">
+            <div class="user" v-for="(item, index) in gameData.teams[1].users">
               <el-avatar :src="imgOrigin + item.icon" class="avatar"></el-avatar>
               <div class="userName">{{item.userName}} <span v-if="gameData.type === 'team' && item.userId === gameData.host.userId">(房主)</span></div>
             </div>
@@ -1415,15 +1415,19 @@ export default {
       font-size: 3rem;
       margin-bottom: 1rem;;
     }
-    .avatar {
-      width: 150px;
-      height: 150px;
-      margin: 0 auto;
-    }
+    .user {
+      display: block;
+      margin: 10px;
+      .avatar {
+        width: 100px;
+        height: 100px;
+        margin: 0 auto;
+      }
 
-    .userName {
-      margin-top: 1rem;
-      font-size: 1.5rem;
+      .userName {
+        margin-top: 1rem;
+        font-size: 16px;
+      }
     }
 
   }
@@ -1468,7 +1472,7 @@ export default {
       font-weight: bold;
     }
     .wait_game_start {
-      padding-top: 1rem;
+      padding-top: 2rem;
       font-size: 24px;
     }
 
