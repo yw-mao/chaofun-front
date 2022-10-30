@@ -122,6 +122,14 @@
               全国最好的网络迷踪社区
             </div>
           </div>
+          <div class="card" @click="$toast('敬请期待')">
+            <div class="title">
+              图寻作弊器
+            </div>
+            <div class="describe">
+              地理小测验，帮助你玩好图寻（未开放）
+            </div>
+          </div>
         </div>
         <div class="thx">
           <p>提示：如倒计时不准或卡死，可关闭代理，系统时间对齐互联网时间再试</p>
