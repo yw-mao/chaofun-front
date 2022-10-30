@@ -29,8 +29,8 @@
           </div>
         </div>
         <div>
-          <img class="vs_img"  :src="this.imgOrigin + 'biz/1658807128256_91c9df63c2d144359005b6f504a96a81.png'">
-          </img>
+          <img class="vs_img"  :src="this.imgOrigin + 'biz/1658807128256_91c9df63c2d144359005b6f504a96a81.png'"></img>
+          <div></div>
           <el-button @click="swapTeam"  type="primary" v-if="gameData.type==='team'" round>换队伍</el-button>
         </div>
         <div class="player">
