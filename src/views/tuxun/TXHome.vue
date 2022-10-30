@@ -236,7 +236,9 @@ export default {
 
   methods: {
     initMap() {
-      var map = L.map('map', {attributionControl: false,worldCopyJump: true, coordType: 'gcj02',  zoomAnimation: false, fadeAnimation: true, maxBoundsViscosity: 1.0, maxBounds:  [[-90,-540],   [90,540]]}).setView([38.8, 106.0], 3)
+      var map = L.map('map', {attributionControl: true,worldCopyJump: true, coordType: 'gcj02',  zoomAnimation: false, fadeAnimation: true, maxBoundsViscosity: 1.0, maxBounds:  [[-90,-540],   [90,540]]}).setView([38.8, 106.0], 3)
+      map.attributionControl.setPrefix('华为地图');
+      map.attributionControl.addAttribution('GS（2022）2885号');
       var url = 'https://map.chao-fan.com/mapApi/v1/mapService/getTile?x={x}&y={y}&z={z}&language=zh&scale=2&key=DAEDAALLJxDN3xIxrZz2g5NX2lXE%2Fqbk4v%2BzupvIWqwiMyZDKFQr3CqRmVb6Jn1cgoBxn20G47eawHQwysQulh3nYfG9pToO0CdGfA%3D%3D';
       if(this.ISPHONE){
         url = 'https://map.chao-fan.com/mapApi/v1/mapService/getTile?x={x}&y={y}&z={z}&language=zh&scale=1&key=DAEDAALLJxDN3xIxrZz2g5NX2lXE%2Fqbk4v%2BzupvIWqwiMyZDKFQr3CqRmVb6Jn1cgoBxn20G47eawHQwysQulh3nYfG9pToO0CdGfA%3D%3D';
