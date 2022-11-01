@@ -63,6 +63,13 @@ export default {
   data(){
     return {
       recentPagedata: [
+        {name: '【图寻每日挑战】第一次尝试解说，节目效果有了', cover: 'biz/1667315860054_b7aa2bbdd3c945cc9a94b8449dc0f9bd_0.png', url: 'https://www.bilibili.com/video/BV19e4y1y7a4'},
+        {name: '你能根据照片推理位置吗？（31月10日图寻每日挑战）', cover: 'biz/1667315813323_3b2c26b8dd3743b1ba7e132ccf750bed_0.png', url: 'https://www.bilibili.com/video/BV1EK411S7x4'},
+        {name: '小伙挑战图寻每日挑战，直呼好爽！（10月31日挑战）', cover: 'biz/1667315764462_c387b3fbd08a4f0a8ebae598b62ea914_0.png', url: 'https://www.bilibili.com/video/BV1eD4y1478j'},
+        {name: '根据照片推理国家首都', cover: 'biz/1667315721194_d87c9aa855d744f9974a4d0dba4a88a1_0.png', url: 'https://www.bilibili.com/video/BV1NG411A7m6'},
+        {name: '图寻实况1', cover: 'biz/1667315653758_f15c884f808b46b29def6da870ed8c9e_0.png', url: 'https://www.bilibili.com/video/BV1TP411P7x3'},
+        {name: '好久不见！根据照片推理位置（30月10日图寻每日挑战）', cover: 'biz/1667315579123_4ff18ed739564a87b12ec089813dbdae_0.png', url: 'https://www.bilibili.com/video/BV12D4y1b73A'},
+        {name: '小伙终于发现了必胜的法则，居然扶摇直上17000分！', cover: 'biz/1667315524093_03c1f9c4d2954320a011bc32d27c187f_0.png', url: 'https://www.bilibili.com/video/BV1eP4y1m7pc'},
         {name: '3分钟挑战图寻10月29月日每日挑战20000分（成功了，但没完全成功）', cover: 'biz/1667059784925_2a85829fe2864560b7e3271125b1baea_0.png', url: 'https://www.bilibili.com/video/BV12m4y1F7gv'},
         {name: '【图寻】国家挑战移动街景44连胜（暂无解说）', cover: 'biz/1667059727103_d6cc23b981604e73bccb58558d748267_0.png', url: 'https://www.bilibili.com/video/BV1uV4y1V765'},
         {name: '10.29图寻每日挑战', cover: 'biz/1667059577008_c07e8348a7484aabaedd99f2ce098c31_1.png', url: 'https://www.bilibili.com/video/BV12K411U7PE'},
