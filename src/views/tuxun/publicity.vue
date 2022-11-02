@@ -63,6 +63,7 @@ export default {
   data(){
     return {
       recentPagedata: [
+        {name: '你能根据照片推理位置吗？（1月11日图寻每日挑战）', cover: 'biz/1667404794368_31c2729e95dc411c95013452ac3290dc_0.png', url: 'https://www.bilibili.com/video/BV1bm4y1c7T5'},
         {name: '【图寻每日挑战】第一次尝试解说，节目效果有了', cover: 'biz/1667315860054_b7aa2bbdd3c945cc9a94b8449dc0f9bd_0.png', url: 'https://www.bilibili.com/video/BV19e4y1y7a4'},
         {name: '你能根据照片推理位置吗？（31月10日图寻每日挑战）', cover: 'biz/1667315813323_3b2c26b8dd3743b1ba7e132ccf750bed_0.png', url: 'https://www.bilibili.com/video/BV1EK411S7x4'},
         {name: '小伙挑战图寻每日挑战，直呼好爽！（10月31日挑战）', cover: 'biz/1667315764462_c387b3fbd08a4f0a8ebae598b62ea914_0.png', url: 'https://www.bilibili.com/video/BV1eD4y1478j'},
