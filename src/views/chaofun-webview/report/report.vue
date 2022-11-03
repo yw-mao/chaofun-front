@@ -17,8 +17,8 @@
               <viewer :images="images" ref="viewer" style="line-height: 0px" >
                 <div v-for="(i,k) in item.postInfo.images" :key="k">
                       <span class="aaa">
-                        <img  style="opacity:0;width:60px;height:60px" :src="imgOrigin+i+'?x-oss-process=image/resize,h_60/format,webp/quality,q_75'" :data-source="imgOrigin+i" >
-                        <div :src="imgOrigin+i+'?x-oss-process=image/resize,h_60/format,webp/quality,q_75'" :data-source="imgOrigin+i" :style="{'background-image':'url('+imgOrigin+i+')','background-size':'cover',width:'60px',height:'60px'}" ></div>
+                        <img  style="opacity:0;width:150px;height:150px" :src="imgOrigin+i+'?x-oss-process=image/resize,h_60/format,webp/quality,q_75'" :data-source="imgOrigin+i" >
+                        <div :src="imgOrigin+i+'?x-oss-process=image/resize,h_60/format,webp/quality,q_75'" :data-source="imgOrigin+i" :style="{'background-image':'url('+imgOrigin+i+')','background-size':'cover',width:'150px',height:'150px'}" ></div>
                       </span>
                 </div>
               </viewer>
