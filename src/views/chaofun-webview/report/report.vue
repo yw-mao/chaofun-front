@@ -213,7 +213,7 @@ export default {
 
   methods: {
     init() {
-      api.getByPath('/api/v0/report/list', null).then(res=>{
+      api.getByPath('/api/v0/report/list', {desc: false}).then(res=>{
         this.lists = res.data
       })
     },
