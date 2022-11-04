@@ -32,7 +32,7 @@
               </viewer>
             </div>
           </div>
-          <div v-if="item.postInfo.type == 'article'">
+          <div @click="toPost(item.postInfo.postId)" v-if="item.postInfo.type == 'article'">
             {{item.postInfo.article}}
           </div>
           <div v-if="item.postInfo.type == 'audio'">
