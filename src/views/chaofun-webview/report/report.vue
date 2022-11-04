@@ -17,8 +17,7 @@
               <viewer :images="images" ref="viewer" style="line-height: 0px" >
                 <div v-for="(i,k) in item.postInfo.images" :key="k">
                       <span class="aaa">
-                        <img  style="opacity:0;width:150px;height:150px" :src="imgOrigin+i+'?x-oss-process=image/resize,h_60/format,webp/quality,q_75'" :data-source="imgOrigin+i" >
-                        <div :src="imgOrigin+i+'?x-oss-process=image/resize,h_60/format,webp/quality,q_75'" :data-source="imgOrigin+i" :style="{'background-image':'url('+imgOrigin+i+')','background-size':'cover',width:'150px',height:'150px'}" ></div>
+                        <img  style="opacity:1;width:300px;height:300px;object-fit: contain" :src="imgOrigin+i+'?x-oss-process=image/resize,h_300/format,webp/quality,q_75'" :data-source="imgOrigin+i" >
                       </span>
                 </div>
               </viewer>
@@ -27,8 +26,7 @@
               <viewer :images="doImgs(item.postInfo.imageName)" ref="viewer" style="line-height: 0px" >
                 <div v-for="(i,k) in item.postInfo.imageName.split(',')" :key="k">
                             <span class="aaa">
-                              <img  style="opacity:0;width:150px;height:150px" :src="imgOrigin+i+'?x-oss-process=image/resize,h_60/format,webp/quality,q_75'" :data-source="imgOrigin+i" >
-                              <div :src="imgOrigin+i+'?x-oss-process=image/resize,h_60/format,webp/quality,q_75'" :data-source="imgOrigin+i" :style="{'background-image':'url('+imgOrigin+i+')','background-size':'cover',width:'150px',height:'150px'}" ></div>
+                              <img  style="opacity:1;width:300px;height:300px;object-fit: contain" :src="imgOrigin+i+'?x-oss-process=image/resize,h_300/format,webp/quality,q_75'" :data-source="imgOrigin+i" >
                             </span>
                 </div>
               </viewer>
@@ -88,8 +86,8 @@
           <div>
             <el-button @click="dealReport(item.id, 'ignore')">忽略</el-button>
             <el-button @click="dealReport(item.id, 'delete')">删除</el-button>
-            <el-button @click="dealReport(item.id, 'publish_sex')">处罚：色情+删除</el-button>
-            <el-button @click="dealReport(item.id, 'punish_politic')">处罚：政治+删除</el-button>
+            <el-button @click="dealReport(item.id, 'publish_sex')">色情+删除</el-button>
+            <el-button @click="dealReport(item.id, 'punish_politic')">政治+删除</el-button>
             <el-button @click="dealReport(item.id, 'malicious')">恶意举报</el-button>
           </div>
         </div>
@@ -110,8 +108,7 @@
                         <div v-for="(i,k) in item.commentInfo.imageNames.split(',')" :key="k">
                             <span class="aaa">
 <!--                                【附图】-->
-                              <img  style="opacity:0;width:150px;height:150px" :src="imgOrigin+i+'?x-oss-process=image/resize,h_60/format,webp/quality,q_75'" :data-source="imgOrigin+i" >
-                              <div :src="imgOrigin+i+'?x-oss-process=image/resize,h_60/format,webp/quality,q_75'" :data-source="imgOrigin+i" :style="{'background-image':'url('+imgOrigin+i+')','background-size':'cover',width:'150px',height:'150px'}" ></div>
+                              <img  style="opacity:1;width:300px;height:300px;object-fit: contain" :src="imgOrigin+i+'?x-oss-process=image/resize,h_300/format,webp/quality,q_75'" :data-source="imgOrigin+i" >
                             </span>
                         </div>
                     </viewer>
@@ -143,8 +140,8 @@
           <div>
             <el-button @click="dealReport(item.id, 'ignore')">忽略</el-button>
             <el-button @click="dealReport(item.id, 'delete')">删除</el-button>
-            <el-button @click="dealReport(item.id, 'publish_sex')">处罚：色情+删除</el-button>
-            <el-button @click="dealReport(item.id, 'punish_politic')">处罚：政治+删除</el-button>
+            <el-button @click="dealReport(item.id, 'publish_sex')">色情+删除</el-button>
+            <el-button @click="dealReport(item.id, 'punish_politic')">政治+删除</el-button>
             <el-button @click="dealReport(item.id, 'malicious')">恶意举报</el-button>
           </div>
         </div>
@@ -161,8 +158,7 @@
                         <div v-for="(i,k) in item.userInfo.icon.split(',')" :key="k">
                             <span class="aaa">
 <!--                                【附图】-->
-                              <img  style="opacity:0;width:150px;height:150px" :src="imgOrigin+i+'?x-oss-process=image/resize,h_60/format,webp/quality,q_75'" :data-source="imgOrigin+i" >
-                              <div :src="imgOrigin+i+'?x-oss-process=image/resize,h_60/format,webp/quality,q_75'" :data-source="imgOrigin+i" :style="{'background-image':'url('+imgOrigin+i+')','background-size':'cover',width:'150px',height:'150px'}" ></div>
+                              <img  style="opacity:1;width:300px;height:300px;object-fit: contain" :src="imgOrigin+i+'?x-oss-process=image/resize,h_300/format,webp/quality,q_75'" :data-source="imgOrigin+i" >
                             </span>
                         </div>
                     </viewer>
@@ -213,7 +209,11 @@ export default {
 
   methods: {
     init() {
-      api.getByPath('/api/v0/report/list', {desc: false}).then(res=>{
+      // api.getByPath('/api/v0/report/list', {desc: false}).then(res=>{
+      //   this.lists = res.data
+      // })
+
+      api.getByPath('/api/v0/report/list', {desc: true}).then(res=>{
         this.lists = res.data
       })
     },
@@ -388,7 +388,7 @@ export default {
   //height: 30px;
   // background: #ddd;
   display: inline-block;
-  overflow: hidden;
+  //overflow: hidden;
   color: #1890ff;
   padding-right: 4px;
   padding-top: 2px;
@@ -398,7 +398,7 @@ export default {
 
     .futu {
       opacity: 1;
-      width: 150px;
+      width: 300px;
       height: auto;
       left: 60px;
       top: 0;
@@ -406,7 +406,7 @@ export default {
   }
 
   img {
-    position: absolute;
+    //position: absolute;
     width: initial;
     height: initial;
     right: 10px;
