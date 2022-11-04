@@ -144,7 +144,7 @@
             <el-button @click="dealReport(item.id, 'ignore')">忽略</el-button>
             <el-button @click="dealReport(item.id, 'delete')">删除</el-button>
             <el-button @click="dealReport(item.id, 'publish_sex')">处罚：色情+删除</el-button>
-            <el-button @click="dealReport(item.id, 'publish_politics')">处罚：政治+删除</el-button>
+            <el-button @click="dealReport(item.id, 'punish_politic')">处罚：政治+删除</el-button>
             <el-button @click="dealReport(item.id, 'malicious')">恶意举报</el-button>
           </div>
         </div>
