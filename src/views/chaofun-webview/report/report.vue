@@ -94,13 +94,13 @@
 
 
         <div style="border-bottom: 1px solid #f1f1f1;" v-if="item.type === 'comment'" >
-          <div @click="toPost(item.postInfo.postId)" style="font-size: 20px; font-weight: bold">
+          <div @click="toComment(item.postInfo.postId, item.commentInfo.id)" style="font-size: 20px; font-weight: bold">
             评论 {{doCommentType(item.commentInfo)}}
           </div>
-          <div @click="toPost(item.postInfo.postId)" style="font-size: 16px; font-weight: bold">
+          <div @click="toComment(item.postInfo.postId, item.commentInfo.id)" style="font-size: 16px; font-weight: bold">
             版块: {{item.postInfo.forum.name}}
           </div>
-          <div @click="toPost(item.postInfo.postId)" style="font-size: 16px">
+          <div @click="toComment(item.postInfo.postId, item.commentInfo.id)" style="font-size: 16px">
             内容：{{item.commentInfo.text}}
           </div>
           <span v-if="item.commentInfo.imageNames" class="comImgs">
@@ -128,13 +128,13 @@
             alt="">
             </audio>
           </span>
-          <div @click="toPost(item.postInfo.postId)" style="font-size: 16px">
+          <div @click="toComment(item.postInfo.postId, item.commentInfo.id)" style="font-size: 16px">
             原帖标题: {{item.postInfo.title}}
           </div>
-          <div @click="toPost(item.postInfo.postId)" style="font-size: 16px">
+          <div @click="toComment(item.postInfo.postId, item.commentInfo.id)" style="font-size: 16px">
             用户：{{item.commentInfo.userInfo.userName}}
           </div>
-          <div @click="toPost(item.postInfo.postId)" style="font-size: 16px">
+          <div @click="toComment(item.postInfo.postId, item.commentInfo.id)" style="font-size: 16px">
             举报原因：{{item.reason}}
           </div>
           <div>
@@ -277,6 +277,14 @@ export default {
         window.flutter_inappwebview.callHandler('toAppPost', {postId: id.toString()});
       } catch (e) {
         window.open('/p/' + id.toString(), "_blank");
+      }
+    },
+
+    toComment(pid, cid) {
+      try {
+        window.flutter_inappwebview.callHandler('toAppPost', {postId: pid.toString()});
+      } catch (e) {
+        window.open('/p/' + pid.toString() + '?commentId=' + cid.toString(), "_blank");
       }
     },
 
