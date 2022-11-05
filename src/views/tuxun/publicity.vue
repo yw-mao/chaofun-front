@@ -63,6 +63,13 @@ export default {
   data(){
     return {
       recentPagedata: [
+        {name: '图寻挑战：图寻竟然有人40连胜 挑战世界街景，分辨出是哪个国家', cover: 'biz/1667672178243_dcdba9b1c4034abfbffa8ff715c2e21f_0.png', url: 'https://www.bilibili.com/video/BV1at4y1K7Pp'},
+        {name: '今天题目质量很高（11月4日图寻每日挑战）', cover: 'biz/1667672137743_83e6fde7780e4897ae503045ec079740_0.png', url: 'https://www.bilibili.com/video/BV1Q8411h7kH'},
+        {name: '网络迷踪：如何根据道路车辆信息判断所处国家', cover: 'biz/1667671971425_5b42b9a4446241b5be069291ba23753e_0.png', url: 'https://www.bilibili.com/video/BV1u84y1v7Dw'},
+        {name: '你能根据照片推理位置吗？', cover: 'biz/1667671858488_ade022f18f5f4a819cb7c6f8f19aead6_0.png', url: 'https://www.bilibili.com/video/BV1qm4y1c7Fo'},
+        {name: '你能不穿衣服根据照片推理位置吗？', cover: 'biz/1667671755525_2deeeec3d2b64389afc5f3ccb861b42b_0.png', url: 'https://www.bilibili.com/video/BV1qm4y1c7Fo'},
+        {name: '你能根据照片推理位置吗？', cover: 'biz/1667671688674_c3e5b3205aa24de3ba30b564d61515a5_0.png', url: 'https://bilibili.com/video/BV1KD4y187q2'},
+        {name: '你能根据照片推理位置吗？（11月2日图寻每日挑战）', cover: 'biz/1667670151387_0c4a117c8a9e4d77829920d259f6e7ae_0.png', url: 'https://www.bilibili.com/video/BV1Ne4y1t7LB'},
         {name: '你能根据照片推理位置吗？（1月11日图寻每日挑战）', cover: 'biz/1667404794368_31c2729e95dc411c95013452ac3290dc_0.png', url: 'https://www.bilibili.com/video/BV1bm4y1c7T5'},
         {name: '【图寻每日挑战】第一次尝试解说，节目效果有了', cover: 'biz/1667315860054_b7aa2bbdd3c945cc9a94b8449dc0f9bd_0.png', url: 'https://www.bilibili.com/video/BV19e4y1y7a4'},
         {name: '你能根据照片推理位置吗？（31月10日图寻每日挑战）', cover: 'biz/1667315813323_3b2c26b8dd3743b1ba7e132ccf750bed_0.png', url: 'https://www.bilibili.com/video/BV1EK411S7x4'},
@@ -111,6 +118,7 @@ export default {
         {name: '当你做了一道地球人都会的题后， 一定会有一道地球人都不会的题等着你', cover: 'biz/1665575510613_fcb281887a3c4b1c970e7b654ae48f0f_0.webp', url: 'https://www.bilibili.com/video/BV1He411j79D'}
       ],
       recommendPagedata: [
+        {name: '图寻第三届团体锦标赛录播', cover: 'biz/1667672031165_bafac27ddc8f4d99a5ea004913c99d05_0.png', url: 'https://www.bilibili.com/video/BV1VP411A7b5'},
         {name: 'H.M-炒饭图寻大神，猜国家地址游戏，倾情直播！（录播上）', cover: 'biz/1666799535958_996733eebf9a4834a3f7cc025db3d5dc_0.png', url: 'https://www.bilibili.com/video/BV1hg411z7nT'},
         {name:'街景挑战：图寻竟然有人40连胜 你也来挑战试试',cover: 'biz/1666625855777_9fd11e1920bf468f88c698d0f9c5c410_0.png', url: 'https://www.bilibili.com/video/BV1ig411z7iC' },
         {name:'挑战世界街景，分辨出是哪个国家',cover: 'biz/1666546562290_0ff5cd41cf0b417888ade23e57ddb62c_0.png', url: 'https://www.bilibili.com/video/BV1Ee4y1e7B3' },
@@ -121,6 +129,7 @@ export default {
         {name:'图寻第一届个人锦标赛录播1',cover: 'biz/1665575321286_9f85c32bccd2401191aed9e468129888_0.webp', url: 'https://www.bilibili.com/video/BV1Ma41137zr' },
       ],
       coursePagedata: [
+        {name: '【教程】图寻/Geoguessr 海外属地特殊街景车', cover: 'biz/1667672068671_4478361375d24aa9991970ca4d1cd577_0.png', url: 'https://www.bilibili.com/video/BV1TP411A7o2'},
         {name: '【图寻小技巧】语言识别：罗曼语族（一）', cover: 'biz/1667059619190_aeba12ec6fb044158d5273307cb57ba1_0.png', url: 'https://www.bilibili.com/video/BV1b84y1i7iP'},
         {name:'图寻总笔记1.0',cover: 'biz/1665574727065_92d546eddc4a427d9eb503077a34fd06_0.webp', url: 'https://www.bilibili.com/video/BV1Xg411a78m' },
         {name:'这个视频将会双倍你的Geoguessr/图寻能力 历史地理人文知识问答Jetpunk',cover: 'biz/1665856643354_58dc7397ce96424fb1ac053b07cb8737_0.webp', url: 'https://www.bilibili.com/video/BV1VD4y1C7Mr' },
