@@ -15,6 +15,7 @@
 
     <div class="game">
       <div class="info" @click="toFirstTournament">炒饭网络迷踪图寻第三届团队赛圆满结束！</div>
+      <div v-if="times" class="times" @click="toFirstTournament">图寻总轮次数：<span style="font-size: 18px">{{times}}</span></div>
       <section class="game_entrance">
         <div class="first_session_head">单人</div>
         <div class="line"></div>
@@ -169,6 +170,7 @@ export default {
   name: "TXNewHome",
   data() {
     return {
+      times: null,
       backgroundImage: 'biz/1665370526912_495e8dbd52364a83b6f5235ce2ddafa8_0.jpeg?x-oss-process=image/quality,q_80'
     }
   },
@@ -184,8 +186,14 @@ export default {
       Notification.requestPermission(function (status) {
       })
     }
+    this.getTimes();
   },
   methods:{
+    getTimes() {
+      api.getByPath('/api/v0/tuxun/getTotalGuess').then(res=>{
+        this.times = res.data;
+      })
+    },
     toPage(title, path) {
       try {
         window.flutter_inappwebview.callHandler('toViewPage',{url: location.origin+path,title:title,showHeader: true})
@@ -273,6 +281,13 @@ export default {
       font-size: medium;
       padding-top: 1rem;
       text-decoration:underline;
+    }
+    .times {
+      color: white;
+      padding-top: 5px;
+      span: {
+        color: green;
+      }
     }
     section {
       padding-top: 20px;
