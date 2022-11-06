@@ -63,6 +63,10 @@ export default {
   data(){
     return {
       recentPagedata: [
+        {name: '【图寻】 国家连胜移动87连胜', cover: 'biz/1667760336015_8ef96c7ab24b4bada0df99a45eb5e0be_0.png', url: 'https://www.bilibili.com/video/BV1gP4y1U7Be'},
+        {name: '你能根据照片推理位置吗？炒饭图寻', cover: 'biz/1667760307022_8058bb1693b640399b93d5dc315b5968_0.png', url: 'https://www.bilibili.com/video/BV1Ae411F77B'},
+        {name: '小伙挑战看图猜省份，结局意想不到', cover: 'biz/1667760203332_f301972455bd45c0931c6ec427d4b8e1_0.png', url: 'https://www.bilibili.com/video/BV1o8411h7Ji'},
+        {name: '大家秋天快乐（11月5日图寻每日挑战）', cover: 'biz/1667760119385_74b2f0d189c24f21beb8cfa154a38eff_0.png', url: 'https://www.bilibili.com/video/BV1xv4y1U7Qh'},
         {name: '图寻挑战：图寻竟然有人40连胜 挑战世界街景，分辨出是哪个国家', cover: 'biz/1667672178243_dcdba9b1c4034abfbffa8ff715c2e21f_0.png', url: 'https://www.bilibili.com/video/BV1at4y1K7Pp'},
         {name: '今天题目质量很高（11月4日图寻每日挑战）', cover: 'biz/1667672137743_83e6fde7780e4897ae503045ec079740_0.png', url: 'https://www.bilibili.com/video/BV1Q8411h7kH'},
         {name: '网络迷踪：如何根据道路车辆信息判断所处国家', cover: 'biz/1667671971425_5b42b9a4446241b5be069291ba23753e_0.png', url: 'https://www.bilibili.com/video/BV1u84y1v7Dw'},
@@ -129,6 +133,7 @@ export default {
         {name:'图寻第一届个人锦标赛录播1',cover: 'biz/1665575321286_9f85c32bccd2401191aed9e468129888_0.webp', url: 'https://www.bilibili.com/video/BV1Ma41137zr' },
       ],
       coursePagedata: [
+        {name: '【图寻小技巧】语言识别：罗曼语族（二）', cover: 'biz/1667760389459_e41d6ff239dd4e659fdba8f835e7de06_0.png', url: 'https://www.bilibili.com/video/BV1cd4y1F78U'},
         {name: '【教程】图寻/Geoguessr 海外属地特殊街景车', cover: 'biz/1667672068671_4478361375d24aa9991970ca4d1cd577_0.png', url: 'https://www.bilibili.com/video/BV1TP411A7o2'},
         {name: '【图寻小技巧】语言识别：罗曼语族（一）', cover: 'biz/1667059619190_aeba12ec6fb044158d5273307cb57ba1_0.png', url: 'https://www.bilibili.com/video/BV1b84y1i7iP'},
         {name:'图寻总笔记1.0',cover: 'biz/1665574727065_92d546eddc4a427d9eb503077a34fd06_0.webp', url: 'https://www.bilibili.com/video/BV1Xg411a78m' },
