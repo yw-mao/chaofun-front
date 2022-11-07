@@ -63,6 +63,10 @@ export default {
   data(){
     return {
       recentPagedata: [
+        {name: '图寻挑战：如何根据道路车辆信息及房屋风格判断所处国家', cover: 'biz/1667842793516_73b95f2af3df4b3093932202b0716027_0.png', url: 'https://www.bilibili.com/video/BV11t4y1K76d'},
+        {name: '如何根据照片分析出地点？', cover: 'biz/1667842750216_dff9682676fa4ac6a344f00490af9b27_0.png', url: 'https://www.bilibili.com/video/BV1Je411F7kr'},
+        {name: '尝试每日挑战解说第一弹', cover: 'biz/1667842652615_10b6449e10bb44faa65a96102b113874_1.png', url: 'https://www.bilibili.com/video/BV1vV4y137Ry'},
+        {name: '你能根据照片推理位置吗？主播最后疯了', cover: 'biz/1667842483557_32828e8a88314daebf0a4ae850c3346b_0.png', url: 'https://www.bilibili.com/video/BV1Gd4y1w72Y'},
         {name: '【图寻】 国家连胜移动87连胜', cover: 'biz/1667760336015_8ef96c7ab24b4bada0df99a45eb5e0be_0.png', url: 'https://www.bilibili.com/video/BV1gP4y1U7Be'},
         {name: '你能根据照片推理位置吗？炒饭图寻', cover: 'biz/1667760307022_8058bb1693b640399b93d5dc315b5968_0.png', url: 'https://www.bilibili.com/video/BV1Ae411F77B'},
         {name: '小伙挑战看图猜省份，结局意想不到', cover: 'biz/1667760203332_f301972455bd45c0931c6ec427d4b8e1_0.png', url: 'https://www.bilibili.com/video/BV1o8411h7Ji'},
