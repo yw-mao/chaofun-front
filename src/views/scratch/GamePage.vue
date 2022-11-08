@@ -103,7 +103,7 @@ table, th, td {
     //}
 
     .table {
-      max-width: 80%;
+      width: 80%;
     }
   }
 }
