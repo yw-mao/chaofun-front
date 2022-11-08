@@ -11,7 +11,7 @@
     </div>
     <div v-if="!showResult">
       <div v-if="!start && guessInfo" style="margin: auto; text-align: center; padding-top: 1rem">
-        <el-button type="primary" style="margin: auto; text-align: center;" @click="start = true">开始</el-button>
+        <el-button type="primary" style="margin: auto; text-align: center;" @click="startGuess">开始</el-button>
       </div>
       <div v-if="start" class="input">
         <div v-if="guessInfo">
@@ -68,7 +68,7 @@ export default {
     this.getGuessInfo();
   },
   methods: {
-    start() {
+    startGuess() {
       this.start = true;
       api.getByPath('/api/v0/scratch/game/start', {'id': this.id}).then(res=>{
       })
