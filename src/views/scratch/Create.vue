@@ -17,10 +17,12 @@
       </div>
       <el-input v-model="desc"></el-input>
       <div>
-        答案(一行一个):
+        答案(一行一个): {{answers.split("\n").length }} 个
       </div>
 
-      <el-input v-model="answers" type="textarea"></el-input>
+      <el-input v-model="answers" type="textarea"
+                :autosize="{ minRows: 10, maxRows: 10}"
+      ></el-input>
       <el-button type="primary" @click="submit">提交</el-button>
     </div>
 
@@ -46,14 +48,17 @@ export default {
     submit() {
       if (this.name === '') {
         this.$toast('测验名称不能为空');
+        return;
       }
 
       if (this.desc === '') {
         this.$toast('测验描述不能为空')
+        return;
       }
 
       if (this.answers === '') {
         this.$toast('测验的答案不能为空')
+        return;
       }
 
       api.postByPath('/api/v0/scratch/game/create', {name: this.name, desc: this.desc, cover: 'biz/1667921710402_beb8f2eaccb1482d87deb7816fd3baef_0.jpeg', data: JSON.stringify({"answers": this.answers.split("\n")})}).then((res) => {
