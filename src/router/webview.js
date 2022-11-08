@@ -354,6 +354,13 @@ routes = [
     hidden: true
   },
   {
+    path: '/scratch/create',
+    component: () => import('@/views/scratch/Create'),
+    name: 'scratch_create',
+    meta: { title: 'scratch_create'},
+    hidden: true
+  },
+  {
     path: '/tuxun/home',
     component: () => import('@/views/tuxun/TXNewHome'),
     name: 'tuxun',
