@@ -6,7 +6,7 @@
     <div v-if="guessInfo" style="margin: auto; text-align: center; font-size: 16px">
       {{this.guessInfo.desc}}
     </div>
-    <div v-if="!start" style="margin: auto; text-align: center; padding-top: 1rem">
+    <div v-if="!start && guessInfo" style="margin: auto; text-align: center; padding-top: 1rem">
       <el-button type="primary" style="margin: auto; text-align: center;" @click="start = true">开始</el-button>
     </div>
     <div v-if="start" class="input">
@@ -80,6 +80,7 @@ export default {
   height: 100%;
   width: 100%;
   .input {
+    padding-top: 1rem;
     max-width: 40%;
     margin: auto;
   }
@@ -93,5 +94,17 @@ export default {
 
 table, th, td {
   border: 1px solid black;
+}
+
+@media only screen and (max-width: 679px) {
+  .container {
+    //.input {
+    //  max-width: 80%;
+    //}
+
+    .table {
+      max-width: 80%;
+    }
+  }
 }
 </style>
