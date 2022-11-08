@@ -53,6 +53,7 @@ export default {
     }
   },
   mounted() {
+    document.title = '挠头 - 一起来做小测验吧'
     this.id =  this.$route.query.id;
     this.getGuessInfo();
   },
