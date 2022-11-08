@@ -20,7 +20,7 @@
       <div class="table">
         <table v-if="guessInfo" style="width: 100%">
           <tr style="width: 100px;">
-            <th style="border: 1px solid black;">答案</th>
+            <th>答案</th>
           </tr>
           <tr v-for="(item, index) in guessInfo.data.answers" style="border: 1px solid black;">
             <td style="width: 100%; border: 1px solid black;">
@@ -93,6 +93,7 @@ export default {
 }
 
 table, th, td {
+  border-collapse:collapse;
   border: 1px solid black;
 }
 
