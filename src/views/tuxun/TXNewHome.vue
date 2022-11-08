@@ -123,7 +123,7 @@
               全国最好的网络迷踪社区
             </div>
           </div>
-          <div class="card" @click="$toast('敬请期待')">
+          <div class="card" @click="redirectPage( '/scratch/home')">
             <div class="title">
               图寻作弊器
             </div>

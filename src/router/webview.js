@@ -340,6 +340,20 @@ routes = [
     hidden: true
   },
   {
+    path: '/scratch/home',
+    component: () => import('@/views/scratch/HomePage'),
+    name: 'scratch',
+    meta: { title: 'scratch'},
+    hidden: true
+  },
+  {
+    path: '/scratch/guess',
+    component: () => import('@/views/scratch/GamePage'),
+    name: 'scratch_game',
+    meta: { title: 'scratch_game'},
+    hidden: true
+  },
+  {
     path: '/tuxun/home',
     component: () => import('@/views/tuxun/TXNewHome'),
     name: 'tuxun',
