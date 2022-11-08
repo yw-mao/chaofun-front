@@ -56,7 +56,7 @@ export default {
         this.$toast('测验的答案不能为空')
       }
 
-      api.postByPath('/api/v0/scratch/game/create', {name: this.name, desc: this.desc, data: JSON.stringify({"answers": this.answers.split("\n")})}).then((res) => {
+      api.postByPath('/api/v0/scratch/game/create', {name: this.name, desc: this.desc, cover: 'biz/1667921710402_beb8f2eaccb1482d87deb7816fd3baef_0.jpeg', data: JSON.stringify({"answers": this.answers.split("\n")})}).then((res) => {
         window.location.href = '/scratch/guess?id=' + res.data.id;
       })
     },
