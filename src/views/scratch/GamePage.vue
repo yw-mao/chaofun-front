@@ -57,6 +57,11 @@ export default {
     this.getGuessInfo();
   },
   methods: {
+    start() {
+      this.start = true;
+      api.getByPath('/api/v0/scratch/game/start', {'id': this.id}).then(res=>{
+      })
+    },
     getGuessInfo() {
       api.getByPath('/api/v0/scratch/game/get', {'id': this.id}).then(res=>{
         this.guessInfo = res.data;
