@@ -1,6 +1,8 @@
 <template>
   <div class="container">
-    <div style="text-align: center; width: 100%; font-size: 32px;font-weight: bold; padding-top: 1rem; padding-bottom: 2rem"> 炒饭小测验 </div>
+    <div style="text-align: center; width: 100%; font-size: 32px;font-weight: bold; padding-top: 1rem; padding-bottom: 2rem"> 炒饭小测验
+      <div v-if="totalTimes" style="font-size: 16px">总测验次数: {{totalTimes}}</div>
+    </div>
     <section v-if="list" class="list_container">
       <div style="display: flex; padding-bottom: 8px" v-for="(item, index) in list" @click="gotoGuess(item)">
         <img class="cover" :src="imgOrigin + item.cover" style="">
@@ -26,6 +28,7 @@ export default {
 
   data() {
     return {
+      totalTimes: null,
       list: [],
     }
   },
@@ -40,9 +43,16 @@ export default {
       })
     },
 
+    getTotalGuessTimes() {
+      api.getByPath('/api/v0/scratch/game/getTotalStartTimes' ).then(res=>{
+        this.totalTimes = res.data;
+      })
+    },
+
     gotoGuess(item) {
       window.location.href = '/scratch/guess?id=' + item.id;
     }
+
   },
 }
 </script>
