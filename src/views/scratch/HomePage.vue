@@ -40,6 +40,7 @@ export default {
   },
   mounted() {
     this.getList();
+    this.getTotalGuessTimes();
   },
 
   methods: {
