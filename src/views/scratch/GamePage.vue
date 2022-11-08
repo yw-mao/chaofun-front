@@ -1,21 +1,30 @@
 <template>
   <div class="container">
-    <div v-if="guessInfo" style="margin: auto; text-align: center; font-size: 32px">
+    <div class="back_home" @click="goHome">
+      <el-button round>←返回小测验首页</el-button>
+    </div>
+    <div v-if="guessInfo" style="padding-top: 3rem; margin: auto; text-align: center; font-size: 32px">
       {{this.guessInfo.name}}
     </div>
     <div v-if="guessInfo" style="margin: auto; text-align: center; font-size: 16px">
       {{this.guessInfo.desc}}
     </div>
-    <div v-if="!start && guessInfo" style="margin: auto; text-align: center; padding-top: 1rem">
-      <el-button type="primary" style="margin: auto; text-align: center;" @click="start = true">开始</el-button>
-    </div>
-    <div v-if="start" class="input">
-      <div v-if="guessInfo">
-        猜对：{{this.right}} / {{this.guessInfo.data.answers.length}}
+    <div v-if="!showResult">
+      <div v-if="!start && guessInfo" style="margin: auto; text-align: center; padding-top: 1rem">
+        <el-button type="primary" style="margin: auto; text-align: center;" @click="start = true">开始</el-button>
       </div>
-      <el-input @input="match" v-model="inputResult">
-      </el-input>
+      <div v-if="start" class="input">
+        <div v-if="guessInfo">
+          猜对：{{this.right}} / {{this.guessInfo.data.answers.length}}
+        </div>
+        <el-input @input="match" v-model="inputResult">
+        </el-input>
+      </div>
     </div>
+    <div v-else class="result">
+      恭喜你，已经全部答对
+    </div>
+
     <section style="width: 100%">
       <div class="table">
         <table v-if="guessInfo" style="width: 100%">
@@ -44,6 +53,7 @@ export default {
   name: "GamePage",
   data() {
     return {
+      showResult: false,
       inputResult: '',
       guessInfo: null,
       matched: new Set(),
@@ -53,7 +63,7 @@ export default {
     }
   },
   mounted() {
-    document.title = '挠头 - 一起来做小测验吧'
+    document.title = '炒饭小测验 - 一起来做小测验吧'
     this.id =  this.$route.query.id;
     this.getGuessInfo();
   },
@@ -68,12 +78,18 @@ export default {
         this.guessInfo = res.data;
       })
     },
+    goHome() {
+      window.location.href = '/scratch/home'
+    },
     match(e) {
       this.guessInfo.data.answers.forEach(v => {
         if (v === e && !this.matched.has(v)) {
           this.right = this.right + 1;
           this.inputResult = '';
           this.matched.add(v);
+          if (this.right === this.guessInfo.data.answers.length) {
+            this.showResult = true;
+          }
         }
       });
     }
@@ -95,6 +111,16 @@ export default {
     width: 30%;
     margin-left: auto;
     margin-right: auto;
+  }
+  .back_home {
+    position: absolute;
+    padding-top: 1rem;
+    padding-left: 1rem;
+  }
+  .result {
+    width: 100%;
+    text-align: center;
+    padding-top: 1rem;
   }
 }
 

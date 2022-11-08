@@ -1,7 +1,8 @@
 <template>
   <div class="container">
+    <div style="text-align: center; width: 100%; font-size: 32px;font-weight: bold; padding-bottom: 2rem"> 炒饭小测验 </div>
     <section v-if="list" class="list_container">
-      <div style="display: flex" v-for="(item, index) in list" @click="gotoGuess(item)">
+      <div style="display: flex; padding-bottom: 8px" v-for="(item, index) in list" @click="gotoGuess(item)">
         <img class="cover" :src="imgOrigin + item.cover" style="">
         </img>
         <div>
