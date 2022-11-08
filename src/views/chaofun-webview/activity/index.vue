@@ -57,6 +57,12 @@ export default {
           showBottom: true
         },
         {
+          path: '/scratch/home',
+          title: '小测验',
+          desc: '一起来制作和玩耍小测验吧',
+          showBottom: true
+        },
+        {
           path: '/p/1137991',
           title: '炒饭社区内容公约',
           desc: '大家一起加油吧！！！',
