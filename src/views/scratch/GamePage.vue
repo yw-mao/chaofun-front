@@ -1,7 +1,8 @@
 <template>
   <div class="container">
-    <div class="back_home" @click="goHome">
-      <el-button round>←返回小测验首页</el-button>
+    <div class="back_home">
+      <el-button @click="goHome" round>←返回小测验首页</el-button>
+      <el-button @click="share" round>分享</el-button>
     </div>
     <div v-if="guessInfo" style="padding-top: 3rem; margin: auto; text-align: center; font-size: 32px">
       {{this.guessInfo.name}}
@@ -92,6 +93,16 @@ export default {
           }
         }
       });
+    },
+    share() {
+      var input = document.createElement('input');
+      input.setAttribute('value', 'https://chao.fan/scratch/guess?id=' + this.id);
+      document.body.appendChild(input);
+      input.select();
+      var result = document.execCommand('copy');
+      document.body.removeChild(input);
+      this.$toast("复制测验地址成功");
+      return result;
     }
   }
 }
