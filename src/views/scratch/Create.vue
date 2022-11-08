@@ -5,7 +5,7 @@
     </div>
     <div style="text-align: center; width: 100%; font-size: 24px;font-weight: bold; padding-top: 3rem; padding-bottom: 2rem">
       创建测验
-      <div  style="font-size: 12px;font-weight: normal">创建后如有改动暂时可以练习站长修改</div>
+      <div  style="font-size: 12px;font-weight: normal">创建后如有改动暂时可以联系站长修改</div>
     </div>
     <div class="input-container">
       <div>
