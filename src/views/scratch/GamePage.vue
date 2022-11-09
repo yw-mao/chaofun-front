@@ -18,7 +18,7 @@
       测验次数: {{guessInfo.start}}
     </div>
     <div v-if="!showResult">
-      <div v-if="showResult && !giveUp" style="margin: auto; text-align: center; padding-top: 1rem">
+      <div v-if="!start && guessInfo && !giveUp" style="margin: auto; text-align: center; padding-top: 1rem">
         <el-button type="primary" style="margin: auto; text-align: center;" @click="startGuess">开始</el-button>
       </div>
       <div v-if="!start && guessInfo && giveUp" style="margin: auto; text-align: center; padding-top: 1rem">
