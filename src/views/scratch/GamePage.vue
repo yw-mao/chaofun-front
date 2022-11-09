@@ -3,6 +3,7 @@
     <div class="back_home">
       <el-button @click="goHome" round>←返回小测验首页</el-button>
       <el-button @click="share" round>分享</el-button>
+      <el-button v-if="guessInfo &&  this.$store.state.user && this.$store.state.user.userInfo  && this.$store.state.user.userInfo.userId === this.guessInfo.userId" @click="modify" round>修改</el-button>
     </div>
     <div v-if="guessInfo" style="padding-top: 3rem; margin: auto; text-align: center; font-size: 32px">
       {{this.guessInfo.name}}
@@ -75,6 +76,9 @@ export default {
     this.getGuessInfo();
   },
   methods: {
+    modify() {
+      window.location.href = '/scratch/modify?id=' + this.id
+    },
     startGuess() {
       this.start = true;
       api.getByPath('/api/v0/scratch/game/start', {'id': this.id}).then(res=>{

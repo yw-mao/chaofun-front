@@ -38,13 +38,25 @@ export default {
     return {
       name: '',
       desc: '',
-      answers: ''
+      answers: '',
+      id: null
     }
   },
   mounted() {
-
+    this.id =  this.$route.query.id;
+    if (this.id && this.id !== '') {
+      this.modify = true;
+      this.getGuess();
+    }
   },
   methods: {
+    getGuess() {
+      api.getByPath('/api/v0/scratch/game/get', {'id': this.id}).then(res=>{
+        this.name = res.data.name;
+        this.desc = res.data.desc;
+        this.answers = res.data.data.answers.join("\n");
+      })
+    },
     submit() {
       if (this.name === '') {
         this.$toast('测验名称不能为空');
@@ -61,7 +73,7 @@ export default {
         return;
       }
 
-      api.postByPath('/api/v0/scratch/game/create', {name: this.name, desc: this.desc, cover: 'biz/1667921710402_beb8f2eaccb1482d87deb7816fd3baef_0.jpeg', data: JSON.stringify({"answers": this.answers.split("\n")})}).then((res) => {
+      api.postByPath('/api/v0/scratch/game/create', {id: this.id, name: this.name, desc: this.desc, cover: 'biz/1667921710402_beb8f2eaccb1482d87deb7816fd3baef_0.jpeg', data: JSON.stringify({"answers": this.answers.split("\n")})}).then((res) => {
         window.location.href = '/scratch/guess?id=' + res.data.id;
       })
     },

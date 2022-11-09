@@ -1,7 +1,5 @@
 <template>
   <div class="container">
-
-
     <div style="text-align: center; width: 100%; font-size: 32px;font-weight: bold; padding-top: 1rem; padding-bottom: 2rem"> 炒饭小测验
       <div v-if="totalTimes" style="font-size: 16px">总测验次数: {{totalTimes}}</div>
       <div class="top-right">
@@ -9,7 +7,6 @@
         <el-button type="primary" @click="toCreate" round>创建小测验</el-button>
       </div>
     </div>
-
 
     <section v-if="list" class="list_container">
       <el-radio-group v-model="sort" style="margin-bottom: 30px;" @change="changeSort">
