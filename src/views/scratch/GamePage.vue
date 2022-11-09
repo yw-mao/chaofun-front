@@ -18,8 +18,11 @@
       测验次数: {{guessInfo.start}}
     </div>
     <div v-if="!showResult">
-      <div v-if="!start && guessInfo" style="margin: auto; text-align: center; padding-top: 1rem">
+      <div v-if="!start && guessInfo && !giveUp" style="margin: auto; text-align: center; padding-top: 1rem">
         <el-button type="primary" style="margin: auto; text-align: center;" @click="startGuess">开始</el-button>
+      </div>
+      <div v-if="!start && guessInfo && giveUp" style="margin: auto; text-align: center; padding-top: 1rem">
+        <el-button type="primary" style="margin: auto; text-align: center;" @click="startGuess">再来一次</el-button>
       </div>
       <div v-if="start" class="input">
         <div v-if="guessInfo">
@@ -27,6 +30,10 @@
         </div>
         <el-input @input="match" v-model="inputResult">
         </el-input>
+      </div>
+
+      <div v-if="start && guessInfo" style="margin: auto; text-align: center; padding-top: 1rem">
+        <el-button type="warning" style="margin: auto; text-align: center;" @click="giveUpGuess">放弃</el-button>
       </div>
     </div>
     <div v-else class="result">
@@ -42,6 +49,9 @@
           <tr v-for="(item, index) in guessInfo.data.answers" style="border: 1px solid black;">
             <td style="width: 100%; border: 1px solid black;">
               <div v-if="matched.has(item)" style="text-align: center; color: green">
+                {{item}}
+              </div>
+              <div v-if="!matched.has(item) && giveUp" style="text-align: center; color: red">
                 {{item}}
               </div>
               <div v-else style="text-align: center">
@@ -68,6 +78,7 @@ export default {
       id: null,
       right: 0,
       start: false,
+      giveUp: false,
     }
   },
   mounted() {
@@ -79,7 +90,12 @@ export default {
     modify() {
       window.location.href = '/scratch/modify?id=' + this.id
     },
+    giveUpGuess() {
+      this.giveUp = true;
+      this.start = false;
+    },
     startGuess() {
+      this.giveUp = false;
       this.start = true;
       api.getByPath('/api/v0/scratch/game/start', {'id': this.id}).then(res=>{
       })
