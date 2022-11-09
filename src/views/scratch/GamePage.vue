@@ -13,6 +13,9 @@
     <div v-if="guessInfo.user" style="margin: auto; text-align: center; font-size: 16px">
       作者: {{guessInfo.user.userName}}
     </div>
+    <div v-if="guessInfo" style="margin: auto; text-align: center; font-size: 16px">
+      测验次数: {{guessInfo.start}}
+    </div>
     <div v-if="!showResult">
       <div v-if="!start && guessInfo" style="margin: auto; text-align: center; padding-top: 1rem">
         <el-button type="primary" style="margin: auto; text-align: center;" @click="startGuess">开始</el-button>
