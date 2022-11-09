@@ -28,7 +28,7 @@
         <div v-if="guessInfo">
           猜对：{{this.right}} / {{this.guessInfo.data.answers.length}}
         </div>
-        <el-input @input="match" v-model="inputResult">
+        <el-input autofocus @input="match" v-model="inputResult">
         </el-input>
       </div>
 
