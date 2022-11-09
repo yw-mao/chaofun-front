@@ -18,7 +18,7 @@
       测验次数: {{guessInfo.start}}
     </div>
     <div v-if="!showResult">
-      <div v-if="!start && guessInfo && !giveUp" style="margin: auto; text-align: center; padding-top: 1rem">
+      <div v-if="showResult && !giveUp" style="margin: auto; text-align: center; padding-top: 1rem">
         <el-button type="primary" style="margin: auto; text-align: center;" @click="startGuess">开始</el-button>
       </div>
       <div v-if="!start && guessInfo && giveUp" style="margin: auto; text-align: center; padding-top: 1rem">
@@ -38,6 +38,9 @@
     </div>
     <div v-else class="result">
       恭喜你，已经全部答对
+      <div v-if="!start && guessInfo && giveUp" style="margin: auto; text-align: center; padding-top: 1rem">
+        <el-button type="primary" style="margin: auto; text-align: center;" @click="startGuess">再来一次</el-button>
+      </div>
     </div>
 
     <section style="width: 100%">
@@ -54,7 +57,7 @@
               <div v-if="!matched.has(item) && giveUp" style="text-align: center; color: red">
                 {{item}}
               </div>
-              <div v-else style="text-align: center">
+              <div v-if="!matched.has(item) && !giveUp" style="text-align: center">
                 {{'-'}}
               </div>
             </td>
