@@ -9,7 +9,13 @@
         <el-button type="primary" @click="toCreate" round>创建小测验</el-button>
       </div>
     </div>
+
+
     <section v-if="list" class="list_container">
+      <el-radio-group v-model="sort" style="margin-bottom: 30px;" @change="changeSort">
+      <el-radio-button label="hot">最热</el-radio-button>
+        <el-radio-button label="new">最新</el-radio-button>
+      </el-radio-group>
       <div style="display: flex; padding-bottom: 8px" v-for="(item, index) in list" @click="gotoGuess(item)">
         <img class="cover" :src="imgOrigin + item.cover" style="">
         </img>
@@ -35,6 +41,7 @@ export default {
   data() {
     return {
       totalTimes: null,
+      sort: 'hot',
       list: [],
     }
   },
@@ -45,7 +52,7 @@ export default {
 
   methods: {
     getList() {
-      api.getByPath('/api/v0/scratch/game/list', ).then(res=>{
+      api.getByPath('/api/v0/scratch/game/list', {order: this.sort}).then(res=>{
         this.list = res.data;
       })
     },
@@ -62,8 +69,12 @@ export default {
 
     toCreate() {
       window.location.href = '/scratch/create'
-    }
+    },
 
+    changeSort(tab, event) {
+      this.list = [];
+      this.getList();
+    }
   },
 }
 </script>
