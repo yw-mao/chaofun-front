@@ -38,9 +38,6 @@
     </div>
     <div v-else class="result">
       恭喜你，已经全部答对
-      <div v-if="!start && guessInfo && giveUp" style="margin: auto; text-align: center; padding-top: 1rem">
-        <el-button type="primary" style="margin: auto; text-align: center;" @click="startGuess">再来一次</el-button>
-      </div>
     </div>
 
     <section style="width: 100%">
