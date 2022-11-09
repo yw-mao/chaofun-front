@@ -4,8 +4,8 @@
       <el-button round>←返回小测验首页</el-button>
     </div>
     <div style="text-align: center; width: 100%; font-size: 24px;font-weight: bold; padding-top: 3rem; padding-bottom: 2rem">
-      创建测验
-      <div  style="font-size: 12px;font-weight: normal">创建后如有改动暂时可以联系站长修改</div>
+      <div v-if="!modify">创建测验</div>
+      <div v-else>修改测验</div>
     </div>
     <div class="input-container">
       <div>
@@ -39,6 +39,7 @@ export default {
       name: '',
       desc: '',
       answers: '',
+      modify: false,
       id: null
     }
   },
