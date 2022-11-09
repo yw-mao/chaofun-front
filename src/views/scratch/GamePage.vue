@@ -94,7 +94,7 @@ export default {
     },
     match(e) {
       this.guessInfo.data.answers.forEach(v => {
-        if (v === e && !this.matched.has(v)) {
+        if (this.palindrome(v) === this.palindrome(e) && !this.matched.has(v)) {
           this.right = this.right + 1;
           this.inputResult = '';
           this.matched.add(v);
@@ -113,6 +113,9 @@ export default {
       document.body.removeChild(input);
       this.$toast("复制测验地址成功");
       return result;
+    },
+    palindrome(str) {
+      return str.replace(/[`:_.~!@#$%^&*() \+ =<>?"{}|, \/ ;' \\ [ \] ·~！@#￥%……&*（）—— \+ ={}|《》？：“”【】、；‘’，。、]/g, '');
     }
   }
 }

@@ -17,7 +17,7 @@
       <div style="display: flex; padding-bottom: 8px" v-for="(item, index) in list" @click="gotoGuess(item)">
         <img class="cover" :src="imgOrigin + item.cover" style="">
         </img>
-        <div>
+        <div style="padding-left: 8px">
           <div style="font-size: 24px; font-weight: bold;">
             {{item.name}}
           </div>
