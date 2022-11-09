@@ -10,7 +10,7 @@
     <div v-if="guessInfo" style="margin: auto; text-align: center; font-size: 16px">
       {{this.guessInfo.desc}}
     </div>
-    <div v-if="guessInfo.user" style="margin: auto; text-align: center; font-size: 16px">
+    <div v-if="guessInfo && guessInfo.user" style="margin: auto; text-align: center; font-size: 16px">
       作者: {{guessInfo.user.userName}}
     </div>
     <div v-if="guessInfo" style="margin: auto; text-align: center; font-size: 16px">
