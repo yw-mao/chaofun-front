@@ -361,6 +361,13 @@ routes = [
     hidden: true
   },
   {
+    path: '/scratch/modify',
+    component: () => import('@/views/scratch/Create'),
+    name: 'scratch_modify',
+    meta: { title: 'scratch_modify'},
+    hidden: true
+  },
+  {
     path: '/tuxun/home',
     component: () => import('@/views/tuxun/TXNewHome'),
     name: 'tuxun',
