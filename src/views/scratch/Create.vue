@@ -1,7 +1,8 @@
 <template>
   <div class="container">
-    <div class="back_home" @click="goHome">
-      <el-button round>←返回小测验首页</el-button>
+    <div class="back_home">
+      <el-button @click="goHome" round>←返回小测验首页</el-button>
+      <el-button v-if="modify" @click="deleteGame" round>删除测验</el-button>
     </div>
     <div style="text-align: center; width: 100%; font-size: 24px;font-weight: bold; padding-top: 3rem; padding-bottom: 2rem">
       <div v-if="!modify">创建测验</div>
@@ -80,6 +81,19 @@ export default {
     },
     goHome() {
       window.location.href = '/scratch/home';
+    },
+    deleteGame() {
+      this.$confirm(`是否确定删除该小测验？`, "提示", {
+        type: "warning",
+        // position: center,
+      }).then(() => {
+        api.getByPath('/api/v0/scratch/game/delete', {'id': this.id}).then(res=>{
+          if (res.success) {
+            window.location.href = '/scratch/home';
+          }
+        })
+      })
+
     }
   }
 }
