@@ -63,6 +63,12 @@ export default {
   data(){
     return {
       recentPagedata: [
+        {name: '不认识山西是我的错吗？！', cover: 'biz/1668104654887_6e710c4c79e14690b2b4f6358337118f_0.png', url: 'https://www.bilibili.com/video/BV12W4y147tq'},
+        {name: '五个判断国家的妙招', cover: 'biz/1668104621854_156f518865eb42dbaae850ae267ac282_0.png', url: 'https://www.bilibili.com/video/BV1qG4y1Z7QJ/'},
+        {name: '网络谜踪：小伙根据一张图片推理出地点', cover: 'biz/1668104565687_4e3a6af57ffb452a86eb808df9758d5a_0.png', url: 'https://www.bilibili.com/video/BV1114y1p78F'},
+        {name: '不认识广东是我的错吗？图寻每日挑战 ', cover: 'biz/1668104507742_7d476a4a7e4a4aa7a2010331ce93b160_0.png', url: 'https://www.bilibili.com/video/BV1vd4y1F7GU'},
+        {name: '解说地理达人如何用一张照片判断国家', cover: 'biz/1668104466140_b93dd2fb3b704ef0a9a88272b4d59140_0.png', url: 'https://www.bilibili.com/video/BV1gP4y127mp'},
+        {name: '燃烧自己，照亮他人（11月7日图寻每日挑战）', cover: 'biz/1668104400851_565d923c4b4a427ebf9363c785f55ac1_0.png', url: 'https://www.bilibili.com/video/BV1V8411a7bZ'},
         {name: '图寻挑战：如何根据道路车辆信息及房屋风格判断所处国家', cover: 'biz/1667842793516_73b95f2af3df4b3093932202b0716027_0.png', url: 'https://www.bilibili.com/video/BV11t4y1K76d'},
         {name: '如何根据照片分析出地点？', cover: 'biz/1667842750216_dff9682676fa4ac6a344f00490af9b27_0.png', url: 'https://www.bilibili.com/video/BV1Je411F7kr'},
         {name: '尝试每日挑战解说第一弹', cover: 'biz/1667842652615_10b6449e10bb44faa65a96102b113874_1.png', url: 'https://www.bilibili.com/video/BV1vV4y137Ry'},
