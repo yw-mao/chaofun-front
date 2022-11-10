@@ -97,6 +97,7 @@ export default {
       this.panorama.setZoom(0);
     },
     change() {
+      this.location = null;
       this.doLoginStatus().then((res) => {
       if (res) {
 
@@ -105,7 +106,6 @@ export default {
           return;
         }
         api.getByPath("/api/v0/tuxun/random", {mapsId: this.mapsId}).then(res => {
-          this.location = null;
           this.setPano(res.data);
         })
       }
