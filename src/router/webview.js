@@ -347,6 +347,13 @@ routes = [
     hidden: true
   },
   {
+    path: '/scratch',
+    component: () => import('@/views/scratch/HomePage'),
+    name: 'scratch',
+    meta: { title: 'scratch'},
+    hidden: true
+  },
+  {
     path: '/scratch/guess',
     component: () => import('@/views/scratch/GamePage'),
     name: 'scratch_game',
