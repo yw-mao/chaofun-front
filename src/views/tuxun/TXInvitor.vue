@@ -200,7 +200,7 @@
               你连胜了 {{gameData.player.streaks}} 轮
             </div>
             <div>
-              <el-button class="result_button" type="primary" @click="createNew" round>重新开始挑战</el-button>
+              <el-button class="result_button" type="primary" @click="createNew" round>再来一局</el-button>
             </div>
             <div>
               <el-button class="result_button"  @click="goHome" round>回到图寻首页</el-button>
