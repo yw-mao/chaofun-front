@@ -37,21 +37,29 @@
                 <div>
                   <el-input v-model="userInfo.userName" maxlength="20" style="width:210px;"></el-input>
                   <el-button
-                    :disabled="userInfo.phone?false:true"
-                    :type="userInfo.phone?'primary':'info'"
                     icon="el-icon-edit"
                     size="small"
                     style="margin-left:10px;"
                     @click="handleUserName">
                     确定修改
                   </el-button>
+                </div>
+                <div class="title">绑定手机号</div>
+                <div>
                   <div v-if="!userInfo.phone" style="display:inline-block;padding-left:10px;">
                     <span style="color:red;">未绑定手机号？</span>
                     <span style="color:#409eff;text-decoration:underline;cursor:pointer;"
                           @click="toBindPhone">去绑定</span>
                   </div>
+                  <div v-else style="color: dodgerblue">
+                    已绑定
+                  </div>
                 </div>
+
+
               </el-tab-pane>
+
+
 
               <el-tab-pane :lazy=true label="本地设置" name="localSetting">
                 <div class="title" style="display: flex;">本地设置
@@ -306,6 +314,10 @@ export default {
       // this.type = 'edit';
       // this.params.phone = (this.userInfo.phone.slice(0,3)+'****'+this.userInfo.phone.slice(7));
       // this.logStatus = true;
+
+      if (!this.userInfo.phone) {
+        this.$toast('需绑定手机号');
+      }
       if (this.userInfo.userName && this.userInfo.phone) {
         api.changeUserName({ userName: this.userInfo.userName }).then(res => {
           if (res.success) {
