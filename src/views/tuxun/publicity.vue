@@ -63,6 +63,8 @@ export default {
   data(){
     return {
       recentPagedata: [
+        {name: '如何优雅的证明你是单身狗这件小事', cover: 'biz/1668183939910_7f5295dfbdc94476b8e20d6f5a048e0c_0.png', url: 'https://www.bilibili.com/video/BV1TG4y1t7Mv'},
+        {name: 'aslghf;lyweoityafhdlk（11月11日图寻每日挑战', cover: 'biz/1668183799021_cb0256561daf45dbb923fcd6ccf348e9_0.png', url: 'https://www.bilibili.com/video/BV1W14y1p7GE'},
         {name: '不认识山西是我的错吗？！', cover: 'biz/1668104654887_6e710c4c79e14690b2b4f6358337118f_0.png', url: 'https://www.bilibili.com/video/BV12W4y147tq'},
         {name: '五个判断国家的妙招', cover: 'biz/1668104621854_156f518865eb42dbaae850ae267ac282_0.png', url: 'https://www.bilibili.com/video/BV1qG4y1Z7QJ/'},
         {name: '网络谜踪：小伙根据一张图片推理出地点', cover: 'biz/1668104565687_4e3a6af57ffb452a86eb808df9758d5a_0.png', url: 'https://www.bilibili.com/video/BV1114y1p78F'},
