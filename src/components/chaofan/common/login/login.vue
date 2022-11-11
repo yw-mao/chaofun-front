@@ -6,10 +6,10 @@
         <div class="tnames">
           <div @click="checkoutLoginType('account')" :class="['tts',{'tts_act':loginType=='account'}]">账号登录</div>
           <div @click="checkoutLoginType('phone')" :class="['tts',{'tts_act':loginType=='phone'}]">短信登录</div>
-<!--          <div v-if="!ISPHONE" @click="checkoutLoginType('scan')" :class="['tts',{'tts_act':loginType=='scan'}]">-->
-<!--            <img class="codes" :src="imgOrigin+'biz/7303906d6ddbb39a3616ac81f9d9a46c.png'" alt="">-->
-<!--            微信扫码-->
-<!--          </div>-->
+          <div v-if="!ISPHONE" @click="checkoutLoginType('scan')" :class="['tts',{'tts_act':loginType=='scan'}]">
+            <img class="codes" :src="imgOrigin+'biz/7303906d6ddbb39a3616ac81f9d9a46c.png'" alt="">
+            微信扫码
+          </div>
         </div>
         <div v-if="loginType=='account'" style="">
           <input type="text" v-model="params.userName"  placeholder="用户名 / 手机号"/>
@@ -23,7 +23,7 @@
           </div>
         </div>
         <div v-if="loginType=='scan'" style="">
-          <iframe class="" src="https://open.weixin.qq.com/connect/qrconnect?appid=wx758a87aa8b4a7eb0&redirect_uri=https%3A%2F%2Fchao.fun&response_type=code&scope=snsapi_login&state=STATE#wechat_redirect"  frameborder="0"></iframe>
+          <iframe class="" src="https://open.weixin.qq.com/connect/qrconnect?appid=wx758a87aa8b4a7eb0&redirect_uri=https%3A%2F%2Fchao.fan&response_type=code&scope=snsapi_login&state=STATE#wechat_redirect"  frameborder="0"></iframe>
         </div>
 
         <div class="remPassword">
