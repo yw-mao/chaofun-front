@@ -4,12 +4,12 @@
       <div class="ycontainer">
         <img @click="cancelLogin" class="cancel" :src='cancelImg'/>
         <div class="tnames">
-          <div @click="checkoutLoginType('account')" :class="['tts',{'tts_act':loginType=='account'}]">账号登录</div>
-          <div @click="checkoutLoginType('phone')" :class="['tts',{'tts_act':loginType=='phone'}]">短信登录</div>
           <div v-if="!ISPHONE" @click="checkoutLoginType('scan')" :class="['tts',{'tts_act':loginType=='scan'}]">
             <img class="codes" :src="imgOrigin+'biz/7303906d6ddbb39a3616ac81f9d9a46c.png'" alt="">
             微信扫码
           </div>
+          <div @click="checkoutLoginType('account')" :class="['tts',{'tts_act':loginType=='account'}]">账号登录</div>
+          <div @click="checkoutLoginType('phone')" :class="['tts',{'tts_act':loginType=='phone'}]">短信登录</div>
         </div>
         <div v-if="loginType=='account'" style="">
           <input type="text" v-model="params.userName"  placeholder="用户名 / 手机号"/>
@@ -22,8 +22,9 @@
             <span @click="sendCode">{{time?time+'s':'发送验证码'}}</span>
           </div>
         </div>
-        <div v-if="loginType=='scan'" style="">
-          <iframe class="" src="https://open.weixin.qq.com/connect/qrconnect?appid=wx758a87aa8b4a7eb0&redirect_uri=https%3A%2F%2Fchao.fan&response_type=code&scope=snsapi_login&state=STATE#wechat_redirect"  frameborder="0"></iframe>
+        <div v-if="loginType=='scan'">
+          <div style="text-align: center">扫码关注「炒饭社区」公众号登录入</div>
+          <img style="max-width: 100%; margin: auto" v-if="this.ticket" :src="'https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket=' + this.ticket">
         </div>
 
         <div class="remPassword">
@@ -107,13 +108,15 @@ import { Checkbox } from 'element-ui'
           code: ''
         },
         ifRemember: false,
+        ticket: null,
+        ticketTimer: null,
         registerSuccess: true,
         logStatus: 'login',
         msg: '123123',
         text: '向右滑',
         timer: null,
         time: null,
-        loginType: 'account',
+        loginType: 'scan',
         phoneParams: {
           phone: '',
           code: ''
@@ -179,6 +182,11 @@ import { Checkbox } from 'element-ui'
       }
    },
    mounted() {
+     if (this.ISPHONE) {
+       this.checkoutLoginType('account');
+     } else {
+       this.checkoutLoginType('scan');
+     }
      let self = this;
      if(document.getElementById('loginBox')){
        document.getElementById('loginBox').addEventListener('keyup',(e)=>{
@@ -204,8 +212,33 @@ import { Checkbox } from 'element-ui'
         }
      },
     checkoutLoginType(v){
+       if (this.ticketTimer) {
+         clearInterval(this.ticketTimer);
+       }
+       if (v === 'scan') {
+         this.getTicket();
+       }
       this.loginType = v;
     },
+     getTicket() {
+       api.getByPath('/api/v0/user/getLoginTicket').then(res=>{
+         if (res.success) {
+           this.ticket = res.data;
+           this.ticketTimer = setInterval(()=>{
+             this.checkTicketLogin();
+           },2000)
+         }
+       })
+     },
+     checkTicketLogin() {
+       api.getByPath('/api/v0/login/loginByPublicAccount', {'ticket': this.ticket}).then(res=>{
+         if (res.data) {
+           clearInterval(this.ticketTimer)
+           this.getUserInfo()
+           this.registerSuccess = true;
+         }
+       })
+     },
     sendCode(){
       if(this.time) return;
       if(this.params.phone&&(/^1[3456789]\d{9}$/.test(this.params.phone))){
@@ -310,7 +343,7 @@ import { Checkbox } from 'element-ui'
             }
           })
         }
-      }else if(v==2&&this.ifNull(v)){
+      } else if(v==2&&this.ifNull(v)){
         if(location.href.includes('code=')){
           params.platform = 'wechat';
         }
