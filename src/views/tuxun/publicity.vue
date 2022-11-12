@@ -63,6 +63,7 @@ export default {
   data(){
     return {
       recentPagedata: [
+        {name: '重发）系好安全带 我要装逼了（11月12日图寻每日挑战）', cover: 'biz/1668270500288_fa8b273872e34e2ea0ce3f4b9832851a_0.png', url: 'https://www.bilibili.com/video/BV1Pd4y1b7Qi'},
         {name: '如何优雅的证明你是单身狗这件小事', cover: 'biz/1668183939910_7f5295dfbdc94476b8e20d6f5a048e0c_0.png', url: 'https://www.bilibili.com/video/BV1TG4y1t7Mv'},
         {name: 'aslghf;lyweoityafhdlk（11月11日图寻每日挑战', cover: 'biz/1668183799021_cb0256561daf45dbb923fcd6ccf348e9_0.png', url: 'https://www.bilibili.com/video/BV1W14y1p7GE'},
         {name: '不认识山西是我的错吗？！', cover: 'biz/1668104654887_6e710c4c79e14690b2b4f6358337118f_0.png', url: 'https://www.bilibili.com/video/BV12W4y147tq'},
