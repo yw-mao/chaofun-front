@@ -4,7 +4,7 @@
       <div class="ycontainer">
         <img @click="cancelLogin" class="cancel" :src='cancelImg'/>
         <div class="tnames">
-          <div v-if="!ISPHONE" @click="checkoutLoginType('scan')" :class="['tts',{'tts_act':loginType=='scan'}]">
+          <div @click="checkoutLoginType('scan')" :class="['tts',{'tts_act':loginType=='scan'}]">
             <img class="codes" :src="imgOrigin+'biz/7303906d6ddbb39a3616ac81f9d9a46c.png'" alt="">
             微信扫码
           </div>
