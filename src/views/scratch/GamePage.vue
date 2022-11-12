@@ -109,16 +109,20 @@ export default {
       window.location.href = '/scratch/home'
     },
     match(e) {
+      var matchValue = null;
       this.guessInfo.data.answers.forEach(v => {
         if (this.palindrome(v) === this.palindrome(e) && !this.matched.has(v)) {
           this.right = this.right + 1;
           this.inputResult = '';
-          this.matched.add(v);
+          matchValue = v;
           if (this.right === this.guessInfo.data.answers.length) {
             this.showResult = true;
           }
         }
       });
+      if (matchValue) {
+        this.matched.add(matchValue);
+      }
     },
     share() {
       var input = document.createElement('input');
