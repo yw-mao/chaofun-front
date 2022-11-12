@@ -182,11 +182,7 @@ import { Checkbox } from 'element-ui'
       }
    },
    mounted() {
-     if (this.ISPHONE) {
-       this.checkoutLoginType('account');
-     } else {
-       this.checkoutLoginType('scan');
-     }
+     this.checkoutLoginType('scan');
      let self = this;
      if(document.getElementById('loginBox')){
        document.getElementById('loginBox').addEventListener('keyup',(e)=>{
