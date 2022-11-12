@@ -66,7 +66,9 @@ export default {
     },
 
     toCreate() {
-      window.location.href = '/scratch/create'
+      this.doLoginStatus().then((res) => {
+        window.location.href = '/scratch/create'
+      });
     },
 
     changeSort(tab, event) {
