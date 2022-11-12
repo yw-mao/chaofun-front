@@ -15,7 +15,7 @@
 
     <div class="game">
       <div class="info" @click="toFirstTournament">炒饭第四届图寻个人赛开始啦，11月13号周日下午2点开赛，大家赶快来报名吧！！！</div>
-      <div v-if="times" class="times" @click="toFirstTournament">图寻总轮次数：<span style="font-size: 18px">{{times}}</span></div>
+      <div v-if="times" class="times">图寻总轮次数：<span style="font-size: 18px">{{times}}</span></div>
       <section class="game_entrance">
         <div class="first_session_head">单人</div>
         <div class="line"></div>
