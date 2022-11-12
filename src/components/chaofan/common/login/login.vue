@@ -236,6 +236,7 @@ import { Checkbox } from 'element-ui'
            clearInterval(this.ticketTimer)
            this.getUserInfo()
            this.registerSuccess = true;
+           this.$toast('扫码登陆成功');
          }
        })
      },
