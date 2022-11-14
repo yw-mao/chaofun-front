@@ -26,7 +26,7 @@ export default {
   },
   methods: {
     create() {
-      api.getByPath('/api/v0/tuxun/challenge/adminCreate', {type: this.type}).then(res=>{
+      api.getByPath('/api/v0/tuxun/challenge/adminCreate', {type: this.type, mapsId: 33}).then(res=>{
         if (res.data) {
           this.panos = res.data.rounds;
         }

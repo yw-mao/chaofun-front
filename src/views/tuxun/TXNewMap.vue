@@ -13,9 +13,9 @@ export default {
   name: "TuxunNewMap",
   mounted() {
     var map = L.map('map').setView([51.505, -0.09], 3)
-    var url = 'https://map.chao-fan.com/mapApi/v1/mapService/getTile?x={x}&y={y}&z={z}&language=zh&scale=2&key=DAEDAALLJxDN3xIxrZz2g5NX2lXE%2Fqbk4v%2BzupvIWqwiMyZDKFQr3CqRmVb6Jn1cgoBxn20G47eawHQwysQulh3nYfG9pToO0CdGfA%3D%3D';
+    var url = 'https://map.chao-fan.com/tile/s2_z{z}_x{x}_y{y}.png';
     if(this.ISPHONE){
-      url = 'https://map.chao-fan.com/mapApi/v1/mapService/getTile?x={x}&y={y}&z={z}&language=zh&scale=1&key=DAEDAALLJxDN3xIxrZz2g5NX2lXE%2Fqbk4v%2BzupvIWqwiMyZDKFQr3CqRmVb6Jn1cgoBxn20G47eawHQwysQulh3nYfG9pToO0CdGfA%3D%3D';
+      url = 'https://map.chao-fan.com/tile/s1_z{z}_x{x}_y{y}.png';
     }
     L.tileLayer(url, {
       maxZoom: 18,
