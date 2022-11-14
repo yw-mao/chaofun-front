@@ -575,6 +575,8 @@ export default {
     },
 
     challengeInit() {
+      api.getByPath('/api/v0/tuxun/game/enterMap', {mapsId: this.mapsId}).then(res=>{
+      })
       api.getByPath('/api/v0/tuxun/challenge/getGameInfo', {'challengeId': this.challengeId}).then(res => {
         if (res.data) {
           this.gameId = res.data.id;
