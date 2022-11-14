@@ -445,6 +445,7 @@ export default {
     this.streakId = this.$route.query.streakId;
     this.guoqingId = this.$route.query.guoqingId;
     this.init();
+
     document.onkeydown=function(event){
       var e = event || window.event || arguments.callee.caller.arguments[0];
       console.log(e.keyCode)
@@ -476,8 +477,14 @@ export default {
         this.showMatch = true;
         this.match();
       } else if (this.challengeId) {
-        this.showMatch = false;
-        this.challengeInit();
+        this.doLoginStatus().then(res => {
+          console.log(res)
+          if (res) {
+            this.showMatch = false;
+            this.challengeInit();
+          }
+        });
+
       } else if (this.streakId) {
         this.showMatch = false;
         this.gameId = this.streakId;
