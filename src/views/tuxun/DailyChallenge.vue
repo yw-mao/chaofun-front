@@ -30,7 +30,7 @@
         <el-button v-if="(this.gameData && this.gameData.status === 'ready') || this.showBegin" type="primary" size="large" @click="begin" round>开始今日挑战</el-button>
         <el-button v-if="this.gameData && this.gameData.status === 'ongoing'" type="warning" size="large" @click="again" round>继续今日挑战</el-button>
         <div class="score" v-if="this.gameData && this.gameData.status === 'finish'">今日得分: {{this.gameData.player.totalScore}}</div>
-        <div class="score" v-if="this.gameData && this.gameData.status === 'finish' && this.dailyChallengeRank">排名: {{this.dailyChallengeRank}}</div>
+        <div class="score" v-if="this.gameData && this.gameData.status === 'finish' && this.dailyChallengeRank">排名: {{this.dailyChallengeRank}} / {{this.dailyChallengeTotalPlayers}}</div>
         <div class="score" v-if="this.gameData && this.gameData.status === 'finish' && this.dailyChallengePercent">超过：{{((1 - this.dailyChallengePercent) * 100).toFixed(2)}} % 选手</div>
         <div class="rank">
           今日挑战排名
@@ -68,6 +68,7 @@ export default {
       gameData: undefined,
       rank: undefined,
       dailyChallengeRank: null,
+      dailyChallengeTotalPlayers: null,
       dailyChallengePercent: null,
       showBegin: false,
       type: 'noMove',
@@ -86,6 +87,7 @@ export default {
       this.challengeId = null;
       this.dailyChallengeRank = null;
       this.dailyChallengePercent = null;
+      this.dailyChallengeTotalPlayers = null;
       this.rank = null;
       api.getByPath('/api/v0/tuxun/challenge/getGameInfo', {'day': '1', type: this.type}).then(res => {
         console.log(res.data)
@@ -111,6 +113,7 @@ export default {
       api.getByPath('/api/v0/tuxun/challenge/getDailyChallengeRank', {'challengeId': this.challengeId, 'gameId': this.gameData.id}).then(res=>{
         this.dailyChallengeRank = res.data.rank;
         this.dailyChallengePercent = res.data.percent;
+        this.dailyChallengeTotalPlayers = res.data.total;
       })
     },
     goHome() {

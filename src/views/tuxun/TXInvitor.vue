@@ -96,6 +96,7 @@
         <div v-if="showRoundResult" class="round_result">
           <div class="round_result_top">
             <span v-if="gameData.type === 'daily_challenge'">每日挑战<span v-if="lastRound.source">(移动)</span><span v-if="!lastRound.source">(固定)</span> - </span>
+            <span v-if="gameData.type === 'challenge'">{{gameData.mapsName}}<span v-if="lastRound.source">(移动)</span><span v-if="!lastRound.source">(固定)</span> - </span>
             <span v-if="gameData.type === 'country_streak'">国家连胜<span v-if="lastRound.source">(移动)</span><span v-if="!lastRound.source">(固定)</span> - </span>
             <span v-if="gameData.type === 'province_streak'">省份连胜 - </span>
             第 {{gameData.currentRound}} 轮
@@ -142,12 +143,12 @@
             </div>
           </div>
 
-          <div class="round_result_center" v-if="gameData.type === 'daily_challenge'">
+          <div class="round_result_center" v-if="gameData.type === 'daily_challenge' || gameData.type === 'challenge' " >
             <div class="round_result_block">
               <div>
                 轮数:  {{gameData.currentRound}} / {{gameData.roundNumber}}
               </div>
-              本轮得分: {{gameData.player.lastRoundResult.score}}
+               本轮得分: {{gameData.player.lastRoundResult.score}}
               <div>
                 总得分:  {{gameData.player.totalScore}}
               </div>
@@ -181,8 +182,16 @@
               </p>
               超过：{{((1 - this.dailyChallengePercent) * 100).toFixed(2)}} % 选手
             </div>
-            <div>
+            <div v-if="gameData.type === 'daily_challenge'">
               <el-button class="result_button" type="primary" @click="goDailyChallenge" round>查看总排名</el-button>
+            </div>
+
+            <div v-if="gameData.type === 'challenge'">
+              <el-button class="result_button" type="primary" @click="challengeAgain" round>再来一局</el-button>
+            </div>
+
+            <div v-if="gameData.type === 'challenge'">
+              <el-button class="result_button" @click="goMaps" round>回到练习赛首页</el-button>
             </div>
             <div>
               <el-button class="result_button" @click="goHome" round>回到图寻首页</el-button>
@@ -623,7 +632,6 @@ export default {
       }.bind(this), 100);
     },
     solveGameData(data, code) {
-
       if (!data) {
         return;
       }
@@ -687,10 +695,12 @@ export default {
         }
       }
 
-      if (this.gameData.type === 'daily_challenge' && (code === 'game_end' || data.status === 'finish')) {
+      if ((this.gameData.type === 'daily_challenge' || this.gameData.type === 'challenge') && (code === 'game_end' || data.status === 'finish')) {
         this.showMap = false;
         this.showChallengeGameEnd = true;
-        this.getDailyChallengeRank();
+        if (this.gameData.type === 'daily_challenge') {
+          this.getDailyChallengeRank();
+        }
       }
 
       if ((this.gameData.type === 'country_streak' || this.gameData.type === 'province_streak') && (code === 'game_end' || data.status === 'finish')) {
@@ -705,9 +715,18 @@ export default {
             this.lastRound.content = this.lastRound.contentSpeedUp;
           }
           if (this.image !== this.lastRound.content) {
-            if (this.map) {
-              this.map.setView([38.8, 106.0], 3);
+            var interval = 0;
+            if (!this.map) {
+              interval = 500;
             }
+            setTimeout(() => {
+              if (this.gameData.centerLat) {
+                this.map.setView([this.gameData.centerLat, this.gameData.centerLng], this.gameData.mapZoom);
+              } else {
+                this.map.setView([38.8, 106.0], 3);
+              }
+            },interval);
+
             this.removeChooseMarker()
             this.removeTargetMarker();
             this.removeLine();
@@ -1226,7 +1245,7 @@ export default {
       }
       this.confirmed = true;
       var path = "/api/v0/tuxun/solo/guess";
-      if (this.gameData.type === 'daily_challenge') {
+      if (this.gameData.type === 'daily_challenge' || this.gameData.type === 'challenge') {
         path = "/api/v0/tuxun/challenge/guess";
       }
 
@@ -1297,6 +1316,15 @@ export default {
       })
     },
 
+    challengeAgain() {
+      this.doLoginStatus().then((res) => {
+        api.getByPath('/api/v0/tuxun/challenge/create', {'mapsId': this.gameData.mapsId}).then(res => {
+          if (res.success) {
+            window.location.href = '/tuxun/challenge?challengeId=' + res.data;
+          }
+        })
+      });
+    },
     goDailyChallenge() {
       window.location.href = '/tuxun/daily_challenge';
     },
@@ -1304,6 +1332,11 @@ export default {
     goHome() {
       window.location.href = '/tuxun';
     },
+
+    goMaps() {
+      window.location.href = '/tuxun/maps';
+    },
+
 
     toReport() {
       api.getByPath('/api/v0/tuxun/game/report', {content: this.image}).then(res => {
