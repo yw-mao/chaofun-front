@@ -189,12 +189,17 @@ export default {
     this.getTimes();
   },
   methods:{
-    getTimes() {
+    getTimesInterval() {
+      this.getTimes()
       setInterval(() => {
-        api.getByPath('/api/v0/tuxun/getTotalGuess').then(res=>{
-          this.times = res.data;
-        })
+        this.getTimes()
       }, 5000)
+
+    },
+    getTimes() {
+      api.getByPath('/api/v0/tuxun/getTotalGuess').then(res=>{
+        this.times = res.data;
+      })
     },
     toPage(title, path) {
       try {
