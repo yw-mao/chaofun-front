@@ -109,13 +109,7 @@ export default {
       })
     },
     toMaps(item){
-      this.doLoginStatus().then((res) => {
-        api.getByPath('/api/v0/tuxun/challenge/create', {'id': this.id}).then(res => {
-          if (res.success) {
-            window.location.href = '/tuxun/challenge?challengeId=' + res.data;
-          }
-        })
-      });
+      window.open(location.origin + '/tuxun/maps_game?mapsId=' + item.id, '_blank');
     },
 
     goHome() {
