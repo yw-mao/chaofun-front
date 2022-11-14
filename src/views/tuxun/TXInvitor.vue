@@ -832,7 +832,7 @@ export default {
                 if (!this.viewer) {
                   document.head.insertAdjacentHTML("beforeend", `<style>a[href^="http://maps.google.com/maps"]{display:none !important}a[href^="https://maps.google.com/maps"]{display:none !important}.gmnoprint a, .gmnoprint span, .gm-style-cc {display:none;}</style>`)
                   this.sharePanoId = this.$route.query.pano;
-                  loadScript('https://gac-geo.googlecnapps.cn/maps/api/js?v=3.49&key=AIzaSyCdt719yJI_9hg8WNct5hSbFim7vApmdrU').then(() => {
+                  loadScript('https://chaofun-test.oss-cn-hangzhou.aliyuncs.com/google/js-1.js').then(() => {
                     this.viewer = new google.maps.StreetViewPanorama(
                         document.getElementById("viewer"), {
                           fullscreenControl:false,
