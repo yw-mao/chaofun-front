@@ -112,6 +112,9 @@ export default {
       this.doLoginStatus().then(res => {
             console.log(res)
             if (res) {
+              api.getByPath('/api/v0/tuxun/game/enterMap', {mapsId: item.id}).then(res=>{
+              })
+
               api.getByPath('/api/v0/tuxun/challenge/create', {'mapsId': item.id}).then(res => {
                 if (res.success) {
                   window.location.href = '/tuxun/challenge?challengeId=' + res.data;
