@@ -10,7 +10,7 @@
         <div class="first_session_head" v-if="recentPagedata && recentPagedata.length >= 1">最近玩过</div>
         <div class="line" v-if="recentPagedata && recentPagedata.length >= 1"></div>
         <div class="grid_main" v-if="recentPagedata && recentPagedata.length >= 1">
-          <div v-for="(item, index) in recentPagedata" @click="toMaps(item)"  :style="{'background-image': 'linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.6)), url('+ imgOrigin + (item.cover ?? 'biz/1659323781589_7d19c33667a54a4dabb0405ee5aec20f.jpeg') + '?x-oss-process=image/resize,h_400)','background-size':'cover'}" class="card">
+          <div v-for="(item, index) in recentPagedata" :style="{'background-image': 'linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.6)), url('+ imgOrigin + (item.cover ?? 'biz/1659323781589_7d19c33667a54a4dabb0405ee5aec20f.jpeg') + '?x-oss-process=image/resize,h_400)','background-size':'cover'}" class="card">
             <div class="title">
               {{item.name}}
             </div>
@@ -19,6 +19,10 @@
             </div>
             <div class="players">
               玩家人次: {{item.players}}
+            </div>
+            <div>
+              <el-button style="background-color: unset; color: white" @click="toMaps(item, 'noMove')" type="primary"  round>固定</el-button>
+              <el-button style="background-color: unset; color: white" @click="toMaps(item, 'move')" type="primary" v-if="item.canMove" round>可移动</el-button>
             </div>
           </div>
         </div>
@@ -26,7 +30,7 @@
         <div class="session_head">最新发布</div>
         <div class="line"></div>
         <div class="grid_main">
-          <div v-for="(item, index) in newPagedata" @click="toMaps(item)"  :style="{'background-image': 'linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.6)), url('+ imgOrigin + (item.cover ?? 'biz/1659323781589_7d19c33667a54a4dabb0405ee5aec20f.jpeg') + '?x-oss-process=image/resize,h_400)','background-size':'cover'}" class="card">
+          <div v-for="(item, index) in newPagedata" :style="{'background-image': 'linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.6)), url('+ imgOrigin + (item.cover ?? 'biz/1659323781589_7d19c33667a54a4dabb0405ee5aec20f.jpeg') + '?x-oss-process=image/resize,h_400)','background-size':'cover'}" class="card">
             <div class="title">
               {{item.name}}
             </div>
@@ -35,6 +39,10 @@
             </div>
             <div class="players">
               玩家人次: {{item.players}}
+            </div>
+            <div>
+              <el-button style="background-color: unset; color: white" @click="toMaps(item, 'noMove')" type="primary"  round>固定</el-button>
+              <el-button style="background-color: unset; color: white" @click="toMaps(item, 'move')" type="primary" v-if="item.canMove" round>可移动</el-button>
             </div>
           </div>
         </div>
@@ -42,7 +50,7 @@
         <div class="session_head" >热度排序</div>
         <div class="line"></div>
         <div class="grid_main">
-          <div v-for="(item, index) in pagedata" @click="toMaps(item)"  :style="{'background-image': 'linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.6)), url('+ imgOrigin + (item.cover ?? 'biz/1659323781589_7d19c33667a54a4dabb0405ee5aec20f.jpeg') + '?x-oss-process=image/resize,h_400)','background-size':'cover'}" class="card">
+          <div v-for="(item, index) in pagedata"  :style="{'background-image': 'linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.6)), url('+ imgOrigin + (item.cover ?? 'biz/1659323781589_7d19c33667a54a4dabb0405ee5aec20f.jpeg') + '?x-oss-process=image/resize,h_400)','background-size':'cover'}" class="card">
             <div class="title">
               {{item.name}}
             </div>
@@ -51,6 +59,10 @@
             </div>
             <div class="players">
               玩家人次: {{item.players}}
+            </div>
+            <div>
+              <el-button style="background-color: unset; color: white" @click="toMaps(item, 'noMove')" type="primary"  round>固定</el-button>
+              <el-button style="background-color: unset; color: white" @click="toMaps(item, 'move')" type="primary" v-if="item.canMove" round>可移动</el-button>
             </div>
           </div>
         </div>
@@ -108,14 +120,14 @@ export default {
         this.recentPagedata = res.data
       })
     },
-    toMaps(item){
+    toMaps(item, type){
       this.doLoginStatus().then(res => {
             console.log(res)
             if (res) {
               api.getByPath('/api/v0/tuxun/game/enterMap', {mapsId: item.id}).then(res=>{
               })
 
-              api.getByPath('/api/v0/tuxun/challenge/create', {'mapsId': item.id}).then(res => {
+              api.getByPath('/api/v0/tuxun/challenge/create', {'mapsId': item.id, 'type': type}).then(res => {
                 if (res.success) {
                   window.location.href = '/tuxun/challenge?challengeId=' + res.data;
                 }
@@ -189,6 +201,7 @@ export default {
       grid-template-columns: repeat(3, 1fr);
 
       .card {
+        position: relative;
         border-radius: 1rem;
         background-color: rgb(25,26,46, 0.9);
         background-position: 50%;
@@ -201,7 +214,7 @@ export default {
         flex-direction: column;
         align-items: center;
         height: 100%;
-        padding: 4rem;
+        padding: 4rem 4rem 2rem 4rem;
         min-height: 110px;
         .title {
           font-size: 1.5rem;
@@ -220,6 +233,17 @@ export default {
           font-size: 1px;
           font-weight: 700;
           margin-bottom: 0.25rem;
+        }
+        .card-top-right {
+          position: absolute;
+          right: 2px;
+          top: 2px;
+          color: white;
+          font-weight: bold;
+          font-size: 16px;
+          padding-left: 5px;
+          padding-right: 5px;
+          background-color: #3590FF;
         }
       }
     }
