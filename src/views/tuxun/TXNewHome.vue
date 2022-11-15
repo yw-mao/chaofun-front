@@ -45,6 +45,7 @@
             <div class="describe">
               走遍大江南北
             </div>
+            <div class="card-top-right">可移动</div>
           </div>
         </div>
 
