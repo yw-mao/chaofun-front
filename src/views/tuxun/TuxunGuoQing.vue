@@ -290,6 +290,9 @@ export default {
     .rank_container {
       width: 90%;
     }
+    .tab_container {
+      width: 90%;
+    }
   }
 }
 </style>
