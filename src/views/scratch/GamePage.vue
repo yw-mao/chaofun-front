@@ -120,7 +120,7 @@ export default {
           }
         }
       });
-      if (matchValue) {
+      if (matchValue || (!matchValue && !e)) {
         this.matched.add(matchValue);
       }
     },
