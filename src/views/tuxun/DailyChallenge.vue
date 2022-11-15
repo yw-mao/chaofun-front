@@ -29,6 +29,7 @@
         </div>
         <el-button v-if="!this.gameData || (this.gameData && this.gameData.status === 'ready') || this.showBegin" type="primary" size="large" @click="begin" round>开始今日挑战</el-button>
         <el-button v-if="this.gameData && this.gameData.status === 'ongoing'" type="warning" size="large" @click="again" round>继续今日挑战</el-button>
+        <div class="total" v-if="this.total &&( !this.gameData ||  this.gameData.status !== 'finish')">已有 {{this.total}} 人完成挑战</div>
         <div class="score" v-if="this.gameData && this.gameData.status === 'finish'">今日得分: {{this.gameData.player.totalScore}}</div>
         <div class="score" v-if="this.gameData && this.gameData.status === 'finish' && this.dailyChallengeRank">排名: {{this.dailyChallengeRank}} / {{this.dailyChallengeTotalPlayers}}</div>
         <div class="score" v-if="this.gameData && this.gameData.status === 'finish' && this.dailyChallengePercent">超过：{{((1 - this.dailyChallengePercent) * 100).toFixed(2)}} % 选手</div>
@@ -72,6 +73,7 @@ export default {
       dailyChallengePercent: null,
       showBegin: false,
       type: 'noMove',
+      total: null,
 
     }
   },
@@ -88,6 +90,7 @@ export default {
       this.dailyChallengeRank = null;
       this.dailyChallengePercent = null;
       this.dailyChallengeTotalPlayers = null;
+      this.total = null;
       this.rank = null;
       api.getByPath('/api/v0/tuxun/challenge/getGameInfo', {'day': '1', type: this.type}).then(res => {
         console.log(res.data)
@@ -110,7 +113,7 @@ export default {
       })
     },
     getDailyChallengeRank() {
-      api.getByPath('/api/v0/tuxun/challenge/getDailyChallengeRank', {'challengeId': this.challengeId, 'gameId': this.gameData.id}).then(res=>{
+      api.getByPath('/api/v0/tuxun/challenge/getDailyChallengeRank', {'challengeId': this.challengeId, 'gameId': this.gameData ? this.gameData.id : null }).then(res=>{
         this.dailyChallengeRank = res.data.rank;
         this.dailyChallengePercent = res.data.percent;
         this.dailyChallengeTotalPlayers = res.data.total;
@@ -136,9 +139,10 @@ export default {
     },
 
     getRank() {
-      api.getByPath('/api/v0/tuxun/challenge/rank', {challengeId: this.challengeId}).then(res=>{
+      api.getByPath('/api/v0/tuxun/challenge/rankNew', {challengeId: this.challengeId}).then(res=>{
         if (res.success) {
-          this.rank = res.data;
+          this.rank = res.data.rank;
+          this.total = res.data.total;
         }
       })
     },
@@ -190,6 +194,9 @@ export default {
       .score {
         font-size: 32px;
         color: white;
+      }
+      .total {
+        padding-top: 1rem;
       }
       .time {
         font-size: 32px;
