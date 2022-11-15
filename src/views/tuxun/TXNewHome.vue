@@ -187,15 +187,14 @@ export default {
       Notification.requestPermission(function (status) {
       })
     }
-    this.getTimes();
+    this.getTimesInterval();
   },
   methods:{
     getTimesInterval() {
       this.getTimes()
       setInterval(() => {
-        this.getTimes()
+        this.getTimes();
       }, 5000)
-
     },
     getTimes() {
       api.getByPath('/api/v0/tuxun/getTotalGuess').then(res=>{
