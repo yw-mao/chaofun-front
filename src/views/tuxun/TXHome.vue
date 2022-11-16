@@ -237,6 +237,7 @@ export default {
   methods: {
     initMap() {
       var map = L.map('map', {attributionControl: true,worldCopyJump: true, coordType: 'gcj02',  zoomAnimation: false, fadeAnimation: true, maxBoundsViscosity: 1.0, maxBounds:  [[-90,-540],   [90,540]]}).setView([38.8, 106.0], 3)
+      map.attributionControl.setPosition('bottomleft');
       map.attributionControl.setPrefix('华为地图');
       map.attributionControl.addAttribution('GS（2022）2885号');
       var url = 'https://map.chao-fan.com/tile/s2_z{z}_x{x}_y{y}.png';

@@ -563,6 +563,7 @@ export default {
           maxBoundsViscosity: 1.0,
           maxBounds: [[-90, -540], [90, 540]]
         }).setView([38.8, 106.0], 3)
+        map.attributionControl.setPosition('bottomleft');
         map.attributionControl.setPrefix('华为地图');
         map.attributionControl.addAttribution('GS（2022）2885号');
 
