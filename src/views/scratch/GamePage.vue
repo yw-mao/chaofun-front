@@ -159,7 +159,7 @@ export default {
     },
     share() {
       var input = document.createElement('input');
-      input.setAttribute('value', 'https://chao.fan/scratch/guess?id=' + this.id);
+      input.setAttribute('value','邀请你来做「' + this.guessInfo.name + '」小测验 https://chao.fan/scratch/guess?id=' + this.id);
       document.body.appendChild(input);
       input.select();
       var result = document.execCommand('copy');
