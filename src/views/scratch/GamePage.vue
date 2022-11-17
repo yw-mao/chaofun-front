@@ -18,7 +18,7 @@
       测验次数: {{guessInfo.start}}
     </div>
 
-    <div style="display: flex; position: relative; margin: auto; width: 30%">
+    <div class="input_container" style="">
       <div v-if="start || this.giveUp"  style="font-size: 36px; color: #52B323; padding-right: 20px; display: block; height: 100%; text-align: center; align-items: center">
         {{timeLeftStr}}
       </div>
@@ -178,11 +178,17 @@ export default {
 .container {
   height: 100%;
   width: 100%;
-  .input {
-    width: 50%;
-    //padding-top: 1rem;
-    //max-width: 40%;
-    //margin: auto;
+  .input_container {
+    display: flex;
+    position: relative;
+    margin: auto;
+    width: 30%;
+    .input {
+      width: 50%;
+      //padding-top: 1rem;
+      //max-width: 40%;
+      //margin: auto;
+    }
   }
   .table {
     margin-top: 2rem;
@@ -209,9 +215,15 @@ table, th, td {
 
 @media only screen and (max-width: 679px) {
   .container {
-    //.input {
-    //  max-width: 80%;
-    //}
+    .input_container {
+      width: 80%;
+      .input {
+        width: 50%;
+        //padding-top: 1rem;
+        //max-width: 40%;
+        //margin: auto;
+      }
+    }
 
     .table {
       width: 80%;
