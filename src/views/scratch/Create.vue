@@ -60,7 +60,7 @@ export default {
       api.getByPath('/api/v0/scratch/game/get', {'id': this.id}).then(res=>{
         this.name = res.data.name;
         this.desc = res.data.desc;
-        this.coundown = res.data.countdown;
+        this.countdown = res.data.countdown;
         this.answers = res.data.data.answers.join("\n");
       })
     },
