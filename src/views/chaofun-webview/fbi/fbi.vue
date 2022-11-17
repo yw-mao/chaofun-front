@@ -57,15 +57,15 @@
       注: 除勋爵外其余都支持点击自助兑换（包邮），谢谢！
     </div>
     <div style="width: 100%; ">
-      <div @click="getWechatCover" style="padding-top: 20px;width: 50%; display: inline-block; text-align: center">
-        <img style="padding-right: 10px; padding-left: 10px; max-width: 100%; max-height: 200px" src="https://i.chao-fan.com/biz/76b1d8fd9240d15b3520e9085662b415.png">
-        <p style="text-align: center">
-          微信炒饭娘红包封面
-        </p>
-        <p style="text-align: center">
-          FBi: 99
-        </p>
-      </div>
+<!--      <div @click="getWechatCover" style="padding-top: 20px;width: 50%; display: inline-block; text-align: center">-->
+<!--        <img style="padding-right: 10px; padding-left: 10px; max-width: 100%; max-height: 200px" src="https://i.chao-fan.com/biz/76b1d8fd9240d15b3520e9085662b415.png">-->
+<!--        <p style="text-align: center">-->
+<!--          微信炒饭娘红包封面-->
+<!--        </p>-->
+<!--        <p style="text-align: center">-->
+<!--          FBi: 99-->
+<!--        </p>-->
+<!--      </div>-->
       <div @click="getMusicPackage" style="padding-top: 20px;width: 50%; display: inline-block; text-align: center">
         <img style="padding-right: 10px; padding-left: 10px; max-width: 100%; max-height: 200px" src="https://i.chao-fan.com/biz/1653662548745_fe793a4930f64d31a6acc0129adfc4d6.png">
         <p style="text-align: center">
