@@ -126,7 +126,7 @@
           </div>
           <div class="card" @click="redirectPage( '/scratch/home')">
             <div class="title">
-              图寻作弊器
+              炒饭小测验
             </div>
             <div class="describe">
               地理小测验，帮助你玩好图寻
