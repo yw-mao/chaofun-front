@@ -67,7 +67,9 @@ export default {
 
     toCreate() {
       this.doLoginStatus().then((res) => {
-        window.location.href = '/scratch/create'
+        if (res) {
+          window.location.href = '/scratch/create'
+        }
       });
     },
 
