@@ -17,27 +17,34 @@
     <div v-if="guessInfo" style="margin: auto; text-align: center; font-size: 16px">
       测验次数: {{guessInfo.start}}
     </div>
-    <div v-if="!showResult">
-      <div v-if="!start && guessInfo && !giveUp" style="margin: auto; text-align: center; padding-top: 1rem">
-        <el-button type="primary" style="margin: auto; text-align: center;" @click="startGuess">开始</el-button>
+
+    <div style="display: flex; position: relative; margin: auto; width: 30%">
+      <div v-if="start || this.giveUp"  style="font-size: 36px; color: #52B323; padding-right: 20px; display: block; height: 100%; text-align: center; align-items: center">
+        {{timeLeftStr}}
       </div>
-      <div v-if="!start && guessInfo && giveUp" style="margin: auto; text-align: center; padding-top: 1rem">
-        <el-button type="primary" style="margin: auto; text-align: center;" @click="startGuess">再来一次</el-button>
-      </div>
-      <div v-if="start" class="input">
+
+      <div v-if="start" class="input" style="height: 100%">
         <div v-if="guessInfo">
           猜对：{{this.right}} / {{this.guessInfo.data.answers.length}}
         </div>
-        <el-input autofocus @input="match" v-model="inputResult">
+        <el-input ref="input" autofocus @input="match" v-model="inputResult">
         </el-input>
       </div>
+    </div>
+    <div v-if="!showResult">
 
+      <div v-if="!start && guessInfo && !giveUp" style="margin: auto; text-align: center; padding-top: 1rem">
+        <el-button type="primary" style="margin: auto; text-align: center;" @click="startGuess">开始</el-button>
+      </div>
       <div v-if="start && guessInfo" style="margin: auto; text-align: center; padding-top: 1rem">
         <el-button type="warning" style="margin: auto; text-align: center;" @click="giveUpGuess">放弃</el-button>
       </div>
     </div>
     <div v-else class="result">
       恭喜你，已经全部答对
+    </div>
+    <div v-if="!start && guessInfo && giveUp" style="margin: auto; text-align: center; padding-top: 1rem">
+      <el-button type="primary" style="margin: auto; text-align: center;" @click="startGuess">再来一次</el-button>
     </div>
 
     <section style="width: 100%">
@@ -79,6 +86,9 @@ export default {
       right: 0,
       start: false,
       giveUp: false,
+      countdownTimer: null,
+      timeLeftStr: '00:00',
+      timeLeft: null,
     }
   },
   mounted() {
@@ -97,8 +107,31 @@ export default {
     startGuess() {
       this.giveUp = false;
       this.start = true;
+      this.showResult = false;
+      this.right = 0;
+      this.matched = new Set();
+      this.timeLeft = this.guessInfo.countdown;
+      this.inputResult = '';
+      this.timeLeftStr = Math.floor(this.timeLeft / 60).toString().padStart(2, '0') + ':' + (this.timeLeft % 60).toString().padStart(2, '0');
+      clearInterval(this.countdownTimer);
       api.getByPath('/api/v0/scratch/game/start', {'id': this.id}).then(res=>{
       })
+
+      if (this.guessInfo.countdown) {
+         this.countdownTimer =  setInterval(() => {
+          this.timeLeft = this.timeLeft - 1;
+          this.timeLeftStr = Math.floor(this.timeLeft / 60).toString().padStart(2, '0') + ':' + (this.timeLeft % 60).toString().padStart(2, '0');
+          if (this.giveUp || this.timeLeft <= 0 || this.showResult) {
+            this.giveUpGuess();
+            clearInterval(this.countdownTimer);
+          }
+         }, 1000);
+      }
+
+      setTimeout(() => {
+        this.$refs.input.focus();
+      }, 200);
+
     },
     getGuessInfo() {
       api.getByPath('/api/v0/scratch/game/get', {'id': this.id}).then(res=>{
@@ -146,9 +179,10 @@ export default {
   height: 100%;
   width: 100%;
   .input {
-    padding-top: 1rem;
-    max-width: 40%;
-    margin: auto;
+    width: 50%;
+    //padding-top: 1rem;
+    //max-width: 40%;
+    //margin: auto;
   }
   .table {
     margin-top: 2rem;

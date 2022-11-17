@@ -18,9 +18,12 @@
       </div>
       <el-input v-model="desc"></el-input>
       <div>
+        限时（秒）：
+      </div>
+      <el-input-number :min=5 v-model="countdown"></el-input-number>
+      <div>
         答案(一行一个): {{answers.split("\n").length }} 个
       </div>
-
       <el-input v-model="answers" type="textarea"
                 :autosize="{ minRows: 10, maxRows: 10}"
       ></el-input>
@@ -41,6 +44,7 @@ export default {
       desc: '',
       answers: '',
       modify: false,
+      countdown: 120,
       id: null
     }
   },
@@ -56,6 +60,7 @@ export default {
       api.getByPath('/api/v0/scratch/game/get', {'id': this.id}).then(res=>{
         this.name = res.data.name;
         this.desc = res.data.desc;
+        this.coundown = res.data.countdown;
         this.answers = res.data.data.answers.join("\n");
       })
     },
@@ -75,7 +80,7 @@ export default {
         return;
       }
 
-      api.postByPath('/api/v0/scratch/game/create', {id: this.id, name: this.name, desc: this.desc, cover: 'biz/1667921710402_beb8f2eaccb1482d87deb7816fd3baef_0.jpeg', data: JSON.stringify({"answers": this.answers.split("\n")})}).then((res) => {
+      api.postByPath('/api/v0/scratch/game/create', {id: this.id, countdown: this.countdown, name: this.name, desc: this.desc, cover: 'biz/1667921710402_beb8f2eaccb1482d87deb7816fd3baef_0.jpeg', data: JSON.stringify({"answers": this.answers.split("\n")})}).then((res) => {
         window.location.href = '/scratch/guess?id=' + res.data.id;
       })
     },
