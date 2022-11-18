@@ -15,6 +15,7 @@
       <el-radio-group v-model="sort" style="margin-bottom: 30px;" @change="changeSort">
       <el-radio-button label="hot">最热</el-radio-button>
         <el-radio-button label="new">最新</el-radio-button>
+        <el-radio-button label="mine">我创建的</el-radio-button>
       </el-radio-group>
       <div style="display: flex; padding-bottom: 8px" v-for="(item, index) in list" @click="gotoGuess(item)">
         <img class="cover" :src="imgOrigin + item.cover + '?x-oss-process=image/resize,h_300/quality,q_75'" style="">
