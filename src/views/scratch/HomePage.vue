@@ -5,7 +5,9 @@
       <div v-if="totalTimes" style="font-size: 16px">总测验次数: {{totalTimes}}</div>
       <div class="top-right">
 <!--        <el-button type="primary" @click="toUserHome" round>个人首页</el-button>-->
-        <el-button type="primary" @click="toCreate" round>创建小测验</el-button>
+        <el-button @click="toCreate" round>创建小测验</el-button>
+        <div></div>
+        <el-button type="primary" @click="random" round>随机小测验</el-button>
       </div>
     </div>
 
@@ -71,6 +73,11 @@ export default {
           window.location.href = '/scratch/create'
         }
       });
+    },
+    random() {
+      api.getByPath('/api/v0/scratch/game/random').then(res=>{
+        window.location.href = '/scratch/guess?id=' + res.data;
+      })
     },
 
     changeSort(tab, event) {
