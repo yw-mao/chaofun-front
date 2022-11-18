@@ -61,7 +61,7 @@ export default {
       modify: false,
       imageUrl: null,
       countdown: 120,
-      coverOssName: null,
+      coverOssName: 'biz/1667921710402_beb8f2eaccb1482d87deb7816fd3baef_0.jpeg',
       id: null
     }
   },
