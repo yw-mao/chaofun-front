@@ -1,9 +1,10 @@
 <template>
   <div class="container">
     <div class="back_home">
-      <el-button @click="goHome" round>←返回小测验首页</el-button>
-      <el-button @click="share" round>分享</el-button>
-      <el-button v-if="guessInfo &&  this.$store.state.user && this.$store.state.user.userInfo  && this.$store.state.user.userInfo.userId === this.guessInfo.userId" @click="modify" round>修改</el-button>
+      <el-button @click="goHome" size="small" round>←返回小测验首页</el-button>
+      <el-button @click="share" size="small"  round>分享</el-button>
+      <el-button @click="random" size="small"  round>随机下一个</el-button>
+      <el-button size="medium"  v-if="guessInfo &&  this.$store.state.user && this.$store.state.user.userInfo  && this.$store.state.user.userInfo.userId === this.guessInfo.userId" @click="modify" round>修改</el-button>
     </div>
     <div v-if="guessInfo" style="padding-top: 3rem; margin: auto; text-align: center; font-size: 32px">
       {{this.guessInfo.name}}
@@ -44,7 +45,7 @@
       恭喜你，已经全部答对
     </div>
     <div v-if="!start && guessInfo && giveUp" style="margin: auto; text-align: center; padding-top: 1rem">
-      <el-button type="primary" style="margin: auto; text-align: center;" @click="startGuess">再来一次</el-button>
+      <el-button type="primary" style="margin: auto; text-align: center; margin-bottom: 10px" @click="startGuess" round>再来一次</el-button>
     </div>
 
     <section style="width: 100%">
@@ -169,7 +170,12 @@ export default {
     },
     palindrome(str) {
       return str.replace(/[`:_.~!@#$%^&*() \+ =<>?"{}|, \/ ;' \\ [ \] ·~！@#￥%……&*（）—— \+ ={}|《》？：“”【】、；‘’，。、]/g, '');
-    }
+    },
+    random() {
+      api.getByPath('/api/v0/scratch/game/random').then(res=>{
+        window.location.href = '/scratch/guess?id=' + res.data;
+      })
+    },
   }
 }
 </script>
