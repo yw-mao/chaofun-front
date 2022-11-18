@@ -1,8 +1,8 @@
 <template>
   <div class="container">
     <div class="back_home">
-      <el-button @click="goHome" round>←返回小测验首页</el-button>
-      <el-button v-if="modify" @click="deleteGame" round>删除测验</el-button>
+      <el-button size="small" @click="goHome" round>←返回小测验首页</el-button>
+      <el-button size="small" v-if="modify" @click="deleteGame" round>删除测验</el-button>
     </div>
     <div style="text-align: center; width: 100%; font-size: 24px;font-weight: bold; padding-top: 3rem; padding-bottom: 2rem">
       <div v-if="!modify">创建测验</div>
