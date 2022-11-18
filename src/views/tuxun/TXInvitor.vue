@@ -1328,11 +1328,17 @@ export default {
 
     challengeAgain() {
       this.doLoginStatus().then((res) => {
-        api.getByPath('/api/v0/tuxun/challenge/create', {'mapsId': this.gameData.mapsId}).then(res => {
-          if (res.success) {
-            window.location.href = '/tuxun/challenge?challengeId=' + res.data;
+        if (res) {
+          var type = 'noMove';
+          if (this.gameData.move) {
+            type = 'move'
           }
-        })
+          api.getByPath('/api/v0/tuxun/challenge/create', {'mapsId': this.gameData.mapsId, 'type': type}).then(res => {
+            if (res.success) {
+              window.location.href = '/tuxun/challenge?challengeId=' + res.data;
+            }
+          })
+        }
       });
     },
     goDailyChallenge() {
