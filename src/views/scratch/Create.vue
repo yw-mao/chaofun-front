@@ -102,7 +102,7 @@ export default {
         this.countdown = res.data.countdown;
         this.answers = res.data.data.answers.join("\n");
         this.coverOssName = res.data.cover;
-        this.imageUrl = this.imgOrigin + this.coverOssName;
+        this.imageUrl = this.imgOrigin + this.coverOssName + '?x-oss-process=image/resize,h_300/quality,q_75';
       })
     },
     submit() {

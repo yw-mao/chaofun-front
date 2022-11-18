@@ -15,7 +15,7 @@
         <el-radio-button label="new">最新</el-radio-button>
       </el-radio-group>
       <div style="display: flex; padding-bottom: 8px" v-for="(item, index) in list" @click="gotoGuess(item)">
-        <img class="cover" :src="imgOrigin + item.cover" style="">
+        <img class="cover" :src="imgOrigin + item.cover + '?x-oss-process=image/resize,h_300/quality,q_75'" style="">
         </img>
         <div style="padding-left: 8px">
           <div style="font-size: 24px; font-weight: bold;">
