@@ -9,7 +9,7 @@
       <div v-else>修改测验</div>
     </div>
     <div class="input-container">
-      <div class="title">设置封面</div>
+      <div class="title">设置封面(可选)</div>
       <div>
         <el-upload
             :before-upload="beforeAvatarUpload"
