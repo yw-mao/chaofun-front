@@ -15,6 +15,12 @@
     <div v-if="guessInfo && guessInfo.user" style="margin: auto; text-align: center; font-size: 16px">
       作者: {{guessInfo.user.userName}}
     </div>
+    <div v-if="guessInfo && guessInfo.tags" style="align-items: center;justify-items: center;margin: auto; text-align: center; font-size: 16px; display: flex;justify-content: center;text-align: center;">
+      标签：
+      <div v-for="(item, index) in guessInfo.tags" style="padding-right: 10px">
+        #{{item}}
+      </div>
+    </div>
     <div v-if="guessInfo" style="margin: auto; text-align: center; font-size: 16px">
       测验次数: {{guessInfo.start}}
     </div>

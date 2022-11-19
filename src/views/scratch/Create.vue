@@ -32,6 +32,10 @@
       </div>
       <el-input v-model="desc"></el-input>
       <div>
+        标签(可选，多标签请用逗号分隔):
+      </div>
+      <el-input v-model="tags"></el-input>
+      <div>
         限时（秒）：
       </div>
       <el-input-number :min=5 v-model="countdown"></el-input-number>
@@ -61,6 +65,7 @@ export default {
       modify: false,
       imageUrl: null,
       countdown: 120,
+      tags: '',
       coverOssName: 'biz/1667921710402_beb8f2eaccb1482d87deb7816fd3baef_0.jpeg',
       id: null
     }
@@ -103,6 +108,9 @@ export default {
         this.answers = res.data.data.answers.join("\n");
         this.coverOssName = res.data.cover;
         this.imageUrl = this.imgOrigin + this.coverOssName + '?x-oss-process=image/resize,h_300/quality,q_75';
+        if (res.data.tags) {
+          this.tags = res.data.tags.join(",");
+        }
       })
     },
     submit() {
@@ -121,7 +129,7 @@ export default {
         return;
       }
 
-      api.postByPath('/api/v0/scratch/game/create', {id: this.id, countdown: this.countdown, name: this.name, desc: this.desc, cover: this.coverOssName, data: JSON.stringify({"answers": this.answers.split("\n")})}).then((res) => {
+      api.postByPath('/api/v0/scratch/game/create', {id: this.id, countdown: this.countdown, name: this.name, tags: this.tags, desc: this.desc, cover: this.coverOssName, data: JSON.stringify({"answers": this.answers.split("\n")})}).then((res) => {
         window.location.href = '/scratch/guess?id=' + res.data.id;
       })
     },
