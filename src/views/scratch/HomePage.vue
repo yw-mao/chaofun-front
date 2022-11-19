@@ -98,7 +98,9 @@ export default {
     margin: auto;
   }
   .cover {
-    max-width: 100px; max-height: 100px
+    width: 100px; height: 100px;
+    //background-color: grey;
+    object-fit: cover;
   }
 }
 
