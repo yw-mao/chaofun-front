@@ -83,7 +83,11 @@ export default {
       this.getList();
     },
     goBack() {
-      this.$router.go(-1);
+      try {
+        this.$router.go(-1);
+      } catch (e) {
+        window.location.href = '/scratch/home'
+      }
     },
   },
 }
