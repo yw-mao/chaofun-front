@@ -51,7 +51,7 @@ export default {
   },
   mounted() {
     this.tagName = this.$route.query.tagName;
-    this.getTotalGuessTimes();
+    this.getList();
   },
 
   methods: {
