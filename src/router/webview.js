@@ -347,6 +347,13 @@ routes = [
     hidden: true
   },
   {
+    path: '/scratch/tag',
+    component: () => import('@/views/scratch/TagPage'),
+    name: 'TagPage',
+    meta: { title: 'TagPage'},
+    hidden: true
+  },
+  {
     path: '/scratch',
     component: () => import('@/views/scratch/HomePage'),
     name: 'scratch',

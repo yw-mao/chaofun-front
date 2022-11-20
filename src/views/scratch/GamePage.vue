@@ -17,7 +17,7 @@
     </div>
     <div v-if="guessInfo && guessInfo.tags" style="align-items: center;justify-items: center;margin: auto; text-align: center; font-size: 16px; display: flex;justify-content: center;text-align: center;">
       标签：
-      <div v-for="(item, index) in guessInfo.tags" style="padding-right: 10px">
+      <div v-for="(item, index) in guessInfo.tags" @click="goTag(item)" style="padding: 2px; margin-right: 10px; color: #333fff; text-decoration:underline;cursor: pointer;">
         #{{item}}
       </div>
     </div>
@@ -147,6 +147,9 @@ export default {
     },
     goHome() {
       window.location.href = '/scratch/home'
+    },
+    goTag(item) {
+      window.location.href = '/scratch/tag?tagName=' + item;
     },
     match(e) {
       var matchValue = null;
