@@ -2,6 +2,7 @@
   <div class="container">
     <div class="back_home">
       <el-button @click="goBack" size="small" round>←返回</el-button>
+      <el-button @click="goHome" size="small" round>首页</el-button>
     </div>
     <div style="text-align: center; width: 100%; font-size: 32px;font-weight: bold; padding-top: 1rem; padding-bottom: 2rem">
       #{{this.tagName}}
@@ -78,10 +79,15 @@ export default {
       })
     },
 
+    goHome() {
+      window.location.href = '/scratch/home'
+    },
+
     changeSort(tab, event) {
       this.list = [];
       this.getList();
     },
+
     goBack() {
       try {
         this.$router.go(-1);
