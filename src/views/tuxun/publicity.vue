@@ -63,6 +63,27 @@ export default {
   data(){
     return {
       recentPagedata: [
+        {name: '小伙根据照片推理地点（11月22日图寻每日挑战）', cover: 'biz/1669135863485_4591de99f8234a7e888bc0f2f7233723_0.png', url: 'https://www.bilibili.com/video/BV1DP4y1R7Ch'},
+        {name: '挑战地理大神！', cover: 'biz/1669135820792_683cb8fed8d040a7b4b6d218a7cb0ae5_0.png', url: 'https://www.bilibili.com/video/BV1c24y1178K'},
+        {name: '目标是俄语大师（11月21日图寻每日挑战）', cover: 'biz/1669135764486_679197078fb24b0e900651edfc43e4c8_1.png', url: 'https://www.bilibili.com/video/BV1LG4y1Z7kE'},
+        {name: '我的家乡，美丽的千岛湖（11月20日图寻每日挑战）', cover: 'biz/1669135637531_27a7780292cd473696b006a6714bb280_0.png', url: 'https://www.bilibili.com/video/BV1XG4y1R7se'},
+        {name: '图寻每日挑战（11.20记录）', cover: 'biz/1669135606633_3de5d0d989ca4cd88b2ed5da04c4d5bd_0.png', url: 'https://www.bilibili.com/video/BV1pv4y1U7rY'},
+        {name: '杭州山水甲天下（11月19日图寻每日挑战）', cover: 'biz/1669135555673_98e2f0f5ce534b7bac22fd7ee7074b96_0.png', url: 'https://www.bilibili.com/video/BV1Pg411i7u2'},
+        {name: '图寻-每日挑战-2022.11.19', cover: 'biz/1669134796095_c2001da232e249f9a574db7948c5b43c_0.png', url: 'https://www.bilibili.com/video/BV1K24y1172f'},
+        {name: '最简单的____，最极致的享受（11月18日图寻每日挑战）', cover: 'biz/1669134589482_5968350cba6542b89966775958ba1e51_0.png', url: 'https://www.bilibili.com/video/BV1EP4y117Uv'},
+        {name: '【图寻第3集】3分钟完成的5轮挑战', cover: 'biz/1669134502802_b2fd026847a44813843f55c37f99b553_0.png', url: 'https://www.bilibili.com/video/BV1fP4y1y7FR'},
+        {name: '2分钟高能挑战20000分 图寻每日挑战', cover: 'biz/1669134431744_f965df9d9e03486895f479f3b88c9eb6_0.png', url: 'https://www.bilibili.com/video/BV1Zg411q7fm'},
+        {name: '【图寻第2集】美帝凤凰城、土耳其山城神直觉。。。别的都是笑话', cover: 'biz/1669134384956_e3ae4f91866d429e8b0deda488619a73_0.png', url: 'https://www.bilibili.com/video/BV1V24y1m7DN'},
+        {name: '回归正轨,新人主播,请喷（11月16日图寻每日挑战）', cover: 'biz/1669134299657_eacdbf866ef04274b75a0b6ccc07ed2a_1.png', url: 'https://www.bilibili.com/video/BV19P4y1y7jZ'},
+        {name: '谁知盘中餐，粒粒皆辛苦', cover: 'biz/1669134212741_4cf565a6189142cf9dacfd789247df37_0.png', url: 'https://www.bilibili.com/video/BV1h8411879f'},
+        {name: '晕了（11月16日图寻每日挑战）', cover: 'biz/1669133993913_57125b82e18b4074a9513412ed1abc34_0.png', url: 'https://www.bilibili.com/video/BV1jP4y117jb'},
+        {name: '网络谜踪世界名胜特辑', cover: 'biz/1669133915086_71464538e68846ef9374d805343b9ee1_0.png', url: 'https://www.bilibili.com/video/BV1D841187La'},
+        {name: '图寻2每日挑战解说第二弹', cover: 'biz/1669133874689_b7c3364ffb2c412a994e7b78a3095c7c_0.png', url: 'https://www.bilibili.com/video/BV1XW4y1s78E'},
+        {name: '小伙被关密室80分钟，最后疯了', cover: 'biz/1669133804959_1c0f82e09b324503a857537534bb81c5_0.png', url: 'https://www.bilibili.com/video/BV1T84y117dt'},
+        {name: 'I THREW my game（11月15日图寻每日挑战）', cover: 'biz/1669133748277_d4102c07a19744708353b57b0f0b2ac7_0.png', url: 'https://www.bilibili.com/video/BV1B8411j73B'},
+        {name: '【图寻】我终于来了！！！结果第1、2题离我住过的地方都是50km内!', cover: 'biz/1669133696093_33c269d7293e4b61a993ee3832549a3f_0.png', url: 'https://www.bilibili.com/video/BV1V24y1m7DN'},
+        {name: '每日挑战来啦，感谢虎扑老哥（11月14日图寻每日挑战)', cover: 'biz/1669133518608_423f7da27ad3418eae586d080e86434b_0.png', url: 'https://www.bilibili.com/video/BV1Gd4y1k7K5'},
+        {name: '发烧的小伙继续网络谜踪（11月13日图寻每日挑战）', cover: 'biz/1669133409324_ac8d7e2763c14ab3b0d3a361dfe66468_0.png', url: 'https://www.bilibili.com/video/BV1wK411Z7w6'},
         {name: '重发）系好安全带 我要装逼了（11月12日图寻每日挑战）', cover: 'biz/1668270500288_fa8b273872e34e2ea0ce3f4b9832851a_0.png', url: 'https://www.bilibili.com/video/BV1Pd4y1b7Qi'},
         {name: '如何优雅的证明你是单身狗这件小事', cover: 'biz/1668183939910_7f5295dfbdc94476b8e20d6f5a048e0c_0.png', url: 'https://www.bilibili.com/video/BV1TG4y1t7Mv'},
         {name: 'aslghf;lyweoityafhdlk（11月11日图寻每日挑战', cover: 'biz/1668183799021_cb0256561daf45dbb923fcd6ccf348e9_0.png', url: 'https://www.bilibili.com/video/BV1W14y1p7GE'},
@@ -135,6 +156,7 @@ export default {
         {name: '当你做了一道地球人都会的题后， 一定会有一道地球人都不会的题等着你', cover: 'biz/1665575510613_fcb281887a3c4b1c970e7b654ae48f0f_0.webp', url: 'https://www.bilibili.com/video/BV1He411j79D'}
       ],
       recommendPagedata: [
+        {name: '炒饭网络迷踪 图寻第四届个人赛录播', cover: 'biz/1669133467716_8a2dee97067045af9b2bfa5b3fb4c7c7_0.png', url: 'https://www.bilibili.com/video/BV1E24y1272D'},
         {name: '图寻第三届团体锦标赛录播', cover: 'biz/1667672031165_bafac27ddc8f4d99a5ea004913c99d05_0.png', url: 'https://www.bilibili.com/video/BV1VP411A7b5'},
         {name: 'H.M-炒饭图寻大神，猜国家地址游戏，倾情直播！（录播上）', cover: 'biz/1666799535958_996733eebf9a4834a3f7cc025db3d5dc_0.png', url: 'https://www.bilibili.com/video/BV1hg411z7nT'},
         {name:'街景挑战：图寻竟然有人40连胜 你也来挑战试试',cover: 'biz/1666625855777_9fd11e1920bf468f88c698d0f9c5c410_0.png', url: 'https://www.bilibili.com/video/BV1ig411z7iC' },
@@ -146,6 +168,8 @@ export default {
         {name:'图寻第一届个人锦标赛录播1',cover: 'biz/1665575321286_9f85c32bccd2401191aed9e468129888_0.webp', url: 'https://www.bilibili.com/video/BV1Ma41137zr' },
       ],
       coursePagedata: [
+        {name: '【图寻小技巧】语言识别： 日耳曼语族（一）', cover: 'biz/1667760389459_e41d6ff239dd4e659fdba8f835e7de06_0.png', url: 'https://www.bilibili.com/video/BV17D4y1s7Hw'},
+        {name: '揭秘）最有用也最没用的新手教程', cover: 'biz/1669133595299_06e1299610a54af6865c9203e98dce22_0.png', url: 'https://www.bilibili.com/video/BV1Gd4y1k7K5'},
         {name: '【图寻小技巧】语言识别：罗曼语族（二）', cover: 'biz/1667760389459_e41d6ff239dd4e659fdba8f835e7de06_0.png', url: 'https://www.bilibili.com/video/BV1cd4y1F78U'},
         {name: '【教程】图寻/Geoguessr 海外属地特殊街景车', cover: 'biz/1667672068671_4478361375d24aa9991970ca4d1cd577_0.png', url: 'https://www.bilibili.com/video/BV1TP411A7o2'},
         {name: '【图寻小技巧】语言识别：罗曼语族（一）', cover: 'biz/1667059619190_aeba12ec6fb044158d5273307cb57ba1_0.png', url: 'https://www.bilibili.com/video/BV1b84y1i7iP'},
