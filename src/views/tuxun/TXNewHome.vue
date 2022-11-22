@@ -14,7 +14,7 @@
     </div>
 
     <div class="game">
-      <div class="info" @click="toFirstTournament">炒饭网络迷踪图寻第四届个人赛圆满结束！</div>
+      <div class="info" @click="toFirstTournament">炒饭第四届图寻团队赛开始报名啦!</div>
       <div v-if="times" class="times">图寻总轮次数：<span style="font-size: 18px">{{times}}</span></div>
       <section class="game_entrance">
         <div class="first_session_head">单人</div>
@@ -253,9 +253,9 @@ export default {
     },
     toFirstTournament() {
       try {
-        window.flutter_inappwebview.callHandler('toAppPost', {postId: '1219541'});
+        window.flutter_inappwebview.callHandler('toAppPost', {postId: '1220900'});
       } catch (e) {
-        window.open('/p/1219541', "_blank");
+        window.open('/p/1220900', "_blank");
       }
     }
   }
