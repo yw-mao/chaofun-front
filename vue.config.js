@@ -10,7 +10,7 @@ const port = process.env.port || process.env.npm_config_port || 8099
 const isProduction = process.env.NODE_ENV === 'production';
 
 // 线上打包路径，请根据项目实际线上情况
-const BASE_URL = process.env.NODE_ENV === "production" ? "https://s.chao-fan.com/" : "/";
+const BASE_URL = "/";
 const fs = require('fs');
 
 // directory to check if exists
@@ -24,7 +24,21 @@ module.exports = {
   outputDir: "dist", // 打包生成的生产环境构建文件的目录
   assetsDir: "", // 放置生成的静态资源路径，默认在outputDir
   indexPath: "index.html", // 指定生成的 index.html 输入路径，默认outputDir
-  pages: undefined, // 构建多页
+  pages: {
+    index: {
+      entry: './src/main.js',
+      template: './public/index.html',
+      filename: 'index.html',
+      chunks: 'all'
+    },
+    tuxunPage: {
+      entry: './src/tuxun.main.js',
+      template: './public/tuxun.html',
+      filename: 'tuxunPage.html',
+      chunks: 'all'
+    }
+
+  }, // 构建多页
   productionSourceMap: false, // 开启 生产环境的 source map
   // css:  config => {
   //   config.extract.chunkFilename = `[name].33${Timestamp}.css`;
@@ -34,7 +48,7 @@ module.exports = {
       hints: false
     }
     config.output.filename = `[name].11${Timestamp}.js`;
-      config.output.chunkFilename = `[name].22${Timestamp}.js`;
+    config.output.chunkFilename = `[name].22${Timestamp}.js`;
   },
   chainWebpack: config => {
     // 配置路径别名
@@ -65,7 +79,7 @@ module.exports = {
         config => config.devtool('cheap-source-map')
       )
     config
-      .when(process.env.NODE_ENV !== 'development',
+      .when(process.env.NODE_ENV === 'development',
         config => {
           config
             .plugin('ScriptExtHtmlWebpackPlugin')
