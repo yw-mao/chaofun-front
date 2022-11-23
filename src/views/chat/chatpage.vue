@@ -302,7 +302,7 @@ export default {
     initWebSocket() {
       //初始化weosocket
       //const wsuri = "ws://sms.填写您的地址.com/websocket/" + this.charId; //ws地址
-      const wsuri = "wss://chao.fun/ws/v0/forumChat/" + this.$route.params.id;
+      const wsuri = "wss://chao.fan/ws/v0/forumChat/" + this.$route.params.id;
       //建立连接
       this.websock = new WebSocket(wsuri);
       //连接成功
