@@ -10,18 +10,18 @@ Vue.use(Router)
 import Layout from '@/layout'
 
 export const constantRoutes = [
-  {
-    path: '/',
-    component: () => import('@/views/tuxun/TXNewHome'),
-    meta: { title: '图寻'},
-    hidden: true
-  },
-  {
-    path: '/tuxun',
-    component: () => import('@/views/tuxun/TXNewHome'),
-    meta: { title: '图寻'},
-    hidden: true
-  },
+  // {
+  //   path: '/',
+  //   component: () => import('@/views/tuxun/TXNewHome'),
+  //   meta: { title: '图寻'},
+  //   hidden: true
+  // },
+  // {
+  //   path: '/tuxun',
+  //   component: () => import('@/views/tuxun/TXNewHome'),
+  //   meta: { title: '图寻'},
+  //   hidden: true
+  // },
 ]
 
 /**
