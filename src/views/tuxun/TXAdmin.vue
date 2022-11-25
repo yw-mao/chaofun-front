@@ -128,36 +128,42 @@ export default {
     },
 
     next() {
-      this.confirmed = false;
-      this.returnResult = true;
-      this.polylinePath = false;
-      this.lng = null;
-      this.lat = null;
-      this.targetLat = null;
-      this.targetLng = null;
-      this.image = null;
-      this.distance = null;
-      this.index = this.index + 1;
-      if (this.queryId !== null && this.queryId) {
-        api.getByPath("/api/v0/tuxun/game/getContent", {id: this.queryId}).then(res => {
-              this.image = res.data.content;
-              this.id = res.data.id;
-              this.totalCount = res.data.totalCount;
-            }
-        );
-      } else {
-        api.getByPath("/api/v0/tuxun/game/generateQueue", {index: this.index, mapsId: this.mapsid}).then(res => {
-              if (this.canUseWebP() && res.data.contentSpeedUp) {
-                this.image = res.data.contentSpeedUp;
-              } else {
-                this.image = res.data.content;
-              }
-              this.id = res.data.id;
-              this.totalCount = res.data.totalCount;
-              this.mapsName = res.data.mapsName;
-            }
-        );
-      }
+      this.doLoginStatus().then(res => {
+        console.log(res)
+        if (res) {
+          this.confirmed = false;
+          this.returnResult = true;
+          this.polylinePath = false;
+          this.lng = null;
+          this.lat = null;
+          this.targetLat = null;
+          this.targetLng = null;
+          this.image = null;
+          this.distance = null;
+          this.index = this.index + 1;
+          if (this.queryId !== null && this.queryId) {
+            api.getByPath("/api/v0/tuxun/game/getContent", {id: this.queryId}).then(res => {
+                  this.image = res.data.content;
+                  this.id = res.data.id;
+                  this.totalCount = res.data.totalCount;
+                }
+            );
+          } else {
+            api.getByPath("/api/v0/tuxun/game/generateQueue", {index: this.index, mapsId: this.mapsid}).then(res => {
+                  if (this.canUseWebP() && res.data.contentSpeedUp) {
+                    this.image = res.data.contentSpeedUp;
+                  } else {
+                    this.image = res.data.content;
+                  }
+                  this.id = res.data.id;
+                  this.totalCount = res.data.totalCount;
+                  this.mapsName = res.data.mapsName;
+                }
+            );
+          }
+        }
+      });
+
     },
     mapReady(e) {
       console.log("hahah");
