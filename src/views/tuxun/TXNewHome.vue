@@ -87,7 +87,7 @@
           </div>
           <div class="card" @click="createTeam" >
             <div class="title">
-              邀请组队对战
+              组队对战
             </div>
             <div class="describe">
               组队对决，群体的力量

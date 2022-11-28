@@ -16,7 +16,7 @@
       </div>
 
       <div class="header" v-if="gameData.type === 'team'">
-        邀请组队对战
+        组队对战
       </div>
 
       <div class="vs" v-if="gameData.type !== 'battle_royale'">
