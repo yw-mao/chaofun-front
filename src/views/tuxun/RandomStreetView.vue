@@ -118,7 +118,7 @@ export default {
     },
     shareLink() {
       var input = document.createElement('input');
-      input.setAttribute('value', 'https://chao.fan/tuxun/random?pano='+ this.currentPanoId  + '&source=g');
+      input.setAttribute('value', '街景分享 「' + this.location + '」https://chao.fan/tuxun/random?pano='+ this.currentPanoId  + '&source=g');
       document.body.appendChild(input);
       input.select();
       var result = document.execCommand('copy');
