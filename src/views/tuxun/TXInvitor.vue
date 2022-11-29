@@ -1297,15 +1297,15 @@ export default {
     },
 
     skip() {
-      this.$confirm('此操作会消耗 10 FBi，是否确认操作?', '换一题？', {
-        confirmButtonText: '确认',
-        cancelButtonText: '取消',
-        type: 'warning'
-      }).then(() => {
+      // this.$confirm('此操作会消耗 10 FBi，是否确认操作?', '换一题？', {
+      //   confirmButtonText: '确认',
+      //   cancelButtonText: '取消',
+      //   type: 'warning'
+      // }).then(() => {
         api.getByPath("/api/v0/tuxun/streak/skip", {gameId: this.gameId}).then(res => {
           this.solveGameData(res.data, undefined);
         });
-      }).catch(() => {});
+      // }).catch(() => {});
     },
 
     goTuxun() {
