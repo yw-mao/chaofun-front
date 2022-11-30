@@ -6,7 +6,7 @@
       <div :class="{'fixed-header':fixedHeader}">
         <navbar :islogin="islogin" :userinfo="userinfo" />
       </div>
-      
+
       <app-main />
       <!-- <right-panel v-if="showSettings">
         <settings />
@@ -36,8 +36,10 @@ import ResizeMixin from './mixin/ResizeHandler'
 import { mapState } from 'vuex'
 import Vue from 'vue'
 import login from '@/components/chaofan/common/login/login.js'
+import vip from '@/components/chaofan/common/vip/vip.js'
 // Vue.use(login);
 Vue.prototype.$login = login
+Vue.prototype.$vip =vip
 import * as api from '@/api/api'
 import RightDescribe from '@/components/chaofan/RightDescribe'
 
@@ -49,7 +51,7 @@ console.log("探寻这里的秘密，\n找到自己的最爱，\n成为这里的
 console.log("%c我们的网址是: ","color:red", "https://chao.fan");
 console.log("%c欢迎参与我们的Web开源: ","color:red", "https://github.com/www-chao-fun/chaofun-front/");
 if(process.env.NODE_ENV != "development"){
-  console.log=function(text,type=''){} 
+  console.log=function(text,type=''){}
 }
 
 // 活动
@@ -170,7 +172,7 @@ export default {
     font-size: 16px;
     span{
       color: #e23d0e;
-    } 
+    }
   }
   .logo{
     margin-top: 210px;
@@ -233,7 +235,7 @@ export default {
 .score{
   flex: 0 0 30px;
   text-align: center;
-  
+
   img{
     width: 18px;
     vertical-align: middle;

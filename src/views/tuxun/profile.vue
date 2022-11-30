@@ -8,7 +8,9 @@
           <img :src="imgOrigin+this.userProfile.userAO.icon + '?x-oss-process=image/resize,h_80/format,webp/quality,q_75'" alt="">
           <div class="info">
             <div class="title">{{this.userProfile.userAO.userName}}</div>
-            <!--                    <p v-if="item.userAO.desc" class="desc">{{item.userAO.desc}}</p>-->
+          </div>
+          <div v-if="isVip">
+            图寻会员 <span v-if="vipDue">｜过期时间 {{vipDue}}</span>
           </div>
         </div>
     </div>
@@ -68,6 +70,8 @@
 
 <script>
 // @ is an alias to /src
+
+import moment from "moment";
 // import Header from '@/components/common/Header.vue'
 import * as api from '@/api/api'
 import { CalendarHeatmap } from 'vue-calendar-heatmap'
@@ -104,6 +108,8 @@ export default {
       endDate: null,
       activity: [],
       historys: null,
+      vipDue: null,
+      isVip: false,
       option: {
         xAxis: {
           type: 'time',
@@ -129,6 +135,7 @@ export default {
     this.getUserProfile();
     this.getUserActivity();
     this.getHistory();
+    this.checkVip();
   },
   methods: {
     getUserProfile() {
@@ -170,6 +177,22 @@ export default {
     goHome() {
       window.location.href = '/tuxun';
     },
+    checkVip() {
+      if (this.$store.state.user.userInfo.userId.toString() === this.userId) {
+        api.getByPath('/api/v0/tuxun/vip/check').then(res=>{
+          if (res.data) {
+            this.isVip = true;
+            this.vipDue = moment(res.data).format('YYYY年MM月DD日');
+          }
+        })
+      } else {
+        api.getByPath('/api/v0/tuxun/vip/checkIsVip', {userId: this.userId}).then(res => {
+          if (res.data) {
+            this.isVip = true;
+          }
+        })
+      }
+    }
   }
 }
 </script>

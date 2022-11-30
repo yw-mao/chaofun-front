@@ -100,13 +100,16 @@ export default {
       this.location = null;
       this.doLoginStatus().then((res) => {
       if (res) {
-
         if (this.sharePanoId) {
           window.location.href = '/tuxun/random'
           return;
         }
         api.getByPath("/api/v0/tuxun/random", {mapsId: this.mapsId}).then(res => {
-          this.setPano(res.data);
+          if (res.success) {
+            this.setPano(res.data);
+          } else if (res.errorCode === 'need_vip') {
+            this.$vip();
+          }
         })
       }
       });

@@ -83,15 +83,7 @@ export default {
   },
 
   methods: {
-    init() {
-      this.gameData = null;
-      this.showBegin = false;
-      this.challengeId = null;
-      this.dailyChallengeRank = null;
-      this.dailyChallengePercent = null;
-      this.dailyChallengeTotalPlayers = null;
-      this.total = null;
-      this.rank = null;
+    initSelfRank() {
       api.getByPath('/api/v0/tuxun/challenge/getGameInfo', {'day': '1', type: this.type}).then(res => {
         console.log(res.data)
         if (res.success) {
@@ -104,6 +96,26 @@ export default {
           this.showBegin = true;
         }
       })
+    },
+    init() {
+      this.gameData = null;
+      this.showBegin = false;
+      this.challengeId = null;
+      this.dailyChallengeRank = null;
+      this.dailyChallengePercent = null;
+      this.dailyChallengeTotalPlayers = null;
+      this.total = null;
+      this.rank = null;
+
+      if (this.type === 'move') {
+        api.getByPath('/api/v0/tuxun/vip/check').then(res => {
+          if (res.data) {
+            this.initSelfRank();
+          }
+        })
+      } else {
+        this.initSelfRank();
+      }
 
       api.getByPath('/api/v0/tuxun/challenge/getDailyChallengeId', {type: this.type}).then(res => {
         if (res.data) {
@@ -122,14 +134,27 @@ export default {
     goHome() {
       window.location.href = '/tuxun';
     },
+    beginCall() {
+      api.getByPath('/api/v0/tuxun/challenge/start', {'gameId': this.gameData.id}).then(res=>{
+        this.gameData= res.data;
+        window.location.href = '/tuxun/challenge?challengeId=' + this.gameData.challengeId;
+      })
+    },
     begin() {
       this.doLoginStatus().then(res => {
         console.log(res)
         if (res) {
-          api.getByPath('/api/v0/tuxun/challenge/start', {'gameId': this.gameData.id}).then(res=>{
-              this.gameData= res.data;
-              window.location.href = '/tuxun/challenge?challengeId=' + this.gameData.challengeId;
-          })
+          if (this.type === 'move') {
+            api.getByPath('/api/v0/tuxun/vip/check').then(res=>{
+              if (res.data) {
+                this.beginCall();
+              } else {
+                this.$vip();
+              }
+            })
+          } else {
+            this.beginCall();
+          }
         }
       });
       // window.location.href =

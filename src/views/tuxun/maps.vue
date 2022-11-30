@@ -102,7 +102,7 @@ export default {
       _this.getHotMaps();
       _this.getNewMaps();
       _this.getRecentPageData();
-    },5000)
+    },10000)
   },
   methods:{
     getHotMaps(){
@@ -130,6 +130,11 @@ export default {
               api.getByPath('/api/v0/tuxun/challenge/create', {'mapsId': item.id, 'type': type}).then(res => {
                 if (res.success) {
                   window.location.href = '/tuxun/challenge?challengeId=' + res.data;
+                } else {
+                  if (res.errorCode === 'need_vip') {
+                    this.$vip({
+                    })
+                  }
                 }
               })
             }

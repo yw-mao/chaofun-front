@@ -959,6 +959,8 @@ export default {
           console.log(res.data);
           if (res.success) {
             this.solveGameData(res.data, null);
+          } else if (res.errorCode === 'need_vip') {
+            this.$vip();
           } else {
             this.getGameInfo()
           }
@@ -972,6 +974,8 @@ export default {
           console.log(res.data);
           if (res.success) {
             this.solveGameData(res.data, null);
+          } else if (res.errorCode === 'need_vip') {
+            this.$vip();
           } else {
             this.getGameInfo()
           }
