@@ -39,7 +39,7 @@
           <div v-if="this.totalTryTimes !== null">图寻已经被白嫖了 {{this.totalTryTimes}} 次，救救孩子吧</div>
         </div>
         <div v-if="choose==='month'">注：感谢探索者您的支持！</div>
-        <div v-if="choose==='year'">注：冲冲冲！探索者</div>
+        <div v-if="choose==='year'">注：冲冲冲！探索者，去征服世界吧！！！</div>
 
         <div style="padding-top: 10px; font-weight: bold; font-size: 16px">
           会员权益
