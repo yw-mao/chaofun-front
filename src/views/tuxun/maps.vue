@@ -235,7 +235,6 @@ export default {
         }
         .players {
           color: white;
-          font-size: 1px;
           font-weight: 700;
           margin-bottom: 0.25rem;
         }
