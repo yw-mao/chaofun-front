@@ -71,7 +71,7 @@
        <div style="margin: 1rem; text-align: center; align-items: center">
          <img :src="imgOrigin + this.payImageUrl" style="width: 200px; height: 200px">
          <div>
-           扫描二维码支付
+           微信扫描二维码支付
          </div>
          <div style="padding-top: 10px"></div>
          <el-button type="primary" @click="paySuccess">
