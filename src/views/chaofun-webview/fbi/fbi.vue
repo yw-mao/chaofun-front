@@ -66,6 +66,17 @@
 <!--          FBi: 99-->
 <!--        </p>-->
 <!--      </div>-->
+
+      <div @click="getTuxunVip('1month')" style="padding-top: 20px;width: 50%; display: inline-block; text-align: center">
+        <img style="padding-right: 10px; padding-left: 10px; max-width: 100%; max-height: 200px" src="https://i.chao-fan.com/biz/1669800911472_69cd91feb2354d199303cf52badf688d_0.png">
+        <p style="text-align: center">
+          图寻会员 1个月
+        </p>
+        <p style="text-align: center">
+          FBi: 599
+        </p>
+      </div>
+
       <div @click="getMusicPackage" style="padding-top: 20px;width: 50%; display: inline-block; text-align: center">
         <img style="padding-right: 10px; padding-left: 10px; max-width: 100%; max-height: 200px" src="https://i.chao-fan.com/biz/1653662548745_fe793a4930f64d31a6acc0129adfc4d6.png">
         <p style="text-align: center">
@@ -75,6 +86,7 @@
           FBi: 800
         </p>
       </div>
+
 
       <div @click="getJDECard" style="width: 50%; display: inline-block">
         <img style="padding-right: 10px; padding-left: 10px; width: 100%" src="https://i.chao-fan.com/biz/fc21232af2fa1849c3f0853b8748224c.png">
@@ -133,6 +145,17 @@
           FBi: 2500
         </p>
       </div>
+
+      <div @click="getTuxunVip('1year')" style="padding-top: 20px;width: 50%; display: inline-block; text-align: center">
+        <img style="padding-right: 10px; padding-left: 10px; max-width: 100%; max-height: 200px" src="https://i.chao-fan.com/biz/1669800913716_0f5cdc58e22f479d9371baf622835d0e_0.png">
+        <p style="text-align: center">
+          图寻会员 1年
+        </p>
+        <p style="text-align: center">
+          FBi: 3999
+        </p>
+      </div>
+
       <div @click="orderCup('tshirt')" style="padding-top: 20px;width: 50%; display: inline-block">
         <img style="padding-right: 10px; padding-left: 10px; width: 100%" src="https://i.chao-fan.com/biz/e3e44a77908676ea7047c18601a0297b.png">
         <p style="text-align: center">
@@ -323,6 +346,33 @@ export default {
       })
           .then(() => {
             api.getByPath('/api/v0/gift/getBilibili1Month', {}).then((res) => {
+              if (res.success) {
+                this.$message.success("已兑换, 请查看消息");
+                this.getUserInfo();
+              } else{
+                this.$message.error(res.errorMessage);
+              }
+            });
+          })
+          .catch(() => {
+            // on cancel
+          });
+    },
+    getTuxunVip(period) {
+      var fbi = null;
+      if (period === '1month') {
+        fbi = 599;
+      } else if (period === '1year') {
+        fbi = 3999;
+      }
+
+      Dialog.confirm({
+        title: "是否确认兑换",
+        message: '兑换会扣除 ' + fbi + ' FBi',
+        messageAlign: "left",
+      })
+          .then(() => {
+            api.getByPath('/api/v0/gift/getTuxunVip', {period: period}).then((res) => {
               if (res.success) {
                 this.$message.success("已兑换, 请查看消息");
                 this.getUserInfo();
