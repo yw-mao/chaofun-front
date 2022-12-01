@@ -48,7 +48,7 @@
       <p style="font-weight: bold; font-size: 20px; color: #FF9300;padding-top: 20px">FBi 如何使用:</p>
       <p>  - 兑换炒饭纪念品 </p>
       <p>  - 评论赠与他人: +xxxfbi</p>
-      <p>  - 捐赠给开启了众筹的板块</p>
+      <p>  - 捐赠给开启了众筹的版快</p>
     </div>
     <div style="padding-top: 20px; font-weight: bold; font-size: 20px; color: #FF9300;">
       FBi兑换
