@@ -37,9 +37,12 @@ import { mapState } from 'vuex'
 import Vue from 'vue'
 import login from '@/components/chaofan/common/login/login.js'
 import vip from '@/components/chaofan/common/vip/vip.js'
+import mapsSearch from '@/components/chaofan/common/mapsSearch/mapsSearch.js'
 // Vue.use(login);
-Vue.prototype.$login = login
-Vue.prototype.$vip =vip
+Vue.prototype.$login=login
+Vue.prototype.$vip=vip
+Vue.prototype.$mapsSearch=mapsSearch
+
 import * as api from '@/api/api'
 import RightDescribe from '@/components/chaofan/RightDescribe'
 

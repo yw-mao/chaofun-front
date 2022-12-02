@@ -59,6 +59,24 @@
         等待房主开始游戏...
       </div>
 
+      <div v-if="(gameData.type === 'solo' || gameData.type === 'team') && gameData.mapsName " class="wait_game_start">
+        <div>设置</div>
+        <div>
+          <div style="font-size: 20px;">
+            题库：{{gameData.mapsName}}
+          </div>
+          <el-button
+              v-if="this.$store.state.user.userInfo.userId === this.gameData.host.userId"
+              @click="showMapsSearch"
+              type="primary"
+          >切换</el-button>
+          <div v-if="mapsTagShow">
+            <el-button v-for="(item, index) in this.mapsData" @click="changeMaps(item.id)" size="small" round>{{item.name}}</el-button>
+          </div>
+        </div>
+
+      </div>
+
       <div v-if="gameData.type === 'battle_royale' && gameData.status == 'ready'" class="wait_game_title">
         图寻淘汰赛-准备中
       </div>
@@ -436,6 +454,8 @@ export default {
       dailyChallengeRank: null,
       dailyChallengePercent: null,
       notifyStatus: '',
+      mapsTagShow: false,
+      mapsData: null
 
       // gameData: {playerIds: [1, 2]}
     }
@@ -1429,6 +1449,20 @@ export default {
           }
         }, 1500);
       });
+    },
+    showMapsSearch()  {
+      // this.$mapsSearch();
+      this.mapsTagShow = true;
+      api.getByPath('/api/v0/tuxun/maps/list').then(res=>{
+        this.mapsData = res.data
+      })
+    },
+    changeMaps(mapsId)  {
+      // this.$mapsSearch();
+      this.mapsTagShow = false;
+      api.getByPath('/api/v0/tuxun/game/changeMapsId', {gameId: this.gameData.id, mapsId: mapsId}).then(res=>{
+        this.mapsData = res.data
+      })
     },
   }
 }
