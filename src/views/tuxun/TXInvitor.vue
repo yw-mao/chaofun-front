@@ -417,6 +417,7 @@ export default {
       BMap: null,
       viewer: null,
       image: null,
+      round: null,
       confirmed: false,
       chooseMarker: null,
       showMap: false,
@@ -745,7 +746,7 @@ export default {
           if (this.canUseWebP() && this.lastRound.contentSpeedUp) {
             this.lastRound.content = this.lastRound.contentSpeedUp;
           }
-          if (this.image !== this.lastRound.content) {
+          if (this.image !== this.lastRound.content || this.round !== this.lastRound.round) {
             var interval = 0;
             if (!this.map) {
               interval = 500;
@@ -764,6 +765,7 @@ export default {
             this.clearRanksMarker();
             this.showMap = false;
             this.image = this.lastRound.content;
+            this.round = this.lastRound.round;
             this.contents = this.lastRound.contents;
             this.lat = null;
             this.lng = null;
