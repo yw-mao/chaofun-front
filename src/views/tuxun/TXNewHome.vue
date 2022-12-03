@@ -84,6 +84,7 @@
             <div class="describe">
               邀请朋友图寻对决吧！
             </div>
+            <div class="card-top-right">可移动</div>
           </div>
           <div class="card" @click="createTeam" >
             <div class="title">
@@ -92,6 +93,7 @@
             <div class="describe">
               组队对决，群体的力量
             </div>
+            <div class="card-top-right">可移动</div>
           </div>
         </div>
 
