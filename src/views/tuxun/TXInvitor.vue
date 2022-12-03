@@ -60,21 +60,42 @@
       </div>
 
       <div v-if="(gameData.type === 'solo' || gameData.type === 'team') && gameData.mapsName " class="wait_game_start">
-        <div>设置</div>
+        <div class="separate-line"></div>
+        <div style="padding-top: 10px; font-size: 24px">设置</div>
         <div>
-          <div style="font-size: 20px;">
-            题库：{{gameData.mapsName}}
-          </div>
-          <el-button
-              v-if="this.$store.state.user.userInfo.userId === this.gameData.host.userId"
-              @click="showMapsSearch"
-              type="primary"
-          >切换</el-button>
+            <div style="font-size: 16px">
+              题库：{{gameData.mapsName}}
+            </div>
+            <div>
+              <el-button
+                  v-if="this.$store.state.user.userInfo.userId === this.gameData.host.userId"
+                  @click="showMapsSearch('noMove')"
+                  type="primary"
+                  style="margin-left: 10px"
+              >切换固定</el-button>
+              <el-button
+                  v-if="this.$store.state.user.userInfo.userId === this.gameData.host.userId"
+                  @click="showMapsSearch('move')"
+                  type="primary"
+                  style="margin-left: 10px"
+              >切换移动</el-button>
+              <el-button
+                  v-if="this.$store.state.user.userInfo.userId === this.gameData.host.userId && this.mapsTagShow"
+                  @click="mapsTagShow = false"
+                  type="primary"
+                  style="margin-left: 10px"
+              >收起</el-button>
+            </div>
+
+<!--          <el-button-->
+<!--              v-if="this.$store.state.user.userInfo.userId === this.gameData.host.userId"-->
+<!--              @click="showMapsSearch"-->
+<!--              type="primary"-->
+<!--          >切换</el-button>-->
           <div v-if="mapsTagShow">
             <el-button v-for="(item, index) in this.mapsData" @click="changeMaps(item.id)" size="small" round>{{item.name}}</el-button>
           </div>
         </div>
-
       </div>
 
       <div v-if="gameData.type === 'battle_royale' && gameData.status == 'ready'" class="wait_game_title">
@@ -96,7 +117,8 @@
         <div v-for="(item, index) in gameData.players"> {{item.userName }}</div>
       </div>
       <div class="invite" v-if="status !== 'ready' && ((gameData.type !== 'battle_royale' && gameData.type !== 'solo_match')  || gameData.type == 'team')">
-        <div class="title">
+        <div class="separate-line"></div>
+        <div class="title" style="padding-top: 10px">
           邀请链接
         </div>
         <div class="body">
@@ -456,6 +478,7 @@ export default {
       dailyChallengePercent: null,
       notifyStatus: '',
       mapsTagShow: false,
+      mapsType: 'noMove',
       mapsData: null
 
       // gameData: {playerIds: [1, 2]}
@@ -1031,7 +1054,11 @@ export default {
 
     start() {
       api.getByPath("/api/v0/tuxun/solo/start", {gameId: this.gameId}).then(res => {
-        this.solveGameData(res.data, undefined);
+        if (res.success) {
+          this.solveGameData(res.data, undefined);
+        }  else if (res.errorCode === 'need_vip') {
+          this.$vip();
+        }
       });
     },
 
@@ -1456,17 +1483,23 @@ export default {
         }, 1500);
       });
     },
-    showMapsSearch()  {
-      // this.$mapsSearch();
-      this.mapsTagShow = true;
-      api.getByPath('/api/v0/tuxun/maps/list').then(res=>{
-        this.mapsData = res.data
-      })
+    showMapsSearch(type)  {
+        this.mapsType = type
+        // this.$mapsSearch();
+        this.mapsTagShow = true;
+        this.mapsData = null;
+        api.getByPath('/api/v0/tuxun/maps/listInGame', {type: type}).then(res => {
+          if (res.success) {
+            this.mapsData = res.data
+          } else if (res.errorCode === 'need_vip') {
+            this.$vip();
+          }
+        })
     },
     changeMaps(mapsId)  {
       // this.$mapsSearch();
       this.mapsTagShow = false;
-      api.getByPath('/api/v0/tuxun/game/changeMapsId', {gameId: this.gameData.id, mapsId: mapsId}).then(res=>{
+      api.getByPath('/api/v0/tuxun/game/changeMapsId', {gameId: this.gameData.id, mapsId: mapsId, type: this.mapsType}).then(res=>{
         this.mapsData = res.data
       })
     },
@@ -1543,6 +1576,13 @@ export default {
       font-size: 32px;
     }
 
+    .separate-line {
+      margin: auto;
+      width: 40%;
+      height: 1px;
+      background-color: grey;
+    }
+
     .vs {
       padding-top: 3rem;
       display: block;
@@ -1571,14 +1611,15 @@ export default {
       font-size: 32px;
       font-weight: bold;
     }
+
     .wait_game_start {
       padding-top: 2rem;
-      font-size: 24px;
+      font-size: 16px;
     }
 
     .wait_game_user {
       padding-top: 1rem;
-      font-size: 24px;
+      font-size: 16px;
       align-items: center;
     }
 
@@ -1594,12 +1635,11 @@ export default {
     }
 
     .invite {
-      margin: 5rem auto 0;
-      max-width: 80%;
+      margin: 2rem auto 0;
+      //max-width: 80%;
       min-width: 35rem;
       .title {
         font-size: 24px;
-        font-weight: bolder;
         margin-bottom: 1rem;
       }
       input {
@@ -1920,12 +1960,16 @@ export default {
 @media only screen and (max-width: 679px) {
   .game_container {
     .prepare {
+      .separate-line {
+        width: 80%;
+      }
       .vs {
         width: 80%;
         .vs_img {
           width: 30px;
           height: 30px;
         }
+
       }
 
       .invite {
