@@ -135,6 +135,14 @@
             </div>
           </div>
         </div>
+        <div style="display: flex;">
+          <div @click="redirectPage( 'https://www.yuque.com/ucun5p/kfw26e/dp7hvxnm7tes88g7')" style="color: white;font-size: medium; padding-top: 1rem; padding-right: 1rem; text-decoration:underline;">
+            更新日志
+          </div>
+<!--          <div @click="window.location.href = '/tuxun/change_log'" style="color: white;font-size: medium; padding-top: 1rem; text-decoration:underline;">-->
+<!--            更新日志-->
+<!--          </div>-->
+        </div>
         <div class="thx">
           <p>提示：如倒计时不准/卡死/黑屏，可关闭代理，系统时间对齐互联网时间再试</p>
           <p>快捷键：空格-确定选择, 空格-换一个(随机街景)，WASD-方向&视角移动(随机街景,需先点击街景), 上下左右-方向&视角移动(随机街景,需先点击街景)</p>
