@@ -1339,7 +1339,11 @@ export default {
     },
 
     toNew() {
-      api.getByPath("/api/v0/tuxun/br/get").then(res => {
+      var type = "noMove";
+      if (this.gameData.move) {
+        type = "move"
+      }
+      api.getByPath("/api/v0/tuxun/br/get", {type: type}).then(res => {
         if (res.data.gameId) {
           window.location.href = '/tuxun/guoqing_game?guoqingId=' + res.data.gameId;
         }
