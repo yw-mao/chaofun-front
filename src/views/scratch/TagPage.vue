@@ -20,6 +20,15 @@
         <el-radio-button label="new">最新</el-radio-button>
         <el-radio-button label="mine">我创建的</el-radio-button>
       </el-radio-group>
+      <el-pagination
+          background
+          layout="prev, pager, next"
+          style="padding-bottom: 20px"
+          :current-page.sync="current"
+          :page-size="50"
+          @current-change="handleCurrentChange"
+          :total="total">
+      </el-pagination>
       <div style="display: flex; padding-bottom: 8px" v-for="(item, index) in list" @click="gotoGuess(item)">
         <img class="cover" :src="imgOrigin + item.cover + '?x-oss-process=image/resize,h_300/quality,q_75'" style="">
         </img>
@@ -32,6 +41,16 @@
           </div>
         </div>
       </div>
+
+      <el-pagination
+          background
+          layout="prev, pager, next"
+          style="padding-top: 20px"
+          :current-page.sync="current"
+          :page-size="50"
+          @current-change="handleCurrentChange"
+          :total="total">
+      </el-pagination>
     </section>
   </div>
 </template>
@@ -47,18 +66,21 @@ export default {
       totalTimes: null,
       sort: 'hot',
       tagName: null,
+      current: 1,
+      total: 0,
       list: [],
     }
   },
   mounted() {
     this.tagName = this.$route.query.tagName;
-    this.getList();
+    this.getList(1, 50);
   },
 
   methods: {
-    getList() {
-      api.getByPath('/api/v0/scratch/game/list', {order: this.sort, tag: this.tagName}).then(res=>{
-        this.list = res.data;
+    getList(pageNum, pageSize) {
+      api.getByPath('/api/v0/scratch/game/listV1', {order: this.sort, tag: this.tagName, pageNum: pageNum, pageSize: pageSize}).then(res=>{
+        this.list = res.data.games;
+        this.total = res.data.total;
       })
     },
 
@@ -85,7 +107,7 @@ export default {
 
     changeSort(tab, event) {
       this.list = [];
-      this.getList();
+      this.getList(1, 50);
     },
 
     goBack() {
@@ -94,6 +116,9 @@ export default {
       } catch (e) {
         window.location.href = '/scratch/home'
       }
+    },
+    handleCurrentChange(current) {
+      this.getList(current, 50)
     },
   },
 }

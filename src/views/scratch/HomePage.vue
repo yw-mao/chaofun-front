@@ -12,11 +12,24 @@
     </div>
 
     <section v-if="list" class="list_container">
-      <el-radio-group v-model="sort" style="margin-bottom: 30px;" @change="changeSort">
-      <el-radio-button label="hot">最热</el-radio-button>
+      <el-radio-group v-model="sort" style="margin-bottom: 20px;" @change="changeSort">
+        <el-radio-button label="hot">最热</el-radio-button>
         <el-radio-button label="new">最新</el-radio-button>
         <el-radio-button label="mine">我创建的</el-radio-button>
       </el-radio-group>
+
+      <el-pagination
+          background
+          layout="prev, pager, next"
+          style="padding-bottom: 20px"
+          :current-page.sync="current"
+          :page-size="50"
+          @current-change="handleCurrentChange"
+          :total="total">
+      </el-pagination>
+
+
+
       <div style="display: flex; padding-bottom: 8px" v-for="(item, index) in list" @click="gotoGuess(item)">
         <img class="cover" :src="imgOrigin + item.cover + '?x-oss-process=image/resize,h_300/quality,q_75'" style="">
         </img>
@@ -29,6 +42,16 @@
           </div>
         </div>
       </div>
+
+      <el-pagination
+          background
+          layout="prev, pager, next"
+          style="padding-top: 20px"
+          :current-page.sync="current"
+          :page-size="50"
+          @current-change="handleCurrentChange"
+          :total="total">
+      </el-pagination>
     </section>
   </div>
 </template>
@@ -43,18 +66,21 @@ export default {
     return {
       totalTimes: null,
       sort: 'hot',
+      total: 0,
+      current: 1,
       list: [],
     }
   },
   mounted() {
-    this.getList();
+    this.getList(1, 50);
     this.getTotalGuessTimes();
   },
 
   methods: {
-    getList() {
-      api.getByPath('/api/v0/scratch/game/list', {order: this.sort}).then(res=>{
-        this.list = res.data;
+    getList(pageNum, pageSize) {
+      api.getByPath('/api/v0/scratch/game/listV1', {order: this.sort, pageSize: pageSize, pageNum: pageNum}).then(res=>{
+        this.list = res.data.games;
+        this.total = res.data.total;
       })
     },
 
@@ -75,6 +101,7 @@ export default {
         }
       });
     },
+
     random() {
       api.getByPath('/api/v0/scratch/game/random').then(res=>{
         window.location.href = '/scratch/guess?id=' + res.data;
@@ -83,8 +110,12 @@ export default {
 
     changeSort(tab, event) {
       this.list = [];
-      this.getList();
-    }
+      this.getList(1, 50);
+    },
+
+    handleCurrentChange(current) {
+      this.getList(current, 50)
+    },
   },
 }
 </script>
