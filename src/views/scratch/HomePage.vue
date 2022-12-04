@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div style="text-align: center; width: 100%; font-size: 32px;font-weight: bold; padding-top: 1rem; padding-bottom: 2rem"> 炒饭小测验
-      <div v-if="totalTimes" style="font-size: 16px">交流群号: 594837569</div>
+      <div v-if="totalTimes" style="font-size: 16px">交流QQ群号: 594837569</div>
       <div v-if="totalTimes" style="font-size: 16px">总测验次数: {{totalTimes}}</div>
       <div class="top-right">
 <!--        <el-button type="primary" @click="toUserHome" round>个人首页</el-button>-->
@@ -11,8 +11,16 @@
       </div>
     </div>
 
+
+
     <section v-if="list" class="list_container">
-      <el-radio-group v-model="sort" style="margin-bottom: 20px;" @change="changeSort">
+      <div>
+        <el-button type="warning" @click="showHotTags=!showHotTags" round>热门标签</el-button>
+      </div>
+      <div v-if="showHotTags" style="display: flex; flex-wrap: wrap; border: 1px solid gray ">
+        <div v-for="(item,index) in tags" @click="goTag(item)" style="display: block; padding-right: 10px; color: blue; font-size: 20px">{{item}}</div>
+      </div>
+      <el-radio-group v-model="sort" style="margin-bottom: 20px;margin-top: 20px;" @change="changeSort">
         <el-radio-button label="hot">最热</el-radio-button>
         <el-radio-button label="new">最新</el-radio-button>
         <el-radio-button label="mine">我创建的</el-radio-button>
@@ -66,13 +74,16 @@ export default {
     return {
       totalTimes: null,
       sort: 'hot',
+      showHotTags: false,
       total: 0,
       current: 1,
+      tags: [],
       list: [],
     }
   },
   mounted() {
     this.getList(1, 50);
+    this.listTag();
     this.getTotalGuessTimes();
   },
 
@@ -88,6 +99,14 @@ export default {
       api.getByPath('/api/v0/scratch/game/getTotalStartTimes' ).then(res=>{
         this.totalTimes = res.data;
       })
+    },
+    listTag() {
+      api.getByPath('/api/v0/scratch/tag/listHot', {size: 40} ).then(res=>{
+        this.tags = res.data;
+      })
+    },
+    goTag(item) {
+      window.location.href = '/scratch/tag?tagName=' + item;
     },
 
     gotoGuess(item) {
