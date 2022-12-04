@@ -19,7 +19,7 @@
     <div v-if="guessInfo && guessInfo.tags" style="align-items: center;justify-items: center;margin: auto; text-align: center; font-size: 16px; display: flex;justify-content: center;text-align: center;">
       标签：
       <div v-for="(item, index) in guessInfo.tags" @click="goTag(item)" style="padding: 2px; margin-right: 10px; color: #333fff; text-decoration:underline;cursor: pointer;">
-        #{{item}}
+        {{item}}
       </div>
     </div>
     <div v-if="guessInfo" style="margin: auto; text-align: center; font-size: 16px">

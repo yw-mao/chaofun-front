@@ -18,7 +18,7 @@
         <el-button type="warning" @click="showHotTags=!showHotTags" round>热门标签</el-button>
       </div>
       <div v-if="showHotTags" style="display: flex; flex-wrap: wrap; border: 1px solid gray ">
-        <div v-for="(item,index) in tags" @click="goTag(item)" style="display: block; padding-right: 10px; color: blue; font-size: 20px">{{item}}</div>
+        <div v-for="(item,index) in tags" @click="goTag(item)" style="display: block; padding-right: 10px; color: blue; font-size: 20px;">{{item}}</div>
       </div>
       <el-radio-group v-model="sort" style="margin-bottom: 20px;margin-top: 20px;" @change="changeSort">
         <el-radio-button label="hot">最热</el-radio-button>
