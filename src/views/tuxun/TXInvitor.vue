@@ -72,17 +72,20 @@
                   @click="showMapsSearch('noMove')"
                   type="primary"
                   style="margin-left: 10px"
+                  size="small"
               >切换固定</el-button>
               <el-button
                   v-if="this.$store.state.user.userInfo.userId === this.gameData.host.userId"
                   @click="showMapsSearch('move')"
                   type="primary"
+                  size="small"
                   style="margin-left: 10px"
               >切换移动</el-button>
               <el-button
                   v-if="this.$store.state.user.userInfo.userId === this.gameData.host.userId && this.mapsTagShow"
                   @click="mapsTagShow = false"
                   type="primary"
+                  size="small"
                   style="margin-left: 10px"
               >收起</el-button>
             </div>
@@ -95,6 +98,11 @@
           <div v-if="mapsTagShow">
             <el-button v-for="(item, index) in this.mapsData" @click="changeMaps(item.id)" size="small" round>{{item.name}}</el-button>
           </div>
+        </div>
+        <div style="padding-top: 2rem; font-size: 16px">
+          血量
+          <el-input-number v-if="this.$store.state.user.userInfo.userId === this.gameData.host.userId" v-model="health" @change="changeHealth" :min=1000 :max=1000000 :step=1000 />
+          <span v-else> : {{this.health}} </span>
         </div>
       </div>
 
@@ -479,6 +487,7 @@ export default {
       notifyStatus: '',
       mapsTagShow: false,
       mapsType: 'noMove',
+      health: 6000,
       mapsData: null
 
       // gameData: {playerIds: [1, 2]}
@@ -692,6 +701,10 @@ export default {
       }
 
       this.gameData = data;
+
+      if (this.gameData.health) {
+        this.health = this.gameData.health;
+      }
 
       if (this.gameData.status === 'match_fail') {
         this.$toast('匹配失败，重新匹配！');
@@ -1503,6 +1516,11 @@ export default {
         this.mapsData = res.data
       })
     },
+    changeHealth() {
+      api.getByPath('/api/v0/tuxun/game/changeHealth', {gameId: this.gameData.id, health: this.health}).then(res=>{
+        this.health = this.gameData.health;
+      })
+    }
   }
 }
 </script>
