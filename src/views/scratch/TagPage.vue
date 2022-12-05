@@ -4,7 +4,7 @@
       <el-button @click="goBack" size="small" round>←返回</el-button>
       <el-button @click="goHome" size="small" round>首页</el-button>
     </div>
-    <div style="text-align: center; width: 100%; font-size: 32px;font-weight: bold; padding-top: 1rem; padding-bottom: 2rem">
+    <div style="text-align: center; width: 100%; font-size: 32px;font-weight: bold; padding-top: 3rem; padding-bottom: 2rem">
       #{{this.tagName}}
 <!--      <div class="top-right">-->
 <!--&lt;!&ndash;        <el-button type="primary" @click="toUserHome" round>个人首页</el-button>&ndash;&gt;-->
