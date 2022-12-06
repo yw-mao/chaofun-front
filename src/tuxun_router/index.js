@@ -16,6 +16,12 @@ export const constantRoutes = [
     meta: { title: '支付'},
     hidden: true
   },
+  {
+    path: '/wxRedirect',
+    component: () => import('@/views/tuxun/WXRedirect'),
+    meta: { title: '支付'},
+    hidden: true
+  },
 ]
 
 /**

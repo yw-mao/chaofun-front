@@ -424,6 +424,13 @@ routes = [
     hidden: true
   },
   {
+    path: '/tuxun/wxRedirect',
+    component: () => import('@/views/tuxun/WXRedirect'),
+    name: '支付',
+    meta: { title: '支付'},
+    hidden: true
+  },
+  {
     path: '/tuxun/random',
     component: () => import('@/views/tuxun/RandomStreetView'),
     name: '随机街景',
