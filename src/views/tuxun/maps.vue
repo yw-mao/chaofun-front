@@ -99,8 +99,8 @@ export default {
 
     let _this = this;
     let timer = setInterval(()=>{
-      _this.getHotMaps();
-      _this.getNewMaps();
+      // _this.getHotMaps();
+      // _this.getNewMaps();
       _this.getRecentPageData();
     },10000)
   },
