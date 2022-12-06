@@ -10,18 +10,12 @@ Vue.use(Router)
 import Layout from '@/layout'
 
 export const constantRoutes = [
-  // {
-  //   path: '/',
-  //   component: () => import('@/views/tuxun/TXNewHome'),
-  //   meta: { title: '图寻'},
-  //   hidden: true
-  // },
-  // {
-  //   path: '/tuxun',
-  //   component: () => import('@/views/tuxun/TXNewHome'),
-  //   meta: { title: '图寻'},
-  //   hidden: true
-  // },
+  {
+    path: '/wxPay',
+    component: () => import('@/views/tuxun/pay'),
+    meta: { title: '支付'},
+    hidden: true
+  },
 ]
 
 /**

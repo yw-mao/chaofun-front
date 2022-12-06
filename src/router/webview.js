@@ -417,6 +417,13 @@ routes = [
     hidden: true
   },
   {
+    path: '/tuxun/wxPay',
+    component: () => import('@/views/tuxun/pay'),
+    name: '支付',
+    meta: { title: '支付'},
+    hidden: true
+  },
+  {
     path: '/tuxun/random',
     component: () => import('@/views/tuxun/RandomStreetView'),
     name: '随机街景',
