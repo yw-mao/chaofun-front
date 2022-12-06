@@ -73,6 +73,9 @@
          <div>
            微信扫描二维码支付
          </div>
+         <div v-if="ISPHONE">
+           暂不支持截图支付, 请使用另一台手机扫码支付
+         </div>
          <div style="padding-top: 10px"></div>
          <el-button type="primary" @click="paySuccess">
            已完成支付
