@@ -315,10 +315,7 @@ export default {
       // this.params.phone = (this.userInfo.phone.slice(0,3)+'****'+this.userInfo.phone.slice(7));
       // this.logStatus = true;
 
-      if (!this.userInfo.phone) {
-        this.$toast('需绑定手机号');
-      }
-      if (this.userInfo.userName && this.userInfo.phone) {
+      if (this.userInfo.userName) {
         api.changeUserName({ userName: this.userInfo.userName }).then(res => {
           if (res.success) {
             this.$toast("用户名修改成功");
