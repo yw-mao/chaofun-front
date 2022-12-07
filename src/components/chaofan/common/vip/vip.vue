@@ -150,7 +150,7 @@ import { Checkbox } from 'element-ui'
          if (this.choose === 'year') {
            period = '1year';
          }
-         api.getByPath('/api/v0/tuxun/vip/getPayUrl', {period: period}).then(res=>{
+         api.getByPath('/api/v0/tuxun/vip/getJSPayUrl', {period: period}).then(res=>{
            if (res.success) {
              this.orderId = res.data.orderId;
              this.payImageUrl = res.data.qrCodeUrl;
