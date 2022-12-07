@@ -8,7 +8,7 @@ export default {
   name: "pay",
   mounted() {
     this.orderId =  this.$route.query.orderNo;
-    this.code=  this.$route.query.orderNo;
+    this.code=  this.$route.query.code;
     this.callPay();
   },
   methods: {
