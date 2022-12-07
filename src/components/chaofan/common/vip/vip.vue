@@ -2,7 +2,7 @@
  <div  v-if="show" class="cover">
     <div class="ycovers">
       <div class="ycontainer">
-        <div style="font-size: 32px">开通会员</div>
+        <div style="font-size: 32px">续费/开通会员</div>
         <img @click="cancelVip" class="cancel" :src='cancelImg'/>
         <div style="padding-top: 10px; position: relative; display: flex;  justify-content: space-between;">
           <div @click="changeTo('student')" :class="{'card': choose !== 'student', 'choose-card': choose === 'student'}">
