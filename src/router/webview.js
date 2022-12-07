@@ -424,6 +424,13 @@ routes = [
     hidden: true
   },
   {
+    path: '/wxPay',
+    component: () => import('@/views/tuxun/pay'),
+    name: '图寻支付',
+    meta: { title: '图寻支付'},
+    hidden: true
+  },
+  {
     path: '/tuxun/wxRedirect',
     component: () => import('@/views/tuxun/WXRedirect'),
     name: '图寻重定向',
