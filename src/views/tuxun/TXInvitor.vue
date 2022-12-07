@@ -488,7 +488,7 @@ export default {
       mapsTagShow: false,
       mapsType: 'noMove',
       health: 6000,
-      mapsData: null
+      mapsData: []
 
       // gameData: {playerIds: [1, 2]}
     }
