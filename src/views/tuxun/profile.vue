@@ -13,6 +13,7 @@
             图寻会员 <span v-if="vipDue">｜过期时间 {{vipDue}}</span>
           </div>
         </div>
+        <el-button v-if="this.userProfile && this.$store.state.user.userInfo.userId === this.userProfile.userAO.userId" @click="$vip()">续费/开通会员</el-button>
     </div>
     <div v-if="this.userProfile" style="padding-left: 20px">
       <div>
