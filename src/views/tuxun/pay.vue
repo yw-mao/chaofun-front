@@ -3,6 +3,7 @@
 </template>
 
 <script>
+import * as api from '@/api/api'
 export default {
   name: "pay",
   mounted() {
@@ -11,6 +12,7 @@ export default {
   methods: {
     callPay() {
       function onBridgeReady() {
+
         WeixinJSBridge.invoke('getBrandWCPayRequest', {
               "appId": "wx59fc2a25d80a5812",   //公众号ID，由商户传入
               "timeStamp":  (new Date().getTime() / 1000).toString(),   //时间戳，自1970年以来的秒数
