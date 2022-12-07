@@ -19,7 +19,7 @@ export const constantRoutes = [
   {
     path: '/wxRedirect',
     component: () => import('@/views/tuxun/WXRedirect'),
-    meta: { title: '支付'},
+    meta: { title: '重定向'},
     hidden: true
   },
 ]
