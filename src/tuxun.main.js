@@ -99,7 +99,7 @@ router.beforeEach((to, from, next) => {
       window._hmt.push(['_trackPageview', to.fullPath])
     }
   }
-  console.log('路由切换')
+  console.log('路由切换， tuxun')
   if(to.path!='/lists'){
     // console.log('aaa')
     store.state.settings.leftNav = 'normal';
