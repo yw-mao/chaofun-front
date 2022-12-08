@@ -319,6 +319,20 @@ routes = [
     hidden: true
   },
   {
+    path: '/solo_game',
+    component: () => import('@/views/tuxun/TXInvitor'),
+    name: '图寻邀请PK',
+    meta: { title: '图寻邀请PK'},
+    hidden: true
+  },
+  {
+    path: '/team_game',
+    component: () => import('@/views/tuxun/TXInvitor'),
+    name: '图寻邀请PK',
+    meta: { title: '图寻邀请PK'},
+    hidden: true
+  },
+  {
     path: '/tuxun/team_game',
     component: () => import('@/views/tuxun/TXInvitor'),
     name: '图寻邀请PK',
@@ -326,10 +340,24 @@ routes = [
     hidden: true
   },
   {
+    path: '/challenge',
+    component: () => import('@/views/tuxun/TXInvitor'),
+    name: '图寻挑战',
+    meta: { title: '图寻挑战'},
+    hidden: true
+  },
+  {
     path: '/tuxun/challenge',
     component: () => import('@/views/tuxun/TXInvitor'),
     name: '图寻挑战',
     meta: { title: '图寻挑战'},
+    hidden: true
+  },
+  {
+    path: '/maps_game',
+    component: () => import('@/views/tuxun/TXHome'),
+    name: '练习赛',
+    meta: { title: '练习赛'},
     hidden: true
   },
   {
