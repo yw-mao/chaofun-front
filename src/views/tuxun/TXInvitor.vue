@@ -974,6 +974,7 @@ export default {
 
     setGoogle(panoId) {
       this.viewer.setPano(panoId);
+      this.viewer.setVisible(true);
       this.viewer.setZoom(0);
     },
 
