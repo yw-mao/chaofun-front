@@ -429,7 +429,7 @@ import { loadScript } from "vue-plugin-load-script";
 
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
-import "leaflet-bing-layer/leaflet-bing-layer"
+import "./SmoothWheelZoom"
 
 export default {
   name: "TXInvitor",
@@ -612,11 +612,13 @@ export default {
           attributionControl: true,
           worldCopyJump: true,
           coordType: 'gcj02',
-          zoomAnimation: false,
-          fadeAnimation: true,
+          scrollWheelZoom: false, // disable original zoom function
+          smoothWheelZoom: true,  // enable smooth zoom
+          smoothSensitivity: 1,   // zoom speed. default is 1
           maxBoundsViscosity: 1.0,
           maxBounds: [[-90, -540], [90, 540]]
         }).setView([38.8, 106.0], 3)
+        map.scrollWheelZoom = true;
         map.attributionControl.setPosition('bottomleft');
         map.attributionControl.setPrefix('华为地图');
         map.attributionControl.addAttribution('GS（2022）2885号');
