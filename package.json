@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "SET NODE_OPTIONS=--openssl-legacy-provider || export NODE_OPTIONS=--openssl-legacy-provider && vue-cli-service serve",
-    "build": "SET NODE_OPTIONS=--openssl-legacy-provider || export NODE_OPTIONS=--openssl-legacy-provider && vue-cli-service build",
+    "build": "vue-cli-service build",
     "analyzer": "SET NODE_OPTIONS=--openssl-legacy-provider || export NODE_OPTIONS=--openssl-legacy-provider && vue-cli-service build --report",
     "lint": "SET NODE_OPTIONS=--openssl-legacy-provider || export NODE_OPTIONS=--openssl-legacy-provider && vue-cli-service lint"
   },
