@@ -9,6 +9,7 @@
     "lint": "SET NODE_OPTIONS=--openssl-legacy-provider || export NODE_OPTIONS=--openssl-legacy-provider && vue-cli-service lint"
   },
   "dependencies": {
+    "@shzl/shzl-leaflet": "git@github.com:springsheep/shzl-leaflet.git",
     "@toast-ui/vue-editor": "^3.1.1",
     "agora-rtc-sdk-ng": "^4.12.1",
     "agora-rtc-vue": "^0.2.53",
@@ -31,6 +32,7 @@
     "jszip": "^3.7.1",
     "lazysizes": "^5.3.2",
     "leaflet": "^1.8.0",
+    "leaflet-bing-layer": "github:cijianzy/leaflet-bing-layer-china",
     "mavon-editor": "^2.7.7",
     "mockjs": "^1.1.0",
     "moment": "^2.24.0",
