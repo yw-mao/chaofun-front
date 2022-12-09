@@ -3,10 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "vue-cli-service serve",
-    "build": "vue-cli-service build",
-    "analyzer": "vue-cli-service build --report",
-    "lint": "vue-cli-service lint"
+    "dev": "SET NODE_OPTIONS=--openssl-legacy-provider || export NODE_OPTIONS=--openssl-legacy-provider && vue-cli-service serve",
+    "build": "SET NODE_OPTIONS=--openssl-legacy-provider || export NODE_OPTIONS=--openssl-legacy-provider && vue-cli-service build",
+    "analyzer": "SET NODE_OPTIONS=--openssl-legacy-provider || export NODE_OPTIONS=--openssl-legacy-provider && vue-cli-service build --report",
+    "lint": "SET NODE_OPTIONS=--openssl-legacy-provider || export NODE_OPTIONS=--openssl-legacy-provider && vue-cli-service lint"
   },
   "dependencies": {
     "@shzl/shzl-leaflet": "git@github.com:springsheep/shzl-leaflet.git",
