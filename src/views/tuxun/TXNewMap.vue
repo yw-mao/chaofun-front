@@ -7,7 +7,6 @@
 <script>
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
-import "leaflet-bing-layer/leaflet-bing-layer"
 // import "https://cdn.polyfill.io/v2/polyfill.min.js?features=Promise";
 export default {
   name: "TuxunNewMap",
