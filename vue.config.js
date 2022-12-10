@@ -1,6 +1,7 @@
 // vue.config.js
 const path = require("path");
 const webpack = require('webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const resolve = dir => {
   return path.join(__dirname, dir);
@@ -19,6 +20,7 @@ const dirweb = './src/views/chaofun-webview';
 // check if directory exists
 process.env.VUE_APP_BASE_WEB = fs.existsSync(dirweb);
 const Timestamp = new Date().getTime();
+
 module.exports = {
   publicPath: BASE_URL,
   outputDir: "dist", // 打包生成的生产环境构建文件的目录
@@ -29,13 +31,13 @@ module.exports = {
       entry: './src/main.js',
       template: './public/index.html',
       filename: 'index.html',
-      chunks: 'all'
+      // chunks: ['index']
     },
     tuxunPage: {
       entry: './src/tuxun.main.js',
-      template: './public/tuxun.html',
+      template: './public/tuxunPage.html',
       filename: 'tuxunPage.html',
-      chunks: 'all'
+      // chunks: ['tuxun']
     }
 
   }, // 构建多页
@@ -46,11 +48,22 @@ module.exports = {
   configureWebpack: config => {
     config.performance = {
       hints: false
-    }
+    };
+    plugins: [
+      new HtmlWebpackPlugin({
+        filename: 'index.html',
+        chunks: ['index']
+      }),
+      new HtmlWebpackPlugin({
+        filename: 'tuxunPage.html',
+        chunks: ['tuxunPage']
+      }),
+    ],
     config.output.filename = `[name].11${Timestamp}.js`;
     config.output.chunkFilename = `[name].22${Timestamp}.js`;
   },
   chainWebpack: config => {
+
     // 配置路径别名
     config.resolve.alias
       .set("@", resolve("src"))
@@ -78,48 +91,48 @@ module.exports = {
       .when(process.env.NODE_ENV === 'development',
         config => config.devtool('cheap-source-map')
       )
-    config
-      .when(process.env.NODE_ENV === 'development',
-        config => {
-          config
-            .plugin('ScriptExtHtmlWebpackPlugin')
-            .after('html')
-            .use('script-ext-html-webpack-plugin', [{
-            // `runtime` must same as runtimeChunk name. default is `runtime`
-              inline: /runtime\..*\.js$/
-            }])
-            .end()
-          config
-            .optimization.splitChunks({
-              chunks: 'all',
-              /** 新增s */
-              minSize: 10000,
-              maxSize: 200000,
-              /** 新增e */
-              cacheGroups: {
-                libs: {
-                  name: 'chunk-libs',
-                  test: /[\\/]node_modules[\\/]/,
-                  priority: 10,
-                  chunks: 'initial' // only package third parties that are initially dependent
-                },
-                elementUI: {
-                  name: 'chunk-elementUI', // split elementUI into a single package
-                  priority: 20, // the weight needs to be larger than libs and app or it will be packaged into libs or app
-                  test: /[\\/]node_modules[\\/]_?element-ui(.*)/ // in order to adapt to cnpm
-                },
-                commons: {
-                  name: 'chunk-commons',
-                  test: resolve('src/components'), // can customize your rules
-                  minChunks: 3, //  minimum common number
-                  priority: 5,
-                  reuseExistingChunk: true
-                }
-              }
-            })
-          config.optimization.runtimeChunk('single')
-        }
-      )
+    // config
+    //   .when(process.env.NODE_ENV === 'development',
+    //     config => {
+    //       config
+    //         .plugin('ScriptExtHtmlWebpackPlugin')
+    //         .after('html')
+    //         .use('script-ext-html-webpack-plugin', [{
+    //         // `runtime` must same as runtimeChunk name. default is `runtime`
+    //           inline: /runtime\..*\.js$/
+    //         }])
+    //         .end()
+    //       config
+    //         .optimization.splitChunks({
+    //           chunks: 'all',
+    //           /** 新增s */
+    //           minSize: 10000,
+    //           maxSize: 200000,
+    //           /** 新增e */
+    //           cacheGroups: {
+    //             libs: {
+    //               name: 'chunk-libs',
+    //               test: /[\\/]node_modules[\\/]/,
+    //               priority: 10,
+    //               chunks: 'initial' // only package third parties that are initially dependent
+    //             },
+    //             elementUI: {
+    //               name: 'chunk-elementUI', // split elementUI into a single package
+    //               priority: 20, // the weight needs to be larger than libs and app or it will be packaged into libs or app
+    //               test: /[\\/]node_modules[\\/]_?element-ui(.*)/ // in order to adapt to cnpm
+    //             },
+    //             commons: {
+    //               name: 'chunk-commons',
+    //               test: resolve('src/components'), // can customize your rules
+    //               minChunks: 3, //  minimum common number
+    //               priority: 5,
+    //               reuseExistingChunk: true
+    //             }
+    //           }
+    //         })
+    //       config.optimization.runtimeChunk('single')
+    //     }
+    //   )
       /** add */
       // 生产环境配置
     if (isProduction) {
