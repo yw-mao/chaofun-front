@@ -257,6 +257,7 @@ export default {
         minZoom: 1,
       }).addTo(map);
       this.map = map;
+      this.map.scrollWheelZoom.enable();
       this.map.on('click', this.click);
       this.map.invalidateSize();
 
