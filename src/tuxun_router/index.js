@@ -11,6 +11,12 @@ import Layout from '@/layout'
 
 export const constantRoutes = [
   {
+    path: '/',
+    component: () => import('@/views/tuxun/TXNewHome'),
+    meta: { title: '首页'},
+    hidden: true
+  },
+  {
     path: '/wxPay',
     component: () => import('@/views/tuxun/pay'),
     meta: { title: '支付'},
