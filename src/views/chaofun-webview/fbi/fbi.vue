@@ -148,7 +148,7 @@
       </div>
 
       <div @click="getTuxunVip('1year')" style="padding-top: 20px;width: 50%; display: inline-block; text-align: center">
-        <img style="padding-right: 10px; padding-left: 10px; max-width: 100%; max-height: 200px" src="https://i.chao-fan.com/biz/1670860883063_ce53b4155dce4b5cb8a4f7039cd47b59_0.png">
+        <img style="padding-right: 10px; padding-left: 10px; max-width: 100%; max-height: 200px" src="https://i.chao-fan.com/biz/1670861709222_dfe1d453d9cc49e6b7033ae1b12a2f85_0.png">
         <p style="text-align: center">
           图寻会员 1年
         </p>
