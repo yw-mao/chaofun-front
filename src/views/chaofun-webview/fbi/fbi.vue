@@ -68,7 +68,7 @@
 <!--      </div>-->
 
       <div @click="getTuxunVip('1month')" style="padding-top: 20px;width: 50%; display: inline-block; text-align: center">
-        <img style="padding-right: 10px; padding-left: 10px; max-width: 100%; max-height: 200px" src="https://i.chao-fan.com/biz/1669800911472_69cd91feb2354d199303cf52badf688d_0.png">
+        <img style="padding-right: 10px; padding-left: 10px; max-width: 100%; max-height: 200px" src="https://i.chao-fan.com/biz/1670860881679_9b783640ff674791864b6aa4674a9ca8_0.png">
         <p style="text-align: center">
           图寻会员 1个月
         </p>
@@ -147,7 +147,7 @@
       </div>
 
       <div @click="getTuxunVip('1year')" style="padding-top: 20px;width: 50%; display: inline-block; text-align: center">
-        <img style="padding-right: 10px; padding-left: 10px; max-width: 100%; max-height: 200px" src="https://i.chao-fan.com/biz/1669800913716_0f5cdc58e22f479d9371baf622835d0e_0.png">
+        <img style="padding-right: 10px; padding-left: 10px; max-width: 100%; max-height: 200px" src="https://i.chao-fan.com/biz/1670860883063_ce53b4155dce4b5cb8a4f7039cd47b59_0.png">
         <p style="text-align: center">
           图寻会员 1年
         </p>
