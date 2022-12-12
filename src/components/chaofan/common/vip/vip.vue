@@ -16,7 +16,7 @@
           <div @click="changeTo('month')" :class="{'card': choose !== 'month', 'choose-card': choose === 'month'}">
             <div>
               <div style="font-size: 30px">
-                <span style="font-size: 10px">￥</span>5.99
+                <span style="font-size: 10px">￥</span>9.99
               </div>
               <div>
                 一个月
@@ -26,7 +26,7 @@
           <div @click="changeTo('year')" :class="{'card': choose !== 'year', 'choose-card': choose === 'year'}">
             <div>
               <div style="font-size: 30px">
-                <span style="font-size: 10px">￥</span>39.99
+                <span style="font-size: 10px">￥</span>66.99
               </div>
               <div>
                 一年
