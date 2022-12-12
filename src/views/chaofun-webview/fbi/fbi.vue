@@ -67,15 +67,7 @@
 <!--        </p>-->
 <!--      </div>-->
 
-      <div @click="getTuxunVip('1month')" style="padding-top: 20px;width: 50%; display: inline-block; text-align: center">
-        <img style="padding-right: 10px; padding-left: 10px; max-width: 100%; max-height: 200px" src="https://i.chao-fan.com/biz/1670860881679_9b783640ff674791864b6aa4674a9ca8_0.png">
-        <p style="text-align: center">
-          图寻会员 1个月
-        </p>
-        <p style="text-align: center">
-          FBi: 999
-        </p>
-      </div>
+
 
       <div @click="getMusicPackage" style="padding-top: 20px;width: 50%; display: inline-block; text-align: center">
         <img style="padding-right: 10px; padding-left: 10px; max-width: 100%; max-height: 200px" src="https://i.chao-fan.com/biz/1653662548745_fe793a4930f64d31a6acc0129adfc4d6.png">
@@ -87,6 +79,15 @@
         </p>
       </div>
 
+      <div @click="getTuxunVip('1month')" style="padding-top: 20px;width: 50%; display: inline-block; text-align: center">
+        <img style="padding-right: 10px; padding-left: 10px; max-width: 100%; max-height: 200px" src="https://i.chao-fan.com/biz/1670860881679_9b783640ff674791864b6aa4674a9ca8_0.png">
+        <p style="text-align: center">
+          图寻会员 1个月
+        </p>
+        <p style="text-align: center">
+          FBi: 999
+        </p>
+      </div>
 
       <div @click="getJDECard" style="width: 50%; display: inline-block">
         <img style="padding-right: 10px; padding-left: 10px; width: 100%" src="https://i.chao-fan.com/biz/fc21232af2fa1849c3f0853b8748224c.png">
