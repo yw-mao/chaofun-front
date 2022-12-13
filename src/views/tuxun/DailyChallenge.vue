@@ -173,7 +173,7 @@ export default {
       })
     },
     toUser(user) {
-      tuxunJump( location.origin + '/tuxun/user/' + user.userId);
+      tuxunJump( '/tuxun/user/' + user.userId);
     },
 
     getDate() {  //当前时间格式化处理

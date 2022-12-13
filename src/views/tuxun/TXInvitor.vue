@@ -130,7 +130,7 @@
           邀请链接
         </div>
         <div class="body">
-          <input class="invite_input" placeholder readonly :value="'https://chao.fan' + this.$route.fullPath" >
+          <input class="invite_input" placeholder readonly :value="origin + this.$route.fullPath" >
           </input>
           <el-button class="button" type="success" @click="copyInviterLink" round>复制分享</el-button>
         </div>
@@ -490,6 +490,7 @@ export default {
       mapsTagShow: false,
       mapsType: 'noMove',
       health: 6000,
+      origin: location.origin,
       mapsData: []
 
       // gameData: {playerIds: [1, 2]}
@@ -997,7 +998,7 @@ export default {
 
     copyInviterLink() {
       var input = document.createElement('input');
-      input.setAttribute('value', 'https://chao.fan' + this.$route.fullPath);
+      input.setAttribute('value', this.origin + this.$route.fullPath);
       document.body.appendChild(input);
       input.select();
       var result = document.execCommand('copy');

@@ -234,7 +234,6 @@ export default {
         if (res) {
           api.getByPath("/api/v0/tuxun/solo/create").then(res => {
             var id = res.data.id;
-            // window.open(location.origin + '/tuxun/solo_game?gameId=' + id,"_blank");
             tuxunJump('/tuxun/solo_game?gameId=' + id);
             // this.$router.push({path: '/tuxun/solo_game?gameId=' + id}).catch((e) => {})
           });

@@ -13,7 +13,9 @@
             图寻会员 <span v-if="vipDue">｜过期时间 {{vipDue}}</span>
           </div>
         </div>
-        <el-button v-if="this.userProfile && this.$store.state.user.userInfo.userId === this.userProfile.userAO.userId" @click="$vip()">续费/开通会员</el-button>
+      <el-button v-if="this.userProfile && this.$store.state.user.userInfo.userId === this.userProfile.userAO.userId" @click="logout()">退出登陆</el-button>
+      <div></div>
+      <el-button v-if="this.userProfile && this.$store.state.user.userInfo.userId === this.userProfile.userAO.userId" @click="$vip()">续费/开通会员</el-button>
     </div>
     <div v-if="this.userProfile" style="padding-left: 20px">
       <div>
@@ -129,7 +131,7 @@ export default {
     }
   },
   created() {
-    this.userId= this.$route.path.split("/")[3];
+    this.userId= this.$route.path.split("/")[this.$route.path.split("/").length - 1];
     var today = new Date();
     var dd = String(today.getDate()).padStart(2, '0');
     var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
@@ -141,6 +143,10 @@ export default {
     this.checkVip();
   },
   methods: {
+    async logout() {
+      await this.$store.dispatch('user/logout')
+      tuxunJump('/tuxun/')
+    },
     getUserProfile() {
       api.getByPath('/api/v0/tuxun/getProfile', {userId: this.userId}).then(res=>{
         this.userProfile = res.data

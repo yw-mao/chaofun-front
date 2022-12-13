@@ -105,7 +105,7 @@ export default {
       });
     },
     toUser(item) {
-      window.open(location.origin + "/tuxun/user/" + item.userAO.userId, "_blank");
+      tuxunOpen("/tuxun/user/" + item.userAO.userId);
     },
 
     goHome() {

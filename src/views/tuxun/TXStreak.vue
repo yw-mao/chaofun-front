@@ -113,7 +113,7 @@ export default {
       });
     },
     toUser(user) {
-      tuxunJump( location.origin + '/tuxun/user/' + user.userId);
+      tuxunJump( '/tuxun/user/' + user.userId);
     },
   }
 }

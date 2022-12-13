@@ -103,6 +103,13 @@ export const constantRoutes = [
     meta: { title: 'rank'},
     hidden: true
   },
+  {
+    path: '/user/:id',
+    component: () => import('@/views/tuxun/profile'),
+    name: 'tuxunProfile',
+    meta: { title: '',keepAlive: true,},
+    hidden: true
+  },
 ]
 
 /**
