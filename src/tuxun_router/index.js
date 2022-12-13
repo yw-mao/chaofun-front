@@ -96,6 +96,13 @@ export const constantRoutes = [
     meta: { title: '图寻'},
     hidden: true
   },
+  {
+    path: '/rank',
+    component: () => import('@/views/tuxun/rank'),
+    name: 'rank',
+    meta: { title: 'rank'},
+    hidden: true
+  },
 ]
 
 /**
