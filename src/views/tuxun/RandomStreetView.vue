@@ -15,7 +15,7 @@
 <script>
 import { loadScript } from "vue-plugin-load-script";
 import * as api from '../../api/api'
-
+import {tuxunJump, tuxunOpen} from "./common";
 
 export default {
   name: "RandomStreetView",
@@ -82,7 +82,7 @@ export default {
       }
     },
     goHome() {
-      window.location.href = '/tuxun';
+      tuxunJump('/tuxun/');
     },
     setPano(panoId) {
       this.currentPanoId = panoId;
@@ -101,7 +101,7 @@ export default {
       this.doLoginStatus().then((res) => {
       if (res) {
         if (this.sharePanoId) {
-          window.location.href = '/tuxun/random'
+          tuxunJump('/tuxun/random');
           return;
         }
         api.getByPath("/api/v0/tuxun/random", {mapsId: this.mapsId}).then(res => {

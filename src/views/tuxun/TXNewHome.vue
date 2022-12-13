@@ -127,7 +127,7 @@
               全国最好的网络迷踪社区
             </div>
           </div>
-          <div class="card" @click="redirectPage( '/scratch/home')">
+          <div class="card" @click="toScratch()">
             <div class="title">
               炒饭小测验
             </div>
@@ -137,7 +137,7 @@
           </div>
         </div>
         <div style="display: flex;">
-          <div @click="redirectPage( 'https://www.yuque.com/ucun5p/kfw26e/dp7hvxnm7tes88g7')" style="color: white;font-size: medium; padding-top: 1rem; padding-right: 1rem; text-decoration:underline;">
+          <div @click="toDocument" style="color: white;font-size: medium; padding-top: 1rem; padding-right: 1rem; text-decoration:underline;">
             更新日志
           </div>
 <!--          <div @click="window.location.href = '/tuxun/change_log'" style="color: white;font-size: medium; padding-top: 1rem; text-decoration:underline;">-->
@@ -177,6 +177,7 @@
 
 <script>
 import * as api from '../../api/api'
+import {tuxunJump, tuxunOpen} from "./common";
 
 export default {
   name: "TXNewHome",
@@ -217,14 +218,14 @@ export default {
       try {
         window.flutter_inappwebview.callHandler('toViewPage',{url: location.origin+path,title:title,showHeader: true})
       } catch (e) {
-        window.open(location.origin + path);
+        tuxunJump(location.origin + path);
       }
     },
     toForum(){
       try {
         window.flutter_inappwebview.callHandler('toAppForum',{forumId: 84+''})
       } catch (e) {
-        window.open('https://chao.fan/f/84',"_blank");
+        tuxunOpen('https://chao.fan/f/84');
       }
     },
 
@@ -234,7 +235,7 @@ export default {
           api.getByPath("/api/v0/tuxun/solo/create").then(res => {
             var id = res.data.id;
             // window.open(location.origin + '/tuxun/solo_game?gameId=' + id,"_blank");
-            window.location.href = '/tuxun/solo_game?gameId=' + id;
+            tuxunJump('/tuxun/solo_game?gameId=' + id);
             // this.$router.push({path: '/tuxun/solo_game?gameId=' + id}).catch((e) => {})
           });
         }
@@ -246,34 +247,42 @@ export default {
         api.getByPath("/api/v0/tuxun/team/create").then(res => {
           var id = res.data.id;
           // window.open(location.origin + '/tuxun/solo_game?gameId=' + id,"_blank");
-          window.location.href = '/tuxun/team_game?gameId=' + id;
+          tuxunJump('/tuxun/team_game?gameId=' + id);
           // this.$router.push({path: '/tuxun/solo_game?gameId=' + id}).catch((e) => {})
         });
       })
     },
 
     redirectPage(path) {
-      window.location.href = path
+      console.log(path)
+      tuxunJump(path)
+      // window.location.href = path
     },
 
     soloMatch() {
-        window.location.href = '/tuxun/solo_game'
+      tuxunJump('/tuxun/solo_game')
     },
     toRank() {
-      window.location.href = location.origin + '/tuxun/rank'
+      tuxunJump(  '/tuxun/rank')
     },
     toUserHome() {
       this.doLoginStatus().then((res) => {
         if (res) {
-          window.location.href = location.origin + '/tuxun/user/' + this.$store.state.user.userInfo.userId;
+          tuxunJump('/tuxun/user/' + this.$store.state.user.userInfo.userId);
         }
       });
+    },
+    toScratch() {
+      tuxunOpen('https://chao.fan/scratch/home')
+    },
+    toDocument() {
+      tuxunOpen('https://www.yuque.com/ucun5p/kfw26e/dp7hvxnm7tes88g7')
     },
     toFirstTournament() {
       try {
         window.flutter_inappwebview.callHandler('toAppPost', {postId: '1222809'});
       } catch (e) {
-        window.open('/p/1222809', "_blank");
+        tuxunOpen('https://chao.fan/p/1222809');
       }
     }
   }

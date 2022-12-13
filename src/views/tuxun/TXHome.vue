@@ -141,6 +141,7 @@ import 'photo-sphere-viewer/dist/plugins/compass.css'
 import 'photo-sphere-viewer/dist/plugins/virtual-tour.css'
 import 'photo-sphere-viewer/dist/plugins/markers.css'
 import BMapLoader from "../../utils/bmap-jsapi-loader";
+import {tuxunJump, tuxunOpen} from "./common";
 
 export default {
   components: {
@@ -781,10 +782,10 @@ export default {
       })
     },
     toMaps() {
-      window.open(location.origin + '/tuxun/maps',"_blank");
+      tuxunOpen('/tuxun/maps');
     },
     toHome() {
-      window.location.href = '/tuxun';
+      tuxunJump( '/tuxun/');
     },
 
     next() {

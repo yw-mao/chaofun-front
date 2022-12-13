@@ -107,7 +107,7 @@ export default {
     },
 
     goHome() {
-      window.location.href = '/tuxun';
+      tuxunJump('/tuxun/');
     },
   }
 };

@@ -28,6 +28,74 @@ export const constantRoutes = [
     meta: { title: '重定向'},
     hidden: true
   },
+  {
+    path: '/maps',
+    component: () => import('@/views/tuxun/maps'),
+    meta: { title: '重定向'},
+    hidden: true
+  },
+  {
+    path: '/solo_game',
+    component: () => import('@/views/tuxun/TXInvitor'),
+    name: '图寻邀请PK',
+    meta: { title: '图寻邀请PK'},
+    hidden: true
+  },
+  {
+    path: '/team_game',
+    component: () => import('@/views/tuxun/TXInvitor'),
+    name: '图寻邀请PK',
+    meta: { title: '图寻邀请PK'},
+    hidden: true
+  },
+  {
+    path: '/random',
+    component: () => import('@/views/tuxun/RandomStreetView'),
+    name: '图寻首页',
+    meta: { title: '图寻首页'},
+    hidden: true
+  },
+  {
+    path: '/daily_challenge',
+    component: () => import('@/views/tuxun/DailyChallenge'),
+    name: '图寻每日挑战',
+    meta: { title: '图寻每日挑战'},
+    hidden: true
+  },
+  {
+    path: '/challenge',
+    component: () => import('@/views/tuxun/TXInvitor'),
+    name: '图寻挑战',
+    meta: { title: '图寻挑战'},
+    hidden: true
+  },
+  {
+    path: '/guoqing',
+    component: () => import('@/views/tuxun/TuxunGuoQing'),
+    name: '图寻国庆活动',
+    meta: { title: '图寻国庆活动'},
+    hidden: true
+  },
+  {
+    path: '/guoqing_game',
+    component: () => import('@/views/tuxun/TXInvitor'),
+    name: '图寻国庆活动',
+    meta: { title: '图寻国庆活动'},
+    hidden: true
+  },  {
+    path: '/streak_game',
+    component: () => import('@/views/tuxun/TXInvitor'),
+    name: '图寻连胜',
+    meta: { title: '图寻连胜'},
+    hidden: true
+  },
+  {
+    path: '/main_game',
+    component: () => import('@/views/tuxun/TXHome'),
+    name: '图寻',
+    meta: { title: '图寻'},
+    hidden: true
+  },
 ]
 
 /**

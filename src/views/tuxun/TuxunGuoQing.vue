@@ -48,6 +48,8 @@
 <script>
 
 import * as api from '../../api/api'
+import {tuxunJump, tuxunOpen} from "./common";
+
 
 export default {
   name: "TuxunGuoQing",
@@ -77,7 +79,7 @@ export default {
       this.countDown();
     },
     goHome() {
-      window.location.href = '/tuxun';
+      tuxunJump('/tuxun/');
     },
 
     countDown() {
@@ -98,7 +100,7 @@ export default {
       });
     },
     toGame() {
-      window.location.href = '/tuxun/guoqing_game?guoqingId=' + this.gameId;
+      tuxunJump('/tuxun/guoqing_game?guoqingId=' + this.gameId);
     },
     listResult() {
       api.getByPath("/api/v0/tuxun/br/listResult", {type: this.type}).then(res => {
@@ -106,7 +108,7 @@ export default {
       });
     },
     toUser(item) {
-      window.open(location.origin + "/tuxun/user/" + item.userId, "_blank");
+      tuxunOpen(location.origin + "/tuxun/user/" + item.userId);
     },
   }
 }

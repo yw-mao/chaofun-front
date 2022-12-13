@@ -69,6 +69,7 @@
 
 <script>
 import * as api from '../../api/api'
+import {tuxunJump, tuxunOpen} from "./common";
 
 export default {
   name: "TXStreak",
@@ -87,7 +88,7 @@ export default {
       this.listRank();
     },
     goHome() {
-      window.location.href = '/tuxun';
+      tuxunJump('/tuxun/');
     },
     createNew() {
 
@@ -96,7 +97,7 @@ export default {
         if (res) {
           api.getByPath("/api/v0/tuxun/streak/create", {type: this.type}).then(res => {
             if (res.success) {
-              window.location.href = '/tuxun/streak_game?streakId=' + res.data.id;
+              tuxunJump('/tuxun/streak_game?streakId=' + res.data.id);
             } else if (res.errorCode === 'need_vip') {
               this.$vip();
             }
@@ -112,7 +113,7 @@ export default {
       });
     },
     toUser(user) {
-      window.location.href = location.origin + '/tuxun/user/' + user.userId;
+      tuxunJump( location.origin + '/tuxun/user/' + user.userId);
     },
   }
 }

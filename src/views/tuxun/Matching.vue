@@ -16,6 +16,7 @@
 
 <script>
 import {Circle2} from 'vue-loading-spinner'
+import {tuxunJump, tuxunOpen} from "./common";
 
 export default {
   name: "Matching",
@@ -24,7 +25,7 @@ export default {
   },
   methods: {
     goHome() {
-      window.location.href = '/tuxun';
+      tuxunJump('/tuxun/');
     },
   }
 }

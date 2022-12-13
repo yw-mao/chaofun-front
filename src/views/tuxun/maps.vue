@@ -76,6 +76,8 @@
 // @ is an alias to /src
 // import Header from '@/components/common/Header.vue'
 import * as api from '@/api/api'
+import {tuxunJump, tuxunOpen} from "./common";
+
 export default {
   name: 'tuxunRank',
   components: {
@@ -129,7 +131,7 @@ export default {
 
               api.getByPath('/api/v0/tuxun/challenge/create', {'mapsId': item.id, 'type': type}).then(res => {
                 if (res.success) {
-                  window.location.href = '/tuxun/challenge?challengeId=' + res.data;
+                  tuxunJump('/tuxun/challenge?challengeId=' + res.data);
                 } else {
                   if (res.errorCode === 'need_vip') {
                     this.$vip({
@@ -142,7 +144,7 @@ export default {
     },
 
     goHome() {
-      window.location.href = '/tuxun';
+      tuxunJump('/tuxun/');
     },
   },
 }

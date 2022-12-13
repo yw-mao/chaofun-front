@@ -58,6 +58,7 @@
 </template>
 
 <script>
+import {tuxunJump, tuxunOpen} from "./common";
 import * as api from '../../api/api'
 
 export default {
@@ -132,12 +133,12 @@ export default {
       })
     },
     goHome() {
-      window.location.href = '/tuxun';
+      tuxunJump('/tuxun/');
     },
     beginCall() {
       api.getByPath('/api/v0/tuxun/challenge/start', {'gameId': this.gameData.id}).then(res=>{
         this.gameData= res.data;
-        window.location.href = '/tuxun/challenge?challengeId=' + this.gameData.challengeId;
+        tuxunJump( '/tuxun/challenge?challengeId=' + this.gameData.challengeId);
       })
     },
     begin() {
@@ -160,7 +161,7 @@ export default {
       // window.location.href =
     },
     again() {
-      window.location.href = '/tuxun/challenge?challengeId=' + this.gameData.challengeId;
+      tuxunJump( '/tuxun/challenge?challengeId=' + this.gameData.challengeId);
     },
 
     getRank() {
@@ -172,7 +173,7 @@ export default {
       })
     },
     toUser(user) {
-      window.location.href = location.origin + '/tuxun/user/' + user.userId;
+      tuxunJump( location.origin + '/tuxun/user/' + user.userId);
     },
 
     getDate() {  //当前时间格式化处理

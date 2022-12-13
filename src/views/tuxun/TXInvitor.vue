@@ -430,6 +430,8 @@ import { loadScript } from "vue-plugin-load-script";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import "./SmoothWheelZoom"
+import {tuxunJump, tuxunOpen} from "./common";
+
 
 export default {
   name: "TXInvitor",
@@ -709,7 +711,7 @@ export default {
 
       if (this.gameData.status === 'match_fail') {
         this.$toast('匹配失败，重新匹配！');
-        window.location.href = '/tuxun/solo_game'
+        tuxunJump('/tuxun/solo_game')
         return;
       }
 
@@ -1087,11 +1089,11 @@ export default {
           tType = 'country_move'
         }
         api.getByPath("/api/v0/tuxun/streak/create", {type: tType}).then(res => {
-          window.location.href = '/tuxun/streak_game?streakId=' + res.data.id;
+          tuxunJump('/tuxun/streak_game?streakId=' + res.data.id);
         });
       } else {
         api.getByPath("/api/v0/tuxun/streak/create", {type: 'province'}).then(res => {
-          window.location.href = '/tuxun/streak_game?streakId=' + res.data.id;
+          tuxunJump('/tuxun/streak_game?streakId=' + res.data.id);
         });
       }
     },
@@ -1379,7 +1381,7 @@ export default {
     },
 
     goTuxun() {
-      window.location.href = '/tuxun/solo_game';
+      tuxunJump('/tuxun/solo_game');
     },
 
     toNew() {
@@ -1389,7 +1391,7 @@ export default {
       }
       api.getByPath("/api/v0/tuxun/br/get", {type: type}).then(res => {
         if (res.data.gameId) {
-          window.location.href = '/tuxun/guoqing_game?guoqingId=' + res.data.gameId;
+          tuxunJump('/tuxun/guoqing_game?guoqingId=' + res.data.gameId);
         }
       });
     },
@@ -1397,9 +1399,9 @@ export default {
       api.getByPath('/api/v0/tuxun/game/again', {'gameId': this.gameId}).then(res => {
         if (res.data) {
           if (res.data.type === 'team') {
-            window.location.href = '/tuxun/team_game?gameId=' + res.data.id;
+            tuxunJump('/tuxun/team_game?gameId=' + res.data.id);
           } else {
-            window.location.href = '/tuxun/solo_game?gameId=' + res.data.id;
+            tuxunJump('/tuxun/solo_game?gameId=' + res.data.id);
           }
         }
       })
@@ -1414,22 +1416,22 @@ export default {
           }
           api.getByPath('/api/v0/tuxun/challenge/create', {'mapsId': this.gameData.mapsId, 'type': type}).then(res => {
             if (res.success) {
-              window.location.href = '/tuxun/challenge?challengeId=' + res.data;
+              tuxunJump( '/tuxun/challenge?challengeId=' + res.data);
             }
           })
         }
       });
     },
     goDailyChallenge() {
-      window.location.href = '/tuxun/daily_challenge';
+      tuxunJump(  '/tuxun/daily_challenge');
     },
 
     goHome() {
-      window.location.href = '/tuxun';
+      tuxunJump( '/tuxun/');
     },
 
     goMaps() {
-      window.location.href = '/tuxun/maps';
+      tuxunJump( '/tuxun/maps');
     },
 
 

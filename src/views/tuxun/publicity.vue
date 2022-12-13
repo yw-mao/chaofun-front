@@ -55,6 +55,7 @@
 // @ is an alias to /src
 // import Header from '@/components/common/Header.vue'
 import * as api from '@/api/api'
+import {tuxunJump, tuxunOpen} from "./common";
 export default {
   name: 'tuxunRank',
   components: {
@@ -193,7 +194,7 @@ export default {
       window.open(url, '_blank');
     },
     goHome() {
-      window.location.href = '/tuxun';
+      tuxunJump('/tuxun/');
     },
   },
 }

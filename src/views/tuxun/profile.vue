@@ -176,7 +176,7 @@ export default {
       }
     },
     goHome() {
-      window.location.href = '/tuxun';
+      tuxunJump('/tuxun/');
     },
     checkVip() {
       if (this.$store.state.user.userInfo.userId.toString() === this.userId) {
