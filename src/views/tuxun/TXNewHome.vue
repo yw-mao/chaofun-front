@@ -4,6 +4,7 @@
       <div>
         <img style="margin-top: 25px; margin-left: 25px; width: 5rem; height: 3rem" :src="imgOrigin + 'biz/1658657631523_45db8dd090dc49af99f2a8a4ace01122.svg'"></img>
         <div style="margin-left: 25px; color: white">探索真实世界，收集线索，找出自己的位置</div>
+        <div style="margin-left: 20px; color: white">「炒饭社区」出品</div>
       </div>
       <div class="top-right">
         <el-button type="primary" @click="toUserHome" round>个人首页</el-button>
@@ -223,7 +224,7 @@ export default {
       try {
         window.flutter_inappwebview.callHandler('toAppForum',{forumId: 84+''})
       } catch (e) {
-        window.open(location.origin + '/f/84',"_blank");
+        window.open('https://chao.fan/f/84',"_blank");
       }
     },
 
