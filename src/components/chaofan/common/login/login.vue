@@ -296,6 +296,9 @@ import { Checkbox } from 'element-ui'
       // Vue.$store.dispatch('user/SET_logStatus','')
       this.logStatus = 'login'
       this.show = false;
+      if (this.ticketTimer) {
+        clearInterval(this.ticketTimer);
+      }
     },
     logOrReg(v){
       let params = deepClone(this.params);
