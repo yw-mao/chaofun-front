@@ -14,7 +14,7 @@
           </div>
         </div>
       <el-button v-if="this.userProfile && this.$store.state.user.userInfo.userId === this.userProfile.userAO.userId" @click="logout()">退出登陆</el-button>
-      <div></div>
+      <div style="height: 10px"></div>
       <el-button v-if="this.userProfile && this.$store.state.user.userInfo.userId === this.userProfile.userAO.userId" @click="$vip()">续费/开通会员</el-button>
     </div>
     <div v-if="this.userProfile" style="padding-left: 20px">
