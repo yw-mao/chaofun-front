@@ -49,7 +49,6 @@ Vue.use(VueScroller)
 
 import './icons' // icon
 import './utils/error-log' // error log
-import './permission' // permission control
 import * as filters from './filters' // global filters
 import i18n from './lang'
 // const {version} = require('./utils/version')

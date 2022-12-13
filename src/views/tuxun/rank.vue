@@ -75,8 +75,6 @@
 
 <script>
 import * as api from "@/api/api";
-import {tuxunJump, tuxunOpen} from "./common";
-
 
 export default {
   name: "tuxunRank",

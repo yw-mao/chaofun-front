@@ -311,7 +311,7 @@ import { Checkbox } from 'element-ui'
                 let a = this.tils().encode(params.userName);
                 let p = this.tils().encode(params.password);
                 localStorage.setItem('u',a+'||'+p)
-              } else {
+              }else{
                 localStorage.removeItem('u')
               }
               // debugger
