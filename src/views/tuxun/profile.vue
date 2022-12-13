@@ -86,6 +86,8 @@ import {
   LegendComponent
 } from "echarts/components";
 import VChart, { THEME_KEY } from "vue-echarts";
+import {tuxunJump, tuxunOpen} from "./common";
+
 
 use([
   CanvasRenderer,
