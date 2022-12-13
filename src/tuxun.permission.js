@@ -1,4 +1,4 @@
-import router from './router'
+import router from './tuxun_router'
 import store from './store'
 import { Message } from 'element-ui'
 import { getToken } from '@/utils/auth' // get token from cookie
