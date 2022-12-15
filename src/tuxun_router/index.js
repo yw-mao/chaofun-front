@@ -13,13 +13,13 @@ export const constantRoutes = [
   {
     path: '/',
     component: () => import('@/views/tuxun/TXNewHome'),
-    meta: { title: '首页'},
+    meta: { title: '图寻-首页'},
     hidden: true
   },
   {
     path: '/wxPay',
     component: () => import('@/views/tuxun/pay'),
-    meta: { title: '支付'},
+    meta: { title: '图寻-支付'},
     hidden: true
   },
   {
@@ -31,97 +31,88 @@ export const constantRoutes = [
   {
     path: '/maps',
     component: () => import('@/views/tuxun/maps'),
-    meta: { title: '重定向'},
+    meta: { title: '练习赛'},
     hidden: true
   },
   {
     path: '/solo_game',
     component: () => import('@/views/tuxun/TXInvitor'),
-    name: '图寻邀请PK',
-    meta: { title: '图寻邀请PK'},
+    meta: { title: '图寻-Solo'},
     hidden: true
   },
   {
     path: '/team_game',
     component: () => import('@/views/tuxun/TXInvitor'),
-    name: '图寻邀请PK',
-    meta: { title: '图寻邀请PK'},
+    meta: { title: '图寻-组队'},
     hidden: true
   },
   {
     path: '/random',
     component: () => import('@/views/tuxun/RandomStreetView'),
-    name: '图寻首页',
-    meta: { title: '图寻首页'},
+    meta: { title: '图寻-随机街景'},
     hidden: true
   },
   {
     path: '/daily_challenge',
     component: () => import('@/views/tuxun/DailyChallenge'),
-    name: '图寻每日挑战',
+    name: '图寻-每日挑战',
     meta: { title: '图寻每日挑战'},
     hidden: true
   },
   {
     path: '/challenge',
     component: () => import('@/views/tuxun/TXInvitor'),
-    name: '图寻挑战',
-    meta: { title: '图寻挑战'},
+    name: '图寻-挑战',
+    meta: { title: '图寻-挑战'},
     hidden: true
   },
   {
     path: '/guoqing',
     component: () => import('@/views/tuxun/TuxunGuoQing'),
-    name: '图寻国庆活动',
-    meta: { title: '图寻国庆活动'},
+    name: '图寻-淘汰赛',
+    meta: { title: '图寻-淘汰赛'},
     hidden: true
   },
   {
     path: '/guoqing_game',
     component: () => import('@/views/tuxun/TXInvitor'),
-    name: '图寻国庆活动',
-    meta: { title: '图寻国庆活动'},
+    name: '图寻-淘汰赛',
+    meta: { title: '图寻-淘汰赛'},
     hidden: true
   },  {
     path: '/streak_game',
     component: () => import('@/views/tuxun/TXInvitor'),
-    name: '图寻连胜',
-    meta: { title: '图寻连胜'},
+    meta: { title: '图寻-连胜'},
     hidden: true
   },
   {
     path: '/main_game',
     component: () => import('@/views/tuxun/TXHome'),
-    name: '图寻',
-    meta: { title: '图寻'},
+    meta: { title: '图寻-积分赛'},
     hidden: true
   },
   {
     path: '/rank',
     component: () => import('@/views/tuxun/rank'),
-    name: 'rank',
-    meta: { title: 'rank'},
+    meta: { title: '图寻-积分排行'},
     hidden: true
   },
   {
     path: '/streak',
     component: () => import('@/views/tuxun/TXStreak'),
-    name: '图寻首页',
-    meta: { title: '图寻首页'},
+    meta: { title: '图寻-连胜'},
     hidden: true
   },
   {
     path: '/publicity',
     component: () => import('@/views/tuxun/publicity'),
-    name: '外宣',
-    meta: { title: '直播/视频/教程'},
+    meta: { title: '图寻-外宣'},
     hidden: true
   },
   {
     path: '/user/:id',
     component: () => import('@/views/tuxun/profile'),
-    name: 'tuxunProfile',
-    meta: { title: '',keepAlive: true,},
+    meta: { title: '图寻-个人首页'},
     hidden: true
   },
 ]

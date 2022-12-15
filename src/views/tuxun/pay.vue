@@ -28,7 +28,6 @@ export default {
     }
   },
   mounted() {
-    document.title = '炒饭收银台'
     this.orderId =  this.$route.query.orderNo;
     this.code=  this.$route.query.code;
     this.callPay();

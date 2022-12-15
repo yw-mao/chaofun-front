@@ -91,7 +91,6 @@ export default {
   },
   mounted() {
     this.getButtonRank();
-    document.title = "图寻总积分";
 
     let _this = this;
     setInterval(() => {

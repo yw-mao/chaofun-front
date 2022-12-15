@@ -184,9 +184,6 @@ export default {
   created(){
   },
   mounted(){
-
-    document.title = "图寻-外宣";
-
     let _this = this;
   },
   methods:{

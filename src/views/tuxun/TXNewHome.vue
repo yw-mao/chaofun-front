@@ -195,7 +195,6 @@ export default {
   },
 
   mounted() {
-    document.title = "图寻-首页";
     var Notification = window.Notification || window.mozNotification || window.webkitNotification;
     if (Notification) {
       Notification.requestPermission(function (status) {

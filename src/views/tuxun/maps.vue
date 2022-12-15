@@ -92,12 +92,12 @@ export default {
     }
   },
   created(){
+    // document.title = "图寻-练习赛";
   },
   mounted(){
     this.getHotMaps();
     this.getNewMaps();
     this.getRecentPageData();
-    document.title = "图寻-练习赛";
 
     let _this = this;
     let timer = setInterval(()=>{

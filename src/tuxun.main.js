@@ -9,8 +9,7 @@ import '@/styles/index.scss' // global css
 
 import store from './store'
 import router from './tuxun_router'
-
-
+import getPageTitle from '@/utils/get-page-title'
 
 Vue.prototype.$EventBus = new Vue();
 
@@ -94,11 +93,14 @@ Vue.config.productionTip = false
 // 加入百度统计
 router.beforeEach((to, from, next) => {
 
+  document.title = getPageTitle(to.meta.title)
+
   if (to.path) {
     if (window._hmt) {
       window._hmt.push(['_trackPageview', to.fullPath])
     }
   }
+
   console.log('路由切换， tuxun')
   if(to.path!='/lists'){
     // console.log('aaa')

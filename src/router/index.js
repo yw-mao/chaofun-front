@@ -131,7 +131,7 @@ export const constantRoutes = [
         path: '',
         component: () => import('@/views/dashboard/index'),
         name: 'Dashboard',
-        meta: { title: '首页', icon: 'dashboard', affix: true,keepAlive: true, },
+        meta: { title: '炒饭社区-首页', icon: 'dashboard', affix: true,keepAlive: true, },
         // redirect: '',
         hidden: true
       },
@@ -146,7 +146,7 @@ export const constantRoutes = [
         path: '/trends',
         component: () => import('@/views/list/attention'),
         name: 'trends',
-        meta: { title: '关注', icon: 'dashboard', affix: true,keepAlive: true, },
+        meta: { title: '炒饭社区-关注', icon: 'dashboard', affix: true,keepAlive: true, },
         hidden: true
       },
       {
@@ -160,7 +160,7 @@ export const constantRoutes = [
         path: '/submit',
         name: 'submit',
         component: () => import('@/views/submit/submit'),
-        meta: {keepAlive: false},
+        meta: {title: '炒饭社区-发布',keepAlive: false},
         hidden: true
       },
       // 新版发布
@@ -168,6 +168,7 @@ export const constantRoutes = [
         path: '/f/submit',
         name: 'submitV2',
         component: () => import('@/views/submit/v2'),
+        meta: {title: '炒饭社区-发布'},
         hidden: true
       },
       // 新版论坛发布

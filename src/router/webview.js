@@ -441,28 +441,28 @@ routes = [
     path: '/tuxun/maps',
     component: () => import('@/views/tuxun/maps'),
     name: 'maps',
-    meta: { title: '图寻练习集'},
+    meta: { title: '图寻-练习赛'},
     hidden: true
   },
   {
     path: '/tuxun/publicity',
     component: () => import('@/views/tuxun/publicity'),
     name: '外宣',
-    meta: { title: '直播/视频/教程'},
+    meta: { title: '图寻-直播/视频/教程'},
     hidden: true
   },
   {
     path: '/tuxun/wxPay',
     component: () => import('@/views/tuxun/pay'),
-    name: '图寻支付',
-    meta: { title: '图寻支付'},
+    name: '图寻-支付',
+    meta: { title: '图寻-支付'},
     hidden: true
   },
   {
     path: '/wxPay',
     component: () => import('@/views/tuxun/pay'),
     name: '图寻支付',
-    meta: { title: '图寻支付'},
+    meta: { title: '图寻-支付'},
     hidden: true
   },
   {
