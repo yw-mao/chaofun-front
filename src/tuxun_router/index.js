@@ -13,7 +13,7 @@ export const constantRoutes = [
   {
     path: '/',
     component: () => import('@/views/tuxun/TXNewHome'),
-    meta: { title: '图寻-首页'},
+    meta: { title: '图寻 - 探索世界，找到你'},
     hidden: true
   },
   {
@@ -31,7 +31,7 @@ export const constantRoutes = [
   {
     path: '/maps',
     component: () => import('@/views/tuxun/maps'),
-    meta: { title: '练习赛'},
+    meta: { title: '图寻-练习赛'},
     hidden: true
   },
   {
