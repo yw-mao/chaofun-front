@@ -15,7 +15,7 @@
     </div>
 
     <div class="game">
-      <div class="info" @click="toFirstTournament">炒饭第五届图寻个人赛开始报名了，12月10日24点报名结束</div>
+      <div class="info" @click="toFirstTournament">炒饭第五届图寻个人赛圆满结束！！！</div>
       <div v-if="times" class="times">图寻总轮次数：<span style="font-size: 18px">{{times}}</span></div>
       <section class="game_entrance">
         <div class="first_session_head">单人</div>
@@ -168,6 +168,7 @@
           <p>
             背景图：巴塞罗那
           </p>
+          <a target="_blank" href="https://beian.miit.gov.cn/">浙ICP备2022031450号</a>
         </div>
       </section>
 
@@ -194,7 +195,7 @@ export default {
   },
 
   mounted() {
-    // document.title = "图寻-首页";
+    document.title = "图寻-首页";
     var Notification = window.Notification || window.mozNotification || window.webkitNotification;
     if (Notification) {
       Notification.requestPermission(function (status) {
@@ -279,9 +280,9 @@ export default {
     },
     toFirstTournament() {
       try {
-        window.flutter_inappwebview.callHandler('toAppPost', {postId: '1222809'});
+        window.flutter_inappwebview.callHandler('toAppPost', {postId: '1223406'});
       } catch (e) {
-        tuxunOpen('https://chao.fan/p/1222809');
+        tuxunOpen('https://chao.fan/p/1223406');
       }
     }
   }

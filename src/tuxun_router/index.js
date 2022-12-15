@@ -104,6 +104,20 @@ export const constantRoutes = [
     hidden: true
   },
   {
+    path: '/streak',
+    component: () => import('@/views/tuxun/TXStreak'),
+    name: '图寻首页',
+    meta: { title: '图寻首页'},
+    hidden: true
+  },
+  {
+    path: '/publicity',
+    component: () => import('@/views/tuxun/publicity'),
+    name: '外宣',
+    meta: { title: '直播/视频/教程'},
+    hidden: true
+  },
+  {
     path: '/user/:id',
     component: () => import('@/views/tuxun/profile'),
     name: 'tuxunProfile',

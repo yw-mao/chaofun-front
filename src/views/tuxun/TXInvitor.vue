@@ -1487,7 +1487,7 @@ export default {
               api.getByPathLongTimeout('/api/v0/tuxun/solo/joinRandom').then(res => {
                 if (res.data) {
                   this.notify("您的图寻已匹配到对手，点击开始游戏");
-                  this.$router.push({path: '/tuxun/solo_game?gameId=' + res.data})
+                  tuxunJump( '/tuxun/solo_game?gameId=' + res.data);
                   this.gameId = res.data;
                   this.init();
                   this.continueSend = false;
