@@ -22,8 +22,8 @@ router.beforeEach(async(to, from, next) => {
   if(!to.path.includes('/f')){
     store.dispatch('var/SET_formName', '')
   }
-  document.title = getPageTitle(to.meta.title)
   // set page title
+  document.title = getPageTitle(to.meta.title)
   const hasToken = getToken()
   const { roles } = ['admin']
   await store.dispatch('user/getInfo')
