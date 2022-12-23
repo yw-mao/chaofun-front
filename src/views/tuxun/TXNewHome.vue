@@ -15,7 +15,7 @@
     </div>
 
     <div class="game">
-      <div class="info" @click="toFirstTournament">炒饭第五届图寻个人赛圆满结束！！！</div>
+      <div class="info" @click="toFirstTournament">炒饭第五届图寻团队赛来啦！！！赶快点击报名</div>
       <div v-if="times" class="times">图寻总轮次数：<span style="font-size: 18px">{{times}}</span></div>
       <section class="game_entrance">
         <div class="first_session_head">单人</div>
@@ -111,7 +111,7 @@
             </div>
             <div class="card-top-right">可移动</div>
           </div>
-          <div class="card" @click="redirectPage( '/tuxun/publicity')">
+          <div class="card" @click="toBilibili">
             <div class="title">
               直播/视频/教程
             </div>
@@ -271,6 +271,9 @@ export default {
         }
       });
     },
+    toBilibili() {
+      tuxunOpen('https://search.bilibili.com/all?keyword=%E5%9B%BE%E5%AF%BB')
+    },
     toScratch() {
       tuxunOpen('https://chao.fan/scratch/home')
     },
@@ -279,9 +282,9 @@ export default {
     },
     toFirstTournament() {
       try {
-        window.flutter_inappwebview.callHandler('toAppPost', {postId: '1223406'});
+        window.flutter_inappwebview.callHandler('toAppPost', {postId: '1224794'});
       } catch (e) {
-        tuxunOpen('https://chao.fan/p/1223406');
+        tuxunOpen('https://chao.fan/p/1224794');
       }
     }
   }

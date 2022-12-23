@@ -371,7 +371,7 @@ routes = [
     path: '/scratch/home',
     component: () => import('@/views/scratch/HomePage'),
     name: 'scratch',
-    meta: { title: 'scratch'},
+    meta: { title: '小测验-炒饭'},
     hidden: true
   },
   {
@@ -385,28 +385,28 @@ routes = [
     path: '/scratch',
     component: () => import('@/views/scratch/HomePage'),
     name: 'scratch',
-    meta: { title: 'scratch'},
+    meta: { title: '小测验-炒饭'},
     hidden: true
   },
   {
     path: '/scratch/guess',
     component: () => import('@/views/scratch/GamePage'),
     name: 'scratch_game',
-    meta: { title: 'scratch_game'},
+    meta: { title: '小测验-炒饭'},
     hidden: true
   },
   {
     path: '/scratch/create',
     component: () => import('@/views/scratch/Create'),
     name: 'scratch_create',
-    meta: { title: 'scratch_create'},
+    meta: { title: '小测验创建-炒饭'},
     hidden: true
   },
   {
     path: '/scratch/modify',
     component: () => import('@/views/scratch/Create'),
     name: 'scratch_modify',
-    meta: { title: 'scratch_modify'},
+    meta: { title: '小测验修改-炒饭'},
     hidden: true
   },
   {
@@ -414,13 +414,6 @@ routes = [
     component: () => import('@/views/tuxun/TXNewHome'),
     name: 'tuxun',
     meta: { title: 'tuxun'},
-    hidden: true
-  },
-  {
-    path: '/maps',
-    component: () => import('@/views/tuxun/maps'),
-    name: 'maps',
-    meta: { title: '图寻练习集'},
     hidden: true
   },
   {
