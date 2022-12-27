@@ -6,7 +6,10 @@
       <div class="nav">
         练习赛
       </div>
-      <section class="game_entrance">
+    <div @click="searchFocus">
+      <el-input v-model="keyword" id="input" placeholder="搜索练习赛" style="margin-top: 2rem; max-width: 60%;" round></el-input>
+    </div>
+      <section class="game_entrance" v-if="!search">
         <div class="first_session_head" v-if="recentPagedata && recentPagedata.length >= 1">最近玩过</div>
         <div class="line" v-if="recentPagedata && recentPagedata.length >= 1"></div>
         <div class="grid_main" v-if="recentPagedata && recentPagedata.length >= 1">
@@ -88,6 +91,8 @@ export default {
       pagedata: [],
       newPagedata: [],
       recentPagedata: [],
+      search: false,
+      keyword: '',
       timer: 0
     }
   },
@@ -122,6 +127,12 @@ export default {
         this.recentPagedata = res.data
       })
     },
+    searchFocus() {
+      document.getElementById('input').blur();
+      this.$mapsSearch();
+      // tuxunOpen('/tuxun/search')
+    },
+
     toMaps(item, type){
       this.doLoginStatus().then(res => {
             console.log(res)
@@ -150,6 +161,11 @@ export default {
 }
 </script>
 <style scoped lang="scss">
+
+::v-deep .el-input__inner {
+  background-color: rgba(255, 255, 255, 0.247);
+  color: white;
+}
 .container{
   position: absolute;
   width: 100%;

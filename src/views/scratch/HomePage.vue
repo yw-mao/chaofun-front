@@ -1,6 +1,7 @@
 <template>
   <div class="container">
     <div style="text-align: center; width: 100%; font-size: 32px;font-weight: bold; padding-top: 1rem; padding-bottom: 2rem"> 炒饭小测验
+      <div v-if="totalTimes" style="font-size: 16px">「炒饭社区」出品</div>
       <div v-if="totalTimes" style="font-size: 16px">交流QQ群号: 594837569</div>
       <div v-if="totalTimes" style="font-size: 16px">总测验次数: {{totalTimes}}</div>
       <div class="top-right">
@@ -16,6 +17,7 @@
     <section v-if="list" class="list_container">
       <div>
         <el-button type="warning" @click="showHotTags=!showHotTags" round>热门标签</el-button>
+        <el-button type="warning" @click="gotoSearch" round>搜索</el-button>
       </div>
       <div v-if="showHotTags" style="display: flex; flex-wrap: wrap; border: 1px solid gray ">
         <div v-for="(item,index) in tags" @click="goTag(item)" style="display: block; padding-right: 10px; color: blue; font-size: 20px;">{{item}}</div>
@@ -135,6 +137,9 @@ export default {
     handleCurrentChange(current) {
       this.getList(current, 50)
     },
+    gotoSearch() {
+      window.location.href = '/scratch/search'
+    }
   },
 }
 </script>

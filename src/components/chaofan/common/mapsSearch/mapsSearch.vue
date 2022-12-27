@@ -1,24 +1,38 @@
 <template>
-  <div  v-if="show" class="cover">
-    <div class="ycovers" >
-      <section style="width: 60%; display: block;overflow:scroll; overscroll-behavior: contain; height: 100%">
-        <div v-for="(item, index) in this.pagedata" >
-          <div style="height: 50px; color: white">
+  <div v-if="show" class="cover">
+    <section class="section" style="display: block;overflow:scroll; overscroll-behavior: contain; height: 100%;    scrollbar-width: none;">
+      <div style="font-size: 20px; color: white; padding-top: 2rem">练习赛搜索<el-button type="primary" style="margin-left: 10px" @click="show=false" round>关闭</el-button></div>
+      <el-input v-model="keyword"
+                :autofocus="true"
+                @input="search"
+                placeholder="搜索练习赛"
+                style="margin-top: 2rem; max-width: 100%; margin-bottom: 20px"></el-input>
+      <div v-for="(item, index) in this.pagedata" >
+        <div style="display: flex;  justify-content: space-between;">
+          <div style="height: 100%;display: flex; color: white">
             {{item.name}}
           </div>
+          <div>
+            <el-button style="background-color: unset; color: white" @click="toMaps(item, 'noMove')" type="primary"round>固定</el-button>
+            <el-button style="background-color: unset; color: white" @click="toMaps(item, 'move')" type="primary" v-if="item.canMove" round>移动</el-button>
+            <div  v-if="!item.canMove" style="width: 150px"></div>
+          </div>
         </div>
-      </section>
-    </div>
+        <div style="width: 100%;height: 1px; background-color: white;margin-bottom: 1rem"></div>
+      </div>
+    </section>
   </div>
 </template>
 
 <script>
 import * as api from '@/api/api'
+import {tuxunJump} from "../../../../views/tuxun/common";
 export default {
   name: "mapsSearch",
   data() {
     return {
       show: false,
+      keyword: '',
       pagedata: null
     }
   },
@@ -31,33 +45,73 @@ export default {
         this.pagedata = res.data
       })
     },
+    search() {
+      api.getByPath('/api/v0/tuxun/maps/search', {keyword: this.keyword}).then(res=>{
+        this.pagedata = res.data
+      })
+    },
+    toMaps(item, type) {
+        api.getByPath('/api/v0/tuxun/game/enterMap', {mapsId: item.id}).then(res => {
+        })
+
+        api.getByPath('/api/v0/tuxun/challenge/create', {'mapsId': item.id, 'type': type}).then(res => {
+          if (res.success) {
+            tuxunJump('/tuxun/challenge?challengeId=' + res.data);
+          } else {
+            if (res.errorCode === 'need_vip') {
+              this.$vip({})
+            }
+          }
+        })
+    }
   }
 }
 </script>
 
 <style lang="scss" scoped>
-.ycovers {
+::v-deep .el-input__inner {
+  background-color: rgba(255, 255, 255, 0.247);
+  color: white;
+}
+.cover {
   position: fixed;
   z-index: 2012;
+  height: 100%;
+  width: 100%;
+  //color: ;
   top: 0;
+  background-color: #090723;
   left: 0;
   right: 0;
-  //bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
   display: flex;
   align-items: center;
-  justify-content: space-around;
+  justify-content: center;
 
-  .ycontainer {
-    background: #fff;
-    width: 400px;
-    max-width: 90%;
-    // height: 350px;
-    box-sizing: border-box;
-    padding: 30px;
-    border-radius: 10px;
-    position: relative;
-    min-height: 330px;
+
+  .back_home {
+    position: fixed;
+    padding-top: 1rem;
+    padding-left: 1rem;
+    z-index: 500;
+  }
+
+  .section{
+    width: 60%;
+    -ms-overflow-style: none;  /* Internet Explorer 10+ */
+    scrollbar-width: none;  /* Firefox */
+  }
+  .section::-webkit-scrollbar {
+    display: none;  /* Safari and Chrome */
+  }
+
+
+}
+
+@media only screen and (max-width: 679px) {
+  .cover{
+    .section {
+      width: 90%;
+    }
   }
 }
 </style>

@@ -403,6 +403,13 @@ routes = [
     hidden: true
   },
   {
+    path: '/scratch/search',
+    component: () => import('@/views/scratch/SearchPage'),
+    name: 'scratch_search',
+    meta: { title: '小测验搜索-炒饭'},
+    hidden: true
+  },
+  {
     path: '/scratch/modify',
     component: () => import('@/views/scratch/Create'),
     name: 'scratch_modify',

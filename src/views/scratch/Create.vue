@@ -8,7 +8,7 @@
     <div style="text-align: center; width: 100%; font-size: 24px;font-weight: bold; padding-top: 3rem; padding-bottom: 2rem">
       <div v-if="!modify">创建测验</div>
       <div v-else>修改测验</div>
-      <div style="font-size: 16px; font-weight: normal; text-align: center">建议添加标签，创建之前请查看是否有重复测验</div>
+      <div style="font-size: 16px; font-weight: normal; text-align: center">建议添加标签，创建之前请通过搜索查看是否有重复测验，如果重复创建管理员会删除</div>
     </div>
     <div class="input-container">
       <div class="title">设置封面(可选)</div>
