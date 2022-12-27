@@ -21,9 +21,9 @@
 node14
 
 ## 初始化
-### 使用 cnpm 初始化 ()
+### 使用 npm 初始化 ()
 ```
-cnpm install
+npm install
 ```
 
 ## 本地运行
