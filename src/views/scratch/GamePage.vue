@@ -16,6 +16,9 @@
     <div v-if="guessInfo && guessInfo.user" style="margin: auto; text-align: center; font-size: 16px">
       作者: {{guessInfo.user.userName}}
     </div>
+    <div v-if="guessInfo && guessInfo.gmtCreate" style="margin: auto; text-align: center; font-size: 16px">
+      创建时间: {{moment(guessInfo.gmtCreate).format('YYYY年MM月DD日 HH:mm')}}
+    </div>
     <div v-if="guessInfo && guessInfo.tags" style="align-items: center;justify-items: center;margin: auto; text-align: center; font-size: 16px; display: flex;justify-content: center;text-align: center;">
       标签：
       <div v-for="(item, index) in guessInfo.tags" @click="goTag(item)" style="padding: 2px; margin-right: 10px; color: #333fff; text-decoration:underline;cursor: pointer;">
@@ -82,6 +85,8 @@
 
 <script>
 import * as api from '../../api/api'
+import moment from 'moment'
+
 export default {
   name: "GamePage",
   data() {
@@ -91,6 +96,7 @@ export default {
       guessInfo: null,
       matched: new Set(),
       id: null,
+      moment: moment,
       right: 0,
       start: false,
       giveUp: false,
