@@ -28,6 +28,22 @@
     <div v-if="guessInfo" style="margin: auto; text-align: center; font-size: 16px">
       测验次数: {{guessInfo.start}}
     </div>
+    <div v-if="guessInfo" style="margin: auto; text-align: center; font-size: 16px;">
+      <div style="display: flex; align-items: center;justify-content: center">
+        评分({{guessInfo.rateCount}} 人评价)：
+              <div>
+                <StarRating :read-only="true" :increment="0.01" :rating="guessInfo.rate" :star-size="25"></StarRating>
+              </div>
+      </div>
+    </div>
+    <div v-if="guessInfo" style="margin: auto; text-align: center; font-size: 16px;">
+      <div style="display: flex; align-items: center;justify-content: center">
+        我的打分：
+        <div>
+          <StarRating @rating-selected ="setRating" :show-rating="false" v-model:rating="rating" :star-size="25"></StarRating>
+        </div>
+      </div>
+    </div>
 
     <div class="input_container" style="">
       <div v-if="start || this.giveUp"  style="font-size: 36px; color: #52B323; padding-right: 20px; display: block; height: 100%; text-align: center; align-items: center">
@@ -85,10 +101,17 @@
 
 <script>
 import * as api from '../../api/api'
+import Rate from 'vue-tiny-rate';
 import moment from 'moment'
+import StarRating from 'vue-star-rating'
+
 
 export default {
   name: "GamePage",
+  components: {
+    Rate,
+    StarRating,
+  },
   data() {
     return {
       showResult: false,
@@ -102,6 +125,7 @@ export default {
       giveUp: false,
       countdownTimer: null,
       timeLeftStr: '00:00',
+      rating: null,
       timeLeft: null,
     }
   },
@@ -109,6 +133,7 @@ export default {
     document.title = '炒饭小测验 - 一起来做小测验吧'
     this.id =  this.$route.query.id;
     this.getGuessInfo();
+    this.getRate();
   },
   methods: {
     modify() {
@@ -150,6 +175,11 @@ export default {
     getGuessInfo() {
       api.getByPath('/api/v0/scratch/game/get', {'id': this.id}).then(res=>{
         this.guessInfo = res.data;
+      })
+    },
+    getRate() {
+      api.getByPath('/api/v0/scratch/game/getRate', {'id': this.id}).then(res=>{
+        this.rating = res.data;
       })
     },
     goHome() {
@@ -199,6 +229,20 @@ export default {
         window.location.href = '/scratch/home'
       }
     },
+    setRating(rating) {
+      this.doLoginStatus().then(res => {
+        console.log(res)
+        if (res) {
+          this.rating = rating;
+          api.getByPath('/api/v0/scratch/game/rate', {id: this.id, rate: this.rating}).then(res=>{
+            this.pagedata = res.data
+          })
+
+        } else {
+          this.rating = null;
+        }
+      });
+    }
   }
 }
 </script>
