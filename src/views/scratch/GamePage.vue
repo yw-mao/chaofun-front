@@ -101,7 +101,6 @@
 
 <script>
 import * as api from '../../api/api'
-import Rate from 'vue-tiny-rate';
 import moment from 'moment'
 import StarRating from 'vue-star-rating'
 
@@ -109,7 +108,6 @@ import StarRating from 'vue-star-rating'
 export default {
   name: "GamePage",
   components: {
-    Rate,
     StarRating,
   },
   data() {

@@ -92,51 +92,10 @@ module.exports = {
       .when(process.env.NODE_ENV === 'development',
         config => config.devtool('cheap-source-map')
       )
-    // config
-    //   .when(process.env.NODE_ENV === 'development',
-    //     config => {
-    //       config
-    //         .plugin('ScriptExtHtmlWebpackPlugin')
-    //         .after('html')
-    //         .use('script-ext-html-webpack-plugin', [{
-    //         // `runtime` must same as runtimeChunk name. default is `runtime`
-    //           inline: /runtime\..*\.js$/
-    //         }])
-    //         .end()
-    //       config
-    //         .optimization.splitChunks({
-    //           chunks: 'all',
-    //           /** 新增s */
-    //           minSize: 10000,
-    //           maxSize: 200000,
-    //           /** 新增e */
-    //           cacheGroups: {
-    //             libs: {
-    //               name: 'chunk-libs',
-    //               test: /[\\/]node_modules[\\/]/,
-    //               priority: 10,
-    //               chunks: 'initial' // only package third parties that are initially dependent
-    //             },
-    //             elementUI: {
-    //               name: 'chunk-elementUI', // split elementUI into a single package
-    //               priority: 20, // the weight needs to be larger than libs and app or it will be packaged into libs or app
-    //               test: /[\\/]node_modules[\\/]_?element-ui(.*)/ // in order to adapt to cnpm
-    //             },
-    //             commons: {
-    //               name: 'chunk-commons',
-    //               test: resolve('src/components'), // can customize your rules
-    //               minChunks: 3, //  minimum common number
-    //               priority: 5,
-    //               reuseExistingChunk: true
-    //             }
-    //           }
-    //         })
-    //       config.optimization.runtimeChunk('single')
-    //     }
-    //   )
+
       /** add */
       // 生产环境配置
-    if (isProduction) {
+    // if (isProduction) {
       // 删除预加载
       config.plugins.delete('preload');
       config.plugins.delete('prefetch');
@@ -149,18 +108,18 @@ module.exports = {
       // 压缩代码
       config.optimization.minimize(true);
       // 分割代码
-      config.optimization.splitChunks({
-        chunks: 'all',
-        minSize: 20000,
-        maxSize: 400000,
-      })
+      // config.optimization.splitChunks({
+      //   chunks: 'all',
+      //   minSize: 20000,
+      //   maxSize: 400000,
+      // })
       // 生产环境注入cdn
       // config.plugin('html')
       //   .tap(args => {
       //     args[0].cdn = cdn;
       //     return args;
       //   });
-    }
+    // }
   },
   css: {
     extract: {
