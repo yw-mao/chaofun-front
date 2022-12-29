@@ -30,7 +30,7 @@
     </div>
     <div v-if="guessInfo" style="margin: auto; text-align: center; font-size: 16px;">
       <div style="display: flex; align-items: center;justify-content: center">
-        评分({{guessInfo.rateCount}} 人评价)：
+        评分( {{guessInfo.rateCount}} 人评价)：
               <div>
                 <StarRating :read-only="true" :increment="0.01" :rating="guessInfo.rate" :star-size="25"></StarRating>
               </div>

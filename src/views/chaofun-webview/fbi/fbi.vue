@@ -85,7 +85,7 @@
           图寻会员 1个月
         </p>
         <p style="text-align: center">
-          FBi: 999
+          FBi: 599
         </p>
       </div>
 
@@ -153,7 +153,7 @@
           图寻会员 1年
         </p>
         <p style="text-align: center">
-          FBi: 6699
+          FBi: 3999
         </p>
       </div>
 
@@ -362,9 +362,9 @@ export default {
     getTuxunVip(period) {
       var fbi = null;
       if (period === '1month') {
-        fbi = 999;
+        fbi = 599;
       } else if (period === '1year') {
-        fbi = 6699;
+        fbi = 3999;
       }
 
       Dialog.confirm({
