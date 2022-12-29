@@ -15,12 +15,12 @@
     <div v-if="!ISPHONE" class="beian" style="text-align: right">
       <div>开源：<a href="https://github.com/www-chao-fun" target="_blank">www-chao-fun</a></div>
       <div >
-      <img style="width:16px" src="../assets/images/bbcc.png" alt=""> <a target="_blank" href="https://beian.miit.gov.cn/">粤ICP备19153164号</a>
-        </div>
-      <div >
-        <img style="width:16px" src="../assets/images/bbcc.png" alt="">
-      <a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=44010602009793">粤公网安备 44010602009793号</a>
+        <img style="width:16px" src="../assets/images/bbcc.png" alt=""> <a target="_blank" href="https://beian.miit.gov.cn/">浙ICP备2022031450号</a>
       </div>
+      <!--      <div >-->
+      <!--        <img style="width:16px" src="../assets/images/bbcc.png" alt="">-->
+      <!--      <a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=44010602009793">粤公网安备 44010602009793号</a>-->
+      <!--      </div>-->
       Copyright © 2019 - 2022 炒饭
     </div>
     <chat v-if="$store.state.user.showChatBox&&!($route.path.includes('/chatpage'))"></chat>
@@ -117,48 +117,48 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  @import "~@/styles/mixin.scss";
-  @import "~@/styles/variables.scss";
-  .app-wrapper {
-    @include clearfix;
-    position: relative;
-    height: 100%;
-    width: 100%;
-    // z-index: 0;
+@import "~@/styles/mixin.scss";
+@import "~@/styles/variables.scss";
+.app-wrapper {
+  @include clearfix;
+  position: relative;
+  height: 100%;
+  width: 100%;
+  // z-index: 0;
 
-    &.mobile.openSidebar {
-      position: fixed;
-      top: 0;
-    }
-  }
-
-  .drawer-bg {
-    background: #000;
-    opacity: 0.3;
-    width: 100%;
-    top: 0;
-    height: 100%;
-    position: absolute;
-    z-index: 9;
-  }
-
-  .fixed-header {
+  &.mobile.openSidebar {
     position: fixed;
     top: 0;
-    right: 0;
-    z-index: 9;
-    width: calc(100% - #{$sideBarWidth});
-    transition: width 0.28s;
-    background: transparent;
   }
+}
 
-  .hideSidebar .fixed-header {
-    width: calc(100% - 54px)
-  }
+.drawer-bg {
+  background: #000;
+  opacity: 0.3;
+  width: 100%;
+  top: 0;
+  height: 100%;
+  position: absolute;
+  z-index: 9;
+}
 
-  .mobile .fixed-header {
-    width: 100%;
-  }
+.fixed-header {
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 9;
+  width: calc(100% - #{$sideBarWidth});
+  transition: width 0.28s;
+  background: transparent;
+}
+
+.hideSidebar .fixed-header {
+  width: calc(100% - 54px)
+}
+
+.mobile .fixed-header {
+  width: 100%;
+}
 
 
 
