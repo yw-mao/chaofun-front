@@ -131,7 +131,7 @@ export const constantRoutes = [
         path: '',
         component: () => import('@/views/dashboard/index'),
         name: 'Dashboard',
-        meta: { title: '炒饭-首页', icon: 'dashboard', affix: true,keepAlive: true, },
+        meta: { title: '首页-炒饭网', icon: 'dashboard', affix: true,keepAlive: true, },
         // redirect: '',
         hidden: true
       },
@@ -139,7 +139,7 @@ export const constantRoutes = [
         path: '/middles',
         component: () => import('@/views/dashboard/index'),
         name: 'middles',
-        meta: { title: '炒饭-首页', icon: 'dashboard', affix: true,keepAlive: true, },
+        meta: { title: '首页-炒饭网', icon: 'dashboard', affix: true,keepAlive: true, },
         hidden: true
       },
       {
@@ -303,14 +303,14 @@ export const constantRoutes = [
         path: '/all',
         component: () => import('@/views/dashboard/index'),
         name: 'all',
-        meta: { title: '全站',keepAlive: true,},
+        meta: { title: '全站-炒饭网',keepAlive: true,},
         hidden: true
       },
       {
         path: '/recommend',
         component: () => import('@/views/dashboard/index'),
         name: 'recommend',
-        meta: { title: '推荐',keepAlive: true,},
+        meta: { title: '推荐-炒饭网',keepAlive: true,},
         hidden: true
       },
       {

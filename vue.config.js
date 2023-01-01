@@ -152,7 +152,7 @@ module.exports = {
     proxy: {
       '/api':{
         // target: `http://localhost:8080/api`,
-        target: `https://chao.fan/api`,
+        target: `https://choa.fun/api`,
         changeOrigin: true,
         pathRewrite: {
           '^/api': ''
@@ -160,7 +160,7 @@ module.exports = {
       },
       '/ws': {
         // target: `ws://localhost:8080/ws`,
-        target: `wss://chao.fan/ws`,
+        target: `wss://choa.fun/ws`,
         ws: true,
         changeOrigin: true,
         pathRewrite: {

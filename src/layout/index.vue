@@ -21,7 +21,7 @@
       <!--        <img style="width:16px" src="../assets/images/bbcc.png" alt="">-->
       <!--      <a target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=44010602009793">粤公网安备 44010602009793号</a>-->
       <!--      </div>-->
-      Copyright © 2019 - 2022 炒饭
+      Copyright © 2019 - 2023 炒饭
     </div>
     <chat v-if="$store.state.user.showChatBox&&!($route.path.includes('/chatpage'))"></chat>
     <!-- <new-dialog></new-dialog> -->

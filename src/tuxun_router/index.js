@@ -115,6 +115,13 @@ export const constantRoutes = [
     meta: { title: '图寻-个人首页'},
     hidden: true
   },
+  {
+    path: '/tuxunAdmin',
+    component: () => import('@/views/tuxun/TXAdmin'),
+    name: 'tuxunAdmin',
+    meta: { title: 'tuxunAdmin'},
+    hidden: true
+  },
 ]
 
 /**
