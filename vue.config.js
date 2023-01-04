@@ -95,7 +95,7 @@ module.exports = {
 
       /** add */
       // 生产环境配置
-    // if (isProduction) {
+    if (isProduction) {
       // 删除预加载
       config.plugins.delete('preload');
       config.plugins.delete('prefetch');
@@ -119,7 +119,7 @@ module.exports = {
       //     args[0].cdn = cdn;
       //     return args;
       //   });
-    // }
+    }
   },
   css: {
     extract: {

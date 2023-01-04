@@ -256,6 +256,24 @@ routes = [
     hidden: true
   },
   {
+    path: '/tuxun/my_maps',
+    component: () => import('@/views/tuxun/MyMaps'),
+    meta: { title: '自建题库-图寻'},
+    hidden: true
+  },
+  {
+    path: '/tuxun/maps_create',
+    component: () => import('@/views/tuxun/MapsCreate'),
+    meta: { title: '创建题库-图寻'},
+    hidden: true
+  },
+  {
+    path: '/tuxun/maps_modify',
+    component: () => import('@/views/tuxun/MapsModify'),
+    meta: { title: '修改题库-图寻'},
+    hidden: true
+  },
+  {
     path: '/tuxun',
     component: () => import('@/views/tuxun/TXNewHome'),
     name: '图寻首页',
@@ -507,6 +525,7 @@ routes = [
     meta: { title: 'tuxunFilter'},
     hidden: true
   },
+
   {
     path: '/webview/forumIntro',
     component: () => import('@/views/activity/help/forumIntro'),

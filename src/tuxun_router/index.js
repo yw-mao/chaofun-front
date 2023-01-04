@@ -35,6 +35,24 @@ export const constantRoutes = [
     hidden: true
   },
   {
+    path: '/my_maps',
+    component: () => import('@/views/tuxun/MyMaps'),
+    meta: { title: '图寻-练习赛'},
+    hidden: true
+  },
+  {
+    path: '/maps_create',
+    component: () => import('@/views/tuxun/MapsCreate'),
+    meta: { title: '创建题库-图寻'},
+    hidden: true
+  },
+  {
+    path: '/maps_modify',
+    component: () => import('@/views/tuxun/MapsModify'),
+    meta: { title: '修改题库-图寻'},
+    hidden: true
+  },
+  {
     path: '/solo_game',
     component: () => import('@/views/tuxun/TXInvitor'),
     meta: { title: '图寻-Solo'},

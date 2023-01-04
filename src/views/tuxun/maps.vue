@@ -1,14 +1,15 @@
 <template>
   <div class="container">
-      <div class="back_home" @click="goHome">
-        <el-button type="primary" round>←返回首页</el-button>
+      <div class="back_home">
+        <el-button type="primary"  @click="goHome" round>←返回首页</el-button>
+        <el-button type="primary" @click="goMapMakeHome" round>自建</el-button>
       </div>
       <div class="nav">
-        练习赛
+        练习赛题库
       </div>
-    <div @click="searchFocus">
-      <el-input v-model="keyword" id="input" placeholder="搜索练习赛" style="margin-top: 2rem; max-width: 60%;" round></el-input>
-    </div>
+      <div @click="searchFocus">
+        <el-input v-model="keyword" id="input" placeholder="搜索练习赛" style="margin-top: 2rem; max-width: 60%;" round></el-input>
+      </div>
       <section class="game_entrance" v-if="!search">
         <div class="first_session_head" v-if="recentPagedata && recentPagedata.length >= 1">最近玩过</div>
         <div class="line" v-if="recentPagedata && recentPagedata.length >= 1"></div>
@@ -157,6 +158,9 @@ export default {
     goHome() {
       tuxunJump('/tuxun/');
     },
+    goMapMakeHome() {
+      tuxunJump('/tuxun/my_maps');
+    }
   },
 }
 </script>
