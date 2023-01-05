@@ -29,13 +29,13 @@
       </div>
       <div v-for="(item, index) in panos" style="display: flex;justify-content: space-between">
         <div style="display: flex; color: white">
-          <div>{{item.panoId}}</div>
+          <div @click="toPano(item)">{{item.panoId}}</div>
           <div v-if="item.status === 'crawling'" class="status">准备中</div>
           <div v-if="item.status === 'publish'" class="status">已发布</div>
           <div v-if="item.status === 'crawler_success'" class="status">待发布</div>
           <div v-if="item.status === 'crawler_fail'" class="status">准备失败</div>
         </div>
-<!--        <div style="color: white">删除</div>-->
+        <div style="color: white" @click="deletePano(item.id)">删除</div>
       </div>
     </div>
   </div>
@@ -105,6 +105,26 @@ export default {
         this.submitPanoramaShow = false;
         this.getPanos();
       })
+    },
+    deletePano(id) {
+      this.$confirm('此操作将删除该街景, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        api.getByPath('/api/v0/tuxun/maps/deletePano', {containId: id}).then(res=>{
+          this.getPanos();
+        })
+      }).catch(() => {
+
+      });
+    },
+    toPano(item) {
+      if (item.source === 'baidu_pano') {
+        tuxunOpen('https://maps.baidu.com/#panoid=' + item.panoId + '&panotype=street&pitch=0&l=13&tn=B_NORMAL_MAP&sc=0&newmap=1&shareurl=1&pid=' + item.panoId)
+      } else {
+        tuxunOpen('https://www.google.com/maps/@?api=1&map_action=pano&pano=' + item.panoId)
+      }
     }
   }
 }

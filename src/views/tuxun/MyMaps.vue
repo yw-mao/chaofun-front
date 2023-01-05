@@ -23,7 +23,7 @@
           <el-button style="background-color: unset; color: white"  type="primary" @click="toMapsModify(item.id)" round>编辑</el-button>
           <el-button style="background-color: unset; color: white"  v-if="item.publish" type="warning" @click="unPublish(item.id)" round>撤回</el-button>
           <el-button style="background-color: unset; color: white"  v-if="!item.publish" type="primary" @click="publish(item.id)" round>发布</el-button>
-          <el-button style="background-color: unset; color: white"  type="danger" round>删除</el-button>
+          <el-button style="background-color: unset; color: white"  type="danger" @click="deleteMaps(item.id)" round>删除</el-button>
         </div>
       </div>
     </div>
@@ -70,6 +70,16 @@ export default {
       api.getByPath('/api/v0/tuxun/maps/publish', {mapsId: id}).then(res=>{
         this.getMapsList();
       })
+    },
+    deleteMaps(id) {
+      this.$confirm(`是否确定删除该题库吗？`, "提示", {
+        type: "warning",
+        position: "top",
+      }).then(() => {
+            api.getByPath('/api/v0/tuxun/maps/delete', {mapsId: id}).then(res => {
+              this.getMapsList();
+            })
+      });
     },
     toMapsModify(id) {
       tuxunJump('/tuxun/maps_modify?mapsId=' + id)
