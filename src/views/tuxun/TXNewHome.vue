@@ -15,7 +15,7 @@
     </div>
 
     <div class="game">
-      <div class="info" @click="toFirstTournament">炒饭第五届图寻团队赛结束，点击查看排名～</div>
+      <div class="info" @click="toFirstTournament">炒饭第六届图寻个人赛比赛结果公布～</div>
       <div v-if="times" class="times">图寻总轮次数：<span style="font-size: 18px">{{times}}</span></div>
       <section class="game_entrance">
         <div class="first_session_head">单人</div>
@@ -282,9 +282,9 @@ export default {
     },
     toFirstTournament() {
       try {
-        window.flutter_inappwebview.callHandler('toAppPost', {postId: '1225036'});
+        window.flutter_inappwebview.callHandler('toAppPost', {postId: '1227412'});
       } catch (e) {
-        tuxunOpen('https://chao.fan/p/1225036');
+        tuxunOpen('https://chao.fan/p/1227412');
       }
     }
   }

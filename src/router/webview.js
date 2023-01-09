@@ -452,7 +452,7 @@ routes = [
     path: '/tuxun/rank',
     component: () => import('@/views/tuxun/rank'),
     name: 'rank',
-    meta: { title: 'rank'},
+    meta: { title: '积分排行-图寻'},
     hidden: true
   },
   {

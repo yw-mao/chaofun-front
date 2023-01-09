@@ -12,19 +12,6 @@
       </div>
     </el-dialog>
 
-    <el-dialog title="提交街景" :visible.sync="submitPanoramaShow" :append-to-body="true">
-      <el-form :model="form">
-        <el-form-item label="街景链接:一行一条，支持百度和Google，需要与本练习赛有关联, 审核通过会加入到题库中">
-          <el-input type="textarea" :autosize="{ minRows: 4}"
-                    v-model="panoramaSubmitForm.links" autocomplete="off"> </el-input>
-        </el-form-item>
-      </el-form>
-      <div slot="footer" class="dialog-footer">
-        <el-button @click="hideSubmitPanorama()">取 消</el-button>
-        <el-button type="primary" @click="submitPanorama()">确 定</el-button>
-      </div>
-    </el-dialog>
-
     <div id="container" :class="[{'im-view': !ISPHONE}, {'im-view-phone': ISPHONE}]">
       <div v-show="this.contentType === 'panorama' && this.baiduPano && this.baiduPano !== null"  id="panorama" style="width: 100%; height: 100%;"></div>
       <div v-show="this.contentType === 'panorama' && !(this.baiduPano && this.baiduPano !== null) " id="viewer"  style="width: 100%; height: 100%"></div>
@@ -855,25 +842,7 @@ export default {
       this.dialogVisible = false;
     },
 
-    submitPanorama() {
-      api.postByPath('/api/v0/tuxun/maps/userAddPanorama',
-          {links: this.panoramaSubmitForm.links, mapsId: this.mapsId}).then(res=>{
-        this.panoramaSubmitForm.links = '';
-        this.$toast('提交成功, 谢谢你！');
-        this.submitPanoramaShow = false;
-      })
-    },
 
-    toSubmitPanorama() {
-      this.submitPanoramaShow = true;
-      setTimeout(function () {
-        document.getElementById("input").focus();
-      }, 500);
-    },
-
-    hideSubmitPanorama() {
-      this.submitPanoramaShow = false;
-    },
     mapReady(e) {
       console.log("hahah");
       console.log(e)

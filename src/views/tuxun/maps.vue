@@ -119,7 +119,7 @@ export default {
       })
     },
     getNewMaps(){
-      api.getByPath('/api/v0/tuxun/maps/listNew').then(res=>{
+      api.getByPath('/api/v0/tuxun/maps/listNew', {count: 9}).then(res=>{
         this.newPagedata = res.data
       })
     },

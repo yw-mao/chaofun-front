@@ -249,7 +249,13 @@ export const constantRoutes = [
         meta: { title: '设置',keepAlive: false},
         hidden: true
       },
-
+      {
+        path: '/tuxun/settings',
+        component: () => import('@/views/list/setting'),
+        name: 'setting',
+        meta: { title: '设置',keepAlive: false},
+        hidden: true
+      },
       {
         path: '/submitH5',
         component: () => import('@/views/h5/submit'),

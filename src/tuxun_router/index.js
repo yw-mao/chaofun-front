@@ -140,6 +140,13 @@ export const constantRoutes = [
     meta: { title: 'tuxunAdmin'},
     hidden: true
   },
+  {
+    path: '/settings',
+    component: () => import('@/views/list/setting'),
+    name: 'setting',
+    meta: { title: '设置',keepAlive: false},
+    hidden: true
+  },
 ]
 
 /**

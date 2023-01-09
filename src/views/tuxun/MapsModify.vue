@@ -2,7 +2,8 @@
   <div class="container">
     <el-dialog title="提交街景" :visible.sync="submitPanoramaShow" :append-to-body="true">
       <el-form :model="form">
-        <el-form-item label="街景链接:一行一条，目前只支持百度街景">
+        <el-form-item label="街景链接:一行一条，支持百度街景和Google街景">
+          <a target="_blank" href="https://www.yuque.com/ucun5p/kfw26e/ttqiucknz7sifo5u">点击跳转教程</a>
           <el-input type="textarea" :autosize="{ minRows: 4}"
                     v-model="panoramaSubmitForm.links" autocomplete="off"> </el-input>
         </el-form-item>
@@ -21,7 +22,7 @@
     <div v-if="name" class="nav">
       {{this.name}}
     </div>
-    <div style="color: white">发布题库需要题库中有5个状态为已发布或者待发布状态的街景</div>
+    <div style="color: white">发布题库需要题库中有5个状态为已发布或者待发布状态的街景，当系统检测到题库中有5个Google官方街景，会自动将题库标记为「可移动」</div>
     <el-button @click="addPano" type="primary">增加街景</el-button>
     <div class="list_container">
       <div style="margin-top: 1rem; font-size: 20px; color: white">
@@ -125,6 +126,9 @@ export default {
       } else {
         tuxunOpen('https://www.google.com/maps/@?api=1&map_action=pano&pano=' + item.panoId)
       }
+    },
+    toGuid() {
+      tuxunOpen('https://www.yuque.com/ucun5p/kfw26e/ttqiucknz7sifo5u')
     }
   }
 }
