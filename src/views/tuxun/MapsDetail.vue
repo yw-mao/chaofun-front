@@ -9,6 +9,9 @@
     <div v-if="mapsData && mapsData.desc" class="describe">
       {{mapsData.desc}}
     </div>
+    <div v-if="userInfo" class="players">
+      作者: {{userInfo.userName}}
+    </div>
     <div v-if="mapsData" class="players">
       玩家人次: {{mapsData.players}}
     </div>
@@ -30,6 +33,7 @@ export default {
       mapsId: null,
       name: null,
       mapsData: null,
+      userInfo: null,
     }
   },
   mounted() {
@@ -41,10 +45,18 @@ export default {
       api.getByPath('/api/v0/tuxun/maps/get', {mapsId: this.mapsId}).then(res=>{
         this.name = res.data.name;
         this.mapsData = res.data;
+        this.getUserInfo(res.data.userId);
       })
     },
     goHome() {
       tuxunJump('/tuxun/')
+    },
+    getUserInfo(userId) {
+      api.getByPath('/api/v0/user/info',{userId: userId}).then((res) => {
+        if (res.success) {
+          this.userInfo = res.data;
+        }
+      });
     },
     toMaps(item, type) {
       api.getByPath('/api/v0/tuxun/game/enterMap', {mapsId: item.id}).then(res => {
