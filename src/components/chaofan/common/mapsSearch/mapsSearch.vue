@@ -8,7 +8,7 @@
                 placeholder="搜索练习赛"
                 style="margin-top: 2rem; max-width: 100%; margin-bottom: 20px"></el-input>
       <div v-for="(item, index) in this.pagedata" >
-        <div style="display: flex;  justify-content: space-between;">
+        <div @click="toMapsDetail(item)" style="display: flex;  justify-content: space-between;">
           <div style="height: 100%;display: flex; color: white">
             {{item.name}}
           </div>
@@ -49,6 +49,9 @@ export default {
       api.getByPath('/api/v0/tuxun/maps/search', {keyword: this.keyword}).then(res=>{
         this.pagedata = res.data
       })
+    },
+    toMapsDetail(item) {
+      tuxunJump('/tuxun/maps_detail?mapsId=' + item.id )
     },
     toMaps(item, type) {
         api.getByPath('/api/v0/tuxun/game/enterMap', {mapsId: item.id}).then(res => {
