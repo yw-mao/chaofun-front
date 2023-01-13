@@ -71,6 +71,13 @@ export const constantRoutes = [
     hidden: true
   },
   {
+    path: '/tuxun/maps_detail',
+    component: () => import('@/views/tuxun/MapsDetail'),
+    name: 'maps',
+    meta: { title: '题库详情-图寻'},
+    hidden: true
+  },
+  {
     path: '/daily_challenge',
     component: () => import('@/views/tuxun/DailyChallenge'),
     name: '图寻-每日挑战',

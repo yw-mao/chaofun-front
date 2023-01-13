@@ -459,7 +459,14 @@ routes = [
     path: '/tuxun/maps',
     component: () => import('@/views/tuxun/maps'),
     name: 'maps',
-    meta: { title: '图寻-练习赛'},
+    meta: { title: '练习赛-图寻'},
+    hidden: true
+  },
+  {
+    path: '/tuxun/maps_detail',
+    component: () => import('@/views/tuxun/MapsDetail'),
+    name: 'maps',
+    meta: { title: '题库详情-图寻'},
     hidden: true
   },
   {

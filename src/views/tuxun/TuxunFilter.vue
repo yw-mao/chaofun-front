@@ -16,18 +16,19 @@ export default {
   data() {
     return {
       type: null,
+      exceptNations: null,
       panos: [],
     }
   },
 
   mounted() {
     this.type = this.$route.query.type;
-
+    this.exceptNations = this.$route.query.exceptNations;
     this.create();
   },
   methods: {
     create() {
-      api.getByPath('/api/v0/tuxun/challenge/adminCreate', {type: this.type, mapsId: 4}).then(res=>{
+      api.getByPath('/api/v0/tuxun/challenge/adminCreate', {type: this.type, mapsId: 4, exceptNations: this.exceptNations}).then(res=>{
         if (res.data) {
           this.panos = res.data.rounds;
         }
