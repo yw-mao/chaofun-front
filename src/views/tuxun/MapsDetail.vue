@@ -2,6 +2,7 @@
   <div class="container">
     <div class="back_home">
       <el-button type="primary"  @click="goHome" round>←返回首页</el-button>
+      <el-button type="primary"  @click="share" round>分享</el-button>
     </div>
     <div v-if="name" class="nav">
       {{name}}
@@ -71,7 +72,17 @@ export default {
           }
         }
       })
-    }
+    },
+    share() {
+      var input = document.createElement('input');
+      input.setAttribute('value','邀请你来图寻做「' + this.mapsData.name + '」练习赛题库, 你能找到你在哪吗？ https://tuxun.fun/maps_detail?mapsId=' + this.mapsId);
+      document.body.appendChild(input);
+      input.select();
+      var result = document.execCommand('copy');
+      document.body.removeChild(input);
+      this.$toast("复制练习赛题库地址成功");
+      return result;
+    },
   }
 
 
