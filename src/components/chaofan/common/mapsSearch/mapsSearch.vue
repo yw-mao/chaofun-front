@@ -8,13 +8,13 @@
                 placeholder="搜索练习赛"
                 style="margin-top: 2rem; max-width: 100%; margin-bottom: 20px"></el-input>
       <div v-for="(item, index) in this.pagedata" >
-        <div @click="toMapsDetail(item)" style="display: flex;  justify-content: space-between;">
+        <div @click.stop="toMapsDetail(item)" style="display: flex;  justify-content: space-between;">
           <div style="height: 100%;display: flex; color: white">
             {{item.name}}
           </div>
           <div>
-            <el-button style="background-color: unset; color: white" @click="toMaps(item, 'noMove')" type="primary"round>固定</el-button>
-            <el-button style="background-color: unset; color: white" @click="toMaps(item, 'move')" type="primary" v-if="item.canMove" round>移动</el-button>
+            <el-button style="background-color: unset; color: white" @click.stop="toMaps(item, 'noMove')" type="primary"round>固定</el-button>
+            <el-button style="background-color: unset; color: white" @click.stop="toMaps(item, 'move')" type="primary" v-if="item.canMove" round>移动</el-button>
             <div  v-if="!item.canMove" style="width: 150px"></div>
           </div>
         </div>

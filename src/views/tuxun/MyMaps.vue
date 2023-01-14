@@ -6,7 +6,7 @@
     <div class="nav">
       我的题库
     </div>
-    <el-button type="primary" @click="toMapsCreate">创建</el-button>
+    <el-button type="primary" @click.stop="toMapsCreate">创建</el-button>
     <div class="game_entrance" v-if="!search">
     <div class="grid_main" v-if="pagedata && pagedata.length >= 1">
       <div v-for="(item, index) in pagedata" :style="{'background-image': 'linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.6)), url('+ imgOrigin + (item.cover ?? 'biz/1659323781589_7d19c33667a54a4dabb0405ee5aec20f.jpeg') + '?x-oss-process=image/resize,h_400)','background-size':'cover'}" class="card">
@@ -20,7 +20,7 @@
           玩家人次: {{item.players}}
         </div>
         <div>
-          <el-button style="background-color: unset; color: white"  type="primary" @click="toMapsModify(item.id)" round>编辑</el-button>
+          <el-button style="background-color: unset; color: white"  type="primary" @click.stop="toMapsModify(item.id)" round>编辑</el-button>
           <el-button style="background-color: unset; color: white"  v-if="item.publish" type="warning" @click="unPublish(item.id)" round>撤回</el-button>
           <el-button style="background-color: unset; color: white"  v-if="!item.publish" type="primary" @click="publish(item.id)" round>发布</el-button>
           <el-button style="background-color: unset; color: white"  type="danger" @click="deleteMaps(item.id)" round>删除</el-button>

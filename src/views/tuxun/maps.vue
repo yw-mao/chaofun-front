@@ -14,7 +14,7 @@
         <div class="first_session_head" v-if="recentPagedata && recentPagedata.length >= 1">最近玩过</div>
         <div class="line" v-if="recentPagedata && recentPagedata.length >= 1"></div>
         <div class="grid_main" v-if="recentPagedata && recentPagedata.length >= 1">
-          <div v-for="(item, index) in recentPagedata" @click="toMapsDetail(item)" :style="{'background-image': 'linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.6)), url('+ imgOrigin + (item.cover ?? 'biz/1659323781589_7d19c33667a54a4dabb0405ee5aec20f.jpeg') + '?x-oss-process=image/resize,h_400)','background-size':'cover'}"  class="card">
+          <div v-for="(item, index) in recentPagedata" @click.stop="toMapsDetail(item)" :style="{'background-image': 'linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.6)), url('+ imgOrigin + (item.cover ?? 'biz/1659323781589_7d19c33667a54a4dabb0405ee5aec20f.jpeg') + '?x-oss-process=image/resize,h_400)','background-size':'cover'}"  class="card">
             <div class="title">
               {{item.name}}
             </div>
@@ -25,8 +25,8 @@
               玩家人次: {{item.players}}
             </div>
             <div>
-              <el-button style="background-color: unset; color: white" @click="toMaps(item, 'noMove')" type="primary"  round>固定</el-button>
-              <el-button style="background-color: unset; color: white" @click="toMaps(item, 'move')" type="primary" v-if="item.canMove" round>移动</el-button>
+              <el-button style="background-color: unset; color: white" @click.stop="toMaps(item, 'noMove')" type="primary"  round>固定</el-button>
+              <el-button style="background-color: unset; color: white" @click.stop="toMaps(item, 'move')" type="primary" v-if="item.canMove" round>移动</el-button>
             </div>
           </div>
         </div>
@@ -34,7 +34,7 @@
         <div class="session_head">最新发布</div>
         <div class="line"></div>
         <div class="grid_main">
-          <div v-for="(item, index) in newPagedata" @click="toMapsDetail(item)" :style="{'background-image': 'linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.6)), url('+ imgOrigin + (item.cover ?? 'biz/1659323781589_7d19c33667a54a4dabb0405ee5aec20f.jpeg') + '?x-oss-process=image/resize,h_400)','background-size':'cover'}" class="card">
+          <div v-for="(item, index) in newPagedata" @click.stop="toMapsDetail(item)" :style="{'background-image': 'linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.6)), url('+ imgOrigin + (item.cover ?? 'biz/1659323781589_7d19c33667a54a4dabb0405ee5aec20f.jpeg') + '?x-oss-process=image/resize,h_400)','background-size':'cover'}" class="card">
             <div class="title">
               {{item.name}}
             </div>
@@ -45,8 +45,8 @@
               玩家人次: {{item.players}}
             </div>
             <div>
-              <el-button style="background-color: unset; color: white" @click="toMaps(item, 'noMove')" type="primary"  round>固定</el-button>
-              <el-button style="background-color: unset; color: white" @click="toMaps(item, 'move')" type="primary" v-if="item.canMove" round>移动</el-button>
+              <el-button style="background-color: unset; color: white" @click.stop="toMaps(item, 'noMove')" type="primary"  round>固定</el-button>
+              <el-button style="background-color: unset; color: white" @click.stop="toMaps(item, 'move')" type="primary" v-if="item.canMove" round>移动</el-button>
             </div>
           </div>
         </div>
@@ -54,7 +54,7 @@
         <div class="session_head" >热度排序</div>
         <div class="line"></div>
         <div class="grid_main">
-          <div v-for="(item, index) in pagedata" @click="toMapsDetail(item)"  :style="{'background-image': 'linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.6)), url('+ imgOrigin + (item.cover ?? 'biz/1659323781589_7d19c33667a54a4dabb0405ee5aec20f.jpeg') + '?x-oss-process=image/resize,h_400)','background-size':'cover'}" class="card">
+          <div v-for="(item, index) in pagedata" @click.stop="toMapsDetail(item)"  :style="{'background-image': 'linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.6)), url('+ imgOrigin + (item.cover ?? 'biz/1659323781589_7d19c33667a54a4dabb0405ee5aec20f.jpeg') + '?x-oss-process=image/resize,h_400)','background-size':'cover'}" class="card">
             <div class="title">
               {{item.name}}
             </div>
@@ -65,8 +65,8 @@
               玩家人次: {{item.players}}
             </div>
             <div>
-              <el-button style="background-color: unset; color: white" @click="toMaps(item, 'noMove')" type="primary"  round>固定</el-button>
-              <el-button style="background-color: unset; color: white" @click="toMaps(item, 'move')" type="primary" v-if="item.canMove" round>移动</el-button>
+              <el-button style="background-color: unset; color: white" @click.stop="toMaps(item, 'noMove')" type="primary"  round>固定</el-button>
+              <el-button style="background-color: unset; color: white" @click.stop="toMaps(item, 'move')" type="primary" v-if="item.canMove" round>移动</el-button>
             </div>
           </div>
         </div>

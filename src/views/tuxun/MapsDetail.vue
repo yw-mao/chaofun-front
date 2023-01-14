@@ -18,8 +18,8 @@
     </div>
 
     <div v-if="mapsData" style="margin-top: 1rem">
-      <el-button style="background-color: unset; color: white" @click="toMaps(mapsData, 'noMove')" type="primary"  round>固定</el-button>
-      <el-button style="background-color: unset; color: white" @click="toMaps(mapsData, 'move')" type="primary" v-if="mapsData.canMove" round>移动</el-button>
+      <el-button style="background-color: unset; color: white" @click.stop="toMaps(mapsData, 'noMove')" type="primary"  round>固定</el-button>
+      <el-button style="background-color: unset; color: white" @click.stop="toMaps(mapsData, 'move')" type="primary" v-if="mapsData.canMove" round>移动</el-button>
     </div>
   </div>
 </template>
