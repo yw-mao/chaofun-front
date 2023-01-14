@@ -21,6 +21,31 @@
       <el-button style="background-color: unset; color: white" @click.stop="toMaps(mapsData, 'noMove')" type="primary"  round>固定</el-button>
       <el-button style="background-color: unset; color: white" @click.stop="toMaps(mapsData, 'move')" type="primary" v-if="mapsData.canMove" round>移动</el-button>
     </div>
+
+    <div class="rank">
+      Top100排名
+    </div>
+
+    <div class="rank_container" v-if="mapsData && this.rank">
+      <el-radio-group v-if="mapsData && mapsData.canMove" v-model="type"  @change="getRank" style="margin-bottom: 10px;">
+        <el-radio-button size="mini" label="noMove">固定</el-radio-button>
+        <el-radio-button size="mini" label="move">移动</el-radio-button>
+      </el-radio-group>
+      <div @click="toUser(item.user)" v-for="(item,index) in this.rank" :key="index" class="item">
+        <div class="left">
+          <div class="number">
+            {{index + 1}}.
+          </div>
+          <img style="object-fit: cover;" :src="imgOrigin+ item.user.icon + '?x-oss-process=image/resize,h_80/format,webp/quality,q_75'" alt="">
+          <div class="info">
+            <div class="title">{{item.user.userName}}</div>
+          </div>
+        </div>
+        <div class="right">
+          <p>得分：{{item.score}}</p>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -35,11 +60,14 @@ export default {
       name: null,
       mapsData: null,
       userInfo: null,
+      rank: [],
+      type: 'noMove'
     }
   },
   mounted() {
     this.mapsId = this.$route.query.mapsId;
     this.getMapsInfo();
+    this.getRank();
   },
   methods: {
     getMapsInfo() {
@@ -51,6 +79,14 @@ export default {
     },
     goHome() {
       tuxunJump('/tuxun/')
+    },
+    getRank() {
+      this.rank = [];
+      api.getByPath('/api/v0/tuxun/maps/rank', {mapsId: this.mapsId, type: this.type}).then(res=>{
+        if (res.success) {
+          this.rank = res.data;
+        }
+      })
     },
     getUserInfo(userId) {
       api.getByPath('/api/v0/user/info',{userId: userId}).then((res) => {
@@ -82,6 +118,9 @@ export default {
       document.body.removeChild(input);
       this.$toast("复制练习赛题库地址成功");
       return result;
+    },
+    toUser(user) {
+      tuxunJump( '/tuxun/user/' + user.userId);
     },
   }
 
@@ -119,6 +158,90 @@ export default {
     color: white;
     font-weight: 700;
     margin-bottom: 0.25rem;
+  }
+  .rank {
+    padding-top: 3rem;
+    font-size: 16px;
+    color: darkgray;
+  }
+  .rank_container {
+    color: white;
+    padding-top: 1rem;
+    padding-bottom: 5rem;
+    margin: auto;
+    width: 40%;
+
+    .item {
+      display: flex;
+      justify-content: space-between;
+      padding: 5px;
+      border-bottom: 1px solid #f1f1f1;
+      // height: 60px;
+      // box-sizing: border-box;
+      overflow: hidden;
+
+      .left {
+        flex: 1;
+        display: flex;
+
+        .number {
+          //position: absolute;
+          text-align: end;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          height: 100%;
+          font-size: 16px;
+          margin-right: 8px;
+        }
+        img {
+          flex: 0 0 40px;
+          width: 40px;
+          height: 40px;
+          border-radius: 50%;
+          margin-right: 10px;
+          vertical-align: middle;
+        }
+
+        .title {
+          font-size: 16px;
+        }
+
+        .desc {
+          width: 180px;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          color: #888;
+          font-size: 13px;
+        }
+
+        .info {
+          display: flex;
+          flex-direction: column;
+          justify-content: space-around;
+
+        }
+      }
+
+      .right {
+        flex: 0 0 60px;
+        // line-height: 40px;
+        text-align: center;
+        font-size: 12px;
+
+        p {
+          font-size: 14px;
+        }
+      }
+    }
+  }
+}
+@media only screen and (max-width: 679px) {
+  .container {
+    .rank_container {
+      width: 90%;
+    }
   }
 }
 </style>

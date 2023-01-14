@@ -35,7 +35,7 @@
               连胜挑战
             </div>
             <div class="describe">
-              是男人就坚持一百题
+              探索者，坚持到一百题啊！
             </div>
             <div class="card-top-right">可移动</div>
           </div>
